@@ -17,6 +17,7 @@ const utils = {
     }
     return input
   },
+  emptyFunction() {},
 }
 
 module.exports = utils

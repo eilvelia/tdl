@@ -1,8 +1,8 @@
 const ref = require('ref')
-const ffi = require('ffi')
+const ffi = require('ffi-napi')
 const path = require('path')
 
-const { buildQuery, getInput } = require('./utils')
+const { buildQuery, getInput, emptyFunction } = require('./utils')
 
 class Client {
   constructor(options = {}) {
@@ -27,16 +27,20 @@ class Client {
         'td_set_log_verbosity_level': [ref.types.void     , [ref.types.int]],
       }
     )
-    this.tdlib.td_set_log_verbosity_level(this.options.verbosityLevel)
     this.connect = () => new Promise((resolve, reject) => {
       this.resolver = resolve
       this.rejector = reject
     })
+    this.listeners = {
+      '_update': emptyFunction,
+      '_error': emptyFunction,
+    }
     this.init()
   }
 
   async init() {
     try {
+      this.tdlib.td_set_log_verbosity_level(this.options.verbosityLevel)
       this.client = await this._create()
       this.loop()
     } catch (error) {
@@ -44,9 +48,17 @@ class Client {
     }
   }
 
+  on(eventName, listener) {
+    const validNames = Object.keys(this.listeners)
+    if (validNames.indexOf(eventName) < 0) {
+      throw new Error(`Invalid event name "${eventName}".`)
+      return
+    }
+    this.listeners[eventName] = listener
+  }
+
   async loop() {
     const update = await this._receive()
-    console.log('>> update ', JSON.stringify(update, null, 2))
     if (!update) {
       console.log('Current update is empty.')
       return this.loop()
@@ -61,13 +73,13 @@ class Client {
         break
       }
       default:
+        await this.handleUpdate(update)
         break
     }
     this.loop()
   }
 
   async handleAuth(update) {
-    console.log(this.options)
     switch (update['authorization_state']['@type']) {
       case 'authorizationStateWaitTdlibParameters': {
         await this._send({
@@ -149,9 +161,13 @@ class Client {
         break
       }
       default:
-        console.log('Uncaught error.')
+        this.listeners['_error'].call(null, update)
         break
     }
+  }
+
+  async handleUpdate(update) {
+    this.listeners['_update'].call(null, update)
   }
 
   _create() {

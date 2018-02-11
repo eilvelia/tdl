@@ -7,6 +7,10 @@ async function main() {
     phoneNumber: 'YOUR_PHONE_NUMBER',
   })
 
+  client.on('_update', (update) => {
+    console.log('Got update:', JSON.stringify(update, null, 2))
+  })
+
   await client.connect()
 
   await client._send({
