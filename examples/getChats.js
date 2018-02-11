@@ -9,17 +9,15 @@ async function main() {
 
   await client.connect()
 
-  await client._send({
-    '@type': 'sendMessage',
-    'chat_id': -123456789,
-    'input_message_content': {
-      '@type': 'inputMessageText',
-      'text': {
-        '@type': 'formattedText',
-        'text': 'Hi',
-      },
-    },
+  const result = await client.fetch({
+    '@type': 'getChats',
+    'offset_order': '9223372036854775807',
+    'offset_chat_id': 0,
+    'limit': 100,
   })
+
+  // latest 100 chats will be returned
+  console.log(result)
 }
 
 main()

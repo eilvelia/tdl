@@ -1,5 +1,6 @@
-const ref = require('ref')
+const uuidv4 = require('uuid/v4')
 const ffi = require('ffi-napi')
+const ref = require('ref')
 const path = require('path')
 
 const { buildQuery, getInput, emptyFunction } = require('./utils')
@@ -35,6 +36,7 @@ class Client {
       '_update': emptyFunction,
       '_error': emptyFunction,
     }
+    this.fetching = {}
     this.init()
   }
 
@@ -167,7 +169,30 @@ class Client {
   }
 
   async handleUpdate(update) {
-    this.listeners['_update'].call(null, update)
+    const id = update['@extra']
+    if (this.fetching[id]) {
+      delete update['@extra']
+      this.fetching[id](update)
+      delete this.fetching[id]
+    } else {
+      this.listeners['_update'].call(null, update)
+    }
+  }
+
+  async fetch(query) {
+    const id = uuidv4()
+    query['@extra'] = id
+    const receiveUpdate = new Promise((resolve, reject) => {
+      this.fetching[id] = resolve
+      // timeout after 10 seconds
+      setTimeout(() => {
+        delete this.fetching[id]
+        reject('Query timed out after 10 seconds.')
+      }, 1000 * 10)
+    })
+    await this._send(query)
+    const result = await receiveUpdate
+    return result
   }
 
   _create() {
