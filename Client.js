@@ -12,6 +12,15 @@ class Client {
       apiHash: null,
       binaryPath: 'libtdjson',
       verbosityLevel: 2,
+      tdlibParameters: {
+        'use_message_database': true,
+        'use_secret_chats': false,
+        'system_language_code': 'en',
+        'application_version': '1.0',
+        'device_model': 'tdtest',
+        'system_version': 'node',
+        'enable_storage_optimizer': true,
+      },
     }
     this.options = {
       ...defaultOptions,
@@ -87,19 +96,12 @@ class Client {
         await this._send({
           '@type': 'setTdlibParameters',
           'parameters': {
+            ...this.options.tdlibParameters,
             '@type': 'tdlibParameters',
-            // 'use_test_dc': true,
             'database_directory': path.resolve(process.cwd(), '_td_database'),
             'files_directory': path.resolve(process.cwd(), '_td_files'),
-            'use_message_database': true,
-            'use_secret_chats': false,
             'api_id': this.options.apiId,
             'api_hash': this.options.apiHash,
-            'system_language_code': 'en',
-            'application_version': '1.0',
-            'device_model': 'tdtest',
-            'system_version': 'node',
-            'enable_storage_optimizer': true,
           },
         })
         break
