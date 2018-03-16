@@ -1,6 +1,6 @@
 const uuidv4 = require('uuid/v4')
 const ffi = require('ffi-napi')
-const ref = require('ref')
+const ref = require('ref-napi')
 const path = require('path')
 
 const { buildQuery, getInput, emptyFunction } = require('./utils')
