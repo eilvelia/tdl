@@ -1,4 +1,4 @@
-const ref = require('ref')
+const ref = require('ref-napi')
 const inquirer = require('inquirer')
 
 const utils = {
