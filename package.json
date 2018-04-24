@@ -1,6 +1,6 @@
 {
   "name": "tglib",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "TDLib (Telegram Database library) bindings for Node.js",
   "main": "index.js",
   "scripts": {
@@ -21,8 +21,8 @@
   },
   "homepage": "https://github.com/nodegin/tglib#readme",
   "dependencies": {
-    "ffi-napi": "^2.4.2",
-    "inquirer": "^5.1.0",
+    "ffi-napi": "^2.4.3",
+    "inquirer": "^5.2.0",
     "ref-napi": "^1.4.0",
     "uuid": "^3.2.1"
   }
