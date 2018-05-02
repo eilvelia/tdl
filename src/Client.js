@@ -1,79 +1,137 @@
-const uuidv4 = require('uuid/v4')
-const ffi = require('ffi-napi')
-const ref = require('ref-napi')
-const path = require('path')
+// @flow
 
-const { buildQuery, getInput, emptyFunction } = require('./utils')
+import path from 'path'
+import EventEmitter from 'events'
+import ffi from 'ffi-napi'
+import ref from 'ref-napi'
+import { prompt, type QuestionKindT } from 'inquirer'
+import Debug from 'debug'
+import uuidv4 from '../vendor/uuidv4'
 
-class Client {
-  constructor(options = {}) {
-    const defaultOptions = {
-      apiId: null,
-      apiHash: null,
-      binaryPath: 'libtdjson',
-      verbosityLevel: 2,
-      tdlibParameters: {
-        'use_message_database': true,
-        'use_secret_chats': false,
-        'system_language_code': 'en',
-        'application_version': '1.0',
-        'device_model': 'tdtest',
-        'system_version': 'node',
-        'enable_storage_optimizer': true,
-      },
-    }
-    this.options = {
-      ...defaultOptions,
-      ...options,
-    }
-    this.tdlib = ffi.Library(
-      path.resolve(process.cwd(), this.options.binaryPath),
-      {
-        'td_json_client_create' :     [ref.refType('void'), []],
-        'td_json_client_send'   :     [ref.types.void     , [ref.refType('void'), ref.types.CString]],
-        'td_json_client_receive':     [ref.types.CString  , [ref.refType('void'), ref.types.double]],
-        'td_json_client_execute':     [ref.types.CString  , [ref.refType('void'), ref.types.CString]],
-        'td_json_client_destroy':     [ref.types.void     , [ref.refType('void')]],
-        'td_set_log_verbosity_level': [ref.types.void     , [ref.types.int]],
-      }
-    )
-    this.connect = () => new Promise((resolve, reject) => {
+import type {
+  EventType,
+  ConfigType,
+  StrictConfigType
+} from './types'
+
+const debug = Debug('tdl')
+
+const noop = () => {}
+
+const buildQuery = query => {
+  const buffer = Buffer.from(JSON.stringify(query) + '\0', 'utf-8')
+  // $FlowFixMe
+  buffer.type = ref.types.CString
+  return buffer
+}
+
+const getInput = (type: QuestionKindT, message: string): Promise<string> =>
+  prompt([{ type, name: 'input', message }])
+    .then(result => typeof result.input === 'string' ? result.input : '')
+    .then(input => input.length === 0 ? getInput(type, message) : input)
+
+const getAuthCode = (retry?: boolean): Promise<string> =>
+  getInput('input', retry
+    ? 'Wrong auth code, please re-enter: '
+    : 'Please enter auth code: ')
+
+const getPassword = (passwordHint: string, retry?: boolean): Promise<string> =>
+  getInput('password', retry
+    ? 'Wrong password, please re-enter: '
+    : `Please enter password (${passwordHint}): `)
+
+const cwd = process.cwd()
+
+const defaultOptions = {
+  apiId: null,
+  apiHash: null,
+  getAuthCode,
+  getPassword,
+  binaryPath: 'libtdjson',
+  databaseDirectory: '_td_database',
+  filesDirectory: '_td_files',
+  logFilePath: '',
+  verbosityLevel: 2,
+  tdlibParameters: {
+    use_message_database: true,
+    use_secret_chats: false,
+    system_language_code: 'en',
+    application_version: '1.0',
+    device_model: 'tdlib',
+    system_version: 'node',
+    enable_storage_optimizer: true
+  }
+}
+
+type P = { resolve: (result: any) => void, reject: (error: any) => void }
+
+export class Client {
+  options: StrictConfigType
+  emitter = new EventEmitter()
+  fetching: Map<string, P> = new Map()
+  tdlib: Object
+  client: Object | null
+  resolver: Function
+  rejector: Function
+
+  connect: () => Promise<void> =
+    () => new Promise((resolve, reject) => {
       this.resolver = resolve
       this.rejector = reject
+      this.init()
     })
-    this.listeners = {
-      '_update': emptyFunction,
-      '_error': emptyFunction,
+
+  constructor (options: ConfigType = {}) {
+    this.options = {
+      ...defaultOptions,
+      ...options
     }
-    this.fetching = {}
-    this.init()
+
+    this.tdlib = ffi.Library(
+      path.resolve(cwd, this.options.binaryPath),
+      {
+        'td_json_client_create'          : ['pointer', []],
+        'td_json_client_send'            : ['void'   , ['pointer', 'string']],
+        'td_json_client_receive'         : ['string' , ['pointer', 'double']],
+        'td_json_client_execute'         : ['string' , ['pointer', 'string']],
+        'td_json_client_destroy'         : ['void'   , ['pointer']],
+        'td_set_log_file_path'           : ['int'    , ['string']],
+        'td_set_log_verbosity_level'     : ['void'   , ['int']],
+      })
   }
 
-  async init() {
+  async init (): Promise<void> {
     try {
-      this.tdlib.td_set_log_verbosity_level(this.options.verbosityLevel)
+      this._setLogVerbosityLevel(this.options.verbosityLevel)
+
+      if (this.options.logFilePath)
+        this._setLogFilePath(path.resolve(cwd, this.options.logFilePath))
+
       this.client = await this._create()
+
       this.loop()
     } catch (error) {
       this.rejector(`Error while creating client: ${error}`)
     }
   }
 
-  on(eventName, listener) {
-    const validNames = Object.keys(this.listeners)
-    if (validNames.indexOf(eventName) < 0) {
-      throw new Error(`Invalid event name "${eventName}".`)
-      return
-    }
-    this.listeners[eventName] = listener
+  on (eventName: EventType, listener: (arg: any) => void) {
+    this.emitter.on(eventName, listener)
+    return this
   }
 
-  async loop() {
+  emit (eventName: EventType, value: any) {
+    return this.emitter.emit(eventName, value)
+  }
+
+  async loop (): Promise<void> {
     const update = await this._receive()
+
     if (!update) {
-      console.log('Current update is empty.')
+      debug('Current update is empty.')
       return this.loop()
     }
+
     switch (update['@type']) {
       case 'updateAuthorizationState': {
         await this.handleAuth(update)
@@ -85,21 +143,21 @@ class Client {
       }
       default:
         await this.handleUpdate(update)
-        break
     }
+
     this.loop()
   }
 
-  async handleAuth(update) {
-    switch (update['authorization_state']['@type']) {
+  async handleAuth (update: Object): Promise<void> {
+    switch (update.authorization_state['@type']) {
       case 'authorizationStateWaitTdlibParameters': {
         await this._send({
           '@type': 'setTdlibParameters',
           'parameters': {
             ...this.options.tdlibParameters,
             '@type': 'tdlibParameters',
-            'database_directory': path.resolve(process.cwd(), '_td_database'),
-            'files_directory': path.resolve(process.cwd(), '_td_files'),
+            'database_directory': path.resolve(cwd, this.options.databaseDirectory),
+            'files_directory': path.resolve(cwd, this.options.filesDirectory),
             'api_id': this.options.apiId,
             'api_hash': this.options.apiHash,
           },
@@ -120,7 +178,7 @@ class Client {
         break
       }
       case 'authorizationStateWaitCode': {
-        const code = await getInput('input', 'Please enter auth code: ')
+        const code = await this.options.getAuthCode(false)
         await this._send({
           '@type': 'checkAuthenticationCode',
           'code': code,
@@ -128,8 +186,8 @@ class Client {
         break
       }
       case 'authorizationStateWaitPassword': {
-        const passwordHint = update['authorization_state']['password_hint']
-        const password = await getInput('password', `Please enter password (${passwordHint}): `)
+        const passwordHint = update.authorization_state['password_hint']
+        const password = await this.options.getPassword(passwordHint, false)
         await this._send({
           '@type': 'checkAuthenticationPassword',
           'password': password,
@@ -145,11 +203,11 @@ class Client {
     }
   }
 
-  async handleError(update) {
+  async handleError (update: Object) {
     switch (update['message']) {
       case 'PHONE_CODE_EMPTY':
       case 'PHONE_CODE_INVALID': {
-        const code = await getInput('input', 'Wrong auth code, please re-enter: ')
+        const code = await this.options.getAuthCode(true)
         await this._send({
           '@type': 'checkAuthenticationCode',
           'code': code,
@@ -157,7 +215,7 @@ class Client {
         break
       }
       case 'PASSWORD_HASH_INVALID': {
-        const password = await getInput('password', `Wrong password, please re-enter: `)
+        const password = await this.options.getPassword('', true)
         await this._send({
           '@type': 'checkAuthenticationPassword',
           'password': password,
@@ -165,98 +223,96 @@ class Client {
         break
       }
       default:
-        this.listeners['_error'].call(null, update)
-        break
+        const id = update['@extra']
+        const el = this.fetching.get(id)
+
+        if (el) {
+          delete update['@extra']
+          el.reject(update)
+          this.fetching.delete(id)
+        } else {
+          this.emit('error', update)
+        }
     }
   }
 
-  async handleUpdate(update) {
+  async handleUpdate (update: Object) {
     const id = update['@extra']
-    if (this.fetching[id]) {
+    const el = this.fetching.get(id)
+
+    if (el) {
       delete update['@extra']
-      this.fetching[id](update)
-      delete this.fetching[id]
+      el.resolve(update)
+      this.fetching.delete(id)
     } else {
-      this.listeners['_update'].call(null, update)
+      this.emit('update', update)
     }
   }
 
-  async fetch(query) {
+  async fetch (query: Object): Promise<Object> {
     const id = uuidv4()
     query['@extra'] = id
     const receiveUpdate = new Promise((resolve, reject) => {
-      this.fetching[id] = resolve
+      this.fetching.set(id, { resolve, reject })
       // timeout after 10 seconds
-      setTimeout(() => {
-        delete this.fetching[id]
-        reject('Query timed out after 10 seconds.')
-      }, 1000 * 10)
+      // setTimeout(() => {
+      //   delete this.fetching[id]
+      //   reject('Query timed out after 10 seconds.')
+      // }, 1000 * 10)
     })
     await this._send(query)
-    const result = await receiveUpdate
-    return result
+
+    return receiveUpdate
   }
 
-  _create() {
-    return new Promise((resolve, reject) => {
+  destroy (): void {
+    this.destroy()
+  }
+
+  _create = (): Promise<Object> =>
+    new Promise((resolve, reject) => {
       this.tdlib.td_json_client_create.async((err, client) => {
-        if (err) {
-          return reject(err)
-        }
+        if (err) reject(err)
         resolve(client)
       })
     })
-  }
 
-  _send(query) {
-    return new Promise((resolve, reject) => {
+  _send = (query: Object): Promise<Object | null> =>
+    new Promise((resolve, reject) => {
       this.tdlib.td_json_client_send.async(this.client, buildQuery(query), (err, response) => {
-        if (err) {
-          return reject(err)
-        }
-        if (!response) {
-          return resolve(null)
-        }
+        if (err) return reject(err)
+        if (!response) return resolve(null)
         resolve(JSON.parse(response))
       })
     })
-  }
 
-  _receive(timeout = 10) {
-    return new Promise((resolve, reject) => {
+  _receive = (timeout: number = 10): Promise<Object | null> =>
+    new Promise((resolve, reject) => {
       this.tdlib.td_json_client_receive.async(this.client, timeout, (err, response) => {
-        if (err) {
-          return reject(err)
-        }
-        if (!response) {
-          return resolve(null)
-        }
+        if (err) return reject(err)
+        if (!response) return resolve(null)
         resolve(JSON.parse(response))
       })
     })
+
+  _execute (query: Object): Object | null {
+    const response = this.tdlib.td_json_client_execute(this.client, buildQuery(query))
+    if (!response) return null
+    return JSON.parse(response)
   }
 
-  _execute(query) {
-    return new Promise((resolve, reject) => {
-      try {
-        const response = this.tdlib.td_json_client_execute(this.client, buildQuery(query))
-        if (!response) {
-          return resolve(null)
-        }
-        resolve(JSON.parse(response))
-      } catch (err) {
-        reject(err)
-      }
-    })
+  _destroy (): void {
+    if (!this.client) return
+
+    this.tdlib.td_json_client_destroy(this.client)
+    this.client = null
   }
 
-  _destroy() {
-    return new Promise((resolve) => {
-      this.tdlib.td_json_client_destroy(this.client)
-      this.client = null
-      resolve()
-    })
+  _setLogFilePath (path: string) {
+    return this.tdlib.td_set_log_file_path(path)
+  }
+
+  _setLogVerbosityLevel (verbosity: number) {
+    return this.tdlib.td_set_log_verbosity_level(verbosity)
   }
 }
-
-module.exports = Client
