@@ -45,5 +45,16 @@
     "mtproto",
     "ffi",
     "tglib"
-  ]
+  ],
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bannerets/tdl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Bannerets/tdl/issues"
+  },
+  "homepage": "https://github.com/Bannerets/tdl#readme"
 }
