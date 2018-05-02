@@ -1,29 +1,49 @@
 {
-  "name": "tglib",
+  "name": "tdl",
   "version": "1.0.0",
   "description": "TDLib (Telegram Database library) bindings for Node.js",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf dist/",
+    "types": "flow-copy-source src dist",
+    "build": "babel src/ -d dist/ && npm run types",
+    "test": "flow .",
+    "prepublish": "npm test && npm run clean && npm run build",
+    "start": "node dist"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nodegin/tglib.git"
-  },
-  "keywords": [
-    "tdlib",
-    "telegram"
+  "files": [
+    ".flowconfig",
+    "dist",
+    "vendor",
+    "flow-typed",
+    "README.md"
   ],
-  "author": "nodegin",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/nodegin/tglib/issues"
-  },
-  "homepage": "https://github.com/nodegin/tglib#readme",
   "dependencies": {
+    "debug": "^3.1.0",
     "ffi-napi": "^2.4.3",
-    "inquirer": "^5.2.0",
-    "ref-napi": "^1.4.0",
-    "uuid": "^3.2.1"
-  }
+    "inquirer": "^2.0.0",
+    "ref-napi": "^1.4.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-flow": "^6.23.0",
+    "flow-bin": "^0.66.0",
+    "flow-copy-source": "^1.3.0",
+    "rimraf": "^2.6.2"
+  },
+  "engines": {
+    "node": ">= 8.0.0"
+  },
+  "author": "Bannerets <save14@protonmail.com>",
+  "license": "BSL-1.0",
+  "keywords": [
+    "telegram",
+    "tdlib",
+    "mtproto",
+    "ffi",
+    "tglib"
+  ]
 }

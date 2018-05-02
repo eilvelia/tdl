@@ -1,6 +1,8 @@
 .DS_Store
 node_modules/
 package-lock.json
+dist/
+*.bak
 
 npm-debug.log*
 yarn-debug.log*
