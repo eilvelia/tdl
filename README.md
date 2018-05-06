@@ -78,17 +78,6 @@ You can use this API to destroy the client.
 client.destroy()
 ```
 
-##### `client._execute(query)` -> ?Object
- 
-This API is provided by TDLib, you can use this API to execute synchronous action to Telegram.
-
-```js
-client._execute({
-  '@type': 'getTextEntities',
-  'text': '@telegram /test_command https://telegram.org telegram.me',
-})
-```
-
 -----
 
 ### Options
@@ -146,4 +135,4 @@ Any empty fields may just not be specified.
 
 ### Fork
 
-This is a fork of [nodeign/tglib](https://github.com/nodegin/tglib).
+This is a fork of [nodegin/tglib](https://github.com/nodegin/tglib).

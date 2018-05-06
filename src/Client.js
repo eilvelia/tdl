@@ -2,10 +2,9 @@
 
 import path from 'path'
 import EventEmitter from 'events'
-import ffi from 'ffi-napi'
-import ref from 'ref-napi'
 import { prompt, type QuestionKindT } from 'inquirer'
 import Debug from 'debug'
+import { TDLib } from './TDLib'
 import uuidv4 from '../vendor/uuidv4'
 
 import type {
@@ -14,16 +13,9 @@ import type {
   StrictConfigType
 } from './types'
 
+import type { TDLibClient } from './TDLib'
+
 const debug = Debug('tdl')
-
-const noop = () => {}
-
-const buildQuery = query => {
-  const buffer = Buffer.from(JSON.stringify(query) + '\0', 'utf-8')
-  // $FlowFixMe
-  buffer.type = ref.types.CString
-  return buffer
-}
 
 const getInput = (type: QuestionKindT, message: string): Promise<string> =>
   prompt([{ type, name: 'input', message }])
@@ -69,8 +61,8 @@ export class Client {
 ; +options: StrictConfigType
 ; +emitter = new EventEmitter()
 ; +fetching: Map<string, P> = new Map()
-; +tdlib: Object
-  client: Object | null
+; +tdlib: TDLib
+  client: TDLibClient | null
   resolver: Function
   rejector: Function
 
@@ -87,31 +79,21 @@ export class Client {
       ...options
     }
 
-    this.tdlib = ffi.Library(
-      path.resolve(cwd, this.options.binaryPath),
-      {
-        'td_json_client_create'          : ['pointer', []],
-        'td_json_client_send'            : ['void'   , ['pointer', 'string']],
-        'td_json_client_receive'         : ['string' , ['pointer', 'double']],
-        'td_json_client_execute'         : ['string' , ['pointer', 'string']],
-        'td_json_client_destroy'         : ['void'   , ['pointer']],
-        'td_set_log_file_path'           : ['int'    , ['string']],
-        'td_set_log_verbosity_level'     : ['void'   , ['int']],
-      })
+    this.tdlib = new TDLib(path.resolve(cwd, this.options.binaryPath))
   }
 
   async _init (): Promise<void> {
     try {
-      this._setLogVerbosityLevel(this.options.verbosityLevel)
+      this.setLogVerbosityLevel(this.options.verbosityLevel)
 
       if (this.options.logFilePath)
-        this._setLogFilePath(path.resolve(cwd, this.options.logFilePath))
+        this.setLogFilePath(path.resolve(cwd, this.options.logFilePath))
 
-      this.client = await this._create()
+      this.client = await this.tdlib.create()
 
       this._loop()
-    } catch (error) {
-      this.rejector(`Error while creating client: ${error}`)
+    } catch (err) {
+      this.rejector(`Error while creating client: ${err}`)
     }
   }
 
@@ -123,7 +105,6 @@ export class Client {
   emit = (eventName: EventType, value: any) => {
     return this.emitter.emit(eventName, value)
   }
-
 
   invoke = async (query: Object): Promise<Object> => {
     const id = uuidv4()
@@ -143,9 +124,16 @@ export class Client {
 
   destroy = (): void => {
     if (!this.client) return
-
-    this.tdlib.td_json_client_destroy(this.client)
+    this.tdlib.destroy(this.client)
     this.client = null
+  }
+
+  setLogFilePath (path: string): number | any {
+    return this.tdlib.setLogFilePath(path)
+  }
+
+  setLogVerbosityLevel (verbosity: number): void {
+    this.tdlib.setLogVerbosityLevel(verbosity)
   }
 
   async _loop (): Promise<void> {
@@ -157,14 +145,14 @@ export class Client {
     }
 
     switch (update['@type']) {
-      case 'updateAuthorizationState': {
+      case 'updateAuthorizationState':
         await this._handleAuth(update)
         break
-      }
-      case 'error': {
+
+      case 'error':
         await this._handleError(update)
         break
-      }
+
       default:
         await this._handleUpdate(update)
     }
@@ -174,7 +162,7 @@ export class Client {
 
   async _handleAuth (update: Object): Promise<void> {
     switch (update.authorization_state['@type']) {
-      case 'authorizationStateWaitTdlibParameters': {
+      case 'authorizationStateWaitTdlibParameters':
         await this._send({
           '@type': 'setTdlibParameters',
           'parameters': {
@@ -187,29 +175,29 @@ export class Client {
           },
         })
         break
-      }
-      case 'authorizationStateWaitEncryptionKey': {
+
+      case 'authorizationStateWaitEncryptionKey':
         await this._send({
           '@type': 'checkDatabaseEncryptionKey',
         })
         break
-      }
-      case 'authorizationStateWaitPhoneNumber': {
+
+      case 'authorizationStateWaitPhoneNumber':
         await this._send({
           '@type': 'setAuthenticationPhoneNumber',
           'phone_number': this.options.phoneNumber,
         })
         break
-      }
-      case 'authorizationStateWaitCode': {
+
+      case 'authorizationStateWaitCode':
         const code = await this.options.getAuthCode(false)
         await this._send({
           '@type': 'checkAuthenticationCode',
           'code': code,
         })
         break
-      }
-      case 'authorizationStateWaitPassword': {
+
+      case 'authorizationStateWaitPassword':
         const passwordHint = update.authorization_state['password_hint']
         const password = await this.options.getPassword(passwordHint, false)
         await this._send({
@@ -217,42 +205,38 @@ export class Client {
           'password': password,
         })
         break
-      }
-      case 'authorizationStateReady': {
+
+      case 'authorizationStateReady':
         this.resolver()
-        break
-      }
-      default:
-        break
     }
   }
 
   async _handleError (update: Object) {
     switch (update['message']) {
       case 'PHONE_CODE_EMPTY':
-      case 'PHONE_CODE_INVALID': {
+      case 'PHONE_CODE_INVALID':
         const code = await this.options.getAuthCode(true)
         await this._send({
           '@type': 'checkAuthenticationCode',
           'code': code,
         })
         break
-      }
-      case 'PASSWORD_HASH_INVALID': {
+
+      case 'PASSWORD_HASH_INVALID':
         const password = await this.options.getPassword('', true)
         await this._send({
           '@type': 'checkAuthenticationPassword',
           'password': password,
         })
         break
-      }
+
       default:
         const id = update['@extra']
-        const el = this.fetching.get(id)
+        const p = this.fetching.get(id)
 
-        if (el) {
+        if (p) {
           delete update['@extra']
-          el.reject(update)
+          p.reject(update)
           this.fetching.delete(id)
         } else {
           this.emit('error', update)
@@ -262,54 +246,24 @@ export class Client {
 
   async _handleUpdate (update: Object) {
     const id = update['@extra']
-    const el = this.fetching.get(id)
+    const p = this.fetching.get(id)
 
-    if (el) {
+    if (p) {
       delete update['@extra']
-      el.resolve(update)
+      p.resolve(update)
       this.fetching.delete(id)
     } else {
       this.emit('update', update)
     }
   }
 
-  _create = (): Promise<Object> =>
-    new Promise((resolve, reject) => {
-      this.tdlib.td_json_client_create.async((err, client) => {
-        if (err) return reject(err)
-        resolve(client)
-      })
-    })
-
-  _send = (query: Object): Promise<Object | null> =>
-    new Promise((resolve, reject) => {
-      this.tdlib.td_json_client_send.async(this.client, buildQuery(query), (err, response) => {
-        if (err) return reject(err)
-        if (!response) return resolve(null)
-        resolve(JSON.parse(response))
-      })
-    })
-
-  _receive = (timeout: number = 10): Promise<Object | null> =>
-    new Promise((resolve, reject) => {
-      this.tdlib.td_json_client_receive.async(this.client, timeout, (err, response) => {
-        if (err) return reject(err)
-        if (!response) return resolve(null)
-        resolve(JSON.parse(response))
-      })
-    })
-
-  _execute (query: Object): Object | null {
-    const response = this.tdlib.td_json_client_execute(this.client, buildQuery(query))
-    if (!response) return null
-    return JSON.parse(response)
+  _send (query: Object): Promise<Object | null> {
+    if (!this.client) return Promise.resolve(null)
+    return this.tdlib.send(this.client, query)
   }
 
-  _setLogFilePath (path: string): number | any {
-    return this.tdlib.td_set_log_file_path(path)
-  }
-
-  _setLogVerbosityLevel (verbosity: number): void {
-    this.tdlib.td_set_log_verbosity_level(verbosity)
+  _receive (timeout: number = 10): Promise<Object | null> {
+    if (!this.client) return Promise.resolve(null)
+    return this.tdlib.receive(this.client, timeout)
   }
 }
