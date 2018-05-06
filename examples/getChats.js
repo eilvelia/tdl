@@ -9,7 +9,7 @@ async function main() {
 
   await client.connect()
 
-  const result = await client.fetch({
+  const result = await client.invoke({
     '@type': 'getChats',
     'offset_order': '9223372036854775807',
     'offset_chat_id': 0,

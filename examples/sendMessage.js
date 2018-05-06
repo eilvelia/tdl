@@ -9,7 +9,7 @@ async function main() {
 
   await client.connect()
 
-  await client._send({
+  await client.invoke({
     '@type': 'sendMessage',
     'chat_id': -123456789,
     'input_message_content': {

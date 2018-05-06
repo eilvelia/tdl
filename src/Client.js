@@ -66,10 +66,10 @@ const defaultOptions = {
 type P = { resolve: (result: any) => void, reject: (error: any) => void }
 
 export class Client {
-  options: StrictConfigType
-  emitter = new EventEmitter()
-  fetching: Map<string, P> = new Map()
-  tdlib: Object
+; +options: StrictConfigType
+; +emitter = new EventEmitter()
+; +fetching: Map<string, P> = new Map()
+; +tdlib: Object
   client: Object | null
   resolver: Function
   rejector: Function
@@ -78,7 +78,7 @@ export class Client {
     () => new Promise((resolve, reject) => {
       this.resolver = resolve
       this.rejector = reject
-      this.init()
+      this._init()
     })
 
   constructor (options: ConfigType = {}) {
@@ -100,7 +100,7 @@ export class Client {
       })
   }
 
-  async init (): Promise<void> {
+  async _init (): Promise<void> {
     try {
       this._setLogVerbosityLevel(this.options.verbosityLevel)
 
@@ -109,46 +109,70 @@ export class Client {
 
       this.client = await this._create()
 
-      this.loop()
+      this._loop()
     } catch (error) {
       this.rejector(`Error while creating client: ${error}`)
     }
   }
 
-  on (eventName: EventType, listener: (arg: any) => void) {
+  on = (eventName: EventType, listener: (arg: any) => void) => {
     this.emitter.on(eventName, listener)
     return this
   }
 
-  emit (eventName: EventType, value: any) {
+  emit = (eventName: EventType, value: any) => {
     return this.emitter.emit(eventName, value)
   }
 
-  async loop (): Promise<void> {
+
+  invoke = async (query: Object): Promise<Object> => {
+    const id = uuidv4()
+    query['@extra'] = id
+    const receiveUpdate = new Promise((resolve, reject) => {
+      this.fetching.set(id, { resolve, reject })
+      // timeout after 10 seconds
+      // setTimeout(() => {
+      //   delete this.fetching[id]
+      //   reject('Query timed out after 10 seconds.')
+      // }, 1000 * 10)
+    })
+    await this._send(query)
+
+    return receiveUpdate
+  }
+
+  destroy = (): void => {
+    if (!this.client) return
+
+    this.tdlib.td_json_client_destroy(this.client)
+    this.client = null
+  }
+
+  async _loop (): Promise<void> {
     const update = await this._receive()
 
     if (!update) {
       debug('Current update is empty.')
-      return this.loop()
+      return this._loop()
     }
 
     switch (update['@type']) {
       case 'updateAuthorizationState': {
-        await this.handleAuth(update)
+        await this._handleAuth(update)
         break
       }
       case 'error': {
-        await this.handleError(update)
+        await this._handleError(update)
         break
       }
       default:
-        await this.handleUpdate(update)
+        await this._handleUpdate(update)
     }
 
-    this.loop()
+    this._loop()
   }
 
-  async handleAuth (update: Object): Promise<void> {
+  async _handleAuth (update: Object): Promise<void> {
     switch (update.authorization_state['@type']) {
       case 'authorizationStateWaitTdlibParameters': {
         await this._send({
@@ -203,7 +227,7 @@ export class Client {
     }
   }
 
-  async handleError (update: Object) {
+  async _handleError (update: Object) {
     switch (update['message']) {
       case 'PHONE_CODE_EMPTY':
       case 'PHONE_CODE_INVALID': {
@@ -236,7 +260,7 @@ export class Client {
     }
   }
 
-  async handleUpdate (update: Object) {
+  async _handleUpdate (update: Object) {
     const id = update['@extra']
     const el = this.fetching.get(id)
 
@@ -249,30 +273,10 @@ export class Client {
     }
   }
 
-  async fetch (query: Object): Promise<Object> {
-    const id = uuidv4()
-    query['@extra'] = id
-    const receiveUpdate = new Promise((resolve, reject) => {
-      this.fetching.set(id, { resolve, reject })
-      // timeout after 10 seconds
-      // setTimeout(() => {
-      //   delete this.fetching[id]
-      //   reject('Query timed out after 10 seconds.')
-      // }, 1000 * 10)
-    })
-    await this._send(query)
-
-    return receiveUpdate
-  }
-
-  destroy (): void {
-    this.destroy()
-  }
-
   _create = (): Promise<Object> =>
     new Promise((resolve, reject) => {
       this.tdlib.td_json_client_create.async((err, client) => {
-        if (err) reject(err)
+        if (err) return reject(err)
         resolve(client)
       })
     })
@@ -301,18 +305,11 @@ export class Client {
     return JSON.parse(response)
   }
 
-  _destroy (): void {
-    if (!this.client) return
-
-    this.tdlib.td_json_client_destroy(this.client)
-    this.client = null
-  }
-
-  _setLogFilePath (path: string) {
+  _setLogFilePath (path: string): number | any {
     return this.tdlib.td_set_log_file_path(path)
   }
 
-  _setLogVerbosityLevel (verbosity: number) {
-    return this.tdlib.td_set_log_verbosity_level(verbosity)
+  _setLogVerbosityLevel (verbosity: number): void {
+    this.tdlib.td_set_log_verbosity_level(verbosity)
   }
 }

@@ -2,10 +2,6 @@
 
 TDLib (Telegram Database library) bindings for Node.js
 
-#### Fork
-
-This is a fork of [nodeign/tglib](https://github.com/nodegin/tglib).
-
 -----
 
 ### Getting started
@@ -31,7 +27,7 @@ const client = new Client({
 
 ##### `client.connect()` -> Promise -> Void
 
-This API is provided by tdl, you can use this API to initialize and connect your client with Telegram.
+You can use this API to initialize and connect your client with Telegram.
 
 ```js
 await client.connect()
@@ -39,19 +35,20 @@ await client.connect()
 
 ##### `client.on(event, callback)` -> Void
 
-This API is provided by tdl, you can use this API to attach an event listener for iterating updates.
+You can use this API to attach an event listener for iterating updates.
 
 ```js
 client.on('update', console.log)
 client.on('error', console.error)
 ```
 
-##### `client.fetch(query)` -> Promise -> Object
+##### `client.invoke(query)` -> Promise -> Object
 
-This API is provided by tdl, you can use this API to send asynchronous message to Telegram and receive response.
+You can use this API to send asynchronous message to Telegram and receive response.  
+Resolves with response, or rejects with an error.
 
 ```js
-const chats = await client.fetch({
+const chats = await client.invoke({
   '@type': 'getChats',
   'offset_order': '9223372036854775807',
   'offset_chat_id': 0,
@@ -59,22 +56,8 @@ const chats = await client.fetch({
 })
 ```
 
-##### `client.destroy()` -> Void
-
-This API is provided by tdl, you can use this API to destroy the client.
-
 ```js
-client.destroy()
-```
-
-#### ![](https://placehold.it/12/efcf39/000?text=+) Low Level APIs
-
-##### `client._send(query)` -> Promise -> ?Object
-
-This API is provided by TDLib, you can use this API to send asynchronous message to Telegram.
-
-```js
-await client._send({
+await client.invoke({
   '@type': 'sendMessage',
   'chat_id': -123456789,
   'input_message_content': {
@@ -87,8 +70,16 @@ await client._send({
 })
 ```
 
-##### `client._execute(query)` -> ?Object
+##### `client.destroy()` -> Void
 
+You can use this API to destroy the client.
+
+```js
+client.destroy()
+```
+
+##### `client._execute(query)` -> ?Object
+ 
 This API is provided by TDLib, you can use this API to execute synchronous action to Telegram.
 
 ```js
@@ -97,10 +88,6 @@ client._execute({
   'text': '@telegram /test_command https://telegram.org telegram.me',
 })
 ```
-
-##### `client._destroy()` -> Void
-
-This API is provided by TDLib, you can use this API to destroy the client.
 
 -----
 
@@ -157,6 +144,6 @@ Any empty fields may just not be specified.
 
 -----
 
-### License
+### Fork
 
-tdl uses the same license as TDLib. See [tdlib/td](https://github.com/tdlib/td) for more information.
+This is a fork of [nodeign/tglib](https://github.com/nodegin/tglib).
