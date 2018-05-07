@@ -2,8 +2,11 @@
 
 import ffi from 'ffi-napi'
 import ref from 'ref-napi'
+import Debug from 'debug'
 
 export opaque type TDLibClient = Object
+
+const debug = Debug('tdl:tdlib')
 
 const buildQuery = query => {
   const buffer = Buffer.from(JSON.stringify(query) + '\0', 'utf-8')
@@ -16,6 +19,8 @@ export class TDLib {
 ; +tdlib: Object
 
   constructor (absoluteBinaryPath: string) {
+    debug('binaryPath', absoluteBinaryPath)
+
     this.tdlib = ffi.Library(
       absoluteBinaryPath,
       {
@@ -62,14 +67,17 @@ export class TDLib {
   }
 
   destroy (client: TDLibClient): void {
+    debug('destroy')
     this.tdlib.td_json_client_destroy(client)
   }
 
   setLogFilePath (path: string): number | any {
+    debug('setLogFilePath', path)
     return this.tdlib.td_set_log_file_path(path)
   }
 
   setLogVerbosityLevel (verbosity: number): void {
+    debug('setLogVerbosityLevel', verbosity)
     this.tdlib.td_set_log_verbosity_level(verbosity)
   }
 }

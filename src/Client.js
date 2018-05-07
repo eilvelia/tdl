@@ -15,7 +15,7 @@ import type {
 
 import type { TDLibClient } from './TDLib'
 
-const debug = Debug('tdl')
+const debug = Debug('tdl:client')
 
 const getInput = (type: QuestionKindT, message: string): Promise<string> =>
   prompt([{ type, name: 'input', message }])
@@ -33,6 +33,9 @@ const getPassword = (passwordHint: string, retry?: boolean): Promise<string> =>
     : `Please enter password (${passwordHint}): `)
 
 const cwd = process.cwd()
+
+const resolvePath = (relativePath: string): string =>
+  path.resolve(cwd, relativePath)
 
 const defaultOptions = {
   apiId: null,
@@ -62,9 +65,9 @@ export class Client {
 ; +emitter = new EventEmitter()
 ; +fetching: Map<string, P> = new Map()
 ; +tdlib: TDLib
-  client: TDLibClient | null
-  resolver: Function
-  rejector: Function
+  client: ?TDLibClient
+  resolver: (result: any) => void
+  rejector: (error: any) => void
 
   connect: () => Promise<void> =
     () => new Promise((resolve, reject) => {
@@ -79,7 +82,7 @@ export class Client {
       ...options
     }
 
-    this.tdlib = new TDLib(path.resolve(cwd, this.options.binaryPath))
+    this.tdlib = new TDLib(resolvePath(this.options.binaryPath))
   }
 
   async _init (): Promise<void> {
@@ -87,7 +90,7 @@ export class Client {
       this.setLogVerbosityLevel(this.options.verbosityLevel)
 
       if (this.options.logFilePath)
-        this.setLogFilePath(path.resolve(cwd, this.options.logFilePath))
+        this.setLogFilePath(resolvePath(this.options.logFilePath))
 
       this.client = await this.tdlib.create()
 
@@ -102,7 +105,7 @@ export class Client {
     return this
   }
 
-  emit = (eventName: EventType, value: any) => {
+  emit = (eventName: EventType, value: any): boolean => {
     return this.emitter.emit(eventName, value)
   }
 
@@ -128,11 +131,10 @@ export class Client {
     this.client = null
   }
 
-  setLogFilePath (path: string): number | any {
-    return this.tdlib.setLogFilePath(path)
-  }
+  setLogFilePath = (path: string): number | any =>
+    this.tdlib.setLogFilePath(path)
 
-  setLogVerbosityLevel (verbosity: number): void {
+  setLogVerbosityLevel = (verbosity: number): void => {
     this.tdlib.setLogVerbosityLevel(verbosity)
   }
 
@@ -168,8 +170,8 @@ export class Client {
           'parameters': {
             ...this.options.tdlibParameters,
             '@type': 'tdlibParameters',
-            'database_directory': path.resolve(cwd, this.options.databaseDirectory),
-            'files_directory': path.resolve(cwd, this.options.filesDirectory),
+            'database_directory': resolvePath(this.options.databaseDirectory),
+            'files_directory': resolvePath(this.options.filesDirectory),
             'api_id': this.options.apiId,
             'api_hash': this.options.apiHash,
           },
