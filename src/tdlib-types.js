@@ -3112,74 +3112,74 @@ export type webPageInstantView = {
   is_full: boolean,
 }
 
-export type acceptCall = {
+export type acceptCall = {|
   _: 'acceptCall',
   call_id?: number,
   protocol?: $Shape<callProtocol>,
-}
+|}
 
-export type addChatMember = {
+export type addChatMember = {|
   _: 'addChatMember',
   chat_id?: number,
   user_id?: number,
   forward_limit?: number,
-}
+|}
 
-export type addChatMembers = {
+export type addChatMembers = {|
   _: 'addChatMembers',
   chat_id?: number,
   user_ids?: $Shape<number[]>,
-}
+|}
 
-export type addFavoriteSticker = {
+export type addFavoriteSticker = {|
   _: 'addFavoriteSticker',
   sticker?: $Shape<InputFile>,
-}
+|}
 
-export type addNetworkStatistics = {
+export type addNetworkStatistics = {|
   _: 'addNetworkStatistics',
   entry?: $Shape<NetworkStatisticsEntry>,
-}
+|}
 
-export type addRecentSticker = {
+export type addRecentSticker = {|
   _: 'addRecentSticker',
   is_attached?: boolean,
   sticker?: $Shape<InputFile>,
-}
+|}
 
-export type addRecentlyFoundChat = {
+export type addRecentlyFoundChat = {|
   _: 'addRecentlyFoundChat',
   chat_id?: number,
-}
+|}
 
-export type addSavedAnimation = {
+export type addSavedAnimation = {|
   _: 'addSavedAnimation',
   animation?: $Shape<InputFile>,
-}
+|}
 
-export type addStickerToSet = {
+export type addStickerToSet = {|
   _: 'addStickerToSet',
   user_id?: number,
   name?: string,
   sticker?: $Shape<inputSticker>,
-}
+|}
 
-export type answerCallbackQuery = {
+export type answerCallbackQuery = {|
   _: 'answerCallbackQuery',
   callback_query_id?: number,
   text?: string,
   show_alert?: boolean,
   url?: string,
   cache_time?: number,
-}
+|}
 
-export type answerCustomQuery = {
+export type answerCustomQuery = {|
   _: 'answerCustomQuery',
   custom_query_id?: number,
   data?: string,
-}
+|}
 
-export type answerInlineQuery = {
+export type answerInlineQuery = {|
   _: 'answerInlineQuery',
   inline_query_id?: number,
   is_personal?: boolean,
@@ -3188,334 +3188,334 @@ export type answerInlineQuery = {
   next_offset?: string,
   switch_pm_text?: string,
   switch_pm_parameter?: string,
-}
+|}
 
-export type answerPreCheckoutQuery = {
+export type answerPreCheckoutQuery = {|
   _: 'answerPreCheckoutQuery',
   pre_checkout_query_id?: number,
   error_message?: string,
-}
+|}
 
-export type answerShippingQuery = {
+export type answerShippingQuery = {|
   _: 'answerShippingQuery',
   shipping_query_id?: number,
   shipping_options?: $Shape<shippingOption[]>,
   error_message?: string,
-}
+|}
 
-export type blockUser = {
+export type blockUser = {|
   _: 'blockUser',
   user_id?: number,
-}
+|}
 
-export type cancelDownloadFile = {
+export type cancelDownloadFile = {|
   _: 'cancelDownloadFile',
   file_id?: number,
   only_if_pending?: boolean,
-}
+|}
 
-export type cancelUploadFile = {
+export type cancelUploadFile = {|
   _: 'cancelUploadFile',
   file_id?: number,
-}
+|}
 
-export type changeChatReportSpamState = {
+export type changeChatReportSpamState = {|
   _: 'changeChatReportSpamState',
   chat_id?: number,
   is_spam_chat?: boolean,
-}
+|}
 
-export type changeImportedContacts = {
+export type changeImportedContacts = {|
   _: 'changeImportedContacts',
   contacts?: $Shape<contact[]>,
-}
+|}
 
-export type changePhoneNumber = {
+export type changePhoneNumber = {|
   _: 'changePhoneNumber',
   phone_number?: string,
   allow_flash_call?: boolean,
   is_current_phone_number?: boolean,
-}
+|}
 
-export type changeStickerSet = {
+export type changeStickerSet = {|
   _: 'changeStickerSet',
   set_id?: number,
   is_installed?: boolean,
   is_archived?: boolean,
-}
+|}
 
-export type checkAuthenticationBotToken = {
+export type checkAuthenticationBotToken = {|
   _: 'checkAuthenticationBotToken',
   token?: string,
-}
+|}
 
-export type checkAuthenticationCode = {
+export type checkAuthenticationCode = {|
   _: 'checkAuthenticationCode',
   code?: string,
   first_name?: string,
   last_name?: string,
-}
+|}
 
-export type checkAuthenticationPassword = {
+export type checkAuthenticationPassword = {|
   _: 'checkAuthenticationPassword',
   password?: string,
-}
+|}
 
-export type checkChangePhoneNumberCode = {
+export type checkChangePhoneNumberCode = {|
   _: 'checkChangePhoneNumberCode',
   code?: string,
-}
+|}
 
-export type checkChatInviteLink = {
+export type checkChatInviteLink = {|
   _: 'checkChatInviteLink',
   invite_link?: string,
-}
+|}
 
-export type checkChatUsername = {
+export type checkChatUsername = {|
   _: 'checkChatUsername',
   chat_id?: number,
   username?: string,
-}
+|}
 
-export type checkDatabaseEncryptionKey = {
+export type checkDatabaseEncryptionKey = {|
   _: 'checkDatabaseEncryptionKey',
   encryption_key?: string,
-}
+|}
 
-export type clearImportedContacts = {
+export type clearImportedContacts = {|
   _: 'clearImportedContacts',
-}
+|}
 
-export type clearRecentStickers = {
+export type clearRecentStickers = {|
   _: 'clearRecentStickers',
   is_attached?: boolean,
-}
+|}
 
-export type clearRecentlyFoundChats = {
+export type clearRecentlyFoundChats = {|
   _: 'clearRecentlyFoundChats',
-}
+|}
 
-export type close = {
+export type close = {|
   _: 'close',
-}
+|}
 
-export type closeChat = {
+export type closeChat = {|
   _: 'closeChat',
   chat_id?: number,
-}
+|}
 
-export type closeSecretChat = {
+export type closeSecretChat = {|
   _: 'closeSecretChat',
   secret_chat_id?: number,
-}
+|}
 
-export type createBasicGroupChat = {
+export type createBasicGroupChat = {|
   _: 'createBasicGroupChat',
   basic_group_id?: number,
   force?: boolean,
-}
+|}
 
-export type createCall = {
+export type createCall = {|
   _: 'createCall',
   user_id?: number,
   protocol?: $Shape<callProtocol>,
-}
+|}
 
-export type createNewBasicGroupChat = {
+export type createNewBasicGroupChat = {|
   _: 'createNewBasicGroupChat',
   user_ids?: $Shape<number[]>,
   title?: string,
-}
+|}
 
-export type createNewSecretChat = {
+export type createNewSecretChat = {|
   _: 'createNewSecretChat',
   user_id?: number,
-}
+|}
 
-export type createNewStickerSet = {
+export type createNewStickerSet = {|
   _: 'createNewStickerSet',
   user_id?: number,
   title?: string,
   name?: string,
   is_masks?: boolean,
   stickers?: $Shape<inputSticker[]>,
-}
+|}
 
-export type createNewSupergroupChat = {
+export type createNewSupergroupChat = {|
   _: 'createNewSupergroupChat',
   title?: string,
   is_channel?: boolean,
   description?: string,
-}
+|}
 
-export type createPrivateChat = {
+export type createPrivateChat = {|
   _: 'createPrivateChat',
   user_id?: number,
   force?: boolean,
-}
+|}
 
-export type createSecretChat = {
+export type createSecretChat = {|
   _: 'createSecretChat',
   secret_chat_id?: number,
-}
+|}
 
-export type createSupergroupChat = {
+export type createSupergroupChat = {|
   _: 'createSupergroupChat',
   supergroup_id?: number,
   force?: boolean,
-}
+|}
 
-export type createTemporaryPassword = {
+export type createTemporaryPassword = {|
   _: 'createTemporaryPassword',
   password?: string,
   valid_for?: number,
-}
+|}
 
-export type deleteAccount = {
+export type deleteAccount = {|
   _: 'deleteAccount',
   reason?: string,
-}
+|}
 
-export type deleteChatHistory = {
+export type deleteChatHistory = {|
   _: 'deleteChatHistory',
   chat_id?: number,
   remove_from_chat_list?: boolean,
-}
+|}
 
-export type deleteChatMessagesFromUser = {
+export type deleteChatMessagesFromUser = {|
   _: 'deleteChatMessagesFromUser',
   chat_id?: number,
   user_id?: number,
-}
+|}
 
-export type deleteChatReplyMarkup = {
+export type deleteChatReplyMarkup = {|
   _: 'deleteChatReplyMarkup',
   chat_id?: number,
   message_id?: number,
-}
+|}
 
-export type deleteFile = {
+export type deleteFile = {|
   _: 'deleteFile',
   file_id?: number,
-}
+|}
 
-export type deleteMessages = {
+export type deleteMessages = {|
   _: 'deleteMessages',
   chat_id?: number,
   message_ids?: $Shape<number[]>,
   revoke?: boolean,
-}
+|}
 
-export type deleteProfilePhoto = {
+export type deleteProfilePhoto = {|
   _: 'deleteProfilePhoto',
   profile_photo_id?: number,
-}
+|}
 
-export type deleteSavedCredentials = {
+export type deleteSavedCredentials = {|
   _: 'deleteSavedCredentials',
-}
+|}
 
-export type deleteSavedOrderInfo = {
+export type deleteSavedOrderInfo = {|
   _: 'deleteSavedOrderInfo',
-}
+|}
 
-export type deleteSupergroup = {
+export type deleteSupergroup = {|
   _: 'deleteSupergroup',
   supergroup_id?: number,
-}
+|}
 
-export type destroy = {
+export type destroy = {|
   _: 'destroy',
-}
+|}
 
-export type discardCall = {
+export type discardCall = {|
   _: 'discardCall',
   call_id?: number,
   is_disconnected?: boolean,
   duration?: number,
   connection_id?: number,
-}
+|}
 
-export type disconnectAllWebsites = {
+export type disconnectAllWebsites = {|
   _: 'disconnectAllWebsites',
-}
+|}
 
-export type disconnectWebsite = {
+export type disconnectWebsite = {|
   _: 'disconnectWebsite',
   website_id?: number,
-}
+|}
 
-export type downloadFile = {
+export type downloadFile = {|
   _: 'downloadFile',
   file_id?: number,
   priority?: number,
-}
+|}
 
-export type editInlineMessageCaption = {
+export type editInlineMessageCaption = {|
   _: 'editInlineMessageCaption',
   inline_message_id?: string,
   reply_markup?: $Shape<ReplyMarkup>,
   caption?: $Shape<formattedText>,
-}
+|}
 
-export type editInlineMessageLiveLocation = {
+export type editInlineMessageLiveLocation = {|
   _: 'editInlineMessageLiveLocation',
   inline_message_id?: string,
   reply_markup?: $Shape<ReplyMarkup>,
   location?: $Shape<location>,
-}
+|}
 
-export type editInlineMessageReplyMarkup = {
+export type editInlineMessageReplyMarkup = {|
   _: 'editInlineMessageReplyMarkup',
   inline_message_id?: string,
   reply_markup?: $Shape<ReplyMarkup>,
-}
+|}
 
-export type editInlineMessageText = {
+export type editInlineMessageText = {|
   _: 'editInlineMessageText',
   inline_message_id?: string,
   reply_markup?: $Shape<ReplyMarkup>,
   input_message_content?: $Shape<InputMessageContent>,
-}
+|}
 
-export type editMessageCaption = {
+export type editMessageCaption = {|
   _: 'editMessageCaption',
   chat_id?: number,
   message_id?: number,
   reply_markup?: $Shape<ReplyMarkup>,
   caption?: $Shape<formattedText>,
-}
+|}
 
-export type editMessageLiveLocation = {
+export type editMessageLiveLocation = {|
   _: 'editMessageLiveLocation',
   chat_id?: number,
   message_id?: number,
   reply_markup?: $Shape<ReplyMarkup>,
   location?: $Shape<location>,
-}
+|}
 
-export type editMessageReplyMarkup = {
+export type editMessageReplyMarkup = {|
   _: 'editMessageReplyMarkup',
   chat_id?: number,
   message_id?: number,
   reply_markup?: $Shape<ReplyMarkup>,
-}
+|}
 
-export type editMessageText = {
+export type editMessageText = {|
   _: 'editMessageText',
   chat_id?: number,
   message_id?: number,
   reply_markup?: $Shape<ReplyMarkup>,
   input_message_content?: $Shape<InputMessageContent>,
-}
+|}
 
-export type finishFileGeneration = {
+export type finishFileGeneration = {|
   _: 'finishFileGeneration',
   generation_id?: number,
   error?: $Shape<error>,
-}
+|}
 
-export type forwardMessages = {
+export type forwardMessages = {|
   _: 'forwardMessages',
   chat_id?: number,
   from_chat_id?: number,
@@ -3523,75 +3523,75 @@ export type forwardMessages = {
   disable_notification?: boolean,
   from_background?: boolean,
   as_album?: boolean,
-}
+|}
 
-export type generateChatInviteLink = {
+export type generateChatInviteLink = {|
   _: 'generateChatInviteLink',
   chat_id?: number,
-}
+|}
 
-export type getAccountTtl = {
+export type getAccountTtl = {|
   _: 'getAccountTtl',
-}
+|}
 
-export type getActiveLiveLocationMessages = {
+export type getActiveLiveLocationMessages = {|
   _: 'getActiveLiveLocationMessages',
-}
+|}
 
-export type getActiveSessions = {
+export type getActiveSessions = {|
   _: 'getActiveSessions',
-}
+|}
 
-export type getArchivedStickerSets = {
+export type getArchivedStickerSets = {|
   _: 'getArchivedStickerSets',
   is_masks?: boolean,
   offset_sticker_set_id?: number,
   limit?: number,
-}
+|}
 
-export type getAttachedStickerSets = {
+export type getAttachedStickerSets = {|
   _: 'getAttachedStickerSets',
   file_id?: number,
-}
+|}
 
-export type getAuthorizationState = {
+export type getAuthorizationState = {|
   _: 'getAuthorizationState',
-}
+|}
 
-export type getBasicGroup = {
+export type getBasicGroup = {|
   _: 'getBasicGroup',
   basic_group_id?: number,
-}
+|}
 
-export type getBasicGroupFullInfo = {
+export type getBasicGroupFullInfo = {|
   _: 'getBasicGroupFullInfo',
   basic_group_id?: number,
-}
+|}
 
-export type getBlockedUsers = {
+export type getBlockedUsers = {|
   _: 'getBlockedUsers',
   offset?: number,
   limit?: number,
-}
+|}
 
-export type getCallbackQueryAnswer = {
+export type getCallbackQueryAnswer = {|
   _: 'getCallbackQueryAnswer',
   chat_id?: number,
   message_id?: number,
   payload?: $Shape<CallbackQueryPayload>,
-}
+|}
 
-export type getChat = {
+export type getChat = {|
   _: 'getChat',
   chat_id?: number,
-}
+|}
 
-export type getChatAdministrators = {
+export type getChatAdministrators = {|
   _: 'getChatAdministrators',
   chat_id?: number,
-}
+|}
 
-export type getChatEventLog = {
+export type getChatEventLog = {|
   _: 'getChatEventLog',
   chat_id?: number,
   query?: string,
@@ -3599,354 +3599,354 @@ export type getChatEventLog = {
   limit?: number,
   filters?: $Shape<chatEventLogFilters>,
   user_ids?: $Shape<number[]>,
-}
+|}
 
-export type getChatHistory = {
+export type getChatHistory = {|
   _: 'getChatHistory',
   chat_id?: number,
   from_message_id?: number,
   offset?: number,
   limit?: number,
   only_local?: boolean,
-}
+|}
 
-export type getChatMember = {
+export type getChatMember = {|
   _: 'getChatMember',
   chat_id?: number,
   user_id?: number,
-}
+|}
 
-export type getChatMessageByDate = {
+export type getChatMessageByDate = {|
   _: 'getChatMessageByDate',
   chat_id?: number,
   date?: number,
-}
+|}
 
-export type getChatPinnedMessage = {
+export type getChatPinnedMessage = {|
   _: 'getChatPinnedMessage',
   chat_id?: number,
-}
+|}
 
-export type getChatReportSpamState = {
+export type getChatReportSpamState = {|
   _: 'getChatReportSpamState',
   chat_id?: number,
-}
+|}
 
-export type getChats = {
+export type getChats = {|
   _: 'getChats',
   offset_order?: number,
   offset_chat_id?: number,
   limit?: number,
-}
+|}
 
-export type getConnectedWebsites = {
+export type getConnectedWebsites = {|
   _: 'getConnectedWebsites',
-}
+|}
 
-export type getCountryCode = {
+export type getCountryCode = {|
   _: 'getCountryCode',
-}
+|}
 
-export type getCreatedPublicChats = {
+export type getCreatedPublicChats = {|
   _: 'getCreatedPublicChats',
-}
+|}
 
-export type getFavoriteStickers = {
+export type getFavoriteStickers = {|
   _: 'getFavoriteStickers',
-}
+|}
 
-export type getFile = {
+export type getFile = {|
   _: 'getFile',
   file_id?: number,
-}
+|}
 
-export type getFileExtension = {
+export type getFileExtension = {|
   _: 'getFileExtension',
   mime_type?: string,
-}
+|}
 
-export type getFileMimeType = {
+export type getFileMimeType = {|
   _: 'getFileMimeType',
   file_name?: string,
-}
+|}
 
-export type getGameHighScores = {
+export type getGameHighScores = {|
   _: 'getGameHighScores',
   chat_id?: number,
   message_id?: number,
   user_id?: number,
-}
+|}
 
-export type getGroupsInCommon = {
+export type getGroupsInCommon = {|
   _: 'getGroupsInCommon',
   user_id?: number,
   offset_chat_id?: number,
   limit?: number,
-}
+|}
 
-export type getImportedContactCount = {
+export type getImportedContactCount = {|
   _: 'getImportedContactCount',
-}
+|}
 
-export type getInlineGameHighScores = {
+export type getInlineGameHighScores = {|
   _: 'getInlineGameHighScores',
   inline_message_id?: string,
   user_id?: number,
-}
+|}
 
-export type getInlineQueryResults = {
+export type getInlineQueryResults = {|
   _: 'getInlineQueryResults',
   bot_user_id?: number,
   chat_id?: number,
   user_location?: $Shape<location>,
   query?: string,
   offset?: string,
-}
+|}
 
-export type getInstalledStickerSets = {
+export type getInstalledStickerSets = {|
   _: 'getInstalledStickerSets',
   is_masks?: boolean,
-}
+|}
 
-export type getInviteText = {
+export type getInviteText = {|
   _: 'getInviteText',
-}
+|}
 
-export type getMe = {
+export type getMe = {|
   _: 'getMe',
-}
+|}
 
-export type getMessage = {
+export type getMessage = {|
   _: 'getMessage',
   chat_id?: number,
   message_id?: number,
-}
+|}
 
-export type getMessages = {
+export type getMessages = {|
   _: 'getMessages',
   chat_id?: number,
   message_ids?: $Shape<number[]>,
-}
+|}
 
-export type getNetworkStatistics = {
+export type getNetworkStatistics = {|
   _: 'getNetworkStatistics',
   only_current?: boolean,
-}
+|}
 
-export type getNotificationSettings = {
+export type getNotificationSettings = {|
   _: 'getNotificationSettings',
   scope?: $Shape<NotificationSettingsScope>,
-}
+|}
 
-export type getOption = {
+export type getOption = {|
   _: 'getOption',
   name?: string,
-}
+|}
 
-export type getPasswordState = {
+export type getPasswordState = {|
   _: 'getPasswordState',
-}
+|}
 
-export type getPaymentForm = {
+export type getPaymentForm = {|
   _: 'getPaymentForm',
   chat_id?: number,
   message_id?: number,
-}
+|}
 
-export type getPaymentReceipt = {
+export type getPaymentReceipt = {|
   _: 'getPaymentReceipt',
   chat_id?: number,
   message_id?: number,
-}
+|}
 
-export type getProxy = {
+export type getProxy = {|
   _: 'getProxy',
-}
+|}
 
-export type getPublicMessageLink = {
+export type getPublicMessageLink = {|
   _: 'getPublicMessageLink',
   chat_id?: number,
   message_id?: number,
   for_album?: boolean,
-}
+|}
 
-export type getRecentInlineBots = {
+export type getRecentInlineBots = {|
   _: 'getRecentInlineBots',
-}
+|}
 
-export type getRecentStickers = {
+export type getRecentStickers = {|
   _: 'getRecentStickers',
   is_attached?: boolean,
-}
+|}
 
-export type getRecentlyVisitedTMeUrls = {
+export type getRecentlyVisitedTMeUrls = {|
   _: 'getRecentlyVisitedTMeUrls',
   referrer?: string,
-}
+|}
 
-export type getRecoveryEmailAddress = {
+export type getRecoveryEmailAddress = {|
   _: 'getRecoveryEmailAddress',
   password?: string,
-}
+|}
 
-export type getRemoteFile = {
+export type getRemoteFile = {|
   _: 'getRemoteFile',
   remote_file_id?: string,
   file_type?: $Shape<FileType>,
-}
+|}
 
-export type getRepliedMessage = {
+export type getRepliedMessage = {|
   _: 'getRepliedMessage',
   chat_id?: number,
   message_id?: number,
-}
+|}
 
-export type getSavedAnimations = {
+export type getSavedAnimations = {|
   _: 'getSavedAnimations',
-}
+|}
 
-export type getSavedOrderInfo = {
+export type getSavedOrderInfo = {|
   _: 'getSavedOrderInfo',
-}
+|}
 
-export type getSecretChat = {
+export type getSecretChat = {|
   _: 'getSecretChat',
   secret_chat_id?: number,
-}
+|}
 
-export type getStickerEmojis = {
+export type getStickerEmojis = {|
   _: 'getStickerEmojis',
   sticker?: $Shape<InputFile>,
-}
+|}
 
-export type getStickerSet = {
+export type getStickerSet = {|
   _: 'getStickerSet',
   set_id?: number,
-}
+|}
 
-export type getStickers = {
+export type getStickers = {|
   _: 'getStickers',
   emoji?: string,
   limit?: number,
-}
+|}
 
-export type getStorageStatistics = {
+export type getStorageStatistics = {|
   _: 'getStorageStatistics',
   chat_limit?: number,
-}
+|}
 
-export type getStorageStatisticsFast = {
+export type getStorageStatisticsFast = {|
   _: 'getStorageStatisticsFast',
-}
+|}
 
-export type getSupergroup = {
+export type getSupergroup = {|
   _: 'getSupergroup',
   supergroup_id?: number,
-}
+|}
 
-export type getSupergroupFullInfo = {
+export type getSupergroupFullInfo = {|
   _: 'getSupergroupFullInfo',
   supergroup_id?: number,
-}
+|}
 
-export type getSupergroupMembers = {
+export type getSupergroupMembers = {|
   _: 'getSupergroupMembers',
   supergroup_id?: number,
   filter?: $Shape<SupergroupMembersFilter>,
   offset?: number,
   limit?: number,
-}
+|}
 
-export type getSupportUser = {
+export type getSupportUser = {|
   _: 'getSupportUser',
-}
+|}
 
-export type getTemporaryPasswordState = {
+export type getTemporaryPasswordState = {|
   _: 'getTemporaryPasswordState',
-}
+|}
 
-export type getTermsOfService = {
+export type getTermsOfService = {|
   _: 'getTermsOfService',
-}
+|}
 
-export type getTextEntities = {
+export type getTextEntities = {|
   _: 'getTextEntities',
   text?: string,
-}
+|}
 
-export type getTopChats = {
+export type getTopChats = {|
   _: 'getTopChats',
   category?: $Shape<TopChatCategory>,
   limit?: number,
-}
+|}
 
-export type getTrendingStickerSets = {
+export type getTrendingStickerSets = {|
   _: 'getTrendingStickerSets',
-}
+|}
 
-export type getUser = {
+export type getUser = {|
   _: 'getUser',
   user_id?: number,
-}
+|}
 
-export type getUserFullInfo = {
+export type getUserFullInfo = {|
   _: 'getUserFullInfo',
   user_id?: number,
-}
+|}
 
-export type getUserPrivacySettingRules = {
+export type getUserPrivacySettingRules = {|
   _: 'getUserPrivacySettingRules',
   setting?: $Shape<UserPrivacySetting>,
-}
+|}
 
-export type getUserProfilePhotos = {
+export type getUserProfilePhotos = {|
   _: 'getUserProfilePhotos',
   user_id?: number,
   offset?: number,
   limit?: number,
-}
+|}
 
-export type getWallpapers = {
+export type getWallpapers = {|
   _: 'getWallpapers',
-}
+|}
 
-export type getWebPageInstantView = {
+export type getWebPageInstantView = {|
   _: 'getWebPageInstantView',
   url?: string,
   force_full?: boolean,
-}
+|}
 
-export type getWebPagePreview = {
+export type getWebPagePreview = {|
   _: 'getWebPagePreview',
   text?: $Shape<formattedText>,
-}
+|}
 
-export type importContacts = {
+export type importContacts = {|
   _: 'importContacts',
   contacts?: $Shape<contact[]>,
-}
+|}
 
-export type joinChatByInviteLink = {
+export type joinChatByInviteLink = {|
   _: 'joinChatByInviteLink',
   invite_link?: string,
-}
+|}
 
-export type logOut = {
+export type logOut = {|
   _: 'logOut',
-}
+|}
 
-export type openChat = {
+export type openChat = {|
   _: 'openChat',
   chat_id?: number,
-}
+|}
 
-export type openMessageContent = {
+export type openMessageContent = {|
   _: 'openMessageContent',
   chat_id?: number,
   message_id?: number,
-}
+|}
 
-export type optimizeStorage = {
+export type optimizeStorage = {|
   _: 'optimizeStorage',
   size?: number,
   ttl?: number,
@@ -3956,149 +3956,149 @@ export type optimizeStorage = {
   chat_ids?: $Shape<number[]>,
   exclude_chat_ids?: $Shape<number[]>,
   chat_limit?: number,
-}
+|}
 
-export type parseTextEntities = {
+export type parseTextEntities = {|
   _: 'parseTextEntities',
   text?: string,
   parse_mode?: $Shape<TextParseMode>,
-}
+|}
 
-export type pinSupergroupMessage = {
+export type pinSupergroupMessage = {|
   _: 'pinSupergroupMessage',
   supergroup_id?: number,
   message_id?: number,
   disable_notification?: boolean,
-}
+|}
 
-export type processDcUpdate = {
+export type processDcUpdate = {|
   _: 'processDcUpdate',
   dc?: string,
   addr?: string,
-}
+|}
 
-export type readAllChatMentions = {
+export type readAllChatMentions = {|
   _: 'readAllChatMentions',
   chat_id?: number,
-}
+|}
 
-export type recoverAuthenticationPassword = {
+export type recoverAuthenticationPassword = {|
   _: 'recoverAuthenticationPassword',
   recovery_code?: string,
-}
+|}
 
-export type recoverPassword = {
+export type recoverPassword = {|
   _: 'recoverPassword',
   recovery_code?: string,
-}
+|}
 
-export type registerDevice = {
+export type registerDevice = {|
   _: 'registerDevice',
   device_token?: $Shape<DeviceToken>,
   other_user_ids?: $Shape<number[]>,
-}
+|}
 
-export type removeContacts = {
+export type removeContacts = {|
   _: 'removeContacts',
   user_ids?: $Shape<number[]>,
-}
+|}
 
-export type removeFavoriteSticker = {
+export type removeFavoriteSticker = {|
   _: 'removeFavoriteSticker',
   sticker?: $Shape<InputFile>,
-}
+|}
 
-export type removeRecentHashtag = {
+export type removeRecentHashtag = {|
   _: 'removeRecentHashtag',
   hashtag?: string,
-}
+|}
 
-export type removeRecentSticker = {
+export type removeRecentSticker = {|
   _: 'removeRecentSticker',
   is_attached?: boolean,
   sticker?: $Shape<InputFile>,
-}
+|}
 
-export type removeRecentlyFoundChat = {
+export type removeRecentlyFoundChat = {|
   _: 'removeRecentlyFoundChat',
   chat_id?: number,
-}
+|}
 
-export type removeSavedAnimation = {
+export type removeSavedAnimation = {|
   _: 'removeSavedAnimation',
   animation?: $Shape<InputFile>,
-}
+|}
 
-export type removeStickerFromSet = {
+export type removeStickerFromSet = {|
   _: 'removeStickerFromSet',
   sticker?: $Shape<InputFile>,
-}
+|}
 
-export type removeTopChat = {
+export type removeTopChat = {|
   _: 'removeTopChat',
   category?: $Shape<TopChatCategory>,
   chat_id?: number,
-}
+|}
 
-export type reorderInstalledStickerSets = {
+export type reorderInstalledStickerSets = {|
   _: 'reorderInstalledStickerSets',
   is_masks?: boolean,
   sticker_set_ids?: $Shape<number[]>,
-}
+|}
 
-export type reportChat = {
+export type reportChat = {|
   _: 'reportChat',
   chat_id?: number,
   reason?: $Shape<ChatReportReason>,
   message_ids?: $Shape<number[]>,
-}
+|}
 
-export type reportSupergroupSpam = {
+export type reportSupergroupSpam = {|
   _: 'reportSupergroupSpam',
   supergroup_id?: number,
   user_id?: number,
   message_ids?: $Shape<number[]>,
-}
+|}
 
-export type requestAuthenticationPasswordRecovery = {
+export type requestAuthenticationPasswordRecovery = {|
   _: 'requestAuthenticationPasswordRecovery',
-}
+|}
 
-export type requestPasswordRecovery = {
+export type requestPasswordRecovery = {|
   _: 'requestPasswordRecovery',
-}
+|}
 
-export type resendAuthenticationCode = {
+export type resendAuthenticationCode = {|
   _: 'resendAuthenticationCode',
-}
+|}
 
-export type resendChangePhoneNumberCode = {
+export type resendChangePhoneNumberCode = {|
   _: 'resendChangePhoneNumberCode',
-}
+|}
 
-export type resetAllNotificationSettings = {
+export type resetAllNotificationSettings = {|
   _: 'resetAllNotificationSettings',
-}
+|}
 
-export type resetNetworkStatistics = {
+export type resetNetworkStatistics = {|
   _: 'resetNetworkStatistics',
-}
+|}
 
-export type searchCallMessages = {
+export type searchCallMessages = {|
   _: 'searchCallMessages',
   from_message_id?: number,
   limit?: number,
   only_missed?: boolean,
-}
+|}
 
-export type searchChatMembers = {
+export type searchChatMembers = {|
   _: 'searchChatMembers',
   chat_id?: number,
   query?: string,
   limit?: number,
-}
+|}
 
-export type searchChatMessages = {
+export type searchChatMessages = {|
   _: 'searchChatMessages',
   chat_id?: number,
   query?: string,
@@ -4107,133 +4107,133 @@ export type searchChatMessages = {
   offset?: number,
   limit?: number,
   filter?: $Shape<SearchMessagesFilter>,
-}
+|}
 
-export type searchChatRecentLocationMessages = {
+export type searchChatRecentLocationMessages = {|
   _: 'searchChatRecentLocationMessages',
   chat_id?: number,
   limit?: number,
-}
+|}
 
-export type searchChats = {
+export type searchChats = {|
   _: 'searchChats',
   query?: string,
   limit?: number,
-}
+|}
 
-export type searchChatsOnServer = {
+export type searchChatsOnServer = {|
   _: 'searchChatsOnServer',
   query?: string,
   limit?: number,
-}
+|}
 
-export type searchContacts = {
+export type searchContacts = {|
   _: 'searchContacts',
   query?: string,
   limit?: number,
-}
+|}
 
-export type searchHashtags = {
+export type searchHashtags = {|
   _: 'searchHashtags',
   prefix?: string,
   limit?: number,
-}
+|}
 
-export type searchInstalledStickerSets = {
+export type searchInstalledStickerSets = {|
   _: 'searchInstalledStickerSets',
   is_masks?: boolean,
   query?: string,
   limit?: number,
-}
+|}
 
-export type searchMessages = {
+export type searchMessages = {|
   _: 'searchMessages',
   query?: string,
   offset_date?: number,
   offset_chat_id?: number,
   offset_message_id?: number,
   limit?: number,
-}
+|}
 
-export type searchPublicChat = {
+export type searchPublicChat = {|
   _: 'searchPublicChat',
   username?: string,
-}
+|}
 
-export type searchPublicChats = {
+export type searchPublicChats = {|
   _: 'searchPublicChats',
   query?: string,
-}
+|}
 
-export type searchSecretMessages = {
+export type searchSecretMessages = {|
   _: 'searchSecretMessages',
   chat_id?: number,
   query?: string,
   from_search_id?: number,
   limit?: number,
   filter?: $Shape<SearchMessagesFilter>,
-}
+|}
 
-export type searchStickerSet = {
+export type searchStickerSet = {|
   _: 'searchStickerSet',
   name?: string,
-}
+|}
 
-export type searchStickerSets = {
+export type searchStickerSets = {|
   _: 'searchStickerSets',
   query?: string,
-}
+|}
 
-export type searchStickers = {
+export type searchStickers = {|
   _: 'searchStickers',
   emoji?: string,
   limit?: number,
-}
+|}
 
-export type sendBotStartMessage = {
+export type sendBotStartMessage = {|
   _: 'sendBotStartMessage',
   bot_user_id?: number,
   chat_id?: number,
   parameter?: string,
-}
+|}
 
-export type sendCallDebugInformation = {
+export type sendCallDebugInformation = {|
   _: 'sendCallDebugInformation',
   call_id?: number,
   debug_information?: string,
-}
+|}
 
-export type sendCallRating = {
+export type sendCallRating = {|
   _: 'sendCallRating',
   call_id?: number,
   rating?: number,
   comment?: string,
-}
+|}
 
-export type sendChatAction = {
+export type sendChatAction = {|
   _: 'sendChatAction',
   chat_id?: number,
   action?: $Shape<ChatAction>,
-}
+|}
 
-export type sendChatScreenshotTakenNotification = {
+export type sendChatScreenshotTakenNotification = {|
   _: 'sendChatScreenshotTakenNotification',
   chat_id?: number,
-}
+|}
 
-export type sendChatSetTtlMessage = {
+export type sendChatSetTtlMessage = {|
   _: 'sendChatSetTtlMessage',
   chat_id?: number,
   ttl?: number,
-}
+|}
 
-export type sendCustomRequest = {
+export type sendCustomRequest = {|
   _: 'sendCustomRequest',
   method?: string,
   parameters?: string,
-}
+|}
 
-export type sendInlineQueryResultMessage = {
+export type sendInlineQueryResultMessage = {|
   _: 'sendInlineQueryResultMessage',
   chat_id?: number,
   reply_to_message_id?: number,
@@ -4241,9 +4241,9 @@ export type sendInlineQueryResultMessage = {
   from_background?: boolean,
   query_id?: number,
   result_id?: string,
-}
+|}
 
-export type sendMessage = {
+export type sendMessage = {|
   _: 'sendMessage',
   chat_id?: number,
   reply_to_message_id?: number,
@@ -4251,98 +4251,98 @@ export type sendMessage = {
   from_background?: boolean,
   reply_markup?: $Shape<ReplyMarkup>,
   input_message_content?: $Shape<InputMessageContent>,
-}
+|}
 
-export type sendMessageAlbum = {
+export type sendMessageAlbum = {|
   _: 'sendMessageAlbum',
   chat_id?: number,
   reply_to_message_id?: number,
   disable_notification?: boolean,
   from_background?: boolean,
   input_message_contents?: $Shape<InputMessageContent[]>,
-}
+|}
 
-export type sendPaymentForm = {
+export type sendPaymentForm = {|
   _: 'sendPaymentForm',
   chat_id?: number,
   message_id?: number,
   order_info_id?: string,
   shipping_option_id?: string,
   credentials?: $Shape<InputCredentials>,
-}
+|}
 
-export type setAccountTtl = {
+export type setAccountTtl = {|
   _: 'setAccountTtl',
   ttl?: $Shape<accountTtl>,
-}
+|}
 
-export type setAlarm = {
+export type setAlarm = {|
   _: 'setAlarm',
   seconds?: number,
-}
+|}
 
-export type setAuthenticationPhoneNumber = {
+export type setAuthenticationPhoneNumber = {|
   _: 'setAuthenticationPhoneNumber',
   phone_number?: string,
   allow_flash_call?: boolean,
   is_current_phone_number?: boolean,
-}
+|}
 
-export type setBio = {
+export type setBio = {|
   _: 'setBio',
   bio?: string,
-}
+|}
 
-export type setBotUpdatesStatus = {
+export type setBotUpdatesStatus = {|
   _: 'setBotUpdatesStatus',
   pending_update_count?: number,
   error_message?: string,
-}
+|}
 
-export type setChatClientData = {
+export type setChatClientData = {|
   _: 'setChatClientData',
   chat_id?: number,
   client_data?: string,
-}
+|}
 
-export type setChatDraftMessage = {
+export type setChatDraftMessage = {|
   _: 'setChatDraftMessage',
   chat_id?: number,
   draft_message?: $Shape<draftMessage>,
-}
+|}
 
-export type setChatMemberStatus = {
+export type setChatMemberStatus = {|
   _: 'setChatMemberStatus',
   chat_id?: number,
   user_id?: number,
   status?: $Shape<ChatMemberStatus>,
-}
+|}
 
-export type setChatPhoto = {
+export type setChatPhoto = {|
   _: 'setChatPhoto',
   chat_id?: number,
   photo?: $Shape<InputFile>,
-}
+|}
 
-export type setChatTitle = {
+export type setChatTitle = {|
   _: 'setChatTitle',
   chat_id?: number,
   title?: string,
-}
+|}
 
-export type setDatabaseEncryptionKey = {
+export type setDatabaseEncryptionKey = {|
   _: 'setDatabaseEncryptionKey',
   new_encryption_key?: string,
-}
+|}
 
-export type setFileGenerationProgress = {
+export type setFileGenerationProgress = {|
   _: 'setFileGenerationProgress',
   generation_id?: number,
   expected_size?: number,
   local_prefix_size?: number,
-}
+|}
 
-export type setGameScore = {
+export type setGameScore = {|
   _: 'setGameScore',
   chat_id?: number,
   message_id?: number,
@@ -4350,251 +4350,251 @@ export type setGameScore = {
   user_id?: number,
   score?: number,
   force?: boolean,
-}
+|}
 
-export type setInlineGameScore = {
+export type setInlineGameScore = {|
   _: 'setInlineGameScore',
   inline_message_id?: string,
   edit_message?: boolean,
   user_id?: number,
   score?: number,
   force?: boolean,
-}
+|}
 
-export type setName = {
+export type setName = {|
   _: 'setName',
   first_name?: string,
   last_name?: string,
-}
+|}
 
-export type setNetworkType = {
+export type setNetworkType = {|
   _: 'setNetworkType',
   type?: $Shape<NetworkType>,
-}
+|}
 
-export type setNotificationSettings = {
+export type setNotificationSettings = {|
   _: 'setNotificationSettings',
   scope?: $Shape<NotificationSettingsScope>,
   notification_settings?: $Shape<notificationSettings>,
-}
+|}
 
-export type setOption = {
+export type setOption = {|
   _: 'setOption',
   name?: string,
   value?: $Shape<OptionValue>,
-}
+|}
 
-export type setPassword = {
+export type setPassword = {|
   _: 'setPassword',
   old_password?: string,
   new_password?: string,
   new_hint?: string,
   set_recovery_email_address?: boolean,
   new_recovery_email_address?: string,
-}
+|}
 
-export type setPinnedChats = {
+export type setPinnedChats = {|
   _: 'setPinnedChats',
   chat_ids?: $Shape<number[]>,
-}
+|}
 
-export type setProfilePhoto = {
+export type setProfilePhoto = {|
   _: 'setProfilePhoto',
   photo?: $Shape<InputFile>,
-}
+|}
 
-export type setProxy = {
+export type setProxy = {|
   _: 'setProxy',
   proxy?: $Shape<Proxy>,
-}
+|}
 
-export type setRecoveryEmailAddress = {
+export type setRecoveryEmailAddress = {|
   _: 'setRecoveryEmailAddress',
   password?: string,
   new_recovery_email_address?: string,
-}
+|}
 
-export type setStickerPositionInSet = {
+export type setStickerPositionInSet = {|
   _: 'setStickerPositionInSet',
   sticker?: $Shape<InputFile>,
   position?: number,
-}
+|}
 
-export type setSupergroupDescription = {
+export type setSupergroupDescription = {|
   _: 'setSupergroupDescription',
   supergroup_id?: number,
   description?: string,
-}
+|}
 
-export type setSupergroupStickerSet = {
+export type setSupergroupStickerSet = {|
   _: 'setSupergroupStickerSet',
   supergroup_id?: number,
   sticker_set_id?: number,
-}
+|}
 
-export type setSupergroupUsername = {
+export type setSupergroupUsername = {|
   _: 'setSupergroupUsername',
   supergroup_id?: number,
   username?: string,
-}
+|}
 
-export type setTdlibParameters = {
+export type setTdlibParameters = {|
   _: 'setTdlibParameters',
   parameters?: $Shape<tdlibParameters>,
-}
+|}
 
-export type setUserPrivacySettingRules = {
+export type setUserPrivacySettingRules = {|
   _: 'setUserPrivacySettingRules',
   setting?: $Shape<UserPrivacySetting>,
   rules?: $Shape<userPrivacySettingRules>,
-}
+|}
 
-export type setUsername = {
+export type setUsername = {|
   _: 'setUsername',
   username?: string,
-}
+|}
 
-export type terminateAllOtherSessions = {
+export type terminateAllOtherSessions = {|
   _: 'terminateAllOtherSessions',
-}
+|}
 
-export type terminateSession = {
+export type terminateSession = {|
   _: 'terminateSession',
   session_id?: number,
-}
+|}
 
-export type testCallBytes = {
+export type testCallBytes = {|
   _: 'testCallBytes',
   x?: string,
-}
+|}
 
-export type testCallEmpty = {
+export type testCallEmpty = {|
   _: 'testCallEmpty',
-}
+|}
 
-export type testCallString = {
+export type testCallString = {|
   _: 'testCallString',
   x?: string,
-}
+|}
 
-export type testCallVectorInt = {
+export type testCallVectorInt = {|
   _: 'testCallVectorInt',
   x?: $Shape<number[]>,
-}
+|}
 
-export type testCallVectorIntObject = {
+export type testCallVectorIntObject = {|
   _: 'testCallVectorIntObject',
   x?: $Shape<testInt[]>,
-}
+|}
 
-export type testCallVectorString = {
+export type testCallVectorString = {|
   _: 'testCallVectorString',
   x?: $Shape<string[]>,
-}
+|}
 
-export type testCallVectorStringObject = {
+export type testCallVectorStringObject = {|
   _: 'testCallVectorStringObject',
   x?: $Shape<testString[]>,
-}
+|}
 
-export type testGetDifference = {
+export type testGetDifference = {|
   _: 'testGetDifference',
-}
+|}
 
-export type testNetwork = {
+export type testNetwork = {|
   _: 'testNetwork',
-}
+|}
 
-export type testSquareInt = {
+export type testSquareInt = {|
   _: 'testSquareInt',
   x?: number,
-}
+|}
 
-export type testUseError = {
+export type testUseError = {|
   _: 'testUseError',
-}
+|}
 
-export type testUseUpdate = {
+export type testUseUpdate = {|
   _: 'testUseUpdate',
-}
+|}
 
-export type toggleBasicGroupAdministrators = {
+export type toggleBasicGroupAdministrators = {|
   _: 'toggleBasicGroupAdministrators',
   basic_group_id?: number,
   everyone_is_administrator?: boolean,
-}
+|}
 
-export type toggleChatIsPinned = {
+export type toggleChatIsPinned = {|
   _: 'toggleChatIsPinned',
   chat_id?: number,
   is_pinned?: boolean,
-}
+|}
 
-export type toggleSupergroupInvites = {
+export type toggleSupergroupInvites = {|
   _: 'toggleSupergroupInvites',
   supergroup_id?: number,
   anyone_can_invite?: boolean,
-}
+|}
 
-export type toggleSupergroupIsAllHistoryAvailable = {
+export type toggleSupergroupIsAllHistoryAvailable = {|
   _: 'toggleSupergroupIsAllHistoryAvailable',
   supergroup_id?: number,
   is_all_history_available?: boolean,
-}
+|}
 
-export type toggleSupergroupSignMessages = {
+export type toggleSupergroupSignMessages = {|
   _: 'toggleSupergroupSignMessages',
   supergroup_id?: number,
   sign_messages?: boolean,
-}
+|}
 
-export type unblockUser = {
+export type unblockUser = {|
   _: 'unblockUser',
   user_id?: number,
-}
+|}
 
-export type unpinSupergroupMessage = {
+export type unpinSupergroupMessage = {|
   _: 'unpinSupergroupMessage',
   supergroup_id?: number,
-}
+|}
 
-export type upgradeBasicGroupChatToSupergroupChat = {
+export type upgradeBasicGroupChatToSupergroupChat = {|
   _: 'upgradeBasicGroupChatToSupergroupChat',
   chat_id?: number,
-}
+|}
 
-export type uploadFile = {
+export type uploadFile = {|
   _: 'uploadFile',
   file?: $Shape<InputFile>,
   file_type?: $Shape<FileType>,
   priority?: number,
-}
+|}
 
-export type uploadStickerFile = {
+export type uploadStickerFile = {|
   _: 'uploadStickerFile',
   user_id?: number,
   png_sticker?: $Shape<InputFile>,
-}
+|}
 
-export type validateOrderInfo = {
+export type validateOrderInfo = {|
   _: 'validateOrderInfo',
   chat_id?: number,
   message_id?: number,
   order_info?: $Shape<orderInfo>,
   allow_save?: boolean,
-}
+|}
 
-export type viewMessages = {
+export type viewMessages = {|
   _: 'viewMessages',
   chat_id?: number,
   message_ids?: $Shape<number[]>,
   force_read?: boolean,
-}
+|}
 
-export type viewTrendingStickerSets = {
+export type viewTrendingStickerSets = {|
   _: 'viewTrendingStickerSets',
   sticker_set_ids?: $Shape<number[]>,
-}
+|}
 
 // -----------
 
