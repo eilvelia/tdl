@@ -6,12 +6,20 @@ import { prompt, type QuestionKindT } from 'inquirer'
 import Debug from 'debug'
 import { TDLib } from './TDLib'
 import uuidv4 from '../vendor/uuidv4'
+import { deepRenameKey/*, deepRenameKey_ */ } from './util'
 
 import type {
   EventType,
   ConfigType,
   StrictConfigType
 } from './types'
+
+import type {
+  TDFunction,
+  Update,
+  updateAuthorizationState,
+  error as TDError
+} from './tdlib-types'
 
 import type { TDLibClient } from './TDLib'
 
@@ -38,8 +46,6 @@ const resolvePath = (relativePath: string): string =>
   path.resolve(cwd, relativePath)
 
 const defaultOptions = {
-  apiId: null,
-  apiHash: null,
   getAuthCode,
   getPassword,
   binaryPath: 'libtdjson',
@@ -109,8 +115,9 @@ export class Client {
     return this.emitter.emit(eventName, value)
   }
 
-  invoke = async (query: Object): Promise<Object> => {
+  invoke = async (query: TDFunction): Promise<Object> => {
     const id = uuidv4()
+    // $FlowFixMe
     query['@extra'] = id
     const receiveUpdate = new Promise((resolve, reject) => {
       this.fetching.set(id, { resolve, reject })
@@ -146,7 +153,7 @@ export class Client {
       return this._loop()
     }
 
-    switch (update['@type']) {
+    switch (update._) {
       case 'updateAuthorizationState':
         await this._handleAuth(update)
         break
@@ -162,64 +169,66 @@ export class Client {
     this._loop()
   }
 
-  async _handleAuth (update: Object): Promise<void> {
-    switch (update.authorization_state['@type']) {
+  async _handleAuth (update: updateAuthorizationState): Promise<void> {
+    switch (update.authorization_state._) {
       case 'authorizationStateWaitTdlibParameters':
         await this._send({
-          '@type': 'setTdlibParameters',
+          _: 'setTdlibParameters',
           'parameters': {
             ...this.options.tdlibParameters,
-            '@type': 'tdlibParameters',
-            'database_directory': resolvePath(this.options.databaseDirectory),
-            'files_directory': resolvePath(this.options.filesDirectory),
-            'api_id': this.options.apiId,
-            'api_hash': this.options.apiHash,
+            _: 'tdlibParameters',
+            database_directory: resolvePath(this.options.databaseDirectory),
+            files_directory: resolvePath(this.options.filesDirectory),
+            api_id: this.options.apiId,
+            api_hash: this.options.apiHash,
           },
         })
         break
 
       case 'authorizationStateWaitEncryptionKey':
         await this._send({
-          '@type': 'checkDatabaseEncryptionKey',
+          _: 'checkDatabaseEncryptionKey',
         })
         break
 
       case 'authorizationStateWaitPhoneNumber':
         await this._send({
-          '@type': 'setAuthenticationPhoneNumber',
-          'phone_number': this.options.phoneNumber,
+          _: 'setAuthenticationPhoneNumber',
+          phone_number: this.options.phoneNumber,
         })
         break
 
-      case 'authorizationStateWaitCode':
+      case 'authorizationStateWaitCode': {
         const code = await this.options.getAuthCode(false)
         await this._send({
-          '@type': 'checkAuthenticationCode',
-          'code': code,
+          _: 'checkAuthenticationCode',
+          code: code,
         })
         break
+      }
 
-      case 'authorizationStateWaitPassword':
-        const passwordHint = update.authorization_state['password_hint']
+      case 'authorizationStateWaitPassword': {
+        const passwordHint = update.authorization_state.password_hint
         const password = await this.options.getPassword(passwordHint, false)
         await this._send({
-          '@type': 'checkAuthenticationPassword',
-          'password': password,
+          _: 'checkAuthenticationPassword',
+          password: password,
         })
         break
+      }
 
       case 'authorizationStateReady':
         this.resolver()
     }
   }
 
-  async _handleError (update: Object) {
+  async _handleError (update: TDError) {
     switch (update['message']) {
       case 'PHONE_CODE_EMPTY':
       case 'PHONE_CODE_INVALID':
         const code = await this.options.getAuthCode(true)
         await this._send({
-          '@type': 'checkAuthenticationCode',
+          _: 'checkAuthenticationCode',
           'code': code,
         })
         break
@@ -227,16 +236,18 @@ export class Client {
       case 'PASSWORD_HASH_INVALID':
         const password = await this.options.getPassword('', true)
         await this._send({
-          '@type': 'checkAuthenticationPassword',
+          _: 'checkAuthenticationPassword',
           'password': password,
         })
         break
 
       default:
+        // $FlowFixMe
         const id = update['@extra']
         const p = this.fetching.get(id)
 
         if (p) {
+          // $FlowFixMe
           delete update['@extra']
           p.reject(update)
           this.fetching.delete(id)
@@ -246,11 +257,13 @@ export class Client {
     }
   }
 
-  async _handleUpdate (update: Object) {
+  async _handleUpdate (update: Update) {
+    // $FlowFixMe
     const id = update['@extra']
     const p = this.fetching.get(id)
 
     if (p) {
+      // $FlowFixMe
       delete update['@extra']
       p.resolve(update)
       this.fetching.delete(id)
@@ -259,13 +272,16 @@ export class Client {
     }
   }
 
-  _send (query: Object): Promise<Object | null> {
+  _send (query: TDFunction): Promise<Object | null> {
     if (!this.client) return Promise.resolve(null)
-    return this.tdlib.send(this.client, query)
+    const { client } = this
+    const tdQuery = deepRenameKey('_', '@type', query)
+    return this.tdlib.send(client, tdQuery)
   }
 
-  _receive (timeout: number = 10): Promise<Object | null> {
+  async _receive (timeout: number = 10): Promise<Update | null> {
     if (!this.client) return Promise.resolve(null)
-    return this.tdlib.receive(this.client, timeout)
+    const tdResponse = await this.tdlib.receive(this.client, timeout)
+    return tdResponse && deepRenameKey('@type', '_', tdResponse)
   }
 }

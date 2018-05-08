@@ -3,6 +3,7 @@ node_modules/
 package-lock.json
 dist/
 *.bak
+/*.txt
 
 npm-debug.log*
 yarn-debug.log*

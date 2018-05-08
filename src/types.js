@@ -23,8 +23,8 @@ export type TDLibParameters = {
 }
 
 export type ConfigType = {
-  apiId?: number | null,
-  apiHash?: string | null,
+  apiId?: number,
+  apiHash?: string,
   phoneNumber?: string,
   getAuthCode?: (retry?: boolean) => Promise<string>,
   getPassword?: (passwordHint: string, retry?: boolean) => Promise<string>,
@@ -37,8 +37,8 @@ export type ConfigType = {
 }
 
 export type StrictConfigType = {
-  apiId: number | null,
-  apiHash: string | null,
+  apiId?: number,
+  apiHash?: string,
   phoneNumber?: string,
   getAuthCode: (retry?: boolean) => Promise<string>,
   getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,

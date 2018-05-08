@@ -49,22 +49,22 @@ Resolves with response, or rejects with an error.
 
 ```js
 const chats = await client.invoke({
-  '@type': 'getChats',
-  'offset_order': '9223372036854775807',
-  'offset_chat_id': 0,
-  'limit': 100,
+  _: 'getChats',
+  offset_order: '9223372036854775807',
+  offset_chat_id: 0,
+  limit: 100,
 })
 ```
 
 ```js
 await client.invoke({
-  '@type': 'sendMessage',
-  'chat_id': -123456789,
-  'input_message_content': {
-    '@type': 'inputMessageText',
-    'text': {
-      '@type': 'formattedText',
-      'text': '👻',
+  _: 'sendMessage',
+  chat_id: -123456789,
+  input_message_content: {
+    _: 'inputMessageText',
+    text: {
+      _: 'formattedText',
+      text: '👻',
     },
   },
 })

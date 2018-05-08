@@ -10,13 +10,13 @@ async function main() {
   await client.connect()
 
   await client.invoke({
-    '@type': 'sendMessage',
-    'chat_id': -123456789,
-    'input_message_content': {
-      '@type': 'inputMessageText',
-      'text': {
-        '@type': 'formattedText',
-        'text': 'Hi',
+    _: 'sendMessage',
+    chat_id: -123456789,
+    input_message_content: {
+      _: 'inputMessageText',
+      text: {
+        _: 'formattedText',
+        text: 'Hi',
       },
     },
   })

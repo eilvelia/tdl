@@ -10,10 +10,10 @@ async function main() {
   await client.connect()
 
   const result = await client.invoke({
-    '@type': 'getChats',
-    'offset_order': '9223372036854775807',
-    'offset_chat_id': 0,
-    'limit': 100,
+    _: 'getChats',
+    offset_order: '9223372036854775807',
+    offset_chat_id: 0,
+    limit: 100,
   })
 
   // latest 100 chats will be returned

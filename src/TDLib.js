@@ -4,7 +4,9 @@ import ffi from 'ffi-napi'
 import ref from 'ref-napi'
 import Debug from 'debug'
 
-export opaque type TDLibClient = Object
+import type { TDFunction, Update } from './tdlib-types'
+
+export opaque type TDLibClient = $ReadOnly<Object>
 
 const debug = Debug('tdl:tdlib')
 
