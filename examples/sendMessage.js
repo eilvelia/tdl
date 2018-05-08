@@ -4,7 +4,9 @@ async function main() {
   const client = new Client({
     apiId: 2222, // Your api_id
     apiHash: 'YOUR_API_HASH',
-    phoneNumber: 'YOUR_PHONE_NUMBER',
+    loginDetails: {
+      phoneNumber: 'YOUR_PHONE_NUMBER'
+    }
   })
 
   await client.connect()
@@ -16,9 +18,9 @@ async function main() {
       _: 'inputMessageText',
       text: {
         _: 'formattedText',
-        text: 'Hi',
-      },
-    },
+        text: 'Hi'
+      }
+    }
   })
 }
 

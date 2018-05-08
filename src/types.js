@@ -22,12 +22,25 @@ export type TDLibParameters = {
   ignore_file_names?: boolean
 }
 
+type LoginUser = {
+  type: 'user',
+  phoneNumber?: string,
+  getAuthCode: (retry?: boolean) => Promise<string>,
+  getPassword: (passwordHint: string, retry?: boolean) => Promise<string>
+}
+
+type LoginBot = {
+  type: 'bot',
+  token: string
+}
+
+type LoginDetails = $Shape<LoginUser> | $Shape<LoginBot>
+type StrictLoginDetails = LoginUser | LoginBot
+
 export type ConfigType = {
   apiId?: number,
   apiHash?: string,
-  phoneNumber?: string,
-  getAuthCode?: (retry?: boolean) => Promise<string>,
-  getPassword?: (passwordHint: string, retry?: boolean) => Promise<string>,
+  loginDetails?: LoginDetails,
   binaryPath?: string,
   databaseDirectory?: string,
   filesDirectory?: string,
@@ -39,9 +52,7 @@ export type ConfigType = {
 export type StrictConfigType = {
   apiId?: number,
   apiHash?: string,
-  phoneNumber?: string,
-  getAuthCode: (retry?: boolean) => Promise<string>,
-  getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
+  loginDetails: StrictLoginDetails,
   binaryPath: string,
   databaseDirectory: string,
   filesDirectory: string,

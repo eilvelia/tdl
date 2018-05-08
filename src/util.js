@@ -1,7 +1,6 @@
 // @flow
 
-import map from 'ramda/src/map'
-
+import { map } from 'ramda'
 
 // immutable
 export const renameKey = (

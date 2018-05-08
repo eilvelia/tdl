@@ -2,6 +2,7 @@
 
 import path from 'path'
 import EventEmitter from 'events'
+import { mergeDeepRight } from 'ramda'
 import { prompt, type QuestionKindT } from 'inquirer'
 import Debug from 'debug'
 import { TDLib } from './TDLib'
@@ -45,9 +46,12 @@ const cwd = process.cwd()
 const resolvePath = (relativePath: string): string =>
   path.resolve(cwd, relativePath)
 
-const defaultOptions = {
-  getAuthCode,
-  getPassword,
+const defaultOptions: StrictConfigType = {
+  loginDetails: {
+    type: 'user',
+    getAuthCode,
+    getPassword
+  },
   binaryPath: 'libtdjson',
   databaseDirectory: '_td_database',
   filesDirectory: '_td_files',
@@ -83,10 +87,7 @@ export class Client {
     })
 
   constructor (options: ConfigType = {}) {
-    this.options = {
-      ...defaultOptions,
-      ...options
-    }
+    this.options = mergeDeepRight(defaultOptions, options)
 
     this.tdlib = new TDLib(resolvePath(this.options.binaryPath))
   }
@@ -112,6 +113,7 @@ export class Client {
   }
 
   emit = (eventName: EventType, value: any): boolean => {
+    debug('emit', eventName, value)
     return this.emitter.emit(eventName, value)
   }
 
@@ -170,6 +172,8 @@ export class Client {
   }
 
   async _handleAuth (update: updateAuthorizationState): Promise<void> {
+    const { loginDetails } = this.options
+
     switch (update.authorization_state._) {
       case 'authorizationStateWaitTdlibParameters':
         await this._send({
@@ -191,28 +195,36 @@ export class Client {
         })
         break
 
-      case 'authorizationStateWaitPhoneNumber':
-        await this._send({
-          _: 'setAuthenticationPhoneNumber',
-          phone_number: this.options.phoneNumber,
-        })
+      case 'authorizationStateWaitPhoneNumber': {
+        if (loginDetails.type === 'user') {
+          await this._send({
+            _: 'setAuthenticationPhoneNumber',
+            phone_number: loginDetails.phoneNumber,
+          })
+        } else {
+          await this._send({
+            _: 'checkAuthenticationBotToken',
+            token: loginDetails.token
+          })
+        }
         break
+      }
 
       case 'authorizationStateWaitCode': {
-        const code = await this.options.getAuthCode(false)
+        const code = await getAuthCode(false)
         await this._send({
           _: 'checkAuthenticationCode',
-          code: code,
+          code: code
         })
         break
       }
 
       case 'authorizationStateWaitPassword': {
         const passwordHint = update.authorization_state.password_hint
-        const password = await this.options.getPassword(passwordHint, false)
+        const password = await getPassword(passwordHint, false)
         await this._send({
           _: 'checkAuthenticationPassword',
-          password: password,
+          password: password
         })
         break
       }
@@ -223,18 +235,22 @@ export class Client {
   }
 
   async _handleError (update: TDError) {
+    const { loginDetails } = this.options
+
     switch (update['message']) {
       case 'PHONE_CODE_EMPTY':
       case 'PHONE_CODE_INVALID':
-        const code = await this.options.getAuthCode(true)
+        if (loginDetails.type !== 'user') return
+        const code = await loginDetails.getAuthCode(true)
         await this._send({
           _: 'checkAuthenticationCode',
-          'code': code,
+          'code': code
         })
         break
 
       case 'PASSWORD_HASH_INVALID':
-        const password = await this.options.getPassword('', true)
+        if (loginDetails.type !== 'user') return
+        const password = await loginDetails.getPassword('', true)
         await this._send({
           _: 'checkAuthenticationPassword',
           'password': password,

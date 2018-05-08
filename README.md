@@ -21,7 +21,9 @@ const { Client } = require('tdl')
 const client = new Client({
   apiId: 2222, // Your api_id
   apiHash: 'YOUR_API_HASH',
-  phoneNumber: 'YOUR_PHONE_NUMBER',
+  loginDetails: {
+    phoneNumber: 'YOUR_PHONE_NUMBER'
+  }
 })
 ```
 
@@ -52,21 +54,21 @@ const chats = await client.invoke({
   _: 'getChats',
   offset_order: '9223372036854775807',
   offset_chat_id: 0,
-  limit: 100,
+  limit: 100
 })
 ```
 
 ```js
 await client.invoke({
   _: 'sendMessage',
-  chat_id: -123456789,
+  chat_id: 123456789,
   input_message_content: {
     _: 'inputMessageText',
     text: {
       _: 'formattedText',
-      text: '👻',
-    },
-  },
+      text: '👻'
+    }
+  }
 })
 ```
 
@@ -80,15 +82,38 @@ client.destroy()
 
 -----
 
+#### Login as a bot
+
+```js
+const client = new Client({
+  apiId: 2222, // Your api_id
+  apiHash: 'YOUR_API_HASH',
+  loginDetails: {
+    type: 'bot',
+    token: 'YOUR_BOT_TOKEN'
+  }
+})
+
+await client.connect()
+```
+
+-----
+
 ### Options
 
 ```typescript
 type Options = {
   apiId: number,
   apiHash: string,
-  phoneNumber: string,
-  getAuthCode: (retry?: boolean) => Promise<string>,
-  getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
+  loginDetails: {
+    type: 'user',
+    phoneNumber: string,
+    getAuthCode: (retry?: boolean) => Promise<string>,
+    getPassword: (passwordHint: string, retry?: boolean) => Promise<string>
+  } | {
+    type: 'bot',
+    token: string
+  },
   binaryPath: string, // relative path
   databaseDirectory: string, // relative path
   filesDirectory: string, // relative path
@@ -104,8 +129,11 @@ Any empty fields may just not be specified.
 
 ```javascript
 {
-  getAuthCode, // read from stdin
-  getPassword, // read from stdin
+  loginDetails: {
+    type: 'user',
+    getAuthCode, // read from stdin
+    getPassword  // read from stdin
+  }
   binaryPath: 'libtdjson',
   databaseDirectory: '_td_database',
   filesDirectory: '_td_files',
