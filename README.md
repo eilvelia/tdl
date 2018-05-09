@@ -72,6 +72,17 @@ await client.invoke({
 })
 ```
 
+##### `client.execute(query)` -> ?Object
+
+You can use this API to send synchronous message to Telegram and receive response.
+
+```js
+const res = client.execute({
+  _: 'getTextEntities',
+  text: '@telegram /test_command https://telegram.org telegram.me'
+})
+```
+
 ##### `client.destroy()` -> Void
 
 You can use this API to destroy the client.

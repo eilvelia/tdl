@@ -134,6 +134,9 @@ export class Client {
     return receiveUpdate
   }
 
+  execute = (query: TDFunction): Object | null =>
+    this._execute(query)
+
   destroy = (): void => {
     if (!this.client) return
     this.tdlib.destroy(this.client)
@@ -298,6 +301,14 @@ export class Client {
   async _receive (timeout: number = 10): Promise<Update | null> {
     if (!this.client) return Promise.resolve(null)
     const tdResponse = await this.tdlib.receive(this.client, timeout)
+    return tdResponse && deepRenameKey('@type', '_', tdResponse)
+  }
+
+  _execute (query: TDFunction): Object | null {
+    if (!this.client) return null
+    const { client } = this
+    const tdQuery = deepRenameKey('_', '@type', query)
+    const tdResponse = this.tdlib.execute(client, tdQuery)
     return tdResponse && deepRenameKey('@type', '_', tdResponse)
   }
 }
