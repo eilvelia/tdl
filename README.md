@@ -130,6 +130,7 @@ type Options = {
   filesDirectory: string, // relative path
   logFilePath: string, // relative path
   verbosityLevel: number,
+  dev: boolean, // Use telegram dev server
   tdlibParameters: Object
 }
 ```
@@ -150,6 +151,7 @@ Any empty fields may just not be specified.
   filesDirectory: '_td_files',
   logFilePath: '', // (don't write to file)
   verbosityLevel: 2,
+  dev: false,
   tdlibParameters: {
     use_message_database: true,
     use_secret_chats: false,

@@ -57,6 +57,7 @@ const defaultOptions: StrictConfigType = {
   filesDirectory: '_td_files',
   logFilePath: '',
   verbosityLevel: 2,
+  dev: false,
   tdlibParameters: {
     use_message_database: true,
     use_secret_chats: false,
@@ -188,6 +189,7 @@ export class Client {
             files_directory: resolvePath(this.options.filesDirectory),
             api_id: this.options.apiId,
             api_hash: this.options.apiHash,
+            use_test_dc: this.options.dev
           },
         })
         break

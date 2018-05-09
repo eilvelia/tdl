@@ -46,6 +46,7 @@ export type ConfigType = {
   filesDirectory?: string,
   logFilePath?: string,
   verbosityLevel?: number,
+  dev?: boolean,
   tdlibParameters?: TDLibParameters
 }
 
@@ -58,5 +59,6 @@ export type StrictConfigType = {
   filesDirectory: string,
   logFilePath: string,
   verbosityLevel: number,
+  dev: boolean,
   tdlibParameters: TDLibParameters
 }
