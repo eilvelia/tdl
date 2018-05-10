@@ -10,13 +10,13 @@ import uuidv4 from '../vendor/uuidv4'
 import { deepRenameKey/*, deepRenameKey_ */ } from './util'
 
 import type {
-  EventType,
   ConfigType,
   StrictConfigType
 } from './types'
 
 import type {
-  TDFunction,
+  TDFunctionOptional,
+  TDObject,
   Update,
   updateAuthorizationState,
   error as TDError
@@ -69,7 +69,18 @@ const defaultOptions: StrictConfigType = {
   }
 }
 
-type P = { resolve: (result: any) => void, reject: (error: any) => void }
+type P = {
+  resolve: (result: TDObject) => void,
+  reject: (error: TDError) => void
+}
+
+type On =
+  & ((event: 'update', listener: (update: Update) => void) => Client)
+  & ((event: 'error', listener: (err: TDError) => void) => Client)
+
+type Emit =
+  & ((event: 'update', update: Update) => boolean)
+  & ((event: 'error', err: TDError) => boolean)
 
 export class Client {
 ; +options: StrictConfigType
@@ -88,7 +99,7 @@ export class Client {
     })
 
   constructor (options: ConfigType = {}) {
-    this.options = mergeDeepRight(defaultOptions, options)
+    this.options = (mergeDeepRight(defaultOptions, options): StrictConfigType)
 
     this.tdlib = new TDLib(resolvePath(this.options.binaryPath))
   }
@@ -108,17 +119,17 @@ export class Client {
     }
   }
 
-  on = (eventName: EventType, listener: (arg: any) => void) => {
-    this.emitter.on(eventName, listener)
+  on: On = (event, listener) => {
+    this.emitter.on(event, listener)
     return this
   }
 
-  emit = (eventName: EventType, value: any): boolean => {
-    debug('emit', eventName, value)
-    return this.emitter.emit(eventName, value)
+  emit: Emit = (event, value) => {
+    debug('emit', event, value)
+    return this.emitter.emit(event, value)
   }
 
-  invoke = async (query: TDFunction): Promise<Object> => {
+  invoke = async (query: TDFunctionOptional): Promise<TDObject> => {
     const id = uuidv4()
     // $FlowFixMe
     query['@extra'] = id
@@ -135,7 +146,7 @@ export class Client {
     return receiveUpdate
   }
 
-  execute = (query: TDFunction): Object | null =>
+  execute = (query: TDFunctionOptional): TDObject | null =>
     this._execute(query)
 
   destroy = (): void => {
@@ -152,27 +163,50 @@ export class Client {
   }
 
   async _loop (): Promise<void> {
-    const update = await this._receive()
+    const nullableEvent = await this._receive()
 
-    if (!update) {
-      debug('Current update is empty.')
+    if (!nullableEvent) {
+      // debug('Current update is empty.')
       return this._loop()
     }
 
-    switch (update._) {
+    const event = (nullableEvent: TDObject | Update)
+
+    switch (event._) {
       case 'updateAuthorizationState':
-        await this._handleAuth(update)
+        await this._handleAuth(event)
         break
 
       case 'error':
-        await this._handleError(update)
+        await this._handleError(event)
         break
 
-      default:
-        await this._handleUpdate(update)
+      default: {
+        // $FlowFixMe
+        const id = event['@extra']
+        const p = this.fetching.get(id)
+
+        if (p)
+          // $FlowFixMe
+          this._handleResponse(event, id, p)
+        else
+          // $FlowFixMe
+          await this._handleUpdate(event)
+      }
     }
 
     this._loop()
+  }
+
+  async _handleResponse (res: TDObject, id: string, p: P): Promise<void> {
+    // $FlowFixMe
+    delete res['@extra']
+    p.resolve(res)
+    this.fetching.delete(id)
+  }
+
+  _handleUpdate (update: Update) {
+    this.emit('update', update)
   }
 
   async _handleAuth (update: updateAuthorizationState): Promise<void> {
@@ -239,10 +273,10 @@ export class Client {
     }
   }
 
-  async _handleError (update: TDError) {
+  async _handleError (error: TDError) {
     const { loginDetails } = this.options
 
-    switch (update['message']) {
+    switch (error.message) {
       case 'PHONE_CODE_EMPTY':
       case 'PHONE_CODE_INVALID':
         if (loginDetails.type !== 'user') return
@@ -264,49 +298,34 @@ export class Client {
 
       default:
         // $FlowFixMe
-        const id = update['@extra']
+        const id = error['@extra']
         const p = this.fetching.get(id)
 
         if (p) {
           // $FlowFixMe
-          delete update['@extra']
-          p.reject(update)
+          delete error['@extra']
+          p.reject(error)
           this.fetching.delete(id)
         } else {
-          this.emit('error', update)
+          this.emit('error', error)
         }
     }
   }
 
-  async _handleUpdate (update: Update) {
-    // $FlowFixMe
-    const id = update['@extra']
-    const p = this.fetching.get(id)
-
-    if (p) {
-      // $FlowFixMe
-      delete update['@extra']
-      p.resolve(update)
-      this.fetching.delete(id)
-    } else {
-      this.emit('update', update)
-    }
-  }
-
-  _send (query: TDFunction): Promise<Object | null> {
+  _send (query: TDFunctionOptional): Promise<Object | null> {
     if (!this.client) return Promise.resolve(null)
     const { client } = this
     const tdQuery = deepRenameKey('_', '@type', query)
     return this.tdlib.send(client, tdQuery)
   }
 
-  async _receive (timeout: number = 10): Promise<Update | null> {
+  async _receive (timeout: number = 10): Promise<TDObject | Update | null> {
     if (!this.client) return Promise.resolve(null)
     const tdResponse = await this.tdlib.receive(this.client, timeout)
-    return tdResponse && deepRenameKey('@type', '_', tdResponse)
+    return tdResponse && deepRenameKey/* _ */('@type', '_', tdResponse)
   }
 
-  _execute (query: TDFunction): Object | null {
+  _execute (query: TDFunctionOptional): TDObject | null {
     if (!this.client) return null
     const { client } = this
     const tdQuery = deepRenameKey('_', '@type', query)

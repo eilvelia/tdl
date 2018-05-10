@@ -1,9 +1,5 @@
 // @flow
 
-export type EventType =
-  | 'update'
-  | 'error'
-
 export type TDLibParameters = {
   use_test_dc?: boolean,
   database_directory?: string,

@@ -4,13 +4,11 @@ import ffi from 'ffi-napi'
 import ref from 'ref-napi'
 import Debug from 'debug'
 
-import type { TDFunction, Update } from './tdlib-types'
-
 export opaque type TDLibClient = $ReadOnly<Object>
 
 const debug = Debug('tdl:tdlib')
 
-const buildQuery = query => {
+const buildQuery = (query: Object) => {
   const buffer = Buffer.from(JSON.stringify(query) + '\0', 'utf-8')
   // $FlowFixMe
   buffer.type = ref.types.CString

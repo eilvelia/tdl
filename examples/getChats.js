@@ -13,7 +13,7 @@ async function main() {
 
   const result = await client.invoke({
     _: 'getChats',
-    offset_order: '9223372036854775807',
+    offset_order: 0,
     offset_chat_id: 0,
     limit: 100
   })
