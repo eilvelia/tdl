@@ -36,7 +36,7 @@ export type animationOptional = {|
 
 export type animations = {
   _: 'animations',
-  animations: animation,
+  animations: animation[],
 }
 
 export type animationsOptional = {|
@@ -229,7 +229,7 @@ export type basicGroupOptional = {|
 export type basicGroupFullInfo = {
   _: 'basicGroupFullInfo',
   creator_user_id: number,
-  members: chatMember,
+  members: chatMember[],
   invite_link: string,
 }
 
@@ -255,7 +255,7 @@ export type botCommandOptional = {|
 export type botInfo = {
   _: 'botInfo',
   description: string,
-  commands: botCommand,
+  commands: botCommand[],
 }
 
 export type botInfoOptional = {|
@@ -387,7 +387,7 @@ export type callStateExchangingKeysOptional = {|
 export type callStateReady = {
   _: 'callStateReady',
   protocol: callProtocol,
-  connections: callConnection,
+  connections: callConnection[],
   config: string,
   encryption_key: string,
   emojis: string,
@@ -854,7 +854,7 @@ export type chatEventLogFiltersOptional = {|
 
 export type chatEvents = {
   _: 'chatEvents',
-  events: chatEvent,
+  events: chatEvent[],
 }
 
 export type chatEventsOptional = {|
@@ -997,7 +997,7 @@ export type chatMemberStatusBannedOptional = {|
 export type chatMembers = {
   _: 'chatMembers',
   total_count: number,
-  members: chatMember,
+  members: chatMember[],
 }
 
 export type chatMembersOptional = {|
@@ -1184,7 +1184,7 @@ export type connectedWebsiteOptional = {|
 
 export type connectedWebsites = {
   _: 'connectedWebsites',
-  websites: connectedWebsite,
+  websites: connectedWebsite[],
 }
 
 export type connectedWebsitesOptional = {|
@@ -1567,7 +1567,7 @@ export type fileTypeSecretThumbnailOptional = {|
 export type formattedText = {
   _: 'formattedText',
   text: string,
-  entities: textEntity,
+  entities: textEntity[],
 }
 
 export type formattedTextOptional = {|
@@ -1578,7 +1578,7 @@ export type formattedTextOptional = {|
 
 export type foundMessages = {
   _: 'foundMessages',
-  messages: message,
+  messages: message[],
   next_from_search_id: number,
 }
 
@@ -1626,7 +1626,7 @@ export type gameHighScoreOptional = {|
 
 export type gameHighScores = {
   _: 'gameHighScores',
-  scores: gameHighScore,
+  scores: gameHighScore[],
 }
 
 export type gameHighScoresOptional = {|
@@ -1896,7 +1896,7 @@ export type inlineQueryResults = {
   _: 'inlineQueryResults',
   inline_query_id: number,
   next_offset: string,
-  results: InlineQueryResult,
+  results: InlineQueryResult[],
   switch_pm_text: string,
   switch_pm_parameter: string,
 }
@@ -2591,7 +2591,7 @@ export type inputThumbnailOptional = {|
 export type invoice = {
   _: 'invoice',
   currency: string,
-  price_parts: labeledPricePart,
+  price_parts: labeledPricePart[],
   is_test: boolean,
   need_name: boolean,
   need_phone_number: boolean,
@@ -3309,7 +3309,7 @@ export type messageSendingStateFailedOptional = {|
 export type messages = {
   _: 'messages',
   total_count: number,
-  messages: message,
+  messages: message[],
 }
 
 export type messagesOptional = {|
@@ -3321,7 +3321,7 @@ export type messagesOptional = {|
 export type networkStatistics = {
   _: 'networkStatistics',
   since_date: number,
-  entries: NetworkStatisticsEntry,
+  entries: NetworkStatisticsEntry[],
 }
 
 export type networkStatisticsOptional = {|
@@ -3616,7 +3616,7 @@ export type pageBlockAnchorOptional = {|
 
 export type pageBlockList = {
   _: 'pageBlockList',
-  items: RichText,
+  items: RichText[],
   is_ordered: boolean,
 }
 
@@ -3744,7 +3744,7 @@ export type pageBlockEmbeddedPost = {
   author: string,
   author_photo: photo,
   date: number,
-  page_blocks: PageBlock,
+  page_blocks: PageBlock[],
   caption: RichText,
 }
 
@@ -3760,7 +3760,7 @@ export type pageBlockEmbeddedPostOptional = {|
 
 export type pageBlockCollage = {
   _: 'pageBlockCollage',
-  page_blocks: PageBlock,
+  page_blocks: PageBlock[],
   caption: RichText,
 }
 
@@ -3772,7 +3772,7 @@ export type pageBlockCollageOptional = {|
 
 export type pageBlockSlideshow = {
   _: 'pageBlockSlideshow',
-  page_blocks: PageBlock,
+  page_blocks: PageBlock[],
   caption: RichText,
 }
 
@@ -3896,7 +3896,7 @@ export type photo = {
   _: 'photo',
   id: number,
   has_stickers: boolean,
-  sizes: photoSize,
+  sizes: photoSize[],
 }
 
 export type photoOptional = {|
@@ -4020,7 +4020,7 @@ export type replyMarkupForceReplyOptional = {|
 
 export type replyMarkupShowKeyboard = {
   _: 'replyMarkupShowKeyboard',
-  rows: keyboardButton,
+  rows: keyboardButton[][],
   resize_keyboard: boolean,
   one_time: boolean,
   is_personal: boolean,
@@ -4036,7 +4036,7 @@ export type replyMarkupShowKeyboardOptional = {|
 
 export type replyMarkupInlineKeyboard = {
   _: 'replyMarkupInlineKeyboard',
-  rows: inlineKeyboardButton,
+  rows: inlineKeyboardButton[][],
 }
 
 export type replyMarkupInlineKeyboardOptional = {|
@@ -4130,7 +4130,7 @@ export type richTextEmailAddressOptional = {|
 
 export type richTexts = {
   _: 'richTexts',
-  texts: RichText,
+  texts: RichText[],
 }
 
 export type richTextsOptional = {|
@@ -4362,7 +4362,7 @@ export type sessionOptional = {|
 
 export type sessions = {
   _: 'sessions',
-  sessions: session,
+  sessions: session[],
 }
 
 export type sessionsOptional = {|
@@ -4394,7 +4394,7 @@ export type shippingOption = {
   _: 'shippingOption',
   id: string,
   title: string,
-  price_parts: labeledPricePart,
+  price_parts: labeledPricePart[],
 }
 
 export type shippingOptionOptional = {|
@@ -4448,8 +4448,8 @@ export type stickerSet = {
   is_official: boolean,
   is_masks: boolean,
   is_viewed: boolean,
-  stickers: sticker,
-  emojis: stickerEmojis,
+  stickers: sticker[],
+  emojis: stickerEmojis[],
 }
 
 export type stickerSetOptional = {|
@@ -4477,7 +4477,7 @@ export type stickerSetInfo = {
   is_masks: boolean,
   is_viewed: boolean,
   size: number,
-  covers: sticker,
+  covers: sticker[],
 }
 
 export type stickerSetInfoOptional = {|
@@ -4497,7 +4497,7 @@ export type stickerSetInfoOptional = {|
 export type stickerSets = {
   _: 'stickerSets',
   total_count: number,
-  sets: stickerSetInfo,
+  sets: stickerSetInfo[],
 }
 
 export type stickerSetsOptional = {|
@@ -4508,7 +4508,7 @@ export type stickerSetsOptional = {|
 
 export type stickers = {
   _: 'stickers',
-  stickers: sticker,
+  stickers: sticker[],
 }
 
 export type stickersOptional = {|
@@ -4520,7 +4520,7 @@ export type storageStatistics = {
   _: 'storageStatistics',
   size: number,
   count: number,
-  by_chat: storageStatisticsByChat,
+  by_chat: storageStatisticsByChat[],
 }
 
 export type storageStatisticsOptional = {|
@@ -4535,7 +4535,7 @@ export type storageStatisticsByChat = {
   chat_id: number,
   size: number,
   count: number,
-  by_file_type: storageStatisticsByFileType,
+  by_file_type: storageStatisticsByFileType[],
 }
 
 export type storageStatisticsByChatOptional = {|
@@ -4746,7 +4746,7 @@ export type tMeUrlTypeStickerSetOptional = {|
 
 export type tMeUrls = {
   _: 'tMeUrls',
-  urls: tMeUrl,
+  urls: tMeUrl[],
 }
 
 export type tMeUrlsOptional = {|
@@ -4846,7 +4846,7 @@ export type testVectorIntOptional = {|
 
 export type testVectorIntObject = {
   _: 'testVectorIntObject',
-  value: testInt,
+  value: testInt[],
 }
 
 export type testVectorIntObjectOptional = {|
@@ -4866,7 +4866,7 @@ export type testVectorStringOptional = {|
 
 export type testVectorStringObject = {
   _: 'testVectorStringObject',
-  value: testString,
+  value: testString[],
 }
 
 export type testVectorStringObjectOptional = {|
@@ -4886,7 +4886,7 @@ export type textOptional = {|
 
 export type textEntities = {
   _: 'textEntities',
-  entities: textEntity,
+  entities: textEntity[],
 }
 
 export type textEntitiesOptional = {|
@@ -5922,7 +5922,7 @@ export type userPrivacySettingRuleRestrictUsersOptional = {|
 
 export type userPrivacySettingRules = {
   _: 'userPrivacySettingRules',
-  rules: UserPrivacySettingRule,
+  rules: UserPrivacySettingRule[],
 }
 
 export type userPrivacySettingRulesOptional = {|
@@ -5933,7 +5933,7 @@ export type userPrivacySettingRulesOptional = {|
 export type userProfilePhotos = {
   _: 'userProfilePhotos',
   total_count: number,
-  photos: photo,
+  photos: photo[],
 }
 
 export type userProfilePhotosOptional = {|
@@ -6051,7 +6051,7 @@ export type usersOptional = {|
 export type validatedOrderInfo = {
   _: 'validatedOrderInfo',
   order_info_id: string,
-  shipping_options: shippingOption,
+  shipping_options: shippingOption[],
 }
 
 export type validatedOrderInfoOptional = {|
@@ -6139,7 +6139,7 @@ export type voiceNoteOptional = {|
 export type wallpaper = {
   _: 'wallpaper',
   id: number,
-  sizes: photoSize,
+  sizes: photoSize[],
   color: number,
 }
 
@@ -6152,7 +6152,7 @@ export type wallpaperOptional = {|
 
 export type wallpapers = {
   _: 'wallpapers',
-  wallpapers: wallpaper,
+  wallpapers: wallpaper[],
 }
 
 export type wallpapersOptional = {|
@@ -6212,7 +6212,7 @@ export type webPageOptional = {|
 
 export type webPageInstantView = {
   _: 'webPageInstantView',
-  page_blocks: PageBlock,
+  page_blocks: PageBlock[],
   is_full: boolean,
 }
 
@@ -9309,7 +9309,6 @@ export type TDObject =
   | webPage
   | webPageInstantView
 
-
 export type TDObjectOptional =
   | accountTtlOptional
   | animationOptional
@@ -9433,7 +9432,6 @@ export type AuthenticationCodeType =
   | authenticationCodeTypeCall
   | authenticationCodeTypeFlashCall
 
-
 export type AuthenticationCodeTypeOptional =
   | authenticationCodeTypeTelegramMessageOptional
   | authenticationCodeTypeSmsOptional
@@ -9450,7 +9448,6 @@ export type AuthorizationState =
   | authorizationStateLoggingOut
   | authorizationStateClosing
   | authorizationStateClosed
-
 
 export type AuthorizationStateOptional =
   | authorizationStateWaitTdlibParametersOptional
@@ -9470,7 +9467,6 @@ export type CallDiscardReason =
   | callDiscardReasonDisconnected
   | callDiscardReasonHungUp
 
-
 export type CallDiscardReasonOptional =
   | callDiscardReasonEmptyOptional
   | callDiscardReasonMissedOptional
@@ -9486,7 +9482,6 @@ export type CallState =
   | callStateDiscarded
   | callStateError
 
-
 export type CallStateOptional =
   | callStatePendingOptional
   | callStateExchangingKeysOptional
@@ -9498,7 +9493,6 @@ export type CallStateOptional =
 export type CallbackQueryPayload =
   | callbackQueryPayloadData
   | callbackQueryPayloadGame
-
 
 export type CallbackQueryPayloadOptional =
   | callbackQueryPayloadDataOptional
@@ -9518,7 +9512,6 @@ export type ChatAction =
   | chatActionRecordingVideoNote
   | chatActionUploadingVideoNote
   | chatActionCancel
-
 
 export type ChatActionOptional =
   | chatActionTypingOptional
@@ -9554,7 +9547,6 @@ export type ChatEventAction =
   | chatEventStickerSetChanged
   | chatEventIsAllHistoryAvailableToggled
 
-
 export type ChatEventActionOptional =
   | chatEventMessageEditedOptional
   | chatEventMessageDeletedOptional
@@ -9582,7 +9574,6 @@ export type ChatMemberStatus =
   | chatMemberStatusLeft
   | chatMemberStatusBanned
 
-
 export type ChatMemberStatusOptional =
   | chatMemberStatusCreatorOptional
   | chatMemberStatusAdministratorOptional
@@ -9597,7 +9588,6 @@ export type ChatReportReason =
   | chatReportReasonPornography
   | chatReportReasonCustom
 
-
 export type ChatReportReasonOptional =
   | chatReportReasonSpamOptional
   | chatReportReasonViolenceOptional
@@ -9609,7 +9599,6 @@ export type ChatType =
   | chatTypeBasicGroup
   | chatTypeSupergroup
   | chatTypeSecret
-
 
 export type ChatTypeOptional =
   | chatTypePrivateOptional
@@ -9624,7 +9613,6 @@ export type CheckChatUsernameResult =
   | checkChatUsernameResultPublicChatsTooMuch
   | checkChatUsernameResultPublicGroupsUnavailable
 
-
 export type CheckChatUsernameResultOptional =
   | checkChatUsernameResultOkOptional
   | checkChatUsernameResultUsernameInvalidOptional
@@ -9638,7 +9626,6 @@ export type ConnectionState =
   | connectionStateConnecting
   | connectionStateUpdating
   | connectionStateReady
-
 
 export type ConnectionStateOptional =
   | connectionStateWaitingForNetworkOptional
@@ -9659,7 +9646,6 @@ export type DeviceToken =
   | deviceTokenUbuntuPush
   | deviceTokenBlackBerryPush
   | deviceTokenTizenPush
-
 
 export type DeviceTokenOptional =
   | deviceTokenGoogleCloudMessagingOptional
@@ -9691,7 +9677,6 @@ export type FileType =
   | fileTypeWallpaper
   | fileTypeSecretThumbnail
 
-
 export type FileTypeOptional =
   | fileTypeNoneOptional
   | fileTypeAnimationOptional
@@ -9716,7 +9701,6 @@ export type InlineKeyboardButtonType =
   | inlineKeyboardButtonTypeSwitchInline
   | inlineKeyboardButtonTypeBuy
 
-
 export type InlineKeyboardButtonTypeOptional =
   | inlineKeyboardButtonTypeUrlOptional
   | inlineKeyboardButtonTypeCallbackOptional
@@ -9738,7 +9722,6 @@ export type InlineQueryResult =
   | inlineQueryResultVideo
   | inlineQueryResultVoiceNote
 
-
 export type InlineQueryResultOptional =
   | inlineQueryResultArticleOptional
   | inlineQueryResultContactOptional
@@ -9759,7 +9742,6 @@ export type InputCredentials =
   | inputCredentialsAndroidPay
   | inputCredentialsApplePay
 
-
 export type InputCredentialsOptional =
   | inputCredentialsSavedOptional
   | inputCredentialsNewOptional
@@ -9771,7 +9753,6 @@ export type InputFile =
   | inputFileRemote
   | inputFileLocal
   | inputFileGenerated
-
 
 export type InputFileOptional =
   | inputFileIdOptional
@@ -9793,7 +9774,6 @@ export type InputInlineQueryResult =
   | inputInlineQueryResultVenue
   | inputInlineQueryResultVideo
   | inputInlineQueryResultVoiceNote
-
 
 export type InputInlineQueryResultOptional =
   | inputInlineQueryResultAnimatedGifOptional
@@ -9827,7 +9807,6 @@ export type InputMessageContent =
   | inputMessageInvoice
   | inputMessageForwarded
 
-
 export type InputMessageContentOptional =
   | inputMessageTextOptional
   | inputMessageAnimationOptional
@@ -9850,7 +9829,6 @@ export type KeyboardButtonType =
   | keyboardButtonTypeRequestPhoneNumber
   | keyboardButtonTypeRequestLocation
 
-
 export type KeyboardButtonTypeOptional =
   | keyboardButtonTypeTextOptional
   | keyboardButtonTypeRequestPhoneNumberOptional
@@ -9860,7 +9838,6 @@ export type LinkState =
   | linkStateNone
   | linkStateKnowsPhoneNumber
   | linkStateIsContact
-
 
 export type LinkStateOptional =
   | linkStateNoneOptional
@@ -9872,7 +9849,6 @@ export type MaskPoint =
   | maskPointEyes
   | maskPointMouth
   | maskPointChin
-
 
 export type MaskPointOptional =
   | maskPointForeheadOptional
@@ -9919,7 +9895,6 @@ export type MessageContent =
   | messageWebsiteConnected
   | messageUnsupported
 
-
 export type MessageContentOptional =
   | messageTextOptional
   | messageAnimationOptional
@@ -9963,7 +9938,6 @@ export type MessageForwardInfo =
   | messageForwardedFromUser
   | messageForwardedPost
 
-
 export type MessageForwardInfoOptional =
   | messageForwardedFromUserOptional
   | messageForwardedPostOptional
@@ -9972,7 +9946,6 @@ export type MessageSendingState =
   | messageSendingStatePending
   | messageSendingStateFailed
 
-
 export type MessageSendingStateOptional =
   | messageSendingStatePendingOptional
   | messageSendingStateFailedOptional
@@ -9980,7 +9953,6 @@ export type MessageSendingStateOptional =
 export type NetworkStatisticsEntry =
   | networkStatisticsEntryFile
   | networkStatisticsEntryCall
-
 
 export type NetworkStatisticsEntryOptional =
   | networkStatisticsEntryFileOptional
@@ -9992,7 +9964,6 @@ export type NetworkType =
   | networkTypeMobileRoaming
   | networkTypeWiFi
   | networkTypeOther
-
 
 export type NetworkTypeOptional =
   | networkTypeNoneOptional
@@ -10007,7 +9978,6 @@ export type NotificationSettingsScope =
   | notificationSettingsScopeBasicGroupChats
   | notificationSettingsScopeAllChats
 
-
 export type NotificationSettingsScopeOptional =
   | notificationSettingsScopeChatOptional
   | notificationSettingsScopePrivateChatsOptional
@@ -10019,7 +9989,6 @@ export type OptionValue =
   | optionValueEmpty
   | optionValueInteger
   | optionValueString
-
 
 export type OptionValueOptional =
   | optionValueBooleanOptional
@@ -10052,7 +10021,6 @@ export type PageBlock =
   | pageBlockSlideshow
   | pageBlockChatLink
 
-
 export type PageBlockOptional =
   | pageBlockTitleOptional
   | pageBlockSubtitleOptional
@@ -10082,7 +10050,6 @@ export type Proxy =
   | proxyEmpty
   | proxySocks5
 
-
 export type ProxyOptional =
   | proxyEmptyOptional
   | proxySocks5Optional
@@ -10092,7 +10059,6 @@ export type ReplyMarkup =
   | replyMarkupForceReply
   | replyMarkupShowKeyboard
   | replyMarkupInlineKeyboard
-
 
 export type ReplyMarkupOptional =
   | replyMarkupRemoveKeyboardOptional
@@ -10110,7 +10076,6 @@ export type RichText =
   | richTextUrl
   | richTextEmailAddress
   | richTexts
-
 
 export type RichTextOptional =
   | richTextPlainOptional
@@ -10141,7 +10106,6 @@ export type SearchMessagesFilter =
   | searchMessagesFilterMention
   | searchMessagesFilterUnreadMention
 
-
 export type SearchMessagesFilterOptional =
   | searchMessagesFilterEmptyOptional
   | searchMessagesFilterAnimationOptional
@@ -10165,7 +10129,6 @@ export type SecretChatState =
   | secretChatStateReady
   | secretChatStateClosed
 
-
 export type SecretChatStateOptional =
   | secretChatStatePendingOptional
   | secretChatStateReadyOptional
@@ -10178,7 +10141,6 @@ export type SupergroupMembersFilter =
   | supergroupMembersFilterRestricted
   | supergroupMembersFilterBanned
   | supergroupMembersFilterBots
-
 
 export type SupergroupMembersFilterOptional =
   | supergroupMembersFilterRecentOptional
@@ -10193,7 +10155,6 @@ export type TMeUrlType =
   | tMeUrlTypeSupergroup
   | tMeUrlTypeChatInvite
   | tMeUrlTypeStickerSet
-
 
 export type TMeUrlTypeOptional =
   | tMeUrlTypeUserOptional
@@ -10217,7 +10178,6 @@ export type TextEntityType =
   | textEntityTypeMentionName
   | textEntityTypePhoneNumber
 
-
 export type TextEntityTypeOptional =
   | textEntityTypeMentionOptional
   | textEntityTypeHashtagOptional
@@ -10238,7 +10198,6 @@ export type TextParseMode =
   | textParseModeMarkdown
   | textParseModeHTML
 
-
 export type TextParseModeOptional =
   | textParseModeMarkdownOptional
   | textParseModeHTMLOptional
@@ -10250,7 +10209,6 @@ export type TopChatCategory =
   | topChatCategoryChannels
   | topChatCategoryInlineBots
   | topChatCategoryCalls
-
 
 export type TopChatCategoryOptional =
   | topChatCategoryUsersOptional
@@ -10316,7 +10274,6 @@ export type Update =
   | updateNewCustomEvent
   | updateNewCustomQuery
 
-
 export type UpdateOptional =
   | updateAuthorizationStateOptional
   | updateNewMessageOptional
@@ -10378,7 +10335,6 @@ export type UserPrivacySetting =
   | userPrivacySettingAllowChatInvites
   | userPrivacySettingAllowCalls
 
-
 export type UserPrivacySettingOptional =
   | userPrivacySettingShowStatusOptional
   | userPrivacySettingAllowChatInvitesOptional
@@ -10391,7 +10347,6 @@ export type UserPrivacySettingRule =
   | userPrivacySettingRuleRestrictAll
   | userPrivacySettingRuleRestrictContacts
   | userPrivacySettingRuleRestrictUsers
-
 
 export type UserPrivacySettingRuleOptional =
   | userPrivacySettingRuleAllowAllOptional
@@ -10409,7 +10364,6 @@ export type UserStatus =
   | userStatusLastWeek
   | userStatusLastMonth
 
-
 export type UserStatusOptional =
   | userStatusEmptyOptional
   | userStatusOnlineOptional
@@ -10423,7 +10377,6 @@ export type UserType =
   | userTypeDeleted
   | userTypeBot
   | userTypeUnknown
-
 
 export type UserTypeOptional =
   | userTypeRegularOptional
@@ -10690,7 +10643,6 @@ export type TDFunction =
   | validateOrderInfo
   | viewMessages
   | viewTrendingStickerSets
-
 
 export type TDFunctionOptional =
   | acceptCallOptional
