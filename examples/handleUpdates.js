@@ -10,11 +10,14 @@ async function main() {
   })
 
   client
-    .on('update', (update) => {
+    .on('update', update => {
       console.log('Got update:', JSON.stringify(update, null, 2))
     })
-    .on('error', (update) => {
-      console.error('Got error:', JSON.stringify(update, null, 2))
+    .on('error', err => {
+      console.error('Got error:', JSON.stringify(err, null, 2))
+    })
+    .on('destroy', () => {
+      console.log('destroy')
     })
 
   await client.connect()

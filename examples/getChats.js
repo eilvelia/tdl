@@ -18,7 +18,7 @@ async function main() {
     limit: 100
   })
 
-  // latest 100 chats will be returned
+  // 100 chats will be returned
   console.log(result)
 }
 

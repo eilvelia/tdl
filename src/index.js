@@ -1,12 +1,13 @@
 // @flow
 
 import { Client } from './Client'
+import { TDLib } from './TDLib'
 
 export {
   Client,
-  Client as TDLib,
   Client as TDL,
-  Client as Tdl
+  Client as Tdl,
+  TDLib
 }
 
 export default Client

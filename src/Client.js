@@ -77,10 +77,12 @@ type P = {
 type On =
   & ((event: 'update', listener: (update: Update) => void) => Client)
   & ((event: 'error', listener: (err: TDError) => void) => Client)
+  & ((event: 'destroy', listener: () => void) => Client)
 
 type Emit =
   & ((event: 'update', update: Update) => boolean)
   & ((event: 'error', err: TDError) => boolean)
+  & ((event: 'destroy') => boolean)
 
 export class Client {
 ; +options: StrictConfigType
@@ -153,6 +155,7 @@ export class Client {
     if (!this.client) return
     this.tdlib.destroy(this.client)
     this.client = null
+    this.emit('destroy')
   }
 
   setLogFilePath = (path: string): number | any =>
@@ -164,6 +167,8 @@ export class Client {
 
   async _loop (): Promise<void> {
     const nullableEvent = await this._receive()
+
+    if (!this.client) return
 
     if (!nullableEvent) {
       // debug('Current update is empty.')
@@ -224,13 +229,13 @@ export class Client {
             api_id: this.options.apiId,
             api_hash: this.options.apiHash,
             use_test_dc: this.options.dev
-          },
+          }
         })
         break
 
       case 'authorizationStateWaitEncryptionKey':
         await this._send({
-          _: 'checkDatabaseEncryptionKey',
+          _: 'checkDatabaseEncryptionKey'
         })
         break
 
@@ -238,7 +243,7 @@ export class Client {
         if (loginDetails.type === 'user') {
           await this._send({
             _: 'setAuthenticationPhoneNumber',
-            phone_number: loginDetails.phoneNumber,
+            phone_number: loginDetails.phoneNumber
           })
         } else {
           await this._send({
@@ -270,6 +275,10 @@ export class Client {
 
       case 'authorizationStateReady':
         this.resolver()
+        break
+
+      case 'authorizationStateClosed':
+        this.destroy()
     }
   }
 
@@ -281,22 +290,20 @@ export class Client {
       case 'PHONE_CODE_INVALID':
         if (loginDetails.type !== 'user') return
         const code = await loginDetails.getAuthCode(true)
-        await this._send({
+        return this._send({
           _: 'checkAuthenticationCode',
-          'code': code
+          code: code
         })
-        break
 
       case 'PASSWORD_HASH_INVALID':
         if (loginDetails.type !== 'user') return
         const password = await loginDetails.getPassword('', true)
-        await this._send({
+        return this._send({
           _: 'checkAuthenticationPassword',
-          'password': password,
+          password: password
         })
-        break
 
-      default:
+      default: {
         // $FlowFixMe
         const id = error['@extra']
         const p = this.fetching.get(id)
@@ -309,6 +316,7 @@ export class Client {
         } else {
           this.emit('error', error)
         }
+      }
     }
   }
 
