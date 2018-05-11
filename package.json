@@ -39,7 +39,7 @@
     "node": ">= 8.0.0"
   },
   "author": "Bannerets <save14@protonmail.com>",
-  "license": "BSL-1.0",
+  "license": "MIT",
   "keywords": [
     "telegram",
     "tdlib",
