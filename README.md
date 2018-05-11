@@ -1,5 +1,9 @@
 ## tdl
 
+[![npm](https://img.shields.io/npm/v/tdl.svg)](https://www.npmjs.com/package/tdl)
+[![GitHub repo size in bytes](https://img.shields.io/github/repo-size/Bannerets/tdl.svg)](https://github.com/Bannerets/tdl)
+[![node](https://img.shields.io/node/v/tdl.svg)](https://github.com/Bannerets/tdl)
+
 TDLib (Telegram Database library) bindings for Node.js
 
 -----
