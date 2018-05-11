@@ -126,6 +126,11 @@ export class Client {
     return this
   }
 
+  once: On = (event, listener) => {
+    this.emitter.once(event, listener)
+    return this
+  }
+
   emit: Emit = (event, value) => {
     debug('emit', event, value)
     return this.emitter.emit(event, value)
