@@ -13,7 +13,7 @@ TDLib (Telegram Database library) bindings for Node.js
 
 ### APIs
 
-##### `new Client(options)` -> Client
+##### `new Client(options) -> Client`
 
 ```js
 const { Client } = require('tdl')
@@ -27,7 +27,7 @@ const client = new Client({
 })
 ```
 
-##### `client.connect()` -> Promise -> Void
+##### `client.connect() -> Promise<void>`
 
 You can use this API to initialize and connect your client with Telegram.
 
@@ -35,7 +35,7 @@ You can use this API to initialize and connect your client with Telegram.
 await client.connect()
 ```
 
-##### `client.on(event, callback)` -> Void
+##### `client.on(event, callback) -> void`
 
 You can use this API to attach an event listener for iterating updates.
 
@@ -44,7 +44,7 @@ client.on('update', console.log)
 client.on('error', console.error)
 ```
 
-##### `client.invoke(query)` -> Promise -> Object
+##### `client.invoke(query) -> Promise<Object>`
 
 You can use this API to send asynchronous message to Telegram and receive response.  
 Resolves with response, or rejects with an error.
@@ -72,7 +72,7 @@ await client.invoke({
 })
 ```
 
-##### `client.execute(query)` -> ?Object
+##### `client.execute(query) -> ?Object`
 
 You can use this API to send synchronous message to Telegram and receive response.
 
@@ -83,7 +83,7 @@ const res = client.execute({
 })
 ```
 
-##### `client.destroy()` -> Void
+##### `client.destroy() -> void`
 
 You can use this API to destroy the client.
 
@@ -93,7 +93,7 @@ client.destroy()
 
 -----
 
-#### Login as a bot
+### Login as a bot
 
 ```js
 const client = new Client({
@@ -131,7 +131,7 @@ type Options = {
   logFilePath: string, // relative path
   verbosityLevel: number,
   dev: boolean, // Use telegram dev server
-  tdlibParameters: Object
+  tdlibParameters: Object // See https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html
 }
 ```
 

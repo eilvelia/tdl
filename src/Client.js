@@ -240,12 +240,12 @@ export class Client {
     this.emit('update', update)
   }
 
-  async _handleAuth (update: updateAuthorizationState): Promise<void> {
+  async _handleAuth (update: updateAuthorizationState) {
     const { loginDetails } = this.options
 
     switch (update.authorization_state._) {
       case 'authorizationStateWaitTdlibParameters':
-        await this._send({
+        return this._send({
           _: 'setTdlibParameters',
           'parameters': {
             ...this.options.tdlibParameters,
@@ -257,51 +257,42 @@ export class Client {
             use_test_dc: this.options.dev
           }
         })
-        break
 
       case 'authorizationStateWaitEncryptionKey':
-        await this._send({
+        return this._send({
           _: 'checkDatabaseEncryptionKey'
         })
-        break
 
-      case 'authorizationStateWaitPhoneNumber': {
-        if (loginDetails.type === 'user') {
-          await this._send({
+      case 'authorizationStateWaitPhoneNumber':
+        return loginDetails.type === 'user'
+          ? this._send({
             _: 'setAuthenticationPhoneNumber',
             phone_number: loginDetails.phoneNumber
           })
-        } else {
-          await this._send({
+          : this._send({
             _: 'checkAuthenticationBotToken',
             token: loginDetails.token
           })
-        }
-        break
-      }
 
       case 'authorizationStateWaitCode': {
         const code = await getAuthCode(false)
-        await this._send({
+        return this._send({
           _: 'checkAuthenticationCode',
           code: code
         })
-        break
       }
 
       case 'authorizationStateWaitPassword': {
         const passwordHint = update.authorization_state.password_hint
         const password = await getPassword(passwordHint, false)
-        await this._send({
+        return this._send({
           _: 'checkAuthenticationPassword',
           password: password
         })
-        break
       }
 
       case 'authorizationStateReady':
-        this.resolver()
-        break
+        return this.resolver()
 
       case 'authorizationStateClosed':
         this.destroy()
