@@ -19,7 +19,9 @@ import type {
   TDObject,
   Update,
   updateAuthorizationState,
-  error as TDError
+  error as TDError,
+  Invoke,
+  Execute
 } from './tdlib-types'
 
 import type { TDLibClient } from './TDLib'
@@ -136,7 +138,7 @@ export class Client {
     return this.emitter.emit(event, value)
   }
 
-  invoke = async (query: TDFunctionOptional): Promise<TDObject> => {
+  invoke: Invoke = async query => {
     const id = uuidv4()
     // $FlowFixMe
     query['@extra'] = id
@@ -150,11 +152,9 @@ export class Client {
     })
     await this._send(query)
 
+    // $FlowFixMe
     return receiveUpdate
   }
-
-  execute = (query: TDFunctionOptional): TDObject | null =>
-    this._execute(query)
 
   destroy = (): void => {
     if (!this.client) return
@@ -168,6 +168,27 @@ export class Client {
 
   setLogVerbosityLevel = (verbosity: number): void => {
     this.tdlib.setLogVerbosityLevel(verbosity)
+  }
+
+  execute: Execute = query => {
+    if (!this.client) return null
+    const { client } = this
+    const tdQuery = deepRenameKey('_', '@type', query)
+    const tdResponse = this.tdlib.execute(client, tdQuery)
+    return tdResponse && deepRenameKey('@type', '_', tdResponse)
+  }
+
+  _send (query: TDFunctionOptional): Promise<Object | null> {
+    if (!this.client) return Promise.resolve(null)
+    const { client } = this
+    const tdQuery = deepRenameKey('_', '@type', query)
+    return this.tdlib.send(client, tdQuery)
+  }
+
+  async _receive (timeout: number = 10): Promise<TDObject | Update | null> {
+    if (!this.client) return Promise.resolve(null)
+    const tdResponse = await this.tdlib.receive(this.client, timeout)
+    return tdResponse && deepRenameKey/* _ */('@type', '_', tdResponse)
   }
 
   async _loop (): Promise<void> {
@@ -323,26 +344,5 @@ export class Client {
         }
       }
     }
-  }
-
-  _send (query: TDFunctionOptional): Promise<Object | null> {
-    if (!this.client) return Promise.resolve(null)
-    const { client } = this
-    const tdQuery = deepRenameKey('_', '@type', query)
-    return this.tdlib.send(client, tdQuery)
-  }
-
-  async _receive (timeout: number = 10): Promise<TDObject | Update | null> {
-    if (!this.client) return Promise.resolve(null)
-    const tdResponse = await this.tdlib.receive(this.client, timeout)
-    return tdResponse && deepRenameKey/* _ */('@type', '_', tdResponse)
-  }
-
-  _execute (query: TDFunctionOptional): TDObject | null {
-    if (!this.client) return null
-    const { client } = this
-    const tdQuery = deepRenameKey('_', '@type', query)
-    const tdResponse = this.tdlib.execute(client, tdQuery)
-    return tdResponse && deepRenameKey('@type', '_', tdResponse)
   }
 }

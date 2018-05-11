@@ -6234,6 +6234,8 @@ export type acceptCallOptional = {|
   protocol?: callProtocolOptional,
 |}
 
+export type acceptCallReturnType = ok
+
 export type addChatMember = {|
   _: 'addChatMember',
   chat_id?: number,
@@ -6248,6 +6250,8 @@ export type addChatMemberOptional = {|
   forward_limit?: number,
 |}
 
+export type addChatMemberReturnType = ok
+
 export type addChatMembers = {|
   _: 'addChatMembers',
   chat_id?: number,
@@ -6260,6 +6264,8 @@ export type addChatMembersOptional = {|
   user_ids?: number,
 |}
 
+export type addChatMembersReturnType = ok
+
 export type addFavoriteSticker = {|
   _: 'addFavoriteSticker',
   sticker?: InputFileOptional,
@@ -6270,6 +6276,8 @@ export type addFavoriteStickerOptional = {|
   sticker?: InputFileOptional,
 |}
 
+export type addFavoriteStickerReturnType = ok
+
 export type addNetworkStatistics = {|
   _: 'addNetworkStatistics',
   entry?: NetworkStatisticsEntryOptional,
@@ -6279,6 +6287,8 @@ export type addNetworkStatisticsOptional = {|
   _: 'addNetworkStatistics',
   entry?: NetworkStatisticsEntryOptional,
 |}
+
+export type addNetworkStatisticsReturnType = ok
 
 export type addRecentSticker = {|
   _: 'addRecentSticker',
@@ -6292,6 +6302,8 @@ export type addRecentStickerOptional = {|
   sticker?: InputFileOptional,
 |}
 
+export type addRecentStickerReturnType = stickers
+
 export type addRecentlyFoundChat = {|
   _: 'addRecentlyFoundChat',
   chat_id?: number,
@@ -6302,6 +6314,8 @@ export type addRecentlyFoundChatOptional = {|
   chat_id?: number,
 |}
 
+export type addRecentlyFoundChatReturnType = ok
+
 export type addSavedAnimation = {|
   _: 'addSavedAnimation',
   animation?: InputFileOptional,
@@ -6311,6 +6325,8 @@ export type addSavedAnimationOptional = {|
   _: 'addSavedAnimation',
   animation?: InputFileOptional,
 |}
+
+export type addSavedAnimationReturnType = ok
 
 export type addStickerToSet = {|
   _: 'addStickerToSet',
@@ -6325,6 +6341,8 @@ export type addStickerToSetOptional = {|
   name?: string,
   sticker?: inputStickerOptional,
 |}
+
+export type addStickerToSetReturnType = stickerSet
 
 export type answerCallbackQuery = {|
   _: 'answerCallbackQuery',
@@ -6344,6 +6362,8 @@ export type answerCallbackQueryOptional = {|
   cache_time?: number,
 |}
 
+export type answerCallbackQueryReturnType = ok
+
 export type answerCustomQuery = {|
   _: 'answerCustomQuery',
   custom_query_id?: number,
@@ -6355,6 +6375,8 @@ export type answerCustomQueryOptional = {|
   custom_query_id?: number,
   data?: string,
 |}
+
+export type answerCustomQueryReturnType = ok
 
 export type answerInlineQuery = {|
   _: 'answerInlineQuery',
@@ -6378,6 +6400,8 @@ export type answerInlineQueryOptional = {|
   switch_pm_parameter?: string,
 |}
 
+export type answerInlineQueryReturnType = ok
+
 export type answerPreCheckoutQuery = {|
   _: 'answerPreCheckoutQuery',
   pre_checkout_query_id?: number,
@@ -6389,6 +6413,8 @@ export type answerPreCheckoutQueryOptional = {|
   pre_checkout_query_id?: number,
   error_message?: string,
 |}
+
+export type answerPreCheckoutQueryReturnType = ok
 
 export type answerShippingQuery = {|
   _: 'answerShippingQuery',
@@ -6404,6 +6430,8 @@ export type answerShippingQueryOptional = {|
   error_message?: string,
 |}
 
+export type answerShippingQueryReturnType = ok
+
 export type blockUser = {|
   _: 'blockUser',
   user_id?: number,
@@ -6413,6 +6441,8 @@ export type blockUserOptional = {|
   _: 'blockUser',
   user_id?: number,
 |}
+
+export type blockUserReturnType = ok
 
 export type cancelDownloadFile = {|
   _: 'cancelDownloadFile',
@@ -6426,6 +6456,8 @@ export type cancelDownloadFileOptional = {|
   only_if_pending?: boolean,
 |}
 
+export type cancelDownloadFileReturnType = ok
+
 export type cancelUploadFile = {|
   _: 'cancelUploadFile',
   file_id?: number,
@@ -6435,6 +6467,8 @@ export type cancelUploadFileOptional = {|
   _: 'cancelUploadFile',
   file_id?: number,
 |}
+
+export type cancelUploadFileReturnType = ok
 
 export type changeChatReportSpamState = {|
   _: 'changeChatReportSpamState',
@@ -6448,6 +6482,8 @@ export type changeChatReportSpamStateOptional = {|
   is_spam_chat?: boolean,
 |}
 
+export type changeChatReportSpamStateReturnType = ok
+
 export type changeImportedContacts = {|
   _: 'changeImportedContacts',
   contacts?: contactOptional[],
@@ -6457,6 +6493,8 @@ export type changeImportedContactsOptional = {|
   _: 'changeImportedContacts',
   contacts?: contactOptional[],
 |}
+
+export type changeImportedContactsReturnType = importedContacts
 
 export type changePhoneNumber = {|
   _: 'changePhoneNumber',
@@ -6472,6 +6510,8 @@ export type changePhoneNumberOptional = {|
   is_current_phone_number?: boolean,
 |}
 
+export type changePhoneNumberReturnType = authenticationCodeInfo
+
 export type changeStickerSet = {|
   _: 'changeStickerSet',
   set_id?: number,
@@ -6486,6 +6526,8 @@ export type changeStickerSetOptional = {|
   is_archived?: boolean,
 |}
 
+export type changeStickerSetReturnType = ok
+
 export type checkAuthenticationBotToken = {|
   _: 'checkAuthenticationBotToken',
   token?: string,
@@ -6495,6 +6537,8 @@ export type checkAuthenticationBotTokenOptional = {|
   _: 'checkAuthenticationBotToken',
   token?: string,
 |}
+
+export type checkAuthenticationBotTokenReturnType = ok
 
 export type checkAuthenticationCode = {|
   _: 'checkAuthenticationCode',
@@ -6510,6 +6554,8 @@ export type checkAuthenticationCodeOptional = {|
   last_name?: string,
 |}
 
+export type checkAuthenticationCodeReturnType = ok
+
 export type checkAuthenticationPassword = {|
   _: 'checkAuthenticationPassword',
   password?: string,
@@ -6519,6 +6565,8 @@ export type checkAuthenticationPasswordOptional = {|
   _: 'checkAuthenticationPassword',
   password?: string,
 |}
+
+export type checkAuthenticationPasswordReturnType = ok
 
 export type checkChangePhoneNumberCode = {|
   _: 'checkChangePhoneNumberCode',
@@ -6530,6 +6578,8 @@ export type checkChangePhoneNumberCodeOptional = {|
   code?: string,
 |}
 
+export type checkChangePhoneNumberCodeReturnType = ok
+
 export type checkChatInviteLink = {|
   _: 'checkChatInviteLink',
   invite_link?: string,
@@ -6539,6 +6589,8 @@ export type checkChatInviteLinkOptional = {|
   _: 'checkChatInviteLink',
   invite_link?: string,
 |}
+
+export type checkChatInviteLinkReturnType = chatInviteLinkInfo
 
 export type checkChatUsername = {|
   _: 'checkChatUsername',
@@ -6552,6 +6604,8 @@ export type checkChatUsernameOptional = {|
   username?: string,
 |}
 
+export type checkChatUsernameReturnType = CheckChatUsernameResult
+
 export type checkDatabaseEncryptionKey = {|
   _: 'checkDatabaseEncryptionKey',
   encryption_key?: string,
@@ -6562,6 +6616,8 @@ export type checkDatabaseEncryptionKeyOptional = {|
   encryption_key?: string,
 |}
 
+export type checkDatabaseEncryptionKeyReturnType = ok
+
 export type clearImportedContacts = {|
   _: 'clearImportedContacts',
 |}
@@ -6569,6 +6625,8 @@ export type clearImportedContacts = {|
 export type clearImportedContactsOptional = {|
   _: 'clearImportedContacts',
 |}
+
+export type clearImportedContactsReturnType = ok
 
 export type clearRecentStickers = {|
   _: 'clearRecentStickers',
@@ -6580,6 +6638,8 @@ export type clearRecentStickersOptional = {|
   is_attached?: boolean,
 |}
 
+export type clearRecentStickersReturnType = ok
+
 export type clearRecentlyFoundChats = {|
   _: 'clearRecentlyFoundChats',
 |}
@@ -6588,6 +6648,8 @@ export type clearRecentlyFoundChatsOptional = {|
   _: 'clearRecentlyFoundChats',
 |}
 
+export type clearRecentlyFoundChatsReturnType = ok
+
 export type close = {|
   _: 'close',
 |}
@@ -6595,6 +6657,8 @@ export type close = {|
 export type closeOptional = {|
   _: 'close',
 |}
+
+export type closeReturnType = ok
 
 export type closeChat = {|
   _: 'closeChat',
@@ -6606,6 +6670,8 @@ export type closeChatOptional = {|
   chat_id?: number,
 |}
 
+export type closeChatReturnType = ok
+
 export type closeSecretChat = {|
   _: 'closeSecretChat',
   secret_chat_id?: number,
@@ -6615,6 +6681,8 @@ export type closeSecretChatOptional = {|
   _: 'closeSecretChat',
   secret_chat_id?: number,
 |}
+
+export type closeSecretChatReturnType = ok
 
 export type createBasicGroupChat = {|
   _: 'createBasicGroupChat',
@@ -6628,6 +6696,8 @@ export type createBasicGroupChatOptional = {|
   force?: boolean,
 |}
 
+export type createBasicGroupChatReturnType = chat
+
 export type createCall = {|
   _: 'createCall',
   user_id?: number,
@@ -6639,6 +6709,8 @@ export type createCallOptional = {|
   user_id?: number,
   protocol?: callProtocolOptional,
 |}
+
+export type createCallReturnType = callId
 
 export type createNewBasicGroupChat = {|
   _: 'createNewBasicGroupChat',
@@ -6652,6 +6724,8 @@ export type createNewBasicGroupChatOptional = {|
   title?: string,
 |}
 
+export type createNewBasicGroupChatReturnType = chat
+
 export type createNewSecretChat = {|
   _: 'createNewSecretChat',
   user_id?: number,
@@ -6661,6 +6735,8 @@ export type createNewSecretChatOptional = {|
   _: 'createNewSecretChat',
   user_id?: number,
 |}
+
+export type createNewSecretChatReturnType = chat
 
 export type createNewStickerSet = {|
   _: 'createNewStickerSet',
@@ -6680,6 +6756,8 @@ export type createNewStickerSetOptional = {|
   stickers?: inputStickerOptional[],
 |}
 
+export type createNewStickerSetReturnType = stickerSet
+
 export type createNewSupergroupChat = {|
   _: 'createNewSupergroupChat',
   title?: string,
@@ -6694,6 +6772,8 @@ export type createNewSupergroupChatOptional = {|
   description?: string,
 |}
 
+export type createNewSupergroupChatReturnType = chat
+
 export type createPrivateChat = {|
   _: 'createPrivateChat',
   user_id?: number,
@@ -6706,6 +6786,8 @@ export type createPrivateChatOptional = {|
   force?: boolean,
 |}
 
+export type createPrivateChatReturnType = chat
+
 export type createSecretChat = {|
   _: 'createSecretChat',
   secret_chat_id?: number,
@@ -6715,6 +6797,8 @@ export type createSecretChatOptional = {|
   _: 'createSecretChat',
   secret_chat_id?: number,
 |}
+
+export type createSecretChatReturnType = chat
 
 export type createSupergroupChat = {|
   _: 'createSupergroupChat',
@@ -6728,6 +6812,8 @@ export type createSupergroupChatOptional = {|
   force?: boolean,
 |}
 
+export type createSupergroupChatReturnType = chat
+
 export type createTemporaryPassword = {|
   _: 'createTemporaryPassword',
   password?: string,
@@ -6740,6 +6826,8 @@ export type createTemporaryPasswordOptional = {|
   valid_for?: number,
 |}
 
+export type createTemporaryPasswordReturnType = temporaryPasswordState
+
 export type deleteAccount = {|
   _: 'deleteAccount',
   reason?: string,
@@ -6749,6 +6837,8 @@ export type deleteAccountOptional = {|
   _: 'deleteAccount',
   reason?: string,
 |}
+
+export type deleteAccountReturnType = ok
 
 export type deleteChatHistory = {|
   _: 'deleteChatHistory',
@@ -6762,6 +6852,8 @@ export type deleteChatHistoryOptional = {|
   remove_from_chat_list?: boolean,
 |}
 
+export type deleteChatHistoryReturnType = ok
+
 export type deleteChatMessagesFromUser = {|
   _: 'deleteChatMessagesFromUser',
   chat_id?: number,
@@ -6773,6 +6865,8 @@ export type deleteChatMessagesFromUserOptional = {|
   chat_id?: number,
   user_id?: number,
 |}
+
+export type deleteChatMessagesFromUserReturnType = ok
 
 export type deleteChatReplyMarkup = {|
   _: 'deleteChatReplyMarkup',
@@ -6786,6 +6880,8 @@ export type deleteChatReplyMarkupOptional = {|
   message_id?: number,
 |}
 
+export type deleteChatReplyMarkupReturnType = ok
+
 export type deleteFile = {|
   _: 'deleteFile',
   file_id?: number,
@@ -6795,6 +6891,8 @@ export type deleteFileOptional = {|
   _: 'deleteFile',
   file_id?: number,
 |}
+
+export type deleteFileReturnType = ok
 
 export type deleteMessages = {|
   _: 'deleteMessages',
@@ -6810,6 +6908,8 @@ export type deleteMessagesOptional = {|
   revoke?: boolean,
 |}
 
+export type deleteMessagesReturnType = ok
+
 export type deleteProfilePhoto = {|
   _: 'deleteProfilePhoto',
   profile_photo_id?: number,
@@ -6820,6 +6920,8 @@ export type deleteProfilePhotoOptional = {|
   profile_photo_id?: number,
 |}
 
+export type deleteProfilePhotoReturnType = ok
+
 export type deleteSavedCredentials = {|
   _: 'deleteSavedCredentials',
 |}
@@ -6828,6 +6930,8 @@ export type deleteSavedCredentialsOptional = {|
   _: 'deleteSavedCredentials',
 |}
 
+export type deleteSavedCredentialsReturnType = ok
+
 export type deleteSavedOrderInfo = {|
   _: 'deleteSavedOrderInfo',
 |}
@@ -6835,6 +6939,8 @@ export type deleteSavedOrderInfo = {|
 export type deleteSavedOrderInfoOptional = {|
   _: 'deleteSavedOrderInfo',
 |}
+
+export type deleteSavedOrderInfoReturnType = ok
 
 export type deleteSupergroup = {|
   _: 'deleteSupergroup',
@@ -6846,6 +6952,8 @@ export type deleteSupergroupOptional = {|
   supergroup_id?: number,
 |}
 
+export type deleteSupergroupReturnType = ok
+
 export type destroy = {|
   _: 'destroy',
 |}
@@ -6853,6 +6961,8 @@ export type destroy = {|
 export type destroyOptional = {|
   _: 'destroy',
 |}
+
+export type destroyReturnType = ok
 
 export type discardCall = {|
   _: 'discardCall',
@@ -6870,6 +6980,8 @@ export type discardCallOptional = {|
   connection_id?: number,
 |}
 
+export type discardCallReturnType = ok
+
 export type disconnectAllWebsites = {|
   _: 'disconnectAllWebsites',
 |}
@@ -6877,6 +6989,8 @@ export type disconnectAllWebsites = {|
 export type disconnectAllWebsitesOptional = {|
   _: 'disconnectAllWebsites',
 |}
+
+export type disconnectAllWebsitesReturnType = ok
 
 export type disconnectWebsite = {|
   _: 'disconnectWebsite',
@@ -6887,6 +7001,8 @@ export type disconnectWebsiteOptional = {|
   _: 'disconnectWebsite',
   website_id?: number,
 |}
+
+export type disconnectWebsiteReturnType = ok
 
 export type downloadFile = {|
   _: 'downloadFile',
@@ -6899,6 +7015,8 @@ export type downloadFileOptional = {|
   file_id?: number,
   priority?: number,
 |}
+
+export type downloadFileReturnType = file
 
 export type editInlineMessageCaption = {|
   _: 'editInlineMessageCaption',
@@ -6914,6 +7032,8 @@ export type editInlineMessageCaptionOptional = {|
   caption?: formattedTextOptional,
 |}
 
+export type editInlineMessageCaptionReturnType = ok
+
 export type editInlineMessageLiveLocation = {|
   _: 'editInlineMessageLiveLocation',
   inline_message_id?: string,
@@ -6928,6 +7048,8 @@ export type editInlineMessageLiveLocationOptional = {|
   location?: locationOptional,
 |}
 
+export type editInlineMessageLiveLocationReturnType = ok
+
 export type editInlineMessageReplyMarkup = {|
   _: 'editInlineMessageReplyMarkup',
   inline_message_id?: string,
@@ -6939,6 +7061,8 @@ export type editInlineMessageReplyMarkupOptional = {|
   inline_message_id?: string,
   reply_markup?: ReplyMarkupOptional,
 |}
+
+export type editInlineMessageReplyMarkupReturnType = ok
 
 export type editInlineMessageText = {|
   _: 'editInlineMessageText',
@@ -6953,6 +7077,8 @@ export type editInlineMessageTextOptional = {|
   reply_markup?: ReplyMarkupOptional,
   input_message_content?: InputMessageContentOptional,
 |}
+
+export type editInlineMessageTextReturnType = ok
 
 export type editMessageCaption = {|
   _: 'editMessageCaption',
@@ -6970,6 +7096,8 @@ export type editMessageCaptionOptional = {|
   caption?: formattedTextOptional,
 |}
 
+export type editMessageCaptionReturnType = message
+
 export type editMessageLiveLocation = {|
   _: 'editMessageLiveLocation',
   chat_id?: number,
@@ -6986,6 +7114,8 @@ export type editMessageLiveLocationOptional = {|
   location?: locationOptional,
 |}
 
+export type editMessageLiveLocationReturnType = message
+
 export type editMessageReplyMarkup = {|
   _: 'editMessageReplyMarkup',
   chat_id?: number,
@@ -6999,6 +7129,8 @@ export type editMessageReplyMarkupOptional = {|
   message_id?: number,
   reply_markup?: ReplyMarkupOptional,
 |}
+
+export type editMessageReplyMarkupReturnType = message
 
 export type editMessageText = {|
   _: 'editMessageText',
@@ -7016,6 +7148,8 @@ export type editMessageTextOptional = {|
   input_message_content?: InputMessageContentOptional,
 |}
 
+export type editMessageTextReturnType = message
+
 export type finishFileGeneration = {|
   _: 'finishFileGeneration',
   generation_id?: number,
@@ -7027,6 +7161,8 @@ export type finishFileGenerationOptional = {|
   generation_id?: number,
   error?: errorOptional,
 |}
+
+export type finishFileGenerationReturnType = ok
 
 export type forwardMessages = {|
   _: 'forwardMessages',
@@ -7048,6 +7184,8 @@ export type forwardMessagesOptional = {|
   as_album?: boolean,
 |}
 
+export type forwardMessagesReturnType = messages
+
 export type generateChatInviteLink = {|
   _: 'generateChatInviteLink',
   chat_id?: number,
@@ -7058,6 +7196,8 @@ export type generateChatInviteLinkOptional = {|
   chat_id?: number,
 |}
 
+export type generateChatInviteLinkReturnType = chatInviteLink
+
 export type getAccountTtl = {|
   _: 'getAccountTtl',
 |}
@@ -7065,6 +7205,8 @@ export type getAccountTtl = {|
 export type getAccountTtlOptional = {|
   _: 'getAccountTtl',
 |}
+
+export type getAccountTtlReturnType = accountTtl
 
 export type getActiveLiveLocationMessages = {|
   _: 'getActiveLiveLocationMessages',
@@ -7074,6 +7216,8 @@ export type getActiveLiveLocationMessagesOptional = {|
   _: 'getActiveLiveLocationMessages',
 |}
 
+export type getActiveLiveLocationMessagesReturnType = messages
+
 export type getActiveSessions = {|
   _: 'getActiveSessions',
 |}
@@ -7081,6 +7225,8 @@ export type getActiveSessions = {|
 export type getActiveSessionsOptional = {|
   _: 'getActiveSessions',
 |}
+
+export type getActiveSessionsReturnType = sessions
 
 export type getArchivedStickerSets = {|
   _: 'getArchivedStickerSets',
@@ -7096,6 +7242,8 @@ export type getArchivedStickerSetsOptional = {|
   limit?: number,
 |}
 
+export type getArchivedStickerSetsReturnType = stickerSets
+
 export type getAttachedStickerSets = {|
   _: 'getAttachedStickerSets',
   file_id?: number,
@@ -7106,6 +7254,8 @@ export type getAttachedStickerSetsOptional = {|
   file_id?: number,
 |}
 
+export type getAttachedStickerSetsReturnType = stickerSets
+
 export type getAuthorizationState = {|
   _: 'getAuthorizationState',
 |}
@@ -7113,6 +7263,8 @@ export type getAuthorizationState = {|
 export type getAuthorizationStateOptional = {|
   _: 'getAuthorizationState',
 |}
+
+export type getAuthorizationStateReturnType = AuthorizationState
 
 export type getBasicGroup = {|
   _: 'getBasicGroup',
@@ -7124,6 +7276,8 @@ export type getBasicGroupOptional = {|
   basic_group_id?: number,
 |}
 
+export type getBasicGroupReturnType = basicGroup
+
 export type getBasicGroupFullInfo = {|
   _: 'getBasicGroupFullInfo',
   basic_group_id?: number,
@@ -7133,6 +7287,8 @@ export type getBasicGroupFullInfoOptional = {|
   _: 'getBasicGroupFullInfo',
   basic_group_id?: number,
 |}
+
+export type getBasicGroupFullInfoReturnType = basicGroupFullInfo
 
 export type getBlockedUsers = {|
   _: 'getBlockedUsers',
@@ -7145,6 +7301,8 @@ export type getBlockedUsersOptional = {|
   offset?: number,
   limit?: number,
 |}
+
+export type getBlockedUsersReturnType = users
 
 export type getCallbackQueryAnswer = {|
   _: 'getCallbackQueryAnswer',
@@ -7160,6 +7318,8 @@ export type getCallbackQueryAnswerOptional = {|
   payload?: CallbackQueryPayloadOptional,
 |}
 
+export type getCallbackQueryAnswerReturnType = callbackQueryAnswer
+
 export type getChat = {|
   _: 'getChat',
   chat_id?: number,
@@ -7170,6 +7330,8 @@ export type getChatOptional = {|
   chat_id?: number,
 |}
 
+export type getChatReturnType = chat
+
 export type getChatAdministrators = {|
   _: 'getChatAdministrators',
   chat_id?: number,
@@ -7179,6 +7341,8 @@ export type getChatAdministratorsOptional = {|
   _: 'getChatAdministrators',
   chat_id?: number,
 |}
+
+export type getChatAdministratorsReturnType = users
 
 export type getChatEventLog = {|
   _: 'getChatEventLog',
@@ -7200,6 +7364,8 @@ export type getChatEventLogOptional = {|
   user_ids?: number,
 |}
 
+export type getChatEventLogReturnType = chatEvents
+
 export type getChatHistory = {|
   _: 'getChatHistory',
   chat_id?: number,
@@ -7218,6 +7384,8 @@ export type getChatHistoryOptional = {|
   only_local?: boolean,
 |}
 
+export type getChatHistoryReturnType = messages
+
 export type getChatMember = {|
   _: 'getChatMember',
   chat_id?: number,
@@ -7229,6 +7397,8 @@ export type getChatMemberOptional = {|
   chat_id?: number,
   user_id?: number,
 |}
+
+export type getChatMemberReturnType = chatMember
 
 export type getChatMessageByDate = {|
   _: 'getChatMessageByDate',
@@ -7242,6 +7412,8 @@ export type getChatMessageByDateOptional = {|
   date?: number,
 |}
 
+export type getChatMessageByDateReturnType = message
+
 export type getChatPinnedMessage = {|
   _: 'getChatPinnedMessage',
   chat_id?: number,
@@ -7252,6 +7424,8 @@ export type getChatPinnedMessageOptional = {|
   chat_id?: number,
 |}
 
+export type getChatPinnedMessageReturnType = message
+
 export type getChatReportSpamState = {|
   _: 'getChatReportSpamState',
   chat_id?: number,
@@ -7261,6 +7435,8 @@ export type getChatReportSpamStateOptional = {|
   _: 'getChatReportSpamState',
   chat_id?: number,
 |}
+
+export type getChatReportSpamStateReturnType = chatReportSpamState
 
 export type getChats = {|
   _: 'getChats',
@@ -7276,6 +7452,8 @@ export type getChatsOptional = {|
   limit?: number,
 |}
 
+export type getChatsReturnType = chats
+
 export type getConnectedWebsites = {|
   _: 'getConnectedWebsites',
 |}
@@ -7283,6 +7461,8 @@ export type getConnectedWebsites = {|
 export type getConnectedWebsitesOptional = {|
   _: 'getConnectedWebsites',
 |}
+
+export type getConnectedWebsitesReturnType = connectedWebsites
 
 export type getCountryCode = {|
   _: 'getCountryCode',
@@ -7292,6 +7472,8 @@ export type getCountryCodeOptional = {|
   _: 'getCountryCode',
 |}
 
+export type getCountryCodeReturnType = text
+
 export type getCreatedPublicChats = {|
   _: 'getCreatedPublicChats',
 |}
@@ -7300,6 +7482,8 @@ export type getCreatedPublicChatsOptional = {|
   _: 'getCreatedPublicChats',
 |}
 
+export type getCreatedPublicChatsReturnType = chats
+
 export type getFavoriteStickers = {|
   _: 'getFavoriteStickers',
 |}
@@ -7307,6 +7491,8 @@ export type getFavoriteStickers = {|
 export type getFavoriteStickersOptional = {|
   _: 'getFavoriteStickers',
 |}
+
+export type getFavoriteStickersReturnType = stickers
 
 export type getFile = {|
   _: 'getFile',
@@ -7318,6 +7504,8 @@ export type getFileOptional = {|
   file_id?: number,
 |}
 
+export type getFileReturnType = file
+
 export type getFileExtension = {|
   _: 'getFileExtension',
   mime_type?: string,
@@ -7328,6 +7516,8 @@ export type getFileExtensionOptional = {|
   mime_type?: string,
 |}
 
+export type getFileExtensionReturnType = text
+
 export type getFileMimeType = {|
   _: 'getFileMimeType',
   file_name?: string,
@@ -7337,6 +7527,8 @@ export type getFileMimeTypeOptional = {|
   _: 'getFileMimeType',
   file_name?: string,
 |}
+
+export type getFileMimeTypeReturnType = text
 
 export type getGameHighScores = {|
   _: 'getGameHighScores',
@@ -7352,6 +7544,8 @@ export type getGameHighScoresOptional = {|
   user_id?: number,
 |}
 
+export type getGameHighScoresReturnType = gameHighScores
+
 export type getGroupsInCommon = {|
   _: 'getGroupsInCommon',
   user_id?: number,
@@ -7366,6 +7560,8 @@ export type getGroupsInCommonOptional = {|
   limit?: number,
 |}
 
+export type getGroupsInCommonReturnType = chats
+
 export type getImportedContactCount = {|
   _: 'getImportedContactCount',
 |}
@@ -7373,6 +7569,8 @@ export type getImportedContactCount = {|
 export type getImportedContactCountOptional = {|
   _: 'getImportedContactCount',
 |}
+
+export type getImportedContactCountReturnType = count
 
 export type getInlineGameHighScores = {|
   _: 'getInlineGameHighScores',
@@ -7385,6 +7583,8 @@ export type getInlineGameHighScoresOptional = {|
   inline_message_id?: string,
   user_id?: number,
 |}
+
+export type getInlineGameHighScoresReturnType = gameHighScores
 
 export type getInlineQueryResults = {|
   _: 'getInlineQueryResults',
@@ -7404,6 +7604,8 @@ export type getInlineQueryResultsOptional = {|
   offset?: string,
 |}
 
+export type getInlineQueryResultsReturnType = inlineQueryResults
+
 export type getInstalledStickerSets = {|
   _: 'getInstalledStickerSets',
   is_masks?: boolean,
@@ -7414,6 +7616,8 @@ export type getInstalledStickerSetsOptional = {|
   is_masks?: boolean,
 |}
 
+export type getInstalledStickerSetsReturnType = stickerSets
+
 export type getInviteText = {|
   _: 'getInviteText',
 |}
@@ -7422,6 +7626,8 @@ export type getInviteTextOptional = {|
   _: 'getInviteText',
 |}
 
+export type getInviteTextReturnType = text
+
 export type getMe = {|
   _: 'getMe',
 |}
@@ -7429,6 +7635,8 @@ export type getMe = {|
 export type getMeOptional = {|
   _: 'getMe',
 |}
+
+export type getMeReturnType = user
 
 export type getMessage = {|
   _: 'getMessage',
@@ -7442,6 +7650,8 @@ export type getMessageOptional = {|
   message_id?: number,
 |}
 
+export type getMessageReturnType = message
+
 export type getMessages = {|
   _: 'getMessages',
   chat_id?: number,
@@ -7454,6 +7664,8 @@ export type getMessagesOptional = {|
   message_ids?: number,
 |}
 
+export type getMessagesReturnType = messages
+
 export type getNetworkStatistics = {|
   _: 'getNetworkStatistics',
   only_current?: boolean,
@@ -7463,6 +7675,8 @@ export type getNetworkStatisticsOptional = {|
   _: 'getNetworkStatistics',
   only_current?: boolean,
 |}
+
+export type getNetworkStatisticsReturnType = networkStatistics
 
 export type getNotificationSettings = {|
   _: 'getNotificationSettings',
@@ -7474,6 +7688,8 @@ export type getNotificationSettingsOptional = {|
   scope?: NotificationSettingsScopeOptional,
 |}
 
+export type getNotificationSettingsReturnType = notificationSettings
+
 export type getOption = {|
   _: 'getOption',
   name?: string,
@@ -7484,6 +7700,8 @@ export type getOptionOptional = {|
   name?: string,
 |}
 
+export type getOptionReturnType = OptionValue
+
 export type getPasswordState = {|
   _: 'getPasswordState',
 |}
@@ -7491,6 +7709,8 @@ export type getPasswordState = {|
 export type getPasswordStateOptional = {|
   _: 'getPasswordState',
 |}
+
+export type getPasswordStateReturnType = passwordState
 
 export type getPaymentForm = {|
   _: 'getPaymentForm',
@@ -7504,6 +7724,8 @@ export type getPaymentFormOptional = {|
   message_id?: number,
 |}
 
+export type getPaymentFormReturnType = paymentForm
+
 export type getPaymentReceipt = {|
   _: 'getPaymentReceipt',
   chat_id?: number,
@@ -7516,6 +7738,8 @@ export type getPaymentReceiptOptional = {|
   message_id?: number,
 |}
 
+export type getPaymentReceiptReturnType = paymentReceipt
+
 export type getProxy = {|
   _: 'getProxy',
 |}
@@ -7523,6 +7747,8 @@ export type getProxy = {|
 export type getProxyOptional = {|
   _: 'getProxy',
 |}
+
+export type getProxyReturnType = Proxy
 
 export type getPublicMessageLink = {|
   _: 'getPublicMessageLink',
@@ -7538,6 +7764,8 @@ export type getPublicMessageLinkOptional = {|
   for_album?: boolean,
 |}
 
+export type getPublicMessageLinkReturnType = publicMessageLink
+
 export type getRecentInlineBots = {|
   _: 'getRecentInlineBots',
 |}
@@ -7545,6 +7773,8 @@ export type getRecentInlineBots = {|
 export type getRecentInlineBotsOptional = {|
   _: 'getRecentInlineBots',
 |}
+
+export type getRecentInlineBotsReturnType = users
 
 export type getRecentStickers = {|
   _: 'getRecentStickers',
@@ -7556,6 +7786,8 @@ export type getRecentStickersOptional = {|
   is_attached?: boolean,
 |}
 
+export type getRecentStickersReturnType = stickers
+
 export type getRecentlyVisitedTMeUrls = {|
   _: 'getRecentlyVisitedTMeUrls',
   referrer?: string,
@@ -7566,6 +7798,8 @@ export type getRecentlyVisitedTMeUrlsOptional = {|
   referrer?: string,
 |}
 
+export type getRecentlyVisitedTMeUrlsReturnType = tMeUrls
+
 export type getRecoveryEmailAddress = {|
   _: 'getRecoveryEmailAddress',
   password?: string,
@@ -7575,6 +7809,8 @@ export type getRecoveryEmailAddressOptional = {|
   _: 'getRecoveryEmailAddress',
   password?: string,
 |}
+
+export type getRecoveryEmailAddressReturnType = recoveryEmailAddress
 
 export type getRemoteFile = {|
   _: 'getRemoteFile',
@@ -7588,6 +7824,8 @@ export type getRemoteFileOptional = {|
   file_type?: FileTypeOptional,
 |}
 
+export type getRemoteFileReturnType = file
+
 export type getRepliedMessage = {|
   _: 'getRepliedMessage',
   chat_id?: number,
@@ -7600,6 +7838,8 @@ export type getRepliedMessageOptional = {|
   message_id?: number,
 |}
 
+export type getRepliedMessageReturnType = message
+
 export type getSavedAnimations = {|
   _: 'getSavedAnimations',
 |}
@@ -7608,6 +7848,8 @@ export type getSavedAnimationsOptional = {|
   _: 'getSavedAnimations',
 |}
 
+export type getSavedAnimationsReturnType = animations
+
 export type getSavedOrderInfo = {|
   _: 'getSavedOrderInfo',
 |}
@@ -7615,6 +7857,8 @@ export type getSavedOrderInfo = {|
 export type getSavedOrderInfoOptional = {|
   _: 'getSavedOrderInfo',
 |}
+
+export type getSavedOrderInfoReturnType = orderInfo
 
 export type getSecretChat = {|
   _: 'getSecretChat',
@@ -7626,6 +7870,8 @@ export type getSecretChatOptional = {|
   secret_chat_id?: number,
 |}
 
+export type getSecretChatReturnType = secretChat
+
 export type getStickerEmojis = {|
   _: 'getStickerEmojis',
   sticker?: InputFileOptional,
@@ -7636,6 +7882,8 @@ export type getStickerEmojisOptional = {|
   sticker?: InputFileOptional,
 |}
 
+export type getStickerEmojisReturnType = stickerEmojis
+
 export type getStickerSet = {|
   _: 'getStickerSet',
   set_id?: number,
@@ -7645,6 +7893,8 @@ export type getStickerSetOptional = {|
   _: 'getStickerSet',
   set_id?: number,
 |}
+
+export type getStickerSetReturnType = stickerSet
 
 export type getStickers = {|
   _: 'getStickers',
@@ -7658,6 +7908,8 @@ export type getStickersOptional = {|
   limit?: number,
 |}
 
+export type getStickersReturnType = stickers
+
 export type getStorageStatistics = {|
   _: 'getStorageStatistics',
   chat_limit?: number,
@@ -7668,6 +7920,8 @@ export type getStorageStatisticsOptional = {|
   chat_limit?: number,
 |}
 
+export type getStorageStatisticsReturnType = storageStatistics
+
 export type getStorageStatisticsFast = {|
   _: 'getStorageStatisticsFast',
 |}
@@ -7675,6 +7929,8 @@ export type getStorageStatisticsFast = {|
 export type getStorageStatisticsFastOptional = {|
   _: 'getStorageStatisticsFast',
 |}
+
+export type getStorageStatisticsFastReturnType = storageStatisticsFast
 
 export type getSupergroup = {|
   _: 'getSupergroup',
@@ -7686,6 +7942,8 @@ export type getSupergroupOptional = {|
   supergroup_id?: number,
 |}
 
+export type getSupergroupReturnType = supergroup
+
 export type getSupergroupFullInfo = {|
   _: 'getSupergroupFullInfo',
   supergroup_id?: number,
@@ -7695,6 +7953,8 @@ export type getSupergroupFullInfoOptional = {|
   _: 'getSupergroupFullInfo',
   supergroup_id?: number,
 |}
+
+export type getSupergroupFullInfoReturnType = supergroupFullInfo
 
 export type getSupergroupMembers = {|
   _: 'getSupergroupMembers',
@@ -7712,6 +7972,8 @@ export type getSupergroupMembersOptional = {|
   limit?: number,
 |}
 
+export type getSupergroupMembersReturnType = chatMembers
+
 export type getSupportUser = {|
   _: 'getSupportUser',
 |}
@@ -7719,6 +7981,8 @@ export type getSupportUser = {|
 export type getSupportUserOptional = {|
   _: 'getSupportUser',
 |}
+
+export type getSupportUserReturnType = user
 
 export type getTemporaryPasswordState = {|
   _: 'getTemporaryPasswordState',
@@ -7728,6 +7992,8 @@ export type getTemporaryPasswordStateOptional = {|
   _: 'getTemporaryPasswordState',
 |}
 
+export type getTemporaryPasswordStateReturnType = temporaryPasswordState
+
 export type getTermsOfService = {|
   _: 'getTermsOfService',
 |}
@@ -7735,6 +8001,8 @@ export type getTermsOfService = {|
 export type getTermsOfServiceOptional = {|
   _: 'getTermsOfService',
 |}
+
+export type getTermsOfServiceReturnType = text
 
 export type getTextEntities = {|
   _: 'getTextEntities',
@@ -7745,6 +8013,8 @@ export type getTextEntitiesOptional = {|
   _: 'getTextEntities',
   text?: string,
 |}
+
+export type getTextEntitiesReturnType = textEntities
 
 export type getTopChats = {|
   _: 'getTopChats',
@@ -7758,6 +8028,8 @@ export type getTopChatsOptional = {|
   limit?: number,
 |}
 
+export type getTopChatsReturnType = chats
+
 export type getTrendingStickerSets = {|
   _: 'getTrendingStickerSets',
 |}
@@ -7765,6 +8037,8 @@ export type getTrendingStickerSets = {|
 export type getTrendingStickerSetsOptional = {|
   _: 'getTrendingStickerSets',
 |}
+
+export type getTrendingStickerSetsReturnType = stickerSets
 
 export type getUser = {|
   _: 'getUser',
@@ -7776,6 +8050,8 @@ export type getUserOptional = {|
   user_id?: number,
 |}
 
+export type getUserReturnType = user
+
 export type getUserFullInfo = {|
   _: 'getUserFullInfo',
   user_id?: number,
@@ -7786,6 +8062,8 @@ export type getUserFullInfoOptional = {|
   user_id?: number,
 |}
 
+export type getUserFullInfoReturnType = userFullInfo
+
 export type getUserPrivacySettingRules = {|
   _: 'getUserPrivacySettingRules',
   setting?: UserPrivacySettingOptional,
@@ -7795,6 +8073,8 @@ export type getUserPrivacySettingRulesOptional = {|
   _: 'getUserPrivacySettingRules',
   setting?: UserPrivacySettingOptional,
 |}
+
+export type getUserPrivacySettingRulesReturnType = userPrivacySettingRules
 
 export type getUserProfilePhotos = {|
   _: 'getUserProfilePhotos',
@@ -7810,6 +8090,8 @@ export type getUserProfilePhotosOptional = {|
   limit?: number,
 |}
 
+export type getUserProfilePhotosReturnType = userProfilePhotos
+
 export type getWallpapers = {|
   _: 'getWallpapers',
 |}
@@ -7817,6 +8099,8 @@ export type getWallpapers = {|
 export type getWallpapersOptional = {|
   _: 'getWallpapers',
 |}
+
+export type getWallpapersReturnType = wallpapers
 
 export type getWebPageInstantView = {|
   _: 'getWebPageInstantView',
@@ -7830,6 +8114,8 @@ export type getWebPageInstantViewOptional = {|
   force_full?: boolean,
 |}
 
+export type getWebPageInstantViewReturnType = webPageInstantView
+
 export type getWebPagePreview = {|
   _: 'getWebPagePreview',
   text?: formattedTextOptional,
@@ -7839,6 +8125,8 @@ export type getWebPagePreviewOptional = {|
   _: 'getWebPagePreview',
   text?: formattedTextOptional,
 |}
+
+export type getWebPagePreviewReturnType = webPage
 
 export type importContacts = {|
   _: 'importContacts',
@@ -7850,6 +8138,8 @@ export type importContactsOptional = {|
   contacts?: contactOptional[],
 |}
 
+export type importContactsReturnType = importedContacts
+
 export type joinChatByInviteLink = {|
   _: 'joinChatByInviteLink',
   invite_link?: string,
@@ -7860,6 +8150,8 @@ export type joinChatByInviteLinkOptional = {|
   invite_link?: string,
 |}
 
+export type joinChatByInviteLinkReturnType = chat
+
 export type logOut = {|
   _: 'logOut',
 |}
@@ -7867,6 +8159,8 @@ export type logOut = {|
 export type logOutOptional = {|
   _: 'logOut',
 |}
+
+export type logOutReturnType = ok
 
 export type openChat = {|
   _: 'openChat',
@@ -7877,6 +8171,8 @@ export type openChatOptional = {|
   _: 'openChat',
   chat_id?: number,
 |}
+
+export type openChatReturnType = ok
 
 export type openMessageContent = {|
   _: 'openMessageContent',
@@ -7889,6 +8185,8 @@ export type openMessageContentOptional = {|
   chat_id?: number,
   message_id?: number,
 |}
+
+export type openMessageContentReturnType = ok
 
 export type optimizeStorage = {|
   _: 'optimizeStorage',
@@ -7914,6 +8212,8 @@ export type optimizeStorageOptional = {|
   chat_limit?: number,
 |}
 
+export type optimizeStorageReturnType = storageStatistics
+
 export type parseTextEntities = {|
   _: 'parseTextEntities',
   text?: string,
@@ -7925,6 +8225,8 @@ export type parseTextEntitiesOptional = {|
   text?: string,
   parse_mode?: TextParseModeOptional,
 |}
+
+export type parseTextEntitiesReturnType = formattedText
 
 export type pinSupergroupMessage = {|
   _: 'pinSupergroupMessage',
@@ -7940,6 +8242,8 @@ export type pinSupergroupMessageOptional = {|
   disable_notification?: boolean,
 |}
 
+export type pinSupergroupMessageReturnType = ok
+
 export type processDcUpdate = {|
   _: 'processDcUpdate',
   dc?: string,
@@ -7952,6 +8256,8 @@ export type processDcUpdateOptional = {|
   addr?: string,
 |}
 
+export type processDcUpdateReturnType = ok
+
 export type readAllChatMentions = {|
   _: 'readAllChatMentions',
   chat_id?: number,
@@ -7961,6 +8267,8 @@ export type readAllChatMentionsOptional = {|
   _: 'readAllChatMentions',
   chat_id?: number,
 |}
+
+export type readAllChatMentionsReturnType = ok
 
 export type recoverAuthenticationPassword = {|
   _: 'recoverAuthenticationPassword',
@@ -7972,6 +8280,8 @@ export type recoverAuthenticationPasswordOptional = {|
   recovery_code?: string,
 |}
 
+export type recoverAuthenticationPasswordReturnType = ok
+
 export type recoverPassword = {|
   _: 'recoverPassword',
   recovery_code?: string,
@@ -7981,6 +8291,8 @@ export type recoverPasswordOptional = {|
   _: 'recoverPassword',
   recovery_code?: string,
 |}
+
+export type recoverPasswordReturnType = passwordState
 
 export type registerDevice = {|
   _: 'registerDevice',
@@ -7994,6 +8306,8 @@ export type registerDeviceOptional = {|
   other_user_ids?: number,
 |}
 
+export type registerDeviceReturnType = ok
+
 export type removeContacts = {|
   _: 'removeContacts',
   user_ids?: number,
@@ -8003,6 +8317,8 @@ export type removeContactsOptional = {|
   _: 'removeContacts',
   user_ids?: number,
 |}
+
+export type removeContactsReturnType = ok
 
 export type removeFavoriteSticker = {|
   _: 'removeFavoriteSticker',
@@ -8014,6 +8330,8 @@ export type removeFavoriteStickerOptional = {|
   sticker?: InputFileOptional,
 |}
 
+export type removeFavoriteStickerReturnType = ok
+
 export type removeRecentHashtag = {|
   _: 'removeRecentHashtag',
   hashtag?: string,
@@ -8023,6 +8341,8 @@ export type removeRecentHashtagOptional = {|
   _: 'removeRecentHashtag',
   hashtag?: string,
 |}
+
+export type removeRecentHashtagReturnType = ok
 
 export type removeRecentSticker = {|
   _: 'removeRecentSticker',
@@ -8036,6 +8356,8 @@ export type removeRecentStickerOptional = {|
   sticker?: InputFileOptional,
 |}
 
+export type removeRecentStickerReturnType = ok
+
 export type removeRecentlyFoundChat = {|
   _: 'removeRecentlyFoundChat',
   chat_id?: number,
@@ -8045,6 +8367,8 @@ export type removeRecentlyFoundChatOptional = {|
   _: 'removeRecentlyFoundChat',
   chat_id?: number,
 |}
+
+export type removeRecentlyFoundChatReturnType = ok
 
 export type removeSavedAnimation = {|
   _: 'removeSavedAnimation',
@@ -8056,6 +8380,8 @@ export type removeSavedAnimationOptional = {|
   animation?: InputFileOptional,
 |}
 
+export type removeSavedAnimationReturnType = ok
+
 export type removeStickerFromSet = {|
   _: 'removeStickerFromSet',
   sticker?: InputFileOptional,
@@ -8065,6 +8391,8 @@ export type removeStickerFromSetOptional = {|
   _: 'removeStickerFromSet',
   sticker?: InputFileOptional,
 |}
+
+export type removeStickerFromSetReturnType = ok
 
 export type removeTopChat = {|
   _: 'removeTopChat',
@@ -8078,6 +8406,8 @@ export type removeTopChatOptional = {|
   chat_id?: number,
 |}
 
+export type removeTopChatReturnType = ok
+
 export type reorderInstalledStickerSets = {|
   _: 'reorderInstalledStickerSets',
   is_masks?: boolean,
@@ -8089,6 +8419,8 @@ export type reorderInstalledStickerSetsOptional = {|
   is_masks?: boolean,
   sticker_set_ids?: number,
 |}
+
+export type reorderInstalledStickerSetsReturnType = ok
 
 export type reportChat = {|
   _: 'reportChat',
@@ -8104,6 +8436,8 @@ export type reportChatOptional = {|
   message_ids?: number,
 |}
 
+export type reportChatReturnType = ok
+
 export type reportSupergroupSpam = {|
   _: 'reportSupergroupSpam',
   supergroup_id?: number,
@@ -8118,6 +8452,8 @@ export type reportSupergroupSpamOptional = {|
   message_ids?: number,
 |}
 
+export type reportSupergroupSpamReturnType = ok
+
 export type requestAuthenticationPasswordRecovery = {|
   _: 'requestAuthenticationPasswordRecovery',
 |}
@@ -8125,6 +8461,8 @@ export type requestAuthenticationPasswordRecovery = {|
 export type requestAuthenticationPasswordRecoveryOptional = {|
   _: 'requestAuthenticationPasswordRecovery',
 |}
+
+export type requestAuthenticationPasswordRecoveryReturnType = ok
 
 export type requestPasswordRecovery = {|
   _: 'requestPasswordRecovery',
@@ -8134,6 +8472,8 @@ export type requestPasswordRecoveryOptional = {|
   _: 'requestPasswordRecovery',
 |}
 
+export type requestPasswordRecoveryReturnType = passwordRecoveryInfo
+
 export type resendAuthenticationCode = {|
   _: 'resendAuthenticationCode',
 |}
@@ -8141,6 +8481,8 @@ export type resendAuthenticationCode = {|
 export type resendAuthenticationCodeOptional = {|
   _: 'resendAuthenticationCode',
 |}
+
+export type resendAuthenticationCodeReturnType = ok
 
 export type resendChangePhoneNumberCode = {|
   _: 'resendChangePhoneNumberCode',
@@ -8150,6 +8492,8 @@ export type resendChangePhoneNumberCodeOptional = {|
   _: 'resendChangePhoneNumberCode',
 |}
 
+export type resendChangePhoneNumberCodeReturnType = authenticationCodeInfo
+
 export type resetAllNotificationSettings = {|
   _: 'resetAllNotificationSettings',
 |}
@@ -8158,6 +8502,8 @@ export type resetAllNotificationSettingsOptional = {|
   _: 'resetAllNotificationSettings',
 |}
 
+export type resetAllNotificationSettingsReturnType = ok
+
 export type resetNetworkStatistics = {|
   _: 'resetNetworkStatistics',
 |}
@@ -8165,6 +8511,8 @@ export type resetNetworkStatistics = {|
 export type resetNetworkStatisticsOptional = {|
   _: 'resetNetworkStatistics',
 |}
+
+export type resetNetworkStatisticsReturnType = ok
 
 export type searchCallMessages = {|
   _: 'searchCallMessages',
@@ -8180,6 +8528,8 @@ export type searchCallMessagesOptional = {|
   only_missed?: boolean,
 |}
 
+export type searchCallMessagesReturnType = messages
+
 export type searchChatMembers = {|
   _: 'searchChatMembers',
   chat_id?: number,
@@ -8193,6 +8543,8 @@ export type searchChatMembersOptional = {|
   query?: string,
   limit?: number,
 |}
+
+export type searchChatMembersReturnType = chatMembers
 
 export type searchChatMessages = {|
   _: 'searchChatMessages',
@@ -8216,6 +8568,8 @@ export type searchChatMessagesOptional = {|
   filter?: SearchMessagesFilterOptional,
 |}
 
+export type searchChatMessagesReturnType = messages
+
 export type searchChatRecentLocationMessages = {|
   _: 'searchChatRecentLocationMessages',
   chat_id?: number,
@@ -8227,6 +8581,8 @@ export type searchChatRecentLocationMessagesOptional = {|
   chat_id?: number,
   limit?: number,
 |}
+
+export type searchChatRecentLocationMessagesReturnType = messages
 
 export type searchChats = {|
   _: 'searchChats',
@@ -8240,6 +8596,8 @@ export type searchChatsOptional = {|
   limit?: number,
 |}
 
+export type searchChatsReturnType = chats
+
 export type searchChatsOnServer = {|
   _: 'searchChatsOnServer',
   query?: string,
@@ -8251,6 +8609,8 @@ export type searchChatsOnServerOptional = {|
   query?: string,
   limit?: number,
 |}
+
+export type searchChatsOnServerReturnType = chats
 
 export type searchContacts = {|
   _: 'searchContacts',
@@ -8264,6 +8624,8 @@ export type searchContactsOptional = {|
   limit?: number,
 |}
 
+export type searchContactsReturnType = users
+
 export type searchHashtags = {|
   _: 'searchHashtags',
   prefix?: string,
@@ -8275,6 +8637,8 @@ export type searchHashtagsOptional = {|
   prefix?: string,
   limit?: number,
 |}
+
+export type searchHashtagsReturnType = hashtags
 
 export type searchInstalledStickerSets = {|
   _: 'searchInstalledStickerSets',
@@ -8289,6 +8653,8 @@ export type searchInstalledStickerSetsOptional = {|
   query?: string,
   limit?: number,
 |}
+
+export type searchInstalledStickerSetsReturnType = stickerSets
 
 export type searchMessages = {|
   _: 'searchMessages',
@@ -8308,6 +8674,8 @@ export type searchMessagesOptional = {|
   limit?: number,
 |}
 
+export type searchMessagesReturnType = messages
+
 export type searchPublicChat = {|
   _: 'searchPublicChat',
   username?: string,
@@ -8318,6 +8686,8 @@ export type searchPublicChatOptional = {|
   username?: string,
 |}
 
+export type searchPublicChatReturnType = chat
+
 export type searchPublicChats = {|
   _: 'searchPublicChats',
   query?: string,
@@ -8327,6 +8697,8 @@ export type searchPublicChatsOptional = {|
   _: 'searchPublicChats',
   query?: string,
 |}
+
+export type searchPublicChatsReturnType = chats
 
 export type searchSecretMessages = {|
   _: 'searchSecretMessages',
@@ -8346,6 +8718,8 @@ export type searchSecretMessagesOptional = {|
   filter?: SearchMessagesFilterOptional,
 |}
 
+export type searchSecretMessagesReturnType = foundMessages
+
 export type searchStickerSet = {|
   _: 'searchStickerSet',
   name?: string,
@@ -8356,6 +8730,8 @@ export type searchStickerSetOptional = {|
   name?: string,
 |}
 
+export type searchStickerSetReturnType = stickerSet
+
 export type searchStickerSets = {|
   _: 'searchStickerSets',
   query?: string,
@@ -8365,6 +8741,8 @@ export type searchStickerSetsOptional = {|
   _: 'searchStickerSets',
   query?: string,
 |}
+
+export type searchStickerSetsReturnType = stickerSets
 
 export type searchStickers = {|
   _: 'searchStickers',
@@ -8377,6 +8755,8 @@ export type searchStickersOptional = {|
   emoji?: string,
   limit?: number,
 |}
+
+export type searchStickersReturnType = stickers
 
 export type sendBotStartMessage = {|
   _: 'sendBotStartMessage',
@@ -8392,6 +8772,8 @@ export type sendBotStartMessageOptional = {|
   parameter?: string,
 |}
 
+export type sendBotStartMessageReturnType = message
+
 export type sendCallDebugInformation = {|
   _: 'sendCallDebugInformation',
   call_id?: number,
@@ -8403,6 +8785,8 @@ export type sendCallDebugInformationOptional = {|
   call_id?: number,
   debug_information?: string,
 |}
+
+export type sendCallDebugInformationReturnType = ok
 
 export type sendCallRating = {|
   _: 'sendCallRating',
@@ -8418,6 +8802,8 @@ export type sendCallRatingOptional = {|
   comment?: string,
 |}
 
+export type sendCallRatingReturnType = ok
+
 export type sendChatAction = {|
   _: 'sendChatAction',
   chat_id?: number,
@@ -8430,6 +8816,8 @@ export type sendChatActionOptional = {|
   action?: ChatActionOptional,
 |}
 
+export type sendChatActionReturnType = ok
+
 export type sendChatScreenshotTakenNotification = {|
   _: 'sendChatScreenshotTakenNotification',
   chat_id?: number,
@@ -8439,6 +8827,8 @@ export type sendChatScreenshotTakenNotificationOptional = {|
   _: 'sendChatScreenshotTakenNotification',
   chat_id?: number,
 |}
+
+export type sendChatScreenshotTakenNotificationReturnType = ok
 
 export type sendChatSetTtlMessage = {|
   _: 'sendChatSetTtlMessage',
@@ -8452,6 +8842,8 @@ export type sendChatSetTtlMessageOptional = {|
   ttl?: number,
 |}
 
+export type sendChatSetTtlMessageReturnType = message
+
 export type sendCustomRequest = {|
   _: 'sendCustomRequest',
   method?: string,
@@ -8463,6 +8855,8 @@ export type sendCustomRequestOptional = {|
   method?: string,
   parameters?: string,
 |}
+
+export type sendCustomRequestReturnType = customRequestResult
 
 export type sendInlineQueryResultMessage = {|
   _: 'sendInlineQueryResultMessage',
@@ -8484,6 +8878,8 @@ export type sendInlineQueryResultMessageOptional = {|
   result_id?: string,
 |}
 
+export type sendInlineQueryResultMessageReturnType = message
+
 export type sendMessage = {|
   _: 'sendMessage',
   chat_id?: number,
@@ -8504,6 +8900,8 @@ export type sendMessageOptional = {|
   input_message_content?: InputMessageContentOptional,
 |}
 
+export type sendMessageReturnType = message
+
 export type sendMessageAlbum = {|
   _: 'sendMessageAlbum',
   chat_id?: number,
@@ -8521,6 +8919,8 @@ export type sendMessageAlbumOptional = {|
   from_background?: boolean,
   input_message_contents?: InputMessageContentOptional[],
 |}
+
+export type sendMessageAlbumReturnType = messages
 
 export type sendPaymentForm = {|
   _: 'sendPaymentForm',
@@ -8540,6 +8940,8 @@ export type sendPaymentFormOptional = {|
   credentials?: InputCredentialsOptional,
 |}
 
+export type sendPaymentFormReturnType = paymentResult
+
 export type setAccountTtl = {|
   _: 'setAccountTtl',
   ttl?: accountTtlOptional,
@@ -8550,6 +8952,8 @@ export type setAccountTtlOptional = {|
   ttl?: accountTtlOptional,
 |}
 
+export type setAccountTtlReturnType = ok
+
 export type setAlarm = {|
   _: 'setAlarm',
   seconds?: number,
@@ -8559,6 +8963,8 @@ export type setAlarmOptional = {|
   _: 'setAlarm',
   seconds?: number,
 |}
+
+export type setAlarmReturnType = ok
 
 export type setAuthenticationPhoneNumber = {|
   _: 'setAuthenticationPhoneNumber',
@@ -8574,6 +8980,8 @@ export type setAuthenticationPhoneNumberOptional = {|
   is_current_phone_number?: boolean,
 |}
 
+export type setAuthenticationPhoneNumberReturnType = ok
+
 export type setBio = {|
   _: 'setBio',
   bio?: string,
@@ -8583,6 +8991,8 @@ export type setBioOptional = {|
   _: 'setBio',
   bio?: string,
 |}
+
+export type setBioReturnType = ok
 
 export type setBotUpdatesStatus = {|
   _: 'setBotUpdatesStatus',
@@ -8596,6 +9006,8 @@ export type setBotUpdatesStatusOptional = {|
   error_message?: string,
 |}
 
+export type setBotUpdatesStatusReturnType = ok
+
 export type setChatClientData = {|
   _: 'setChatClientData',
   chat_id?: number,
@@ -8608,6 +9020,8 @@ export type setChatClientDataOptional = {|
   client_data?: string,
 |}
 
+export type setChatClientDataReturnType = ok
+
 export type setChatDraftMessage = {|
   _: 'setChatDraftMessage',
   chat_id?: number,
@@ -8619,6 +9033,8 @@ export type setChatDraftMessageOptional = {|
   chat_id?: number,
   draft_message?: draftMessageOptional,
 |}
+
+export type setChatDraftMessageReturnType = ok
 
 export type setChatMemberStatus = {|
   _: 'setChatMemberStatus',
@@ -8634,6 +9050,8 @@ export type setChatMemberStatusOptional = {|
   status?: ChatMemberStatusOptional,
 |}
 
+export type setChatMemberStatusReturnType = ok
+
 export type setChatPhoto = {|
   _: 'setChatPhoto',
   chat_id?: number,
@@ -8645,6 +9063,8 @@ export type setChatPhotoOptional = {|
   chat_id?: number,
   photo?: InputFileOptional,
 |}
+
+export type setChatPhotoReturnType = ok
 
 export type setChatTitle = {|
   _: 'setChatTitle',
@@ -8658,6 +9078,8 @@ export type setChatTitleOptional = {|
   title?: string,
 |}
 
+export type setChatTitleReturnType = ok
+
 export type setDatabaseEncryptionKey = {|
   _: 'setDatabaseEncryptionKey',
   new_encryption_key?: string,
@@ -8667,6 +9089,8 @@ export type setDatabaseEncryptionKeyOptional = {|
   _: 'setDatabaseEncryptionKey',
   new_encryption_key?: string,
 |}
+
+export type setDatabaseEncryptionKeyReturnType = ok
 
 export type setFileGenerationProgress = {|
   _: 'setFileGenerationProgress',
@@ -8681,6 +9105,8 @@ export type setFileGenerationProgressOptional = {|
   expected_size?: number,
   local_prefix_size?: number,
 |}
+
+export type setFileGenerationProgressReturnType = ok
 
 export type setGameScore = {|
   _: 'setGameScore',
@@ -8702,6 +9128,8 @@ export type setGameScoreOptional = {|
   force?: boolean,
 |}
 
+export type setGameScoreReturnType = message
+
 export type setInlineGameScore = {|
   _: 'setInlineGameScore',
   inline_message_id?: string,
@@ -8720,6 +9148,8 @@ export type setInlineGameScoreOptional = {|
   force?: boolean,
 |}
 
+export type setInlineGameScoreReturnType = ok
+
 export type setName = {|
   _: 'setName',
   first_name?: string,
@@ -8732,6 +9162,8 @@ export type setNameOptional = {|
   last_name?: string,
 |}
 
+export type setNameReturnType = ok
+
 export type setNetworkType = {|
   _: 'setNetworkType',
   type?: NetworkTypeOptional,
@@ -8741,6 +9173,8 @@ export type setNetworkTypeOptional = {|
   _: 'setNetworkType',
   type?: NetworkTypeOptional,
 |}
+
+export type setNetworkTypeReturnType = ok
 
 export type setNotificationSettings = {|
   _: 'setNotificationSettings',
@@ -8754,6 +9188,8 @@ export type setNotificationSettingsOptional = {|
   notification_settings?: notificationSettingsOptional,
 |}
 
+export type setNotificationSettingsReturnType = ok
+
 export type setOption = {|
   _: 'setOption',
   name?: string,
@@ -8765,6 +9201,8 @@ export type setOptionOptional = {|
   name?: string,
   value?: OptionValueOptional,
 |}
+
+export type setOptionReturnType = ok
 
 export type setPassword = {|
   _: 'setPassword',
@@ -8784,6 +9222,8 @@ export type setPasswordOptional = {|
   new_recovery_email_address?: string,
 |}
 
+export type setPasswordReturnType = passwordState
+
 export type setPinnedChats = {|
   _: 'setPinnedChats',
   chat_ids?: number,
@@ -8793,6 +9233,8 @@ export type setPinnedChatsOptional = {|
   _: 'setPinnedChats',
   chat_ids?: number,
 |}
+
+export type setPinnedChatsReturnType = ok
 
 export type setProfilePhoto = {|
   _: 'setProfilePhoto',
@@ -8804,6 +9246,8 @@ export type setProfilePhotoOptional = {|
   photo?: InputFileOptional,
 |}
 
+export type setProfilePhotoReturnType = ok
+
 export type setProxy = {|
   _: 'setProxy',
   proxy?: ProxyOptional,
@@ -8813,6 +9257,8 @@ export type setProxyOptional = {|
   _: 'setProxy',
   proxy?: ProxyOptional,
 |}
+
+export type setProxyReturnType = ok
 
 export type setRecoveryEmailAddress = {|
   _: 'setRecoveryEmailAddress',
@@ -8826,6 +9272,8 @@ export type setRecoveryEmailAddressOptional = {|
   new_recovery_email_address?: string,
 |}
 
+export type setRecoveryEmailAddressReturnType = passwordState
+
 export type setStickerPositionInSet = {|
   _: 'setStickerPositionInSet',
   sticker?: InputFileOptional,
@@ -8837,6 +9285,8 @@ export type setStickerPositionInSetOptional = {|
   sticker?: InputFileOptional,
   position?: number,
 |}
+
+export type setStickerPositionInSetReturnType = ok
 
 export type setSupergroupDescription = {|
   _: 'setSupergroupDescription',
@@ -8850,6 +9300,8 @@ export type setSupergroupDescriptionOptional = {|
   description?: string,
 |}
 
+export type setSupergroupDescriptionReturnType = ok
+
 export type setSupergroupStickerSet = {|
   _: 'setSupergroupStickerSet',
   supergroup_id?: number,
@@ -8861,6 +9313,8 @@ export type setSupergroupStickerSetOptional = {|
   supergroup_id?: number,
   sticker_set_id?: number,
 |}
+
+export type setSupergroupStickerSetReturnType = ok
 
 export type setSupergroupUsername = {|
   _: 'setSupergroupUsername',
@@ -8874,6 +9328,8 @@ export type setSupergroupUsernameOptional = {|
   username?: string,
 |}
 
+export type setSupergroupUsernameReturnType = ok
+
 export type setTdlibParameters = {|
   _: 'setTdlibParameters',
   parameters?: tdlibParametersOptional,
@@ -8883,6 +9339,8 @@ export type setTdlibParametersOptional = {|
   _: 'setTdlibParameters',
   parameters?: tdlibParametersOptional,
 |}
+
+export type setTdlibParametersReturnType = ok
 
 export type setUserPrivacySettingRules = {|
   _: 'setUserPrivacySettingRules',
@@ -8896,6 +9354,8 @@ export type setUserPrivacySettingRulesOptional = {|
   rules?: userPrivacySettingRulesOptional,
 |}
 
+export type setUserPrivacySettingRulesReturnType = ok
+
 export type setUsername = {|
   _: 'setUsername',
   username?: string,
@@ -8906,6 +9366,8 @@ export type setUsernameOptional = {|
   username?: string,
 |}
 
+export type setUsernameReturnType = ok
+
 export type terminateAllOtherSessions = {|
   _: 'terminateAllOtherSessions',
 |}
@@ -8913,6 +9375,8 @@ export type terminateAllOtherSessions = {|
 export type terminateAllOtherSessionsOptional = {|
   _: 'terminateAllOtherSessions',
 |}
+
+export type terminateAllOtherSessionsReturnType = ok
 
 export type terminateSession = {|
   _: 'terminateSession',
@@ -8924,6 +9388,8 @@ export type terminateSessionOptional = {|
   session_id?: number,
 |}
 
+export type terminateSessionReturnType = ok
+
 export type testCallBytes = {|
   _: 'testCallBytes',
   x?: string,
@@ -8934,6 +9400,8 @@ export type testCallBytesOptional = {|
   x?: string,
 |}
 
+export type testCallBytesReturnType = testBytes
+
 export type testCallEmpty = {|
   _: 'testCallEmpty',
 |}
@@ -8941,6 +9409,8 @@ export type testCallEmpty = {|
 export type testCallEmptyOptional = {|
   _: 'testCallEmpty',
 |}
+
+export type testCallEmptyReturnType = ok
 
 export type testCallString = {|
   _: 'testCallString',
@@ -8952,6 +9422,8 @@ export type testCallStringOptional = {|
   x?: string,
 |}
 
+export type testCallStringReturnType = testString
+
 export type testCallVectorInt = {|
   _: 'testCallVectorInt',
   x?: number,
@@ -8961,6 +9433,8 @@ export type testCallVectorIntOptional = {|
   _: 'testCallVectorInt',
   x?: number,
 |}
+
+export type testCallVectorIntReturnType = testVectorInt
 
 export type testCallVectorIntObject = {|
   _: 'testCallVectorIntObject',
@@ -8972,6 +9446,8 @@ export type testCallVectorIntObjectOptional = {|
   x?: testIntOptional[],
 |}
 
+export type testCallVectorIntObjectReturnType = testVectorIntObject
+
 export type testCallVectorString = {|
   _: 'testCallVectorString',
   x?: string,
@@ -8981,6 +9457,8 @@ export type testCallVectorStringOptional = {|
   _: 'testCallVectorString',
   x?: string,
 |}
+
+export type testCallVectorStringReturnType = testVectorString
 
 export type testCallVectorStringObject = {|
   _: 'testCallVectorStringObject',
@@ -8992,6 +9470,8 @@ export type testCallVectorStringObjectOptional = {|
   x?: testStringOptional[],
 |}
 
+export type testCallVectorStringObjectReturnType = testVectorStringObject
+
 export type testGetDifference = {|
   _: 'testGetDifference',
 |}
@@ -9000,6 +9480,8 @@ export type testGetDifferenceOptional = {|
   _: 'testGetDifference',
 |}
 
+export type testGetDifferenceReturnType = ok
+
 export type testNetwork = {|
   _: 'testNetwork',
 |}
@@ -9007,6 +9489,8 @@ export type testNetwork = {|
 export type testNetworkOptional = {|
   _: 'testNetwork',
 |}
+
+export type testNetworkReturnType = ok
 
 export type testSquareInt = {|
   _: 'testSquareInt',
@@ -9018,6 +9502,8 @@ export type testSquareIntOptional = {|
   x?: number,
 |}
 
+export type testSquareIntReturnType = testInt
+
 export type testUseError = {|
   _: 'testUseError',
 |}
@@ -9026,6 +9512,8 @@ export type testUseErrorOptional = {|
   _: 'testUseError',
 |}
 
+export type testUseErrorReturnType = error
+
 export type testUseUpdate = {|
   _: 'testUseUpdate',
 |}
@@ -9033,6 +9521,8 @@ export type testUseUpdate = {|
 export type testUseUpdateOptional = {|
   _: 'testUseUpdate',
 |}
+
+export type testUseUpdateReturnType = Update
 
 export type toggleBasicGroupAdministrators = {|
   _: 'toggleBasicGroupAdministrators',
@@ -9046,6 +9536,8 @@ export type toggleBasicGroupAdministratorsOptional = {|
   everyone_is_administrator?: boolean,
 |}
 
+export type toggleBasicGroupAdministratorsReturnType = ok
+
 export type toggleChatIsPinned = {|
   _: 'toggleChatIsPinned',
   chat_id?: number,
@@ -9057,6 +9549,8 @@ export type toggleChatIsPinnedOptional = {|
   chat_id?: number,
   is_pinned?: boolean,
 |}
+
+export type toggleChatIsPinnedReturnType = ok
 
 export type toggleSupergroupInvites = {|
   _: 'toggleSupergroupInvites',
@@ -9070,6 +9564,8 @@ export type toggleSupergroupInvitesOptional = {|
   anyone_can_invite?: boolean,
 |}
 
+export type toggleSupergroupInvitesReturnType = ok
+
 export type toggleSupergroupIsAllHistoryAvailable = {|
   _: 'toggleSupergroupIsAllHistoryAvailable',
   supergroup_id?: number,
@@ -9081,6 +9577,8 @@ export type toggleSupergroupIsAllHistoryAvailableOptional = {|
   supergroup_id?: number,
   is_all_history_available?: boolean,
 |}
+
+export type toggleSupergroupIsAllHistoryAvailableReturnType = ok
 
 export type toggleSupergroupSignMessages = {|
   _: 'toggleSupergroupSignMessages',
@@ -9094,6 +9592,8 @@ export type toggleSupergroupSignMessagesOptional = {|
   sign_messages?: boolean,
 |}
 
+export type toggleSupergroupSignMessagesReturnType = ok
+
 export type unblockUser = {|
   _: 'unblockUser',
   user_id?: number,
@@ -9103,6 +9603,8 @@ export type unblockUserOptional = {|
   _: 'unblockUser',
   user_id?: number,
 |}
+
+export type unblockUserReturnType = ok
 
 export type unpinSupergroupMessage = {|
   _: 'unpinSupergroupMessage',
@@ -9114,6 +9616,8 @@ export type unpinSupergroupMessageOptional = {|
   supergroup_id?: number,
 |}
 
+export type unpinSupergroupMessageReturnType = ok
+
 export type upgradeBasicGroupChatToSupergroupChat = {|
   _: 'upgradeBasicGroupChatToSupergroupChat',
   chat_id?: number,
@@ -9123,6 +9627,8 @@ export type upgradeBasicGroupChatToSupergroupChatOptional = {|
   _: 'upgradeBasicGroupChatToSupergroupChat',
   chat_id?: number,
 |}
+
+export type upgradeBasicGroupChatToSupergroupChatReturnType = chat
 
 export type uploadFile = {|
   _: 'uploadFile',
@@ -9138,6 +9644,8 @@ export type uploadFileOptional = {|
   priority?: number,
 |}
 
+export type uploadFileReturnType = file
+
 export type uploadStickerFile = {|
   _: 'uploadStickerFile',
   user_id?: number,
@@ -9149,6 +9657,8 @@ export type uploadStickerFileOptional = {|
   user_id?: number,
   png_sticker?: InputFileOptional,
 |}
+
+export type uploadStickerFileReturnType = file
 
 export type validateOrderInfo = {|
   _: 'validateOrderInfo',
@@ -9166,6 +9676,8 @@ export type validateOrderInfoOptional = {|
   allow_save?: boolean,
 |}
 
+export type validateOrderInfoReturnType = validatedOrderInfo
+
 export type viewMessages = {|
   _: 'viewMessages',
   chat_id?: number,
@@ -9180,6 +9692,8 @@ export type viewMessagesOptional = {|
   force_read?: boolean,
 |}
 
+export type viewMessagesReturnType = ok
+
 export type viewTrendingStickerSets = {|
   _: 'viewTrendingStickerSets',
   sticker_set_ids?: number,
@@ -9189,6 +9703,8 @@ export type viewTrendingStickerSetsOptional = {|
   _: 'viewTrendingStickerSets',
   sticker_set_ids?: number,
 |}
+
+export type viewTrendingStickerSetsReturnType = ok
 
 // -----------
 
@@ -10903,3 +11419,523 @@ export type TDFunctionOptional =
   | validateOrderInfoOptional
   | viewMessagesOptional
   | viewTrendingStickerSetsOptional
+
+export type Invoke =
+  & ((query: acceptCallOptional) => Promise<acceptCallReturnType>)
+  & ((query: addChatMemberOptional) => Promise<addChatMemberReturnType>)
+  & ((query: addChatMembersOptional) => Promise<addChatMembersReturnType>)
+  & ((query: addFavoriteStickerOptional) => Promise<addFavoriteStickerReturnType>)
+  & ((query: addNetworkStatisticsOptional) => Promise<addNetworkStatisticsReturnType>)
+  & ((query: addRecentStickerOptional) => Promise<addRecentStickerReturnType>)
+  & ((query: addRecentlyFoundChatOptional) => Promise<addRecentlyFoundChatReturnType>)
+  & ((query: addSavedAnimationOptional) => Promise<addSavedAnimationReturnType>)
+  & ((query: addStickerToSetOptional) => Promise<addStickerToSetReturnType>)
+  & ((query: answerCallbackQueryOptional) => Promise<answerCallbackQueryReturnType>)
+  & ((query: answerCustomQueryOptional) => Promise<answerCustomQueryReturnType>)
+  & ((query: answerInlineQueryOptional) => Promise<answerInlineQueryReturnType>)
+  & ((query: answerPreCheckoutQueryOptional) => Promise<answerPreCheckoutQueryReturnType>)
+  & ((query: answerShippingQueryOptional) => Promise<answerShippingQueryReturnType>)
+  & ((query: blockUserOptional) => Promise<blockUserReturnType>)
+  & ((query: cancelDownloadFileOptional) => Promise<cancelDownloadFileReturnType>)
+  & ((query: cancelUploadFileOptional) => Promise<cancelUploadFileReturnType>)
+  & ((query: changeChatReportSpamStateOptional) => Promise<changeChatReportSpamStateReturnType>)
+  & ((query: changeImportedContactsOptional) => Promise<changeImportedContactsReturnType>)
+  & ((query: changePhoneNumberOptional) => Promise<changePhoneNumberReturnType>)
+  & ((query: changeStickerSetOptional) => Promise<changeStickerSetReturnType>)
+  & ((query: checkAuthenticationBotTokenOptional) => Promise<checkAuthenticationBotTokenReturnType>)
+  & ((query: checkAuthenticationCodeOptional) => Promise<checkAuthenticationCodeReturnType>)
+  & ((query: checkAuthenticationPasswordOptional) => Promise<checkAuthenticationPasswordReturnType>)
+  & ((query: checkChangePhoneNumberCodeOptional) => Promise<checkChangePhoneNumberCodeReturnType>)
+  & ((query: checkChatInviteLinkOptional) => Promise<checkChatInviteLinkReturnType>)
+  & ((query: checkChatUsernameOptional) => Promise<checkChatUsernameReturnType>)
+  & ((query: checkDatabaseEncryptionKeyOptional) => Promise<checkDatabaseEncryptionKeyReturnType>)
+  & ((query: clearImportedContactsOptional) => Promise<clearImportedContactsReturnType>)
+  & ((query: clearRecentStickersOptional) => Promise<clearRecentStickersReturnType>)
+  & ((query: clearRecentlyFoundChatsOptional) => Promise<clearRecentlyFoundChatsReturnType>)
+  & ((query: closeOptional) => Promise<closeReturnType>)
+  & ((query: closeChatOptional) => Promise<closeChatReturnType>)
+  & ((query: closeSecretChatOptional) => Promise<closeSecretChatReturnType>)
+  & ((query: createBasicGroupChatOptional) => Promise<createBasicGroupChatReturnType>)
+  & ((query: createCallOptional) => Promise<createCallReturnType>)
+  & ((query: createNewBasicGroupChatOptional) => Promise<createNewBasicGroupChatReturnType>)
+  & ((query: createNewSecretChatOptional) => Promise<createNewSecretChatReturnType>)
+  & ((query: createNewStickerSetOptional) => Promise<createNewStickerSetReturnType>)
+  & ((query: createNewSupergroupChatOptional) => Promise<createNewSupergroupChatReturnType>)
+  & ((query: createPrivateChatOptional) => Promise<createPrivateChatReturnType>)
+  & ((query: createSecretChatOptional) => Promise<createSecretChatReturnType>)
+  & ((query: createSupergroupChatOptional) => Promise<createSupergroupChatReturnType>)
+  & ((query: createTemporaryPasswordOptional) => Promise<createTemporaryPasswordReturnType>)
+  & ((query: deleteAccountOptional) => Promise<deleteAccountReturnType>)
+  & ((query: deleteChatHistoryOptional) => Promise<deleteChatHistoryReturnType>)
+  & ((query: deleteChatMessagesFromUserOptional) => Promise<deleteChatMessagesFromUserReturnType>)
+  & ((query: deleteChatReplyMarkupOptional) => Promise<deleteChatReplyMarkupReturnType>)
+  & ((query: deleteFileOptional) => Promise<deleteFileReturnType>)
+  & ((query: deleteMessagesOptional) => Promise<deleteMessagesReturnType>)
+  & ((query: deleteProfilePhotoOptional) => Promise<deleteProfilePhotoReturnType>)
+  & ((query: deleteSavedCredentialsOptional) => Promise<deleteSavedCredentialsReturnType>)
+  & ((query: deleteSavedOrderInfoOptional) => Promise<deleteSavedOrderInfoReturnType>)
+  & ((query: deleteSupergroupOptional) => Promise<deleteSupergroupReturnType>)
+  & ((query: destroyOptional) => Promise<destroyReturnType>)
+  & ((query: discardCallOptional) => Promise<discardCallReturnType>)
+  & ((query: disconnectAllWebsitesOptional) => Promise<disconnectAllWebsitesReturnType>)
+  & ((query: disconnectWebsiteOptional) => Promise<disconnectWebsiteReturnType>)
+  & ((query: downloadFileOptional) => Promise<downloadFileReturnType>)
+  & ((query: editInlineMessageCaptionOptional) => Promise<editInlineMessageCaptionReturnType>)
+  & ((query: editInlineMessageLiveLocationOptional) => Promise<editInlineMessageLiveLocationReturnType>)
+  & ((query: editInlineMessageReplyMarkupOptional) => Promise<editInlineMessageReplyMarkupReturnType>)
+  & ((query: editInlineMessageTextOptional) => Promise<editInlineMessageTextReturnType>)
+  & ((query: editMessageCaptionOptional) => Promise<editMessageCaptionReturnType>)
+  & ((query: editMessageLiveLocationOptional) => Promise<editMessageLiveLocationReturnType>)
+  & ((query: editMessageReplyMarkupOptional) => Promise<editMessageReplyMarkupReturnType>)
+  & ((query: editMessageTextOptional) => Promise<editMessageTextReturnType>)
+  & ((query: finishFileGenerationOptional) => Promise<finishFileGenerationReturnType>)
+  & ((query: forwardMessagesOptional) => Promise<forwardMessagesReturnType>)
+  & ((query: generateChatInviteLinkOptional) => Promise<generateChatInviteLinkReturnType>)
+  & ((query: getAccountTtlOptional) => Promise<getAccountTtlReturnType>)
+  & ((query: getActiveLiveLocationMessagesOptional) => Promise<getActiveLiveLocationMessagesReturnType>)
+  & ((query: getActiveSessionsOptional) => Promise<getActiveSessionsReturnType>)
+  & ((query: getArchivedStickerSetsOptional) => Promise<getArchivedStickerSetsReturnType>)
+  & ((query: getAttachedStickerSetsOptional) => Promise<getAttachedStickerSetsReturnType>)
+  & ((query: getAuthorizationStateOptional) => Promise<getAuthorizationStateReturnType>)
+  & ((query: getBasicGroupOptional) => Promise<getBasicGroupReturnType>)
+  & ((query: getBasicGroupFullInfoOptional) => Promise<getBasicGroupFullInfoReturnType>)
+  & ((query: getBlockedUsersOptional) => Promise<getBlockedUsersReturnType>)
+  & ((query: getCallbackQueryAnswerOptional) => Promise<getCallbackQueryAnswerReturnType>)
+  & ((query: getChatOptional) => Promise<getChatReturnType>)
+  & ((query: getChatAdministratorsOptional) => Promise<getChatAdministratorsReturnType>)
+  & ((query: getChatEventLogOptional) => Promise<getChatEventLogReturnType>)
+  & ((query: getChatHistoryOptional) => Promise<getChatHistoryReturnType>)
+  & ((query: getChatMemberOptional) => Promise<getChatMemberReturnType>)
+  & ((query: getChatMessageByDateOptional) => Promise<getChatMessageByDateReturnType>)
+  & ((query: getChatPinnedMessageOptional) => Promise<getChatPinnedMessageReturnType>)
+  & ((query: getChatReportSpamStateOptional) => Promise<getChatReportSpamStateReturnType>)
+  & ((query: getChatsOptional) => Promise<getChatsReturnType>)
+  & ((query: getConnectedWebsitesOptional) => Promise<getConnectedWebsitesReturnType>)
+  & ((query: getCountryCodeOptional) => Promise<getCountryCodeReturnType>)
+  & ((query: getCreatedPublicChatsOptional) => Promise<getCreatedPublicChatsReturnType>)
+  & ((query: getFavoriteStickersOptional) => Promise<getFavoriteStickersReturnType>)
+  & ((query: getFileOptional) => Promise<getFileReturnType>)
+  & ((query: getFileExtensionOptional) => Promise<getFileExtensionReturnType>)
+  & ((query: getFileMimeTypeOptional) => Promise<getFileMimeTypeReturnType>)
+  & ((query: getGameHighScoresOptional) => Promise<getGameHighScoresReturnType>)
+  & ((query: getGroupsInCommonOptional) => Promise<getGroupsInCommonReturnType>)
+  & ((query: getImportedContactCountOptional) => Promise<getImportedContactCountReturnType>)
+  & ((query: getInlineGameHighScoresOptional) => Promise<getInlineGameHighScoresReturnType>)
+  & ((query: getInlineQueryResultsOptional) => Promise<getInlineQueryResultsReturnType>)
+  & ((query: getInstalledStickerSetsOptional) => Promise<getInstalledStickerSetsReturnType>)
+  & ((query: getInviteTextOptional) => Promise<getInviteTextReturnType>)
+  & ((query: getMeOptional) => Promise<getMeReturnType>)
+  & ((query: getMessageOptional) => Promise<getMessageReturnType>)
+  & ((query: getMessagesOptional) => Promise<getMessagesReturnType>)
+  & ((query: getNetworkStatisticsOptional) => Promise<getNetworkStatisticsReturnType>)
+  & ((query: getNotificationSettingsOptional) => Promise<getNotificationSettingsReturnType>)
+  & ((query: getOptionOptional) => Promise<getOptionReturnType>)
+  & ((query: getPasswordStateOptional) => Promise<getPasswordStateReturnType>)
+  & ((query: getPaymentFormOptional) => Promise<getPaymentFormReturnType>)
+  & ((query: getPaymentReceiptOptional) => Promise<getPaymentReceiptReturnType>)
+  & ((query: getProxyOptional) => Promise<getProxyReturnType>)
+  & ((query: getPublicMessageLinkOptional) => Promise<getPublicMessageLinkReturnType>)
+  & ((query: getRecentInlineBotsOptional) => Promise<getRecentInlineBotsReturnType>)
+  & ((query: getRecentStickersOptional) => Promise<getRecentStickersReturnType>)
+  & ((query: getRecentlyVisitedTMeUrlsOptional) => Promise<getRecentlyVisitedTMeUrlsReturnType>)
+  & ((query: getRecoveryEmailAddressOptional) => Promise<getRecoveryEmailAddressReturnType>)
+  & ((query: getRemoteFileOptional) => Promise<getRemoteFileReturnType>)
+  & ((query: getRepliedMessageOptional) => Promise<getRepliedMessageReturnType>)
+  & ((query: getSavedAnimationsOptional) => Promise<getSavedAnimationsReturnType>)
+  & ((query: getSavedOrderInfoOptional) => Promise<getSavedOrderInfoReturnType>)
+  & ((query: getSecretChatOptional) => Promise<getSecretChatReturnType>)
+  & ((query: getStickerEmojisOptional) => Promise<getStickerEmojisReturnType>)
+  & ((query: getStickerSetOptional) => Promise<getStickerSetReturnType>)
+  & ((query: getStickersOptional) => Promise<getStickersReturnType>)
+  & ((query: getStorageStatisticsOptional) => Promise<getStorageStatisticsReturnType>)
+  & ((query: getStorageStatisticsFastOptional) => Promise<getStorageStatisticsFastReturnType>)
+  & ((query: getSupergroupOptional) => Promise<getSupergroupReturnType>)
+  & ((query: getSupergroupFullInfoOptional) => Promise<getSupergroupFullInfoReturnType>)
+  & ((query: getSupergroupMembersOptional) => Promise<getSupergroupMembersReturnType>)
+  & ((query: getSupportUserOptional) => Promise<getSupportUserReturnType>)
+  & ((query: getTemporaryPasswordStateOptional) => Promise<getTemporaryPasswordStateReturnType>)
+  & ((query: getTermsOfServiceOptional) => Promise<getTermsOfServiceReturnType>)
+  & ((query: getTextEntitiesOptional) => Promise<getTextEntitiesReturnType>)
+  & ((query: getTopChatsOptional) => Promise<getTopChatsReturnType>)
+  & ((query: getTrendingStickerSetsOptional) => Promise<getTrendingStickerSetsReturnType>)
+  & ((query: getUserOptional) => Promise<getUserReturnType>)
+  & ((query: getUserFullInfoOptional) => Promise<getUserFullInfoReturnType>)
+  & ((query: getUserPrivacySettingRulesOptional) => Promise<getUserPrivacySettingRulesReturnType>)
+  & ((query: getUserProfilePhotosOptional) => Promise<getUserProfilePhotosReturnType>)
+  & ((query: getWallpapersOptional) => Promise<getWallpapersReturnType>)
+  & ((query: getWebPageInstantViewOptional) => Promise<getWebPageInstantViewReturnType>)
+  & ((query: getWebPagePreviewOptional) => Promise<getWebPagePreviewReturnType>)
+  & ((query: importContactsOptional) => Promise<importContactsReturnType>)
+  & ((query: joinChatByInviteLinkOptional) => Promise<joinChatByInviteLinkReturnType>)
+  & ((query: logOutOptional) => Promise<logOutReturnType>)
+  & ((query: openChatOptional) => Promise<openChatReturnType>)
+  & ((query: openMessageContentOptional) => Promise<openMessageContentReturnType>)
+  & ((query: optimizeStorageOptional) => Promise<optimizeStorageReturnType>)
+  & ((query: parseTextEntitiesOptional) => Promise<parseTextEntitiesReturnType>)
+  & ((query: pinSupergroupMessageOptional) => Promise<pinSupergroupMessageReturnType>)
+  & ((query: processDcUpdateOptional) => Promise<processDcUpdateReturnType>)
+  & ((query: readAllChatMentionsOptional) => Promise<readAllChatMentionsReturnType>)
+  & ((query: recoverAuthenticationPasswordOptional) => Promise<recoverAuthenticationPasswordReturnType>)
+  & ((query: recoverPasswordOptional) => Promise<recoverPasswordReturnType>)
+  & ((query: registerDeviceOptional) => Promise<registerDeviceReturnType>)
+  & ((query: removeContactsOptional) => Promise<removeContactsReturnType>)
+  & ((query: removeFavoriteStickerOptional) => Promise<removeFavoriteStickerReturnType>)
+  & ((query: removeRecentHashtagOptional) => Promise<removeRecentHashtagReturnType>)
+  & ((query: removeRecentStickerOptional) => Promise<removeRecentStickerReturnType>)
+  & ((query: removeRecentlyFoundChatOptional) => Promise<removeRecentlyFoundChatReturnType>)
+  & ((query: removeSavedAnimationOptional) => Promise<removeSavedAnimationReturnType>)
+  & ((query: removeStickerFromSetOptional) => Promise<removeStickerFromSetReturnType>)
+  & ((query: removeTopChatOptional) => Promise<removeTopChatReturnType>)
+  & ((query: reorderInstalledStickerSetsOptional) => Promise<reorderInstalledStickerSetsReturnType>)
+  & ((query: reportChatOptional) => Promise<reportChatReturnType>)
+  & ((query: reportSupergroupSpamOptional) => Promise<reportSupergroupSpamReturnType>)
+  & ((query: requestAuthenticationPasswordRecoveryOptional) => Promise<requestAuthenticationPasswordRecoveryReturnType>)
+  & ((query: requestPasswordRecoveryOptional) => Promise<requestPasswordRecoveryReturnType>)
+  & ((query: resendAuthenticationCodeOptional) => Promise<resendAuthenticationCodeReturnType>)
+  & ((query: resendChangePhoneNumberCodeOptional) => Promise<resendChangePhoneNumberCodeReturnType>)
+  & ((query: resetAllNotificationSettingsOptional) => Promise<resetAllNotificationSettingsReturnType>)
+  & ((query: resetNetworkStatisticsOptional) => Promise<resetNetworkStatisticsReturnType>)
+  & ((query: searchCallMessagesOptional) => Promise<searchCallMessagesReturnType>)
+  & ((query: searchChatMembersOptional) => Promise<searchChatMembersReturnType>)
+  & ((query: searchChatMessagesOptional) => Promise<searchChatMessagesReturnType>)
+  & ((query: searchChatRecentLocationMessagesOptional) => Promise<searchChatRecentLocationMessagesReturnType>)
+  & ((query: searchChatsOptional) => Promise<searchChatsReturnType>)
+  & ((query: searchChatsOnServerOptional) => Promise<searchChatsOnServerReturnType>)
+  & ((query: searchContactsOptional) => Promise<searchContactsReturnType>)
+  & ((query: searchHashtagsOptional) => Promise<searchHashtagsReturnType>)
+  & ((query: searchInstalledStickerSetsOptional) => Promise<searchInstalledStickerSetsReturnType>)
+  & ((query: searchMessagesOptional) => Promise<searchMessagesReturnType>)
+  & ((query: searchPublicChatOptional) => Promise<searchPublicChatReturnType>)
+  & ((query: searchPublicChatsOptional) => Promise<searchPublicChatsReturnType>)
+  & ((query: searchSecretMessagesOptional) => Promise<searchSecretMessagesReturnType>)
+  & ((query: searchStickerSetOptional) => Promise<searchStickerSetReturnType>)
+  & ((query: searchStickerSetsOptional) => Promise<searchStickerSetsReturnType>)
+  & ((query: searchStickersOptional) => Promise<searchStickersReturnType>)
+  & ((query: sendBotStartMessageOptional) => Promise<sendBotStartMessageReturnType>)
+  & ((query: sendCallDebugInformationOptional) => Promise<sendCallDebugInformationReturnType>)
+  & ((query: sendCallRatingOptional) => Promise<sendCallRatingReturnType>)
+  & ((query: sendChatActionOptional) => Promise<sendChatActionReturnType>)
+  & ((query: sendChatScreenshotTakenNotificationOptional) => Promise<sendChatScreenshotTakenNotificationReturnType>)
+  & ((query: sendChatSetTtlMessageOptional) => Promise<sendChatSetTtlMessageReturnType>)
+  & ((query: sendCustomRequestOptional) => Promise<sendCustomRequestReturnType>)
+  & ((query: sendInlineQueryResultMessageOptional) => Promise<sendInlineQueryResultMessageReturnType>)
+  & ((query: sendMessageOptional) => Promise<sendMessageReturnType>)
+  & ((query: sendMessageAlbumOptional) => Promise<sendMessageAlbumReturnType>)
+  & ((query: sendPaymentFormOptional) => Promise<sendPaymentFormReturnType>)
+  & ((query: setAccountTtlOptional) => Promise<setAccountTtlReturnType>)
+  & ((query: setAlarmOptional) => Promise<setAlarmReturnType>)
+  & ((query: setAuthenticationPhoneNumberOptional) => Promise<setAuthenticationPhoneNumberReturnType>)
+  & ((query: setBioOptional) => Promise<setBioReturnType>)
+  & ((query: setBotUpdatesStatusOptional) => Promise<setBotUpdatesStatusReturnType>)
+  & ((query: setChatClientDataOptional) => Promise<setChatClientDataReturnType>)
+  & ((query: setChatDraftMessageOptional) => Promise<setChatDraftMessageReturnType>)
+  & ((query: setChatMemberStatusOptional) => Promise<setChatMemberStatusReturnType>)
+  & ((query: setChatPhotoOptional) => Promise<setChatPhotoReturnType>)
+  & ((query: setChatTitleOptional) => Promise<setChatTitleReturnType>)
+  & ((query: setDatabaseEncryptionKeyOptional) => Promise<setDatabaseEncryptionKeyReturnType>)
+  & ((query: setFileGenerationProgressOptional) => Promise<setFileGenerationProgressReturnType>)
+  & ((query: setGameScoreOptional) => Promise<setGameScoreReturnType>)
+  & ((query: setInlineGameScoreOptional) => Promise<setInlineGameScoreReturnType>)
+  & ((query: setNameOptional) => Promise<setNameReturnType>)
+  & ((query: setNetworkTypeOptional) => Promise<setNetworkTypeReturnType>)
+  & ((query: setNotificationSettingsOptional) => Promise<setNotificationSettingsReturnType>)
+  & ((query: setOptionOptional) => Promise<setOptionReturnType>)
+  & ((query: setPasswordOptional) => Promise<setPasswordReturnType>)
+  & ((query: setPinnedChatsOptional) => Promise<setPinnedChatsReturnType>)
+  & ((query: setProfilePhotoOptional) => Promise<setProfilePhotoReturnType>)
+  & ((query: setProxyOptional) => Promise<setProxyReturnType>)
+  & ((query: setRecoveryEmailAddressOptional) => Promise<setRecoveryEmailAddressReturnType>)
+  & ((query: setStickerPositionInSetOptional) => Promise<setStickerPositionInSetReturnType>)
+  & ((query: setSupergroupDescriptionOptional) => Promise<setSupergroupDescriptionReturnType>)
+  & ((query: setSupergroupStickerSetOptional) => Promise<setSupergroupStickerSetReturnType>)
+  & ((query: setSupergroupUsernameOptional) => Promise<setSupergroupUsernameReturnType>)
+  & ((query: setTdlibParametersOptional) => Promise<setTdlibParametersReturnType>)
+  & ((query: setUserPrivacySettingRulesOptional) => Promise<setUserPrivacySettingRulesReturnType>)
+  & ((query: setUsernameOptional) => Promise<setUsernameReturnType>)
+  & ((query: terminateAllOtherSessionsOptional) => Promise<terminateAllOtherSessionsReturnType>)
+  & ((query: terminateSessionOptional) => Promise<terminateSessionReturnType>)
+  & ((query: testCallBytesOptional) => Promise<testCallBytesReturnType>)
+  & ((query: testCallEmptyOptional) => Promise<testCallEmptyReturnType>)
+  & ((query: testCallStringOptional) => Promise<testCallStringReturnType>)
+  & ((query: testCallVectorIntOptional) => Promise<testCallVectorIntReturnType>)
+  & ((query: testCallVectorIntObjectOptional) => Promise<testCallVectorIntObjectReturnType>)
+  & ((query: testCallVectorStringOptional) => Promise<testCallVectorStringReturnType>)
+  & ((query: testCallVectorStringObjectOptional) => Promise<testCallVectorStringObjectReturnType>)
+  & ((query: testGetDifferenceOptional) => Promise<testGetDifferenceReturnType>)
+  & ((query: testNetworkOptional) => Promise<testNetworkReturnType>)
+  & ((query: testSquareIntOptional) => Promise<testSquareIntReturnType>)
+  & ((query: testUseErrorOptional) => Promise<testUseErrorReturnType>)
+  & ((query: testUseUpdateOptional) => Promise<testUseUpdateReturnType>)
+  & ((query: toggleBasicGroupAdministratorsOptional) => Promise<toggleBasicGroupAdministratorsReturnType>)
+  & ((query: toggleChatIsPinnedOptional) => Promise<toggleChatIsPinnedReturnType>)
+  & ((query: toggleSupergroupInvitesOptional) => Promise<toggleSupergroupInvitesReturnType>)
+  & ((query: toggleSupergroupIsAllHistoryAvailableOptional) => Promise<toggleSupergroupIsAllHistoryAvailableReturnType>)
+  & ((query: toggleSupergroupSignMessagesOptional) => Promise<toggleSupergroupSignMessagesReturnType>)
+  & ((query: unblockUserOptional) => Promise<unblockUserReturnType>)
+  & ((query: unpinSupergroupMessageOptional) => Promise<unpinSupergroupMessageReturnType>)
+  & ((query: upgradeBasicGroupChatToSupergroupChatOptional) => Promise<upgradeBasicGroupChatToSupergroupChatReturnType>)
+  & ((query: uploadFileOptional) => Promise<uploadFileReturnType>)
+  & ((query: uploadStickerFileOptional) => Promise<uploadStickerFileReturnType>)
+  & ((query: validateOrderInfoOptional) => Promise<validateOrderInfoReturnType>)
+  & ((query: viewMessagesOptional) => Promise<viewMessagesReturnType>)
+  & ((query: viewTrendingStickerSetsOptional) => Promise<viewTrendingStickerSetsReturnType>)
+
+export type Execute =
+  & ((query: acceptCallOptional) => acceptCallReturnType | error | null)
+  & ((query: addChatMemberOptional) => addChatMemberReturnType | error | null)
+  & ((query: addChatMembersOptional) => addChatMembersReturnType | error | null)
+  & ((query: addFavoriteStickerOptional) => addFavoriteStickerReturnType | error | null)
+  & ((query: addNetworkStatisticsOptional) => addNetworkStatisticsReturnType | error | null)
+  & ((query: addRecentStickerOptional) => addRecentStickerReturnType | error | null)
+  & ((query: addRecentlyFoundChatOptional) => addRecentlyFoundChatReturnType | error | null)
+  & ((query: addSavedAnimationOptional) => addSavedAnimationReturnType | error | null)
+  & ((query: addStickerToSetOptional) => addStickerToSetReturnType | error | null)
+  & ((query: answerCallbackQueryOptional) => answerCallbackQueryReturnType | error | null)
+  & ((query: answerCustomQueryOptional) => answerCustomQueryReturnType | error | null)
+  & ((query: answerInlineQueryOptional) => answerInlineQueryReturnType | error | null)
+  & ((query: answerPreCheckoutQueryOptional) => answerPreCheckoutQueryReturnType | error | null)
+  & ((query: answerShippingQueryOptional) => answerShippingQueryReturnType | error | null)
+  & ((query: blockUserOptional) => blockUserReturnType | error | null)
+  & ((query: cancelDownloadFileOptional) => cancelDownloadFileReturnType | error | null)
+  & ((query: cancelUploadFileOptional) => cancelUploadFileReturnType | error | null)
+  & ((query: changeChatReportSpamStateOptional) => changeChatReportSpamStateReturnType | error | null)
+  & ((query: changeImportedContactsOptional) => changeImportedContactsReturnType | error | null)
+  & ((query: changePhoneNumberOptional) => changePhoneNumberReturnType | error | null)
+  & ((query: changeStickerSetOptional) => changeStickerSetReturnType | error | null)
+  & ((query: checkAuthenticationBotTokenOptional) => checkAuthenticationBotTokenReturnType | error | null)
+  & ((query: checkAuthenticationCodeOptional) => checkAuthenticationCodeReturnType | error | null)
+  & ((query: checkAuthenticationPasswordOptional) => checkAuthenticationPasswordReturnType | error | null)
+  & ((query: checkChangePhoneNumberCodeOptional) => checkChangePhoneNumberCodeReturnType | error | null)
+  & ((query: checkChatInviteLinkOptional) => checkChatInviteLinkReturnType | error | null)
+  & ((query: checkChatUsernameOptional) => checkChatUsernameReturnType | error | null)
+  & ((query: checkDatabaseEncryptionKeyOptional) => checkDatabaseEncryptionKeyReturnType | error | null)
+  & ((query: clearImportedContactsOptional) => clearImportedContactsReturnType | error | null)
+  & ((query: clearRecentStickersOptional) => clearRecentStickersReturnType | error | null)
+  & ((query: clearRecentlyFoundChatsOptional) => clearRecentlyFoundChatsReturnType | error | null)
+  & ((query: closeOptional) => closeReturnType | error | null)
+  & ((query: closeChatOptional) => closeChatReturnType | error | null)
+  & ((query: closeSecretChatOptional) => closeSecretChatReturnType | error | null)
+  & ((query: createBasicGroupChatOptional) => createBasicGroupChatReturnType | error | null)
+  & ((query: createCallOptional) => createCallReturnType | error | null)
+  & ((query: createNewBasicGroupChatOptional) => createNewBasicGroupChatReturnType | error | null)
+  & ((query: createNewSecretChatOptional) => createNewSecretChatReturnType | error | null)
+  & ((query: createNewStickerSetOptional) => createNewStickerSetReturnType | error | null)
+  & ((query: createNewSupergroupChatOptional) => createNewSupergroupChatReturnType | error | null)
+  & ((query: createPrivateChatOptional) => createPrivateChatReturnType | error | null)
+  & ((query: createSecretChatOptional) => createSecretChatReturnType | error | null)
+  & ((query: createSupergroupChatOptional) => createSupergroupChatReturnType | error | null)
+  & ((query: createTemporaryPasswordOptional) => createTemporaryPasswordReturnType | error | null)
+  & ((query: deleteAccountOptional) => deleteAccountReturnType | error | null)
+  & ((query: deleteChatHistoryOptional) => deleteChatHistoryReturnType | error | null)
+  & ((query: deleteChatMessagesFromUserOptional) => deleteChatMessagesFromUserReturnType | error | null)
+  & ((query: deleteChatReplyMarkupOptional) => deleteChatReplyMarkupReturnType | error | null)
+  & ((query: deleteFileOptional) => deleteFileReturnType | error | null)
+  & ((query: deleteMessagesOptional) => deleteMessagesReturnType | error | null)
+  & ((query: deleteProfilePhotoOptional) => deleteProfilePhotoReturnType | error | null)
+  & ((query: deleteSavedCredentialsOptional) => deleteSavedCredentialsReturnType | error | null)
+  & ((query: deleteSavedOrderInfoOptional) => deleteSavedOrderInfoReturnType | error | null)
+  & ((query: deleteSupergroupOptional) => deleteSupergroupReturnType | error | null)
+  & ((query: destroyOptional) => destroyReturnType | error | null)
+  & ((query: discardCallOptional) => discardCallReturnType | error | null)
+  & ((query: disconnectAllWebsitesOptional) => disconnectAllWebsitesReturnType | error | null)
+  & ((query: disconnectWebsiteOptional) => disconnectWebsiteReturnType | error | null)
+  & ((query: downloadFileOptional) => downloadFileReturnType | error | null)
+  & ((query: editInlineMessageCaptionOptional) => editInlineMessageCaptionReturnType | error | null)
+  & ((query: editInlineMessageLiveLocationOptional) => editInlineMessageLiveLocationReturnType | error | null)
+  & ((query: editInlineMessageReplyMarkupOptional) => editInlineMessageReplyMarkupReturnType | error | null)
+  & ((query: editInlineMessageTextOptional) => editInlineMessageTextReturnType | error | null)
+  & ((query: editMessageCaptionOptional) => editMessageCaptionReturnType | error | null)
+  & ((query: editMessageLiveLocationOptional) => editMessageLiveLocationReturnType | error | null)
+  & ((query: editMessageReplyMarkupOptional) => editMessageReplyMarkupReturnType | error | null)
+  & ((query: editMessageTextOptional) => editMessageTextReturnType | error | null)
+  & ((query: finishFileGenerationOptional) => finishFileGenerationReturnType | error | null)
+  & ((query: forwardMessagesOptional) => forwardMessagesReturnType | error | null)
+  & ((query: generateChatInviteLinkOptional) => generateChatInviteLinkReturnType | error | null)
+  & ((query: getAccountTtlOptional) => getAccountTtlReturnType | error | null)
+  & ((query: getActiveLiveLocationMessagesOptional) => getActiveLiveLocationMessagesReturnType | error | null)
+  & ((query: getActiveSessionsOptional) => getActiveSessionsReturnType | error | null)
+  & ((query: getArchivedStickerSetsOptional) => getArchivedStickerSetsReturnType | error | null)
+  & ((query: getAttachedStickerSetsOptional) => getAttachedStickerSetsReturnType | error | null)
+  & ((query: getAuthorizationStateOptional) => getAuthorizationStateReturnType | error | null)
+  & ((query: getBasicGroupOptional) => getBasicGroupReturnType | error | null)
+  & ((query: getBasicGroupFullInfoOptional) => getBasicGroupFullInfoReturnType | error | null)
+  & ((query: getBlockedUsersOptional) => getBlockedUsersReturnType | error | null)
+  & ((query: getCallbackQueryAnswerOptional) => getCallbackQueryAnswerReturnType | error | null)
+  & ((query: getChatOptional) => getChatReturnType | error | null)
+  & ((query: getChatAdministratorsOptional) => getChatAdministratorsReturnType | error | null)
+  & ((query: getChatEventLogOptional) => getChatEventLogReturnType | error | null)
+  & ((query: getChatHistoryOptional) => getChatHistoryReturnType | error | null)
+  & ((query: getChatMemberOptional) => getChatMemberReturnType | error | null)
+  & ((query: getChatMessageByDateOptional) => getChatMessageByDateReturnType | error | null)
+  & ((query: getChatPinnedMessageOptional) => getChatPinnedMessageReturnType | error | null)
+  & ((query: getChatReportSpamStateOptional) => getChatReportSpamStateReturnType | error | null)
+  & ((query: getChatsOptional) => getChatsReturnType | error | null)
+  & ((query: getConnectedWebsitesOptional) => getConnectedWebsitesReturnType | error | null)
+  & ((query: getCountryCodeOptional) => getCountryCodeReturnType | error | null)
+  & ((query: getCreatedPublicChatsOptional) => getCreatedPublicChatsReturnType | error | null)
+  & ((query: getFavoriteStickersOptional) => getFavoriteStickersReturnType | error | null)
+  & ((query: getFileOptional) => getFileReturnType | error | null)
+  & ((query: getFileExtensionOptional) => getFileExtensionReturnType | error | null)
+  & ((query: getFileMimeTypeOptional) => getFileMimeTypeReturnType | error | null)
+  & ((query: getGameHighScoresOptional) => getGameHighScoresReturnType | error | null)
+  & ((query: getGroupsInCommonOptional) => getGroupsInCommonReturnType | error | null)
+  & ((query: getImportedContactCountOptional) => getImportedContactCountReturnType | error | null)
+  & ((query: getInlineGameHighScoresOptional) => getInlineGameHighScoresReturnType | error | null)
+  & ((query: getInlineQueryResultsOptional) => getInlineQueryResultsReturnType | error | null)
+  & ((query: getInstalledStickerSetsOptional) => getInstalledStickerSetsReturnType | error | null)
+  & ((query: getInviteTextOptional) => getInviteTextReturnType | error | null)
+  & ((query: getMeOptional) => getMeReturnType | error | null)
+  & ((query: getMessageOptional) => getMessageReturnType | error | null)
+  & ((query: getMessagesOptional) => getMessagesReturnType | error | null)
+  & ((query: getNetworkStatisticsOptional) => getNetworkStatisticsReturnType | error | null)
+  & ((query: getNotificationSettingsOptional) => getNotificationSettingsReturnType | error | null)
+  & ((query: getOptionOptional) => getOptionReturnType | error | null)
+  & ((query: getPasswordStateOptional) => getPasswordStateReturnType | error | null)
+  & ((query: getPaymentFormOptional) => getPaymentFormReturnType | error | null)
+  & ((query: getPaymentReceiptOptional) => getPaymentReceiptReturnType | error | null)
+  & ((query: getProxyOptional) => getProxyReturnType | error | null)
+  & ((query: getPublicMessageLinkOptional) => getPublicMessageLinkReturnType | error | null)
+  & ((query: getRecentInlineBotsOptional) => getRecentInlineBotsReturnType | error | null)
+  & ((query: getRecentStickersOptional) => getRecentStickersReturnType | error | null)
+  & ((query: getRecentlyVisitedTMeUrlsOptional) => getRecentlyVisitedTMeUrlsReturnType | error | null)
+  & ((query: getRecoveryEmailAddressOptional) => getRecoveryEmailAddressReturnType | error | null)
+  & ((query: getRemoteFileOptional) => getRemoteFileReturnType | error | null)
+  & ((query: getRepliedMessageOptional) => getRepliedMessageReturnType | error | null)
+  & ((query: getSavedAnimationsOptional) => getSavedAnimationsReturnType | error | null)
+  & ((query: getSavedOrderInfoOptional) => getSavedOrderInfoReturnType | error | null)
+  & ((query: getSecretChatOptional) => getSecretChatReturnType | error | null)
+  & ((query: getStickerEmojisOptional) => getStickerEmojisReturnType | error | null)
+  & ((query: getStickerSetOptional) => getStickerSetReturnType | error | null)
+  & ((query: getStickersOptional) => getStickersReturnType | error | null)
+  & ((query: getStorageStatisticsOptional) => getStorageStatisticsReturnType | error | null)
+  & ((query: getStorageStatisticsFastOptional) => getStorageStatisticsFastReturnType | error | null)
+  & ((query: getSupergroupOptional) => getSupergroupReturnType | error | null)
+  & ((query: getSupergroupFullInfoOptional) => getSupergroupFullInfoReturnType | error | null)
+  & ((query: getSupergroupMembersOptional) => getSupergroupMembersReturnType | error | null)
+  & ((query: getSupportUserOptional) => getSupportUserReturnType | error | null)
+  & ((query: getTemporaryPasswordStateOptional) => getTemporaryPasswordStateReturnType | error | null)
+  & ((query: getTermsOfServiceOptional) => getTermsOfServiceReturnType | error | null)
+  & ((query: getTextEntitiesOptional) => getTextEntitiesReturnType | error | null)
+  & ((query: getTopChatsOptional) => getTopChatsReturnType | error | null)
+  & ((query: getTrendingStickerSetsOptional) => getTrendingStickerSetsReturnType | error | null)
+  & ((query: getUserOptional) => getUserReturnType | error | null)
+  & ((query: getUserFullInfoOptional) => getUserFullInfoReturnType | error | null)
+  & ((query: getUserPrivacySettingRulesOptional) => getUserPrivacySettingRulesReturnType | error | null)
+  & ((query: getUserProfilePhotosOptional) => getUserProfilePhotosReturnType | error | null)
+  & ((query: getWallpapersOptional) => getWallpapersReturnType | error | null)
+  & ((query: getWebPageInstantViewOptional) => getWebPageInstantViewReturnType | error | null)
+  & ((query: getWebPagePreviewOptional) => getWebPagePreviewReturnType | error | null)
+  & ((query: importContactsOptional) => importContactsReturnType | error | null)
+  & ((query: joinChatByInviteLinkOptional) => joinChatByInviteLinkReturnType | error | null)
+  & ((query: logOutOptional) => logOutReturnType | error | null)
+  & ((query: openChatOptional) => openChatReturnType | error | null)
+  & ((query: openMessageContentOptional) => openMessageContentReturnType | error | null)
+  & ((query: optimizeStorageOptional) => optimizeStorageReturnType | error | null)
+  & ((query: parseTextEntitiesOptional) => parseTextEntitiesReturnType | error | null)
+  & ((query: pinSupergroupMessageOptional) => pinSupergroupMessageReturnType | error | null)
+  & ((query: processDcUpdateOptional) => processDcUpdateReturnType | error | null)
+  & ((query: readAllChatMentionsOptional) => readAllChatMentionsReturnType | error | null)
+  & ((query: recoverAuthenticationPasswordOptional) => recoverAuthenticationPasswordReturnType | error | null)
+  & ((query: recoverPasswordOptional) => recoverPasswordReturnType | error | null)
+  & ((query: registerDeviceOptional) => registerDeviceReturnType | error | null)
+  & ((query: removeContactsOptional) => removeContactsReturnType | error | null)
+  & ((query: removeFavoriteStickerOptional) => removeFavoriteStickerReturnType | error | null)
+  & ((query: removeRecentHashtagOptional) => removeRecentHashtagReturnType | error | null)
+  & ((query: removeRecentStickerOptional) => removeRecentStickerReturnType | error | null)
+  & ((query: removeRecentlyFoundChatOptional) => removeRecentlyFoundChatReturnType | error | null)
+  & ((query: removeSavedAnimationOptional) => removeSavedAnimationReturnType | error | null)
+  & ((query: removeStickerFromSetOptional) => removeStickerFromSetReturnType | error | null)
+  & ((query: removeTopChatOptional) => removeTopChatReturnType | error | null)
+  & ((query: reorderInstalledStickerSetsOptional) => reorderInstalledStickerSetsReturnType | error | null)
+  & ((query: reportChatOptional) => reportChatReturnType | error | null)
+  & ((query: reportSupergroupSpamOptional) => reportSupergroupSpamReturnType | error | null)
+  & ((query: requestAuthenticationPasswordRecoveryOptional) => requestAuthenticationPasswordRecoveryReturnType | error | null)
+  & ((query: requestPasswordRecoveryOptional) => requestPasswordRecoveryReturnType | error | null)
+  & ((query: resendAuthenticationCodeOptional) => resendAuthenticationCodeReturnType | error | null)
+  & ((query: resendChangePhoneNumberCodeOptional) => resendChangePhoneNumberCodeReturnType | error | null)
+  & ((query: resetAllNotificationSettingsOptional) => resetAllNotificationSettingsReturnType | error | null)
+  & ((query: resetNetworkStatisticsOptional) => resetNetworkStatisticsReturnType | error | null)
+  & ((query: searchCallMessagesOptional) => searchCallMessagesReturnType | error | null)
+  & ((query: searchChatMembersOptional) => searchChatMembersReturnType | error | null)
+  & ((query: searchChatMessagesOptional) => searchChatMessagesReturnType | error | null)
+  & ((query: searchChatRecentLocationMessagesOptional) => searchChatRecentLocationMessagesReturnType | error | null)
+  & ((query: searchChatsOptional) => searchChatsReturnType | error | null)
+  & ((query: searchChatsOnServerOptional) => searchChatsOnServerReturnType | error | null)
+  & ((query: searchContactsOptional) => searchContactsReturnType | error | null)
+  & ((query: searchHashtagsOptional) => searchHashtagsReturnType | error | null)
+  & ((query: searchInstalledStickerSetsOptional) => searchInstalledStickerSetsReturnType | error | null)
+  & ((query: searchMessagesOptional) => searchMessagesReturnType | error | null)
+  & ((query: searchPublicChatOptional) => searchPublicChatReturnType | error | null)
+  & ((query: searchPublicChatsOptional) => searchPublicChatsReturnType | error | null)
+  & ((query: searchSecretMessagesOptional) => searchSecretMessagesReturnType | error | null)
+  & ((query: searchStickerSetOptional) => searchStickerSetReturnType | error | null)
+  & ((query: searchStickerSetsOptional) => searchStickerSetsReturnType | error | null)
+  & ((query: searchStickersOptional) => searchStickersReturnType | error | null)
+  & ((query: sendBotStartMessageOptional) => sendBotStartMessageReturnType | error | null)
+  & ((query: sendCallDebugInformationOptional) => sendCallDebugInformationReturnType | error | null)
+  & ((query: sendCallRatingOptional) => sendCallRatingReturnType | error | null)
+  & ((query: sendChatActionOptional) => sendChatActionReturnType | error | null)
+  & ((query: sendChatScreenshotTakenNotificationOptional) => sendChatScreenshotTakenNotificationReturnType | error | null)
+  & ((query: sendChatSetTtlMessageOptional) => sendChatSetTtlMessageReturnType | error | null)
+  & ((query: sendCustomRequestOptional) => sendCustomRequestReturnType | error | null)
+  & ((query: sendInlineQueryResultMessageOptional) => sendInlineQueryResultMessageReturnType | error | null)
+  & ((query: sendMessageOptional) => sendMessageReturnType | error | null)
+  & ((query: sendMessageAlbumOptional) => sendMessageAlbumReturnType | error | null)
+  & ((query: sendPaymentFormOptional) => sendPaymentFormReturnType | error | null)
+  & ((query: setAccountTtlOptional) => setAccountTtlReturnType | error | null)
+  & ((query: setAlarmOptional) => setAlarmReturnType | error | null)
+  & ((query: setAuthenticationPhoneNumberOptional) => setAuthenticationPhoneNumberReturnType | error | null)
+  & ((query: setBioOptional) => setBioReturnType | error | null)
+  & ((query: setBotUpdatesStatusOptional) => setBotUpdatesStatusReturnType | error | null)
+  & ((query: setChatClientDataOptional) => setChatClientDataReturnType | error | null)
+  & ((query: setChatDraftMessageOptional) => setChatDraftMessageReturnType | error | null)
+  & ((query: setChatMemberStatusOptional) => setChatMemberStatusReturnType | error | null)
+  & ((query: setChatPhotoOptional) => setChatPhotoReturnType | error | null)
+  & ((query: setChatTitleOptional) => setChatTitleReturnType | error | null)
+  & ((query: setDatabaseEncryptionKeyOptional) => setDatabaseEncryptionKeyReturnType | error | null)
+  & ((query: setFileGenerationProgressOptional) => setFileGenerationProgressReturnType | error | null)
+  & ((query: setGameScoreOptional) => setGameScoreReturnType | error | null)
+  & ((query: setInlineGameScoreOptional) => setInlineGameScoreReturnType | error | null)
+  & ((query: setNameOptional) => setNameReturnType | error | null)
+  & ((query: setNetworkTypeOptional) => setNetworkTypeReturnType | error | null)
+  & ((query: setNotificationSettingsOptional) => setNotificationSettingsReturnType | error | null)
+  & ((query: setOptionOptional) => setOptionReturnType | error | null)
+  & ((query: setPasswordOptional) => setPasswordReturnType | error | null)
+  & ((query: setPinnedChatsOptional) => setPinnedChatsReturnType | error | null)
+  & ((query: setProfilePhotoOptional) => setProfilePhotoReturnType | error | null)
+  & ((query: setProxyOptional) => setProxyReturnType | error | null)
+  & ((query: setRecoveryEmailAddressOptional) => setRecoveryEmailAddressReturnType | error | null)
+  & ((query: setStickerPositionInSetOptional) => setStickerPositionInSetReturnType | error | null)
+  & ((query: setSupergroupDescriptionOptional) => setSupergroupDescriptionReturnType | error | null)
+  & ((query: setSupergroupStickerSetOptional) => setSupergroupStickerSetReturnType | error | null)
+  & ((query: setSupergroupUsernameOptional) => setSupergroupUsernameReturnType | error | null)
+  & ((query: setTdlibParametersOptional) => setTdlibParametersReturnType | error | null)
+  & ((query: setUserPrivacySettingRulesOptional) => setUserPrivacySettingRulesReturnType | error | null)
+  & ((query: setUsernameOptional) => setUsernameReturnType | error | null)
+  & ((query: terminateAllOtherSessionsOptional) => terminateAllOtherSessionsReturnType | error | null)
+  & ((query: terminateSessionOptional) => terminateSessionReturnType | error | null)
+  & ((query: testCallBytesOptional) => testCallBytesReturnType | error | null)
+  & ((query: testCallEmptyOptional) => testCallEmptyReturnType | error | null)
+  & ((query: testCallStringOptional) => testCallStringReturnType | error | null)
+  & ((query: testCallVectorIntOptional) => testCallVectorIntReturnType | error | null)
+  & ((query: testCallVectorIntObjectOptional) => testCallVectorIntObjectReturnType | error | null)
+  & ((query: testCallVectorStringOptional) => testCallVectorStringReturnType | error | null)
+  & ((query: testCallVectorStringObjectOptional) => testCallVectorStringObjectReturnType | error | null)
+  & ((query: testGetDifferenceOptional) => testGetDifferenceReturnType | error | null)
+  & ((query: testNetworkOptional) => testNetworkReturnType | error | null)
+  & ((query: testSquareIntOptional) => testSquareIntReturnType | error | null)
+  & ((query: testUseErrorOptional) => testUseErrorReturnType | error | null)
+  & ((query: testUseUpdateOptional) => testUseUpdateReturnType | error | null)
+  & ((query: toggleBasicGroupAdministratorsOptional) => toggleBasicGroupAdministratorsReturnType | error | null)
+  & ((query: toggleChatIsPinnedOptional) => toggleChatIsPinnedReturnType | error | null)
+  & ((query: toggleSupergroupInvitesOptional) => toggleSupergroupInvitesReturnType | error | null)
+  & ((query: toggleSupergroupIsAllHistoryAvailableOptional) => toggleSupergroupIsAllHistoryAvailableReturnType | error | null)
+  & ((query: toggleSupergroupSignMessagesOptional) => toggleSupergroupSignMessagesReturnType | error | null)
+  & ((query: unblockUserOptional) => unblockUserReturnType | error | null)
+  & ((query: unpinSupergroupMessageOptional) => unpinSupergroupMessageReturnType | error | null)
+  & ((query: upgradeBasicGroupChatToSupergroupChatOptional) => upgradeBasicGroupChatToSupergroupChatReturnType | error | null)
+  & ((query: uploadFileOptional) => uploadFileReturnType | error | null)
+  & ((query: uploadStickerFileOptional) => uploadStickerFileReturnType | error | null)
+  & ((query: validateOrderInfoOptional) => validateOrderInfoReturnType | error | null)
+  & ((query: viewMessagesOptional) => viewMessagesReturnType | error | null)
+  & ((query: viewTrendingStickerSetsOptional) => viewTrendingStickerSetsReturnType | error | null)
