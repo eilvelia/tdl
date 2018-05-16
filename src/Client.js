@@ -72,7 +72,7 @@ const defaultOptions: StrictConfigType = {
 }
 
 type P = {
-  resolve: (result: TDObject) => void,
+  resolve: (result: Object/* TDObject */) => void,
   reject: (error: TDError) => void
 }
 
@@ -222,14 +222,14 @@ export class Client {
           this._handleResponse(event, id, p)
         else
           // $FlowFixMe
-          await this._handleUpdate(event)
+          this._handleUpdate(event)
       }
     }
 
     this._loop()
   }
 
-  async _handleResponse (res: TDObject, id: string, p: P): Promise<void> {
+  _handleResponse (res: TDObject, id: string, p: P) {
     // $FlowFixMe
     delete res['@extra']
     p.resolve(res)
@@ -304,21 +304,23 @@ export class Client {
 
     switch (error.message) {
       case 'PHONE_CODE_EMPTY':
-      case 'PHONE_CODE_INVALID':
+      case 'PHONE_CODE_INVALID': {
         if (loginDetails.type !== 'user') return
         const code = await loginDetails.getAuthCode(true)
         return this._send({
           _: 'checkAuthenticationCode',
           code: code
         })
+      }
 
-      case 'PASSWORD_HASH_INVALID':
+      case 'PASSWORD_HASH_INVALID': {
         if (loginDetails.type !== 'user') return
         const password = await loginDetails.getPassword('', true)
         return this._send({
           _: 'checkAuthenticationPassword',
           password: password
         })
+      }
 
       default: {
         // $FlowFixMe

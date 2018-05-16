@@ -6222,11 +6222,11 @@ export type webPageInstantViewOptional = {|
   is_full?: boolean,
 |}
 
-export type acceptCall = {|
+export type acceptCall = {
   _: 'acceptCall',
-  call_id?: number,
-  protocol?: callProtocolOptional,
-|}
+  call_id: number,
+  protocol: callProtocol,
+}
 
 export type acceptCallOptional = {|
   _: 'acceptCall',
@@ -6236,12 +6236,12 @@ export type acceptCallOptional = {|
 
 export type acceptCallReturnType = ok
 
-export type addChatMember = {|
+export type addChatMember = {
   _: 'addChatMember',
-  chat_id?: number,
-  user_id?: number,
-  forward_limit?: number,
-|}
+  chat_id: number,
+  user_id: number,
+  forward_limit: number,
+}
 
 export type addChatMemberOptional = {|
   _: 'addChatMember',
@@ -6252,11 +6252,11 @@ export type addChatMemberOptional = {|
 
 export type addChatMemberReturnType = ok
 
-export type addChatMembers = {|
+export type addChatMembers = {
   _: 'addChatMembers',
-  chat_id?: number,
-  user_ids?: number,
-|}
+  chat_id: number,
+  user_ids: number,
+}
 
 export type addChatMembersOptional = {|
   _: 'addChatMembers',
@@ -6266,10 +6266,10 @@ export type addChatMembersOptional = {|
 
 export type addChatMembersReturnType = ok
 
-export type addFavoriteSticker = {|
+export type addFavoriteSticker = {
   _: 'addFavoriteSticker',
-  sticker?: InputFileOptional,
-|}
+  sticker: InputFile,
+}
 
 export type addFavoriteStickerOptional = {|
   _: 'addFavoriteSticker',
@@ -6278,10 +6278,10 @@ export type addFavoriteStickerOptional = {|
 
 export type addFavoriteStickerReturnType = ok
 
-export type addNetworkStatistics = {|
+export type addNetworkStatistics = {
   _: 'addNetworkStatistics',
-  entry?: NetworkStatisticsEntryOptional,
-|}
+  entry: NetworkStatisticsEntry,
+}
 
 export type addNetworkStatisticsOptional = {|
   _: 'addNetworkStatistics',
@@ -6290,11 +6290,11 @@ export type addNetworkStatisticsOptional = {|
 
 export type addNetworkStatisticsReturnType = ok
 
-export type addRecentSticker = {|
+export type addRecentSticker = {
   _: 'addRecentSticker',
-  is_attached?: boolean,
-  sticker?: InputFileOptional,
-|}
+  is_attached: boolean,
+  sticker: InputFile,
+}
 
 export type addRecentStickerOptional = {|
   _: 'addRecentSticker',
@@ -6304,10 +6304,10 @@ export type addRecentStickerOptional = {|
 
 export type addRecentStickerReturnType = stickers
 
-export type addRecentlyFoundChat = {|
+export type addRecentlyFoundChat = {
   _: 'addRecentlyFoundChat',
-  chat_id?: number,
-|}
+  chat_id: number,
+}
 
 export type addRecentlyFoundChatOptional = {|
   _: 'addRecentlyFoundChat',
@@ -6316,10 +6316,10 @@ export type addRecentlyFoundChatOptional = {|
 
 export type addRecentlyFoundChatReturnType = ok
 
-export type addSavedAnimation = {|
+export type addSavedAnimation = {
   _: 'addSavedAnimation',
-  animation?: InputFileOptional,
-|}
+  animation: InputFile,
+}
 
 export type addSavedAnimationOptional = {|
   _: 'addSavedAnimation',
@@ -6328,12 +6328,12 @@ export type addSavedAnimationOptional = {|
 
 export type addSavedAnimationReturnType = ok
 
-export type addStickerToSet = {|
+export type addStickerToSet = {
   _: 'addStickerToSet',
-  user_id?: number,
-  name?: string,
-  sticker?: inputStickerOptional,
-|}
+  user_id: number,
+  name: string,
+  sticker: inputSticker,
+}
 
 export type addStickerToSetOptional = {|
   _: 'addStickerToSet',
@@ -6344,14 +6344,14 @@ export type addStickerToSetOptional = {|
 
 export type addStickerToSetReturnType = stickerSet
 
-export type answerCallbackQuery = {|
+export type answerCallbackQuery = {
   _: 'answerCallbackQuery',
-  callback_query_id?: number,
-  text?: string,
-  show_alert?: boolean,
-  url?: string,
-  cache_time?: number,
-|}
+  callback_query_id: number,
+  text: string,
+  show_alert: boolean,
+  url: string,
+  cache_time: number,
+}
 
 export type answerCallbackQueryOptional = {|
   _: 'answerCallbackQuery',
@@ -6364,11 +6364,11 @@ export type answerCallbackQueryOptional = {|
 
 export type answerCallbackQueryReturnType = ok
 
-export type answerCustomQuery = {|
+export type answerCustomQuery = {
   _: 'answerCustomQuery',
-  custom_query_id?: number,
-  data?: string,
-|}
+  custom_query_id: number,
+  data: string,
+}
 
 export type answerCustomQueryOptional = {|
   _: 'answerCustomQuery',
@@ -6378,16 +6378,16 @@ export type answerCustomQueryOptional = {|
 
 export type answerCustomQueryReturnType = ok
 
-export type answerInlineQuery = {|
+export type answerInlineQuery = {
   _: 'answerInlineQuery',
-  inline_query_id?: number,
-  is_personal?: boolean,
-  results?: InputInlineQueryResultOptional[],
-  cache_time?: number,
-  next_offset?: string,
-  switch_pm_text?: string,
-  switch_pm_parameter?: string,
-|}
+  inline_query_id: number,
+  is_personal: boolean,
+  results: InputInlineQueryResult[],
+  cache_time: number,
+  next_offset: string,
+  switch_pm_text: string,
+  switch_pm_parameter: string,
+}
 
 export type answerInlineQueryOptional = {|
   _: 'answerInlineQuery',
@@ -6402,11 +6402,11 @@ export type answerInlineQueryOptional = {|
 
 export type answerInlineQueryReturnType = ok
 
-export type answerPreCheckoutQuery = {|
+export type answerPreCheckoutQuery = {
   _: 'answerPreCheckoutQuery',
-  pre_checkout_query_id?: number,
-  error_message?: string,
-|}
+  pre_checkout_query_id: number,
+  error_message: string,
+}
 
 export type answerPreCheckoutQueryOptional = {|
   _: 'answerPreCheckoutQuery',
@@ -6416,12 +6416,12 @@ export type answerPreCheckoutQueryOptional = {|
 
 export type answerPreCheckoutQueryReturnType = ok
 
-export type answerShippingQuery = {|
+export type answerShippingQuery = {
   _: 'answerShippingQuery',
-  shipping_query_id?: number,
-  shipping_options?: shippingOptionOptional[],
-  error_message?: string,
-|}
+  shipping_query_id: number,
+  shipping_options: shippingOption[],
+  error_message: string,
+}
 
 export type answerShippingQueryOptional = {|
   _: 'answerShippingQuery',
@@ -6432,10 +6432,10 @@ export type answerShippingQueryOptional = {|
 
 export type answerShippingQueryReturnType = ok
 
-export type blockUser = {|
+export type blockUser = {
   _: 'blockUser',
-  user_id?: number,
-|}
+  user_id: number,
+}
 
 export type blockUserOptional = {|
   _: 'blockUser',
@@ -6444,11 +6444,11 @@ export type blockUserOptional = {|
 
 export type blockUserReturnType = ok
 
-export type cancelDownloadFile = {|
+export type cancelDownloadFile = {
   _: 'cancelDownloadFile',
-  file_id?: number,
-  only_if_pending?: boolean,
-|}
+  file_id: number,
+  only_if_pending: boolean,
+}
 
 export type cancelDownloadFileOptional = {|
   _: 'cancelDownloadFile',
@@ -6458,10 +6458,10 @@ export type cancelDownloadFileOptional = {|
 
 export type cancelDownloadFileReturnType = ok
 
-export type cancelUploadFile = {|
+export type cancelUploadFile = {
   _: 'cancelUploadFile',
-  file_id?: number,
-|}
+  file_id: number,
+}
 
 export type cancelUploadFileOptional = {|
   _: 'cancelUploadFile',
@@ -6470,11 +6470,11 @@ export type cancelUploadFileOptional = {|
 
 export type cancelUploadFileReturnType = ok
 
-export type changeChatReportSpamState = {|
+export type changeChatReportSpamState = {
   _: 'changeChatReportSpamState',
-  chat_id?: number,
-  is_spam_chat?: boolean,
-|}
+  chat_id: number,
+  is_spam_chat: boolean,
+}
 
 export type changeChatReportSpamStateOptional = {|
   _: 'changeChatReportSpamState',
@@ -6484,10 +6484,10 @@ export type changeChatReportSpamStateOptional = {|
 
 export type changeChatReportSpamStateReturnType = ok
 
-export type changeImportedContacts = {|
+export type changeImportedContacts = {
   _: 'changeImportedContacts',
-  contacts?: contactOptional[],
-|}
+  contacts: contact[],
+}
 
 export type changeImportedContactsOptional = {|
   _: 'changeImportedContacts',
@@ -6496,12 +6496,12 @@ export type changeImportedContactsOptional = {|
 
 export type changeImportedContactsReturnType = importedContacts
 
-export type changePhoneNumber = {|
+export type changePhoneNumber = {
   _: 'changePhoneNumber',
-  phone_number?: string,
-  allow_flash_call?: boolean,
-  is_current_phone_number?: boolean,
-|}
+  phone_number: string,
+  allow_flash_call: boolean,
+  is_current_phone_number: boolean,
+}
 
 export type changePhoneNumberOptional = {|
   _: 'changePhoneNumber',
@@ -6512,12 +6512,12 @@ export type changePhoneNumberOptional = {|
 
 export type changePhoneNumberReturnType = authenticationCodeInfo
 
-export type changeStickerSet = {|
+export type changeStickerSet = {
   _: 'changeStickerSet',
-  set_id?: number,
-  is_installed?: boolean,
-  is_archived?: boolean,
-|}
+  set_id: number,
+  is_installed: boolean,
+  is_archived: boolean,
+}
 
 export type changeStickerSetOptional = {|
   _: 'changeStickerSet',
@@ -6528,10 +6528,10 @@ export type changeStickerSetOptional = {|
 
 export type changeStickerSetReturnType = ok
 
-export type checkAuthenticationBotToken = {|
+export type checkAuthenticationBotToken = {
   _: 'checkAuthenticationBotToken',
-  token?: string,
-|}
+  token: string,
+}
 
 export type checkAuthenticationBotTokenOptional = {|
   _: 'checkAuthenticationBotToken',
@@ -6540,12 +6540,12 @@ export type checkAuthenticationBotTokenOptional = {|
 
 export type checkAuthenticationBotTokenReturnType = ok
 
-export type checkAuthenticationCode = {|
+export type checkAuthenticationCode = {
   _: 'checkAuthenticationCode',
-  code?: string,
-  first_name?: string,
-  last_name?: string,
-|}
+  code: string,
+  first_name: string,
+  last_name: string,
+}
 
 export type checkAuthenticationCodeOptional = {|
   _: 'checkAuthenticationCode',
@@ -6556,10 +6556,10 @@ export type checkAuthenticationCodeOptional = {|
 
 export type checkAuthenticationCodeReturnType = ok
 
-export type checkAuthenticationPassword = {|
+export type checkAuthenticationPassword = {
   _: 'checkAuthenticationPassword',
-  password?: string,
-|}
+  password: string,
+}
 
 export type checkAuthenticationPasswordOptional = {|
   _: 'checkAuthenticationPassword',
@@ -6568,10 +6568,10 @@ export type checkAuthenticationPasswordOptional = {|
 
 export type checkAuthenticationPasswordReturnType = ok
 
-export type checkChangePhoneNumberCode = {|
+export type checkChangePhoneNumberCode = {
   _: 'checkChangePhoneNumberCode',
-  code?: string,
-|}
+  code: string,
+}
 
 export type checkChangePhoneNumberCodeOptional = {|
   _: 'checkChangePhoneNumberCode',
@@ -6580,10 +6580,10 @@ export type checkChangePhoneNumberCodeOptional = {|
 
 export type checkChangePhoneNumberCodeReturnType = ok
 
-export type checkChatInviteLink = {|
+export type checkChatInviteLink = {
   _: 'checkChatInviteLink',
-  invite_link?: string,
-|}
+  invite_link: string,
+}
 
 export type checkChatInviteLinkOptional = {|
   _: 'checkChatInviteLink',
@@ -6592,11 +6592,11 @@ export type checkChatInviteLinkOptional = {|
 
 export type checkChatInviteLinkReturnType = chatInviteLinkInfo
 
-export type checkChatUsername = {|
+export type checkChatUsername = {
   _: 'checkChatUsername',
-  chat_id?: number,
-  username?: string,
-|}
+  chat_id: number,
+  username: string,
+}
 
 export type checkChatUsernameOptional = {|
   _: 'checkChatUsername',
@@ -6606,10 +6606,10 @@ export type checkChatUsernameOptional = {|
 
 export type checkChatUsernameReturnType = CheckChatUsernameResult
 
-export type checkDatabaseEncryptionKey = {|
+export type checkDatabaseEncryptionKey = {
   _: 'checkDatabaseEncryptionKey',
-  encryption_key?: string,
-|}
+  encryption_key: string,
+}
 
 export type checkDatabaseEncryptionKeyOptional = {|
   _: 'checkDatabaseEncryptionKey',
@@ -6618,9 +6618,9 @@ export type checkDatabaseEncryptionKeyOptional = {|
 
 export type checkDatabaseEncryptionKeyReturnType = ok
 
-export type clearImportedContacts = {|
+export type clearImportedContacts = {
   _: 'clearImportedContacts',
-|}
+}
 
 export type clearImportedContactsOptional = {|
   _: 'clearImportedContacts',
@@ -6628,10 +6628,10 @@ export type clearImportedContactsOptional = {|
 
 export type clearImportedContactsReturnType = ok
 
-export type clearRecentStickers = {|
+export type clearRecentStickers = {
   _: 'clearRecentStickers',
-  is_attached?: boolean,
-|}
+  is_attached: boolean,
+}
 
 export type clearRecentStickersOptional = {|
   _: 'clearRecentStickers',
@@ -6640,9 +6640,9 @@ export type clearRecentStickersOptional = {|
 
 export type clearRecentStickersReturnType = ok
 
-export type clearRecentlyFoundChats = {|
+export type clearRecentlyFoundChats = {
   _: 'clearRecentlyFoundChats',
-|}
+}
 
 export type clearRecentlyFoundChatsOptional = {|
   _: 'clearRecentlyFoundChats',
@@ -6650,9 +6650,9 @@ export type clearRecentlyFoundChatsOptional = {|
 
 export type clearRecentlyFoundChatsReturnType = ok
 
-export type close = {|
+export type close = {
   _: 'close',
-|}
+}
 
 export type closeOptional = {|
   _: 'close',
@@ -6660,10 +6660,10 @@ export type closeOptional = {|
 
 export type closeReturnType = ok
 
-export type closeChat = {|
+export type closeChat = {
   _: 'closeChat',
-  chat_id?: number,
-|}
+  chat_id: number,
+}
 
 export type closeChatOptional = {|
   _: 'closeChat',
@@ -6672,10 +6672,10 @@ export type closeChatOptional = {|
 
 export type closeChatReturnType = ok
 
-export type closeSecretChat = {|
+export type closeSecretChat = {
   _: 'closeSecretChat',
-  secret_chat_id?: number,
-|}
+  secret_chat_id: number,
+}
 
 export type closeSecretChatOptional = {|
   _: 'closeSecretChat',
@@ -6684,11 +6684,11 @@ export type closeSecretChatOptional = {|
 
 export type closeSecretChatReturnType = ok
 
-export type createBasicGroupChat = {|
+export type createBasicGroupChat = {
   _: 'createBasicGroupChat',
-  basic_group_id?: number,
-  force?: boolean,
-|}
+  basic_group_id: number,
+  force: boolean,
+}
 
 export type createBasicGroupChatOptional = {|
   _: 'createBasicGroupChat',
@@ -6698,11 +6698,11 @@ export type createBasicGroupChatOptional = {|
 
 export type createBasicGroupChatReturnType = chat
 
-export type createCall = {|
+export type createCall = {
   _: 'createCall',
-  user_id?: number,
-  protocol?: callProtocolOptional,
-|}
+  user_id: number,
+  protocol: callProtocol,
+}
 
 export type createCallOptional = {|
   _: 'createCall',
@@ -6712,11 +6712,11 @@ export type createCallOptional = {|
 
 export type createCallReturnType = callId
 
-export type createNewBasicGroupChat = {|
+export type createNewBasicGroupChat = {
   _: 'createNewBasicGroupChat',
-  user_ids?: number,
-  title?: string,
-|}
+  user_ids: number,
+  title: string,
+}
 
 export type createNewBasicGroupChatOptional = {|
   _: 'createNewBasicGroupChat',
@@ -6726,10 +6726,10 @@ export type createNewBasicGroupChatOptional = {|
 
 export type createNewBasicGroupChatReturnType = chat
 
-export type createNewSecretChat = {|
+export type createNewSecretChat = {
   _: 'createNewSecretChat',
-  user_id?: number,
-|}
+  user_id: number,
+}
 
 export type createNewSecretChatOptional = {|
   _: 'createNewSecretChat',
@@ -6738,14 +6738,14 @@ export type createNewSecretChatOptional = {|
 
 export type createNewSecretChatReturnType = chat
 
-export type createNewStickerSet = {|
+export type createNewStickerSet = {
   _: 'createNewStickerSet',
-  user_id?: number,
-  title?: string,
-  name?: string,
-  is_masks?: boolean,
-  stickers?: inputStickerOptional[],
-|}
+  user_id: number,
+  title: string,
+  name: string,
+  is_masks: boolean,
+  stickers: inputSticker[],
+}
 
 export type createNewStickerSetOptional = {|
   _: 'createNewStickerSet',
@@ -6758,12 +6758,12 @@ export type createNewStickerSetOptional = {|
 
 export type createNewStickerSetReturnType = stickerSet
 
-export type createNewSupergroupChat = {|
+export type createNewSupergroupChat = {
   _: 'createNewSupergroupChat',
-  title?: string,
-  is_channel?: boolean,
-  description?: string,
-|}
+  title: string,
+  is_channel: boolean,
+  description: string,
+}
 
 export type createNewSupergroupChatOptional = {|
   _: 'createNewSupergroupChat',
@@ -6774,11 +6774,11 @@ export type createNewSupergroupChatOptional = {|
 
 export type createNewSupergroupChatReturnType = chat
 
-export type createPrivateChat = {|
+export type createPrivateChat = {
   _: 'createPrivateChat',
-  user_id?: number,
-  force?: boolean,
-|}
+  user_id: number,
+  force: boolean,
+}
 
 export type createPrivateChatOptional = {|
   _: 'createPrivateChat',
@@ -6788,10 +6788,10 @@ export type createPrivateChatOptional = {|
 
 export type createPrivateChatReturnType = chat
 
-export type createSecretChat = {|
+export type createSecretChat = {
   _: 'createSecretChat',
-  secret_chat_id?: number,
-|}
+  secret_chat_id: number,
+}
 
 export type createSecretChatOptional = {|
   _: 'createSecretChat',
@@ -6800,11 +6800,11 @@ export type createSecretChatOptional = {|
 
 export type createSecretChatReturnType = chat
 
-export type createSupergroupChat = {|
+export type createSupergroupChat = {
   _: 'createSupergroupChat',
-  supergroup_id?: number,
-  force?: boolean,
-|}
+  supergroup_id: number,
+  force: boolean,
+}
 
 export type createSupergroupChatOptional = {|
   _: 'createSupergroupChat',
@@ -6814,11 +6814,11 @@ export type createSupergroupChatOptional = {|
 
 export type createSupergroupChatReturnType = chat
 
-export type createTemporaryPassword = {|
+export type createTemporaryPassword = {
   _: 'createTemporaryPassword',
-  password?: string,
-  valid_for?: number,
-|}
+  password: string,
+  valid_for: number,
+}
 
 export type createTemporaryPasswordOptional = {|
   _: 'createTemporaryPassword',
@@ -6828,10 +6828,10 @@ export type createTemporaryPasswordOptional = {|
 
 export type createTemporaryPasswordReturnType = temporaryPasswordState
 
-export type deleteAccount = {|
+export type deleteAccount = {
   _: 'deleteAccount',
-  reason?: string,
-|}
+  reason: string,
+}
 
 export type deleteAccountOptional = {|
   _: 'deleteAccount',
@@ -6840,11 +6840,11 @@ export type deleteAccountOptional = {|
 
 export type deleteAccountReturnType = ok
 
-export type deleteChatHistory = {|
+export type deleteChatHistory = {
   _: 'deleteChatHistory',
-  chat_id?: number,
-  remove_from_chat_list?: boolean,
-|}
+  chat_id: number,
+  remove_from_chat_list: boolean,
+}
 
 export type deleteChatHistoryOptional = {|
   _: 'deleteChatHistory',
@@ -6854,11 +6854,11 @@ export type deleteChatHistoryOptional = {|
 
 export type deleteChatHistoryReturnType = ok
 
-export type deleteChatMessagesFromUser = {|
+export type deleteChatMessagesFromUser = {
   _: 'deleteChatMessagesFromUser',
-  chat_id?: number,
-  user_id?: number,
-|}
+  chat_id: number,
+  user_id: number,
+}
 
 export type deleteChatMessagesFromUserOptional = {|
   _: 'deleteChatMessagesFromUser',
@@ -6868,11 +6868,11 @@ export type deleteChatMessagesFromUserOptional = {|
 
 export type deleteChatMessagesFromUserReturnType = ok
 
-export type deleteChatReplyMarkup = {|
+export type deleteChatReplyMarkup = {
   _: 'deleteChatReplyMarkup',
-  chat_id?: number,
-  message_id?: number,
-|}
+  chat_id: number,
+  message_id: number,
+}
 
 export type deleteChatReplyMarkupOptional = {|
   _: 'deleteChatReplyMarkup',
@@ -6882,10 +6882,10 @@ export type deleteChatReplyMarkupOptional = {|
 
 export type deleteChatReplyMarkupReturnType = ok
 
-export type deleteFile = {|
+export type deleteFile = {
   _: 'deleteFile',
-  file_id?: number,
-|}
+  file_id: number,
+}
 
 export type deleteFileOptional = {|
   _: 'deleteFile',
@@ -6894,12 +6894,12 @@ export type deleteFileOptional = {|
 
 export type deleteFileReturnType = ok
 
-export type deleteMessages = {|
+export type deleteMessages = {
   _: 'deleteMessages',
-  chat_id?: number,
-  message_ids?: number,
-  revoke?: boolean,
-|}
+  chat_id: number,
+  message_ids: number,
+  revoke: boolean,
+}
 
 export type deleteMessagesOptional = {|
   _: 'deleteMessages',
@@ -6910,10 +6910,10 @@ export type deleteMessagesOptional = {|
 
 export type deleteMessagesReturnType = ok
 
-export type deleteProfilePhoto = {|
+export type deleteProfilePhoto = {
   _: 'deleteProfilePhoto',
-  profile_photo_id?: number,
-|}
+  profile_photo_id: number,
+}
 
 export type deleteProfilePhotoOptional = {|
   _: 'deleteProfilePhoto',
@@ -6922,9 +6922,9 @@ export type deleteProfilePhotoOptional = {|
 
 export type deleteProfilePhotoReturnType = ok
 
-export type deleteSavedCredentials = {|
+export type deleteSavedCredentials = {
   _: 'deleteSavedCredentials',
-|}
+}
 
 export type deleteSavedCredentialsOptional = {|
   _: 'deleteSavedCredentials',
@@ -6932,9 +6932,9 @@ export type deleteSavedCredentialsOptional = {|
 
 export type deleteSavedCredentialsReturnType = ok
 
-export type deleteSavedOrderInfo = {|
+export type deleteSavedOrderInfo = {
   _: 'deleteSavedOrderInfo',
-|}
+}
 
 export type deleteSavedOrderInfoOptional = {|
   _: 'deleteSavedOrderInfo',
@@ -6942,10 +6942,10 @@ export type deleteSavedOrderInfoOptional = {|
 
 export type deleteSavedOrderInfoReturnType = ok
 
-export type deleteSupergroup = {|
+export type deleteSupergroup = {
   _: 'deleteSupergroup',
-  supergroup_id?: number,
-|}
+  supergroup_id: number,
+}
 
 export type deleteSupergroupOptional = {|
   _: 'deleteSupergroup',
@@ -6954,9 +6954,9 @@ export type deleteSupergroupOptional = {|
 
 export type deleteSupergroupReturnType = ok
 
-export type destroy = {|
+export type destroy = {
   _: 'destroy',
-|}
+}
 
 export type destroyOptional = {|
   _: 'destroy',
@@ -6964,13 +6964,13 @@ export type destroyOptional = {|
 
 export type destroyReturnType = ok
 
-export type discardCall = {|
+export type discardCall = {
   _: 'discardCall',
-  call_id?: number,
-  is_disconnected?: boolean,
-  duration?: number,
-  connection_id?: number,
-|}
+  call_id: number,
+  is_disconnected: boolean,
+  duration: number,
+  connection_id: number,
+}
 
 export type discardCallOptional = {|
   _: 'discardCall',
@@ -6982,9 +6982,9 @@ export type discardCallOptional = {|
 
 export type discardCallReturnType = ok
 
-export type disconnectAllWebsites = {|
+export type disconnectAllWebsites = {
   _: 'disconnectAllWebsites',
-|}
+}
 
 export type disconnectAllWebsitesOptional = {|
   _: 'disconnectAllWebsites',
@@ -6992,10 +6992,10 @@ export type disconnectAllWebsitesOptional = {|
 
 export type disconnectAllWebsitesReturnType = ok
 
-export type disconnectWebsite = {|
+export type disconnectWebsite = {
   _: 'disconnectWebsite',
-  website_id?: number,
-|}
+  website_id: number,
+}
 
 export type disconnectWebsiteOptional = {|
   _: 'disconnectWebsite',
@@ -7004,11 +7004,11 @@ export type disconnectWebsiteOptional = {|
 
 export type disconnectWebsiteReturnType = ok
 
-export type downloadFile = {|
+export type downloadFile = {
   _: 'downloadFile',
-  file_id?: number,
-  priority?: number,
-|}
+  file_id: number,
+  priority: number,
+}
 
 export type downloadFileOptional = {|
   _: 'downloadFile',
@@ -7018,12 +7018,12 @@ export type downloadFileOptional = {|
 
 export type downloadFileReturnType = file
 
-export type editInlineMessageCaption = {|
+export type editInlineMessageCaption = {
   _: 'editInlineMessageCaption',
-  inline_message_id?: string,
-  reply_markup?: ReplyMarkupOptional,
-  caption?: formattedTextOptional,
-|}
+  inline_message_id: string,
+  reply_markup: ReplyMarkup,
+  caption: formattedText,
+}
 
 export type editInlineMessageCaptionOptional = {|
   _: 'editInlineMessageCaption',
@@ -7034,12 +7034,12 @@ export type editInlineMessageCaptionOptional = {|
 
 export type editInlineMessageCaptionReturnType = ok
 
-export type editInlineMessageLiveLocation = {|
+export type editInlineMessageLiveLocation = {
   _: 'editInlineMessageLiveLocation',
-  inline_message_id?: string,
-  reply_markup?: ReplyMarkupOptional,
-  location?: locationOptional,
-|}
+  inline_message_id: string,
+  reply_markup: ReplyMarkup,
+  location: location,
+}
 
 export type editInlineMessageLiveLocationOptional = {|
   _: 'editInlineMessageLiveLocation',
@@ -7050,11 +7050,11 @@ export type editInlineMessageLiveLocationOptional = {|
 
 export type editInlineMessageLiveLocationReturnType = ok
 
-export type editInlineMessageReplyMarkup = {|
+export type editInlineMessageReplyMarkup = {
   _: 'editInlineMessageReplyMarkup',
-  inline_message_id?: string,
-  reply_markup?: ReplyMarkupOptional,
-|}
+  inline_message_id: string,
+  reply_markup: ReplyMarkup,
+}
 
 export type editInlineMessageReplyMarkupOptional = {|
   _: 'editInlineMessageReplyMarkup',
@@ -7064,12 +7064,12 @@ export type editInlineMessageReplyMarkupOptional = {|
 
 export type editInlineMessageReplyMarkupReturnType = ok
 
-export type editInlineMessageText = {|
+export type editInlineMessageText = {
   _: 'editInlineMessageText',
-  inline_message_id?: string,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
+  inline_message_id: string,
+  reply_markup: ReplyMarkup,
+  input_message_content: InputMessageContent,
+}
 
 export type editInlineMessageTextOptional = {|
   _: 'editInlineMessageText',
@@ -7080,13 +7080,13 @@ export type editInlineMessageTextOptional = {|
 
 export type editInlineMessageTextReturnType = ok
 
-export type editMessageCaption = {|
+export type editMessageCaption = {
   _: 'editMessageCaption',
-  chat_id?: number,
-  message_id?: number,
-  reply_markup?: ReplyMarkupOptional,
-  caption?: formattedTextOptional,
-|}
+  chat_id: number,
+  message_id: number,
+  reply_markup: ReplyMarkup,
+  caption: formattedText,
+}
 
 export type editMessageCaptionOptional = {|
   _: 'editMessageCaption',
@@ -7098,13 +7098,13 @@ export type editMessageCaptionOptional = {|
 
 export type editMessageCaptionReturnType = message
 
-export type editMessageLiveLocation = {|
+export type editMessageLiveLocation = {
   _: 'editMessageLiveLocation',
-  chat_id?: number,
-  message_id?: number,
-  reply_markup?: ReplyMarkupOptional,
-  location?: locationOptional,
-|}
+  chat_id: number,
+  message_id: number,
+  reply_markup: ReplyMarkup,
+  location: location,
+}
 
 export type editMessageLiveLocationOptional = {|
   _: 'editMessageLiveLocation',
@@ -7116,12 +7116,12 @@ export type editMessageLiveLocationOptional = {|
 
 export type editMessageLiveLocationReturnType = message
 
-export type editMessageReplyMarkup = {|
+export type editMessageReplyMarkup = {
   _: 'editMessageReplyMarkup',
-  chat_id?: number,
-  message_id?: number,
-  reply_markup?: ReplyMarkupOptional,
-|}
+  chat_id: number,
+  message_id: number,
+  reply_markup: ReplyMarkup,
+}
 
 export type editMessageReplyMarkupOptional = {|
   _: 'editMessageReplyMarkup',
@@ -7132,13 +7132,13 @@ export type editMessageReplyMarkupOptional = {|
 
 export type editMessageReplyMarkupReturnType = message
 
-export type editMessageText = {|
+export type editMessageText = {
   _: 'editMessageText',
-  chat_id?: number,
-  message_id?: number,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
+  chat_id: number,
+  message_id: number,
+  reply_markup: ReplyMarkup,
+  input_message_content: InputMessageContent,
+}
 
 export type editMessageTextOptional = {|
   _: 'editMessageText',
@@ -7150,11 +7150,11 @@ export type editMessageTextOptional = {|
 
 export type editMessageTextReturnType = message
 
-export type finishFileGeneration = {|
+export type finishFileGeneration = {
   _: 'finishFileGeneration',
-  generation_id?: number,
-  error?: errorOptional,
-|}
+  generation_id: number,
+  error: error,
+}
 
 export type finishFileGenerationOptional = {|
   _: 'finishFileGeneration',
@@ -7164,15 +7164,15 @@ export type finishFileGenerationOptional = {|
 
 export type finishFileGenerationReturnType = ok
 
-export type forwardMessages = {|
+export type forwardMessages = {
   _: 'forwardMessages',
-  chat_id?: number,
-  from_chat_id?: number,
-  message_ids?: number,
-  disable_notification?: boolean,
-  from_background?: boolean,
-  as_album?: boolean,
-|}
+  chat_id: number,
+  from_chat_id: number,
+  message_ids: number,
+  disable_notification: boolean,
+  from_background: boolean,
+  as_album: boolean,
+}
 
 export type forwardMessagesOptional = {|
   _: 'forwardMessages',
@@ -7186,10 +7186,10 @@ export type forwardMessagesOptional = {|
 
 export type forwardMessagesReturnType = messages
 
-export type generateChatInviteLink = {|
+export type generateChatInviteLink = {
   _: 'generateChatInviteLink',
-  chat_id?: number,
-|}
+  chat_id: number,
+}
 
 export type generateChatInviteLinkOptional = {|
   _: 'generateChatInviteLink',
@@ -7198,9 +7198,9 @@ export type generateChatInviteLinkOptional = {|
 
 export type generateChatInviteLinkReturnType = chatInviteLink
 
-export type getAccountTtl = {|
+export type getAccountTtl = {
   _: 'getAccountTtl',
-|}
+}
 
 export type getAccountTtlOptional = {|
   _: 'getAccountTtl',
@@ -7208,9 +7208,9 @@ export type getAccountTtlOptional = {|
 
 export type getAccountTtlReturnType = accountTtl
 
-export type getActiveLiveLocationMessages = {|
+export type getActiveLiveLocationMessages = {
   _: 'getActiveLiveLocationMessages',
-|}
+}
 
 export type getActiveLiveLocationMessagesOptional = {|
   _: 'getActiveLiveLocationMessages',
@@ -7218,9 +7218,9 @@ export type getActiveLiveLocationMessagesOptional = {|
 
 export type getActiveLiveLocationMessagesReturnType = messages
 
-export type getActiveSessions = {|
+export type getActiveSessions = {
   _: 'getActiveSessions',
-|}
+}
 
 export type getActiveSessionsOptional = {|
   _: 'getActiveSessions',
@@ -7228,12 +7228,12 @@ export type getActiveSessionsOptional = {|
 
 export type getActiveSessionsReturnType = sessions
 
-export type getArchivedStickerSets = {|
+export type getArchivedStickerSets = {
   _: 'getArchivedStickerSets',
-  is_masks?: boolean,
-  offset_sticker_set_id?: number,
-  limit?: number,
-|}
+  is_masks: boolean,
+  offset_sticker_set_id: number,
+  limit: number,
+}
 
 export type getArchivedStickerSetsOptional = {|
   _: 'getArchivedStickerSets',
@@ -7244,10 +7244,10 @@ export type getArchivedStickerSetsOptional = {|
 
 export type getArchivedStickerSetsReturnType = stickerSets
 
-export type getAttachedStickerSets = {|
+export type getAttachedStickerSets = {
   _: 'getAttachedStickerSets',
-  file_id?: number,
-|}
+  file_id: number,
+}
 
 export type getAttachedStickerSetsOptional = {|
   _: 'getAttachedStickerSets',
@@ -7256,9 +7256,9 @@ export type getAttachedStickerSetsOptional = {|
 
 export type getAttachedStickerSetsReturnType = stickerSets
 
-export type getAuthorizationState = {|
+export type getAuthorizationState = {
   _: 'getAuthorizationState',
-|}
+}
 
 export type getAuthorizationStateOptional = {|
   _: 'getAuthorizationState',
@@ -7266,10 +7266,10 @@ export type getAuthorizationStateOptional = {|
 
 export type getAuthorizationStateReturnType = AuthorizationState
 
-export type getBasicGroup = {|
+export type getBasicGroup = {
   _: 'getBasicGroup',
-  basic_group_id?: number,
-|}
+  basic_group_id: number,
+}
 
 export type getBasicGroupOptional = {|
   _: 'getBasicGroup',
@@ -7278,10 +7278,10 @@ export type getBasicGroupOptional = {|
 
 export type getBasicGroupReturnType = basicGroup
 
-export type getBasicGroupFullInfo = {|
+export type getBasicGroupFullInfo = {
   _: 'getBasicGroupFullInfo',
-  basic_group_id?: number,
-|}
+  basic_group_id: number,
+}
 
 export type getBasicGroupFullInfoOptional = {|
   _: 'getBasicGroupFullInfo',
@@ -7290,11 +7290,11 @@ export type getBasicGroupFullInfoOptional = {|
 
 export type getBasicGroupFullInfoReturnType = basicGroupFullInfo
 
-export type getBlockedUsers = {|
+export type getBlockedUsers = {
   _: 'getBlockedUsers',
-  offset?: number,
-  limit?: number,
-|}
+  offset: number,
+  limit: number,
+}
 
 export type getBlockedUsersOptional = {|
   _: 'getBlockedUsers',
@@ -7304,12 +7304,12 @@ export type getBlockedUsersOptional = {|
 
 export type getBlockedUsersReturnType = users
 
-export type getCallbackQueryAnswer = {|
+export type getCallbackQueryAnswer = {
   _: 'getCallbackQueryAnswer',
-  chat_id?: number,
-  message_id?: number,
-  payload?: CallbackQueryPayloadOptional,
-|}
+  chat_id: number,
+  message_id: number,
+  payload: CallbackQueryPayload,
+}
 
 export type getCallbackQueryAnswerOptional = {|
   _: 'getCallbackQueryAnswer',
@@ -7320,10 +7320,10 @@ export type getCallbackQueryAnswerOptional = {|
 
 export type getCallbackQueryAnswerReturnType = callbackQueryAnswer
 
-export type getChat = {|
+export type getChat = {
   _: 'getChat',
-  chat_id?: number,
-|}
+  chat_id: number,
+}
 
 export type getChatOptional = {|
   _: 'getChat',
@@ -7332,10 +7332,10 @@ export type getChatOptional = {|
 
 export type getChatReturnType = chat
 
-export type getChatAdministrators = {|
+export type getChatAdministrators = {
   _: 'getChatAdministrators',
-  chat_id?: number,
-|}
+  chat_id: number,
+}
 
 export type getChatAdministratorsOptional = {|
   _: 'getChatAdministrators',
@@ -7344,15 +7344,15 @@ export type getChatAdministratorsOptional = {|
 
 export type getChatAdministratorsReturnType = users
 
-export type getChatEventLog = {|
+export type getChatEventLog = {
   _: 'getChatEventLog',
-  chat_id?: number,
-  query?: string,
-  from_event_id?: number,
-  limit?: number,
-  filters?: chatEventLogFiltersOptional,
-  user_ids?: number,
-|}
+  chat_id: number,
+  query: string,
+  from_event_id: number,
+  limit: number,
+  filters: chatEventLogFilters,
+  user_ids: number,
+}
 
 export type getChatEventLogOptional = {|
   _: 'getChatEventLog',
@@ -7366,14 +7366,14 @@ export type getChatEventLogOptional = {|
 
 export type getChatEventLogReturnType = chatEvents
 
-export type getChatHistory = {|
+export type getChatHistory = {
   _: 'getChatHistory',
-  chat_id?: number,
-  from_message_id?: number,
-  offset?: number,
-  limit?: number,
-  only_local?: boolean,
-|}
+  chat_id: number,
+  from_message_id: number,
+  offset: number,
+  limit: number,
+  only_local: boolean,
+}
 
 export type getChatHistoryOptional = {|
   _: 'getChatHistory',
@@ -7386,11 +7386,11 @@ export type getChatHistoryOptional = {|
 
 export type getChatHistoryReturnType = messages
 
-export type getChatMember = {|
+export type getChatMember = {
   _: 'getChatMember',
-  chat_id?: number,
-  user_id?: number,
-|}
+  chat_id: number,
+  user_id: number,
+}
 
 export type getChatMemberOptional = {|
   _: 'getChatMember',
@@ -7400,11 +7400,11 @@ export type getChatMemberOptional = {|
 
 export type getChatMemberReturnType = chatMember
 
-export type getChatMessageByDate = {|
+export type getChatMessageByDate = {
   _: 'getChatMessageByDate',
-  chat_id?: number,
-  date?: number,
-|}
+  chat_id: number,
+  date: number,
+}
 
 export type getChatMessageByDateOptional = {|
   _: 'getChatMessageByDate',
@@ -7414,10 +7414,10 @@ export type getChatMessageByDateOptional = {|
 
 export type getChatMessageByDateReturnType = message
 
-export type getChatPinnedMessage = {|
+export type getChatPinnedMessage = {
   _: 'getChatPinnedMessage',
-  chat_id?: number,
-|}
+  chat_id: number,
+}
 
 export type getChatPinnedMessageOptional = {|
   _: 'getChatPinnedMessage',
@@ -7426,10 +7426,10 @@ export type getChatPinnedMessageOptional = {|
 
 export type getChatPinnedMessageReturnType = message
 
-export type getChatReportSpamState = {|
+export type getChatReportSpamState = {
   _: 'getChatReportSpamState',
-  chat_id?: number,
-|}
+  chat_id: number,
+}
 
 export type getChatReportSpamStateOptional = {|
   _: 'getChatReportSpamState',
@@ -7438,12 +7438,12 @@ export type getChatReportSpamStateOptional = {|
 
 export type getChatReportSpamStateReturnType = chatReportSpamState
 
-export type getChats = {|
+export type getChats = {
   _: 'getChats',
-  offset_order?: number,
-  offset_chat_id?: number,
-  limit?: number,
-|}
+  offset_order: number,
+  offset_chat_id: number,
+  limit: number,
+}
 
 export type getChatsOptional = {|
   _: 'getChats',
@@ -7454,9 +7454,9 @@ export type getChatsOptional = {|
 
 export type getChatsReturnType = chats
 
-export type getConnectedWebsites = {|
+export type getConnectedWebsites = {
   _: 'getConnectedWebsites',
-|}
+}
 
 export type getConnectedWebsitesOptional = {|
   _: 'getConnectedWebsites',
@@ -7464,9 +7464,9 @@ export type getConnectedWebsitesOptional = {|
 
 export type getConnectedWebsitesReturnType = connectedWebsites
 
-export type getCountryCode = {|
+export type getCountryCode = {
   _: 'getCountryCode',
-|}
+}
 
 export type getCountryCodeOptional = {|
   _: 'getCountryCode',
@@ -7474,9 +7474,9 @@ export type getCountryCodeOptional = {|
 
 export type getCountryCodeReturnType = text
 
-export type getCreatedPublicChats = {|
+export type getCreatedPublicChats = {
   _: 'getCreatedPublicChats',
-|}
+}
 
 export type getCreatedPublicChatsOptional = {|
   _: 'getCreatedPublicChats',
@@ -7484,9 +7484,9 @@ export type getCreatedPublicChatsOptional = {|
 
 export type getCreatedPublicChatsReturnType = chats
 
-export type getFavoriteStickers = {|
+export type getFavoriteStickers = {
   _: 'getFavoriteStickers',
-|}
+}
 
 export type getFavoriteStickersOptional = {|
   _: 'getFavoriteStickers',
@@ -7494,10 +7494,10 @@ export type getFavoriteStickersOptional = {|
 
 export type getFavoriteStickersReturnType = stickers
 
-export type getFile = {|
+export type getFile = {
   _: 'getFile',
-  file_id?: number,
-|}
+  file_id: number,
+}
 
 export type getFileOptional = {|
   _: 'getFile',
@@ -7506,10 +7506,10 @@ export type getFileOptional = {|
 
 export type getFileReturnType = file
 
-export type getFileExtension = {|
+export type getFileExtension = {
   _: 'getFileExtension',
-  mime_type?: string,
-|}
+  mime_type: string,
+}
 
 export type getFileExtensionOptional = {|
   _: 'getFileExtension',
@@ -7518,10 +7518,10 @@ export type getFileExtensionOptional = {|
 
 export type getFileExtensionReturnType = text
 
-export type getFileMimeType = {|
+export type getFileMimeType = {
   _: 'getFileMimeType',
-  file_name?: string,
-|}
+  file_name: string,
+}
 
 export type getFileMimeTypeOptional = {|
   _: 'getFileMimeType',
@@ -7530,12 +7530,12 @@ export type getFileMimeTypeOptional = {|
 
 export type getFileMimeTypeReturnType = text
 
-export type getGameHighScores = {|
+export type getGameHighScores = {
   _: 'getGameHighScores',
-  chat_id?: number,
-  message_id?: number,
-  user_id?: number,
-|}
+  chat_id: number,
+  message_id: number,
+  user_id: number,
+}
 
 export type getGameHighScoresOptional = {|
   _: 'getGameHighScores',
@@ -7546,12 +7546,12 @@ export type getGameHighScoresOptional = {|
 
 export type getGameHighScoresReturnType = gameHighScores
 
-export type getGroupsInCommon = {|
+export type getGroupsInCommon = {
   _: 'getGroupsInCommon',
-  user_id?: number,
-  offset_chat_id?: number,
-  limit?: number,
-|}
+  user_id: number,
+  offset_chat_id: number,
+  limit: number,
+}
 
 export type getGroupsInCommonOptional = {|
   _: 'getGroupsInCommon',
@@ -7562,9 +7562,9 @@ export type getGroupsInCommonOptional = {|
 
 export type getGroupsInCommonReturnType = chats
 
-export type getImportedContactCount = {|
+export type getImportedContactCount = {
   _: 'getImportedContactCount',
-|}
+}
 
 export type getImportedContactCountOptional = {|
   _: 'getImportedContactCount',
@@ -7572,11 +7572,11 @@ export type getImportedContactCountOptional = {|
 
 export type getImportedContactCountReturnType = count
 
-export type getInlineGameHighScores = {|
+export type getInlineGameHighScores = {
   _: 'getInlineGameHighScores',
-  inline_message_id?: string,
-  user_id?: number,
-|}
+  inline_message_id: string,
+  user_id: number,
+}
 
 export type getInlineGameHighScoresOptional = {|
   _: 'getInlineGameHighScores',
@@ -7586,14 +7586,14 @@ export type getInlineGameHighScoresOptional = {|
 
 export type getInlineGameHighScoresReturnType = gameHighScores
 
-export type getInlineQueryResults = {|
+export type getInlineQueryResults = {
   _: 'getInlineQueryResults',
-  bot_user_id?: number,
-  chat_id?: number,
-  user_location?: locationOptional,
-  query?: string,
-  offset?: string,
-|}
+  bot_user_id: number,
+  chat_id: number,
+  user_location: location,
+  query: string,
+  offset: string,
+}
 
 export type getInlineQueryResultsOptional = {|
   _: 'getInlineQueryResults',
@@ -7606,10 +7606,10 @@ export type getInlineQueryResultsOptional = {|
 
 export type getInlineQueryResultsReturnType = inlineQueryResults
 
-export type getInstalledStickerSets = {|
+export type getInstalledStickerSets = {
   _: 'getInstalledStickerSets',
-  is_masks?: boolean,
-|}
+  is_masks: boolean,
+}
 
 export type getInstalledStickerSetsOptional = {|
   _: 'getInstalledStickerSets',
@@ -7618,9 +7618,9 @@ export type getInstalledStickerSetsOptional = {|
 
 export type getInstalledStickerSetsReturnType = stickerSets
 
-export type getInviteText = {|
+export type getInviteText = {
   _: 'getInviteText',
-|}
+}
 
 export type getInviteTextOptional = {|
   _: 'getInviteText',
@@ -7628,9 +7628,9 @@ export type getInviteTextOptional = {|
 
 export type getInviteTextReturnType = text
 
-export type getMe = {|
+export type getMe = {
   _: 'getMe',
-|}
+}
 
 export type getMeOptional = {|
   _: 'getMe',
@@ -7638,11 +7638,11 @@ export type getMeOptional = {|
 
 export type getMeReturnType = user
 
-export type getMessage = {|
+export type getMessage = {
   _: 'getMessage',
-  chat_id?: number,
-  message_id?: number,
-|}
+  chat_id: number,
+  message_id: number,
+}
 
 export type getMessageOptional = {|
   _: 'getMessage',
@@ -7652,11 +7652,11 @@ export type getMessageOptional = {|
 
 export type getMessageReturnType = message
 
-export type getMessages = {|
+export type getMessages = {
   _: 'getMessages',
-  chat_id?: number,
-  message_ids?: number,
-|}
+  chat_id: number,
+  message_ids: number,
+}
 
 export type getMessagesOptional = {|
   _: 'getMessages',
@@ -7666,10 +7666,10 @@ export type getMessagesOptional = {|
 
 export type getMessagesReturnType = messages
 
-export type getNetworkStatistics = {|
+export type getNetworkStatistics = {
   _: 'getNetworkStatistics',
-  only_current?: boolean,
-|}
+  only_current: boolean,
+}
 
 export type getNetworkStatisticsOptional = {|
   _: 'getNetworkStatistics',
@@ -7678,10 +7678,10 @@ export type getNetworkStatisticsOptional = {|
 
 export type getNetworkStatisticsReturnType = networkStatistics
 
-export type getNotificationSettings = {|
+export type getNotificationSettings = {
   _: 'getNotificationSettings',
-  scope?: NotificationSettingsScopeOptional,
-|}
+  scope: NotificationSettingsScope,
+}
 
 export type getNotificationSettingsOptional = {|
   _: 'getNotificationSettings',
@@ -7690,10 +7690,10 @@ export type getNotificationSettingsOptional = {|
 
 export type getNotificationSettingsReturnType = notificationSettings
 
-export type getOption = {|
+export type getOption = {
   _: 'getOption',
-  name?: string,
-|}
+  name: string,
+}
 
 export type getOptionOptional = {|
   _: 'getOption',
@@ -7702,9 +7702,9 @@ export type getOptionOptional = {|
 
 export type getOptionReturnType = OptionValue
 
-export type getPasswordState = {|
+export type getPasswordState = {
   _: 'getPasswordState',
-|}
+}
 
 export type getPasswordStateOptional = {|
   _: 'getPasswordState',
@@ -7712,11 +7712,11 @@ export type getPasswordStateOptional = {|
 
 export type getPasswordStateReturnType = passwordState
 
-export type getPaymentForm = {|
+export type getPaymentForm = {
   _: 'getPaymentForm',
-  chat_id?: number,
-  message_id?: number,
-|}
+  chat_id: number,
+  message_id: number,
+}
 
 export type getPaymentFormOptional = {|
   _: 'getPaymentForm',
@@ -7726,11 +7726,11 @@ export type getPaymentFormOptional = {|
 
 export type getPaymentFormReturnType = paymentForm
 
-export type getPaymentReceipt = {|
+export type getPaymentReceipt = {
   _: 'getPaymentReceipt',
-  chat_id?: number,
-  message_id?: number,
-|}
+  chat_id: number,
+  message_id: number,
+}
 
 export type getPaymentReceiptOptional = {|
   _: 'getPaymentReceipt',
@@ -7740,9 +7740,9 @@ export type getPaymentReceiptOptional = {|
 
 export type getPaymentReceiptReturnType = paymentReceipt
 
-export type getProxy = {|
+export type getProxy = {
   _: 'getProxy',
-|}
+}
 
 export type getProxyOptional = {|
   _: 'getProxy',
@@ -7750,12 +7750,12 @@ export type getProxyOptional = {|
 
 export type getProxyReturnType = Proxy
 
-export type getPublicMessageLink = {|
+export type getPublicMessageLink = {
   _: 'getPublicMessageLink',
-  chat_id?: number,
-  message_id?: number,
-  for_album?: boolean,
-|}
+  chat_id: number,
+  message_id: number,
+  for_album: boolean,
+}
 
 export type getPublicMessageLinkOptional = {|
   _: 'getPublicMessageLink',
@@ -7766,9 +7766,9 @@ export type getPublicMessageLinkOptional = {|
 
 export type getPublicMessageLinkReturnType = publicMessageLink
 
-export type getRecentInlineBots = {|
+export type getRecentInlineBots = {
   _: 'getRecentInlineBots',
-|}
+}
 
 export type getRecentInlineBotsOptional = {|
   _: 'getRecentInlineBots',
@@ -7776,10 +7776,10 @@ export type getRecentInlineBotsOptional = {|
 
 export type getRecentInlineBotsReturnType = users
 
-export type getRecentStickers = {|
+export type getRecentStickers = {
   _: 'getRecentStickers',
-  is_attached?: boolean,
-|}
+  is_attached: boolean,
+}
 
 export type getRecentStickersOptional = {|
   _: 'getRecentStickers',
@@ -7788,10 +7788,10 @@ export type getRecentStickersOptional = {|
 
 export type getRecentStickersReturnType = stickers
 
-export type getRecentlyVisitedTMeUrls = {|
+export type getRecentlyVisitedTMeUrls = {
   _: 'getRecentlyVisitedTMeUrls',
-  referrer?: string,
-|}
+  referrer: string,
+}
 
 export type getRecentlyVisitedTMeUrlsOptional = {|
   _: 'getRecentlyVisitedTMeUrls',
@@ -7800,10 +7800,10 @@ export type getRecentlyVisitedTMeUrlsOptional = {|
 
 export type getRecentlyVisitedTMeUrlsReturnType = tMeUrls
 
-export type getRecoveryEmailAddress = {|
+export type getRecoveryEmailAddress = {
   _: 'getRecoveryEmailAddress',
-  password?: string,
-|}
+  password: string,
+}
 
 export type getRecoveryEmailAddressOptional = {|
   _: 'getRecoveryEmailAddress',
@@ -7812,11 +7812,11 @@ export type getRecoveryEmailAddressOptional = {|
 
 export type getRecoveryEmailAddressReturnType = recoveryEmailAddress
 
-export type getRemoteFile = {|
+export type getRemoteFile = {
   _: 'getRemoteFile',
-  remote_file_id?: string,
-  file_type?: FileTypeOptional,
-|}
+  remote_file_id: string,
+  file_type: FileType,
+}
 
 export type getRemoteFileOptional = {|
   _: 'getRemoteFile',
@@ -7826,11 +7826,11 @@ export type getRemoteFileOptional = {|
 
 export type getRemoteFileReturnType = file
 
-export type getRepliedMessage = {|
+export type getRepliedMessage = {
   _: 'getRepliedMessage',
-  chat_id?: number,
-  message_id?: number,
-|}
+  chat_id: number,
+  message_id: number,
+}
 
 export type getRepliedMessageOptional = {|
   _: 'getRepliedMessage',
@@ -7840,9 +7840,9 @@ export type getRepliedMessageOptional = {|
 
 export type getRepliedMessageReturnType = message
 
-export type getSavedAnimations = {|
+export type getSavedAnimations = {
   _: 'getSavedAnimations',
-|}
+}
 
 export type getSavedAnimationsOptional = {|
   _: 'getSavedAnimations',
@@ -7850,9 +7850,9 @@ export type getSavedAnimationsOptional = {|
 
 export type getSavedAnimationsReturnType = animations
 
-export type getSavedOrderInfo = {|
+export type getSavedOrderInfo = {
   _: 'getSavedOrderInfo',
-|}
+}
 
 export type getSavedOrderInfoOptional = {|
   _: 'getSavedOrderInfo',
@@ -7860,10 +7860,10 @@ export type getSavedOrderInfoOptional = {|
 
 export type getSavedOrderInfoReturnType = orderInfo
 
-export type getSecretChat = {|
+export type getSecretChat = {
   _: 'getSecretChat',
-  secret_chat_id?: number,
-|}
+  secret_chat_id: number,
+}
 
 export type getSecretChatOptional = {|
   _: 'getSecretChat',
@@ -7872,10 +7872,10 @@ export type getSecretChatOptional = {|
 
 export type getSecretChatReturnType = secretChat
 
-export type getStickerEmojis = {|
+export type getStickerEmojis = {
   _: 'getStickerEmojis',
-  sticker?: InputFileOptional,
-|}
+  sticker: InputFile,
+}
 
 export type getStickerEmojisOptional = {|
   _: 'getStickerEmojis',
@@ -7884,10 +7884,10 @@ export type getStickerEmojisOptional = {|
 
 export type getStickerEmojisReturnType = stickerEmojis
 
-export type getStickerSet = {|
+export type getStickerSet = {
   _: 'getStickerSet',
-  set_id?: number,
-|}
+  set_id: number,
+}
 
 export type getStickerSetOptional = {|
   _: 'getStickerSet',
@@ -7896,11 +7896,11 @@ export type getStickerSetOptional = {|
 
 export type getStickerSetReturnType = stickerSet
 
-export type getStickers = {|
+export type getStickers = {
   _: 'getStickers',
-  emoji?: string,
-  limit?: number,
-|}
+  emoji: string,
+  limit: number,
+}
 
 export type getStickersOptional = {|
   _: 'getStickers',
@@ -7910,10 +7910,10 @@ export type getStickersOptional = {|
 
 export type getStickersReturnType = stickers
 
-export type getStorageStatistics = {|
+export type getStorageStatistics = {
   _: 'getStorageStatistics',
-  chat_limit?: number,
-|}
+  chat_limit: number,
+}
 
 export type getStorageStatisticsOptional = {|
   _: 'getStorageStatistics',
@@ -7922,9 +7922,9 @@ export type getStorageStatisticsOptional = {|
 
 export type getStorageStatisticsReturnType = storageStatistics
 
-export type getStorageStatisticsFast = {|
+export type getStorageStatisticsFast = {
   _: 'getStorageStatisticsFast',
-|}
+}
 
 export type getStorageStatisticsFastOptional = {|
   _: 'getStorageStatisticsFast',
@@ -7932,10 +7932,10 @@ export type getStorageStatisticsFastOptional = {|
 
 export type getStorageStatisticsFastReturnType = storageStatisticsFast
 
-export type getSupergroup = {|
+export type getSupergroup = {
   _: 'getSupergroup',
-  supergroup_id?: number,
-|}
+  supergroup_id: number,
+}
 
 export type getSupergroupOptional = {|
   _: 'getSupergroup',
@@ -7944,10 +7944,10 @@ export type getSupergroupOptional = {|
 
 export type getSupergroupReturnType = supergroup
 
-export type getSupergroupFullInfo = {|
+export type getSupergroupFullInfo = {
   _: 'getSupergroupFullInfo',
-  supergroup_id?: number,
-|}
+  supergroup_id: number,
+}
 
 export type getSupergroupFullInfoOptional = {|
   _: 'getSupergroupFullInfo',
@@ -7956,13 +7956,13 @@ export type getSupergroupFullInfoOptional = {|
 
 export type getSupergroupFullInfoReturnType = supergroupFullInfo
 
-export type getSupergroupMembers = {|
+export type getSupergroupMembers = {
   _: 'getSupergroupMembers',
-  supergroup_id?: number,
-  filter?: SupergroupMembersFilterOptional,
-  offset?: number,
-  limit?: number,
-|}
+  supergroup_id: number,
+  filter: SupergroupMembersFilter,
+  offset: number,
+  limit: number,
+}
 
 export type getSupergroupMembersOptional = {|
   _: 'getSupergroupMembers',
@@ -7974,9 +7974,9 @@ export type getSupergroupMembersOptional = {|
 
 export type getSupergroupMembersReturnType = chatMembers
 
-export type getSupportUser = {|
+export type getSupportUser = {
   _: 'getSupportUser',
-|}
+}
 
 export type getSupportUserOptional = {|
   _: 'getSupportUser',
@@ -7984,9 +7984,9 @@ export type getSupportUserOptional = {|
 
 export type getSupportUserReturnType = user
 
-export type getTemporaryPasswordState = {|
+export type getTemporaryPasswordState = {
   _: 'getTemporaryPasswordState',
-|}
+}
 
 export type getTemporaryPasswordStateOptional = {|
   _: 'getTemporaryPasswordState',
@@ -7994,9 +7994,9 @@ export type getTemporaryPasswordStateOptional = {|
 
 export type getTemporaryPasswordStateReturnType = temporaryPasswordState
 
-export type getTermsOfService = {|
+export type getTermsOfService = {
   _: 'getTermsOfService',
-|}
+}
 
 export type getTermsOfServiceOptional = {|
   _: 'getTermsOfService',
@@ -8004,10 +8004,10 @@ export type getTermsOfServiceOptional = {|
 
 export type getTermsOfServiceReturnType = text
 
-export type getTextEntities = {|
+export type getTextEntities = {
   _: 'getTextEntities',
-  text?: string,
-|}
+  text: string,
+}
 
 export type getTextEntitiesOptional = {|
   _: 'getTextEntities',
@@ -8016,11 +8016,11 @@ export type getTextEntitiesOptional = {|
 
 export type getTextEntitiesReturnType = textEntities
 
-export type getTopChats = {|
+export type getTopChats = {
   _: 'getTopChats',
-  category?: TopChatCategoryOptional,
-  limit?: number,
-|}
+  category: TopChatCategory,
+  limit: number,
+}
 
 export type getTopChatsOptional = {|
   _: 'getTopChats',
@@ -8030,9 +8030,9 @@ export type getTopChatsOptional = {|
 
 export type getTopChatsReturnType = chats
 
-export type getTrendingStickerSets = {|
+export type getTrendingStickerSets = {
   _: 'getTrendingStickerSets',
-|}
+}
 
 export type getTrendingStickerSetsOptional = {|
   _: 'getTrendingStickerSets',
@@ -8040,10 +8040,10 @@ export type getTrendingStickerSetsOptional = {|
 
 export type getTrendingStickerSetsReturnType = stickerSets
 
-export type getUser = {|
+export type getUser = {
   _: 'getUser',
-  user_id?: number,
-|}
+  user_id: number,
+}
 
 export type getUserOptional = {|
   _: 'getUser',
@@ -8052,10 +8052,10 @@ export type getUserOptional = {|
 
 export type getUserReturnType = user
 
-export type getUserFullInfo = {|
+export type getUserFullInfo = {
   _: 'getUserFullInfo',
-  user_id?: number,
-|}
+  user_id: number,
+}
 
 export type getUserFullInfoOptional = {|
   _: 'getUserFullInfo',
@@ -8064,10 +8064,10 @@ export type getUserFullInfoOptional = {|
 
 export type getUserFullInfoReturnType = userFullInfo
 
-export type getUserPrivacySettingRules = {|
+export type getUserPrivacySettingRules = {
   _: 'getUserPrivacySettingRules',
-  setting?: UserPrivacySettingOptional,
-|}
+  setting: UserPrivacySetting,
+}
 
 export type getUserPrivacySettingRulesOptional = {|
   _: 'getUserPrivacySettingRules',
@@ -8076,12 +8076,12 @@ export type getUserPrivacySettingRulesOptional = {|
 
 export type getUserPrivacySettingRulesReturnType = userPrivacySettingRules
 
-export type getUserProfilePhotos = {|
+export type getUserProfilePhotos = {
   _: 'getUserProfilePhotos',
-  user_id?: number,
-  offset?: number,
-  limit?: number,
-|}
+  user_id: number,
+  offset: number,
+  limit: number,
+}
 
 export type getUserProfilePhotosOptional = {|
   _: 'getUserProfilePhotos',
@@ -8092,9 +8092,9 @@ export type getUserProfilePhotosOptional = {|
 
 export type getUserProfilePhotosReturnType = userProfilePhotos
 
-export type getWallpapers = {|
+export type getWallpapers = {
   _: 'getWallpapers',
-|}
+}
 
 export type getWallpapersOptional = {|
   _: 'getWallpapers',
@@ -8102,11 +8102,11 @@ export type getWallpapersOptional = {|
 
 export type getWallpapersReturnType = wallpapers
 
-export type getWebPageInstantView = {|
+export type getWebPageInstantView = {
   _: 'getWebPageInstantView',
-  url?: string,
-  force_full?: boolean,
-|}
+  url: string,
+  force_full: boolean,
+}
 
 export type getWebPageInstantViewOptional = {|
   _: 'getWebPageInstantView',
@@ -8116,10 +8116,10 @@ export type getWebPageInstantViewOptional = {|
 
 export type getWebPageInstantViewReturnType = webPageInstantView
 
-export type getWebPagePreview = {|
+export type getWebPagePreview = {
   _: 'getWebPagePreview',
-  text?: formattedTextOptional,
-|}
+  text: formattedText,
+}
 
 export type getWebPagePreviewOptional = {|
   _: 'getWebPagePreview',
@@ -8128,10 +8128,10 @@ export type getWebPagePreviewOptional = {|
 
 export type getWebPagePreviewReturnType = webPage
 
-export type importContacts = {|
+export type importContacts = {
   _: 'importContacts',
-  contacts?: contactOptional[],
-|}
+  contacts: contact[],
+}
 
 export type importContactsOptional = {|
   _: 'importContacts',
@@ -8140,10 +8140,10 @@ export type importContactsOptional = {|
 
 export type importContactsReturnType = importedContacts
 
-export type joinChatByInviteLink = {|
+export type joinChatByInviteLink = {
   _: 'joinChatByInviteLink',
-  invite_link?: string,
-|}
+  invite_link: string,
+}
 
 export type joinChatByInviteLinkOptional = {|
   _: 'joinChatByInviteLink',
@@ -8152,9 +8152,9 @@ export type joinChatByInviteLinkOptional = {|
 
 export type joinChatByInviteLinkReturnType = chat
 
-export type logOut = {|
+export type logOut = {
   _: 'logOut',
-|}
+}
 
 export type logOutOptional = {|
   _: 'logOut',
@@ -8162,10 +8162,10 @@ export type logOutOptional = {|
 
 export type logOutReturnType = ok
 
-export type openChat = {|
+export type openChat = {
   _: 'openChat',
-  chat_id?: number,
-|}
+  chat_id: number,
+}
 
 export type openChatOptional = {|
   _: 'openChat',
@@ -8174,11 +8174,11 @@ export type openChatOptional = {|
 
 export type openChatReturnType = ok
 
-export type openMessageContent = {|
+export type openMessageContent = {
   _: 'openMessageContent',
-  chat_id?: number,
-  message_id?: number,
-|}
+  chat_id: number,
+  message_id: number,
+}
 
 export type openMessageContentOptional = {|
   _: 'openMessageContent',
@@ -8188,17 +8188,17 @@ export type openMessageContentOptional = {|
 
 export type openMessageContentReturnType = ok
 
-export type optimizeStorage = {|
+export type optimizeStorage = {
   _: 'optimizeStorage',
-  size?: number,
-  ttl?: number,
-  count?: number,
-  immunity_delay?: number,
-  file_types?: FileTypeOptional[],
-  chat_ids?: number,
-  exclude_chat_ids?: number,
-  chat_limit?: number,
-|}
+  size: number,
+  ttl: number,
+  count: number,
+  immunity_delay: number,
+  file_types: FileType[],
+  chat_ids: number,
+  exclude_chat_ids: number,
+  chat_limit: number,
+}
 
 export type optimizeStorageOptional = {|
   _: 'optimizeStorage',
@@ -8214,11 +8214,11 @@ export type optimizeStorageOptional = {|
 
 export type optimizeStorageReturnType = storageStatistics
 
-export type parseTextEntities = {|
+export type parseTextEntities = {
   _: 'parseTextEntities',
-  text?: string,
-  parse_mode?: TextParseModeOptional,
-|}
+  text: string,
+  parse_mode: TextParseMode,
+}
 
 export type parseTextEntitiesOptional = {|
   _: 'parseTextEntities',
@@ -8228,12 +8228,12 @@ export type parseTextEntitiesOptional = {|
 
 export type parseTextEntitiesReturnType = formattedText
 
-export type pinSupergroupMessage = {|
+export type pinSupergroupMessage = {
   _: 'pinSupergroupMessage',
-  supergroup_id?: number,
-  message_id?: number,
-  disable_notification?: boolean,
-|}
+  supergroup_id: number,
+  message_id: number,
+  disable_notification: boolean,
+}
 
 export type pinSupergroupMessageOptional = {|
   _: 'pinSupergroupMessage',
@@ -8244,11 +8244,11 @@ export type pinSupergroupMessageOptional = {|
 
 export type pinSupergroupMessageReturnType = ok
 
-export type processDcUpdate = {|
+export type processDcUpdate = {
   _: 'processDcUpdate',
-  dc?: string,
-  addr?: string,
-|}
+  dc: string,
+  addr: string,
+}
 
 export type processDcUpdateOptional = {|
   _: 'processDcUpdate',
@@ -8258,10 +8258,10 @@ export type processDcUpdateOptional = {|
 
 export type processDcUpdateReturnType = ok
 
-export type readAllChatMentions = {|
+export type readAllChatMentions = {
   _: 'readAllChatMentions',
-  chat_id?: number,
-|}
+  chat_id: number,
+}
 
 export type readAllChatMentionsOptional = {|
   _: 'readAllChatMentions',
@@ -8270,10 +8270,10 @@ export type readAllChatMentionsOptional = {|
 
 export type readAllChatMentionsReturnType = ok
 
-export type recoverAuthenticationPassword = {|
+export type recoverAuthenticationPassword = {
   _: 'recoverAuthenticationPassword',
-  recovery_code?: string,
-|}
+  recovery_code: string,
+}
 
 export type recoverAuthenticationPasswordOptional = {|
   _: 'recoverAuthenticationPassword',
@@ -8282,10 +8282,10 @@ export type recoverAuthenticationPasswordOptional = {|
 
 export type recoverAuthenticationPasswordReturnType = ok
 
-export type recoverPassword = {|
+export type recoverPassword = {
   _: 'recoverPassword',
-  recovery_code?: string,
-|}
+  recovery_code: string,
+}
 
 export type recoverPasswordOptional = {|
   _: 'recoverPassword',
@@ -8294,11 +8294,11 @@ export type recoverPasswordOptional = {|
 
 export type recoverPasswordReturnType = passwordState
 
-export type registerDevice = {|
+export type registerDevice = {
   _: 'registerDevice',
-  device_token?: DeviceTokenOptional,
-  other_user_ids?: number,
-|}
+  device_token: DeviceToken,
+  other_user_ids: number,
+}
 
 export type registerDeviceOptional = {|
   _: 'registerDevice',
@@ -8308,10 +8308,10 @@ export type registerDeviceOptional = {|
 
 export type registerDeviceReturnType = ok
 
-export type removeContacts = {|
+export type removeContacts = {
   _: 'removeContacts',
-  user_ids?: number,
-|}
+  user_ids: number,
+}
 
 export type removeContactsOptional = {|
   _: 'removeContacts',
@@ -8320,10 +8320,10 @@ export type removeContactsOptional = {|
 
 export type removeContactsReturnType = ok
 
-export type removeFavoriteSticker = {|
+export type removeFavoriteSticker = {
   _: 'removeFavoriteSticker',
-  sticker?: InputFileOptional,
-|}
+  sticker: InputFile,
+}
 
 export type removeFavoriteStickerOptional = {|
   _: 'removeFavoriteSticker',
@@ -8332,10 +8332,10 @@ export type removeFavoriteStickerOptional = {|
 
 export type removeFavoriteStickerReturnType = ok
 
-export type removeRecentHashtag = {|
+export type removeRecentHashtag = {
   _: 'removeRecentHashtag',
-  hashtag?: string,
-|}
+  hashtag: string,
+}
 
 export type removeRecentHashtagOptional = {|
   _: 'removeRecentHashtag',
@@ -8344,11 +8344,11 @@ export type removeRecentHashtagOptional = {|
 
 export type removeRecentHashtagReturnType = ok
 
-export type removeRecentSticker = {|
+export type removeRecentSticker = {
   _: 'removeRecentSticker',
-  is_attached?: boolean,
-  sticker?: InputFileOptional,
-|}
+  is_attached: boolean,
+  sticker: InputFile,
+}
 
 export type removeRecentStickerOptional = {|
   _: 'removeRecentSticker',
@@ -8358,10 +8358,10 @@ export type removeRecentStickerOptional = {|
 
 export type removeRecentStickerReturnType = ok
 
-export type removeRecentlyFoundChat = {|
+export type removeRecentlyFoundChat = {
   _: 'removeRecentlyFoundChat',
-  chat_id?: number,
-|}
+  chat_id: number,
+}
 
 export type removeRecentlyFoundChatOptional = {|
   _: 'removeRecentlyFoundChat',
@@ -8370,10 +8370,10 @@ export type removeRecentlyFoundChatOptional = {|
 
 export type removeRecentlyFoundChatReturnType = ok
 
-export type removeSavedAnimation = {|
+export type removeSavedAnimation = {
   _: 'removeSavedAnimation',
-  animation?: InputFileOptional,
-|}
+  animation: InputFile,
+}
 
 export type removeSavedAnimationOptional = {|
   _: 'removeSavedAnimation',
@@ -8382,10 +8382,10 @@ export type removeSavedAnimationOptional = {|
 
 export type removeSavedAnimationReturnType = ok
 
-export type removeStickerFromSet = {|
+export type removeStickerFromSet = {
   _: 'removeStickerFromSet',
-  sticker?: InputFileOptional,
-|}
+  sticker: InputFile,
+}
 
 export type removeStickerFromSetOptional = {|
   _: 'removeStickerFromSet',
@@ -8394,11 +8394,11 @@ export type removeStickerFromSetOptional = {|
 
 export type removeStickerFromSetReturnType = ok
 
-export type removeTopChat = {|
+export type removeTopChat = {
   _: 'removeTopChat',
-  category?: TopChatCategoryOptional,
-  chat_id?: number,
-|}
+  category: TopChatCategory,
+  chat_id: number,
+}
 
 export type removeTopChatOptional = {|
   _: 'removeTopChat',
@@ -8408,11 +8408,11 @@ export type removeTopChatOptional = {|
 
 export type removeTopChatReturnType = ok
 
-export type reorderInstalledStickerSets = {|
+export type reorderInstalledStickerSets = {
   _: 'reorderInstalledStickerSets',
-  is_masks?: boolean,
-  sticker_set_ids?: number,
-|}
+  is_masks: boolean,
+  sticker_set_ids: number,
+}
 
 export type reorderInstalledStickerSetsOptional = {|
   _: 'reorderInstalledStickerSets',
@@ -8422,12 +8422,12 @@ export type reorderInstalledStickerSetsOptional = {|
 
 export type reorderInstalledStickerSetsReturnType = ok
 
-export type reportChat = {|
+export type reportChat = {
   _: 'reportChat',
-  chat_id?: number,
-  reason?: ChatReportReasonOptional,
-  message_ids?: number,
-|}
+  chat_id: number,
+  reason: ChatReportReason,
+  message_ids: number,
+}
 
 export type reportChatOptional = {|
   _: 'reportChat',
@@ -8438,12 +8438,12 @@ export type reportChatOptional = {|
 
 export type reportChatReturnType = ok
 
-export type reportSupergroupSpam = {|
+export type reportSupergroupSpam = {
   _: 'reportSupergroupSpam',
-  supergroup_id?: number,
-  user_id?: number,
-  message_ids?: number,
-|}
+  supergroup_id: number,
+  user_id: number,
+  message_ids: number,
+}
 
 export type reportSupergroupSpamOptional = {|
   _: 'reportSupergroupSpam',
@@ -8454,9 +8454,9 @@ export type reportSupergroupSpamOptional = {|
 
 export type reportSupergroupSpamReturnType = ok
 
-export type requestAuthenticationPasswordRecovery = {|
+export type requestAuthenticationPasswordRecovery = {
   _: 'requestAuthenticationPasswordRecovery',
-|}
+}
 
 export type requestAuthenticationPasswordRecoveryOptional = {|
   _: 'requestAuthenticationPasswordRecovery',
@@ -8464,9 +8464,9 @@ export type requestAuthenticationPasswordRecoveryOptional = {|
 
 export type requestAuthenticationPasswordRecoveryReturnType = ok
 
-export type requestPasswordRecovery = {|
+export type requestPasswordRecovery = {
   _: 'requestPasswordRecovery',
-|}
+}
 
 export type requestPasswordRecoveryOptional = {|
   _: 'requestPasswordRecovery',
@@ -8474,9 +8474,9 @@ export type requestPasswordRecoveryOptional = {|
 
 export type requestPasswordRecoveryReturnType = passwordRecoveryInfo
 
-export type resendAuthenticationCode = {|
+export type resendAuthenticationCode = {
   _: 'resendAuthenticationCode',
-|}
+}
 
 export type resendAuthenticationCodeOptional = {|
   _: 'resendAuthenticationCode',
@@ -8484,9 +8484,9 @@ export type resendAuthenticationCodeOptional = {|
 
 export type resendAuthenticationCodeReturnType = ok
 
-export type resendChangePhoneNumberCode = {|
+export type resendChangePhoneNumberCode = {
   _: 'resendChangePhoneNumberCode',
-|}
+}
 
 export type resendChangePhoneNumberCodeOptional = {|
   _: 'resendChangePhoneNumberCode',
@@ -8494,9 +8494,9 @@ export type resendChangePhoneNumberCodeOptional = {|
 
 export type resendChangePhoneNumberCodeReturnType = authenticationCodeInfo
 
-export type resetAllNotificationSettings = {|
+export type resetAllNotificationSettings = {
   _: 'resetAllNotificationSettings',
-|}
+}
 
 export type resetAllNotificationSettingsOptional = {|
   _: 'resetAllNotificationSettings',
@@ -8504,9 +8504,9 @@ export type resetAllNotificationSettingsOptional = {|
 
 export type resetAllNotificationSettingsReturnType = ok
 
-export type resetNetworkStatistics = {|
+export type resetNetworkStatistics = {
   _: 'resetNetworkStatistics',
-|}
+}
 
 export type resetNetworkStatisticsOptional = {|
   _: 'resetNetworkStatistics',
@@ -8514,12 +8514,12 @@ export type resetNetworkStatisticsOptional = {|
 
 export type resetNetworkStatisticsReturnType = ok
 
-export type searchCallMessages = {|
+export type searchCallMessages = {
   _: 'searchCallMessages',
-  from_message_id?: number,
-  limit?: number,
-  only_missed?: boolean,
-|}
+  from_message_id: number,
+  limit: number,
+  only_missed: boolean,
+}
 
 export type searchCallMessagesOptional = {|
   _: 'searchCallMessages',
@@ -8530,12 +8530,12 @@ export type searchCallMessagesOptional = {|
 
 export type searchCallMessagesReturnType = messages
 
-export type searchChatMembers = {|
+export type searchChatMembers = {
   _: 'searchChatMembers',
-  chat_id?: number,
-  query?: string,
-  limit?: number,
-|}
+  chat_id: number,
+  query: string,
+  limit: number,
+}
 
 export type searchChatMembersOptional = {|
   _: 'searchChatMembers',
@@ -8546,16 +8546,16 @@ export type searchChatMembersOptional = {|
 
 export type searchChatMembersReturnType = chatMembers
 
-export type searchChatMessages = {|
+export type searchChatMessages = {
   _: 'searchChatMessages',
-  chat_id?: number,
-  query?: string,
-  sender_user_id?: number,
-  from_message_id?: number,
-  offset?: number,
-  limit?: number,
-  filter?: SearchMessagesFilterOptional,
-|}
+  chat_id: number,
+  query: string,
+  sender_user_id: number,
+  from_message_id: number,
+  offset: number,
+  limit: number,
+  filter: SearchMessagesFilter,
+}
 
 export type searchChatMessagesOptional = {|
   _: 'searchChatMessages',
@@ -8570,11 +8570,11 @@ export type searchChatMessagesOptional = {|
 
 export type searchChatMessagesReturnType = messages
 
-export type searchChatRecentLocationMessages = {|
+export type searchChatRecentLocationMessages = {
   _: 'searchChatRecentLocationMessages',
-  chat_id?: number,
-  limit?: number,
-|}
+  chat_id: number,
+  limit: number,
+}
 
 export type searchChatRecentLocationMessagesOptional = {|
   _: 'searchChatRecentLocationMessages',
@@ -8584,11 +8584,11 @@ export type searchChatRecentLocationMessagesOptional = {|
 
 export type searchChatRecentLocationMessagesReturnType = messages
 
-export type searchChats = {|
+export type searchChats = {
   _: 'searchChats',
-  query?: string,
-  limit?: number,
-|}
+  query: string,
+  limit: number,
+}
 
 export type searchChatsOptional = {|
   _: 'searchChats',
@@ -8598,11 +8598,11 @@ export type searchChatsOptional = {|
 
 export type searchChatsReturnType = chats
 
-export type searchChatsOnServer = {|
+export type searchChatsOnServer = {
   _: 'searchChatsOnServer',
-  query?: string,
-  limit?: number,
-|}
+  query: string,
+  limit: number,
+}
 
 export type searchChatsOnServerOptional = {|
   _: 'searchChatsOnServer',
@@ -8612,11 +8612,11 @@ export type searchChatsOnServerOptional = {|
 
 export type searchChatsOnServerReturnType = chats
 
-export type searchContacts = {|
+export type searchContacts = {
   _: 'searchContacts',
-  query?: string,
-  limit?: number,
-|}
+  query: string,
+  limit: number,
+}
 
 export type searchContactsOptional = {|
   _: 'searchContacts',
@@ -8626,11 +8626,11 @@ export type searchContactsOptional = {|
 
 export type searchContactsReturnType = users
 
-export type searchHashtags = {|
+export type searchHashtags = {
   _: 'searchHashtags',
-  prefix?: string,
-  limit?: number,
-|}
+  prefix: string,
+  limit: number,
+}
 
 export type searchHashtagsOptional = {|
   _: 'searchHashtags',
@@ -8640,12 +8640,12 @@ export type searchHashtagsOptional = {|
 
 export type searchHashtagsReturnType = hashtags
 
-export type searchInstalledStickerSets = {|
+export type searchInstalledStickerSets = {
   _: 'searchInstalledStickerSets',
-  is_masks?: boolean,
-  query?: string,
-  limit?: number,
-|}
+  is_masks: boolean,
+  query: string,
+  limit: number,
+}
 
 export type searchInstalledStickerSetsOptional = {|
   _: 'searchInstalledStickerSets',
@@ -8656,14 +8656,14 @@ export type searchInstalledStickerSetsOptional = {|
 
 export type searchInstalledStickerSetsReturnType = stickerSets
 
-export type searchMessages = {|
+export type searchMessages = {
   _: 'searchMessages',
-  query?: string,
-  offset_date?: number,
-  offset_chat_id?: number,
-  offset_message_id?: number,
-  limit?: number,
-|}
+  query: string,
+  offset_date: number,
+  offset_chat_id: number,
+  offset_message_id: number,
+  limit: number,
+}
 
 export type searchMessagesOptional = {|
   _: 'searchMessages',
@@ -8676,10 +8676,10 @@ export type searchMessagesOptional = {|
 
 export type searchMessagesReturnType = messages
 
-export type searchPublicChat = {|
+export type searchPublicChat = {
   _: 'searchPublicChat',
-  username?: string,
-|}
+  username: string,
+}
 
 export type searchPublicChatOptional = {|
   _: 'searchPublicChat',
@@ -8688,10 +8688,10 @@ export type searchPublicChatOptional = {|
 
 export type searchPublicChatReturnType = chat
 
-export type searchPublicChats = {|
+export type searchPublicChats = {
   _: 'searchPublicChats',
-  query?: string,
-|}
+  query: string,
+}
 
 export type searchPublicChatsOptional = {|
   _: 'searchPublicChats',
@@ -8700,14 +8700,14 @@ export type searchPublicChatsOptional = {|
 
 export type searchPublicChatsReturnType = chats
 
-export type searchSecretMessages = {|
+export type searchSecretMessages = {
   _: 'searchSecretMessages',
-  chat_id?: number,
-  query?: string,
-  from_search_id?: number,
-  limit?: number,
-  filter?: SearchMessagesFilterOptional,
-|}
+  chat_id: number,
+  query: string,
+  from_search_id: number,
+  limit: number,
+  filter: SearchMessagesFilter,
+}
 
 export type searchSecretMessagesOptional = {|
   _: 'searchSecretMessages',
@@ -8720,10 +8720,10 @@ export type searchSecretMessagesOptional = {|
 
 export type searchSecretMessagesReturnType = foundMessages
 
-export type searchStickerSet = {|
+export type searchStickerSet = {
   _: 'searchStickerSet',
-  name?: string,
-|}
+  name: string,
+}
 
 export type searchStickerSetOptional = {|
   _: 'searchStickerSet',
@@ -8732,10 +8732,10 @@ export type searchStickerSetOptional = {|
 
 export type searchStickerSetReturnType = stickerSet
 
-export type searchStickerSets = {|
+export type searchStickerSets = {
   _: 'searchStickerSets',
-  query?: string,
-|}
+  query: string,
+}
 
 export type searchStickerSetsOptional = {|
   _: 'searchStickerSets',
@@ -8744,11 +8744,11 @@ export type searchStickerSetsOptional = {|
 
 export type searchStickerSetsReturnType = stickerSets
 
-export type searchStickers = {|
+export type searchStickers = {
   _: 'searchStickers',
-  emoji?: string,
-  limit?: number,
-|}
+  emoji: string,
+  limit: number,
+}
 
 export type searchStickersOptional = {|
   _: 'searchStickers',
@@ -8758,12 +8758,12 @@ export type searchStickersOptional = {|
 
 export type searchStickersReturnType = stickers
 
-export type sendBotStartMessage = {|
+export type sendBotStartMessage = {
   _: 'sendBotStartMessage',
-  bot_user_id?: number,
-  chat_id?: number,
-  parameter?: string,
-|}
+  bot_user_id: number,
+  chat_id: number,
+  parameter: string,
+}
 
 export type sendBotStartMessageOptional = {|
   _: 'sendBotStartMessage',
@@ -8774,11 +8774,11 @@ export type sendBotStartMessageOptional = {|
 
 export type sendBotStartMessageReturnType = message
 
-export type sendCallDebugInformation = {|
+export type sendCallDebugInformation = {
   _: 'sendCallDebugInformation',
-  call_id?: number,
-  debug_information?: string,
-|}
+  call_id: number,
+  debug_information: string,
+}
 
 export type sendCallDebugInformationOptional = {|
   _: 'sendCallDebugInformation',
@@ -8788,12 +8788,12 @@ export type sendCallDebugInformationOptional = {|
 
 export type sendCallDebugInformationReturnType = ok
 
-export type sendCallRating = {|
+export type sendCallRating = {
   _: 'sendCallRating',
-  call_id?: number,
-  rating?: number,
-  comment?: string,
-|}
+  call_id: number,
+  rating: number,
+  comment: string,
+}
 
 export type sendCallRatingOptional = {|
   _: 'sendCallRating',
@@ -8804,11 +8804,11 @@ export type sendCallRatingOptional = {|
 
 export type sendCallRatingReturnType = ok
 
-export type sendChatAction = {|
+export type sendChatAction = {
   _: 'sendChatAction',
-  chat_id?: number,
-  action?: ChatActionOptional,
-|}
+  chat_id: number,
+  action: ChatAction,
+}
 
 export type sendChatActionOptional = {|
   _: 'sendChatAction',
@@ -8818,10 +8818,10 @@ export type sendChatActionOptional = {|
 
 export type sendChatActionReturnType = ok
 
-export type sendChatScreenshotTakenNotification = {|
+export type sendChatScreenshotTakenNotification = {
   _: 'sendChatScreenshotTakenNotification',
-  chat_id?: number,
-|}
+  chat_id: number,
+}
 
 export type sendChatScreenshotTakenNotificationOptional = {|
   _: 'sendChatScreenshotTakenNotification',
@@ -8830,11 +8830,11 @@ export type sendChatScreenshotTakenNotificationOptional = {|
 
 export type sendChatScreenshotTakenNotificationReturnType = ok
 
-export type sendChatSetTtlMessage = {|
+export type sendChatSetTtlMessage = {
   _: 'sendChatSetTtlMessage',
-  chat_id?: number,
-  ttl?: number,
-|}
+  chat_id: number,
+  ttl: number,
+}
 
 export type sendChatSetTtlMessageOptional = {|
   _: 'sendChatSetTtlMessage',
@@ -8844,11 +8844,11 @@ export type sendChatSetTtlMessageOptional = {|
 
 export type sendChatSetTtlMessageReturnType = message
 
-export type sendCustomRequest = {|
+export type sendCustomRequest = {
   _: 'sendCustomRequest',
-  method?: string,
-  parameters?: string,
-|}
+  method: string,
+  parameters: string,
+}
 
 export type sendCustomRequestOptional = {|
   _: 'sendCustomRequest',
@@ -8858,15 +8858,15 @@ export type sendCustomRequestOptional = {|
 
 export type sendCustomRequestReturnType = customRequestResult
 
-export type sendInlineQueryResultMessage = {|
+export type sendInlineQueryResultMessage = {
   _: 'sendInlineQueryResultMessage',
-  chat_id?: number,
-  reply_to_message_id?: number,
-  disable_notification?: boolean,
-  from_background?: boolean,
-  query_id?: number,
-  result_id?: string,
-|}
+  chat_id: number,
+  reply_to_message_id: number,
+  disable_notification: boolean,
+  from_background: boolean,
+  query_id: number,
+  result_id: string,
+}
 
 export type sendInlineQueryResultMessageOptional = {|
   _: 'sendInlineQueryResultMessage',
@@ -8880,15 +8880,15 @@ export type sendInlineQueryResultMessageOptional = {|
 
 export type sendInlineQueryResultMessageReturnType = message
 
-export type sendMessage = {|
+export type sendMessage = {
   _: 'sendMessage',
-  chat_id?: number,
-  reply_to_message_id?: number,
-  disable_notification?: boolean,
-  from_background?: boolean,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
+  chat_id: number,
+  reply_to_message_id: number,
+  disable_notification: boolean,
+  from_background: boolean,
+  reply_markup: ReplyMarkup,
+  input_message_content: InputMessageContent,
+}
 
 export type sendMessageOptional = {|
   _: 'sendMessage',
@@ -8902,14 +8902,14 @@ export type sendMessageOptional = {|
 
 export type sendMessageReturnType = message
 
-export type sendMessageAlbum = {|
+export type sendMessageAlbum = {
   _: 'sendMessageAlbum',
-  chat_id?: number,
-  reply_to_message_id?: number,
-  disable_notification?: boolean,
-  from_background?: boolean,
-  input_message_contents?: InputMessageContentOptional[],
-|}
+  chat_id: number,
+  reply_to_message_id: number,
+  disable_notification: boolean,
+  from_background: boolean,
+  input_message_contents: InputMessageContent[],
+}
 
 export type sendMessageAlbumOptional = {|
   _: 'sendMessageAlbum',
@@ -8922,14 +8922,14 @@ export type sendMessageAlbumOptional = {|
 
 export type sendMessageAlbumReturnType = messages
 
-export type sendPaymentForm = {|
+export type sendPaymentForm = {
   _: 'sendPaymentForm',
-  chat_id?: number,
-  message_id?: number,
-  order_info_id?: string,
-  shipping_option_id?: string,
-  credentials?: InputCredentialsOptional,
-|}
+  chat_id: number,
+  message_id: number,
+  order_info_id: string,
+  shipping_option_id: string,
+  credentials: InputCredentials,
+}
 
 export type sendPaymentFormOptional = {|
   _: 'sendPaymentForm',
@@ -8942,10 +8942,10 @@ export type sendPaymentFormOptional = {|
 
 export type sendPaymentFormReturnType = paymentResult
 
-export type setAccountTtl = {|
+export type setAccountTtl = {
   _: 'setAccountTtl',
-  ttl?: accountTtlOptional,
-|}
+  ttl: accountTtl,
+}
 
 export type setAccountTtlOptional = {|
   _: 'setAccountTtl',
@@ -8954,10 +8954,10 @@ export type setAccountTtlOptional = {|
 
 export type setAccountTtlReturnType = ok
 
-export type setAlarm = {|
+export type setAlarm = {
   _: 'setAlarm',
-  seconds?: number,
-|}
+  seconds: number,
+}
 
 export type setAlarmOptional = {|
   _: 'setAlarm',
@@ -8966,12 +8966,12 @@ export type setAlarmOptional = {|
 
 export type setAlarmReturnType = ok
 
-export type setAuthenticationPhoneNumber = {|
+export type setAuthenticationPhoneNumber = {
   _: 'setAuthenticationPhoneNumber',
-  phone_number?: string,
-  allow_flash_call?: boolean,
-  is_current_phone_number?: boolean,
-|}
+  phone_number: string,
+  allow_flash_call: boolean,
+  is_current_phone_number: boolean,
+}
 
 export type setAuthenticationPhoneNumberOptional = {|
   _: 'setAuthenticationPhoneNumber',
@@ -8982,10 +8982,10 @@ export type setAuthenticationPhoneNumberOptional = {|
 
 export type setAuthenticationPhoneNumberReturnType = ok
 
-export type setBio = {|
+export type setBio = {
   _: 'setBio',
-  bio?: string,
-|}
+  bio: string,
+}
 
 export type setBioOptional = {|
   _: 'setBio',
@@ -8994,11 +8994,11 @@ export type setBioOptional = {|
 
 export type setBioReturnType = ok
 
-export type setBotUpdatesStatus = {|
+export type setBotUpdatesStatus = {
   _: 'setBotUpdatesStatus',
-  pending_update_count?: number,
-  error_message?: string,
-|}
+  pending_update_count: number,
+  error_message: string,
+}
 
 export type setBotUpdatesStatusOptional = {|
   _: 'setBotUpdatesStatus',
@@ -9008,11 +9008,11 @@ export type setBotUpdatesStatusOptional = {|
 
 export type setBotUpdatesStatusReturnType = ok
 
-export type setChatClientData = {|
+export type setChatClientData = {
   _: 'setChatClientData',
-  chat_id?: number,
-  client_data?: string,
-|}
+  chat_id: number,
+  client_data: string,
+}
 
 export type setChatClientDataOptional = {|
   _: 'setChatClientData',
@@ -9022,11 +9022,11 @@ export type setChatClientDataOptional = {|
 
 export type setChatClientDataReturnType = ok
 
-export type setChatDraftMessage = {|
+export type setChatDraftMessage = {
   _: 'setChatDraftMessage',
-  chat_id?: number,
-  draft_message?: draftMessageOptional,
-|}
+  chat_id: number,
+  draft_message: draftMessage,
+}
 
 export type setChatDraftMessageOptional = {|
   _: 'setChatDraftMessage',
@@ -9036,12 +9036,12 @@ export type setChatDraftMessageOptional = {|
 
 export type setChatDraftMessageReturnType = ok
 
-export type setChatMemberStatus = {|
+export type setChatMemberStatus = {
   _: 'setChatMemberStatus',
-  chat_id?: number,
-  user_id?: number,
-  status?: ChatMemberStatusOptional,
-|}
+  chat_id: number,
+  user_id: number,
+  status: ChatMemberStatus,
+}
 
 export type setChatMemberStatusOptional = {|
   _: 'setChatMemberStatus',
@@ -9052,11 +9052,11 @@ export type setChatMemberStatusOptional = {|
 
 export type setChatMemberStatusReturnType = ok
 
-export type setChatPhoto = {|
+export type setChatPhoto = {
   _: 'setChatPhoto',
-  chat_id?: number,
-  photo?: InputFileOptional,
-|}
+  chat_id: number,
+  photo: InputFile,
+}
 
 export type setChatPhotoOptional = {|
   _: 'setChatPhoto',
@@ -9066,11 +9066,11 @@ export type setChatPhotoOptional = {|
 
 export type setChatPhotoReturnType = ok
 
-export type setChatTitle = {|
+export type setChatTitle = {
   _: 'setChatTitle',
-  chat_id?: number,
-  title?: string,
-|}
+  chat_id: number,
+  title: string,
+}
 
 export type setChatTitleOptional = {|
   _: 'setChatTitle',
@@ -9080,10 +9080,10 @@ export type setChatTitleOptional = {|
 
 export type setChatTitleReturnType = ok
 
-export type setDatabaseEncryptionKey = {|
+export type setDatabaseEncryptionKey = {
   _: 'setDatabaseEncryptionKey',
-  new_encryption_key?: string,
-|}
+  new_encryption_key: string,
+}
 
 export type setDatabaseEncryptionKeyOptional = {|
   _: 'setDatabaseEncryptionKey',
@@ -9092,12 +9092,12 @@ export type setDatabaseEncryptionKeyOptional = {|
 
 export type setDatabaseEncryptionKeyReturnType = ok
 
-export type setFileGenerationProgress = {|
+export type setFileGenerationProgress = {
   _: 'setFileGenerationProgress',
-  generation_id?: number,
-  expected_size?: number,
-  local_prefix_size?: number,
-|}
+  generation_id: number,
+  expected_size: number,
+  local_prefix_size: number,
+}
 
 export type setFileGenerationProgressOptional = {|
   _: 'setFileGenerationProgress',
@@ -9108,15 +9108,15 @@ export type setFileGenerationProgressOptional = {|
 
 export type setFileGenerationProgressReturnType = ok
 
-export type setGameScore = {|
+export type setGameScore = {
   _: 'setGameScore',
-  chat_id?: number,
-  message_id?: number,
-  edit_message?: boolean,
-  user_id?: number,
-  score?: number,
-  force?: boolean,
-|}
+  chat_id: number,
+  message_id: number,
+  edit_message: boolean,
+  user_id: number,
+  score: number,
+  force: boolean,
+}
 
 export type setGameScoreOptional = {|
   _: 'setGameScore',
@@ -9130,14 +9130,14 @@ export type setGameScoreOptional = {|
 
 export type setGameScoreReturnType = message
 
-export type setInlineGameScore = {|
+export type setInlineGameScore = {
   _: 'setInlineGameScore',
-  inline_message_id?: string,
-  edit_message?: boolean,
-  user_id?: number,
-  score?: number,
-  force?: boolean,
-|}
+  inline_message_id: string,
+  edit_message: boolean,
+  user_id: number,
+  score: number,
+  force: boolean,
+}
 
 export type setInlineGameScoreOptional = {|
   _: 'setInlineGameScore',
@@ -9150,11 +9150,11 @@ export type setInlineGameScoreOptional = {|
 
 export type setInlineGameScoreReturnType = ok
 
-export type setName = {|
+export type setName = {
   _: 'setName',
-  first_name?: string,
-  last_name?: string,
-|}
+  first_name: string,
+  last_name: string,
+}
 
 export type setNameOptional = {|
   _: 'setName',
@@ -9164,10 +9164,10 @@ export type setNameOptional = {|
 
 export type setNameReturnType = ok
 
-export type setNetworkType = {|
+export type setNetworkType = {
   _: 'setNetworkType',
-  type?: NetworkTypeOptional,
-|}
+  type: NetworkType,
+}
 
 export type setNetworkTypeOptional = {|
   _: 'setNetworkType',
@@ -9176,11 +9176,11 @@ export type setNetworkTypeOptional = {|
 
 export type setNetworkTypeReturnType = ok
 
-export type setNotificationSettings = {|
+export type setNotificationSettings = {
   _: 'setNotificationSettings',
-  scope?: NotificationSettingsScopeOptional,
-  notification_settings?: notificationSettingsOptional,
-|}
+  scope: NotificationSettingsScope,
+  notification_settings: notificationSettings,
+}
 
 export type setNotificationSettingsOptional = {|
   _: 'setNotificationSettings',
@@ -9190,11 +9190,11 @@ export type setNotificationSettingsOptional = {|
 
 export type setNotificationSettingsReturnType = ok
 
-export type setOption = {|
+export type setOption = {
   _: 'setOption',
-  name?: string,
-  value?: OptionValueOptional,
-|}
+  name: string,
+  value: OptionValue,
+}
 
 export type setOptionOptional = {|
   _: 'setOption',
@@ -9204,14 +9204,14 @@ export type setOptionOptional = {|
 
 export type setOptionReturnType = ok
 
-export type setPassword = {|
+export type setPassword = {
   _: 'setPassword',
-  old_password?: string,
-  new_password?: string,
-  new_hint?: string,
-  set_recovery_email_address?: boolean,
-  new_recovery_email_address?: string,
-|}
+  old_password: string,
+  new_password: string,
+  new_hint: string,
+  set_recovery_email_address: boolean,
+  new_recovery_email_address: string,
+}
 
 export type setPasswordOptional = {|
   _: 'setPassword',
@@ -9224,10 +9224,10 @@ export type setPasswordOptional = {|
 
 export type setPasswordReturnType = passwordState
 
-export type setPinnedChats = {|
+export type setPinnedChats = {
   _: 'setPinnedChats',
-  chat_ids?: number,
-|}
+  chat_ids: number,
+}
 
 export type setPinnedChatsOptional = {|
   _: 'setPinnedChats',
@@ -9236,10 +9236,10 @@ export type setPinnedChatsOptional = {|
 
 export type setPinnedChatsReturnType = ok
 
-export type setProfilePhoto = {|
+export type setProfilePhoto = {
   _: 'setProfilePhoto',
-  photo?: InputFileOptional,
-|}
+  photo: InputFile,
+}
 
 export type setProfilePhotoOptional = {|
   _: 'setProfilePhoto',
@@ -9248,10 +9248,10 @@ export type setProfilePhotoOptional = {|
 
 export type setProfilePhotoReturnType = ok
 
-export type setProxy = {|
+export type setProxy = {
   _: 'setProxy',
-  proxy?: ProxyOptional,
-|}
+  proxy: Proxy,
+}
 
 export type setProxyOptional = {|
   _: 'setProxy',
@@ -9260,11 +9260,11 @@ export type setProxyOptional = {|
 
 export type setProxyReturnType = ok
 
-export type setRecoveryEmailAddress = {|
+export type setRecoveryEmailAddress = {
   _: 'setRecoveryEmailAddress',
-  password?: string,
-  new_recovery_email_address?: string,
-|}
+  password: string,
+  new_recovery_email_address: string,
+}
 
 export type setRecoveryEmailAddressOptional = {|
   _: 'setRecoveryEmailAddress',
@@ -9274,11 +9274,11 @@ export type setRecoveryEmailAddressOptional = {|
 
 export type setRecoveryEmailAddressReturnType = passwordState
 
-export type setStickerPositionInSet = {|
+export type setStickerPositionInSet = {
   _: 'setStickerPositionInSet',
-  sticker?: InputFileOptional,
-  position?: number,
-|}
+  sticker: InputFile,
+  position: number,
+}
 
 export type setStickerPositionInSetOptional = {|
   _: 'setStickerPositionInSet',
@@ -9288,11 +9288,11 @@ export type setStickerPositionInSetOptional = {|
 
 export type setStickerPositionInSetReturnType = ok
 
-export type setSupergroupDescription = {|
+export type setSupergroupDescription = {
   _: 'setSupergroupDescription',
-  supergroup_id?: number,
-  description?: string,
-|}
+  supergroup_id: number,
+  description: string,
+}
 
 export type setSupergroupDescriptionOptional = {|
   _: 'setSupergroupDescription',
@@ -9302,11 +9302,11 @@ export type setSupergroupDescriptionOptional = {|
 
 export type setSupergroupDescriptionReturnType = ok
 
-export type setSupergroupStickerSet = {|
+export type setSupergroupStickerSet = {
   _: 'setSupergroupStickerSet',
-  supergroup_id?: number,
-  sticker_set_id?: number,
-|}
+  supergroup_id: number,
+  sticker_set_id: number,
+}
 
 export type setSupergroupStickerSetOptional = {|
   _: 'setSupergroupStickerSet',
@@ -9316,11 +9316,11 @@ export type setSupergroupStickerSetOptional = {|
 
 export type setSupergroupStickerSetReturnType = ok
 
-export type setSupergroupUsername = {|
+export type setSupergroupUsername = {
   _: 'setSupergroupUsername',
-  supergroup_id?: number,
-  username?: string,
-|}
+  supergroup_id: number,
+  username: string,
+}
 
 export type setSupergroupUsernameOptional = {|
   _: 'setSupergroupUsername',
@@ -9330,10 +9330,10 @@ export type setSupergroupUsernameOptional = {|
 
 export type setSupergroupUsernameReturnType = ok
 
-export type setTdlibParameters = {|
+export type setTdlibParameters = {
   _: 'setTdlibParameters',
-  parameters?: tdlibParametersOptional,
-|}
+  parameters: tdlibParameters,
+}
 
 export type setTdlibParametersOptional = {|
   _: 'setTdlibParameters',
@@ -9342,11 +9342,11 @@ export type setTdlibParametersOptional = {|
 
 export type setTdlibParametersReturnType = ok
 
-export type setUserPrivacySettingRules = {|
+export type setUserPrivacySettingRules = {
   _: 'setUserPrivacySettingRules',
-  setting?: UserPrivacySettingOptional,
-  rules?: userPrivacySettingRulesOptional,
-|}
+  setting: UserPrivacySetting,
+  rules: userPrivacySettingRules,
+}
 
 export type setUserPrivacySettingRulesOptional = {|
   _: 'setUserPrivacySettingRules',
@@ -9356,10 +9356,10 @@ export type setUserPrivacySettingRulesOptional = {|
 
 export type setUserPrivacySettingRulesReturnType = ok
 
-export type setUsername = {|
+export type setUsername = {
   _: 'setUsername',
-  username?: string,
-|}
+  username: string,
+}
 
 export type setUsernameOptional = {|
   _: 'setUsername',
@@ -9368,9 +9368,9 @@ export type setUsernameOptional = {|
 
 export type setUsernameReturnType = ok
 
-export type terminateAllOtherSessions = {|
+export type terminateAllOtherSessions = {
   _: 'terminateAllOtherSessions',
-|}
+}
 
 export type terminateAllOtherSessionsOptional = {|
   _: 'terminateAllOtherSessions',
@@ -9378,10 +9378,10 @@ export type terminateAllOtherSessionsOptional = {|
 
 export type terminateAllOtherSessionsReturnType = ok
 
-export type terminateSession = {|
+export type terminateSession = {
   _: 'terminateSession',
-  session_id?: number,
-|}
+  session_id: number,
+}
 
 export type terminateSessionOptional = {|
   _: 'terminateSession',
@@ -9390,10 +9390,10 @@ export type terminateSessionOptional = {|
 
 export type terminateSessionReturnType = ok
 
-export type testCallBytes = {|
+export type testCallBytes = {
   _: 'testCallBytes',
-  x?: string,
-|}
+  x: string,
+}
 
 export type testCallBytesOptional = {|
   _: 'testCallBytes',
@@ -9402,9 +9402,9 @@ export type testCallBytesOptional = {|
 
 export type testCallBytesReturnType = testBytes
 
-export type testCallEmpty = {|
+export type testCallEmpty = {
   _: 'testCallEmpty',
-|}
+}
 
 export type testCallEmptyOptional = {|
   _: 'testCallEmpty',
@@ -9412,10 +9412,10 @@ export type testCallEmptyOptional = {|
 
 export type testCallEmptyReturnType = ok
 
-export type testCallString = {|
+export type testCallString = {
   _: 'testCallString',
-  x?: string,
-|}
+  x: string,
+}
 
 export type testCallStringOptional = {|
   _: 'testCallString',
@@ -9424,10 +9424,10 @@ export type testCallStringOptional = {|
 
 export type testCallStringReturnType = testString
 
-export type testCallVectorInt = {|
+export type testCallVectorInt = {
   _: 'testCallVectorInt',
-  x?: number,
-|}
+  x: number,
+}
 
 export type testCallVectorIntOptional = {|
   _: 'testCallVectorInt',
@@ -9436,10 +9436,10 @@ export type testCallVectorIntOptional = {|
 
 export type testCallVectorIntReturnType = testVectorInt
 
-export type testCallVectorIntObject = {|
+export type testCallVectorIntObject = {
   _: 'testCallVectorIntObject',
-  x?: testIntOptional[],
-|}
+  x: testInt[],
+}
 
 export type testCallVectorIntObjectOptional = {|
   _: 'testCallVectorIntObject',
@@ -9448,10 +9448,10 @@ export type testCallVectorIntObjectOptional = {|
 
 export type testCallVectorIntObjectReturnType = testVectorIntObject
 
-export type testCallVectorString = {|
+export type testCallVectorString = {
   _: 'testCallVectorString',
-  x?: string,
-|}
+  x: string,
+}
 
 export type testCallVectorStringOptional = {|
   _: 'testCallVectorString',
@@ -9460,10 +9460,10 @@ export type testCallVectorStringOptional = {|
 
 export type testCallVectorStringReturnType = testVectorString
 
-export type testCallVectorStringObject = {|
+export type testCallVectorStringObject = {
   _: 'testCallVectorStringObject',
-  x?: testStringOptional[],
-|}
+  x: testString[],
+}
 
 export type testCallVectorStringObjectOptional = {|
   _: 'testCallVectorStringObject',
@@ -9472,9 +9472,9 @@ export type testCallVectorStringObjectOptional = {|
 
 export type testCallVectorStringObjectReturnType = testVectorStringObject
 
-export type testGetDifference = {|
+export type testGetDifference = {
   _: 'testGetDifference',
-|}
+}
 
 export type testGetDifferenceOptional = {|
   _: 'testGetDifference',
@@ -9482,9 +9482,9 @@ export type testGetDifferenceOptional = {|
 
 export type testGetDifferenceReturnType = ok
 
-export type testNetwork = {|
+export type testNetwork = {
   _: 'testNetwork',
-|}
+}
 
 export type testNetworkOptional = {|
   _: 'testNetwork',
@@ -9492,10 +9492,10 @@ export type testNetworkOptional = {|
 
 export type testNetworkReturnType = ok
 
-export type testSquareInt = {|
+export type testSquareInt = {
   _: 'testSquareInt',
-  x?: number,
-|}
+  x: number,
+}
 
 export type testSquareIntOptional = {|
   _: 'testSquareInt',
@@ -9504,9 +9504,9 @@ export type testSquareIntOptional = {|
 
 export type testSquareIntReturnType = testInt
 
-export type testUseError = {|
+export type testUseError = {
   _: 'testUseError',
-|}
+}
 
 export type testUseErrorOptional = {|
   _: 'testUseError',
@@ -9514,9 +9514,9 @@ export type testUseErrorOptional = {|
 
 export type testUseErrorReturnType = error
 
-export type testUseUpdate = {|
+export type testUseUpdate = {
   _: 'testUseUpdate',
-|}
+}
 
 export type testUseUpdateOptional = {|
   _: 'testUseUpdate',
@@ -9524,11 +9524,11 @@ export type testUseUpdateOptional = {|
 
 export type testUseUpdateReturnType = Update
 
-export type toggleBasicGroupAdministrators = {|
+export type toggleBasicGroupAdministrators = {
   _: 'toggleBasicGroupAdministrators',
-  basic_group_id?: number,
-  everyone_is_administrator?: boolean,
-|}
+  basic_group_id: number,
+  everyone_is_administrator: boolean,
+}
 
 export type toggleBasicGroupAdministratorsOptional = {|
   _: 'toggleBasicGroupAdministrators',
@@ -9538,11 +9538,11 @@ export type toggleBasicGroupAdministratorsOptional = {|
 
 export type toggleBasicGroupAdministratorsReturnType = ok
 
-export type toggleChatIsPinned = {|
+export type toggleChatIsPinned = {
   _: 'toggleChatIsPinned',
-  chat_id?: number,
-  is_pinned?: boolean,
-|}
+  chat_id: number,
+  is_pinned: boolean,
+}
 
 export type toggleChatIsPinnedOptional = {|
   _: 'toggleChatIsPinned',
@@ -9552,11 +9552,11 @@ export type toggleChatIsPinnedOptional = {|
 
 export type toggleChatIsPinnedReturnType = ok
 
-export type toggleSupergroupInvites = {|
+export type toggleSupergroupInvites = {
   _: 'toggleSupergroupInvites',
-  supergroup_id?: number,
-  anyone_can_invite?: boolean,
-|}
+  supergroup_id: number,
+  anyone_can_invite: boolean,
+}
 
 export type toggleSupergroupInvitesOptional = {|
   _: 'toggleSupergroupInvites',
@@ -9566,11 +9566,11 @@ export type toggleSupergroupInvitesOptional = {|
 
 export type toggleSupergroupInvitesReturnType = ok
 
-export type toggleSupergroupIsAllHistoryAvailable = {|
+export type toggleSupergroupIsAllHistoryAvailable = {
   _: 'toggleSupergroupIsAllHistoryAvailable',
-  supergroup_id?: number,
-  is_all_history_available?: boolean,
-|}
+  supergroup_id: number,
+  is_all_history_available: boolean,
+}
 
 export type toggleSupergroupIsAllHistoryAvailableOptional = {|
   _: 'toggleSupergroupIsAllHistoryAvailable',
@@ -9580,11 +9580,11 @@ export type toggleSupergroupIsAllHistoryAvailableOptional = {|
 
 export type toggleSupergroupIsAllHistoryAvailableReturnType = ok
 
-export type toggleSupergroupSignMessages = {|
+export type toggleSupergroupSignMessages = {
   _: 'toggleSupergroupSignMessages',
-  supergroup_id?: number,
-  sign_messages?: boolean,
-|}
+  supergroup_id: number,
+  sign_messages: boolean,
+}
 
 export type toggleSupergroupSignMessagesOptional = {|
   _: 'toggleSupergroupSignMessages',
@@ -9594,10 +9594,10 @@ export type toggleSupergroupSignMessagesOptional = {|
 
 export type toggleSupergroupSignMessagesReturnType = ok
 
-export type unblockUser = {|
+export type unblockUser = {
   _: 'unblockUser',
-  user_id?: number,
-|}
+  user_id: number,
+}
 
 export type unblockUserOptional = {|
   _: 'unblockUser',
@@ -9606,10 +9606,10 @@ export type unblockUserOptional = {|
 
 export type unblockUserReturnType = ok
 
-export type unpinSupergroupMessage = {|
+export type unpinSupergroupMessage = {
   _: 'unpinSupergroupMessage',
-  supergroup_id?: number,
-|}
+  supergroup_id: number,
+}
 
 export type unpinSupergroupMessageOptional = {|
   _: 'unpinSupergroupMessage',
@@ -9618,10 +9618,10 @@ export type unpinSupergroupMessageOptional = {|
 
 export type unpinSupergroupMessageReturnType = ok
 
-export type upgradeBasicGroupChatToSupergroupChat = {|
+export type upgradeBasicGroupChatToSupergroupChat = {
   _: 'upgradeBasicGroupChatToSupergroupChat',
-  chat_id?: number,
-|}
+  chat_id: number,
+}
 
 export type upgradeBasicGroupChatToSupergroupChatOptional = {|
   _: 'upgradeBasicGroupChatToSupergroupChat',
@@ -9630,12 +9630,12 @@ export type upgradeBasicGroupChatToSupergroupChatOptional = {|
 
 export type upgradeBasicGroupChatToSupergroupChatReturnType = chat
 
-export type uploadFile = {|
+export type uploadFile = {
   _: 'uploadFile',
-  file?: InputFileOptional,
-  file_type?: FileTypeOptional,
-  priority?: number,
-|}
+  file: InputFile,
+  file_type: FileType,
+  priority: number,
+}
 
 export type uploadFileOptional = {|
   _: 'uploadFile',
@@ -9646,11 +9646,11 @@ export type uploadFileOptional = {|
 
 export type uploadFileReturnType = file
 
-export type uploadStickerFile = {|
+export type uploadStickerFile = {
   _: 'uploadStickerFile',
-  user_id?: number,
-  png_sticker?: InputFileOptional,
-|}
+  user_id: number,
+  png_sticker: InputFile,
+}
 
 export type uploadStickerFileOptional = {|
   _: 'uploadStickerFile',
@@ -9660,13 +9660,13 @@ export type uploadStickerFileOptional = {|
 
 export type uploadStickerFileReturnType = file
 
-export type validateOrderInfo = {|
+export type validateOrderInfo = {
   _: 'validateOrderInfo',
-  chat_id?: number,
-  message_id?: number,
-  order_info?: orderInfoOptional,
-  allow_save?: boolean,
-|}
+  chat_id: number,
+  message_id: number,
+  order_info: orderInfo,
+  allow_save: boolean,
+}
 
 export type validateOrderInfoOptional = {|
   _: 'validateOrderInfo',
@@ -9678,12 +9678,12 @@ export type validateOrderInfoOptional = {|
 
 export type validateOrderInfoReturnType = validatedOrderInfo
 
-export type viewMessages = {|
+export type viewMessages = {
   _: 'viewMessages',
-  chat_id?: number,
-  message_ids?: number,
-  force_read?: boolean,
-|}
+  chat_id: number,
+  message_ids: number,
+  force_read: boolean,
+}
 
 export type viewMessagesOptional = {|
   _: 'viewMessages',
@@ -9694,10 +9694,10 @@ export type viewMessagesOptional = {|
 
 export type viewMessagesReturnType = ok
 
-export type viewTrendingStickerSets = {|
+export type viewTrendingStickerSets = {
   _: 'viewTrendingStickerSets',
-  sticker_set_ids?: number,
-|}
+  sticker_set_ids: number,
+}
 
 export type viewTrendingStickerSetsOptional = {|
   _: 'viewTrendingStickerSets',

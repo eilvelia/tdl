@@ -9,6 +9,10 @@
     "build": "babel src/ -d dist/ && npm run types",
     "test": "flow check",
     "prepublish": "npm test && npm run clean && npm run build",
+    "flow:start": "pm2 start tdl-flow.sh",
+    "flow:stop": "pm2 stop tdl-flow",
+    "flow:restart": "npm run flow:stop && npm run flow:start",
+    "flow:status": "flow status",
     "start": "node dist"
   },
   "files": [
@@ -31,7 +35,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",
-    "flow-bin": "^0.66.0",
+    "flow-bin": "^0.69.0",
     "flow-copy-source": "^1.3.0",
     "rimraf": "^2.6.2"
   },
