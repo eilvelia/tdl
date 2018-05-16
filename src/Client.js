@@ -72,7 +72,7 @@ const defaultOptions: StrictConfigType = {
 }
 
 type P = {
-  resolve: (result: TDObject) => void,
+  resolve: (result: Object/* TDObject */) => void,
   reject: (error: TDError) => void
 }
 
