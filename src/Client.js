@@ -15,7 +15,7 @@ import type {
 } from './types'
 
 import type {
-  TDFunctionOptional,
+  TDFunction,
   TDObject,
   Update,
   updateAuthorizationState,
@@ -164,7 +164,7 @@ export class Client {
     return tdResponse && deepRenameKey('@type', '_', tdResponse)
   }
 
-  _send (query: TDFunctionOptional): Promise<Object | null> {
+  _send (query: TDFunction): Promise<Object | null> {
     if (!this.client) return Promise.resolve(null)
     const { client } = this
     const tdQuery = deepRenameKey('_', '@type', query)
