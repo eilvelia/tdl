@@ -135,6 +135,7 @@ type Options = {
   logFilePath: string, // relative path
   verbosityLevel: number,
   dev: boolean, // Use telegram dev server
+  useMutableRename: boolean,
   tdlibParameters: Object // See https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html
 }
 ```
@@ -156,6 +157,7 @@ Any empty fields may just not be specified.
   logFilePath: '', // (don't write to file)
   verbosityLevel: 2,
   dev: false,
+  useMutableRename: false,
   tdlibParameters: {
     use_message_database: true,
     use_secret_chats: false,

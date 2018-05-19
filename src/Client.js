@@ -6,7 +6,7 @@ import { mergeDeepRight } from 'ramda'
 import Debug from 'debug'
 import uuidv4 from '../vendor/uuidv4'
 import { TDLib } from './TDLib'
-import { deepRenameKey/*, deepRenameKey_ */ } from './util'
+import { deepRenameKey, deepRenameKey_ } from './util'
 import { getAuthCode, getPassword } from './prompt'
 
 import type {
@@ -45,6 +45,7 @@ const defaultOptions: StrictConfigType = {
   logFilePath: '',
   verbosityLevel: 2,
   dev: false,
+  useMutableRename: false,
   tdlibParameters: {
     use_message_database: true,
     use_secret_chats: false,
@@ -173,7 +174,9 @@ export class Client {
   async _receive (timeout: number = 10): Promise<TDObject | Update | null> {
     if (!this.client) return Promise.resolve(null)
     const tdResponse = await this.tdlib.receive(this.client, timeout)
-    return tdResponse && deepRenameKey/* _ */('@type', '_', tdResponse)
+    return tdResponse && (this.options.useMutableRename
+      ? deepRenameKey_('@type', '_', tdResponse)
+      : deepRenameKey('@type', '_', tdResponse))
   }
 
   async _loop (): Promise<void> {
