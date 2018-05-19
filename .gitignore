@@ -2,6 +2,7 @@
 node_modules/
 package-lock.json
 dist/
+flow-typed/npm/
 *.bak
 /*.txt
 
