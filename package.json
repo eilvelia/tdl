@@ -1,6 +1,6 @@
 {
   "name": "tdl",
-  "version": "3.2.2",
+  "version": "3.3.0",
   "description": "TDLib (Telegram Database library) bindings for Node.js",
   "main": "dist/index.js",
   "scripts": {
