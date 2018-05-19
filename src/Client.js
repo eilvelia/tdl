@@ -61,12 +61,12 @@ type P = {
   reject: (error: TDError) => void
 }
 
-type On =
+export type On =
   & ((event: 'update', listener: (update: Update) => void) => Client)
   & ((event: 'error', listener: (err: TDError) => void) => Client)
   & ((event: 'destroy', listener: () => void) => Client)
 
-type Emit =
+export type Emit =
   & ((event: 'update', update: Update) => boolean)
   & ((event: 'error', err: TDError) => boolean)
   & ((event: 'destroy') => boolean)
@@ -148,7 +148,7 @@ export class Client {
     this.emit('destroy')
   }
 
-  setLogFilePath = (path: string): number | any =>
+  setLogFilePath = (path: string): number =>
     this.tdlib.setLogFilePath(path)
 
   setLogVerbosityLevel = (verbosity: number): void => {

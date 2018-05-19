@@ -18,11 +18,11 @@ const buildQuery = (query: Object) => {
 export class TDLib {
 ; +tdlib: Object
 
-  constructor (absoluteBinaryPath: string) {
-    debug('binaryPath', absoluteBinaryPath)
+  constructor (libraryFile: string) {
+    debug('binaryPath', libraryFile)
 
     this.tdlib = ffi.Library(
-      absoluteBinaryPath,
+      libraryFile,
       {
         'td_json_client_create'          : ['pointer', []],
         'td_json_client_send'            : ['void'   , ['pointer', 'string']],
@@ -34,31 +34,35 @@ export class TDLib {
       })
   }
 
-  create = (): Promise<TDLibClient> =>
-    new Promise((resolve, reject) => {
+  create (): Promise<TDLibClient> {
+    debug('create')
+    return new Promise((resolve, reject) => {
       this.tdlib.td_json_client_create.async((err, client) => {
         if (err) return reject(err)
         resolve(client)
       })
     })
+  }
 
-  send = (client: TDLibClient, query: Object): Promise<Object | null> =>
-    new Promise((resolve, reject) => {
+  send (client: TDLibClient, query: Object): Promise<Object | null> {
+    return new Promise((resolve, reject) => {
       this.tdlib.td_json_client_send.async(client, buildQuery(query), (err, response) => {
         if (err) return reject(err)
         if (!response) return resolve(null)
         resolve(JSON.parse(response))
       })
     })
+  }
 
-  receive = (client: TDLibClient, timeout: number): Promise<Object | null> =>
-    new Promise((resolve, reject) => {
+  receive (client: TDLibClient, timeout: number): Promise<Object | null> {
+    return new Promise((resolve, reject) => {
       this.tdlib.td_json_client_receive.async(client, timeout, (err, response) => {
         if (err) return reject(err)
         if (!response) return resolve(null)
         resolve(JSON.parse(response))
       })
     })
+  }
 
   execute (client: TDLibClient, query: Object): Object | null {
     const response = this.tdlib.td_json_client_execute(client, buildQuery(query))
@@ -71,7 +75,7 @@ export class TDLib {
     this.tdlib.td_json_client_destroy(client)
   }
 
-  setLogFilePath (path: string): number | any {
+  setLogFilePath (path: string): number {
     debug('setLogFilePath', path)
     return this.tdlib.td_set_log_file_path(path)
   }

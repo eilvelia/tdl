@@ -11,3 +11,15 @@ export {
 }
 
 export default Client
+
+export type {
+  ConfigType,
+  StrictConfigType,
+  LoginDetails,
+  StrictLoginDetails,
+} from './types'
+
+export type {
+  On,
+  Emit
+} from './Client'
