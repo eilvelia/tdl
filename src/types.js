@@ -42,6 +42,7 @@ export type ConfigType = {
   filesDirectory?: string,
   logFilePath?: string,
   verbosityLevel?: number,
+  skipOldUpdates?: boolean,
   dev?: boolean,
   useMutableRename?: boolean,
   tdlibParameters?: TDLibParameters
@@ -56,6 +57,7 @@ export type StrictConfigType = {
   filesDirectory: string,
   logFilePath: string,
   verbosityLevel: number,
+  skipOldUpdates: boolean,
   dev: boolean,
   useMutableRename: boolean,
   tdlibParameters: TDLibParameters

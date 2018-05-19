@@ -20,6 +20,7 @@ import type {
   Update,
   updateAuthorizationState,
   error as TDError,
+  ConnectionState,
   Invoke,
   Execute
 } from './tdlib-types'
@@ -44,6 +45,7 @@ const defaultOptions: StrictConfigType = {
   filesDirectory: '_td_files',
   logFilePath: '',
   verbosityLevel: 2,
+  skipOldUpdates: false,
   dev: false,
   useMutableRename: false,
   tdlibParameters: {
@@ -78,6 +80,7 @@ export class Client {
 ; +fetching: Map<string, FetchingPromiseCallback> = new Map()
 ; +tdlib: TDLib
   client: ?TDLibClient
+  connectionState: ConnectionState = { _: 'connectionStateConnecting' }
   resolver: (result: void) => void
   rejector: (error: any) => void
 
@@ -218,7 +221,14 @@ export class Client {
       case 'updateAuthorizationState':
         return this._handleAuth(update)
 
+      case 'updateConnectionState':
+        debug('updateConnectionState', update.state)
+        this.connectionState = update.state
+        return
+
       default:
+        if (this.options.skipOldUpdates && this.connectionState._ !== 'connectionStateReady')
+          return
         this.emit('update', update)
     }
   }
