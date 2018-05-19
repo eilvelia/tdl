@@ -57,7 +57,7 @@ const defaultOptions: StrictConfigType = {
   }
 }
 
-type P = {
+type FetchingPromiseCallback = {
   resolve: (result: Object/* TDObject */) => void,
   reject: (error: TDError) => void
 }
@@ -75,18 +75,11 @@ export type Emit =
 export class Client {
 ; +options: StrictConfigType
 ; +emitter = new EventEmitter()
-; +fetching: Map<string, P> = new Map()
+; +fetching: Map<string, FetchingPromiseCallback> = new Map()
 ; +tdlib: TDLib
   client: ?TDLibClient
-  resolver: (result: any) => void
+  resolver: (result: void) => void
   rejector: (error: any) => void
-
-  connect: () => Promise<void> =
-    () => new Promise((resolve, reject) => {
-      this.resolver = resolve
-      this.rejector = reject
-      this._init()
-    })
 
   constructor (options: ConfigType = {}) {
     this.options = (mergeDeepRight(defaultOptions, options): StrictConfigType)
@@ -108,6 +101,13 @@ export class Client {
       this.rejector(`Error while creating client: ${err}`)
     }
   }
+
+  connect: () => Promise<void> =
+    () => new Promise((resolve, reject) => {
+      this.resolver = resolve
+      this.rejector = reject
+      this._init()
+    })
 
   on: On = (event, listener) => {
     this.emitter.on(event, listener)
@@ -164,14 +164,14 @@ export class Client {
     return tdResponse && deepRenameKey('@type', '_', tdResponse)
   }
 
-  _send (query: TDFunction): Promise<Object | null> {
+  _send (query: TDFunction): Promise<null> {
     if (!this.client) return Promise.resolve(null)
     const { client } = this
     const tdQuery = deepRenameKey('_', '@type', query)
     return this.tdlib.send(client, tdQuery)
   }
 
-  async _receive (timeout: number = 10): Promise<TDObject | Update | null> {
+  async _receive (timeout: number = 10): Promise<TDObject | null> {
     if (!this.client) return Promise.resolve(null)
     const tdResponse = await this.tdlib.receive(this.client, timeout)
     return tdResponse && (this.options.useMutableRename
@@ -180,52 +180,47 @@ export class Client {
   }
 
   async _loop (): Promise<void> {
-    const nullableEvent = await this._receive()
+    const response = await this._receive()
 
     if (!this.client) return
 
-    if (!nullableEvent) {
-      // debug('Current update is empty.')
+    if (!response) {
+      // debug('Response is empty.')
       return this._loop()
     }
 
-    const event = (nullableEvent: TDObject | Update)
-
-    switch (event._) {
-      case 'updateAuthorizationState':
-        await this._handleAuth(event)
-        break
-
-      case 'error':
-        await this._handleError(event)
-        break
-
-      default: {
-        // $FlowFixMe
-        const id = event['@extra']
-        const p = this.fetching.get(id)
-
-        if (p)
-          // $FlowFixMe
-          this._handleResponse(event, id, p)
-        else
-          // $FlowFixMe
-          this._handleUpdate(event)
-      }
-    }
+    await this._handleResponse(response)
 
     this._loop()
   }
 
-  _handleResponse (res: TDObject, id: string, p: P) {
+  async _handleResponse (res: TDObject): Promise<mixed> {
+    if (res._ === 'error')
+      return this._handleError(res)
+
     // $FlowFixMe
-    delete res['@extra']
-    p.resolve(res)
-    this.fetching.delete(id)
+    const id = res['@extra']
+    const promise = this.fetching.get(id)
+
+    if (promise) {
+      // $FlowFixMe
+      delete res['@extra']
+      promise.resolve(res)
+      this.fetching.delete(id)
+    } else if (id !== null) {
+      // $FlowFixMe
+      await this._handleUpdate(res)
+    }
   }
 
-  _handleUpdate (update: Update) {
-    this.emit('update', update)
+  async _handleUpdate (update: Update): Promise<mixed> {
+    switch (update._) {
+      case 'updateAuthorizationState':
+        return this._handleAuth(update)
+
+      default:
+        this.emit('update', update)
+    }
   }
 
   async _handleAuth (update: updateAuthorizationState) {
@@ -313,14 +308,14 @@ export class Client {
       default: {
         // $FlowFixMe
         const id = error['@extra']
-        const p = this.fetching.get(id)
+        const promise = this.fetching.get(id)
 
-        if (p) {
+        if (promise) {
           // $FlowFixMe
           delete error['@extra']
-          p.reject(error)
+          promise.reject(error)
           this.fetching.delete(id)
-        } else {
+        } else if (id !== null) {
           this.emit('error', error)
         }
       }

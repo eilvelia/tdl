@@ -20,7 +20,7 @@ const tdlib = new TDLib('/Users/user/testproject/libtdjson')
 const client = await tdlib.create()
 ```
 
-##### `send: (client: TDLibClient, query: Object) => Promise<Object | null>`
+##### `send: (client: TDLibClient, query: Object) => Promise<null>`
 
 [Docs](https://core.telegram.org/tdlib/docs/classtd_1_1_client.html#a1a6f9cbe607ce76ff869493833c1224d)
 
