@@ -1,0 +1,4 @@
+language: node_js
+node_js:
+  - v9
+script: npm test
