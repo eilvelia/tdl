@@ -1,7 +1,7 @@
 // @flow
 
 import path from 'path'
-import EventEmitter from 'events'
+import EventEmitter from 'eventemitter3'
 import { mergeDeepRight } from 'ramda'
 import Debug from 'debug'
 import uuidv4 from '../vendor/uuidv4'
@@ -70,13 +70,13 @@ export type On =
   & ((event: 'destroy', listener: () => void) => Client)
 
 export type Emit =
-  & ((event: 'update', update: Update) => boolean)
-  & ((event: 'error', err: TDError) => boolean)
-  & ((event: 'destroy') => boolean)
+  & ((event: 'update', update: Update) => Client)
+  & ((event: 'error', err: TDError) => Client)
+  & ((event: 'destroy') => Client)
 
 export class Client {
 ; +options: StrictConfigType
-; +emitter = new EventEmitter()
+; +emitter: EventEmitter = new EventEmitter()
 ; +fetching: Map<string, FetchingPromiseCallback> = new Map()
 ; +tdlib: TDLib
   client: ?TDLibClient
@@ -124,7 +124,8 @@ export class Client {
 
   emit: Emit = (event, value) => {
     debug('emit', event, value)
-    return this.emitter.emit(event, value)
+    this.emitter.emit(event, value)
+    return this
   }
 
   invoke: Invoke = async query => {
