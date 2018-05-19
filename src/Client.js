@@ -68,11 +68,13 @@ export type On =
   & ((event: 'update', listener: (update: Update) => void) => Client)
   & ((event: 'error', listener: (err: TDError) => void) => Client)
   & ((event: 'destroy', listener: () => void) => Client)
+  & ((event: 'auth-needed', listener: () => void) => Client)
 
 export type Emit =
   & ((event: 'update', update: Update) => Client)
   & ((event: 'error', err: TDError) => Client)
   & ((event: 'destroy') => Client)
+  & ((event: 'auth-needed') => Client)
 
 export class Client {
 ; +options: StrictConfigType
@@ -258,6 +260,7 @@ export class Client {
         })
 
       case 'authorizationStateWaitPhoneNumber':
+        this.emit('auth-needed')
         return loginDetails.type === 'user'
           ? this._send({
             _: 'setAuthenticationPhoneNumber',
