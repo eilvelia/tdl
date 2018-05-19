@@ -3,11 +3,11 @@
 import path from 'path'
 import EventEmitter from 'events'
 import { mergeDeepRight } from 'ramda'
-import { prompt, type QuestionKindT } from 'inquirer'
 import Debug from 'debug'
-import { TDLib } from './TDLib'
 import uuidv4 from '../vendor/uuidv4'
+import { TDLib } from './TDLib'
 import { deepRenameKey/*, deepRenameKey_ */ } from './util'
+import { getAuthCode, getPassword } from './prompt'
 
 import type {
   ConfigType,
@@ -27,21 +27,6 @@ import type {
 import type { TDLibClient } from './TDLib'
 
 const debug = Debug('tdl:client')
-
-const getInput = (type: QuestionKindT, message: string): Promise<string> =>
-  prompt([{ type, name: 'input', message }])
-    .then(result => typeof result.input === 'string' ? result.input : '')
-    .then(input => input.length === 0 ? getInput(type, message) : input)
-
-const getAuthCode = (retry?: boolean): Promise<string> =>
-  getInput('input', retry
-    ? 'Wrong auth code, please re-enter: '
-    : 'Please enter auth code: ')
-
-const getPassword = (passwordHint: string, retry?: boolean): Promise<string> =>
-  getInput('password', retry
-    ? 'Wrong password, please re-enter: '
-    : `Please enter password (${passwordHint}): `)
 
 const cwd = process.cwd()
 

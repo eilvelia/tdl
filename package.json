@@ -25,7 +25,7 @@
   "dependencies": {
     "debug": "^3.1.0",
     "ffi-napi": "^2.4.3",
-    "inquirer": "^2.0.0",
+    "promptly": "^3.0.3",
     "ramda": "^0.25.0",
     "ref-napi": "^1.4.0"
   },
