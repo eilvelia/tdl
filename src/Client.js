@@ -68,15 +68,17 @@ export type On =
   & ((event: 'update', listener: (update: Update) => void) => Client)
   & ((event: 'error', listener: (err: TDError) => void) => Client)
   & ((event: 'destroy', listener: () => void) => Client)
+  & ((event: 'auth-needed', listener: () => void) => Client)
 
 export type Emit =
-  & ((event: 'update', update: Update) => Client)
-  & ((event: 'error', err: TDError) => Client)
-  & ((event: 'destroy') => Client)
+  & ((event: 'update', update: Update) => void)
+  & ((event: 'error', err: TDError) => void)
+  & ((event: 'destroy') => void)
+  & ((event: 'auth-needed') => void)
 
 export class Client {
 ; +options: StrictConfigType
-; +emitter: EventEmitter = new EventEmitter()
+; +emitter = new EventEmitter()
 ; +fetching: Map<string, FetchingPromiseCallback> = new Map()
 ; +tdlib: TDLib
   client: ?TDLibClient
@@ -125,7 +127,6 @@ export class Client {
   emit: Emit = (event, value) => {
     debug('emit', event, value)
     this.emitter.emit(event, value)
-    return this
   }
 
   invoke: Invoke = async query => {
@@ -258,6 +259,7 @@ export class Client {
         })
 
       case 'authorizationStateWaitPhoneNumber':
+        this.emit('auth-needed')
         return loginDetails.type === 'user'
           ? this._send({
             _: 'setAuthenticationPhoneNumber',
