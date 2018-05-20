@@ -71,14 +71,14 @@ export type On =
   & ((event: 'auth-needed', listener: () => void) => Client)
 
 export type Emit =
-  & ((event: 'update', update: Update) => Client)
-  & ((event: 'error', err: TDError) => Client)
-  & ((event: 'destroy') => Client)
-  & ((event: 'auth-needed') => Client)
+  & ((event: 'update', update: Update) => void)
+  & ((event: 'error', err: TDError) => void)
+  & ((event: 'destroy') => void)
+  & ((event: 'auth-needed') => void)
 
 export class Client {
 ; +options: StrictConfigType
-; +emitter: EventEmitter = new EventEmitter()
+; +emitter = new EventEmitter()
 ; +fetching: Map<string, FetchingPromiseCallback> = new Map()
 ; +tdlib: TDLib
   client: ?TDLibClient
@@ -127,7 +127,6 @@ export class Client {
   emit: Emit = (event, value) => {
     debug('emit', event, value)
     this.emitter.emit(event, value)
-    return this
   }
 
   invoke: Invoke = async query => {
