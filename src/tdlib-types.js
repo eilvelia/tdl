@@ -390,7 +390,7 @@ export type callStateReady = {
   connections: callConnection[],
   config: string,
   encryption_key: string,
-  emojis: string,
+  emojis: string[],
 }
 
 export type callStateReadyOptional = {|
@@ -399,7 +399,7 @@ export type callStateReadyOptional = {|
   connections?: callConnectionOptional[],
   config?: string,
   encryption_key?: string,
-  emojis?: string,
+  emojis?: string[],
 |}
 
 export type callStateHangingUp = {
@@ -879,7 +879,7 @@ export type chatInviteLinkInfo = {
   title: string,
   photo: chatPhoto,
   member_count: number,
-  member_user_ids: number,
+  member_user_ids: number[],
   is_public: boolean,
 }
 
@@ -890,7 +890,7 @@ export type chatInviteLinkInfoOptional = {|
   title?: string,
   photo?: chatPhotoOptional,
   member_count?: number,
-  member_user_ids?: number,
+  member_user_ids?: number[],
   is_public?: boolean,
 |}
 
@@ -1108,12 +1108,12 @@ export type chatTypeSecretOptional = {|
 
 export type chats = {
   _: 'chats',
-  chat_ids: number,
+  chat_ids: number[],
 }
 
 export type chatsOptional = {|
   _: 'chats',
-  chat_ids?: number,
+  chat_ids?: number[],
 |}
 
 export type checkChatUsernameResultOk = {
@@ -1636,24 +1636,24 @@ export type gameHighScoresOptional = {|
 
 export type hashtags = {
   _: 'hashtags',
-  hashtags: string,
+  hashtags: string[],
 }
 
 export type hashtagsOptional = {|
   _: 'hashtags',
-  hashtags?: string,
+  hashtags?: string[],
 |}
 
 export type importedContacts = {
   _: 'importedContacts',
-  user_ids: number,
-  importer_count: number,
+  user_ids: number[],
+  importer_count: number[],
 }
 
 export type importedContactsOptional = {|
   _: 'importedContacts',
-  user_ids?: number,
-  importer_count?: number,
+  user_ids?: number[],
+  importer_count?: number[],
 |}
 
 export type inlineKeyboardButton = {
@@ -2380,7 +2380,7 @@ export type inputMessagePhoto = {
   _: 'inputMessagePhoto',
   photo: InputFile,
   thumbnail: inputThumbnail,
-  added_sticker_file_ids: number,
+  added_sticker_file_ids: number[],
   width: number,
   height: number,
   caption: formattedText,
@@ -2391,7 +2391,7 @@ export type inputMessagePhotoOptional = {|
   _: 'inputMessagePhoto',
   photo?: InputFileOptional,
   thumbnail?: inputThumbnailOptional,
-  added_sticker_file_ids?: number,
+  added_sticker_file_ids?: number[],
   width?: number,
   height?: number,
   caption?: formattedTextOptional,
@@ -2418,7 +2418,7 @@ export type inputMessageVideo = {
   _: 'inputMessageVideo',
   video: InputFile,
   thumbnail: inputThumbnail,
-  added_sticker_file_ids: number,
+  added_sticker_file_ids: number[],
   duration: number,
   width: number,
   height: number,
@@ -2431,7 +2431,7 @@ export type inputMessageVideoOptional = {|
   _: 'inputMessageVideo',
   video?: InputFileOptional,
   thumbnail?: inputThumbnailOptional,
-  added_sticker_file_ids?: number,
+  added_sticker_file_ids?: number[],
   duration?: number,
   width?: number,
   height?: number,
@@ -3041,13 +3041,13 @@ export type messageCallOptional = {|
 export type messageBasicGroupChatCreate = {
   _: 'messageBasicGroupChatCreate',
   title: string,
-  member_user_ids: number,
+  member_user_ids: number[],
 }
 
 export type messageBasicGroupChatCreateOptional = {|
   _: 'messageBasicGroupChatCreate',
   title?: string,
-  member_user_ids?: number,
+  member_user_ids?: number[],
 |}
 
 export type messageSupergroupChatCreate = {
@@ -3090,12 +3090,12 @@ export type messageChatDeletePhotoOptional = {|
 
 export type messageChatAddMembers = {
   _: 'messageChatAddMembers',
-  member_user_ids: number,
+  member_user_ids: number[],
 }
 
 export type messageChatAddMembersOptional = {|
   _: 'messageChatAddMembers',
-  member_user_ids?: number,
+  member_user_ids?: number[],
 |}
 
 export type messageChatJoinByLink = {
@@ -4430,12 +4430,12 @@ export type stickerOptional = {|
 
 export type stickerEmojis = {
   _: 'stickerEmojis',
-  emojis: string,
+  emojis: string[],
 }
 
 export type stickerEmojisOptional = {|
   _: 'stickerEmojis',
-  emojis?: string,
+  emojis?: string[],
 |}
 
 export type stickerSet = {
@@ -4836,12 +4836,12 @@ export type testStringOptional = {|
 
 export type testVectorInt = {
   _: 'testVectorInt',
-  value: number,
+  value: number[],
 }
 
 export type testVectorIntOptional = {|
   _: 'testVectorInt',
-  value?: number,
+  value?: number[],
 |}
 
 export type testVectorIntObject = {
@@ -4856,12 +4856,12 @@ export type testVectorIntObjectOptional = {|
 
 export type testVectorString = {
   _: 'testVectorString',
-  value: string,
+  value: string[],
 }
 
 export type testVectorStringOptional = {|
   _: 'testVectorString',
-  value?: string,
+  value?: string[],
 |}
 
 export type testVectorStringObject = {
@@ -5377,7 +5377,7 @@ export type updateChatDraftMessageOptional = {|
 export type updateDeleteMessages = {
   _: 'updateDeleteMessages',
   chat_id: number,
-  message_ids: number,
+  message_ids: number[],
   is_permanent: boolean,
   from_cache: boolean,
 }
@@ -5385,7 +5385,7 @@ export type updateDeleteMessages = {
 export type updateDeleteMessagesOptional = {|
   _: 'updateDeleteMessages',
   chat_id?: number,
-  message_ids?: number,
+  message_ids?: number[],
   is_permanent?: boolean,
   from_cache?: boolean,
 |}
@@ -5589,13 +5589,13 @@ export type updateOptionOptional = {|
 export type updateInstalledStickerSets = {
   _: 'updateInstalledStickerSets',
   is_masks: boolean,
-  sticker_set_ids: number,
+  sticker_set_ids: number[],
 }
 
 export type updateInstalledStickerSetsOptional = {|
   _: 'updateInstalledStickerSets',
   is_masks?: boolean,
-  sticker_set_ids?: number,
+  sticker_set_ids?: number[],
 |}
 
 export type updateTrendingStickerSets = {
@@ -5611,33 +5611,33 @@ export type updateTrendingStickerSetsOptional = {|
 export type updateRecentStickers = {
   _: 'updateRecentStickers',
   is_attached: boolean,
-  sticker_ids: number,
+  sticker_ids: number[],
 }
 
 export type updateRecentStickersOptional = {|
   _: 'updateRecentStickers',
   is_attached?: boolean,
-  sticker_ids?: number,
+  sticker_ids?: number[],
 |}
 
 export type updateFavoriteStickers = {
   _: 'updateFavoriteStickers',
-  sticker_ids: number,
+  sticker_ids: number[],
 }
 
 export type updateFavoriteStickersOptional = {|
   _: 'updateFavoriteStickers',
-  sticker_ids?: number,
+  sticker_ids?: number[],
 |}
 
 export type updateSavedAnimations = {
   _: 'updateSavedAnimations',
-  animation_ids: number,
+  animation_ids: number[],
 }
 
 export type updateSavedAnimationsOptional = {|
   _: 'updateSavedAnimations',
-  animation_ids?: number,
+  animation_ids?: number[],
 |}
 
 export type updateConnectionState = {
@@ -5886,12 +5886,12 @@ export type userPrivacySettingRuleAllowContactsOptional = {|
 
 export type userPrivacySettingRuleAllowUsers = {
   _: 'userPrivacySettingRuleAllowUsers',
-  user_ids: number,
+  user_ids: number[],
 }
 
 export type userPrivacySettingRuleAllowUsersOptional = {|
   _: 'userPrivacySettingRuleAllowUsers',
-  user_ids?: number,
+  user_ids?: number[],
 |}
 
 export type userPrivacySettingRuleRestrictAll = {
@@ -5912,12 +5912,12 @@ export type userPrivacySettingRuleRestrictContactsOptional = {|
 
 export type userPrivacySettingRuleRestrictUsers = {
   _: 'userPrivacySettingRuleRestrictUsers',
-  user_ids: number,
+  user_ids: number[],
 }
 
 export type userPrivacySettingRuleRestrictUsersOptional = {|
   _: 'userPrivacySettingRuleRestrictUsers',
-  user_ids?: number,
+  user_ids?: number[],
 |}
 
 export type userPrivacySettingRules = {
@@ -6039,13 +6039,13 @@ export type userTypeUnknownOptional = {|
 export type users = {
   _: 'users',
   total_count: number,
-  user_ids: number,
+  user_ids: number[],
 }
 
 export type usersOptional = {|
   _: 'users',
   total_count?: number,
-  user_ids?: number,
+  user_ids?: number[],
 |}
 
 export type validatedOrderInfo = {
@@ -6242,7 +6242,7 @@ export type addChatMemberReturnType = ok
 export type addChatMembers = {|
   _: 'addChatMembers',
   chat_id?: number,
-  user_ids?: number,
+  user_ids?: number[],
 |}
 
 export type addChatMembersReturnType = ok
@@ -6505,7 +6505,7 @@ export type createCallReturnType = callId
 
 export type createNewBasicGroupChat = {|
   _: 'createNewBasicGroupChat',
-  user_ids?: number,
+  user_ids?: number[],
   title?: string,
 |}
 
@@ -6610,7 +6610,7 @@ export type deleteFileReturnType = ok
 export type deleteMessages = {|
   _: 'deleteMessages',
   chat_id?: number,
-  message_ids?: number,
+  message_ids?: number[],
   revoke?: boolean,
 |}
 
@@ -6765,7 +6765,7 @@ export type forwardMessages = {|
   _: 'forwardMessages',
   chat_id?: number,
   from_chat_id?: number,
-  message_ids?: number,
+  message_ids?: number[],
   disable_notification?: boolean,
   from_background?: boolean,
   as_album?: boolean,
@@ -6872,7 +6872,7 @@ export type getChatEventLog = {|
   from_event_id?: number,
   limit?: number,
   filters?: chatEventLogFiltersOptional,
-  user_ids?: number,
+  user_ids?: number[],
 |}
 
 export type getChatEventLogReturnType = chatEvents
@@ -7045,7 +7045,7 @@ export type getMessageReturnType = message
 export type getMessages = {|
   _: 'getMessages',
   chat_id?: number,
-  message_ids?: number,
+  message_ids?: number[],
 |}
 
 export type getMessagesReturnType = messages
@@ -7361,8 +7361,8 @@ export type optimizeStorage = {|
   count?: number,
   immunity_delay?: number,
   file_types?: FileTypeOptional[],
-  chat_ids?: number,
-  exclude_chat_ids?: number,
+  chat_ids?: number[],
+  exclude_chat_ids?: number[],
   chat_limit?: number,
 |}
 
@@ -7417,14 +7417,14 @@ export type recoverPasswordReturnType = passwordState
 export type registerDevice = {|
   _: 'registerDevice',
   device_token?: DeviceTokenOptional,
-  other_user_ids?: number,
+  other_user_ids?: number[],
 |}
 
 export type registerDeviceReturnType = ok
 
 export type removeContacts = {|
   _: 'removeContacts',
-  user_ids?: number,
+  user_ids?: number[],
 |}
 
 export type removeContactsReturnType = ok
@@ -7483,7 +7483,7 @@ export type removeTopChatReturnType = ok
 export type reorderInstalledStickerSets = {|
   _: 'reorderInstalledStickerSets',
   is_masks?: boolean,
-  sticker_set_ids?: number,
+  sticker_set_ids?: number[],
 |}
 
 export type reorderInstalledStickerSetsReturnType = ok
@@ -7492,7 +7492,7 @@ export type reportChat = {|
   _: 'reportChat',
   chat_id?: number,
   reason?: ChatReportReasonOptional,
-  message_ids?: number,
+  message_ids?: number[],
 |}
 
 export type reportChatReturnType = ok
@@ -7501,7 +7501,7 @@ export type reportSupergroupSpam = {|
   _: 'reportSupergroupSpam',
   supergroup_id?: number,
   user_id?: number,
-  message_ids?: number,
+  message_ids?: number[],
 |}
 
 export type reportSupergroupSpamReturnType = ok
@@ -7945,7 +7945,7 @@ export type setPasswordReturnType = passwordState
 
 export type setPinnedChats = {|
   _: 'setPinnedChats',
-  chat_ids?: number,
+  chat_ids?: number[],
 |}
 
 export type setPinnedChatsReturnType = ok
@@ -8061,7 +8061,7 @@ export type testCallStringReturnType = testString
 
 export type testCallVectorInt = {|
   _: 'testCallVectorInt',
-  x?: number,
+  x?: number[],
 |}
 
 export type testCallVectorIntReturnType = testVectorInt
@@ -8075,7 +8075,7 @@ export type testCallVectorIntObjectReturnType = testVectorIntObject
 
 export type testCallVectorString = {|
   _: 'testCallVectorString',
-  x?: string,
+  x?: string[],
 |}
 
 export type testCallVectorStringReturnType = testVectorString
@@ -8209,7 +8209,7 @@ export type validateOrderInfoReturnType = validatedOrderInfo
 export type viewMessages = {|
   _: 'viewMessages',
   chat_id?: number,
-  message_ids?: number,
+  message_ids?: number[],
   force_read?: boolean,
 |}
 
@@ -8217,7 +8217,7 @@ export type viewMessagesReturnType = ok
 
 export type viewTrendingStickerSets = {|
   _: 'viewTrendingStickerSets',
-  sticker_set_ids?: number,
+  sticker_set_ids?: number[],
 |}
 
 export type viewTrendingStickerSetsReturnType = ok
