@@ -18,7 +18,7 @@ TDLib (Telegram Database library) bindings for Node.js
 
 ### APIs
 
-##### `new Client(options) -> Client`
+##### `new Client(options: Object) -> Client`
 
 ```js
 const { Client } = require('tdl')
@@ -40,7 +40,7 @@ You can use this API to initialize and connect your client with Telegram.
 await client.connect()
 ```
 
-##### `client.on(event, callback) -> void`
+##### `client.on(event: string, callback: Function) -> void`
 
 You can use this API to attach an event listener for iterating updates.
 
@@ -49,7 +49,7 @@ client.on('update', console.log)
 client.on('error', console.error)
 ```
 
-##### `client.invoke(query) -> Promise<Object>`
+##### `client.invoke(query: Object) -> Promise<Object>`
 
 You can use this API to send asynchronous message to Telegram and receive response.  
 Resolves with response, or rejects with an error.
@@ -57,7 +57,7 @@ Resolves with response, or rejects with an error.
 ```js
 const chats = await client.invoke({
   _: 'getChats',
-  offset_order: 0,
+  offset_order: '9223372036854775807',
   offset_chat_id: 0,
   limit: 100
 })
@@ -77,7 +77,7 @@ await client.invoke({
 })
 ```
 
-##### `client.execute(query) -> ?Object`
+##### `client.execute(query: Object) -> ?Object`
 
 You can use this API to send synchronous message to Telegram and receive response.
 
@@ -95,6 +95,18 @@ You can use this API to destroy the client.
 ```js
 client.destroy()
 ```
+
+##### `client.setLogFilePath(path: string) -> number`
+
+See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a8c8aadc9360af6e1cf2673954dcf9aea).
+
+##### `client.setLogVerbosityLevel(verbosityLevel: number) -> void`
+
+See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a9dd71044a37db700da89001c96b978c3).
+
+#### Low-level TDLib APIs
+
+See [TDLib_API.md](TDLib_API.md).
 
 -----
 
@@ -119,8 +131,8 @@ await client.connect()
 
 ```typescript
 type Options = {
-  apiId: number,
-  apiHash: string,
+  apiId: number, // Can be obtained at https://my.telegram.org
+  apiHash: string, // Can be obtained at https://my.telegram.org
   loginDetails: {
     type: 'user',
     phoneNumber: string,
@@ -130,14 +142,14 @@ type Options = {
     type: 'bot',
     token: string
   },
-  binaryPath: string, // relative path
-  databaseDirectory: string, // relative path
-  filesDirectory: string, // relative path
-  logFilePath: string, // relative path
+  binaryPath: string, // Path to tdlib binary, relative path
+  databaseDirectory: string, // Relative path
+  filesDirectory: string, // Relative path
+  logFilePath: string, // Relative path
   verbosityLevel: number,
   skipOldUpdates: boolean,
   dev: boolean, // Use telegram dev server
-  useMutableRename: boolean,
+  useMutableRename: boolean, // Enable in production
   tdlibParameters: Object, // See https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html
   tdlibInstance: TDLib
 }
