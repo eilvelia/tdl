@@ -329,7 +329,7 @@ export class Client {
           delete error['@extra']
           promise.reject(error)
           this.fetching.delete(id)
-        } else if (id !== null) {
+        } else {
           this.emit('error', error)
         }
       }
