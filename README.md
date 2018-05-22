@@ -71,7 +71,7 @@ await client.invoke({
     _: 'inputMessageText',
     text: {
       _: 'formattedText',
-      text: '👻'
+      text: '👻'
     }
   }
 })
@@ -138,7 +138,8 @@ type Options = {
   skipOldUpdates: boolean,
   dev: boolean, // Use telegram dev server
   useMutableRename: boolean,
-  tdlibParameters: Object // See https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html
+  tdlibParameters: Object, // See https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html
+  tdlibInstance: TDLib
 }
 ```
 
