@@ -104,6 +104,10 @@ See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a8c8aadc936
 
 See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a9dd71044a37db700da89001c96b978c3).
 
+##### `client.invokeFuture(query: Object) -> Future<Object, Object>`
+
+Same as `client.invoke`, but returns [Future](https://github.com/fluture-js/Fluture) instead of Promise.
+
 #### Low-level TDLib APIs
 
 See [TDLib_API.md](TDLib_API.md).

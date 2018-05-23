@@ -3,6 +3,7 @@
 import path from 'path'
 import EventEmitter from 'eventemitter3'
 import { mergeDeepRight } from 'ramda'
+import * as Future from 'fluture'
 import Debug from 'debug'
 import uuidv4 from '../vendor/uuidv4'
 import { TDLib } from './TDLib'
@@ -22,6 +23,7 @@ import type {
   error as TDError,
   ConnectionState,
   Invoke,
+  InvokeFuture,
   Execute
 } from './tdlib-types'
 
@@ -147,6 +149,9 @@ export class Client {
     // $FlowFixMe
     return receiveUpdate
   }
+
+  invokeFuture: InvokeFuture =
+    (Future.encaseP(this.invoke): any)
 
   destroy = (): void => {
     if (!this.client) return
