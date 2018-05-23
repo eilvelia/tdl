@@ -3,6 +3,7 @@
 import path from 'path'
 import EventEmitter from 'eventemitter3'
 import { mergeDeepRight } from 'ramda'
+import * as Future from 'fluture'
 import Debug from 'debug'
 import uuidv4 from '../vendor/uuidv4'
 import { TDLib } from './TDLib'
@@ -22,6 +23,7 @@ import type {
   error as TDError,
   ConnectionState,
   Invoke,
+  InvokeFuture,
   Execute
 } from './tdlib-types'
 
@@ -89,7 +91,8 @@ export class Client {
   constructor (options: ConfigType = {}) {
     this.options = (mergeDeepRight(defaultOptions, options): StrictConfigType)
 
-    this.tdlib = new TDLib(resolvePath(this.options.binaryPath))
+    this.tdlib = this.options.tdlibInstance
+      || new TDLib(resolvePath(this.options.binaryPath))
   }
 
   async _init (): Promise<void> {
@@ -146,6 +149,9 @@ export class Client {
     // $FlowFixMe
     return receiveUpdate
   }
+
+  invokeFuture: InvokeFuture =
+    (Future.encaseP(this.invoke): any)
 
   destroy = (): void => {
     if (!this.client) return
@@ -328,7 +334,7 @@ export class Client {
           delete error['@extra']
           promise.reject(error)
           this.fetching.delete(id)
-        } else if (id !== null) {
+        } else {
           this.emit('error', error)
         }
       }

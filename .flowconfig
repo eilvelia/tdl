@@ -3,13 +3,15 @@
 <PROJECT_ROOT>/scripts/
 
 
+# ignored total:
+#
 # ignored typings:
-# debug, inquirer, ramda
+# debug, eventemitter3, promptly, ramda
 # active:
 # ffi-napi, ref-napi
-# Total ignored deps: 305
+#
+# Total ignored deps: 289
 <PROJECT_ROOT>/node_modules/.bin/*
-<PROJECT_ROOT>/node_modules/ansi-escapes/*
 <PROJECT_ROOT>/node_modules/ansi-regex/*
 <PROJECT_ROOT>/node_modules/ansi-styles/*
 <PROJECT_ROOT>/node_modules/anymatch/*
@@ -89,22 +91,18 @@
 <PROJECT_ROOT>/node_modules/brace-expansion/*
 <PROJECT_ROOT>/node_modules/braces/*
 <PROJECT_ROOT>/node_modules/browserslist/*
-<PROJECT_ROOT>/node_modules/buffer-from/*
 <PROJECT_ROOT>/node_modules/cache-base/*
 <PROJECT_ROOT>/node_modules/camelcase/*
 <PROJECT_ROOT>/node_modules/caniuse-lite/*
 <PROJECT_ROOT>/node_modules/chalk/*
 <PROJECT_ROOT>/node_modules/chokidar/*
 <PROJECT_ROOT>/node_modules/class-utils/*
-<PROJECT_ROOT>/node_modules/cli-cursor/*
-<PROJECT_ROOT>/node_modules/cli-width/*
 <PROJECT_ROOT>/node_modules/cliui/*
 <PROJECT_ROOT>/node_modules/code-point-at/*
 <PROJECT_ROOT>/node_modules/collection-visit/*
 <PROJECT_ROOT>/node_modules/commander/*
 <PROJECT_ROOT>/node_modules/component-emitter/*
 <PROJECT_ROOT>/node_modules/concat-map/*
-<PROJECT_ROOT>/node_modules/concat-stream/*
 <PROJECT_ROOT>/node_modules/convert-source-map/*
 <PROJECT_ROOT>/node_modules/copy-descriptor/*
 <PROJECT_ROOT>/node_modules/core-js/*
@@ -118,15 +116,12 @@
 <PROJECT_ROOT>/node_modules/electron-to-chromium/*
 <PROJECT_ROOT>/node_modules/escape-string-regexp/*
 <PROJECT_ROOT>/node_modules/esutils/*
+<PROJECT_ROOT>/node_modules/eventemitter3/*
 <PROJECT_ROOT>/node_modules/execa/*
-<PROJECT_ROOT>/node_modules/exit-hook/*
 <PROJECT_ROOT>/node_modules/expand-brackets/*
 <PROJECT_ROOT>/node_modules/expand-range/*
-<PROJECT_ROOT>/node_modules/extend/*
 <PROJECT_ROOT>/node_modules/extend-shallow/*
-<PROJECT_ROOT>/node_modules/external-editor/*
 <PROJECT_ROOT>/node_modules/extglob/*
-<PROJECT_ROOT>/node_modules/figures/*
 <PROJECT_ROOT>/node_modules/filename-regex/*
 <PROJECT_ROOT>/node_modules/fill-range/*
 <PROJECT_ROOT>/node_modules/find-up/*
@@ -155,7 +150,6 @@
 <PROJECT_ROOT>/node_modules/home-or-tmp/*
 <PROJECT_ROOT>/node_modules/inflight/*
 <PROJECT_ROOT>/node_modules/inherits/*
-<PROJECT_ROOT>/node_modules/inquirer/*
 <PROJECT_ROOT>/node_modules/invariant/*
 <PROJECT_ROOT>/node_modules/invert-kv/*
 <PROJECT_ROOT>/node_modules/is-accessor-descriptor/*
@@ -175,7 +169,6 @@
 <PROJECT_ROOT>/node_modules/is-plain-object/*
 <PROJECT_ROOT>/node_modules/is-posix-bracket/*
 <PROJECT_ROOT>/node_modules/is-primitive/*
-<PROJECT_ROOT>/node_modules/is-promise/*
 <PROJECT_ROOT>/node_modules/is-stream/*
 <PROJECT_ROOT>/node_modules/is-windows/*
 <PROJECT_ROOT>/node_modules/isarray/*
@@ -194,6 +187,7 @@
 <PROJECT_ROOT>/node_modules/lru-cache/*
 <PROJECT_ROOT>/node_modules/map-cache/*
 <PROJECT_ROOT>/node_modules/map-visit/*
+<PROJECT_ROOT>/node_modules/math-random/*
 <PROJECT_ROOT>/node_modules/mem/*
 <PROJECT_ROOT>/node_modules/micromatch/*
 <PROJECT_ROOT>/node_modules/mimic-fn/*
@@ -215,10 +209,8 @@
 <PROJECT_ROOT>/node_modules/object.omit/*
 <PROJECT_ROOT>/node_modules/object.pick/*
 <PROJECT_ROOT>/node_modules/once/*
-<PROJECT_ROOT>/node_modules/onetime/*
 <PROJECT_ROOT>/node_modules/os-homedir/*
 <PROJECT_ROOT>/node_modules/os-locale/*
-<PROJECT_ROOT>/node_modules/os-shim/*
 <PROJECT_ROOT>/node_modules/os-tmpdir/*
 <PROJECT_ROOT>/node_modules/output-file-sync/*
 <PROJECT_ROOT>/node_modules/p-finally/*
@@ -231,15 +223,16 @@
 <PROJECT_ROOT>/node_modules/path-exists/*
 <PROJECT_ROOT>/node_modules/path-is-absolute/*
 <PROJECT_ROOT>/node_modules/path-key/*
-<PROJECT_ROOT>/node_modules/pinkie/*
-<PROJECT_ROOT>/node_modules/pinkie-promise/*
+<PROJECT_ROOT>/node_modules/pify/*
 <PROJECT_ROOT>/node_modules/posix-character-classes/*
 <PROJECT_ROOT>/node_modules/preserve/*
 <PROJECT_ROOT>/node_modules/private/*
 <PROJECT_ROOT>/node_modules/process-nextick-args/*
+<PROJECT_ROOT>/node_modules/promptly/*
 <PROJECT_ROOT>/node_modules/pseudomap/*
 <PROJECT_ROOT>/node_modules/ramda/*
 <PROJECT_ROOT>/node_modules/randomatic/*
+<PROJECT_ROOT>/node_modules/read/*
 <PROJECT_ROOT>/node_modules/readable-stream/*
 <PROJECT_ROOT>/node_modules/readdirp/*
 <PROJECT_ROOT>/node_modules/ref-struct-di/*
@@ -258,11 +251,8 @@
 <PROJECT_ROOT>/node_modules/require-directory/*
 <PROJECT_ROOT>/node_modules/require-main-filename/*
 <PROJECT_ROOT>/node_modules/resolve-url/*
-<PROJECT_ROOT>/node_modules/restore-cursor/*
 <PROJECT_ROOT>/node_modules/ret/*
 <PROJECT_ROOT>/node_modules/rimraf/*
-<PROJECT_ROOT>/node_modules/run-async/*
-<PROJECT_ROOT>/node_modules/rx/*
 <PROJECT_ROOT>/node_modules/safe-buffer/*
 <PROJECT_ROOT>/node_modules/safe-regex/*
 <PROJECT_ROOT>/node_modules/semver/*
@@ -280,7 +270,6 @@
 <PROJECT_ROOT>/node_modules/source-map-resolve/*
 <PROJECT_ROOT>/node_modules/source-map-support/*
 <PROJECT_ROOT>/node_modules/source-map-url/*
-<PROJECT_ROOT>/node_modules/spawn-sync/*
 <PROJECT_ROOT>/node_modules/split-string/*
 <PROJECT_ROOT>/node_modules/static-extend/*
 <PROJECT_ROOT>/node_modules/string-width/*
@@ -288,14 +277,12 @@
 <PROJECT_ROOT>/node_modules/strip-ansi/*
 <PROJECT_ROOT>/node_modules/strip-eof/*
 <PROJECT_ROOT>/node_modules/supports-color/*
-<PROJECT_ROOT>/node_modules/through/*
-<PROJECT_ROOT>/node_modules/tmp/*
+<PROJECT_ROOT>/node_modules/symbol-observable/*
 <PROJECT_ROOT>/node_modules/to-fast-properties/*
 <PROJECT_ROOT>/node_modules/to-object-path/*
 <PROJECT_ROOT>/node_modules/to-regex/*
 <PROJECT_ROOT>/node_modules/to-regex-range/*
 <PROJECT_ROOT>/node_modules/trim-right/*
-<PROJECT_ROOT>/node_modules/typedarray/*
 <PROJECT_ROOT>/node_modules/union-value/*
 <PROJECT_ROOT>/node_modules/universalify/*
 <PROJECT_ROOT>/node_modules/unset-value/*
@@ -322,5 +309,6 @@
 
 [options]
 module.use_strict=true
+module.name_mapper='^fluture$' -> '<PROJECT_ROOT>/flow/fluture'
 
 [strict]
