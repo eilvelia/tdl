@@ -91,7 +91,8 @@ export class Client {
   constructor (options: ConfigType = {}) {
     this.options = (mergeDeepRight(defaultOptions, options): StrictConfigType)
 
-    this.tdlib = new TDLib(resolvePath(this.options.binaryPath))
+    this.tdlib = this.options.tdlibInstance
+      || new TDLib(resolvePath(this.options.binaryPath))
   }
 
   async _init (): Promise<void> {
@@ -333,7 +334,7 @@ export class Client {
           delete error['@extra']
           promise.reject(error)
           this.fetching.delete(id)
-        } else if (id !== null) {
+        } else {
           this.emit('error', error)
         }
       }

@@ -209,15 +209,17 @@ function updateRerunner() {
 const uniqIgnored = IGNORED_ONLY.filter(isNotTyping)
 
 const ignored =
-`💩 ignored total:
-💩 ${IGNORED.join(',')}
-💩 ignored typings:
-💩 ${IGNORED_TYPINGS.sort().join(', ')}
-💩 active:
-💩 ${deps.sort().join(', ')}
-💩 run again:
-💩 ${runAgainText()}
-💩 \n`
+`# ignored total:
+# ${IGNORED.join(',')}
+# ignored typings:
+# ${IGNORED_TYPINGS.sort().join(', ')}
+# active:
+# ${deps.sort().join(', ')}
+#
+# Total ignored deps: ${nodeModules.length}\n`
+/*`# run again:
+# ${runAgainText()}
+# \n`*/
 
 updateRerunner()
 

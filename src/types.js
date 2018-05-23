@@ -1,5 +1,7 @@
 // @flow
 
+import type { TDLib } from './TDLib'
+
 export type TDLibParameters = {
   use_test_dc?: boolean,
   database_directory?: string,
@@ -45,7 +47,8 @@ export type ConfigType = {
   skipOldUpdates?: boolean,
   dev?: boolean,
   useMutableRename?: boolean,
-  tdlibParameters?: TDLibParameters
+  tdlibParameters?: TDLibParameters,
+  tdlibInstance?: TDLib
 }
 
 export type StrictConfigType = {
@@ -60,5 +63,6 @@ export type StrictConfigType = {
   skipOldUpdates: boolean,
   dev: boolean,
   useMutableRename: boolean,
-  tdlibParameters: TDLibParameters
+  tdlibParameters: TDLibParameters,
+  tdlibInstance?: TDLib
 }
