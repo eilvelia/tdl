@@ -1,0 +1,8 @@
+dist/
+flow-typed/
+flow/
+scripts/
+vendor/
+examples/
+/src/tdlib-types.js
+/test.js

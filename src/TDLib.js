@@ -1,5 +1,7 @@
 // @flow
 
+/* eslint-disable no-multi-spaces, key-spacing, comma-spacing */
+
 import ffi from 'ffi-napi'
 import ref from 'ref-napi'
 import Debug from 'debug'
@@ -30,7 +32,7 @@ export class TDLib {
         'td_json_client_execute'         : ['string' , ['pointer', 'string']],
         'td_json_client_destroy'         : ['void'   , ['pointer']],
         'td_set_log_file_path'           : ['int'    , ['string']],
-        'td_set_log_verbosity_level'     : ['void'   , ['int']],
+        'td_set_log_verbosity_level'     : ['void'   , ['int']]
       })
   }
 

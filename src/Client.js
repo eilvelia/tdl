@@ -196,7 +196,7 @@ export class Client {
     if (!this.client) return
 
     if (!response) {
-      // debug('Response is empty.')
+      debug('Response is empty.')
       return this._loop()
     }
 
@@ -280,7 +280,7 @@ export class Client {
         const code = await getAuthCode(false)
         return this._send({
           _: 'checkAuthenticationCode',
-          code: code
+          code
         })
       }
 
@@ -289,7 +289,7 @@ export class Client {
         const password = await getPassword(passwordHint, false)
         return this._send({
           _: 'checkAuthenticationPassword',
-          password: password
+          password
         })
       }
 
@@ -311,7 +311,7 @@ export class Client {
         const code = await loginDetails.getAuthCode(true)
         return this._send({
           _: 'checkAuthenticationCode',
-          code: code
+          code
         })
       }
 
@@ -320,7 +320,7 @@ export class Client {
         const password = await loginDetails.getPassword('', true)
         return this._send({
           _: 'checkAuthenticationPassword',
-          password: password
+          password
         })
       }
 
