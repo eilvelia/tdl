@@ -16,7 +16,7 @@ export type {
   ConfigType,
   StrictConfigType,
   LoginDetails,
-  StrictLoginDetails,
+  StrictLoginDetails
 } from './types'
 
 export type {

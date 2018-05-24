@@ -49,9 +49,8 @@ export const deepRenameKey_ = (
   if (obj[oldKey]) renameKey_(oldKey, newKey, obj)
 
   Object.values(obj).forEach(e => {
-    if (e && typeof e === 'object') {
+    if (e && typeof e === 'object')
       deepRenameKey_(oldKey, newKey, e)
-    }
   })
 
   return obj
