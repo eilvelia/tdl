@@ -18,7 +18,7 @@ const buildQuery = (query: Object) => {
 }
 
 export class TDLib {
-; +tdlib: Object
+  +tdlib: Object
 
   constructor (libraryFile: string) {
     debug('binaryPath', libraryFile)

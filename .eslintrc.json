@@ -1,5 +1,8 @@
 {
   "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
   "env": {
     "browser": false,
     "node": true,
@@ -123,7 +126,19 @@
     "prefer-const": [1, { "destructuring": "all" }],
     "curly": [1, "multi-or-nest", "consistent"],
     "new-cap": [1, { "newIsCap": false, "capIsNew": false, "properties": false }],
-    "indent": 0,
-    "indent-legacy": [1, 2, { "SwitchCase": 1 }]
+    "indent": [1, 2, {
+      "SwitchCase": 1,
+      "VariableDeclarator": 1,
+      "outerIIFEBody": 1,
+      "MemberExpression": 1,
+      "FunctionDeclaration": { "parameters": 1, "body": 1 },
+      "FunctionExpression": { "parameters": 1, "body": 1 },
+      "CallExpression": { "arguments": 1 },
+      "ArrayExpression": 1,
+      "ObjectExpression": 1,
+      "ImportDeclaration": 1,
+      "flatTernaryExpressions": false,
+      "ignoreComments": true
+    }]
   }
 }
