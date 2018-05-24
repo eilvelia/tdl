@@ -35,14 +35,13 @@
     "ref-napi": "^1.4.0"
   },
   "devDependencies": {
+    "@bannerets/eslint-config-flow": "^0.2.0",
     "babel-cli": "^6.26.0",
-    "babel-eslint": "^8.2.3",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",
     "eslint": "^4.19.1",
-    "eslint-plugin-flowtype": "^2.47.1",
     "flow-bin": "^0.69.0",
     "flow-copy-source": "^1.3.0",
     "rimraf": "^2.6.2"
