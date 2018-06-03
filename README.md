@@ -192,6 +192,12 @@ Any empty fields may just not be specified.
 
 -----
 
+### Flowtype typings
+
+`tdl` supports [Flow](https://flow.org/) type annotations out of the box.
+
+-----
+
 ### Requirements
 
 - TDLib binary
