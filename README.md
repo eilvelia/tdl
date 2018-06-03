@@ -198,6 +198,12 @@ Any empty fields may just not be specified.
 
 -----
 
+### Examples
+
+See [examples/](examples) folder.
+
+-----
+
 ### Requirements
 
 - TDLib binary
