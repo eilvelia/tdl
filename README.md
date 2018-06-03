@@ -40,7 +40,7 @@ You can use this API to initialize and connect your client with Telegram.
 await client.connect()
 ```
 
-##### `client.on(event: string, callback: Function) -> void`
+##### `client.on(event: string, callback: Function) -> Client`
 
 You can use this API to attach an event listener for iterating updates.
 
