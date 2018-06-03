@@ -1,23 +1,23 @@
 const { Client } = require('tdl')
+const Future = require('fluture')
 
-async function main() {
-  const client = new Client({
-    apiId: 2222, // Your api_id
-    apiHash: 'YOUR_API_HASH',
-    loginDetails: {
-      phoneNumber: 'YOUR_PHONE_NUMBER'
-    }
-  })
+const client = new Client({
+  apiId: 2222, // Your api_id
+  apiHash: 'YOUR_API_HASH',
+  loginDetails: {
+    phoneNumber: 'YOUR_PHONE_NUMBER'
+  }
+})
 
-  await client.connect()
-
+const searchChat = username =>
   client.invokeFuture({
     _: 'searchPublicChat',
-    username: 'username'
+    username
   })
     .map(chat => `Chat: ${chat.title}, id: ${chat.id}`)
     .mapRej(err => `Error: ${err.message}`)
-    .fork(console.error, console.log)
-}
 
-main()
+Future
+  .tryP(client.connect)
+  .chain(() => searchChat('username'))
+  .fork(console.error, console.log)
