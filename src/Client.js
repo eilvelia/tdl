@@ -25,7 +25,7 @@ import type {
   Invoke,
   InvokeFuture,
   Execute
-} from './tdlib-types'
+} from '../types/tdlib'
 
 import type { TDLibClient } from './TDLib'
 

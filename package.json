@@ -23,6 +23,7 @@
     "vendor",
     "flow-typed",
     "flow",
+    "types",
     "README.md"
   ],
   "dependencies": {
