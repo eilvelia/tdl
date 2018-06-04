@@ -24,7 +24,8 @@
     "flow-typed",
     "flow",
     "types",
-    "README.md"
+    "README.md",
+    "TDLib_API.md"
   ],
   "dependencies": {
     "debug": "^3.1.0",

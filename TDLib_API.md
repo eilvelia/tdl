@@ -34,6 +34,18 @@ const client = await tdlib.create()
 
 ##### `destroy: (client: TDLibClient) => void`
 
+```js
+tdlib.destroy(client)
+```
+
 ##### `setLogFilePath: (path: string) => number`
 
+[Docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#a4b098540dd3957b60a67600cba3ebd7f)
+
 ##### `setLogVerbosityLevel: (verbosity: number) => void`
+
+[Docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#a8cd6fada30eb227c667fc9a10464ae50)
+
+##### `setLogFatalErrorCallback: (fn: (errorMessage: string) => void) => void`
+
+[Docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#addebe91c4525817a6d2b448634c19d71)
