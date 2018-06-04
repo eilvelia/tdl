@@ -2,7 +2,7 @@
   "name": "tdl",
   "version": "3.6.1",
   "description": "TDLib (Telegram Database library) bindings for Node.js",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "clean": "rimraf dist/",
     "types": "flow-copy-source src dist",
