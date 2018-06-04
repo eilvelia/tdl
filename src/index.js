@@ -12,11 +12,16 @@ export {
 
 export default Client
 
+export type { TDLibClient } from './TDLib'
+
 export type {
   ConfigType,
   StrictConfigType,
   LoginDetails,
-  StrictLoginDetails
+  StrictLoginDetails,
+  TDLibParameters,
+  LoginUser,
+  LoginBot
 } from './types'
 
 export type {
