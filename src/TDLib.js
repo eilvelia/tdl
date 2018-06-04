@@ -18,7 +18,7 @@ const buildQuery = (query: Object) => {
 }
 
 export class TDLib {
-; +tdlib: Object
+  +tdlib: Object
 
   constructor (libraryFile: string) {
     debug('binaryPath', libraryFile)
@@ -32,7 +32,8 @@ export class TDLib {
         'td_json_client_execute'         : ['string' , ['pointer', 'string']],
         'td_json_client_destroy'         : ['void'   , ['pointer']],
         'td_set_log_file_path'           : ['int'    , ['string']],
-        'td_set_log_verbosity_level'     : ['void'   , ['int']]
+        'td_set_log_verbosity_level'     : ['void'   , ['int']],
+        'td_set_log_fatal_error_callback': ['void'   , ['pointer']]
       })
   }
 
@@ -84,5 +85,10 @@ export class TDLib {
   setLogVerbosityLevel (verbosity: number): void {
     debug('setLogVerbosityLevel', verbosity)
     this.tdlib.td_set_log_verbosity_level(verbosity)
+  }
+
+  setLogFatalErrorCallback (fn: (errorMessage: string) => void): void {
+    this.tdlib.td_set_log_fatal_error_callback(
+      ffi.Callback('void', ['string'], fn))
   }
 }

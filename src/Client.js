@@ -25,7 +25,7 @@ import type {
   Invoke,
   InvokeFuture,
   Execute
-} from './tdlib-types'
+} from '../types/tdlib'
 
 import type { TDLibClient } from './TDLib'
 
@@ -79,7 +79,7 @@ export type Emit =
   & ((event: 'auth-needed') => void)
 
 export class Client {
-; +options: StrictConfigType
+  +options: StrictConfigType
 ; +emitter = new EventEmitter()
 ; +fetching: Map<string, FetchingPromiseCallback> = new Map()
 ; +tdlib: TDLib

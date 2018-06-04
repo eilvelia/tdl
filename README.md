@@ -40,7 +40,7 @@ You can use this API to initialize and connect your client with Telegram.
 await client.connect()
 ```
 
-##### `client.on(event: string, callback: Function) -> void`
+##### `client.on(event: string, callback: Function) -> Client`
 
 You can use this API to attach an event listener for iterating updates.
 
@@ -189,6 +189,18 @@ Any empty fields may just not be specified.
   }
 }
 ```
+
+-----
+
+### Flowtype typings
+
+`tdl` supports [Flow](https://flow.org/) type annotations out of the box.
+
+-----
+
+### Examples
+
+See [examples/](examples) folder.
 
 -----
 
