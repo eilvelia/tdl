@@ -1,0 +1,9 @@
+*.flow linguist-language=TypeScript linguist-detectable=false
+src/**/*.js linguist-language=TypeScript linguist-detectable=false
+flow/**/*.js linguist-language=TypeScript linguist-detectable=false
+flow-typed/**/*.js linguist-language=TypeScript linguist-detectable=false
+types/**/*.js linguist-language=TypeScript linguist-detectable=false
+
+types/tdlib.js linguist-generated=true
+
+*.sh linguist-detectable=false
