@@ -277,6 +277,7 @@ export class Client {
           })
 
       case 'authorizationStateWaitCode': {
+        if (loginDetails.type !== 'user') return
         const code = await loginDetails.getAuthCode(false)
         return this._send({
           _: 'checkAuthenticationCode',
@@ -285,6 +286,7 @@ export class Client {
       }
 
       case 'authorizationStateWaitPassword': {
+        if (loginDetails.type !== 'user') return
         const passwordHint = update.authorization_state.password_hint
         const password = await loginDetails.getPassword(passwordHint, false)
         return this._send({
