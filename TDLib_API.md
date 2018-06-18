@@ -20,6 +20,8 @@ const tdlib = new TDLib('/Users/user/testproject/libtdjson')
 const client = await tdlib.create()
 ```
 
+[Docs](https://core.telegram.org/tdlib/docs/td__json__client_8h.html#a45cd6979ada11b7690d9dcb1ddc841a0)
+
 ##### `send: (client: TDLibClient, query: Object) => Promise<null>`
 
 [Docs](https://core.telegram.org/tdlib/docs/classtd_1_1_client.html#a1a6f9cbe607ce76ff869493833c1224d)
@@ -38,9 +40,15 @@ const client = await tdlib.create()
 tdlib.destroy(client)
 ```
 
+[Docs](https://core.telegram.org/tdlib/docs/td__json__client_8h.html#a75c765a44f3bdf6a724d90c2e7f75ecf)
+
 ##### `setLogFilePath: (path: string) => number`
 
 [Docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#a4b098540dd3957b60a67600cba3ebd7f)
+
+##### `setLogMaxFileSize: (maxFileSize: number | string) => void`
+
+[Docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#adcbe44e62e16d65eb4c7503aabe264b3)
 
 ##### `setLogVerbosityLevel: (verbosity: number) => void`
 

@@ -160,11 +160,19 @@ export class Client {
     this.emit('destroy')
   }
 
+  setLogMaxFileSize = (maxFileSize: number | string): void => {
+    this.tdlib.setLogMaxFileSize(maxFileSize)
+  }
+
   setLogFilePath = (path: string): number =>
     this.tdlib.setLogFilePath(path)
 
   setLogVerbosityLevel = (verbosity: number): void => {
     this.tdlib.setLogVerbosityLevel(verbosity)
+  }
+
+  setLogFatalErrorCallback = (fn: (errorMessage: string) => void): void => {
+    this.tdlib.setLogFatalErrorCallback(fn)
   }
 
   execute: Execute = query => {

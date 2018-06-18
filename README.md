@@ -100,9 +100,19 @@ client.destroy()
 
 See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a8c8aadc9360af6e1cf2673954dcf9aea).
 
+##### `client.setLogMaxFileSize(maxFileSize: number | string) -> void`
+
+Sets maximum size of the file to where the internal TDLib log is written before the file will be auto-rotated.   Unused if log is not written to a file. Defaults to 10 MB.
+
+See [docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#adcbe44e62e16d65eb4c7503aabe264b3).
+
 ##### `client.setLogVerbosityLevel(verbosityLevel: number) -> void`
 
 See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a9dd71044a37db700da89001c96b978c3).
+
+##### `client.setLogFatalErrorCallback(fn: Function) -> void`
+
+See [docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#addebe91c4525817a6d2b448634c19d71).
 
 ##### `client.invokeFuture(query: Object) -> Future<Object, Object>`
 

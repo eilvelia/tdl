@@ -32,6 +32,7 @@ export class TDLib {
         'td_json_client_execute'         : ['string' , ['pointer', 'string']],
         'td_json_client_destroy'         : ['void'   , ['pointer']],
         'td_set_log_file_path'           : ['int'    , ['string']],
+        'td_set_log_max_file_size'       : ['void'   , ['int64']],
         'td_set_log_verbosity_level'     : ['void'   , ['int']],
         'td_set_log_fatal_error_callback': ['void'   , ['pointer']]
       })
@@ -80,6 +81,11 @@ export class TDLib {
   setLogFilePath (path: string): number {
     debug('setLogFilePath', path)
     return this.tdlib.td_set_log_file_path(path)
+  }
+
+  setLogMaxFileSize (maxFileSize: number | string): void {
+    debug('setLogMaxFileSize', maxFileSize)
+    this.tdlib.td_set_log_max_file_size(maxFileSize)
   }
 
   setLogVerbosityLevel (verbosity: number): void {
