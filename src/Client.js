@@ -135,7 +135,7 @@ export class Client {
 
   invoke: Invoke = async query => {
     const id = uuidv4()
-    // $FlowFixMe
+    // $FlowOff
     query['@extra'] = id
     const receiveUpdate = new Promise((resolve, reject) => {
       this.fetching.set(id, { resolve, reject })
@@ -217,17 +217,17 @@ export class Client {
     if (res._ === 'error')
       return this._handleError(res)
 
-    // $FlowFixMe
+    // $FlowOff
     const id = res['@extra']
     const promise = this.fetching.get(id)
 
     if (promise) {
-      // $FlowFixMe
+      // $FlowOff
       delete res['@extra']
       promise.resolve(res)
       this.fetching.delete(id)
     } else if (id !== null) {
-      // $FlowFixMe
+      // $FlowOff
       await this._handleUpdate(res)
     }
   }
@@ -347,12 +347,12 @@ export class Client {
       }
 
       default: {
-        // $FlowFixMe
+        // $FlowOff
         const id = error['@extra']
         const promise = this.fetching.get(id)
 
         if (promise) {
-          // $FlowFixMe
+          // $FlowOff
           delete error['@extra']
           promise.reject(error)
           this.fetching.delete(id)

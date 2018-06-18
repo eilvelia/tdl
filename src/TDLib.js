@@ -12,7 +12,7 @@ const debug = Debug('tdl:tdlib')
 
 const buildQuery = (query: Object) => {
   const buffer = Buffer.from(JSON.stringify(query) + '\0', 'utf-8')
-  // $FlowFixMe
+  // $FlowOff
   buffer.type = ref.types.CString
   return buffer
 }
