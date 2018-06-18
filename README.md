@@ -141,7 +141,8 @@ type Options = {
     type: 'user',
     phoneNumber: string,
     getAuthCode: (retry?: boolean) => Promise<string>,
-    getPassword: (passwordHint: string, retry?: boolean) => Promise<string>
+    getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
+    getName: () => Promise<{ firstName: string, lastName?: string }>
   } | {
     type: 'bot',
     token: string
@@ -168,7 +169,8 @@ Any empty fields may just not be specified.
   loginDetails: {
     type: 'user',
     getAuthCode, // read from stdin
-    getPassword  // read from stdin
+    getPassword,  // read from stdin
+    getName // read from stdin
   }
   binaryPath: 'libtdjson',
   databaseDirectory: '_td_database',

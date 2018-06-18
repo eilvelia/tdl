@@ -81,7 +81,8 @@ export type LoginUser = {
   type: 'user',
   phoneNumber?: string,
   getAuthCode: (retry?: boolean) => Promise<string>,
-  getPassword: (passwordHint: string, retry?: boolean) => Promise<string>
+  getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
+  getName: () => Promise<{ firstName: string, lastName?: string }>
 }
 
 export type LoginBot = {

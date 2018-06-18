@@ -8,7 +8,7 @@ import Debug from 'debug'
 import uuidv4 from '../vendor/uuidv4'
 import { TDLib } from './TDLib'
 import { deepRenameKey, deepRenameKey_ } from './util'
-import { getAuthCode, getPassword } from './prompt'
+import { getAuthCode, getPassword, getName } from './prompt'
 
 import type {
   ConfigType,
@@ -40,7 +40,8 @@ const defaultOptions: StrictConfigType = {
   loginDetails: {
     type: 'user',
     getAuthCode,
-    getPassword
+    getPassword,
+    getName
   },
   binaryPath: 'libtdjson',
   databaseDirectory: '_td_database',
@@ -146,7 +147,6 @@ export class Client {
     })
     await this._send(query)
 
-    // $FlowFixMe
     return receiveUpdate
   }
 
@@ -243,8 +243,9 @@ export class Client {
 
   async _handleAuth (update: updateAuthorizationState) {
     const { loginDetails } = this.options
+    const authorizationState = update.authorization_state
 
-    switch (update.authorization_state._) {
+    switch (authorizationState._) {
       case 'authorizationStateWaitTdlibParameters':
         return this._send({
           _: 'setTdlibParameters',
@@ -279,6 +280,17 @@ export class Client {
       case 'authorizationStateWaitCode': {
         if (loginDetails.type !== 'user') return
         const code = await loginDetails.getAuthCode(false)
+
+        if (authorizationState.is_registered === false) {
+          const { firstName, lastName = '' } = await loginDetails.getName()
+          return this._send({
+            _: 'checkAuthenticationCode',
+            code,
+            first_name: firstName,
+            last_name: lastName
+          })
+        }
+
         return this._send({
           _: 'checkAuthenticationCode',
           code
@@ -287,7 +299,7 @@ export class Client {
 
       case 'authorizationStateWaitPassword': {
         if (loginDetails.type !== 'user') return
-        const passwordHint = update.authorization_state.password_hint
+        const passwordHint = authorizationState.password_hint
         const password = await loginDetails.getPassword(passwordHint, false)
         return this._send({
           _: 'checkAuthenticationPassword',
