@@ -8,7 +8,7 @@ import Debug from 'debug'
 import uuidv4 from '../vendor/uuidv4'
 import { TDLib } from './TDLib'
 import { deepRenameKey, deepRenameKey_ } from './util'
-import { getAuthCode, getPassword } from './prompt'
+import { getAuthCode, getPassword, getName } from './prompt'
 
 import type {
   ConfigType,
@@ -40,7 +40,8 @@ const defaultOptions: StrictConfigType = {
   loginDetails: {
     type: 'user',
     getAuthCode,
-    getPassword
+    getPassword,
+    getName
   },
   binaryPath: 'libtdjson',
   databaseDirectory: '_td_database',
@@ -134,7 +135,7 @@ export class Client {
 
   invoke: Invoke = async query => {
     const id = uuidv4()
-    // $FlowFixMe
+    // $FlowOff
     query['@extra'] = id
     const receiveUpdate = new Promise((resolve, reject) => {
       this.fetching.set(id, { resolve, reject })
@@ -146,7 +147,6 @@ export class Client {
     })
     await this._send(query)
 
-    // $FlowFixMe
     return receiveUpdate
   }
 
@@ -160,11 +160,19 @@ export class Client {
     this.emit('destroy')
   }
 
+  setLogMaxFileSize = (maxFileSize: number | string): void => {
+    this.tdlib.setLogMaxFileSize(maxFileSize)
+  }
+
   setLogFilePath = (path: string): number =>
     this.tdlib.setLogFilePath(path)
 
   setLogVerbosityLevel = (verbosity: number): void => {
     this.tdlib.setLogVerbosityLevel(verbosity)
+  }
+
+  setLogFatalErrorCallback = (fn: (errorMessage: string) => void): void => {
+    this.tdlib.setLogFatalErrorCallback(fn)
   }
 
   execute: Execute = query => {
@@ -209,17 +217,17 @@ export class Client {
     if (res._ === 'error')
       return this._handleError(res)
 
-    // $FlowFixMe
+    // $FlowOff
     const id = res['@extra']
     const promise = this.fetching.get(id)
 
     if (promise) {
-      // $FlowFixMe
+      // $FlowOff
       delete res['@extra']
       promise.resolve(res)
       this.fetching.delete(id)
     } else if (id !== null) {
-      // $FlowFixMe
+      // $FlowOff
       await this._handleUpdate(res)
     }
   }
@@ -243,8 +251,9 @@ export class Client {
 
   async _handleAuth (update: updateAuthorizationState) {
     const { loginDetails } = this.options
+    const authorizationState = update.authorization_state
 
-    switch (update.authorization_state._) {
+    switch (authorizationState._) {
       case 'authorizationStateWaitTdlibParameters':
         return this._send({
           _: 'setTdlibParameters',
@@ -279,6 +288,17 @@ export class Client {
       case 'authorizationStateWaitCode': {
         if (loginDetails.type !== 'user') return
         const code = await loginDetails.getAuthCode(false)
+
+        if (authorizationState.is_registered === false) {
+          const { firstName, lastName = '' } = await loginDetails.getName()
+          return this._send({
+            _: 'checkAuthenticationCode',
+            code,
+            first_name: firstName,
+            last_name: lastName
+          })
+        }
+
         return this._send({
           _: 'checkAuthenticationCode',
           code
@@ -287,7 +307,7 @@ export class Client {
 
       case 'authorizationStateWaitPassword': {
         if (loginDetails.type !== 'user') return
-        const passwordHint = update.authorization_state.password_hint
+        const passwordHint = authorizationState.password_hint
         const password = await loginDetails.getPassword(passwordHint, false)
         return this._send({
           _: 'checkAuthenticationPassword',
@@ -327,12 +347,12 @@ export class Client {
       }
 
       default: {
-        // $FlowFixMe
+        // $FlowOff
         const id = error['@extra']
         const promise = this.fetching.get(id)
 
         if (promise) {
-          // $FlowFixMe
+          // $FlowOff
           delete error['@extra']
           promise.reject(error)
           this.fetching.delete(id)

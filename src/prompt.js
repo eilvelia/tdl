@@ -12,3 +12,9 @@ export const getPassword = (passwordHint: string, retry?: boolean): Promise<stri
     ? 'Wrong password, please re-enter: '
     : `Please enter password (${passwordHint}): `,
   { replace: '*' })
+
+type GetName = () => Promise<{ firstName: string, lastName?: string }>
+export const getName: GetName = async () => ({
+  firstName: await promptly.prompt('First name:'),
+  lastName: await promptly.prompt('Last name (optional):', { default: undefined })
+})

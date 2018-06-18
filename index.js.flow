@@ -30,7 +30,9 @@ declare export class Client {
   invokeFuture: InvokeFuture;
   destroy: () => void;
   setLogFilePath: (path: string) => number;
+  setLogMaxFileSize: (maxFileSize: number | string) => void;
   setLogVerbosityLevel: (verbosity: number) => void;
+  setLogFatalErrorCallback: (fn: (errorMessage: string) => void) => void;
   execute: Execute;
 }
 
@@ -52,9 +54,10 @@ declare export class TDLib {
   execute(client: TDLibClient, query: Object): Object | null;
   receive(client: TDLibClient, timeout: number): Promise<Object | null>;
   send(client: TDLibClient, query: Object): Promise<null>;
-  setLogFatalErrorCallback(fn: (errorMessage: string) => void): void;
   setLogFilePath(path: string): number;
+  setLogMaxFileSize(maxFileSize: number | string): void;
   setLogVerbosityLevel(verbosity: number): void;
+  setLogFatalErrorCallback(fn: (errorMessage: string) => void): void;
 }
 
 // ---
@@ -81,7 +84,8 @@ export type LoginUser = {
   type: 'user',
   phoneNumber?: string,
   getAuthCode: (retry?: boolean) => Promise<string>,
-  getPassword: (passwordHint: string, retry?: boolean) => Promise<string>
+  getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
+  getName: () => Promise<{ firstName: string, lastName?: string }>
 }
 
 export type LoginBot = {
