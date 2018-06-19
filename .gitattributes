@@ -5,5 +5,8 @@ flow-typed/**/*.js linguist-language=TypeScript linguist-detectable=false
 types/**/*.js linguist-language=TypeScript linguist-detectable=false
 
 types/tdlib.js linguist-generated=true
+types/tdlib.ts linguist-generated=true
+
+index.d.ts linguist-detectable=false
 
 *.sh linguist-detectable=false
