@@ -6,3 +6,4 @@ vendor/
 examples/
 /types/tdlib.js
 /test.js
+*.ts
