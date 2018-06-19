@@ -204,9 +204,9 @@ Any empty fields may just not be specified.
 
 -----
 
-### Flowtype typings
+### Typings
 
-`tdl` supports [Flow](https://flow.org/) type annotations out of the box.
+`tdl` supports [Flow](https://flow.org/) and [TypeScript](https://www.typescriptlang.org/) out of the box.
 
 -----
 
