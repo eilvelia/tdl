@@ -87,7 +87,7 @@ export class Client {
   client: ?TDLibClient
   connectionState: ConnectionState = { _: 'connectionStateConnecting' }
   resolver: (result: void) => void
-  rejector: (error: any) => void
+  rejector: (error: string) => void
 
   constructor (options: ConfigType = {}) {
     this.options = (mergeDeepRight(defaultOptions, options): StrictConfigType)
@@ -104,19 +104,19 @@ export class Client {
         this.setLogFilePath(resolvePath(this.options.logFilePath))
 
       this.client = await this.tdlib.create()
-
-      this._loop()
     } catch (err) {
       this.rejector(`Error while creating client: ${err}`)
     }
+
+    this._loop()
   }
 
-  connect: () => Promise<void> =
-    () => new Promise((resolve, reject) => {
+  connect = (): Promise<void> =>
+    new Promise((resolve, reject) => {
       this.resolver = resolve
       this.rejector = reject
       this._init()
-    })
+    }) //
 
   on: On = (event, listener) => {
     this.emitter.on(event, listener)

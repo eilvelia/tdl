@@ -1,3 +1,5 @@
+// TDLib 1.2.0
+
 export type accountTtl = {
   _: 'accountTtl',
   days: number,
@@ -6916,8 +6918,8 @@ export type getChatReportSpamStateReturnType = chatReportSpamState
 
 export type getChats = {
   _: 'getChats',
-  offset_order?: number,
-  offset_chat_id?: number,
+  offset_order?: (number | string),
+  offset_chat_id?: (number | string),
   limit?: number,
 }
 

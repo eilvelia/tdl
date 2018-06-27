@@ -1,6 +1,6 @@
 {
   "name": "tdl",
-  "version": "3.8.0",
+  "version": "3.8.1",
   "description": "TDLib (Telegram Database library) bindings for Node.js",
   "main": "index.js",
   "types": "index.d.ts",
@@ -20,13 +20,15 @@
   },
   "files": [
     ".flowconfig",
-    "dist",
     "index.js",
     "index.js.flow",
+    "index.d.ts",
+    "dist",
     "vendor",
     "flow-typed",
     "flow",
     "types",
+    "examples",
     "README.md",
     "TDLib_API.md"
   ],
@@ -59,6 +61,7 @@
   "keywords": [
     "telegram",
     "tdlib",
+    "bindings",
     "mtproto",
     "ffi",
     "tglib"
