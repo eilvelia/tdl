@@ -7,3 +7,4 @@ examples/
 /types/tdlib.js
 /test.js
 *.ts
+tests/typings/

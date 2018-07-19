@@ -8,8 +8,7 @@ const PHONE_NUMBER_2 = '+111'
 
 const tdlib = new TDLib('libtdjson')
 
-const client1 = new Client({
-  tdlibInstance: tdlib,
+const client1 = Client.fromTDLib(tdlib, {
   apiId: API_ID,
   apiHash: API_HASH,
   loginDetails: {
@@ -19,8 +18,7 @@ const client1 = new Client({
   filesDirectory: '_td_files1'
 })
 
-const client2 = new Client({
-  tdlibInstance: tdlib,
+const client2 = Client.fromTDLib(tdlib, {
   apiId: API_ID,
   apiHash: API_HASH,
   loginDetails: {
@@ -30,12 +28,12 @@ const client2 = new Client({
   filesDirectory: '_td_files2'
 })
 
-client1.on('error', console.error)
-client2.on('error', console.error)
+client1.on('error', e => console.error('Client1 error', e))
+client2.on('error', e => console.error('Client2 error', e))
 
 main()
 
 async function main() {
-  await client1.connect()
-  await client2.connect()
+  await Promise.all([ client1.connect(), client2.connect() ])
+  // ...
 }
