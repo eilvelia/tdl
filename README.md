@@ -32,12 +32,20 @@ const client = new Client({
 })
 ```
 
-##### `client.connect() -> Promise<void>`
+##### `client.connect(beforeAuth?: () => Promise) -> Promise<void>`
 
 You can use this API to initialize and connect your client with Telegram.
 
 ```js
 await client.connect()
+```
+
+`beforeAuth` function is called before auth begins.
+
+```js
+client.connect(async () => {
+  // ...
+})
 ```
 
 ##### `client.on(event: string, callback: Function) -> Client`
@@ -162,8 +170,8 @@ type Options = {
   filesDirectory: string, // Relative path
   logFilePath: string, // Relative path
   verbosityLevel: number,
-  skipOldUpdates: boolean,
-  dev: boolean, // Use telegram dev server
+  skipOldUpdates: boolean, // Don't emit old updates
+  useTestDc: boolean, // Use telegram dev server
   useMutableRename: boolean, // Enable in production
   tdlibParameters: Object, // See https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html
   tdlibInstance: TDLib
@@ -188,7 +196,7 @@ Any empty fields may just not be specified.
   logFilePath: '', // (don't write to file)
   verbosityLevel: 2,
   skipOldUpdates: false,
-  dev: false,
+  useTestDc: false,
   useMutableRename: false,
   tdlibParameters: {
     use_message_database: true,

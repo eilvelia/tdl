@@ -1,6 +1,6 @@
 {
   "name": "tdl",
-  "version": "3.8.2",
+  "version": "4.0.0",
   "description": "TDLib (Telegram Database library) bindings for Node.js",
   "main": "index.js",
   "types": "index.d.ts",
@@ -9,9 +9,10 @@
     "types": "flow-copy-source src dist",
     "build": "babel src/ -d dist/",
     "lint": "eslint . --max-warnings 0",
-    "test": "flow check && npm run lint",
+    "test": "npm run flow:check && npm run lint",
     "prepare": "npm run clean && npm run build",
     "prepack": "npm test",
+    "flow:check": "flow --include-warnings --max-warnings 0",
     "flow:start": "pm2 start tdl-flow.sh",
     "flow:stop": "pm2 stop tdl-flow",
     "flow:restart": "npm run flow:stop && npm run flow:start",
@@ -64,6 +65,7 @@
     "bindings",
     "mtproto",
     "ffi",
+    "tg",
     "tglib"
   ],
   "directories": {

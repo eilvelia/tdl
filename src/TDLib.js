@@ -1,7 +1,5 @@
 // @flow
 
-/* eslint-disable no-multi-spaces, key-spacing, comma-spacing */
-
 import ffi from 'ffi-napi'
 import ref from 'ref-napi'
 import Debug from 'debug'
@@ -17,13 +15,15 @@ const buildQuery = (query: Object) => {
   return buffer
 }
 
+/* eslint-disable no-multi-spaces, key-spacing, comma-spacing */
+
 export class TDLib {
-  +tdlib: Object
+  +_tdlib: Object
 
   constructor (libraryFile: string) {
     debug('binaryPath', libraryFile)
 
-    this.tdlib = ffi.Library(
+    this._tdlib = ffi.Library(
       libraryFile,
       {
         'td_json_client_create'          : ['pointer', []],
@@ -41,7 +41,7 @@ export class TDLib {
   create (): Promise<TDLibClient> {
     debug('create')
     return new Promise((resolve, reject) => {
-      this.tdlib.td_json_client_create.async((err, client) => {
+      this._tdlib.td_json_client_create.async((err, client) => {
         if (err) return reject(err)
         resolve(client)
       })
@@ -50,7 +50,7 @@ export class TDLib {
 
   send (client: TDLibClient, query: Object): Promise<null> {
     return new Promise((resolve, reject) => {
-      this.tdlib.td_json_client_send.async(client, buildQuery(query), (err, response) => {
+      this._tdlib.td_json_client_send.async(client, buildQuery(query), (err, response) => {
         if (err) return reject(err)
         resolve(response)
       })
@@ -59,7 +59,7 @@ export class TDLib {
 
   receive (client: TDLibClient, timeout: number): Promise<Object | null> {
     return new Promise((resolve, reject) => {
-      this.tdlib.td_json_client_receive.async(client, timeout, (err, response) => {
+      this._tdlib.td_json_client_receive.async(client, timeout, (err, response) => {
         if (err) return reject(err)
         if (!response) return resolve(null)
         resolve(JSON.parse(response))
@@ -68,33 +68,33 @@ export class TDLib {
   }
 
   execute (client: TDLibClient, query: Object): Object | null {
-    const response = this.tdlib.td_json_client_execute(client, buildQuery(query))
+    const response = this._tdlib.td_json_client_execute(client, buildQuery(query))
     if (!response) return null
     return JSON.parse(response)
   }
 
   destroy (client: TDLibClient): void {
     debug('destroy')
-    this.tdlib.td_json_client_destroy(client)
+    this._tdlib.td_json_client_destroy(client)
   }
 
   setLogFilePath (path: string): number {
     debug('setLogFilePath', path)
-    return this.tdlib.td_set_log_file_path(path)
+    return this._tdlib.td_set_log_file_path(path)
   }
 
   setLogMaxFileSize (maxFileSize: number | string): void {
     debug('setLogMaxFileSize', maxFileSize)
-    this.tdlib.td_set_log_max_file_size(maxFileSize)
+    this._tdlib.td_set_log_max_file_size(maxFileSize)
   }
 
   setLogVerbosityLevel (verbosity: number): void {
     debug('setLogVerbosityLevel', verbosity)
-    this.tdlib.td_set_log_verbosity_level(verbosity)
+    this._tdlib.td_set_log_verbosity_level(verbosity)
   }
 
   setLogFatalErrorCallback (fn: (errorMessage: string) => void): void {
-    this.tdlib.td_set_log_fatal_error_callback(
+    this._tdlib.td_set_log_fatal_error_callback(
       ffi.Callback('void', ['string'], fn))
   }
 }

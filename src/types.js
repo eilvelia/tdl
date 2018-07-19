@@ -46,7 +46,7 @@ export type ConfigType = {
   logFilePath?: string,
   verbosityLevel?: number,
   skipOldUpdates?: boolean,
-  dev?: boolean,
+  useTestDc?: boolean,
   useMutableRename?: boolean,
   tdlibParameters?: TDLibParameters,
   tdlibInstance?: TDLib
@@ -62,7 +62,7 @@ export type StrictConfigType = {
   logFilePath: string,
   verbosityLevel: number,
   skipOldUpdates: boolean,
-  dev: boolean,
+  useTestDc: boolean,
   useMutableRename: boolean,
   tdlibParameters: TDLibParameters,
   tdlibInstance?: TDLib
