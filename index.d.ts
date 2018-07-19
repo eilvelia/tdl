@@ -8,19 +8,23 @@ import {
 
 export type On =
   & ((event: 'update', listener: (update: Update) => void) => Client)
-  & ((event: 'error', listener: (err: TDError) => void) => Client)
+  & ((event: 'error', listener: (err: TDError | Error) => void) => Client)
   & ((event: 'destroy', listener: () => void) => Client)
   & ((event: 'auth-needed', listener: () => void) => Client)
+  & ((event: 'auth-not-needed', listener: () => void) => Client)
 
 export type Emit =
   & ((event: 'update', update: Update) => void)
-  & ((event: 'error', err: TDError) => void)
+  & ((event: 'error', err: TDError | Error) => void)
   & ((event: 'destroy') => void)
   & ((event: 'auth-needed') => void)
+  & ((event: 'auth-not-needed') => void)
 
 export declare class Client {
   constructor(options?: ConfigType)
-  connect: () => Promise<undefined>
+  static create(options?: ConfigType): Client
+  static fromTDLib(tdlibInstance: TDLib, options?: ConfigType): Client
+  connect: (beforeAuth?: () => Promise<any>) => Promise<undefined>
   on: On
   once: On
   emit: Emit
@@ -104,7 +108,7 @@ export type ConfigType = {
   logFilePath?: string,
   verbosityLevel?: number,
   skipOldUpdates?: boolean,
-  dev?: boolean,
+  useTestDc?: boolean,
   useMutableRename?: boolean,
   tdlibParameters?: TDLibParameters,
   tdlibInstance?: TDLib
@@ -120,7 +124,7 @@ export type StrictConfigType = {
   logFilePath: string,
   verbosityLevel: number,
   skipOldUpdates: boolean,
-  dev: boolean,
+  useTestDc: boolean,
   useMutableRename: boolean,
   tdlibParameters: TDLibParameters,
   tdlibInstance?: TDLib
