@@ -199,18 +199,27 @@ export class Client {
   }
 
   async _loop (): Promise<void> {
-    const response = await this._receive()
+    while (true) {
+      let response
+      try {
+        response = await this._receive()
+      } catch (error) {
+        this.emit('error', error)
+        return
+      }
 
-    if (!this.client) return
+      if (!this.client) return
 
-    if (!response) {
-      debug('Response is empty.')
-      return this._loop()
+      if (response) {
+        try {
+          await this._handleResponse(response)
+        } catch (error) {
+          this.emit('error', error)
+        }
+      } else {
+        debug('Response is empty.')
+      }
     }
-
-    await this._handleResponse(response)
-
-    this._loop()
   }
 
   async _handleResponse (res: TDObject): Promise<mixed> {
