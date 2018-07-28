@@ -20,6 +20,13 @@ export type Emit =
   & ((event: 'auth-needed') => void)
   & ((event: 'auth-not-needed') => void)
 
+export type RemoveListener =
+  & ((event: 'update', listener: Function, once?: boolean) => void)
+  & ((event: 'error', listener: Function, once?: boolean) => void)
+  & ((event: 'destroy', listener: Function, once?: boolean) => void)
+  & ((event: 'auth-needed', listener: Function, once?: boolean) => void)
+  & ((event: 'auth-not-needed', listener: Function, once?: boolean) => void)
+
 export declare class Client {
   constructor(options?: ConfigType)
   static create(options?: ConfigType): Client
@@ -28,6 +35,7 @@ export declare class Client {
   on: On
   once: On
   emit: Emit
+  removeListener: RemoveListener
   invoke: Invoke
   invokeFuture: InvokeFuture
   destroy: () => undefined

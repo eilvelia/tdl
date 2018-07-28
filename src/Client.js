@@ -81,6 +81,13 @@ export type Emit =
   & ((event: 'auth-needed') => void)
   & ((event: 'auth-not-needed') => void)
 
+export type RemoveListener =
+  & ((event: 'update', listener: Function, once?: boolean) => void)
+  & ((event: 'error', listener: Function, once?: boolean) => void)
+  & ((event: 'destroy', listener: Function, once?: boolean) => void)
+  & ((event: 'auth-needed', listener: Function, once?: boolean) => void)
+  & ((event: 'auth-not-needed', listener: Function, once?: boolean) => void)
+
 const defaultBeforeAuth = () => Promise.resolve()
 
 export class Client {
@@ -155,6 +162,10 @@ export class Client {
   emit: Emit = (event, value) => {
     debug('emit', event, value)
     this._emitter.emit(event, value)
+  }
+
+  removeListener: RemoveListener = (event, listener, once = false) => {
+    this._emitter.removeListener(event, listener, undefined, once)
   }
 
   invoke: Invoke = async query => {
