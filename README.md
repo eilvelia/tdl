@@ -50,11 +50,25 @@ client.connect(async () => {
 
 ##### `client.on(event: string, callback: Function) -> Client`
 
+##### `client.once(event: string, callback: Function) -> Client`
+
 You can use this API to attach an event listener for iterating updates.
 
 ```js
 client.on('update', console.log)
 client.on('error', console.error)
+```
+
+##### `client.removeListener(event: string, listener: Function, once?: boolean) -> Client`
+
+You can use this API to remove an event listener.
+
+```js
+const listener = v => {
+  console.log('New update.', v)
+  client.removeListener('update', listener)
+}
+client.on('update', listener)
 ```
 
 ##### `client.invoke(query: Object) -> Promise<Object>`

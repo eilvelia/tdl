@@ -22,7 +22,8 @@ import { Client, TDLib } from '../../index'
 // import type { formattedText, inputMessageText } from '../../types/tdlib'
 import type {
   error as Td$Error,
-  searchPublicChatReturnType as Td$searchPublicChatReturnType
+  searchPublicChatReturnType as Td$searchPublicChatReturnType,
+  Update as Td$Update
 } from '../../types/tdlib'
 
 const client = new Client({
@@ -79,6 +80,22 @@ client.setLogFatalErrorCallback('1234')
   // $ExpectError
   client.on('error')
 
+  client.once('update', e => {
+    ;(e: Td$Update)
+    // $FlowFixMe
+    ;(e: number)
+  })
+
+  client.removeListener('update', () => {})
+  client.removeListener('update', () => {}, true)
+  client.removeListener('update', () => {}, false)
+  // $ExpectError
+  client.removeListener('update', () => {}, 'abc')
+  // $ExpectError
+  client.removeListener('myevent', () => {})
+  // $ExpectError
+  client.removeListener('update', 'abc')
+
   // $ExpectError
   client.setLogFilePath(1234, 'abc', 123423)
 
@@ -114,4 +131,11 @@ client.setLogFatalErrorCallback('1234')
     .map((e: Td$searchPublicChatReturnType) => e.title)
     .mapRej((e: Td$Error) => e)
     .fork(console.error, (e: string) => console.log(e))
+
+  client.invokeFuture({
+    _: 'searchPublicChat',
+    username: 'username'
+  })
+    // $ExpectError
+    .map((e: number) => e)
 })()
