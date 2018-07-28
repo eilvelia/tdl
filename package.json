@@ -12,7 +12,7 @@
     "test": "npm run flow:check && npm run lint",
     "prepare": "npm run clean && npm run build",
     "prepack": "npm test",
-    "flow:check": "flow --include-warnings --max-warnings 0",
+    "flow:check": "flow check --include-warnings --max-warnings 0",
     "flow:start": "pm2 start tdl-flow.sh",
     "flow:stop": "pm2 stop tdl-flow",
     "flow:restart": "npm run flow:stop && npm run flow:start",
@@ -50,7 +50,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",
     "eslint": "^4.19.1",
-    "flow-bin": "^0.69.0",
+    "flow-bin": "^0.76.0",
     "flow-copy-source": "^1.3.0",
     "rimraf": "^2.6.2"
   },
