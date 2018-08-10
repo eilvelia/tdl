@@ -19,10 +19,12 @@ import { Tdl } from '../../index'
 
 
 import { Client, TDLib } from '../../index'
+
 // import type { formattedText, inputMessageText } from '../../types/tdlib'
+
 import type {
-  error as Td$Error,
-  searchPublicChatReturnType as Td$searchPublicChatReturnType,
+  error as Td$error,
+  Chat as Td$Chat,
   Update as Td$Update
 } from '../../types/tdlib'
 
@@ -128,8 +130,8 @@ client.setLogFatalErrorCallback('1234')
     _: 'searchPublicChat',
     username: 'username'
   })
-    .map((e: Td$searchPublicChatReturnType) => e.title)
-    .mapRej((e: Td$Error) => e)
+    .map((e: Td$Chat) => e.title)
+    .mapRej((e: Td$error) => e)
     .fork(console.error, (e: string) => console.log(e))
 
   client.invokeFuture({

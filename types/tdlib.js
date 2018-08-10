@@ -2,8826 +2,13490 @@
 
 // TDLib 1.2.0
 
-export type accountTtl = {
-  _: 'accountTtl',
-  days: number,
-}
-
-export type accountTtlOptional = {|
-  _: 'accountTtl',
-  days?: number,
-|}
-
-export type animation = {
-  _: 'animation',
-  duration: number,
-  width: number,
-  height: number,
-  file_name: string,
-  mime_type: string,
-  thumbnail: photoSize,
-  animation: file,
-}
-
-export type animationOptional = {|
-  _: 'animation',
-  duration?: number,
-  width?: number,
-  height?: number,
-  file_name?: string,
-  mime_type?: string,
-  thumbnail?: photoSizeOptional,
-  animation?: fileOptional,
-|}
-
-export type animations = {
-  _: 'animations',
-  animations: animation[],
-}
-
-export type animationsOptional = {|
-  _: 'animations',
-  animations?: animationOptional[],
-|}
-
-export type audio = {
-  _: 'audio',
-  duration: number,
-  title: string,
-  performer: string,
-  file_name: string,
-  mime_type: string,
-  album_cover_thumbnail: photoSize,
-  audio: file,
-}
-
-export type audioOptional = {|
-  _: 'audio',
-  duration?: number,
-  title?: string,
-  performer?: string,
-  file_name?: string,
-  mime_type?: string,
-  album_cover_thumbnail?: photoSizeOptional,
-  audio?: fileOptional,
-|}
-
-export type authenticationCodeInfo = {
-  _: 'authenticationCodeInfo',
-  phone_number: string,
-  type: AuthenticationCodeType,
-  next_type: AuthenticationCodeType,
-  timeout: number,
-}
-
-export type authenticationCodeInfoOptional = {|
-  _: 'authenticationCodeInfo',
-  phone_number?: string,
-  type?: AuthenticationCodeTypeOptional,
-  next_type?: AuthenticationCodeTypeOptional,
-  timeout?: number,
-|}
-
-export type authenticationCodeTypeTelegramMessage = {
-  _: 'authenticationCodeTypeTelegramMessage',
-  length: number,
-}
-
-export type authenticationCodeTypeTelegramMessageOptional = {|
-  _: 'authenticationCodeTypeTelegramMessage',
-  length?: number,
-|}
-
-export type authenticationCodeTypeSms = {
-  _: 'authenticationCodeTypeSms',
-  length: number,
-}
-
-export type authenticationCodeTypeSmsOptional = {|
-  _: 'authenticationCodeTypeSms',
-  length?: number,
-|}
-
-export type authenticationCodeTypeCall = {
-  _: 'authenticationCodeTypeCall',
-  length: number,
-}
-
-export type authenticationCodeTypeCallOptional = {|
-  _: 'authenticationCodeTypeCall',
-  length?: number,
-|}
-
-export type authenticationCodeTypeFlashCall = {
-  _: 'authenticationCodeTypeFlashCall',
-  pattern: string,
-}
-
-export type authenticationCodeTypeFlashCallOptional = {|
-  _: 'authenticationCodeTypeFlashCall',
-  pattern?: string,
-|}
-
-export type authorizationStateWaitTdlibParameters = {
-  _: 'authorizationStateWaitTdlibParameters',
-}
-
-export type authorizationStateWaitTdlibParametersOptional = {|
-  _: 'authorizationStateWaitTdlibParameters',
-|}
-
-export type authorizationStateWaitEncryptionKey = {
-  _: 'authorizationStateWaitEncryptionKey',
-  is_encrypted: boolean,
-}
-
-export type authorizationStateWaitEncryptionKeyOptional = {|
-  _: 'authorizationStateWaitEncryptionKey',
-  is_encrypted?: boolean,
-|}
-
-export type authorizationStateWaitPhoneNumber = {
-  _: 'authorizationStateWaitPhoneNumber',
-}
-
-export type authorizationStateWaitPhoneNumberOptional = {|
-  _: 'authorizationStateWaitPhoneNumber',
-|}
-
-export type authorizationStateWaitCode = {
-  _: 'authorizationStateWaitCode',
-  is_registered: boolean,
-  code_info: authenticationCodeInfo,
-}
-
-export type authorizationStateWaitCodeOptional = {|
-  _: 'authorizationStateWaitCode',
-  is_registered?: boolean,
-  code_info?: authenticationCodeInfoOptional,
-|}
-
-export type authorizationStateWaitPassword = {
-  _: 'authorizationStateWaitPassword',
-  password_hint: string,
-  has_recovery_email_address: boolean,
-  recovery_email_address_pattern: string,
-}
-
-export type authorizationStateWaitPasswordOptional = {|
-  _: 'authorizationStateWaitPassword',
-  password_hint?: string,
-  has_recovery_email_address?: boolean,
-  recovery_email_address_pattern?: string,
-|}
-
-export type authorizationStateReady = {
-  _: 'authorizationStateReady',
-}
-
-export type authorizationStateReadyOptional = {|
-  _: 'authorizationStateReady',
-|}
-
-export type authorizationStateLoggingOut = {
-  _: 'authorizationStateLoggingOut',
-}
-
-export type authorizationStateLoggingOutOptional = {|
-  _: 'authorizationStateLoggingOut',
-|}
-
-export type authorizationStateClosing = {
-  _: 'authorizationStateClosing',
-}
-
-export type authorizationStateClosingOptional = {|
-  _: 'authorizationStateClosing',
-|}
-
-export type authorizationStateClosed = {
-  _: 'authorizationStateClosed',
-}
-
-export type authorizationStateClosedOptional = {|
-  _: 'authorizationStateClosed',
-|}
-
-export type basicGroup = {
-  _: 'basicGroup',
-  id: number,
-  member_count: number,
-  status: ChatMemberStatus,
-  everyone_is_administrator: boolean,
-  is_active: boolean,
-  upgraded_to_supergroup_id: number,
-}
-
-export type basicGroupOptional = {|
-  _: 'basicGroup',
-  id?: number,
-  member_count?: number,
-  status?: ChatMemberStatusOptional,
-  everyone_is_administrator?: boolean,
-  is_active?: boolean,
-  upgraded_to_supergroup_id?: number,
-|}
-
-export type basicGroupFullInfo = {
-  _: 'basicGroupFullInfo',
-  creator_user_id: number,
-  members: chatMember[],
-  invite_link: string,
-}
-
-export type basicGroupFullInfoOptional = {|
-  _: 'basicGroupFullInfo',
-  creator_user_id?: number,
-  members?: chatMemberOptional[],
-  invite_link?: string,
-|}
-
-export type botCommand = {
-  _: 'botCommand',
-  command: string,
-  description: string,
-}
-
-export type botCommandOptional = {|
-  _: 'botCommand',
-  command?: string,
-  description?: string,
-|}
-
-export type botInfo = {
-  _: 'botInfo',
-  description: string,
-  commands: botCommand[],
-}
-
-export type botInfoOptional = {|
-  _: 'botInfo',
-  description?: string,
-  commands?: botCommandOptional[],
-|}
-
-export type call = {
-  _: 'call',
-  id: number,
-  user_id: number,
-  is_outgoing: boolean,
-  state: CallState,
-}
-
-export type callOptional = {|
-  _: 'call',
-  id?: number,
-  user_id?: number,
-  is_outgoing?: boolean,
-  state?: CallStateOptional,
-|}
-
-export type callConnection = {
-  _: 'callConnection',
-  id: number,
-  ip: string,
-  ipv6: string,
-  port: number,
-  peer_tag: string,
-}
-
-export type callConnectionOptional = {|
-  _: 'callConnection',
-  id?: number,
-  ip?: string,
-  ipv6?: string,
-  port?: number,
-  peer_tag?: string,
-|}
-
-export type callDiscardReasonEmpty = {
-  _: 'callDiscardReasonEmpty',
-}
-
-export type callDiscardReasonEmptyOptional = {|
-  _: 'callDiscardReasonEmpty',
-|}
-
-export type callDiscardReasonMissed = {
-  _: 'callDiscardReasonMissed',
-}
-
-export type callDiscardReasonMissedOptional = {|
-  _: 'callDiscardReasonMissed',
-|}
-
-export type callDiscardReasonDeclined = {
-  _: 'callDiscardReasonDeclined',
-}
-
-export type callDiscardReasonDeclinedOptional = {|
-  _: 'callDiscardReasonDeclined',
-|}
-
-export type callDiscardReasonDisconnected = {
-  _: 'callDiscardReasonDisconnected',
-}
-
-export type callDiscardReasonDisconnectedOptional = {|
-  _: 'callDiscardReasonDisconnected',
-|}
-
-export type callDiscardReasonHungUp = {
-  _: 'callDiscardReasonHungUp',
-}
-
-export type callDiscardReasonHungUpOptional = {|
-  _: 'callDiscardReasonHungUp',
-|}
-
-export type callId = {
-  _: 'callId',
-  id: number,
-}
-
-export type callIdOptional = {|
-  _: 'callId',
-  id?: number,
-|}
-
-export type callProtocol = {
-  _: 'callProtocol',
-  udp_p2p: boolean,
-  udp_reflector: boolean,
-  min_layer: number,
-  max_layer: number,
-}
-
-export type callProtocolOptional = {|
-  _: 'callProtocol',
-  udp_p2p?: boolean,
-  udp_reflector?: boolean,
-  min_layer?: number,
-  max_layer?: number,
-|}
-
-export type callStatePending = {
-  _: 'callStatePending',
-  is_created: boolean,
-  is_received: boolean,
-}
-
-export type callStatePendingOptional = {|
-  _: 'callStatePending',
-  is_created?: boolean,
-  is_received?: boolean,
-|}
-
-export type callStateExchangingKeys = {
-  _: 'callStateExchangingKeys',
-}
-
-export type callStateExchangingKeysOptional = {|
-  _: 'callStateExchangingKeys',
-|}
-
-export type callStateReady = {
-  _: 'callStateReady',
-  protocol: callProtocol,
-  connections: callConnection[],
-  config: string,
-  encryption_key: string,
-  emojis: string[],
-}
-
-export type callStateReadyOptional = {|
-  _: 'callStateReady',
-  protocol?: callProtocolOptional,
-  connections?: callConnectionOptional[],
-  config?: string,
-  encryption_key?: string,
-  emojis?: string[],
-|}
-
-export type callStateHangingUp = {
-  _: 'callStateHangingUp',
-}
-
-export type callStateHangingUpOptional = {|
-  _: 'callStateHangingUp',
-|}
-
-export type callStateDiscarded = {
-  _: 'callStateDiscarded',
-  reason: CallDiscardReason,
-  need_rating: boolean,
-  need_debug_information: boolean,
-}
-
-export type callStateDiscardedOptional = {|
-  _: 'callStateDiscarded',
-  reason?: CallDiscardReasonOptional,
-  need_rating?: boolean,
-  need_debug_information?: boolean,
-|}
-
-export type callStateError = {
-  _: 'callStateError',
-  error: error,
-}
-
-export type callStateErrorOptional = {|
-  _: 'callStateError',
-  error?: errorOptional,
-|}
-
-export type callbackQueryAnswer = {
-  _: 'callbackQueryAnswer',
-  text: string,
-  show_alert: boolean,
-  url: string,
-}
-
-export type callbackQueryAnswerOptional = {|
-  _: 'callbackQueryAnswer',
-  text?: string,
-  show_alert?: boolean,
-  url?: string,
-|}
-
-export type callbackQueryPayloadData = {
-  _: 'callbackQueryPayloadData',
-  data: string,
-}
-
-export type callbackQueryPayloadDataOptional = {|
-  _: 'callbackQueryPayloadData',
-  data?: string,
-|}
-
-export type callbackQueryPayloadGame = {
-  _: 'callbackQueryPayloadGame',
-  game_short_name: string,
-}
-
-export type callbackQueryPayloadGameOptional = {|
-  _: 'callbackQueryPayloadGame',
-  game_short_name?: string,
-|}
-
-export type chat = {
-  _: 'chat',
-  id: number,
-  type: ChatType,
-  title: string,
-  photo: chatPhoto,
-  last_message: message,
-  order: number,
-  is_pinned: boolean,
-  can_be_reported: boolean,
-  unread_count: number,
-  last_read_inbox_message_id: number,
-  last_read_outbox_message_id: number,
-  unread_mention_count: number,
-  notification_settings: notificationSettings,
-  reply_markup_message_id: number,
-  draft_message: draftMessage,
-  client_data: string,
-}
-
-export type chatOptional = {|
-  _: 'chat',
-  id?: number,
-  type?: ChatTypeOptional,
-  title?: string,
-  photo?: chatPhotoOptional,
-  last_message?: messageOptional,
-  order?: number,
-  is_pinned?: boolean,
-  can_be_reported?: boolean,
-  unread_count?: number,
-  last_read_inbox_message_id?: number,
-  last_read_outbox_message_id?: number,
-  unread_mention_count?: number,
-  notification_settings?: notificationSettingsOptional,
-  reply_markup_message_id?: number,
-  draft_message?: draftMessageOptional,
-  client_data?: string,
-|}
-
-export type chatActionTyping = {
-  _: 'chatActionTyping',
-}
-
-export type chatActionTypingOptional = {|
-  _: 'chatActionTyping',
-|}
-
-export type chatActionRecordingVideo = {
-  _: 'chatActionRecordingVideo',
-}
-
-export type chatActionRecordingVideoOptional = {|
-  _: 'chatActionRecordingVideo',
-|}
-
-export type chatActionUploadingVideo = {
-  _: 'chatActionUploadingVideo',
-  progress: number,
-}
-
-export type chatActionUploadingVideoOptional = {|
-  _: 'chatActionUploadingVideo',
-  progress?: number,
-|}
-
-export type chatActionRecordingVoiceNote = {
-  _: 'chatActionRecordingVoiceNote',
-}
-
-export type chatActionRecordingVoiceNoteOptional = {|
-  _: 'chatActionRecordingVoiceNote',
-|}
-
-export type chatActionUploadingVoiceNote = {
-  _: 'chatActionUploadingVoiceNote',
-  progress: number,
-}
-
-export type chatActionUploadingVoiceNoteOptional = {|
-  _: 'chatActionUploadingVoiceNote',
-  progress?: number,
-|}
-
-export type chatActionUploadingPhoto = {
-  _: 'chatActionUploadingPhoto',
-  progress: number,
-}
-
-export type chatActionUploadingPhotoOptional = {|
-  _: 'chatActionUploadingPhoto',
-  progress?: number,
-|}
-
-export type chatActionUploadingDocument = {
-  _: 'chatActionUploadingDocument',
-  progress: number,
-}
-
-export type chatActionUploadingDocumentOptional = {|
-  _: 'chatActionUploadingDocument',
-  progress?: number,
-|}
-
-export type chatActionChoosingLocation = {
-  _: 'chatActionChoosingLocation',
-}
-
-export type chatActionChoosingLocationOptional = {|
-  _: 'chatActionChoosingLocation',
-|}
-
-export type chatActionChoosingContact = {
-  _: 'chatActionChoosingContact',
-}
-
-export type chatActionChoosingContactOptional = {|
-  _: 'chatActionChoosingContact',
-|}
-
-export type chatActionStartPlayingGame = {
-  _: 'chatActionStartPlayingGame',
-}
-
-export type chatActionStartPlayingGameOptional = {|
-  _: 'chatActionStartPlayingGame',
-|}
-
-export type chatActionRecordingVideoNote = {
-  _: 'chatActionRecordingVideoNote',
-}
-
-export type chatActionRecordingVideoNoteOptional = {|
-  _: 'chatActionRecordingVideoNote',
-|}
-
-export type chatActionUploadingVideoNote = {
-  _: 'chatActionUploadingVideoNote',
-  progress: number,
-}
-
-export type chatActionUploadingVideoNoteOptional = {|
-  _: 'chatActionUploadingVideoNote',
-  progress?: number,
-|}
-
-export type chatActionCancel = {
-  _: 'chatActionCancel',
-}
-
-export type chatActionCancelOptional = {|
-  _: 'chatActionCancel',
-|}
-
-export type chatEvent = {
-  _: 'chatEvent',
-  id: number,
-  date: number,
-  user_id: number,
-  action: ChatEventAction,
-}
-
-export type chatEventOptional = {|
-  _: 'chatEvent',
-  id?: number,
-  date?: number,
-  user_id?: number,
-  action?: ChatEventActionOptional,
-|}
-
-export type chatEventMessageEdited = {
-  _: 'chatEventMessageEdited',
-  old_message: message,
-  new_message: message,
-}
-
-export type chatEventMessageEditedOptional = {|
-  _: 'chatEventMessageEdited',
-  old_message?: messageOptional,
-  new_message?: messageOptional,
-|}
-
-export type chatEventMessageDeleted = {
-  _: 'chatEventMessageDeleted',
-  message: message,
-}
-
-export type chatEventMessageDeletedOptional = {|
-  _: 'chatEventMessageDeleted',
-  message?: messageOptional,
-|}
-
-export type chatEventMessagePinned = {
-  _: 'chatEventMessagePinned',
-  message: message,
-}
-
-export type chatEventMessagePinnedOptional = {|
-  _: 'chatEventMessagePinned',
-  message?: messageOptional,
-|}
-
-export type chatEventMessageUnpinned = {
-  _: 'chatEventMessageUnpinned',
-}
-
-export type chatEventMessageUnpinnedOptional = {|
-  _: 'chatEventMessageUnpinned',
-|}
-
-export type chatEventMemberJoined = {
-  _: 'chatEventMemberJoined',
-}
-
-export type chatEventMemberJoinedOptional = {|
-  _: 'chatEventMemberJoined',
-|}
-
-export type chatEventMemberLeft = {
-  _: 'chatEventMemberLeft',
-}
-
-export type chatEventMemberLeftOptional = {|
-  _: 'chatEventMemberLeft',
-|}
-
-export type chatEventMemberInvited = {
-  _: 'chatEventMemberInvited',
-  user_id: number,
-  status: ChatMemberStatus,
-}
-
-export type chatEventMemberInvitedOptional = {|
-  _: 'chatEventMemberInvited',
-  user_id?: number,
-  status?: ChatMemberStatusOptional,
-|}
-
-export type chatEventMemberPromoted = {
-  _: 'chatEventMemberPromoted',
-  user_id: number,
-  old_status: ChatMemberStatus,
-  new_status: ChatMemberStatus,
-}
-
-export type chatEventMemberPromotedOptional = {|
-  _: 'chatEventMemberPromoted',
-  user_id?: number,
-  old_status?: ChatMemberStatusOptional,
-  new_status?: ChatMemberStatusOptional,
-|}
-
-export type chatEventMemberRestricted = {
-  _: 'chatEventMemberRestricted',
-  user_id: number,
-  old_status: ChatMemberStatus,
-  new_status: ChatMemberStatus,
-}
-
-export type chatEventMemberRestrictedOptional = {|
-  _: 'chatEventMemberRestricted',
-  user_id?: number,
-  old_status?: ChatMemberStatusOptional,
-  new_status?: ChatMemberStatusOptional,
-|}
-
-export type chatEventTitleChanged = {
-  _: 'chatEventTitleChanged',
-  old_title: string,
-  new_title: string,
-}
-
-export type chatEventTitleChangedOptional = {|
-  _: 'chatEventTitleChanged',
-  old_title?: string,
-  new_title?: string,
-|}
-
-export type chatEventDescriptionChanged = {
-  _: 'chatEventDescriptionChanged',
-  old_description: string,
-  new_description: string,
-}
-
-export type chatEventDescriptionChangedOptional = {|
-  _: 'chatEventDescriptionChanged',
-  old_description?: string,
-  new_description?: string,
-|}
-
-export type chatEventUsernameChanged = {
-  _: 'chatEventUsernameChanged',
-  old_username: string,
-  new_username: string,
-}
-
-export type chatEventUsernameChangedOptional = {|
-  _: 'chatEventUsernameChanged',
-  old_username?: string,
-  new_username?: string,
-|}
-
-export type chatEventPhotoChanged = {
-  _: 'chatEventPhotoChanged',
-  old_photo: chatPhoto,
-  new_photo: chatPhoto,
-}
-
-export type chatEventPhotoChangedOptional = {|
-  _: 'chatEventPhotoChanged',
-  old_photo?: chatPhotoOptional,
-  new_photo?: chatPhotoOptional,
-|}
-
-export type chatEventInvitesToggled = {
-  _: 'chatEventInvitesToggled',
-  anyone_can_invite: boolean,
-}
-
-export type chatEventInvitesToggledOptional = {|
-  _: 'chatEventInvitesToggled',
-  anyone_can_invite?: boolean,
-|}
-
-export type chatEventSignMessagesToggled = {
-  _: 'chatEventSignMessagesToggled',
-  sign_messages: boolean,
-}
-
-export type chatEventSignMessagesToggledOptional = {|
-  _: 'chatEventSignMessagesToggled',
-  sign_messages?: boolean,
-|}
-
-export type chatEventStickerSetChanged = {
-  _: 'chatEventStickerSetChanged',
-  old_sticker_set_id: number,
-  new_sticker_set_id: number,
-}
-
-export type chatEventStickerSetChangedOptional = {|
-  _: 'chatEventStickerSetChanged',
-  old_sticker_set_id?: number,
-  new_sticker_set_id?: number,
-|}
-
-export type chatEventIsAllHistoryAvailableToggled = {
-  _: 'chatEventIsAllHistoryAvailableToggled',
-  is_all_history_available: boolean,
-}
-
-export type chatEventIsAllHistoryAvailableToggledOptional = {|
-  _: 'chatEventIsAllHistoryAvailableToggled',
-  is_all_history_available?: boolean,
-|}
-
-export type chatEventLogFilters = {
-  _: 'chatEventLogFilters',
-  message_edits: boolean,
-  message_deletions: boolean,
-  message_pins: boolean,
-  member_joins: boolean,
-  member_leaves: boolean,
-  member_invites: boolean,
-  member_promotions: boolean,
-  member_restrictions: boolean,
-  info_changes: boolean,
-  setting_changes: boolean,
-}
-
-export type chatEventLogFiltersOptional = {|
-  _: 'chatEventLogFilters',
-  message_edits?: boolean,
-  message_deletions?: boolean,
-  message_pins?: boolean,
-  member_joins?: boolean,
-  member_leaves?: boolean,
-  member_invites?: boolean,
-  member_promotions?: boolean,
-  member_restrictions?: boolean,
-  info_changes?: boolean,
-  setting_changes?: boolean,
-|}
-
-export type chatEvents = {
-  _: 'chatEvents',
-  events: chatEvent[],
-}
-
-export type chatEventsOptional = {|
-  _: 'chatEvents',
-  events?: chatEventOptional[],
-|}
-
-export type chatInviteLink = {
-  _: 'chatInviteLink',
-  invite_link: string,
-}
-
-export type chatInviteLinkOptional = {|
-  _: 'chatInviteLink',
-  invite_link?: string,
-|}
-
-export type chatInviteLinkInfo = {
-  _: 'chatInviteLinkInfo',
-  chat_id: number,
-  type: ChatType,
-  title: string,
-  photo: chatPhoto,
-  member_count: number,
-  member_user_ids: number[],
-  is_public: boolean,
-}
-
-export type chatInviteLinkInfoOptional = {|
-  _: 'chatInviteLinkInfo',
-  chat_id?: number,
-  type?: ChatTypeOptional,
-  title?: string,
-  photo?: chatPhotoOptional,
-  member_count?: number,
-  member_user_ids?: number[],
-  is_public?: boolean,
-|}
-
-export type chatMember = {
-  _: 'chatMember',
-  user_id: number,
-  inviter_user_id: number,
-  joined_chat_date: number,
-  status: ChatMemberStatus,
-  bot_info: botInfo,
-}
-
-export type chatMemberOptional = {|
-  _: 'chatMember',
-  user_id?: number,
-  inviter_user_id?: number,
-  joined_chat_date?: number,
-  status?: ChatMemberStatusOptional,
-  bot_info?: botInfoOptional,
-|}
-
-export type chatMemberStatusCreator = {
-  _: 'chatMemberStatusCreator',
-  is_member: boolean,
-}
-
-export type chatMemberStatusCreatorOptional = {|
-  _: 'chatMemberStatusCreator',
-  is_member?: boolean,
-|}
-
-export type chatMemberStatusAdministrator = {
-  _: 'chatMemberStatusAdministrator',
-  can_be_edited: boolean,
-  can_change_info: boolean,
-  can_post_messages: boolean,
-  can_edit_messages: boolean,
-  can_delete_messages: boolean,
-  can_invite_users: boolean,
-  can_restrict_members: boolean,
-  can_pin_messages: boolean,
-  can_promote_members: boolean,
-}
-
-export type chatMemberStatusAdministratorOptional = {|
-  _: 'chatMemberStatusAdministrator',
-  can_be_edited?: boolean,
-  can_change_info?: boolean,
-  can_post_messages?: boolean,
-  can_edit_messages?: boolean,
-  can_delete_messages?: boolean,
-  can_invite_users?: boolean,
-  can_restrict_members?: boolean,
-  can_pin_messages?: boolean,
-  can_promote_members?: boolean,
-|}
-
-export type chatMemberStatusMember = {
-  _: 'chatMemberStatusMember',
-}
-
-export type chatMemberStatusMemberOptional = {|
-  _: 'chatMemberStatusMember',
-|}
-
-export type chatMemberStatusRestricted = {
-  _: 'chatMemberStatusRestricted',
-  is_member: boolean,
-  restricted_until_date: number,
-  can_send_messages: boolean,
-  can_send_media_messages: boolean,
-  can_send_other_messages: boolean,
-  can_add_web_page_previews: boolean,
-}
-
-export type chatMemberStatusRestrictedOptional = {|
-  _: 'chatMemberStatusRestricted',
-  is_member?: boolean,
-  restricted_until_date?: number,
-  can_send_messages?: boolean,
-  can_send_media_messages?: boolean,
-  can_send_other_messages?: boolean,
-  can_add_web_page_previews?: boolean,
-|}
-
-export type chatMemberStatusLeft = {
-  _: 'chatMemberStatusLeft',
-}
-
-export type chatMemberStatusLeftOptional = {|
-  _: 'chatMemberStatusLeft',
-|}
-
-export type chatMemberStatusBanned = {
-  _: 'chatMemberStatusBanned',
-  banned_until_date: number,
-}
-
-export type chatMemberStatusBannedOptional = {|
-  _: 'chatMemberStatusBanned',
-  banned_until_date?: number,
-|}
-
-export type chatMembers = {
-  _: 'chatMembers',
-  total_count: number,
-  members: chatMember[],
-}
-
-export type chatMembersOptional = {|
-  _: 'chatMembers',
-  total_count?: number,
-  members?: chatMemberOptional[],
-|}
-
-export type chatPhoto = {
-  _: 'chatPhoto',
-  small: file,
-  big: file,
-}
-
-export type chatPhotoOptional = {|
-  _: 'chatPhoto',
-  small?: fileOptional,
-  big?: fileOptional,
-|}
-
-export type chatReportReasonSpam = {
-  _: 'chatReportReasonSpam',
-}
-
-export type chatReportReasonSpamOptional = {|
-  _: 'chatReportReasonSpam',
-|}
-
-export type chatReportReasonViolence = {
-  _: 'chatReportReasonViolence',
-}
-
-export type chatReportReasonViolenceOptional = {|
-  _: 'chatReportReasonViolence',
-|}
-
-export type chatReportReasonPornography = {
-  _: 'chatReportReasonPornography',
-}
-
-export type chatReportReasonPornographyOptional = {|
-  _: 'chatReportReasonPornography',
-|}
-
-export type chatReportReasonCustom = {
-  _: 'chatReportReasonCustom',
-  text: string,
-}
-
-export type chatReportReasonCustomOptional = {|
-  _: 'chatReportReasonCustom',
-  text?: string,
-|}
-
-export type chatReportSpamState = {
-  _: 'chatReportSpamState',
-  can_report_spam: boolean,
-}
-
-export type chatReportSpamStateOptional = {|
-  _: 'chatReportSpamState',
-  can_report_spam?: boolean,
-|}
-
-export type chatTypePrivate = {
-  _: 'chatTypePrivate',
-  user_id: number,
-}
-
-export type chatTypePrivateOptional = {|
-  _: 'chatTypePrivate',
-  user_id?: number,
-|}
-
-export type chatTypeBasicGroup = {
-  _: 'chatTypeBasicGroup',
-  basic_group_id: number,
-}
-
-export type chatTypeBasicGroupOptional = {|
-  _: 'chatTypeBasicGroup',
-  basic_group_id?: number,
-|}
-
-export type chatTypeSupergroup = {
-  _: 'chatTypeSupergroup',
-  supergroup_id: number,
-  is_channel: boolean,
-}
-
-export type chatTypeSupergroupOptional = {|
-  _: 'chatTypeSupergroup',
-  supergroup_id?: number,
-  is_channel?: boolean,
-|}
-
-export type chatTypeSecret = {
-  _: 'chatTypeSecret',
-  secret_chat_id: number,
-  user_id: number,
-}
-
-export type chatTypeSecretOptional = {|
-  _: 'chatTypeSecret',
-  secret_chat_id?: number,
-  user_id?: number,
-|}
-
-export type chats = {
-  _: 'chats',
-  chat_ids: number[],
-}
-
-export type chatsOptional = {|
-  _: 'chats',
-  chat_ids?: number[],
-|}
-
-export type checkChatUsernameResultOk = {
-  _: 'checkChatUsernameResultOk',
-}
-
-export type checkChatUsernameResultOkOptional = {|
-  _: 'checkChatUsernameResultOk',
-|}
-
-export type checkChatUsernameResultUsernameInvalid = {
-  _: 'checkChatUsernameResultUsernameInvalid',
-}
-
-export type checkChatUsernameResultUsernameInvalidOptional = {|
-  _: 'checkChatUsernameResultUsernameInvalid',
-|}
-
-export type checkChatUsernameResultUsernameOccupied = {
-  _: 'checkChatUsernameResultUsernameOccupied',
-}
-
-export type checkChatUsernameResultUsernameOccupiedOptional = {|
-  _: 'checkChatUsernameResultUsernameOccupied',
-|}
-
-export type checkChatUsernameResultPublicChatsTooMuch = {
-  _: 'checkChatUsernameResultPublicChatsTooMuch',
-}
-
-export type checkChatUsernameResultPublicChatsTooMuchOptional = {|
-  _: 'checkChatUsernameResultPublicChatsTooMuch',
-|}
-
-export type checkChatUsernameResultPublicGroupsUnavailable = {
-  _: 'checkChatUsernameResultPublicGroupsUnavailable',
-}
-
-export type checkChatUsernameResultPublicGroupsUnavailableOptional = {|
-  _: 'checkChatUsernameResultPublicGroupsUnavailable',
-|}
-
-export type connectedWebsite = {
-  _: 'connectedWebsite',
-  id: number,
-  domain_name: string,
-  bot_user_id: number,
-  browser: string,
-  platform: string,
-  log_in_date: number,
-  last_active_date: number,
-  ip: string,
-  location: string,
-}
-
-export type connectedWebsiteOptional = {|
-  _: 'connectedWebsite',
-  id?: number,
-  domain_name?: string,
-  bot_user_id?: number,
-  browser?: string,
-  platform?: string,
-  log_in_date?: number,
-  last_active_date?: number,
-  ip?: string,
-  location?: string,
-|}
-
-export type connectedWebsites = {
-  _: 'connectedWebsites',
-  websites: connectedWebsite[],
-}
-
-export type connectedWebsitesOptional = {|
-  _: 'connectedWebsites',
-  websites?: connectedWebsiteOptional[],
-|}
-
-export type connectionStateWaitingForNetwork = {
-  _: 'connectionStateWaitingForNetwork',
-}
-
-export type connectionStateWaitingForNetworkOptional = {|
-  _: 'connectionStateWaitingForNetwork',
-|}
-
-export type connectionStateConnectingToProxy = {
-  _: 'connectionStateConnectingToProxy',
-}
-
-export type connectionStateConnectingToProxyOptional = {|
-  _: 'connectionStateConnectingToProxy',
-|}
-
-export type connectionStateConnecting = {
-  _: 'connectionStateConnecting',
-}
-
-export type connectionStateConnectingOptional = {|
-  _: 'connectionStateConnecting',
-|}
-
-export type connectionStateUpdating = {
-  _: 'connectionStateUpdating',
-}
-
-export type connectionStateUpdatingOptional = {|
-  _: 'connectionStateUpdating',
-|}
-
-export type connectionStateReady = {
-  _: 'connectionStateReady',
-}
-
-export type connectionStateReadyOptional = {|
-  _: 'connectionStateReady',
-|}
-
-export type contact = {
-  _: 'contact',
-  phone_number: string,
-  first_name: string,
-  last_name: string,
-  user_id: number,
-}
-
-export type contactOptional = {|
-  _: 'contact',
-  phone_number?: string,
-  first_name?: string,
-  last_name?: string,
-  user_id?: number,
-|}
-
-export type count = {
-  _: 'count',
-  count: number,
-}
-
-export type countOptional = {|
-  _: 'count',
-  count?: number,
-|}
-
-export type customRequestResult = {
-  _: 'customRequestResult',
-  result: string,
-}
-
-export type customRequestResultOptional = {|
-  _: 'customRequestResult',
-  result?: string,
-|}
-
-export type deviceTokenGoogleCloudMessaging = {
-  _: 'deviceTokenGoogleCloudMessaging',
-  token: string,
-}
-
-export type deviceTokenGoogleCloudMessagingOptional = {|
-  _: 'deviceTokenGoogleCloudMessaging',
-  token?: string,
-|}
-
-export type deviceTokenApplePush = {
-  _: 'deviceTokenApplePush',
-  device_token: string,
-  is_app_sandbox: boolean,
-}
-
-export type deviceTokenApplePushOptional = {|
-  _: 'deviceTokenApplePush',
-  device_token?: string,
-  is_app_sandbox?: boolean,
-|}
-
-export type deviceTokenApplePushVoIP = {
-  _: 'deviceTokenApplePushVoIP',
-  device_token: string,
-  is_app_sandbox: boolean,
-}
-
-export type deviceTokenApplePushVoIPOptional = {|
-  _: 'deviceTokenApplePushVoIP',
-  device_token?: string,
-  is_app_sandbox?: boolean,
-|}
-
-export type deviceTokenWindowsPush = {
-  _: 'deviceTokenWindowsPush',
-  access_token: string,
-}
-
-export type deviceTokenWindowsPushOptional = {|
-  _: 'deviceTokenWindowsPush',
-  access_token?: string,
-|}
-
-export type deviceTokenMicrosoftPush = {
-  _: 'deviceTokenMicrosoftPush',
-  channel_uri: string,
-}
-
-export type deviceTokenMicrosoftPushOptional = {|
-  _: 'deviceTokenMicrosoftPush',
-  channel_uri?: string,
-|}
-
-export type deviceTokenMicrosoftPushVoIP = {
-  _: 'deviceTokenMicrosoftPushVoIP',
-  channel_uri: string,
-}
-
-export type deviceTokenMicrosoftPushVoIPOptional = {|
-  _: 'deviceTokenMicrosoftPushVoIP',
-  channel_uri?: string,
-|}
-
-export type deviceTokenWebPush = {
-  _: 'deviceTokenWebPush',
-  endpoint: string,
-  p256dh_base64url: string,
-  auth_base64url: string,
-}
-
-export type deviceTokenWebPushOptional = {|
-  _: 'deviceTokenWebPush',
-  endpoint?: string,
-  p256dh_base64url?: string,
-  auth_base64url?: string,
-|}
-
-export type deviceTokenSimplePush = {
-  _: 'deviceTokenSimplePush',
-  endpoint: string,
-}
-
-export type deviceTokenSimplePushOptional = {|
-  _: 'deviceTokenSimplePush',
-  endpoint?: string,
-|}
-
-export type deviceTokenUbuntuPush = {
-  _: 'deviceTokenUbuntuPush',
-  token: string,
-}
-
-export type deviceTokenUbuntuPushOptional = {|
-  _: 'deviceTokenUbuntuPush',
-  token?: string,
-|}
-
-export type deviceTokenBlackBerryPush = {
-  _: 'deviceTokenBlackBerryPush',
-  token: string,
-}
-
-export type deviceTokenBlackBerryPushOptional = {|
-  _: 'deviceTokenBlackBerryPush',
-  token?: string,
-|}
-
-export type deviceTokenTizenPush = {
-  _: 'deviceTokenTizenPush',
-  reg_id: string,
-}
-
-export type deviceTokenTizenPushOptional = {|
-  _: 'deviceTokenTizenPush',
-  reg_id?: string,
-|}
-
-export type document = {
-  _: 'document',
-  file_name: string,
-  mime_type: string,
-  thumbnail: photoSize,
-  document: file,
-}
-
-export type documentOptional = {|
-  _: 'document',
-  file_name?: string,
-  mime_type?: string,
-  thumbnail?: photoSizeOptional,
-  document?: fileOptional,
-|}
-
-export type draftMessage = {
-  _: 'draftMessage',
-  reply_to_message_id: number,
-  input_message_text: InputMessageContent,
-}
-
-export type draftMessageOptional = {|
-  _: 'draftMessage',
-  reply_to_message_id?: number,
-  input_message_text?: InputMessageContentOptional,
-|}
-
+/** An object of this type can be returned on every function call, in case of an error */
 export type error = {
   _: 'error',
+  /**
+   * Error code; subject to future changes. If the error code is 406, the error message
+   * must not be processed in any way and must not be displayed to the user
+   */
   code: number,
+  /** Error message; subject to future changes */
   message: string,
 }
 
+/** An object of this type can be returned on every function call, in case of an error */
 export type errorOptional = {|
   _: 'error',
+  /**
+   * Error code; subject to future changes. If the error code is 406, the error message
+   * must not be processed in any way and must not be displayed to the user
+   */
   code?: number,
+  /** Error message; subject to future changes */
   message?: string,
 |}
 
-export type file = {
-  _: 'file',
-  id: number,
-  size: number,
-  expected_size: number,
-  local: localFile,
-  remote: remoteFile,
-}
-
-export type fileOptional = {|
-  _: 'file',
-  id?: number,
-  size?: number,
-  expected_size?: number,
-  local?: localFileOptional,
-  remote?: remoteFileOptional,
-|}
-
-export type fileTypeNone = {
-  _: 'fileTypeNone',
-}
-
-export type fileTypeNoneOptional = {|
-  _: 'fileTypeNone',
-|}
-
-export type fileTypeAnimation = {
-  _: 'fileTypeAnimation',
-}
-
-export type fileTypeAnimationOptional = {|
-  _: 'fileTypeAnimation',
-|}
-
-export type fileTypeAudio = {
-  _: 'fileTypeAudio',
-}
-
-export type fileTypeAudioOptional = {|
-  _: 'fileTypeAudio',
-|}
-
-export type fileTypeDocument = {
-  _: 'fileTypeDocument',
-}
-
-export type fileTypeDocumentOptional = {|
-  _: 'fileTypeDocument',
-|}
-
-export type fileTypePhoto = {
-  _: 'fileTypePhoto',
-}
-
-export type fileTypePhotoOptional = {|
-  _: 'fileTypePhoto',
-|}
-
-export type fileTypeProfilePhoto = {
-  _: 'fileTypeProfilePhoto',
-}
-
-export type fileTypeProfilePhotoOptional = {|
-  _: 'fileTypeProfilePhoto',
-|}
-
-export type fileTypeSecret = {
-  _: 'fileTypeSecret',
-}
-
-export type fileTypeSecretOptional = {|
-  _: 'fileTypeSecret',
-|}
-
-export type fileTypeSticker = {
-  _: 'fileTypeSticker',
-}
-
-export type fileTypeStickerOptional = {|
-  _: 'fileTypeSticker',
-|}
-
-export type fileTypeThumbnail = {
-  _: 'fileTypeThumbnail',
-}
-
-export type fileTypeThumbnailOptional = {|
-  _: 'fileTypeThumbnail',
-|}
-
-export type fileTypeUnknown = {
-  _: 'fileTypeUnknown',
-}
-
-export type fileTypeUnknownOptional = {|
-  _: 'fileTypeUnknown',
-|}
-
-export type fileTypeVideo = {
-  _: 'fileTypeVideo',
-}
-
-export type fileTypeVideoOptional = {|
-  _: 'fileTypeVideo',
-|}
-
-export type fileTypeVideoNote = {
-  _: 'fileTypeVideoNote',
-}
-
-export type fileTypeVideoNoteOptional = {|
-  _: 'fileTypeVideoNote',
-|}
-
-export type fileTypeVoiceNote = {
-  _: 'fileTypeVoiceNote',
-}
-
-export type fileTypeVoiceNoteOptional = {|
-  _: 'fileTypeVoiceNote',
-|}
-
-export type fileTypeWallpaper = {
-  _: 'fileTypeWallpaper',
-}
-
-export type fileTypeWallpaperOptional = {|
-  _: 'fileTypeWallpaper',
-|}
-
-export type fileTypeSecretThumbnail = {
-  _: 'fileTypeSecretThumbnail',
-}
-
-export type fileTypeSecretThumbnailOptional = {|
-  _: 'fileTypeSecretThumbnail',
-|}
-
-export type formattedText = {
-  _: 'formattedText',
-  text: string,
-  entities: textEntity[],
-}
-
-export type formattedTextOptional = {|
-  _: 'formattedText',
-  text?: string,
-  entities?: textEntityOptional[],
-|}
-
-export type foundMessages = {
-  _: 'foundMessages',
-  messages: message[],
-  next_from_search_id: number,
-}
-
-export type foundMessagesOptional = {|
-  _: 'foundMessages',
-  messages?: messageOptional[],
-  next_from_search_id?: number,
-|}
-
-export type game = {
-  _: 'game',
-  id: number,
-  short_name: string,
-  title: string,
-  text: formattedText,
-  description: string,
-  photo: photo,
-  animation: animation,
-}
-
-export type gameOptional = {|
-  _: 'game',
-  id?: number,
-  short_name?: string,
-  title?: string,
-  text?: formattedTextOptional,
-  description?: string,
-  photo?: photoOptional,
-  animation?: animationOptional,
-|}
-
-export type gameHighScore = {
-  _: 'gameHighScore',
-  position: number,
-  user_id: number,
-  score: number,
-}
-
-export type gameHighScoreOptional = {|
-  _: 'gameHighScore',
-  position?: number,
-  user_id?: number,
-  score?: number,
-|}
-
-export type gameHighScores = {
-  _: 'gameHighScores',
-  scores: gameHighScore[],
-}
-
-export type gameHighScoresOptional = {|
-  _: 'gameHighScores',
-  scores?: gameHighScoreOptional[],
-|}
-
-export type hashtags = {
-  _: 'hashtags',
-  hashtags: string[],
-}
-
-export type hashtagsOptional = {|
-  _: 'hashtags',
-  hashtags?: string[],
-|}
-
-export type importedContacts = {
-  _: 'importedContacts',
-  user_ids: number[],
-  importer_count: number[],
-}
-
-export type importedContactsOptional = {|
-  _: 'importedContacts',
-  user_ids?: number[],
-  importer_count?: number[],
-|}
-
-export type inlineKeyboardButton = {
-  _: 'inlineKeyboardButton',
-  text: string,
-  type: InlineKeyboardButtonType,
-}
-
-export type inlineKeyboardButtonOptional = {|
-  _: 'inlineKeyboardButton',
-  text?: string,
-  type?: InlineKeyboardButtonTypeOptional,
-|}
-
-export type inlineKeyboardButtonTypeUrl = {
-  _: 'inlineKeyboardButtonTypeUrl',
-  url: string,
-}
-
-export type inlineKeyboardButtonTypeUrlOptional = {|
-  _: 'inlineKeyboardButtonTypeUrl',
-  url?: string,
-|}
-
-export type inlineKeyboardButtonTypeCallback = {
-  _: 'inlineKeyboardButtonTypeCallback',
-  data: string,
-}
-
-export type inlineKeyboardButtonTypeCallbackOptional = {|
-  _: 'inlineKeyboardButtonTypeCallback',
-  data?: string,
-|}
-
-export type inlineKeyboardButtonTypeCallbackGame = {
-  _: 'inlineKeyboardButtonTypeCallbackGame',
-}
-
-export type inlineKeyboardButtonTypeCallbackGameOptional = {|
-  _: 'inlineKeyboardButtonTypeCallbackGame',
-|}
-
-export type inlineKeyboardButtonTypeSwitchInline = {
-  _: 'inlineKeyboardButtonTypeSwitchInline',
-  query: string,
-  in_current_chat: boolean,
-}
-
-export type inlineKeyboardButtonTypeSwitchInlineOptional = {|
-  _: 'inlineKeyboardButtonTypeSwitchInline',
-  query?: string,
-  in_current_chat?: boolean,
-|}
-
-export type inlineKeyboardButtonTypeBuy = {
-  _: 'inlineKeyboardButtonTypeBuy',
-}
-
-export type inlineKeyboardButtonTypeBuyOptional = {|
-  _: 'inlineKeyboardButtonTypeBuy',
-|}
-
-export type inlineQueryResultArticle = {
-  _: 'inlineQueryResultArticle',
-  id: string,
-  url: string,
-  hide_url: boolean,
-  title: string,
-  description: string,
-  thumbnail: photoSize,
-}
-
-export type inlineQueryResultArticleOptional = {|
-  _: 'inlineQueryResultArticle',
-  id?: string,
-  url?: string,
-  hide_url?: boolean,
-  title?: string,
-  description?: string,
-  thumbnail?: photoSizeOptional,
-|}
-
-export type inlineQueryResultContact = {
-  _: 'inlineQueryResultContact',
-  id: string,
-  contact: contact,
-  thumbnail: photoSize,
-}
-
-export type inlineQueryResultContactOptional = {|
-  _: 'inlineQueryResultContact',
-  id?: string,
-  contact?: contactOptional,
-  thumbnail?: photoSizeOptional,
-|}
-
-export type inlineQueryResultLocation = {
-  _: 'inlineQueryResultLocation',
-  id: string,
-  location: location,
-  title: string,
-  thumbnail: photoSize,
-}
-
-export type inlineQueryResultLocationOptional = {|
-  _: 'inlineQueryResultLocation',
-  id?: string,
-  location?: locationOptional,
-  title?: string,
-  thumbnail?: photoSizeOptional,
-|}
-
-export type inlineQueryResultVenue = {
-  _: 'inlineQueryResultVenue',
-  id: string,
-  venue: venue,
-  thumbnail: photoSize,
-}
-
-export type inlineQueryResultVenueOptional = {|
-  _: 'inlineQueryResultVenue',
-  id?: string,
-  venue?: venueOptional,
-  thumbnail?: photoSizeOptional,
-|}
-
-export type inlineQueryResultGame = {
-  _: 'inlineQueryResultGame',
-  id: string,
-  game: game,
-}
-
-export type inlineQueryResultGameOptional = {|
-  _: 'inlineQueryResultGame',
-  id?: string,
-  game?: gameOptional,
-|}
-
-export type inlineQueryResultAnimation = {
-  _: 'inlineQueryResultAnimation',
-  id: string,
-  animation: animation,
-  title: string,
-}
-
-export type inlineQueryResultAnimationOptional = {|
-  _: 'inlineQueryResultAnimation',
-  id?: string,
-  animation?: animationOptional,
-  title?: string,
-|}
-
-export type inlineQueryResultAudio = {
-  _: 'inlineQueryResultAudio',
-  id: string,
-  audio: audio,
-}
-
-export type inlineQueryResultAudioOptional = {|
-  _: 'inlineQueryResultAudio',
-  id?: string,
-  audio?: audioOptional,
-|}
-
-export type inlineQueryResultDocument = {
-  _: 'inlineQueryResultDocument',
-  id: string,
-  document: document,
-  title: string,
-  description: string,
-}
-
-export type inlineQueryResultDocumentOptional = {|
-  _: 'inlineQueryResultDocument',
-  id?: string,
-  document?: documentOptional,
-  title?: string,
-  description?: string,
-|}
-
-export type inlineQueryResultPhoto = {
-  _: 'inlineQueryResultPhoto',
-  id: string,
-  photo: photo,
-  title: string,
-  description: string,
-}
-
-export type inlineQueryResultPhotoOptional = {|
-  _: 'inlineQueryResultPhoto',
-  id?: string,
-  photo?: photoOptional,
-  title?: string,
-  description?: string,
-|}
-
-export type inlineQueryResultSticker = {
-  _: 'inlineQueryResultSticker',
-  id: string,
-  sticker: sticker,
-}
-
-export type inlineQueryResultStickerOptional = {|
-  _: 'inlineQueryResultSticker',
-  id?: string,
-  sticker?: stickerOptional,
-|}
-
-export type inlineQueryResultVideo = {
-  _: 'inlineQueryResultVideo',
-  id: string,
-  video: video,
-  title: string,
-  description: string,
-}
-
-export type inlineQueryResultVideoOptional = {|
-  _: 'inlineQueryResultVideo',
-  id?: string,
-  video?: videoOptional,
-  title?: string,
-  description?: string,
-|}
-
-export type inlineQueryResultVoiceNote = {
-  _: 'inlineQueryResultVoiceNote',
-  id: string,
-  voice_note: voiceNote,
-  title: string,
-}
-
-export type inlineQueryResultVoiceNoteOptional = {|
-  _: 'inlineQueryResultVoiceNote',
-  id?: string,
-  voice_note?: voiceNoteOptional,
-  title?: string,
-|}
-
-export type inlineQueryResults = {
-  _: 'inlineQueryResults',
-  inline_query_id: number,
-  next_offset: string,
-  results: InlineQueryResult[],
-  switch_pm_text: string,
-  switch_pm_parameter: string,
-}
-
-export type inlineQueryResultsOptional = {|
-  _: 'inlineQueryResults',
-  inline_query_id?: number,
-  next_offset?: string,
-  results?: InlineQueryResultOptional[],
-  switch_pm_text?: string,
-  switch_pm_parameter?: string,
-|}
-
-export type inputCredentialsSaved = {
-  _: 'inputCredentialsSaved',
-  saved_credentials_id: string,
-}
-
-export type inputCredentialsSavedOptional = {|
-  _: 'inputCredentialsSaved',
-  saved_credentials_id?: string,
-|}
-
-export type inputCredentialsNew = {
-  _: 'inputCredentialsNew',
-  data: string,
-  allow_save: boolean,
-}
-
-export type inputCredentialsNewOptional = {|
-  _: 'inputCredentialsNew',
-  data?: string,
-  allow_save?: boolean,
-|}
-
-export type inputCredentialsAndroidPay = {
-  _: 'inputCredentialsAndroidPay',
-  data: string,
-}
-
-export type inputCredentialsAndroidPayOptional = {|
-  _: 'inputCredentialsAndroidPay',
-  data?: string,
-|}
-
-export type inputCredentialsApplePay = {
-  _: 'inputCredentialsApplePay',
-  data: string,
-}
-
-export type inputCredentialsApplePayOptional = {|
-  _: 'inputCredentialsApplePay',
-  data?: string,
-|}
-
-export type inputFileId = {
-  _: 'inputFileId',
-  id: number,
-}
-
-export type inputFileIdOptional = {|
-  _: 'inputFileId',
-  id?: number,
-|}
-
-export type inputFileRemote = {
-  _: 'inputFileRemote',
-  id: string,
-}
-
-export type inputFileRemoteOptional = {|
-  _: 'inputFileRemote',
-  id?: string,
-|}
-
-export type inputFileLocal = {
-  _: 'inputFileLocal',
-  path: string,
-}
-
-export type inputFileLocalOptional = {|
-  _: 'inputFileLocal',
-  path?: string,
-|}
-
-export type inputFileGenerated = {
-  _: 'inputFileGenerated',
-  original_path: string,
-  conversion: string,
-  expected_size: number,
-}
-
-export type inputFileGeneratedOptional = {|
-  _: 'inputFileGenerated',
-  original_path?: string,
-  conversion?: string,
-  expected_size?: number,
-|}
-
-export type inputInlineQueryResultAnimatedGif = {
-  _: 'inputInlineQueryResultAnimatedGif',
-  id: string,
-  title: string,
-  thumbnail_url: string,
-  gif_url: string,
-  gif_duration: number,
-  gif_width: number,
-  gif_height: number,
-  reply_markup: ReplyMarkup,
-  input_message_content: InputMessageContent,
-}
-
-export type inputInlineQueryResultAnimatedGifOptional = {|
-  _: 'inputInlineQueryResultAnimatedGif',
-  id?: string,
-  title?: string,
-  thumbnail_url?: string,
-  gif_url?: string,
-  gif_duration?: number,
-  gif_width?: number,
-  gif_height?: number,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
-
-export type inputInlineQueryResultAnimatedMpeg4 = {
-  _: 'inputInlineQueryResultAnimatedMpeg4',
-  id: string,
-  title: string,
-  thumbnail_url: string,
-  mpeg4_url: string,
-  mpeg4_duration: number,
-  mpeg4_width: number,
-  mpeg4_height: number,
-  reply_markup: ReplyMarkup,
-  input_message_content: InputMessageContent,
-}
-
-export type inputInlineQueryResultAnimatedMpeg4Optional = {|
-  _: 'inputInlineQueryResultAnimatedMpeg4',
-  id?: string,
-  title?: string,
-  thumbnail_url?: string,
-  mpeg4_url?: string,
-  mpeg4_duration?: number,
-  mpeg4_width?: number,
-  mpeg4_height?: number,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
-
-export type inputInlineQueryResultArticle = {
-  _: 'inputInlineQueryResultArticle',
-  id: string,
-  url: string,
-  hide_url: boolean,
-  title: string,
-  description: string,
-  thumbnail_url: string,
-  thumbnail_width: number,
-  thumbnail_height: number,
-  reply_markup: ReplyMarkup,
-  input_message_content: InputMessageContent,
-}
-
-export type inputInlineQueryResultArticleOptional = {|
-  _: 'inputInlineQueryResultArticle',
-  id?: string,
-  url?: string,
-  hide_url?: boolean,
-  title?: string,
-  description?: string,
-  thumbnail_url?: string,
-  thumbnail_width?: number,
-  thumbnail_height?: number,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
-
-export type inputInlineQueryResultAudio = {
-  _: 'inputInlineQueryResultAudio',
-  id: string,
-  title: string,
-  performer: string,
-  audio_url: string,
-  audio_duration: number,
-  reply_markup: ReplyMarkup,
-  input_message_content: InputMessageContent,
-}
-
-export type inputInlineQueryResultAudioOptional = {|
-  _: 'inputInlineQueryResultAudio',
-  id?: string,
-  title?: string,
-  performer?: string,
-  audio_url?: string,
-  audio_duration?: number,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
-
-export type inputInlineQueryResultContact = {
-  _: 'inputInlineQueryResultContact',
-  id: string,
-  contact: contact,
-  thumbnail_url: string,
-  thumbnail_width: number,
-  thumbnail_height: number,
-  reply_markup: ReplyMarkup,
-  input_message_content: InputMessageContent,
-}
-
-export type inputInlineQueryResultContactOptional = {|
-  _: 'inputInlineQueryResultContact',
-  id?: string,
-  contact?: contactOptional,
-  thumbnail_url?: string,
-  thumbnail_width?: number,
-  thumbnail_height?: number,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
-
-export type inputInlineQueryResultDocument = {
-  _: 'inputInlineQueryResultDocument',
-  id: string,
-  title: string,
-  description: string,
-  document_url: string,
-  mime_type: string,
-  thumbnail_url: string,
-  thumbnail_width: number,
-  thumbnail_height: number,
-  reply_markup: ReplyMarkup,
-  input_message_content: InputMessageContent,
-}
-
-export type inputInlineQueryResultDocumentOptional = {|
-  _: 'inputInlineQueryResultDocument',
-  id?: string,
-  title?: string,
-  description?: string,
-  document_url?: string,
-  mime_type?: string,
-  thumbnail_url?: string,
-  thumbnail_width?: number,
-  thumbnail_height?: number,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
-
-export type inputInlineQueryResultGame = {
-  _: 'inputInlineQueryResultGame',
-  id: string,
-  game_short_name: string,
-  reply_markup: ReplyMarkup,
-}
-
-export type inputInlineQueryResultGameOptional = {|
-  _: 'inputInlineQueryResultGame',
-  id?: string,
-  game_short_name?: string,
-  reply_markup?: ReplyMarkupOptional,
-|}
-
-export type inputInlineQueryResultLocation = {
-  _: 'inputInlineQueryResultLocation',
-  id: string,
-  location: location,
-  live_period: number,
-  title: string,
-  thumbnail_url: string,
-  thumbnail_width: number,
-  thumbnail_height: number,
-  reply_markup: ReplyMarkup,
-  input_message_content: InputMessageContent,
-}
-
-export type inputInlineQueryResultLocationOptional = {|
-  _: 'inputInlineQueryResultLocation',
-  id?: string,
-  location?: locationOptional,
-  live_period?: number,
-  title?: string,
-  thumbnail_url?: string,
-  thumbnail_width?: number,
-  thumbnail_height?: number,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
-
-export type inputInlineQueryResultPhoto = {
-  _: 'inputInlineQueryResultPhoto',
-  id: string,
-  title: string,
-  description: string,
-  thumbnail_url: string,
-  photo_url: string,
-  photo_width: number,
-  photo_height: number,
-  reply_markup: ReplyMarkup,
-  input_message_content: InputMessageContent,
-}
-
-export type inputInlineQueryResultPhotoOptional = {|
-  _: 'inputInlineQueryResultPhoto',
-  id?: string,
-  title?: string,
-  description?: string,
-  thumbnail_url?: string,
-  photo_url?: string,
-  photo_width?: number,
-  photo_height?: number,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
-
-export type inputInlineQueryResultSticker = {
-  _: 'inputInlineQueryResultSticker',
-  id: string,
-  thumbnail_url: string,
-  sticker_url: string,
-  sticker_width: number,
-  sticker_height: number,
-  reply_markup: ReplyMarkup,
-  input_message_content: InputMessageContent,
-}
-
-export type inputInlineQueryResultStickerOptional = {|
-  _: 'inputInlineQueryResultSticker',
-  id?: string,
-  thumbnail_url?: string,
-  sticker_url?: string,
-  sticker_width?: number,
-  sticker_height?: number,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
-
-export type inputInlineQueryResultVenue = {
-  _: 'inputInlineQueryResultVenue',
-  id: string,
-  venue: venue,
-  thumbnail_url: string,
-  thumbnail_width: number,
-  thumbnail_height: number,
-  reply_markup: ReplyMarkup,
-  input_message_content: InputMessageContent,
-}
-
-export type inputInlineQueryResultVenueOptional = {|
-  _: 'inputInlineQueryResultVenue',
-  id?: string,
-  venue?: venueOptional,
-  thumbnail_url?: string,
-  thumbnail_width?: number,
-  thumbnail_height?: number,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
-
-export type inputInlineQueryResultVideo = {
-  _: 'inputInlineQueryResultVideo',
-  id: string,
-  title: string,
-  description: string,
-  thumbnail_url: string,
-  video_url: string,
-  mime_type: string,
-  video_width: number,
-  video_height: number,
-  video_duration: number,
-  reply_markup: ReplyMarkup,
-  input_message_content: InputMessageContent,
-}
-
-export type inputInlineQueryResultVideoOptional = {|
-  _: 'inputInlineQueryResultVideo',
-  id?: string,
-  title?: string,
-  description?: string,
-  thumbnail_url?: string,
-  video_url?: string,
-  mime_type?: string,
-  video_width?: number,
-  video_height?: number,
-  video_duration?: number,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
-
-export type inputInlineQueryResultVoiceNote = {
-  _: 'inputInlineQueryResultVoiceNote',
-  id: string,
-  title: string,
-  voice_note_url: string,
-  voice_note_duration: number,
-  reply_markup: ReplyMarkup,
-  input_message_content: InputMessageContent,
-}
-
-export type inputInlineQueryResultVoiceNoteOptional = {|
-  _: 'inputInlineQueryResultVoiceNote',
-  id?: string,
-  title?: string,
-  voice_note_url?: string,
-  voice_note_duration?: number,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
-
-export type inputMessageText = {
-  _: 'inputMessageText',
-  text: formattedText,
-  disable_web_page_preview: boolean,
-  clear_draft: boolean,
-}
-
-export type inputMessageTextOptional = {|
-  _: 'inputMessageText',
-  text?: formattedTextOptional,
-  disable_web_page_preview?: boolean,
-  clear_draft?: boolean,
-|}
-
-export type inputMessageAnimation = {
-  _: 'inputMessageAnimation',
-  animation: InputFile,
-  thumbnail: inputThumbnail,
-  duration: number,
-  width: number,
-  height: number,
-  caption: formattedText,
-}
-
-export type inputMessageAnimationOptional = {|
-  _: 'inputMessageAnimation',
-  animation?: InputFileOptional,
-  thumbnail?: inputThumbnailOptional,
-  duration?: number,
-  width?: number,
-  height?: number,
-  caption?: formattedTextOptional,
-|}
-
-export type inputMessageAudio = {
-  _: 'inputMessageAudio',
-  audio: InputFile,
-  album_cover_thumbnail: inputThumbnail,
-  duration: number,
-  title: string,
-  performer: string,
-  caption: formattedText,
-}
-
-export type inputMessageAudioOptional = {|
-  _: 'inputMessageAudio',
-  audio?: InputFileOptional,
-  album_cover_thumbnail?: inputThumbnailOptional,
-  duration?: number,
-  title?: string,
-  performer?: string,
-  caption?: formattedTextOptional,
-|}
-
-export type inputMessageDocument = {
-  _: 'inputMessageDocument',
-  document: InputFile,
-  thumbnail: inputThumbnail,
-  caption: formattedText,
-}
-
-export type inputMessageDocumentOptional = {|
-  _: 'inputMessageDocument',
-  document?: InputFileOptional,
-  thumbnail?: inputThumbnailOptional,
-  caption?: formattedTextOptional,
-|}
-
-export type inputMessagePhoto = {
-  _: 'inputMessagePhoto',
-  photo: InputFile,
-  thumbnail: inputThumbnail,
-  added_sticker_file_ids: number[],
-  width: number,
-  height: number,
-  caption: formattedText,
-  ttl: number,
-}
-
-export type inputMessagePhotoOptional = {|
-  _: 'inputMessagePhoto',
-  photo?: InputFileOptional,
-  thumbnail?: inputThumbnailOptional,
-  added_sticker_file_ids?: number[],
-  width?: number,
-  height?: number,
-  caption?: formattedTextOptional,
-  ttl?: number,
-|}
-
-export type inputMessageSticker = {
-  _: 'inputMessageSticker',
-  sticker: InputFile,
-  thumbnail: inputThumbnail,
-  width: number,
-  height: number,
-}
-
-export type inputMessageStickerOptional = {|
-  _: 'inputMessageSticker',
-  sticker?: InputFileOptional,
-  thumbnail?: inputThumbnailOptional,
-  width?: number,
-  height?: number,
-|}
-
-export type inputMessageVideo = {
-  _: 'inputMessageVideo',
-  video: InputFile,
-  thumbnail: inputThumbnail,
-  added_sticker_file_ids: number[],
-  duration: number,
-  width: number,
-  height: number,
-  supports_streaming: boolean,
-  caption: formattedText,
-  ttl: number,
-}
-
-export type inputMessageVideoOptional = {|
-  _: 'inputMessageVideo',
-  video?: InputFileOptional,
-  thumbnail?: inputThumbnailOptional,
-  added_sticker_file_ids?: number[],
-  duration?: number,
-  width?: number,
-  height?: number,
-  supports_streaming?: boolean,
-  caption?: formattedTextOptional,
-  ttl?: number,
-|}
-
-export type inputMessageVideoNote = {
-  _: 'inputMessageVideoNote',
-  video_note: InputFile,
-  thumbnail: inputThumbnail,
-  duration: number,
-  length: number,
-}
-
-export type inputMessageVideoNoteOptional = {|
-  _: 'inputMessageVideoNote',
-  video_note?: InputFileOptional,
-  thumbnail?: inputThumbnailOptional,
-  duration?: number,
-  length?: number,
-|}
-
-export type inputMessageVoiceNote = {
-  _: 'inputMessageVoiceNote',
-  voice_note: InputFile,
-  duration: number,
-  waveform: string,
-  caption: formattedText,
-}
-
-export type inputMessageVoiceNoteOptional = {|
-  _: 'inputMessageVoiceNote',
-  voice_note?: InputFileOptional,
-  duration?: number,
-  waveform?: string,
-  caption?: formattedTextOptional,
-|}
-
-export type inputMessageLocation = {
-  _: 'inputMessageLocation',
-  location: location,
-  live_period: number,
-}
-
-export type inputMessageLocationOptional = {|
-  _: 'inputMessageLocation',
-  location?: locationOptional,
-  live_period?: number,
-|}
-
-export type inputMessageVenue = {
-  _: 'inputMessageVenue',
-  venue: venue,
-}
-
-export type inputMessageVenueOptional = {|
-  _: 'inputMessageVenue',
-  venue?: venueOptional,
-|}
-
-export type inputMessageContact = {
-  _: 'inputMessageContact',
-  contact: contact,
-}
-
-export type inputMessageContactOptional = {|
-  _: 'inputMessageContact',
-  contact?: contactOptional,
-|}
-
-export type inputMessageGame = {
-  _: 'inputMessageGame',
-  bot_user_id: number,
-  game_short_name: string,
-}
-
-export type inputMessageGameOptional = {|
-  _: 'inputMessageGame',
-  bot_user_id?: number,
-  game_short_name?: string,
-|}
-
-export type inputMessageInvoice = {
-  _: 'inputMessageInvoice',
-  invoice: invoice,
-  title: string,
-  description: string,
-  photo_url: string,
-  photo_size: number,
-  photo_width: number,
-  photo_height: number,
-  payload: string,
-  provider_token: string,
-  provider_data: string,
-  start_parameter: string,
-}
-
-export type inputMessageInvoiceOptional = {|
-  _: 'inputMessageInvoice',
-  invoice?: invoiceOptional,
-  title?: string,
-  description?: string,
-  photo_url?: string,
-  photo_size?: number,
-  photo_width?: number,
-  photo_height?: number,
-  payload?: string,
-  provider_token?: string,
-  provider_data?: string,
-  start_parameter?: string,
-|}
-
-export type inputMessageForwarded = {
-  _: 'inputMessageForwarded',
-  from_chat_id: number,
-  message_id: number,
-  in_game_share: boolean,
-}
-
-export type inputMessageForwardedOptional = {|
-  _: 'inputMessageForwarded',
-  from_chat_id?: number,
-  message_id?: number,
-  in_game_share?: boolean,
-|}
-
-export type inputSticker = {
-  _: 'inputSticker',
-  png_sticker: InputFile,
-  emojis: string,
-  mask_position: maskPosition,
-}
-
-export type inputStickerOptional = {|
-  _: 'inputSticker',
-  png_sticker?: InputFileOptional,
-  emojis?: string,
-  mask_position?: maskPositionOptional,
-|}
-
-export type inputThumbnail = {
-  _: 'inputThumbnail',
-  thumbnail: InputFile,
-  width: number,
-  height: number,
-}
-
-export type inputThumbnailOptional = {|
-  _: 'inputThumbnail',
-  thumbnail?: InputFileOptional,
-  width?: number,
-  height?: number,
-|}
-
-export type invoice = {
-  _: 'invoice',
-  currency: string,
-  price_parts: labeledPricePart[],
-  is_test: boolean,
-  need_name: boolean,
-  need_phone_number: boolean,
-  need_email_address: boolean,
-  need_shipping_address: boolean,
-  send_phone_number_to_provider: boolean,
-  send_email_address_to_provider: boolean,
-  is_flexible: boolean,
-}
-
-export type invoiceOptional = {|
-  _: 'invoice',
-  currency?: string,
-  price_parts?: labeledPricePartOptional[],
-  is_test?: boolean,
-  need_name?: boolean,
-  need_phone_number?: boolean,
-  need_email_address?: boolean,
-  need_shipping_address?: boolean,
-  send_phone_number_to_provider?: boolean,
-  send_email_address_to_provider?: boolean,
-  is_flexible?: boolean,
-|}
-
-export type keyboardButton = {
-  _: 'keyboardButton',
-  text: string,
-  type: KeyboardButtonType,
-}
-
-export type keyboardButtonOptional = {|
-  _: 'keyboardButton',
-  text?: string,
-  type?: KeyboardButtonTypeOptional,
-|}
-
-export type keyboardButtonTypeText = {
-  _: 'keyboardButtonTypeText',
-}
-
-export type keyboardButtonTypeTextOptional = {|
-  _: 'keyboardButtonTypeText',
-|}
-
-export type keyboardButtonTypeRequestPhoneNumber = {
-  _: 'keyboardButtonTypeRequestPhoneNumber',
-}
-
-export type keyboardButtonTypeRequestPhoneNumberOptional = {|
-  _: 'keyboardButtonTypeRequestPhoneNumber',
-|}
-
-export type keyboardButtonTypeRequestLocation = {
-  _: 'keyboardButtonTypeRequestLocation',
-}
-
-export type keyboardButtonTypeRequestLocationOptional = {|
-  _: 'keyboardButtonTypeRequestLocation',
-|}
-
-export type labeledPricePart = {
-  _: 'labeledPricePart',
-  label: string,
-  amount: number,
-}
-
-export type labeledPricePartOptional = {|
-  _: 'labeledPricePart',
-  label?: string,
-  amount?: number,
-|}
-
-export type linkStateNone = {
-  _: 'linkStateNone',
-}
-
-export type linkStateNoneOptional = {|
-  _: 'linkStateNone',
-|}
-
-export type linkStateKnowsPhoneNumber = {
-  _: 'linkStateKnowsPhoneNumber',
-}
-
-export type linkStateKnowsPhoneNumberOptional = {|
-  _: 'linkStateKnowsPhoneNumber',
-|}
-
-export type linkStateIsContact = {
-  _: 'linkStateIsContact',
-}
-
-export type linkStateIsContactOptional = {|
-  _: 'linkStateIsContact',
-|}
-
-export type localFile = {
-  _: 'localFile',
-  path: string,
-  can_be_downloaded: boolean,
-  can_be_deleted: boolean,
-  is_downloading_active: boolean,
-  is_downloading_completed: boolean,
-  downloaded_prefix_size: number,
-  downloaded_size: number,
-}
-
-export type localFileOptional = {|
-  _: 'localFile',
-  path?: string,
-  can_be_downloaded?: boolean,
-  can_be_deleted?: boolean,
-  is_downloading_active?: boolean,
-  is_downloading_completed?: boolean,
-  downloaded_prefix_size?: number,
-  downloaded_size?: number,
-|}
-
-export type location = {
-  _: 'location',
-  latitude: number,
-  longitude: number,
-}
-
-export type locationOptional = {|
-  _: 'location',
-  latitude?: number,
-  longitude?: number,
-|}
-
-export type maskPointForehead = {
-  _: 'maskPointForehead',
-}
-
-export type maskPointForeheadOptional = {|
-  _: 'maskPointForehead',
-|}
-
-export type maskPointEyes = {
-  _: 'maskPointEyes',
-}
-
-export type maskPointEyesOptional = {|
-  _: 'maskPointEyes',
-|}
-
-export type maskPointMouth = {
-  _: 'maskPointMouth',
-}
-
-export type maskPointMouthOptional = {|
-  _: 'maskPointMouth',
-|}
-
-export type maskPointChin = {
-  _: 'maskPointChin',
-}
-
-export type maskPointChinOptional = {|
-  _: 'maskPointChin',
-|}
-
-export type maskPosition = {
-  _: 'maskPosition',
-  point: MaskPoint,
-  x_shift: number,
-  y_shift: number,
-  scale: number,
-}
-
-export type maskPositionOptional = {|
-  _: 'maskPosition',
-  point?: MaskPointOptional,
-  x_shift?: number,
-  y_shift?: number,
-  scale?: number,
-|}
-
-export type message = {
-  _: 'message',
-  id: number,
-  sender_user_id: number,
-  chat_id: number,
-  sending_state: MessageSendingState,
-  is_outgoing: boolean,
-  can_be_edited: boolean,
-  can_be_forwarded: boolean,
-  can_be_deleted_only_for_self: boolean,
-  can_be_deleted_for_all_users: boolean,
-  is_channel_post: boolean,
-  contains_unread_mention: boolean,
-  date: number,
-  edit_date: number,
-  forward_info: MessageForwardInfo,
-  reply_to_message_id: number,
-  ttl: number,
-  ttl_expires_in: number,
-  via_bot_user_id: number,
-  author_signature: string,
-  views: number,
-  media_album_id: number,
-  content: MessageContent,
-  reply_markup: ReplyMarkup,
-}
-
-export type messageOptional = {|
-  _: 'message',
-  id?: number,
-  sender_user_id?: number,
-  chat_id?: number,
-  sending_state?: MessageSendingStateOptional,
-  is_outgoing?: boolean,
-  can_be_edited?: boolean,
-  can_be_forwarded?: boolean,
-  can_be_deleted_only_for_self?: boolean,
-  can_be_deleted_for_all_users?: boolean,
-  is_channel_post?: boolean,
-  contains_unread_mention?: boolean,
-  date?: number,
-  edit_date?: number,
-  forward_info?: MessageForwardInfoOptional,
-  reply_to_message_id?: number,
-  ttl?: number,
-  ttl_expires_in?: number,
-  via_bot_user_id?: number,
-  author_signature?: string,
-  views?: number,
-  media_album_id?: number,
-  content?: MessageContentOptional,
-  reply_markup?: ReplyMarkupOptional,
-|}
-
-export type messageText = {
-  _: 'messageText',
-  text: formattedText,
-  web_page: webPage,
-}
-
-export type messageTextOptional = {|
-  _: 'messageText',
-  text?: formattedTextOptional,
-  web_page?: webPageOptional,
-|}
-
-export type messageAnimation = {
-  _: 'messageAnimation',
-  animation: animation,
-  caption: formattedText,
-  is_secret: boolean,
-}
-
-export type messageAnimationOptional = {|
-  _: 'messageAnimation',
-  animation?: animationOptional,
-  caption?: formattedTextOptional,
-  is_secret?: boolean,
-|}
-
-export type messageAudio = {
-  _: 'messageAudio',
-  audio: audio,
-  caption: formattedText,
-}
-
-export type messageAudioOptional = {|
-  _: 'messageAudio',
-  audio?: audioOptional,
-  caption?: formattedTextOptional,
-|}
-
-export type messageDocument = {
-  _: 'messageDocument',
-  document: document,
-  caption: formattedText,
-}
-
-export type messageDocumentOptional = {|
-  _: 'messageDocument',
-  document?: documentOptional,
-  caption?: formattedTextOptional,
-|}
-
-export type messagePhoto = {
-  _: 'messagePhoto',
-  photo: photo,
-  caption: formattedText,
-  is_secret: boolean,
-}
-
-export type messagePhotoOptional = {|
-  _: 'messagePhoto',
-  photo?: photoOptional,
-  caption?: formattedTextOptional,
-  is_secret?: boolean,
-|}
-
-export type messageExpiredPhoto = {
-  _: 'messageExpiredPhoto',
-}
-
-export type messageExpiredPhotoOptional = {|
-  _: 'messageExpiredPhoto',
-|}
-
-export type messageSticker = {
-  _: 'messageSticker',
-  sticker: sticker,
-}
-
-export type messageStickerOptional = {|
-  _: 'messageSticker',
-  sticker?: stickerOptional,
-|}
-
-export type messageVideo = {
-  _: 'messageVideo',
-  video: video,
-  caption: formattedText,
-  is_secret: boolean,
-}
-
-export type messageVideoOptional = {|
-  _: 'messageVideo',
-  video?: videoOptional,
-  caption?: formattedTextOptional,
-  is_secret?: boolean,
-|}
-
-export type messageExpiredVideo = {
-  _: 'messageExpiredVideo',
-}
-
-export type messageExpiredVideoOptional = {|
-  _: 'messageExpiredVideo',
-|}
-
-export type messageVideoNote = {
-  _: 'messageVideoNote',
-  video_note: videoNote,
-  is_viewed: boolean,
-  is_secret: boolean,
-}
-
-export type messageVideoNoteOptional = {|
-  _: 'messageVideoNote',
-  video_note?: videoNoteOptional,
-  is_viewed?: boolean,
-  is_secret?: boolean,
-|}
-
-export type messageVoiceNote = {
-  _: 'messageVoiceNote',
-  voice_note: voiceNote,
-  caption: formattedText,
-  is_listened: boolean,
-}
-
-export type messageVoiceNoteOptional = {|
-  _: 'messageVoiceNote',
-  voice_note?: voiceNoteOptional,
-  caption?: formattedTextOptional,
-  is_listened?: boolean,
-|}
-
-export type messageLocation = {
-  _: 'messageLocation',
-  location: location,
-  live_period: number,
-  expires_in: number,
-}
-
-export type messageLocationOptional = {|
-  _: 'messageLocation',
-  location?: locationOptional,
-  live_period?: number,
-  expires_in?: number,
-|}
-
-export type messageVenue = {
-  _: 'messageVenue',
-  venue: venue,
-}
-
-export type messageVenueOptional = {|
-  _: 'messageVenue',
-  venue?: venueOptional,
-|}
-
-export type messageContact = {
-  _: 'messageContact',
-  contact: contact,
-}
-
-export type messageContactOptional = {|
-  _: 'messageContact',
-  contact?: contactOptional,
-|}
-
-export type messageGame = {
-  _: 'messageGame',
-  game: game,
-}
-
-export type messageGameOptional = {|
-  _: 'messageGame',
-  game?: gameOptional,
-|}
-
-export type messageInvoice = {
-  _: 'messageInvoice',
-  title: string,
-  description: string,
-  photo: photo,
-  currency: string,
-  total_amount: number,
-  start_parameter: string,
-  is_test: boolean,
-  need_shipping_address: boolean,
-  receipt_message_id: number,
-}
-
-export type messageInvoiceOptional = {|
-  _: 'messageInvoice',
-  title?: string,
-  description?: string,
-  photo?: photoOptional,
-  currency?: string,
-  total_amount?: number,
-  start_parameter?: string,
-  is_test?: boolean,
-  need_shipping_address?: boolean,
-  receipt_message_id?: number,
-|}
-
-export type messageCall = {
-  _: 'messageCall',
-  discard_reason: CallDiscardReason,
-  duration: number,
-}
-
-export type messageCallOptional = {|
-  _: 'messageCall',
-  discard_reason?: CallDiscardReasonOptional,
-  duration?: number,
-|}
-
-export type messageBasicGroupChatCreate = {
-  _: 'messageBasicGroupChatCreate',
-  title: string,
-  member_user_ids: number[],
-}
-
-export type messageBasicGroupChatCreateOptional = {|
-  _: 'messageBasicGroupChatCreate',
-  title?: string,
-  member_user_ids?: number[],
-|}
-
-export type messageSupergroupChatCreate = {
-  _: 'messageSupergroupChatCreate',
-  title: string,
-}
-
-export type messageSupergroupChatCreateOptional = {|
-  _: 'messageSupergroupChatCreate',
-  title?: string,
-|}
-
-export type messageChatChangeTitle = {
-  _: 'messageChatChangeTitle',
-  title: string,
-}
-
-export type messageChatChangeTitleOptional = {|
-  _: 'messageChatChangeTitle',
-  title?: string,
-|}
-
-export type messageChatChangePhoto = {
-  _: 'messageChatChangePhoto',
-  photo: photo,
-}
-
-export type messageChatChangePhotoOptional = {|
-  _: 'messageChatChangePhoto',
-  photo?: photoOptional,
-|}
-
-export type messageChatDeletePhoto = {
-  _: 'messageChatDeletePhoto',
-}
-
-export type messageChatDeletePhotoOptional = {|
-  _: 'messageChatDeletePhoto',
-|}
-
-export type messageChatAddMembers = {
-  _: 'messageChatAddMembers',
-  member_user_ids: number[],
-}
-
-export type messageChatAddMembersOptional = {|
-  _: 'messageChatAddMembers',
-  member_user_ids?: number[],
-|}
-
-export type messageChatJoinByLink = {
-  _: 'messageChatJoinByLink',
-}
-
-export type messageChatJoinByLinkOptional = {|
-  _: 'messageChatJoinByLink',
-|}
-
-export type messageChatDeleteMember = {
-  _: 'messageChatDeleteMember',
-  user_id: number,
-}
-
-export type messageChatDeleteMemberOptional = {|
-  _: 'messageChatDeleteMember',
-  user_id?: number,
-|}
-
-export type messageChatUpgradeTo = {
-  _: 'messageChatUpgradeTo',
-  supergroup_id: number,
-}
-
-export type messageChatUpgradeToOptional = {|
-  _: 'messageChatUpgradeTo',
-  supergroup_id?: number,
-|}
-
-export type messageChatUpgradeFrom = {
-  _: 'messageChatUpgradeFrom',
-  title: string,
-  basic_group_id: number,
-}
-
-export type messageChatUpgradeFromOptional = {|
-  _: 'messageChatUpgradeFrom',
-  title?: string,
-  basic_group_id?: number,
-|}
-
-export type messagePinMessage = {
-  _: 'messagePinMessage',
-  message_id: number,
-}
-
-export type messagePinMessageOptional = {|
-  _: 'messagePinMessage',
-  message_id?: number,
-|}
-
-export type messageScreenshotTaken = {
-  _: 'messageScreenshotTaken',
-}
-
-export type messageScreenshotTakenOptional = {|
-  _: 'messageScreenshotTaken',
-|}
-
-export type messageChatSetTtl = {
-  _: 'messageChatSetTtl',
-  ttl: number,
-}
-
-export type messageChatSetTtlOptional = {|
-  _: 'messageChatSetTtl',
-  ttl?: number,
-|}
-
-export type messageCustomServiceAction = {
-  _: 'messageCustomServiceAction',
-  text: string,
-}
-
-export type messageCustomServiceActionOptional = {|
-  _: 'messageCustomServiceAction',
-  text?: string,
-|}
-
-export type messageGameScore = {
-  _: 'messageGameScore',
-  game_message_id: number,
-  game_id: number,
-  score: number,
-}
-
-export type messageGameScoreOptional = {|
-  _: 'messageGameScore',
-  game_message_id?: number,
-  game_id?: number,
-  score?: number,
-|}
-
-export type messagePaymentSuccessful = {
-  _: 'messagePaymentSuccessful',
-  invoice_message_id: number,
-  currency: string,
-  total_amount: number,
-}
-
-export type messagePaymentSuccessfulOptional = {|
-  _: 'messagePaymentSuccessful',
-  invoice_message_id?: number,
-  currency?: string,
-  total_amount?: number,
-|}
-
-export type messagePaymentSuccessfulBot = {
-  _: 'messagePaymentSuccessfulBot',
-  invoice_message_id: number,
-  currency: string,
-  total_amount: number,
-  invoice_payload: string,
-  shipping_option_id: string,
-  order_info: orderInfo,
-  telegram_payment_charge_id: string,
-  provider_payment_charge_id: string,
-}
-
-export type messagePaymentSuccessfulBotOptional = {|
-  _: 'messagePaymentSuccessfulBot',
-  invoice_message_id?: number,
-  currency?: string,
-  total_amount?: number,
-  invoice_payload?: string,
-  shipping_option_id?: string,
-  order_info?: orderInfoOptional,
-  telegram_payment_charge_id?: string,
-  provider_payment_charge_id?: string,
-|}
-
-export type messageContactRegistered = {
-  _: 'messageContactRegistered',
-}
-
-export type messageContactRegisteredOptional = {|
-  _: 'messageContactRegistered',
-|}
-
-export type messageWebsiteConnected = {
-  _: 'messageWebsiteConnected',
-  domain_name: string,
-}
-
-export type messageWebsiteConnectedOptional = {|
-  _: 'messageWebsiteConnected',
-  domain_name?: string,
-|}
-
-export type messageUnsupported = {
-  _: 'messageUnsupported',
-}
-
-export type messageUnsupportedOptional = {|
-  _: 'messageUnsupported',
-|}
-
-export type messageForwardedFromUser = {
-  _: 'messageForwardedFromUser',
-  sender_user_id: number,
-  date: number,
-  forwarded_from_chat_id: number,
-  forwarded_from_message_id: number,
-}
-
-export type messageForwardedFromUserOptional = {|
-  _: 'messageForwardedFromUser',
-  sender_user_id?: number,
-  date?: number,
-  forwarded_from_chat_id?: number,
-  forwarded_from_message_id?: number,
-|}
-
-export type messageForwardedPost = {
-  _: 'messageForwardedPost',
-  chat_id: number,
-  author_signature: string,
-  date: number,
-  message_id: number,
-  forwarded_from_chat_id: number,
-  forwarded_from_message_id: number,
-}
-
-export type messageForwardedPostOptional = {|
-  _: 'messageForwardedPost',
-  chat_id?: number,
-  author_signature?: string,
-  date?: number,
-  message_id?: number,
-  forwarded_from_chat_id?: number,
-  forwarded_from_message_id?: number,
-|}
-
-export type messageSendingStatePending = {
-  _: 'messageSendingStatePending',
-}
-
-export type messageSendingStatePendingOptional = {|
-  _: 'messageSendingStatePending',
-|}
-
-export type messageSendingStateFailed = {
-  _: 'messageSendingStateFailed',
-}
-
-export type messageSendingStateFailedOptional = {|
-  _: 'messageSendingStateFailed',
-|}
-
-export type messages = {
-  _: 'messages',
-  total_count: number,
-  messages: message[],
-}
-
-export type messagesOptional = {|
-  _: 'messages',
-  total_count?: number,
-  messages?: messageOptional[],
-|}
-
-export type networkStatistics = {
-  _: 'networkStatistics',
-  since_date: number,
-  entries: NetworkStatisticsEntry[],
-}
-
-export type networkStatisticsOptional = {|
-  _: 'networkStatistics',
-  since_date?: number,
-  entries?: NetworkStatisticsEntryOptional[],
-|}
-
-export type networkStatisticsEntryFile = {
-  _: 'networkStatisticsEntryFile',
-  file_type: FileType,
-  network_type: NetworkType,
-  sent_bytes: number,
-  received_bytes: number,
-}
-
-export type networkStatisticsEntryFileOptional = {|
-  _: 'networkStatisticsEntryFile',
-  file_type?: FileTypeOptional,
-  network_type?: NetworkTypeOptional,
-  sent_bytes?: number,
-  received_bytes?: number,
-|}
-
-export type networkStatisticsEntryCall = {
-  _: 'networkStatisticsEntryCall',
-  network_type: NetworkType,
-  sent_bytes: number,
-  received_bytes: number,
-  duration: number,
-}
-
-export type networkStatisticsEntryCallOptional = {|
-  _: 'networkStatisticsEntryCall',
-  network_type?: NetworkTypeOptional,
-  sent_bytes?: number,
-  received_bytes?: number,
-  duration?: number,
-|}
-
-export type networkTypeNone = {
-  _: 'networkTypeNone',
-}
-
-export type networkTypeNoneOptional = {|
-  _: 'networkTypeNone',
-|}
-
-export type networkTypeMobile = {
-  _: 'networkTypeMobile',
-}
-
-export type networkTypeMobileOptional = {|
-  _: 'networkTypeMobile',
-|}
-
-export type networkTypeMobileRoaming = {
-  _: 'networkTypeMobileRoaming',
-}
-
-export type networkTypeMobileRoamingOptional = {|
-  _: 'networkTypeMobileRoaming',
-|}
-
-export type networkTypeWiFi = {
-  _: 'networkTypeWiFi',
-}
-
-export type networkTypeWiFiOptional = {|
-  _: 'networkTypeWiFi',
-|}
-
-export type networkTypeOther = {
-  _: 'networkTypeOther',
-}
-
-export type networkTypeOtherOptional = {|
-  _: 'networkTypeOther',
-|}
-
-export type notificationSettings = {
-  _: 'notificationSettings',
-  mute_for: number,
-  sound: string,
-  show_preview: boolean,
-}
-
-export type notificationSettingsOptional = {|
-  _: 'notificationSettings',
-  mute_for?: number,
-  sound?: string,
-  show_preview?: boolean,
-|}
-
-export type notificationSettingsScopeChat = {
-  _: 'notificationSettingsScopeChat',
-  chat_id: number,
-}
-
-export type notificationSettingsScopeChatOptional = {|
-  _: 'notificationSettingsScopeChat',
-  chat_id?: number,
-|}
-
-export type notificationSettingsScopePrivateChats = {
-  _: 'notificationSettingsScopePrivateChats',
-}
-
-export type notificationSettingsScopePrivateChatsOptional = {|
-  _: 'notificationSettingsScopePrivateChats',
-|}
-
-export type notificationSettingsScopeBasicGroupChats = {
-  _: 'notificationSettingsScopeBasicGroupChats',
-}
-
-export type notificationSettingsScopeBasicGroupChatsOptional = {|
-  _: 'notificationSettingsScopeBasicGroupChats',
-|}
-
-export type notificationSettingsScopeAllChats = {
-  _: 'notificationSettingsScopeAllChats',
-}
-
-export type notificationSettingsScopeAllChatsOptional = {|
-  _: 'notificationSettingsScopeAllChats',
-|}
-
+/** An object of this type is returned on a successful function call for certain functions */
 export type ok = {
   _: 'ok',
 }
 
+/** An object of this type is returned on a successful function call for certain functions */
 export type okOptional = {|
   _: 'ok',
 |}
 
-export type optionValueBoolean = {
-  _: 'optionValueBoolean',
-  value: boolean,
-}
-
-export type optionValueBooleanOptional = {|
-  _: 'optionValueBoolean',
-  value?: boolean,
-|}
-
-export type optionValueEmpty = {
-  _: 'optionValueEmpty',
-}
-
-export type optionValueEmptyOptional = {|
-  _: 'optionValueEmpty',
-|}
-
-export type optionValueInteger = {
-  _: 'optionValueInteger',
-  value: number,
-}
-
-export type optionValueIntegerOptional = {|
-  _: 'optionValueInteger',
-  value?: number,
-|}
-
-export type optionValueString = {
-  _: 'optionValueString',
-  value: string,
-}
-
-export type optionValueStringOptional = {|
-  _: 'optionValueString',
-  value?: string,
-|}
-
-export type orderInfo = {
-  _: 'orderInfo',
-  name: string,
-  phone_number: string,
-  email_address: string,
-  shipping_address: shippingAddress,
-}
-
-export type orderInfoOptional = {|
-  _: 'orderInfo',
-  name?: string,
-  phone_number?: string,
-  email_address?: string,
-  shipping_address?: shippingAddressOptional,
-|}
-
-export type pageBlockTitle = {
-  _: 'pageBlockTitle',
-  title: RichText,
-}
-
-export type pageBlockTitleOptional = {|
-  _: 'pageBlockTitle',
-  title?: RichTextOptional,
-|}
-
-export type pageBlockSubtitle = {
-  _: 'pageBlockSubtitle',
-  subtitle: RichText,
-}
-
-export type pageBlockSubtitleOptional = {|
-  _: 'pageBlockSubtitle',
-  subtitle?: RichTextOptional,
-|}
-
-export type pageBlockAuthorDate = {
-  _: 'pageBlockAuthorDate',
-  author: RichText,
-  publish_date: number,
-}
-
-export type pageBlockAuthorDateOptional = {|
-  _: 'pageBlockAuthorDate',
-  author?: RichTextOptional,
-  publish_date?: number,
-|}
-
-export type pageBlockHeader = {
-  _: 'pageBlockHeader',
-  header: RichText,
-}
-
-export type pageBlockHeaderOptional = {|
-  _: 'pageBlockHeader',
-  header?: RichTextOptional,
-|}
-
-export type pageBlockSubheader = {
-  _: 'pageBlockSubheader',
-  subheader: RichText,
-}
-
-export type pageBlockSubheaderOptional = {|
-  _: 'pageBlockSubheader',
-  subheader?: RichTextOptional,
-|}
-
-export type pageBlockParagraph = {
-  _: 'pageBlockParagraph',
-  text: RichText,
-}
-
-export type pageBlockParagraphOptional = {|
-  _: 'pageBlockParagraph',
-  text?: RichTextOptional,
-|}
-
-export type pageBlockPreformatted = {
-  _: 'pageBlockPreformatted',
-  text: RichText,
-  language: string,
-}
-
-export type pageBlockPreformattedOptional = {|
-  _: 'pageBlockPreformatted',
-  text?: RichTextOptional,
-  language?: string,
-|}
-
-export type pageBlockFooter = {
-  _: 'pageBlockFooter',
-  footer: RichText,
-}
-
-export type pageBlockFooterOptional = {|
-  _: 'pageBlockFooter',
-  footer?: RichTextOptional,
-|}
-
-export type pageBlockDivider = {
-  _: 'pageBlockDivider',
-}
-
-export type pageBlockDividerOptional = {|
-  _: 'pageBlockDivider',
-|}
-
-export type pageBlockAnchor = {
-  _: 'pageBlockAnchor',
-  name: string,
-}
-
-export type pageBlockAnchorOptional = {|
-  _: 'pageBlockAnchor',
-  name?: string,
-|}
-
-export type pageBlockList = {
-  _: 'pageBlockList',
-  items: RichText[],
-  is_ordered: boolean,
-}
-
-export type pageBlockListOptional = {|
-  _: 'pageBlockList',
-  items?: RichTextOptional[],
-  is_ordered?: boolean,
-|}
-
-export type pageBlockBlockQuote = {
-  _: 'pageBlockBlockQuote',
-  text: RichText,
-  caption: RichText,
-}
-
-export type pageBlockBlockQuoteOptional = {|
-  _: 'pageBlockBlockQuote',
-  text?: RichTextOptional,
-  caption?: RichTextOptional,
-|}
-
-export type pageBlockPullQuote = {
-  _: 'pageBlockPullQuote',
-  text: RichText,
-  caption: RichText,
-}
-
-export type pageBlockPullQuoteOptional = {|
-  _: 'pageBlockPullQuote',
-  text?: RichTextOptional,
-  caption?: RichTextOptional,
-|}
-
-export type pageBlockAnimation = {
-  _: 'pageBlockAnimation',
-  animation: animation,
-  caption: RichText,
-  need_autoplay: boolean,
-}
-
-export type pageBlockAnimationOptional = {|
-  _: 'pageBlockAnimation',
-  animation?: animationOptional,
-  caption?: RichTextOptional,
-  need_autoplay?: boolean,
-|}
-
-export type pageBlockAudio = {
-  _: 'pageBlockAudio',
-  audio: audio,
-  caption: RichText,
-}
-
-export type pageBlockAudioOptional = {|
-  _: 'pageBlockAudio',
-  audio?: audioOptional,
-  caption?: RichTextOptional,
-|}
-
-export type pageBlockPhoto = {
-  _: 'pageBlockPhoto',
-  photo: photo,
-  caption: RichText,
-}
-
-export type pageBlockPhotoOptional = {|
-  _: 'pageBlockPhoto',
-  photo?: photoOptional,
-  caption?: RichTextOptional,
-|}
-
-export type pageBlockVideo = {
-  _: 'pageBlockVideo',
-  video: video,
-  caption: RichText,
-  need_autoplay: boolean,
-  is_looped: boolean,
-}
-
-export type pageBlockVideoOptional = {|
-  _: 'pageBlockVideo',
-  video?: videoOptional,
-  caption?: RichTextOptional,
-  need_autoplay?: boolean,
-  is_looped?: boolean,
-|}
-
-export type pageBlockCover = {
-  _: 'pageBlockCover',
-  cover: PageBlock,
-}
-
-export type pageBlockCoverOptional = {|
-  _: 'pageBlockCover',
-  cover?: PageBlockOptional,
-|}
-
-export type pageBlockEmbedded = {
-  _: 'pageBlockEmbedded',
-  url: string,
-  html: string,
-  poster_photo: photo,
-  width: number,
-  height: number,
-  caption: RichText,
-  is_full_width: boolean,
-  allow_scrolling: boolean,
-}
-
-export type pageBlockEmbeddedOptional = {|
-  _: 'pageBlockEmbedded',
-  url?: string,
-  html?: string,
-  poster_photo?: photoOptional,
-  width?: number,
-  height?: number,
-  caption?: RichTextOptional,
-  is_full_width?: boolean,
-  allow_scrolling?: boolean,
-|}
-
-export type pageBlockEmbeddedPost = {
-  _: 'pageBlockEmbeddedPost',
-  url: string,
-  author: string,
-  author_photo: photo,
-  date: number,
-  page_blocks: PageBlock[],
-  caption: RichText,
-}
-
-export type pageBlockEmbeddedPostOptional = {|
-  _: 'pageBlockEmbeddedPost',
-  url?: string,
-  author?: string,
-  author_photo?: photoOptional,
-  date?: number,
-  page_blocks?: PageBlockOptional[],
-  caption?: RichTextOptional,
-|}
-
-export type pageBlockCollage = {
-  _: 'pageBlockCollage',
-  page_blocks: PageBlock[],
-  caption: RichText,
-}
-
-export type pageBlockCollageOptional = {|
-  _: 'pageBlockCollage',
-  page_blocks?: PageBlockOptional[],
-  caption?: RichTextOptional,
-|}
-
-export type pageBlockSlideshow = {
-  _: 'pageBlockSlideshow',
-  page_blocks: PageBlock[],
-  caption: RichText,
-}
-
-export type pageBlockSlideshowOptional = {|
-  _: 'pageBlockSlideshow',
-  page_blocks?: PageBlockOptional[],
-  caption?: RichTextOptional,
-|}
-
-export type pageBlockChatLink = {
-  _: 'pageBlockChatLink',
-  title: string,
-  photo: chatPhoto,
-  username: string,
-}
-
-export type pageBlockChatLinkOptional = {|
-  _: 'pageBlockChatLink',
-  title?: string,
-  photo?: chatPhotoOptional,
-  username?: string,
-|}
-
-export type passwordRecoveryInfo = {
-  _: 'passwordRecoveryInfo',
-  recovery_email_address_pattern: string,
-}
-
-export type passwordRecoveryInfoOptional = {|
-  _: 'passwordRecoveryInfo',
-  recovery_email_address_pattern?: string,
-|}
-
-export type passwordState = {
-  _: 'passwordState',
-  has_password: boolean,
-  password_hint: string,
-  has_recovery_email_address: boolean,
-  unconfirmed_recovery_email_address_pattern: string,
-}
-
-export type passwordStateOptional = {|
-  _: 'passwordState',
-  has_password?: boolean,
-  password_hint?: string,
-  has_recovery_email_address?: boolean,
-  unconfirmed_recovery_email_address_pattern?: string,
-|}
-
-export type paymentForm = {
-  _: 'paymentForm',
-  invoice: invoice,
-  url: string,
-  payments_provider: paymentsProviderStripe,
-  saved_order_info: orderInfo,
-  saved_credentials: savedCredentials,
-  can_save_credentials: boolean,
-  need_password: boolean,
-}
-
-export type paymentFormOptional = {|
-  _: 'paymentForm',
-  invoice?: invoiceOptional,
-  url?: string,
-  payments_provider?: paymentsProviderStripeOptional,
-  saved_order_info?: orderInfoOptional,
-  saved_credentials?: savedCredentialsOptional,
-  can_save_credentials?: boolean,
-  need_password?: boolean,
-|}
-
-export type paymentReceipt = {
-  _: 'paymentReceipt',
-  date: number,
-  payments_provider_user_id: number,
-  invoice: invoice,
-  order_info: orderInfo,
-  shipping_option: shippingOption,
-  credentials_title: string,
-}
-
-export type paymentReceiptOptional = {|
-  _: 'paymentReceipt',
-  date?: number,
-  payments_provider_user_id?: number,
-  invoice?: invoiceOptional,
-  order_info?: orderInfoOptional,
-  shipping_option?: shippingOptionOptional,
-  credentials_title?: string,
-|}
-
-export type paymentResult = {
-  _: 'paymentResult',
-  success: boolean,
-  verification_url: string,
-}
-
-export type paymentResultOptional = {|
-  _: 'paymentResult',
-  success?: boolean,
-  verification_url?: string,
-|}
-
-export type paymentsProviderStripe = {
-  _: 'paymentsProviderStripe',
-  publishable_key: string,
-  need_country: boolean,
-  need_postal_code: boolean,
-  need_cardholder_name: boolean,
-}
-
-export type paymentsProviderStripeOptional = {|
-  _: 'paymentsProviderStripe',
-  publishable_key?: string,
-  need_country?: boolean,
-  need_postal_code?: boolean,
-  need_cardholder_name?: boolean,
-|}
-
-export type photo = {
-  _: 'photo',
-  id: number,
-  has_stickers: boolean,
-  sizes: photoSize[],
-}
-
-export type photoOptional = {|
-  _: 'photo',
-  id?: number,
-  has_stickers?: boolean,
-  sizes?: photoSizeOptional[],
-|}
-
-export type photoSize = {
-  _: 'photoSize',
-  type: string,
-  photo: file,
-  width: number,
-  height: number,
-}
-
-export type photoSizeOptional = {|
-  _: 'photoSize',
-  type?: string,
-  photo?: fileOptional,
-  width?: number,
-  height?: number,
-|}
-
-export type profilePhoto = {
-  _: 'profilePhoto',
-  id: number,
-  small: file,
-  big: file,
-}
-
-export type profilePhotoOptional = {|
-  _: 'profilePhoto',
-  id?: number,
-  small?: fileOptional,
-  big?: fileOptional,
-|}
-
-export type proxyEmpty = {
-  _: 'proxyEmpty',
-}
-
-export type proxyEmptyOptional = {|
-  _: 'proxyEmpty',
-|}
-
-export type proxySocks5 = {
-  _: 'proxySocks5',
-  server: string,
-  port: number,
-  username: string,
-  password: string,
-}
-
-export type proxySocks5Optional = {|
-  _: 'proxySocks5',
-  server?: string,
-  port?: number,
-  username?: string,
-  password?: string,
-|}
-
-export type publicMessageLink = {
-  _: 'publicMessageLink',
-  link: string,
-  html: string,
-}
-
-export type publicMessageLinkOptional = {|
-  _: 'publicMessageLink',
-  link?: string,
-  html?: string,
-|}
-
-export type recoveryEmailAddress = {
-  _: 'recoveryEmailAddress',
-  recovery_email_address: string,
-}
-
-export type recoveryEmailAddressOptional = {|
-  _: 'recoveryEmailAddress',
-  recovery_email_address?: string,
-|}
-
-export type remoteFile = {
-  _: 'remoteFile',
-  id: string,
-  is_uploading_active: boolean,
-  is_uploading_completed: boolean,
-  uploaded_size: number,
-}
-
-export type remoteFileOptional = {|
-  _: 'remoteFile',
-  id?: string,
-  is_uploading_active?: boolean,
-  is_uploading_completed?: boolean,
-  uploaded_size?: number,
-|}
-
-export type replyMarkupRemoveKeyboard = {
-  _: 'replyMarkupRemoveKeyboard',
-  is_personal: boolean,
-}
-
-export type replyMarkupRemoveKeyboardOptional = {|
-  _: 'replyMarkupRemoveKeyboard',
-  is_personal?: boolean,
-|}
-
-export type replyMarkupForceReply = {
-  _: 'replyMarkupForceReply',
-  is_personal: boolean,
-}
-
-export type replyMarkupForceReplyOptional = {|
-  _: 'replyMarkupForceReply',
-  is_personal?: boolean,
-|}
-
-export type replyMarkupShowKeyboard = {
-  _: 'replyMarkupShowKeyboard',
-  rows: keyboardButton[][],
-  resize_keyboard: boolean,
-  one_time: boolean,
-  is_personal: boolean,
-}
-
-export type replyMarkupShowKeyboardOptional = {|
-  _: 'replyMarkupShowKeyboard',
-  rows?: keyboardButtonOptional[][],
-  resize_keyboard?: boolean,
-  one_time?: boolean,
-  is_personal?: boolean,
-|}
-
-export type replyMarkupInlineKeyboard = {
-  _: 'replyMarkupInlineKeyboard',
-  rows: inlineKeyboardButton[][],
-}
-
-export type replyMarkupInlineKeyboardOptional = {|
-  _: 'replyMarkupInlineKeyboard',
-  rows?: inlineKeyboardButtonOptional[][],
-|}
-
-export type richTextPlain = {
-  _: 'richTextPlain',
-  text: string,
-}
-
-export type richTextPlainOptional = {|
-  _: 'richTextPlain',
-  text?: string,
-|}
-
-export type richTextBold = {
-  _: 'richTextBold',
-  text: RichText,
-}
-
-export type richTextBoldOptional = {|
-  _: 'richTextBold',
-  text?: RichTextOptional,
-|}
-
-export type richTextItalic = {
-  _: 'richTextItalic',
-  text: RichText,
-}
-
-export type richTextItalicOptional = {|
-  _: 'richTextItalic',
-  text?: RichTextOptional,
-|}
-
-export type richTextUnderline = {
-  _: 'richTextUnderline',
-  text: RichText,
-}
-
-export type richTextUnderlineOptional = {|
-  _: 'richTextUnderline',
-  text?: RichTextOptional,
-|}
-
-export type richTextStrikethrough = {
-  _: 'richTextStrikethrough',
-  text: RichText,
-}
-
-export type richTextStrikethroughOptional = {|
-  _: 'richTextStrikethrough',
-  text?: RichTextOptional,
-|}
-
-export type richTextFixed = {
-  _: 'richTextFixed',
-  text: RichText,
-}
-
-export type richTextFixedOptional = {|
-  _: 'richTextFixed',
-  text?: RichTextOptional,
-|}
-
-export type richTextUrl = {
-  _: 'richTextUrl',
-  text: RichText,
-  url: string,
-}
-
-export type richTextUrlOptional = {|
-  _: 'richTextUrl',
-  text?: RichTextOptional,
-  url?: string,
-|}
-
-export type richTextEmailAddress = {
-  _: 'richTextEmailAddress',
-  text: RichText,
-  email_address: string,
-}
-
-export type richTextEmailAddressOptional = {|
-  _: 'richTextEmailAddress',
-  text?: RichTextOptional,
-  email_address?: string,
-|}
-
-export type richTexts = {
-  _: 'richTexts',
-  texts: RichText[],
-}
-
-export type richTextsOptional = {|
-  _: 'richTexts',
-  texts?: RichTextOptional[],
-|}
-
-export type savedCredentials = {
-  _: 'savedCredentials',
-  id: string,
-  title: string,
-}
-
-export type savedCredentialsOptional = {|
-  _: 'savedCredentials',
-  id?: string,
-  title?: string,
-|}
-
-export type searchMessagesFilterEmpty = {
-  _: 'searchMessagesFilterEmpty',
-}
-
-export type searchMessagesFilterEmptyOptional = {|
-  _: 'searchMessagesFilterEmpty',
-|}
-
-export type searchMessagesFilterAnimation = {
-  _: 'searchMessagesFilterAnimation',
-}
-
-export type searchMessagesFilterAnimationOptional = {|
-  _: 'searchMessagesFilterAnimation',
-|}
-
-export type searchMessagesFilterAudio = {
-  _: 'searchMessagesFilterAudio',
-}
-
-export type searchMessagesFilterAudioOptional = {|
-  _: 'searchMessagesFilterAudio',
-|}
-
-export type searchMessagesFilterDocument = {
-  _: 'searchMessagesFilterDocument',
-}
-
-export type searchMessagesFilterDocumentOptional = {|
-  _: 'searchMessagesFilterDocument',
-|}
-
-export type searchMessagesFilterPhoto = {
-  _: 'searchMessagesFilterPhoto',
-}
-
-export type searchMessagesFilterPhotoOptional = {|
-  _: 'searchMessagesFilterPhoto',
-|}
-
-export type searchMessagesFilterVideo = {
-  _: 'searchMessagesFilterVideo',
-}
-
-export type searchMessagesFilterVideoOptional = {|
-  _: 'searchMessagesFilterVideo',
-|}
-
-export type searchMessagesFilterVoiceNote = {
-  _: 'searchMessagesFilterVoiceNote',
-}
-
-export type searchMessagesFilterVoiceNoteOptional = {|
-  _: 'searchMessagesFilterVoiceNote',
-|}
-
-export type searchMessagesFilterPhotoAndVideo = {
-  _: 'searchMessagesFilterPhotoAndVideo',
-}
-
-export type searchMessagesFilterPhotoAndVideoOptional = {|
-  _: 'searchMessagesFilterPhotoAndVideo',
-|}
-
-export type searchMessagesFilterUrl = {
-  _: 'searchMessagesFilterUrl',
-}
-
-export type searchMessagesFilterUrlOptional = {|
-  _: 'searchMessagesFilterUrl',
-|}
-
-export type searchMessagesFilterChatPhoto = {
-  _: 'searchMessagesFilterChatPhoto',
-}
-
-export type searchMessagesFilterChatPhotoOptional = {|
-  _: 'searchMessagesFilterChatPhoto',
-|}
-
-export type searchMessagesFilterCall = {
-  _: 'searchMessagesFilterCall',
-}
-
-export type searchMessagesFilterCallOptional = {|
-  _: 'searchMessagesFilterCall',
-|}
-
-export type searchMessagesFilterMissedCall = {
-  _: 'searchMessagesFilterMissedCall',
-}
-
-export type searchMessagesFilterMissedCallOptional = {|
-  _: 'searchMessagesFilterMissedCall',
-|}
-
-export type searchMessagesFilterVideoNote = {
-  _: 'searchMessagesFilterVideoNote',
-}
-
-export type searchMessagesFilterVideoNoteOptional = {|
-  _: 'searchMessagesFilterVideoNote',
-|}
-
-export type searchMessagesFilterVoiceAndVideoNote = {
-  _: 'searchMessagesFilterVoiceAndVideoNote',
-}
-
-export type searchMessagesFilterVoiceAndVideoNoteOptional = {|
-  _: 'searchMessagesFilterVoiceAndVideoNote',
-|}
-
-export type searchMessagesFilterMention = {
-  _: 'searchMessagesFilterMention',
-}
-
-export type searchMessagesFilterMentionOptional = {|
-  _: 'searchMessagesFilterMention',
-|}
-
-export type searchMessagesFilterUnreadMention = {
-  _: 'searchMessagesFilterUnreadMention',
-}
-
-export type searchMessagesFilterUnreadMentionOptional = {|
-  _: 'searchMessagesFilterUnreadMention',
-|}
-
-export type secretChat = {
-  _: 'secretChat',
-  id: number,
-  user_id: number,
-  state: SecretChatState,
-  is_outbound: boolean,
-  ttl: number,
-  key_hash: string,
-  layer: number,
-}
-
-export type secretChatOptional = {|
-  _: 'secretChat',
-  id?: number,
-  user_id?: number,
-  state?: SecretChatStateOptional,
-  is_outbound?: boolean,
-  ttl?: number,
-  key_hash?: string,
-  layer?: number,
-|}
-
-export type secretChatStatePending = {
-  _: 'secretChatStatePending',
-}
-
-export type secretChatStatePendingOptional = {|
-  _: 'secretChatStatePending',
-|}
-
-export type secretChatStateReady = {
-  _: 'secretChatStateReady',
-}
-
-export type secretChatStateReadyOptional = {|
-  _: 'secretChatStateReady',
-|}
-
-export type secretChatStateClosed = {
-  _: 'secretChatStateClosed',
-}
-
-export type secretChatStateClosedOptional = {|
-  _: 'secretChatStateClosed',
-|}
-
-export type session = {
-  _: 'session',
-  id: number,
-  is_current: boolean,
-  api_id: number,
-  application_name: string,
-  application_version: string,
-  is_official_application: boolean,
-  device_model: string,
-  platform: string,
-  system_version: string,
-  log_in_date: number,
-  last_active_date: number,
-  ip: string,
-  country: string,
-  region: string,
-}
-
-export type sessionOptional = {|
-  _: 'session',
-  id?: number,
-  is_current?: boolean,
-  api_id?: number,
-  application_name?: string,
-  application_version?: string,
-  is_official_application?: boolean,
-  device_model?: string,
-  platform?: string,
-  system_version?: string,
-  log_in_date?: number,
-  last_active_date?: number,
-  ip?: string,
-  country?: string,
-  region?: string,
-|}
-
-export type sessions = {
-  _: 'sessions',
-  sessions: session[],
-}
-
-export type sessionsOptional = {|
-  _: 'sessions',
-  sessions?: sessionOptional[],
-|}
-
-export type shippingAddress = {
-  _: 'shippingAddress',
-  country_code: string,
-  state: string,
-  city: string,
-  street_line1: string,
-  street_line2: string,
-  postal_code: string,
-}
-
-export type shippingAddressOptional = {|
-  _: 'shippingAddress',
-  country_code?: string,
-  state?: string,
-  city?: string,
-  street_line1?: string,
-  street_line2?: string,
-  postal_code?: string,
-|}
-
-export type shippingOption = {
-  _: 'shippingOption',
-  id: string,
-  title: string,
-  price_parts: labeledPricePart[],
-}
-
-export type shippingOptionOptional = {|
-  _: 'shippingOption',
-  id?: string,
-  title?: string,
-  price_parts?: labeledPricePartOptional[],
-|}
-
-export type sticker = {
-  _: 'sticker',
-  set_id: number,
-  width: number,
-  height: number,
-  emoji: string,
-  is_mask: boolean,
-  mask_position: maskPosition,
-  thumbnail: photoSize,
-  sticker: file,
-}
-
-export type stickerOptional = {|
-  _: 'sticker',
-  set_id?: number,
-  width?: number,
-  height?: number,
-  emoji?: string,
-  is_mask?: boolean,
-  mask_position?: maskPositionOptional,
-  thumbnail?: photoSizeOptional,
-  sticker?: fileOptional,
-|}
-
-export type stickerEmojis = {
-  _: 'stickerEmojis',
-  emojis: string[],
-}
-
-export type stickerEmojisOptional = {|
-  _: 'stickerEmojis',
-  emojis?: string[],
-|}
-
-export type stickerSet = {
-  _: 'stickerSet',
-  id: number,
-  title: string,
-  name: string,
-  is_installed: boolean,
-  is_archived: boolean,
-  is_official: boolean,
-  is_masks: boolean,
-  is_viewed: boolean,
-  stickers: sticker[],
-  emojis: stickerEmojis[],
-}
-
-export type stickerSetOptional = {|
-  _: 'stickerSet',
-  id?: number,
-  title?: string,
-  name?: string,
-  is_installed?: boolean,
-  is_archived?: boolean,
-  is_official?: boolean,
-  is_masks?: boolean,
-  is_viewed?: boolean,
-  stickers?: stickerOptional[],
-  emojis?: stickerEmojisOptional[],
-|}
-
-export type stickerSetInfo = {
-  _: 'stickerSetInfo',
-  id: number,
-  title: string,
-  name: string,
-  is_installed: boolean,
-  is_archived: boolean,
-  is_official: boolean,
-  is_masks: boolean,
-  is_viewed: boolean,
-  size: number,
-  covers: sticker[],
-}
-
-export type stickerSetInfoOptional = {|
-  _: 'stickerSetInfo',
-  id?: number,
-  title?: string,
-  name?: string,
-  is_installed?: boolean,
-  is_archived?: boolean,
-  is_official?: boolean,
-  is_masks?: boolean,
-  is_viewed?: boolean,
-  size?: number,
-  covers?: stickerOptional[],
-|}
-
-export type stickerSets = {
-  _: 'stickerSets',
-  total_count: number,
-  sets: stickerSetInfo[],
-}
-
-export type stickerSetsOptional = {|
-  _: 'stickerSets',
-  total_count?: number,
-  sets?: stickerSetInfoOptional[],
-|}
-
-export type stickers = {
-  _: 'stickers',
-  stickers: sticker[],
-}
-
-export type stickersOptional = {|
-  _: 'stickers',
-  stickers?: stickerOptional[],
-|}
-
-export type storageStatistics = {
-  _: 'storageStatistics',
-  size: number,
-  count: number,
-  by_chat: storageStatisticsByChat[],
-}
-
-export type storageStatisticsOptional = {|
-  _: 'storageStatistics',
-  size?: number,
-  count?: number,
-  by_chat?: storageStatisticsByChatOptional[],
-|}
-
-export type storageStatisticsByChat = {
-  _: 'storageStatisticsByChat',
-  chat_id: number,
-  size: number,
-  count: number,
-  by_file_type: storageStatisticsByFileType[],
-}
-
-export type storageStatisticsByChatOptional = {|
-  _: 'storageStatisticsByChat',
-  chat_id?: number,
-  size?: number,
-  count?: number,
-  by_file_type?: storageStatisticsByFileTypeOptional[],
-|}
-
-export type storageStatisticsByFileType = {
-  _: 'storageStatisticsByFileType',
-  file_type: FileType,
-  size: number,
-  count: number,
-}
-
-export type storageStatisticsByFileTypeOptional = {|
-  _: 'storageStatisticsByFileType',
-  file_type?: FileTypeOptional,
-  size?: number,
-  count?: number,
-|}
-
-export type storageStatisticsFast = {
-  _: 'storageStatisticsFast',
-  files_size: number,
-  file_count: number,
-  database_size: number,
-}
-
-export type storageStatisticsFastOptional = {|
-  _: 'storageStatisticsFast',
-  files_size?: number,
-  file_count?: number,
-  database_size?: number,
-|}
-
-export type supergroup = {
-  _: 'supergroup',
-  id: number,
-  username: string,
-  date: number,
-  status: ChatMemberStatus,
-  member_count: number,
-  anyone_can_invite: boolean,
-  sign_messages: boolean,
-  is_channel: boolean,
-  is_verified: boolean,
-  restriction_reason: string,
-}
-
-export type supergroupOptional = {|
-  _: 'supergroup',
-  id?: number,
-  username?: string,
-  date?: number,
-  status?: ChatMemberStatusOptional,
-  member_count?: number,
-  anyone_can_invite?: boolean,
-  sign_messages?: boolean,
-  is_channel?: boolean,
-  is_verified?: boolean,
-  restriction_reason?: string,
-|}
-
-export type supergroupFullInfo = {
-  _: 'supergroupFullInfo',
-  description: string,
-  member_count: number,
-  administrator_count: number,
-  restricted_count: number,
-  banned_count: number,
-  can_get_members: boolean,
-  can_set_username: boolean,
-  can_set_sticker_set: boolean,
-  is_all_history_available: boolean,
-  sticker_set_id: number,
-  invite_link: string,
-  pinned_message_id: number,
-  upgraded_from_basic_group_id: number,
-  upgraded_from_max_message_id: number,
-}
-
-export type supergroupFullInfoOptional = {|
-  _: 'supergroupFullInfo',
-  description?: string,
-  member_count?: number,
-  administrator_count?: number,
-  restricted_count?: number,
-  banned_count?: number,
-  can_get_members?: boolean,
-  can_set_username?: boolean,
-  can_set_sticker_set?: boolean,
-  is_all_history_available?: boolean,
-  sticker_set_id?: number,
-  invite_link?: string,
-  pinned_message_id?: number,
-  upgraded_from_basic_group_id?: number,
-  upgraded_from_max_message_id?: number,
-|}
-
-export type supergroupMembersFilterRecent = {
-  _: 'supergroupMembersFilterRecent',
-}
-
-export type supergroupMembersFilterRecentOptional = {|
-  _: 'supergroupMembersFilterRecent',
-|}
-
-export type supergroupMembersFilterAdministrators = {
-  _: 'supergroupMembersFilterAdministrators',
-}
-
-export type supergroupMembersFilterAdministratorsOptional = {|
-  _: 'supergroupMembersFilterAdministrators',
-|}
-
-export type supergroupMembersFilterSearch = {
-  _: 'supergroupMembersFilterSearch',
-  query: string,
-}
-
-export type supergroupMembersFilterSearchOptional = {|
-  _: 'supergroupMembersFilterSearch',
-  query?: string,
-|}
-
-export type supergroupMembersFilterRestricted = {
-  _: 'supergroupMembersFilterRestricted',
-  query: string,
-}
-
-export type supergroupMembersFilterRestrictedOptional = {|
-  _: 'supergroupMembersFilterRestricted',
-  query?: string,
-|}
-
-export type supergroupMembersFilterBanned = {
-  _: 'supergroupMembersFilterBanned',
-  query: string,
-}
-
-export type supergroupMembersFilterBannedOptional = {|
-  _: 'supergroupMembersFilterBanned',
-  query?: string,
-|}
-
-export type supergroupMembersFilterBots = {
-  _: 'supergroupMembersFilterBots',
-}
-
-export type supergroupMembersFilterBotsOptional = {|
-  _: 'supergroupMembersFilterBots',
-|}
-
-export type tMeUrl = {
-  _: 'tMeUrl',
-  url: string,
-  type: TMeUrlType,
-}
-
-export type tMeUrlOptional = {|
-  _: 'tMeUrl',
-  url?: string,
-  type?: TMeUrlTypeOptional,
-|}
-
-export type tMeUrlTypeUser = {
-  _: 'tMeUrlTypeUser',
-  user_id: number,
-}
-
-export type tMeUrlTypeUserOptional = {|
-  _: 'tMeUrlTypeUser',
-  user_id?: number,
-|}
-
-export type tMeUrlTypeSupergroup = {
-  _: 'tMeUrlTypeSupergroup',
-  supergroup_id: number,
-}
-
-export type tMeUrlTypeSupergroupOptional = {|
-  _: 'tMeUrlTypeSupergroup',
-  supergroup_id?: number,
-|}
-
-export type tMeUrlTypeChatInvite = {
-  _: 'tMeUrlTypeChatInvite',
-  info: chatInviteLinkInfo,
-}
-
-export type tMeUrlTypeChatInviteOptional = {|
-  _: 'tMeUrlTypeChatInvite',
-  info?: chatInviteLinkInfoOptional,
-|}
-
-export type tMeUrlTypeStickerSet = {
-  _: 'tMeUrlTypeStickerSet',
-  sticker_set_id: number,
-}
-
-export type tMeUrlTypeStickerSetOptional = {|
-  _: 'tMeUrlTypeStickerSet',
-  sticker_set_id?: number,
-|}
-
-export type tMeUrls = {
-  _: 'tMeUrls',
-  urls: tMeUrl[],
-}
-
-export type tMeUrlsOptional = {|
-  _: 'tMeUrls',
-  urls?: tMeUrlOptional[],
-|}
-
+/** Contains parameters for TDLib initialization */
 export type tdlibParameters = {
   _: 'tdlibParameters',
+  /**
+   * If set to true, the Telegram test environment will be used instead of the production
+   * environment
+   */
   use_test_dc: boolean,
+  /**
+   * The path to the directory for the persistent database; if empty, the current working
+   * directory will be used
+   */
   database_directory: string,
+  /**
+   * The path to the directory for storing files; if empty, database_directory will be
+   * used
+   */
   files_directory: string,
+  /**
+   * If set to true, information about downloaded and uploaded files will be saved between
+   * application restarts
+   */
   use_file_database: boolean,
+  /**
+   * If set to true, the library will maintain a cache of users, basic groups, supergroups,
+   * channels and secret chats. Implies use_file_database
+   */
   use_chat_info_database: boolean,
+  /**
+   * If set to true, the library will maintain a cache of chats and messages. Implies
+   * use_chat_info_database
+   */
   use_message_database: boolean,
+  /** If set to true, support for secret chats will be enabled */
   use_secret_chats: boolean,
+  /** Application identifier for Telegram API access, which can be obtained at https://my.telegram.org */
   api_id: number,
+  /** Application identifier hash for Telegram API access, which can be obtained at https://my.telegram.org */
   api_hash: string,
+  /** IETF language tag of the user's operating system language; must be non-empty */
   system_language_code: string,
+  /** Model of the device the application is being run on; must be non-empty */
   device_model: string,
+  /** Version of the operating system the application is being run on; must be non-empty */
   system_version: string,
+  /** Application version; must be non-empty */
   application_version: string,
+  /** If set to true, old files will automatically be deleted */
   enable_storage_optimizer: boolean,
+  /**
+   * If set to true, original file names will be ignored. Otherwise, downloaded files
+   * will be saved under names as close as possible to the original name
+   */
   ignore_file_names: boolean,
 }
 
+/** Contains parameters for TDLib initialization */
 export type tdlibParametersOptional = {|
   _: 'tdlibParameters',
+  /**
+   * If set to true, the Telegram test environment will be used instead of the production
+   * environment
+   */
   use_test_dc?: boolean,
+  /**
+   * The path to the directory for the persistent database; if empty, the current working
+   * directory will be used
+   */
   database_directory?: string,
+  /**
+   * The path to the directory for storing files; if empty, database_directory will be
+   * used
+   */
   files_directory?: string,
+  /**
+   * If set to true, information about downloaded and uploaded files will be saved between
+   * application restarts
+   */
   use_file_database?: boolean,
+  /**
+   * If set to true, the library will maintain a cache of users, basic groups, supergroups,
+   * channels and secret chats. Implies use_file_database
+   */
   use_chat_info_database?: boolean,
+  /**
+   * If set to true, the library will maintain a cache of chats and messages. Implies
+   * use_chat_info_database
+   */
   use_message_database?: boolean,
+  /** If set to true, support for secret chats will be enabled */
   use_secret_chats?: boolean,
+  /** Application identifier for Telegram API access, which can be obtained at https://my.telegram.org */
   api_id?: number,
+  /** Application identifier hash for Telegram API access, which can be obtained at https://my.telegram.org */
   api_hash?: string,
+  /** IETF language tag of the user's operating system language; must be non-empty */
   system_language_code?: string,
+  /** Model of the device the application is being run on; must be non-empty */
   device_model?: string,
+  /** Version of the operating system the application is being run on; must be non-empty */
   system_version?: string,
+  /** Application version; must be non-empty */
   application_version?: string,
+  /** If set to true, old files will automatically be deleted */
   enable_storage_optimizer?: boolean,
+  /**
+   * If set to true, original file names will be ignored. Otherwise, downloaded files
+   * will be saved under names as close as possible to the original name
+   */
   ignore_file_names?: boolean,
 |}
 
-export type temporaryPasswordState = {
-  _: 'temporaryPasswordState',
-  has_password: boolean,
-  valid_for: number,
-}
-
-export type temporaryPasswordStateOptional = {|
-  _: 'temporaryPasswordState',
-  has_password?: boolean,
-  valid_for?: number,
-|}
-
-export type testBytes = {
-  _: 'testBytes',
-  value: string,
-}
-
-export type testBytesOptional = {|
-  _: 'testBytes',
-  value?: string,
-|}
-
-export type testInt = {
-  _: 'testInt',
-  value: number,
-}
-
-export type testIntOptional = {|
-  _: 'testInt',
-  value?: number,
-|}
-
-export type testString = {
-  _: 'testString',
-  value: string,
-}
-
-export type testStringOptional = {|
-  _: 'testString',
-  value?: string,
-|}
-
-export type testVectorInt = {
-  _: 'testVectorInt',
-  value: number[],
-}
-
-export type testVectorIntOptional = {|
-  _: 'testVectorInt',
-  value?: number[],
-|}
-
-export type testVectorIntObject = {
-  _: 'testVectorIntObject',
-  value: testInt[],
-}
-
-export type testVectorIntObjectOptional = {|
-  _: 'testVectorIntObject',
-  value?: testIntOptional[],
-|}
-
-export type testVectorString = {
-  _: 'testVectorString',
-  value: string[],
-}
-
-export type testVectorStringOptional = {|
-  _: 'testVectorString',
-  value?: string[],
-|}
-
-export type testVectorStringObject = {
-  _: 'testVectorStringObject',
-  value: testString[],
-}
-
-export type testVectorStringObjectOptional = {|
-  _: 'testVectorStringObject',
-  value?: testStringOptional[],
-|}
-
-export type text = {
-  _: 'text',
-  text: string,
-}
-
-export type textOptional = {|
-  _: 'text',
-  text?: string,
-|}
-
-export type textEntities = {
-  _: 'textEntities',
-  entities: textEntity[],
-}
-
-export type textEntitiesOptional = {|
-  _: 'textEntities',
-  entities?: textEntityOptional[],
-|}
-
-export type textEntity = {
-  _: 'textEntity',
-  offset: number,
+/**
+ * An authentication code is delivered via a private Telegram message, which can be
+ * viewed in another client
+ */
+export type authenticationCodeTypeTelegramMessage = {
+  _: 'authenticationCodeTypeTelegramMessage',
+  /** Length of the code */
   length: number,
-  type: TextEntityType,
 }
 
-export type textEntityOptional = {|
-  _: 'textEntity',
-  offset?: number,
+/**
+ * An authentication code is delivered via a private Telegram message, which can be
+ * viewed in another client
+ */
+export type authenticationCodeTypeTelegramMessageOptional = {|
+  _: 'authenticationCodeTypeTelegramMessage',
+  /** Length of the code */
   length?: number,
-  type?: TextEntityTypeOptional,
 |}
 
-export type textEntityTypeMention = {
-  _: 'textEntityTypeMention',
-}
-
-export type textEntityTypeMentionOptional = {|
-  _: 'textEntityTypeMention',
-|}
-
-export type textEntityTypeHashtag = {
-  _: 'textEntityTypeHashtag',
-}
-
-export type textEntityTypeHashtagOptional = {|
-  _: 'textEntityTypeHashtag',
-|}
-
-export type textEntityTypeCashtag = {
-  _: 'textEntityTypeCashtag',
-}
-
-export type textEntityTypeCashtagOptional = {|
-  _: 'textEntityTypeCashtag',
-|}
-
-export type textEntityTypeBotCommand = {
-  _: 'textEntityTypeBotCommand',
-}
-
-export type textEntityTypeBotCommandOptional = {|
-  _: 'textEntityTypeBotCommand',
-|}
-
-export type textEntityTypeUrl = {
-  _: 'textEntityTypeUrl',
-}
-
-export type textEntityTypeUrlOptional = {|
-  _: 'textEntityTypeUrl',
-|}
-
-export type textEntityTypeEmailAddress = {
-  _: 'textEntityTypeEmailAddress',
-}
-
-export type textEntityTypeEmailAddressOptional = {|
-  _: 'textEntityTypeEmailAddress',
-|}
-
-export type textEntityTypeBold = {
-  _: 'textEntityTypeBold',
-}
-
-export type textEntityTypeBoldOptional = {|
-  _: 'textEntityTypeBold',
-|}
-
-export type textEntityTypeItalic = {
-  _: 'textEntityTypeItalic',
-}
-
-export type textEntityTypeItalicOptional = {|
-  _: 'textEntityTypeItalic',
-|}
-
-export type textEntityTypeCode = {
-  _: 'textEntityTypeCode',
-}
-
-export type textEntityTypeCodeOptional = {|
-  _: 'textEntityTypeCode',
-|}
-
-export type textEntityTypePre = {
-  _: 'textEntityTypePre',
-}
-
-export type textEntityTypePreOptional = {|
-  _: 'textEntityTypePre',
-|}
-
-export type textEntityTypePreCode = {
-  _: 'textEntityTypePreCode',
-  language: string,
-}
-
-export type textEntityTypePreCodeOptional = {|
-  _: 'textEntityTypePreCode',
-  language?: string,
-|}
-
-export type textEntityTypeTextUrl = {
-  _: 'textEntityTypeTextUrl',
-  url: string,
-}
-
-export type textEntityTypeTextUrlOptional = {|
-  _: 'textEntityTypeTextUrl',
-  url?: string,
-|}
-
-export type textEntityTypeMentionName = {
-  _: 'textEntityTypeMentionName',
-  user_id: number,
-}
-
-export type textEntityTypeMentionNameOptional = {|
-  _: 'textEntityTypeMentionName',
-  user_id?: number,
-|}
-
-export type textEntityTypePhoneNumber = {
-  _: 'textEntityTypePhoneNumber',
-}
-
-export type textEntityTypePhoneNumberOptional = {|
-  _: 'textEntityTypePhoneNumber',
-|}
-
-export type textParseModeMarkdown = {
-  _: 'textParseModeMarkdown',
-}
-
-export type textParseModeMarkdownOptional = {|
-  _: 'textParseModeMarkdown',
-|}
-
-export type textParseModeHTML = {
-  _: 'textParseModeHTML',
-}
-
-export type textParseModeHTMLOptional = {|
-  _: 'textParseModeHTML',
-|}
-
-export type topChatCategoryUsers = {
-  _: 'topChatCategoryUsers',
-}
-
-export type topChatCategoryUsersOptional = {|
-  _: 'topChatCategoryUsers',
-|}
-
-export type topChatCategoryBots = {
-  _: 'topChatCategoryBots',
-}
-
-export type topChatCategoryBotsOptional = {|
-  _: 'topChatCategoryBots',
-|}
-
-export type topChatCategoryGroups = {
-  _: 'topChatCategoryGroups',
-}
-
-export type topChatCategoryGroupsOptional = {|
-  _: 'topChatCategoryGroups',
-|}
-
-export type topChatCategoryChannels = {
-  _: 'topChatCategoryChannels',
-}
-
-export type topChatCategoryChannelsOptional = {|
-  _: 'topChatCategoryChannels',
-|}
-
-export type topChatCategoryInlineBots = {
-  _: 'topChatCategoryInlineBots',
-}
-
-export type topChatCategoryInlineBotsOptional = {|
-  _: 'topChatCategoryInlineBots',
-|}
-
-export type topChatCategoryCalls = {
-  _: 'topChatCategoryCalls',
-}
-
-export type topChatCategoryCallsOptional = {|
-  _: 'topChatCategoryCalls',
-|}
-
-export type updateAuthorizationState = {
-  _: 'updateAuthorizationState',
-  authorization_state: AuthorizationState,
-}
-
-export type updateAuthorizationStateOptional = {|
-  _: 'updateAuthorizationState',
-  authorization_state?: AuthorizationStateOptional,
-|}
-
-export type updateNewMessage = {
-  _: 'updateNewMessage',
-  message: message,
-  disable_notification: boolean,
-  contains_mention: boolean,
-}
-
-export type updateNewMessageOptional = {|
-  _: 'updateNewMessage',
-  message?: messageOptional,
-  disable_notification?: boolean,
-  contains_mention?: boolean,
-|}
-
-export type updateMessageSendAcknowledged = {
-  _: 'updateMessageSendAcknowledged',
-  chat_id: number,
-  message_id: number,
-}
-
-export type updateMessageSendAcknowledgedOptional = {|
-  _: 'updateMessageSendAcknowledged',
-  chat_id?: number,
-  message_id?: number,
-|}
-
-export type updateMessageSendSucceeded = {
-  _: 'updateMessageSendSucceeded',
-  message: message,
-  old_message_id: number,
-}
-
-export type updateMessageSendSucceededOptional = {|
-  _: 'updateMessageSendSucceeded',
-  message?: messageOptional,
-  old_message_id?: number,
-|}
-
-export type updateMessageSendFailed = {
-  _: 'updateMessageSendFailed',
-  message: message,
-  old_message_id: number,
-  error_code: number,
-  error_message: string,
-}
-
-export type updateMessageSendFailedOptional = {|
-  _: 'updateMessageSendFailed',
-  message?: messageOptional,
-  old_message_id?: number,
-  error_code?: number,
-  error_message?: string,
-|}
-
-export type updateMessageContent = {
-  _: 'updateMessageContent',
-  chat_id: number,
-  message_id: number,
-  new_content: MessageContent,
-}
-
-export type updateMessageContentOptional = {|
-  _: 'updateMessageContent',
-  chat_id?: number,
-  message_id?: number,
-  new_content?: MessageContentOptional,
-|}
-
-export type updateMessageEdited = {
-  _: 'updateMessageEdited',
-  chat_id: number,
-  message_id: number,
-  edit_date: number,
-  reply_markup: ReplyMarkup,
-}
-
-export type updateMessageEditedOptional = {|
-  _: 'updateMessageEdited',
-  chat_id?: number,
-  message_id?: number,
-  edit_date?: number,
-  reply_markup?: ReplyMarkupOptional,
-|}
-
-export type updateMessageViews = {
-  _: 'updateMessageViews',
-  chat_id: number,
-  message_id: number,
-  views: number,
-}
-
-export type updateMessageViewsOptional = {|
-  _: 'updateMessageViews',
-  chat_id?: number,
-  message_id?: number,
-  views?: number,
-|}
-
-export type updateMessageContentOpened = {
-  _: 'updateMessageContentOpened',
-  chat_id: number,
-  message_id: number,
-}
-
-export type updateMessageContentOpenedOptional = {|
-  _: 'updateMessageContentOpened',
-  chat_id?: number,
-  message_id?: number,
-|}
-
-export type updateMessageMentionRead = {
-  _: 'updateMessageMentionRead',
-  chat_id: number,
-  message_id: number,
-  unread_mention_count: number,
-}
-
-export type updateMessageMentionReadOptional = {|
-  _: 'updateMessageMentionRead',
-  chat_id?: number,
-  message_id?: number,
-  unread_mention_count?: number,
-|}
-
-export type updateNewChat = {
-  _: 'updateNewChat',
-  chat: chat,
-}
-
-export type updateNewChatOptional = {|
-  _: 'updateNewChat',
-  chat?: chatOptional,
-|}
-
-export type updateChatTitle = {
-  _: 'updateChatTitle',
-  chat_id: number,
-  title: string,
-}
-
-export type updateChatTitleOptional = {|
-  _: 'updateChatTitle',
-  chat_id?: number,
-  title?: string,
-|}
-
-export type updateChatPhoto = {
-  _: 'updateChatPhoto',
-  chat_id: number,
-  photo: chatPhoto,
-}
-
-export type updateChatPhotoOptional = {|
-  _: 'updateChatPhoto',
-  chat_id?: number,
-  photo?: chatPhotoOptional,
-|}
-
-export type updateChatLastMessage = {
-  _: 'updateChatLastMessage',
-  chat_id: number,
-  last_message: message,
-  order: number,
-}
-
-export type updateChatLastMessageOptional = {|
-  _: 'updateChatLastMessage',
-  chat_id?: number,
-  last_message?: messageOptional,
-  order?: number,
-|}
-
-export type updateChatOrder = {
-  _: 'updateChatOrder',
-  chat_id: number,
-  order: number,
-}
-
-export type updateChatOrderOptional = {|
-  _: 'updateChatOrder',
-  chat_id?: number,
-  order?: number,
-|}
-
-export type updateChatIsPinned = {
-  _: 'updateChatIsPinned',
-  chat_id: number,
-  is_pinned: boolean,
-  order: number,
-}
-
-export type updateChatIsPinnedOptional = {|
-  _: 'updateChatIsPinned',
-  chat_id?: number,
-  is_pinned?: boolean,
-  order?: number,
-|}
-
-export type updateChatReadInbox = {
-  _: 'updateChatReadInbox',
-  chat_id: number,
-  last_read_inbox_message_id: number,
-  unread_count: number,
-}
-
-export type updateChatReadInboxOptional = {|
-  _: 'updateChatReadInbox',
-  chat_id?: number,
-  last_read_inbox_message_id?: number,
-  unread_count?: number,
-|}
-
-export type updateChatReadOutbox = {
-  _: 'updateChatReadOutbox',
-  chat_id: number,
-  last_read_outbox_message_id: number,
-}
-
-export type updateChatReadOutboxOptional = {|
-  _: 'updateChatReadOutbox',
-  chat_id?: number,
-  last_read_outbox_message_id?: number,
-|}
-
-export type updateChatUnreadMentionCount = {
-  _: 'updateChatUnreadMentionCount',
-  chat_id: number,
-  unread_mention_count: number,
-}
-
-export type updateChatUnreadMentionCountOptional = {|
-  _: 'updateChatUnreadMentionCount',
-  chat_id?: number,
-  unread_mention_count?: number,
-|}
-
-export type updateNotificationSettings = {
-  _: 'updateNotificationSettings',
-  scope: NotificationSettingsScope,
-  notification_settings: notificationSettings,
-}
-
-export type updateNotificationSettingsOptional = {|
-  _: 'updateNotificationSettings',
-  scope?: NotificationSettingsScopeOptional,
-  notification_settings?: notificationSettingsOptional,
-|}
-
-export type updateChatReplyMarkup = {
-  _: 'updateChatReplyMarkup',
-  chat_id: number,
-  reply_markup_message_id: number,
-}
-
-export type updateChatReplyMarkupOptional = {|
-  _: 'updateChatReplyMarkup',
-  chat_id?: number,
-  reply_markup_message_id?: number,
-|}
-
-export type updateChatDraftMessage = {
-  _: 'updateChatDraftMessage',
-  chat_id: number,
-  draft_message: draftMessage,
-  order: number,
-}
-
-export type updateChatDraftMessageOptional = {|
-  _: 'updateChatDraftMessage',
-  chat_id?: number,
-  draft_message?: draftMessageOptional,
-  order?: number,
-|}
-
-export type updateDeleteMessages = {
-  _: 'updateDeleteMessages',
-  chat_id: number,
-  message_ids: number[],
-  is_permanent: boolean,
-  from_cache: boolean,
-}
-
-export type updateDeleteMessagesOptional = {|
-  _: 'updateDeleteMessages',
-  chat_id?: number,
-  message_ids?: number[],
-  is_permanent?: boolean,
-  from_cache?: boolean,
-|}
-
-export type updateUserChatAction = {
-  _: 'updateUserChatAction',
-  chat_id: number,
-  user_id: number,
-  action: ChatAction,
-}
-
-export type updateUserChatActionOptional = {|
-  _: 'updateUserChatAction',
-  chat_id?: number,
-  user_id?: number,
-  action?: ChatActionOptional,
-|}
-
-export type updateUserStatus = {
-  _: 'updateUserStatus',
-  user_id: number,
-  status: UserStatus,
-}
-
-export type updateUserStatusOptional = {|
-  _: 'updateUserStatus',
-  user_id?: number,
-  status?: UserStatusOptional,
-|}
-
-export type updateUser = {
-  _: 'updateUser',
-  user: user,
-}
-
-export type updateUserOptional = {|
-  _: 'updateUser',
-  user?: userOptional,
-|}
-
-export type updateBasicGroup = {
-  _: 'updateBasicGroup',
-  basic_group: basicGroup,
-}
-
-export type updateBasicGroupOptional = {|
-  _: 'updateBasicGroup',
-  basic_group?: basicGroupOptional,
-|}
-
-export type updateSupergroup = {
-  _: 'updateSupergroup',
-  supergroup: supergroup,
-}
-
-export type updateSupergroupOptional = {|
-  _: 'updateSupergroup',
-  supergroup?: supergroupOptional,
-|}
-
-export type updateSecretChat = {
-  _: 'updateSecretChat',
-  secret_chat: secretChat,
-}
-
-export type updateSecretChatOptional = {|
-  _: 'updateSecretChat',
-  secret_chat?: secretChatOptional,
-|}
-
-export type updateUserFullInfo = {
-  _: 'updateUserFullInfo',
-  user_id: number,
-  user_full_info: userFullInfo,
-}
-
-export type updateUserFullInfoOptional = {|
-  _: 'updateUserFullInfo',
-  user_id?: number,
-  user_full_info?: userFullInfoOptional,
-|}
-
-export type updateBasicGroupFullInfo = {
-  _: 'updateBasicGroupFullInfo',
-  basic_group_id: number,
-  basic_group_full_info: basicGroupFullInfo,
-}
-
-export type updateBasicGroupFullInfoOptional = {|
-  _: 'updateBasicGroupFullInfo',
-  basic_group_id?: number,
-  basic_group_full_info?: basicGroupFullInfoOptional,
-|}
-
-export type updateSupergroupFullInfo = {
-  _: 'updateSupergroupFullInfo',
-  supergroup_id: number,
-  supergroup_full_info: supergroupFullInfo,
-}
-
-export type updateSupergroupFullInfoOptional = {|
-  _: 'updateSupergroupFullInfo',
-  supergroup_id?: number,
-  supergroup_full_info?: supergroupFullInfoOptional,
-|}
-
-export type updateServiceNotification = {
-  _: 'updateServiceNotification',
-  type: string,
-  content: MessageContent,
-}
-
-export type updateServiceNotificationOptional = {|
-  _: 'updateServiceNotification',
-  type?: string,
-  content?: MessageContentOptional,
-|}
-
-export type updateFile = {
-  _: 'updateFile',
-  file: file,
-}
-
-export type updateFileOptional = {|
-  _: 'updateFile',
-  file?: fileOptional,
-|}
-
-export type updateFileGenerationStart = {
-  _: 'updateFileGenerationStart',
-  generation_id: number,
-  original_path: string,
-  destination_path: string,
-  conversion: string,
-}
-
-export type updateFileGenerationStartOptional = {|
-  _: 'updateFileGenerationStart',
-  generation_id?: number,
-  original_path?: string,
-  destination_path?: string,
-  conversion?: string,
-|}
-
-export type updateFileGenerationStop = {
-  _: 'updateFileGenerationStop',
-  generation_id: number,
-}
-
-export type updateFileGenerationStopOptional = {|
-  _: 'updateFileGenerationStop',
-  generation_id?: number,
-|}
-
-export type updateCall = {
-  _: 'updateCall',
-  call: call,
-}
-
-export type updateCallOptional = {|
-  _: 'updateCall',
-  call?: callOptional,
-|}
-
-export type updateUserPrivacySettingRules = {
-  _: 'updateUserPrivacySettingRules',
-  setting: UserPrivacySetting,
-  rules: userPrivacySettingRules,
-}
-
-export type updateUserPrivacySettingRulesOptional = {|
-  _: 'updateUserPrivacySettingRules',
-  setting?: UserPrivacySettingOptional,
-  rules?: userPrivacySettingRulesOptional,
-|}
-
-export type updateUnreadMessageCount = {
-  _: 'updateUnreadMessageCount',
-  unread_count: number,
-  unread_unmuted_count: number,
-}
-
-export type updateUnreadMessageCountOptional = {|
-  _: 'updateUnreadMessageCount',
-  unread_count?: number,
-  unread_unmuted_count?: number,
-|}
-
-export type updateOption = {
-  _: 'updateOption',
-  name: string,
-  value: OptionValue,
-}
-
-export type updateOptionOptional = {|
-  _: 'updateOption',
-  name?: string,
-  value?: OptionValueOptional,
-|}
-
-export type updateInstalledStickerSets = {
-  _: 'updateInstalledStickerSets',
-  is_masks: boolean,
-  sticker_set_ids: number[],
-}
-
-export type updateInstalledStickerSetsOptional = {|
-  _: 'updateInstalledStickerSets',
-  is_masks?: boolean,
-  sticker_set_ids?: number[],
-|}
-
-export type updateTrendingStickerSets = {
-  _: 'updateTrendingStickerSets',
-  sticker_sets: stickerSets,
-}
-
-export type updateTrendingStickerSetsOptional = {|
-  _: 'updateTrendingStickerSets',
-  sticker_sets?: stickerSetsOptional,
-|}
-
-export type updateRecentStickers = {
-  _: 'updateRecentStickers',
-  is_attached: boolean,
-  sticker_ids: number[],
-}
-
-export type updateRecentStickersOptional = {|
-  _: 'updateRecentStickers',
-  is_attached?: boolean,
-  sticker_ids?: number[],
-|}
-
-export type updateFavoriteStickers = {
-  _: 'updateFavoriteStickers',
-  sticker_ids: number[],
-}
-
-export type updateFavoriteStickersOptional = {|
-  _: 'updateFavoriteStickers',
-  sticker_ids?: number[],
-|}
-
-export type updateSavedAnimations = {
-  _: 'updateSavedAnimations',
-  animation_ids: number[],
-}
-
-export type updateSavedAnimationsOptional = {|
-  _: 'updateSavedAnimations',
-  animation_ids?: number[],
-|}
-
-export type updateConnectionState = {
-  _: 'updateConnectionState',
-  state: ConnectionState,
-}
-
-export type updateConnectionStateOptional = {|
-  _: 'updateConnectionState',
-  state?: ConnectionStateOptional,
-|}
-
-export type updateNewInlineQuery = {
-  _: 'updateNewInlineQuery',
-  id: number,
-  sender_user_id: number,
-  user_location: location,
-  query: string,
-  offset: string,
-}
-
-export type updateNewInlineQueryOptional = {|
-  _: 'updateNewInlineQuery',
-  id?: number,
-  sender_user_id?: number,
-  user_location?: locationOptional,
-  query?: string,
-  offset?: string,
-|}
-
-export type updateNewChosenInlineResult = {
-  _: 'updateNewChosenInlineResult',
-  sender_user_id: number,
-  user_location: location,
-  query: string,
-  result_id: string,
-  inline_message_id: string,
-}
-
-export type updateNewChosenInlineResultOptional = {|
-  _: 'updateNewChosenInlineResult',
-  sender_user_id?: number,
-  user_location?: locationOptional,
-  query?: string,
-  result_id?: string,
-  inline_message_id?: string,
-|}
-
-export type updateNewCallbackQuery = {
-  _: 'updateNewCallbackQuery',
-  id: number,
-  sender_user_id: number,
-  chat_id: number,
-  message_id: number,
-  chat_instance: number,
-  payload: CallbackQueryPayload,
-}
-
-export type updateNewCallbackQueryOptional = {|
-  _: 'updateNewCallbackQuery',
-  id?: number,
-  sender_user_id?: number,
-  chat_id?: number,
-  message_id?: number,
-  chat_instance?: number,
-  payload?: CallbackQueryPayloadOptional,
-|}
-
-export type updateNewInlineCallbackQuery = {
-  _: 'updateNewInlineCallbackQuery',
-  id: number,
-  sender_user_id: number,
-  inline_message_id: string,
-  chat_instance: number,
-  payload: CallbackQueryPayload,
-}
-
-export type updateNewInlineCallbackQueryOptional = {|
-  _: 'updateNewInlineCallbackQuery',
-  id?: number,
-  sender_user_id?: number,
-  inline_message_id?: string,
-  chat_instance?: number,
-  payload?: CallbackQueryPayloadOptional,
-|}
-
-export type updateNewShippingQuery = {
-  _: 'updateNewShippingQuery',
-  id: number,
-  sender_user_id: number,
-  invoice_payload: string,
-  shipping_address: shippingAddress,
-}
-
-export type updateNewShippingQueryOptional = {|
-  _: 'updateNewShippingQuery',
-  id?: number,
-  sender_user_id?: number,
-  invoice_payload?: string,
-  shipping_address?: shippingAddressOptional,
-|}
-
-export type updateNewPreCheckoutQuery = {
-  _: 'updateNewPreCheckoutQuery',
-  id: number,
-  sender_user_id: number,
-  currency: string,
-  total_amount: number,
-  invoice_payload: string,
-  shipping_option_id: string,
-  order_info: orderInfo,
-}
-
-export type updateNewPreCheckoutQueryOptional = {|
-  _: 'updateNewPreCheckoutQuery',
-  id?: number,
-  sender_user_id?: number,
-  currency?: string,
-  total_amount?: number,
-  invoice_payload?: string,
-  shipping_option_id?: string,
-  order_info?: orderInfoOptional,
-|}
-
-export type updateNewCustomEvent = {
-  _: 'updateNewCustomEvent',
-  event: string,
-}
-
-export type updateNewCustomEventOptional = {|
-  _: 'updateNewCustomEvent',
-  event?: string,
-|}
-
-export type updateNewCustomQuery = {
-  _: 'updateNewCustomQuery',
-  id: number,
-  data: string,
+/** An authentication code is delivered via an SMS message to the specified phone number */
+export type authenticationCodeTypeSms = {
+  _: 'authenticationCodeTypeSms',
+  /** Length of the code */
+  length: number,
+}
+
+/** An authentication code is delivered via an SMS message to the specified phone number */
+export type authenticationCodeTypeSmsOptional = {|
+  _: 'authenticationCodeTypeSms',
+  /** Length of the code */
+  length?: number,
+|}
+
+/** An authentication code is delivered via a phone call to the specified phone number */
+export type authenticationCodeTypeCall = {
+  _: 'authenticationCodeTypeCall',
+  /** Length of the code */
+  length: number,
+}
+
+/** An authentication code is delivered via a phone call to the specified phone number */
+export type authenticationCodeTypeCallOptional = {|
+  _: 'authenticationCodeTypeCall',
+  /** Length of the code */
+  length?: number,
+|}
+
+/**
+ * An authentication code is delivered by an immediately cancelled call to the specified
+ * phone number. The number from which the call was made is the code
+ */
+export type authenticationCodeTypeFlashCall = {
+  _: 'authenticationCodeTypeFlashCall',
+  /** Pattern of the phone number from which the call will be made */
+  pattern: string,
+}
+
+/**
+ * An authentication code is delivered by an immediately cancelled call to the specified
+ * phone number. The number from which the call was made is the code
+ */
+export type authenticationCodeTypeFlashCallOptional = {|
+  _: 'authenticationCodeTypeFlashCall',
+  /** Pattern of the phone number from which the call will be made */
+  pattern?: string,
+|}
+
+/** Information about the authentication code that was sent */
+export type authenticationCodeInfo = {
+  _: 'authenticationCodeInfo',
+  /** A phone number that is being authenticated */
+  phone_number: string,
+  /** Describes the way the code was sent to the user */
+  type: AuthenticationCodeType,
+  /** Describes the way the next code will be sent to the user; may be null */
+  next_type: AuthenticationCodeType,
+  /** Timeout before the code should be re-sent, in seconds */
   timeout: number,
 }
 
-export type updateNewCustomQueryOptional = {|
-  _: 'updateNewCustomQuery',
-  id?: number,
-  data?: string,
+/** Information about the authentication code that was sent */
+export type authenticationCodeInfoOptional = {|
+  _: 'authenticationCodeInfo',
+  /** A phone number that is being authenticated */
+  phone_number?: string,
+  /** Describes the way the code was sent to the user */
+  type?: AuthenticationCodeTypeOptional,
+  /** Describes the way the next code will be sent to the user; may be null */
+  next_type?: AuthenticationCodeTypeOptional,
+  /** Timeout before the code should be re-sent, in seconds */
   timeout?: number,
 |}
 
-export type user = {
-  _: 'user',
+/** TDLib needs TdlibParameters for initialization */
+export type authorizationStateWaitTdlibParameters = {
+  _: 'authorizationStateWaitTdlibParameters',
+}
+
+/** TDLib needs TdlibParameters for initialization */
+export type authorizationStateWaitTdlibParametersOptional = {|
+  _: 'authorizationStateWaitTdlibParameters',
+|}
+
+/** TDLib needs an encryption key to decrypt the local database */
+export type authorizationStateWaitEncryptionKey = {
+  _: 'authorizationStateWaitEncryptionKey',
+  /** True, if the database is currently encrypted */
+  is_encrypted: boolean,
+}
+
+/** TDLib needs an encryption key to decrypt the local database */
+export type authorizationStateWaitEncryptionKeyOptional = {|
+  _: 'authorizationStateWaitEncryptionKey',
+  /** True, if the database is currently encrypted */
+  is_encrypted?: boolean,
+|}
+
+/** TDLib needs the user's phone number to authorize */
+export type authorizationStateWaitPhoneNumber = {
+  _: 'authorizationStateWaitPhoneNumber',
+}
+
+/** TDLib needs the user's phone number to authorize */
+export type authorizationStateWaitPhoneNumberOptional = {|
+  _: 'authorizationStateWaitPhoneNumber',
+|}
+
+/** TDLib needs the user's authentication code to finalize authorization */
+export type authorizationStateWaitCode = {
+  _: 'authorizationStateWaitCode',
+  /** True, if the user is already registered */
+  is_registered: boolean,
+  /** Information about the authorization code that was sent */
+  code_info: authenticationCodeInfo,
+}
+
+/** TDLib needs the user's authentication code to finalize authorization */
+export type authorizationStateWaitCodeOptional = {|
+  _: 'authorizationStateWaitCode',
+  /** True, if the user is already registered */
+  is_registered?: boolean,
+  /** Information about the authorization code that was sent */
+  code_info?: authenticationCodeInfoOptional,
+|}
+
+/** The user has been authorized, but needs to enter a password to start using the application */
+export type authorizationStateWaitPassword = {
+  _: 'authorizationStateWaitPassword',
+  /** Hint for the password; can be empty */
+  password_hint: string,
+  /** True if a recovery email address has been set up */
+  has_recovery_email_address: boolean,
+  /**
+   * Pattern of the email address to which the recovery email was sent; empty until a
+   * recovery email has been sent
+   */
+  recovery_email_address_pattern: string,
+}
+
+/** The user has been authorized, but needs to enter a password to start using the application */
+export type authorizationStateWaitPasswordOptional = {|
+  _: 'authorizationStateWaitPassword',
+  /** Hint for the password; can be empty */
+  password_hint?: string,
+  /** True if a recovery email address has been set up */
+  has_recovery_email_address?: boolean,
+  /**
+   * Pattern of the email address to which the recovery email was sent; empty until a
+   * recovery email has been sent
+   */
+  recovery_email_address_pattern?: string,
+|}
+
+/** The user has been successfully authorized. TDLib is now ready to answer queries */
+export type authorizationStateReady = {
+  _: 'authorizationStateReady',
+}
+
+/** The user has been successfully authorized. TDLib is now ready to answer queries */
+export type authorizationStateReadyOptional = {|
+  _: 'authorizationStateReady',
+|}
+
+/** The user is currently logging out */
+export type authorizationStateLoggingOut = {
+  _: 'authorizationStateLoggingOut',
+}
+
+/** The user is currently logging out */
+export type authorizationStateLoggingOutOptional = {|
+  _: 'authorizationStateLoggingOut',
+|}
+
+/**
+ * TDLib is closing, all subsequent queries will be answered with the error 500. Note
+ * that closing TDLib can take a while. All resources will be freed only after authorizationStateClosed
+ * has been received
+ */
+export type authorizationStateClosing = {
+  _: 'authorizationStateClosing',
+}
+
+/**
+ * TDLib is closing, all subsequent queries will be answered with the error 500. Note
+ * that closing TDLib can take a while. All resources will be freed only after authorizationStateClosed
+ * has been received
+ */
+export type authorizationStateClosingOptional = {|
+  _: 'authorizationStateClosing',
+|}
+
+/**
+ * TDLib client is in its final state. All databases are closed and all resources are
+ * released. No other updates will be received after this. All queries will be responded
+ * to with error code 500. To continue working, one should create a new instance of
+ * the TDLib client
+ */
+export type authorizationStateClosed = {
+  _: 'authorizationStateClosed',
+}
+
+/**
+ * TDLib client is in its final state. All databases are closed and all resources are
+ * released. No other updates will be received after this. All queries will be responded
+ * to with error code 500. To continue working, one should create a new instance of
+ * the TDLib client
+ */
+export type authorizationStateClosedOptional = {|
+  _: 'authorizationStateClosed',
+|}
+
+/** Represents the current state of 2-step verification */
+export type passwordState = {
+  _: 'passwordState',
+  /** True if a 2-step verification password has been set up */
+  has_password: boolean,
+  /** Hint for the password; can be empty */
+  password_hint: string,
+  /** True if a recovery email has been set up */
+  has_recovery_email_address: boolean,
+  /** Pattern of the email address to which a confirmation email was sent */
+  unconfirmed_recovery_email_address_pattern: string,
+}
+
+/** Represents the current state of 2-step verification */
+export type passwordStateOptional = {|
+  _: 'passwordState',
+  /** True if a 2-step verification password has been set up */
+  has_password?: boolean,
+  /** Hint for the password; can be empty */
+  password_hint?: string,
+  /** True if a recovery email has been set up */
+  has_recovery_email_address?: boolean,
+  /** Pattern of the email address to which a confirmation email was sent */
+  unconfirmed_recovery_email_address_pattern?: string,
+|}
+
+/** Contains information available to the user after requesting password recovery */
+export type passwordRecoveryInfo = {
+  _: 'passwordRecoveryInfo',
+  /** Pattern of the email address to which a recovery email was sent */
+  recovery_email_address_pattern: string,
+}
+
+/** Contains information available to the user after requesting password recovery */
+export type passwordRecoveryInfoOptional = {|
+  _: 'passwordRecoveryInfo',
+  /** Pattern of the email address to which a recovery email was sent */
+  recovery_email_address_pattern?: string,
+|}
+
+/** Contains information about the current recovery email address */
+export type recoveryEmailAddress = {
+  _: 'recoveryEmailAddress',
+  /** Recovery email address */
+  recovery_email_address: string,
+}
+
+/** Contains information about the current recovery email address */
+export type recoveryEmailAddressOptional = {|
+  _: 'recoveryEmailAddress',
+  /** Recovery email address */
+  recovery_email_address?: string,
+|}
+
+/**
+ * Returns information about the availability of a temporary password, which can be
+ * used for payments
+ */
+export type temporaryPasswordState = {
+  _: 'temporaryPasswordState',
+  /** True, if a temporary password is available */
+  has_password: boolean,
+  /** Time left before the temporary password expires, in seconds */
+  valid_for: number,
+}
+
+/**
+ * Returns information about the availability of a temporary password, which can be
+ * used for payments
+ */
+export type temporaryPasswordStateOptional = {|
+  _: 'temporaryPasswordState',
+  /** True, if a temporary password is available */
+  has_password?: boolean,
+  /** Time left before the temporary password expires, in seconds */
+  valid_for?: number,
+|}
+
+/** Represents a local file */
+export type localFile = {
+  _: 'localFile',
+  /** Local path to the locally available file part; may be empty */
+  path: string,
+  /** True, if it is possible to try to download or generate the file */
+  can_be_downloaded: boolean,
+  /** True, if the file can be deleted */
+  can_be_deleted: boolean,
+  /**
+   * True, if the file is currently being downloaded (or a local copy is being generated
+   * by some other means)
+   */
+  is_downloading_active: boolean,
+  /** True, if the local copy is fully available */
+  is_downloading_completed: boolean,
+  /**
+   * If is_downloading_completed is false, then only some prefix of the file is ready
+   * to be read. downloaded_prefix_size is the size of that prefix
+   */
+  downloaded_prefix_size: number,
+  /**
+   * Total downloaded file bytes. Should be used only for calculating download progress.
+   * The actual file size may be bigger, and some parts of it may contain garbage
+   */
+  downloaded_size: number,
+}
+
+/** Represents a local file */
+export type localFileOptional = {|
+  _: 'localFile',
+  /** Local path to the locally available file part; may be empty */
+  path?: string,
+  /** True, if it is possible to try to download or generate the file */
+  can_be_downloaded?: boolean,
+  /** True, if the file can be deleted */
+  can_be_deleted?: boolean,
+  /**
+   * True, if the file is currently being downloaded (or a local copy is being generated
+   * by some other means)
+   */
+  is_downloading_active?: boolean,
+  /** True, if the local copy is fully available */
+  is_downloading_completed?: boolean,
+  /**
+   * If is_downloading_completed is false, then only some prefix of the file is ready
+   * to be read. downloaded_prefix_size is the size of that prefix
+   */
+  downloaded_prefix_size?: number,
+  /**
+   * Total downloaded file bytes. Should be used only for calculating download progress.
+   * The actual file size may be bigger, and some parts of it may contain garbage
+   */
+  downloaded_size?: number,
+|}
+
+/** Represents a remote file */
+export type remoteFile = {
+  _: 'remoteFile',
+  /**
+   * Remote file identifier, may be empty. Can be used across application restarts or
+   * even from other devices for the current user. If the ID starts with "http://" or
+   * "https://", it represents the HTTP URL of the file. TDLib is currently unable to
+   * download files if only their URL is known. If downloadFile is called on such a file
+   * or if it is sent to a secret chat, TDLib starts a file generation process by sending
+   * updateFileGenerationStart to the client with the HTTP URL in the original_path and
+   * "#url#" as the conversion string. Clients should generate the file by downloading
+   * it to the specified location
+   */
+  id: string,
+  /**
+   * True, if the file is currently being uploaded (or a remote copy is being generated
+   * by some other means)
+   */
+  is_uploading_active: boolean,
+  /** True, if a remote copy is fully available */
+  is_uploading_completed: boolean,
+  /** Size of the remote available part of the file; 0 if unknown */
+  uploaded_size: number,
+}
+
+/** Represents a remote file */
+export type remoteFileOptional = {|
+  _: 'remoteFile',
+  /**
+   * Remote file identifier, may be empty. Can be used across application restarts or
+   * even from other devices for the current user. If the ID starts with "http://" or
+   * "https://", it represents the HTTP URL of the file. TDLib is currently unable to
+   * download files if only their URL is known. If downloadFile is called on such a file
+   * or if it is sent to a secret chat, TDLib starts a file generation process by sending
+   * updateFileGenerationStart to the client with the HTTP URL in the original_path and
+   * "#url#" as the conversion string. Clients should generate the file by downloading
+   * it to the specified location
+   */
+  id?: string,
+  /**
+   * True, if the file is currently being uploaded (or a remote copy is being generated
+   * by some other means)
+   */
+  is_uploading_active?: boolean,
+  /** True, if a remote copy is fully available */
+  is_uploading_completed?: boolean,
+  /** Size of the remote available part of the file; 0 if unknown */
+  uploaded_size?: number,
+|}
+
+/** Represents a file */
+export type file = {
+  _: 'file',
+  /** Unique file identifier */
   id: number,
-  first_name: string,
-  last_name: string,
-  username: string,
-  phone_number: string,
-  status: UserStatus,
-  profile_photo: profilePhoto,
-  outgoing_link: LinkState,
-  incoming_link: LinkState,
-  is_verified: boolean,
-  restriction_reason: string,
-  have_access: boolean,
-  type: UserType,
-  language_code: string,
+  /** File size; 0 if unknown */
+  size: number,
+  /**
+   * Expected file size in case the exact file size is unknown, but an approximate size
+   * is known. Can be used to show download/upload progress
+   */
+  expected_size: number,
+  /** Information about the local copy of the file */
+  local: localFile,
+  /** Information about the remote copy of the file */
+  remote: remoteFile,
 }
 
-export type userOptional = {|
-  _: 'user',
+/** Represents a file */
+export type fileOptional = {|
+  _: 'file',
+  /** Unique file identifier */
   id?: number,
-  first_name?: string,
-  last_name?: string,
-  username?: string,
+  /** File size; 0 if unknown */
+  size?: number,
+  /**
+   * Expected file size in case the exact file size is unknown, but an approximate size
+   * is known. Can be used to show download/upload progress
+   */
+  expected_size?: number,
+  /** Information about the local copy of the file */
+  local?: localFileOptional,
+  /** Information about the remote copy of the file */
+  remote?: remoteFileOptional,
+|}
+
+/** A file defined by its unique ID */
+export type inputFileId = {
+  _: 'inputFileId',
+  /** Unique file identifier */
+  id: number,
+}
+
+/** A file defined by its unique ID */
+export type inputFileIdOptional = {|
+  _: 'inputFileId',
+  /** Unique file identifier */
+  id?: number,
+|}
+
+/** A file defined by its remote ID */
+export type inputFileRemote = {
+  _: 'inputFileRemote',
+  /** Remote file identifier */
+  id: string,
+}
+
+/** A file defined by its remote ID */
+export type inputFileRemoteOptional = {|
+  _: 'inputFileRemote',
+  /** Remote file identifier */
+  id?: string,
+|}
+
+/** A file defined by a local path */
+export type inputFileLocal = {
+  _: 'inputFileLocal',
+  /** Local path to the file */
+  path: string,
+}
+
+/** A file defined by a local path */
+export type inputFileLocalOptional = {|
+  _: 'inputFileLocal',
+  /** Local path to the file */
+  path?: string,
+|}
+
+/** A file generated by the client */
+export type inputFileGenerated = {
+  _: 'inputFileGenerated',
+  /**
+   * Local path to a file from which the file is generated, may be empty if there is no
+   * such file
+   */
+  original_path: string,
+  /**
+   * String specifying the conversion applied to the original file; should be persistent
+   * across application restarts
+   */
+  conversion: string,
+  /** Expected size of the generated file; 0 if unknown */
+  expected_size: number,
+}
+
+/** A file generated by the client */
+export type inputFileGeneratedOptional = {|
+  _: 'inputFileGenerated',
+  /**
+   * Local path to a file from which the file is generated, may be empty if there is no
+   * such file
+   */
+  original_path?: string,
+  /**
+   * String specifying the conversion applied to the original file; should be persistent
+   * across application restarts
+   */
+  conversion?: string,
+  /** Expected size of the generated file; 0 if unknown */
+  expected_size?: number,
+|}
+
+/** Photo description */
+export type photoSize = {
+  _: 'photoSize',
+  /** Thumbnail type (see https://core.telegram.org/constructor/photoSize) */
+  type: string,
+  /** Information about the photo file */
+  photo: file,
+  /** Photo width */
+  width: number,
+  /** Photo height */
+  height: number,
+}
+
+/** Photo description */
+export type photoSizeOptional = {|
+  _: 'photoSize',
+  /** Thumbnail type (see https://core.telegram.org/constructor/photoSize) */
+  type?: string,
+  /** Information about the photo file */
+  photo?: fileOptional,
+  /** Photo width */
+  width?: number,
+  /** Photo height */
+  height?: number,
+|}
+
+/** A mask should be placed relatively to the forehead */
+export type maskPointForehead = {
+  _: 'maskPointForehead',
+}
+
+/** A mask should be placed relatively to the forehead */
+export type maskPointForeheadOptional = {|
+  _: 'maskPointForehead',
+|}
+
+/** A mask should be placed relatively to the eyes */
+export type maskPointEyes = {
+  _: 'maskPointEyes',
+}
+
+/** A mask should be placed relatively to the eyes */
+export type maskPointEyesOptional = {|
+  _: 'maskPointEyes',
+|}
+
+/** A mask should be placed relatively to the mouth */
+export type maskPointMouth = {
+  _: 'maskPointMouth',
+}
+
+/** A mask should be placed relatively to the mouth */
+export type maskPointMouthOptional = {|
+  _: 'maskPointMouth',
+|}
+
+/** A mask should be placed relatively to the chin */
+export type maskPointChin = {
+  _: 'maskPointChin',
+}
+
+/** A mask should be placed relatively to the chin */
+export type maskPointChinOptional = {|
+  _: 'maskPointChin',
+|}
+
+/** Position on a photo where a mask should be placed */
+export type maskPosition = {
+  _: 'maskPosition',
+  /** Part of the face, relative to which the mask should be placed */
+  point: MaskPoint,
+  /**
+   * Shift by X-axis measured in widths of the mask scaled to the face size, from left
+   * to right. (For example, -1.0 will place the mask just to the left of the default
+   * mask position)
+   */
+  x_shift: number,
+  /**
+   * Shift by Y-axis measured in heights of the mask scaled to the face size, from top
+   * to bottom. (For example, 1.0 will place the mask just below the default mask position)
+   */
+  y_shift: number,
+  /** Mask scaling coefficient. (For example, 2.0 means a doubled size) */
+  scale: number,
+}
+
+/** Position on a photo where a mask should be placed */
+export type maskPositionOptional = {|
+  _: 'maskPosition',
+  /** Part of the face, relative to which the mask should be placed */
+  point?: MaskPointOptional,
+  /**
+   * Shift by X-axis measured in widths of the mask scaled to the face size, from left
+   * to right. (For example, -1.0 will place the mask just to the left of the default
+   * mask position)
+   */
+  x_shift?: number,
+  /**
+   * Shift by Y-axis measured in heights of the mask scaled to the face size, from top
+   * to bottom. (For example, 1.0 will place the mask just below the default mask position)
+   */
+  y_shift?: number,
+  /** Mask scaling coefficient. (For example, 2.0 means a doubled size) */
+  scale?: number,
+|}
+
+/** Represents a part of the text that needs to be formatted in some unusual way */
+export type textEntity = {
+  _: 'textEntity',
+  /** Offset of the entity in UTF-16 code points */
+  offset: number,
+  /** Length of the entity, in UTF-16 code points */
+  length: number,
+  /** Type of the entity */
+  type: TextEntityType,
+}
+
+/** Represents a part of the text that needs to be formatted in some unusual way */
+export type textEntityOptional = {|
+  _: 'textEntity',
+  /** Offset of the entity in UTF-16 code points */
+  offset?: number,
+  /** Length of the entity, in UTF-16 code points */
+  length?: number,
+  /** Type of the entity */
+  type?: TextEntityTypeOptional,
+|}
+
+/** Contains a list of text entities */
+export type textEntities = {
+  _: 'textEntities',
+  /** List of text entities */
+  entities: textEntity[],
+}
+
+/** Contains a list of text entities */
+export type textEntitiesOptional = {|
+  _: 'textEntities',
+  /** List of text entities */
+  entities?: textEntityOptional[],
+|}
+
+/** A text with some entities */
+export type formattedText = {
+  _: 'formattedText',
+  /** The text */
+  text: string,
+  /** Entities contained in the text */
+  entities: textEntity[],
+}
+
+/** A text with some entities */
+export type formattedTextOptional = {|
+  _: 'formattedText',
+  /** The text */
+  text?: string,
+  /** Entities contained in the text */
+  entities?: textEntityOptional[],
+|}
+
+/** Describes an animation file. The animation must be encoded in GIF or MPEG4 format */
+export type animation = {
+  _: 'animation',
+  /** Duration of the animation, in seconds; as defined by the sender */
+  duration: number,
+  /** Width of the animation */
+  width: number,
+  /** Height of the animation */
+  height: number,
+  /** Original name of the file; as defined by the sender */
+  file_name: string,
+  /** MIME type of the file, usually "image/gif" or "video/mp4" */
+  mime_type: string,
+  /** Animation thumbnail; may be null */
+  thumbnail: photoSize,
+  /** File containing the animation */
+  animation: file,
+}
+
+/** Describes an animation file. The animation must be encoded in GIF or MPEG4 format */
+export type animationOptional = {|
+  _: 'animation',
+  /** Duration of the animation, in seconds; as defined by the sender */
+  duration?: number,
+  /** Width of the animation */
+  width?: number,
+  /** Height of the animation */
+  height?: number,
+  /** Original name of the file; as defined by the sender */
+  file_name?: string,
+  /** MIME type of the file, usually "image/gif" or "video/mp4" */
+  mime_type?: string,
+  /** Animation thumbnail; may be null */
+  thumbnail?: photoSizeOptional,
+  /** File containing the animation */
+  animation?: fileOptional,
+|}
+
+/** Describes an audio file. Audio is usually in MP3 format */
+export type audio = {
+  _: 'audio',
+  /** Duration of the audio, in seconds; as defined by the sender */
+  duration: number,
+  /** Title of the audio; as defined by the sender */
+  title: string,
+  /** Performer of the audio; as defined by the sender */
+  performer: string,
+  /** Original name of the file; as defined by the sender */
+  file_name: string,
+  /** The MIME type of the file; as defined by the sender */
+  mime_type: string,
+  /**
+   * The thumbnail of the album cover; as defined by the sender. The full size thumbnail
+   * should be extracted from the downloaded file; may be null
+   */
+  album_cover_thumbnail: photoSize,
+  /** File containing the audio */
+  audio: file,
+}
+
+/** Describes an audio file. Audio is usually in MP3 format */
+export type audioOptional = {|
+  _: 'audio',
+  /** Duration of the audio, in seconds; as defined by the sender */
+  duration?: number,
+  /** Title of the audio; as defined by the sender */
+  title?: string,
+  /** Performer of the audio; as defined by the sender */
+  performer?: string,
+  /** Original name of the file; as defined by the sender */
+  file_name?: string,
+  /** The MIME type of the file; as defined by the sender */
+  mime_type?: string,
+  /**
+   * The thumbnail of the album cover; as defined by the sender. The full size thumbnail
+   * should be extracted from the downloaded file; may be null
+   */
+  album_cover_thumbnail?: photoSizeOptional,
+  /** File containing the audio */
+  audio?: fileOptional,
+|}
+
+/** Describes a document of any type */
+export type document = {
+  _: 'document',
+  /** Original name of the file; as defined by the sender */
+  file_name: string,
+  /** MIME type of the file; as defined by the sender */
+  mime_type: string,
+  /** Document thumbnail; as defined by the sender; may be null */
+  thumbnail: photoSize,
+  /** File containing the document */
+  document: file,
+}
+
+/** Describes a document of any type */
+export type documentOptional = {|
+  _: 'document',
+  /** Original name of the file; as defined by the sender */
+  file_name?: string,
+  /** MIME type of the file; as defined by the sender */
+  mime_type?: string,
+  /** Document thumbnail; as defined by the sender; may be null */
+  thumbnail?: photoSizeOptional,
+  /** File containing the document */
+  document?: fileOptional,
+|}
+
+/** Describes a photo */
+export type photo = {
+  _: 'photo',
+  /** Photo identifier; 0 for deleted photos */
+  id: (number | string),
+  /** True, if stickers were added to the photo */
+  has_stickers: boolean,
+  /** Available variants of the photo, in different sizes */
+  sizes: photoSize[],
+}
+
+/** Describes a photo */
+export type photoOptional = {|
+  _: 'photo',
+  /** Photo identifier; 0 for deleted photos */
+  id?: (number | string),
+  /** True, if stickers were added to the photo */
+  has_stickers?: boolean,
+  /** Available variants of the photo, in different sizes */
+  sizes?: photoSizeOptional[],
+|}
+
+/** Describes a sticker */
+export type sticker = {
+  _: 'sticker',
+  /** The identifier of the sticker set to which the sticker belongs; 0 if none */
+  set_id: (number | string),
+  /** Sticker width; as defined by the sender */
+  width: number,
+  /** Sticker height; as defined by the sender */
+  height: number,
+  /** Emoji corresponding to the sticker */
+  emoji: string,
+  /** True, if the sticker is a mask */
+  is_mask: boolean,
+  /** Position where the mask should be placed; may be null */
+  mask_position: maskPosition,
+  /** Sticker thumbnail in WEBP or JPEG format; may be null */
+  thumbnail: photoSize,
+  /** File containing the sticker */
+  sticker: file,
+}
+
+/** Describes a sticker */
+export type stickerOptional = {|
+  _: 'sticker',
+  /** The identifier of the sticker set to which the sticker belongs; 0 if none */
+  set_id?: (number | string),
+  /** Sticker width; as defined by the sender */
+  width?: number,
+  /** Sticker height; as defined by the sender */
+  height?: number,
+  /** Emoji corresponding to the sticker */
+  emoji?: string,
+  /** True, if the sticker is a mask */
+  is_mask?: boolean,
+  /** Position where the mask should be placed; may be null */
+  mask_position?: maskPositionOptional,
+  /** Sticker thumbnail in WEBP or JPEG format; may be null */
+  thumbnail?: photoSizeOptional,
+  /** File containing the sticker */
+  sticker?: fileOptional,
+|}
+
+/** Describes a video file */
+export type video = {
+  _: 'video',
+  /** Duration of the video, in seconds; as defined by the sender */
+  duration: number,
+  /** Video width; as defined by the sender */
+  width: number,
+  /** Video height; as defined by the sender */
+  height: number,
+  /** Original name of the file; as defined by the sender */
+  file_name: string,
+  /** MIME type of the file; as defined by the sender */
+  mime_type: string,
+  /** True, if stickers were added to the photo */
+  has_stickers: boolean,
+  /** True, if the video should be tried to be streamed */
+  supports_streaming: boolean,
+  /** Video thumbnail; as defined by the sender; may be null */
+  thumbnail: photoSize,
+  /** File containing the video */
+  video: file,
+}
+
+/** Describes a video file */
+export type videoOptional = {|
+  _: 'video',
+  /** Duration of the video, in seconds; as defined by the sender */
+  duration?: number,
+  /** Video width; as defined by the sender */
+  width?: number,
+  /** Video height; as defined by the sender */
+  height?: number,
+  /** Original name of the file; as defined by the sender */
+  file_name?: string,
+  /** MIME type of the file; as defined by the sender */
+  mime_type?: string,
+  /** True, if stickers were added to the photo */
+  has_stickers?: boolean,
+  /** True, if the video should be tried to be streamed */
+  supports_streaming?: boolean,
+  /** Video thumbnail; as defined by the sender; may be null */
+  thumbnail?: photoSizeOptional,
+  /** File containing the video */
+  video?: fileOptional,
+|}
+
+/**
+ * Describes a video note. The video must be equal in width and height, cropped to a
+ * circle, and stored in MPEG4 format
+ */
+export type videoNote = {
+  _: 'videoNote',
+  /** Duration of the video, in seconds; as defined by the sender */
+  duration: number,
+  /** Video width and height; as defined by the sender */
+  length: number,
+  /** Video thumbnail; as defined by the sender; may be null */
+  thumbnail: photoSize,
+  /** File containing the video */
+  video: file,
+}
+
+/**
+ * Describes a video note. The video must be equal in width and height, cropped to a
+ * circle, and stored in MPEG4 format
+ */
+export type videoNoteOptional = {|
+  _: 'videoNote',
+  /** Duration of the video, in seconds; as defined by the sender */
+  duration?: number,
+  /** Video width and height; as defined by the sender */
+  length?: number,
+  /** Video thumbnail; as defined by the sender; may be null */
+  thumbnail?: photoSizeOptional,
+  /** File containing the video */
+  video?: fileOptional,
+|}
+
+/**
+ * Describes a voice note. The voice note must be encoded with the Opus codec, and stored
+ * inside an OGG container. Voice notes can have only a single audio channel
+ */
+export type voiceNote = {
+  _: 'voiceNote',
+  /** Duration of the voice note, in seconds; as defined by the sender */
+  duration: number,
+  /** A waveform representation of the voice note in 5-bit format */
+  waveform: string,
+  /** MIME type of the file; as defined by the sender */
+  mime_type: string,
+  /** File containing the voice note */
+  voice: file,
+}
+
+/**
+ * Describes a voice note. The voice note must be encoded with the Opus codec, and stored
+ * inside an OGG container. Voice notes can have only a single audio channel
+ */
+export type voiceNoteOptional = {|
+  _: 'voiceNote',
+  /** Duration of the voice note, in seconds; as defined by the sender */
+  duration?: number,
+  /** A waveform representation of the voice note in 5-bit format */
+  waveform?: string,
+  /** MIME type of the file; as defined by the sender */
+  mime_type?: string,
+  /** File containing the voice note */
+  voice?: fileOptional,
+|}
+
+/** Describes a user contact */
+export type contact = {
+  _: 'contact',
+  /** Phone number of the user */
+  phone_number: string,
+  /** First name of the user; 1-255 characters in length */
+  first_name: string,
+  /** Last name of the user */
+  last_name: string,
+  /** Identifier of the user, if known; otherwise 0 */
+  user_id: number,
+}
+
+/** Describes a user contact */
+export type contactOptional = {|
+  _: 'contact',
+  /** Phone number of the user */
   phone_number?: string,
-  status?: UserStatusOptional,
-  profile_photo?: profilePhotoOptional,
-  outgoing_link?: LinkStateOptional,
-  incoming_link?: LinkStateOptional,
-  is_verified?: boolean,
-  restriction_reason?: string,
-  have_access?: boolean,
-  type?: UserTypeOptional,
-  language_code?: string,
+  /** First name of the user; 1-255 characters in length */
+  first_name?: string,
+  /** Last name of the user */
+  last_name?: string,
+  /** Identifier of the user, if known; otherwise 0 */
+  user_id?: number,
 |}
 
-export type userFullInfo = {
-  _: 'userFullInfo',
-  is_blocked: boolean,
-  can_be_called: boolean,
-  has_private_calls: boolean,
-  bio: string,
-  share_text: string,
-  group_in_common_count: number,
-  bot_info: botInfo,
+/** Describes a location on planet Earth */
+export type location = {
+  _: 'location',
+  /** Latitude of the location in degrees; as defined by the sender */
+  latitude: number,
+  /** Longitude of the location, in degrees; as defined by the sender */
+  longitude: number,
 }
 
-export type userFullInfoOptional = {|
-  _: 'userFullInfo',
-  is_blocked?: boolean,
-  can_be_called?: boolean,
-  has_private_calls?: boolean,
-  bio?: string,
-  share_text?: string,
-  group_in_common_count?: number,
-  bot_info?: botInfoOptional,
+/** Describes a location on planet Earth */
+export type locationOptional = {|
+  _: 'location',
+  /** Latitude of the location in degrees; as defined by the sender */
+  latitude?: number,
+  /** Longitude of the location, in degrees; as defined by the sender */
+  longitude?: number,
 |}
 
-export type userPrivacySettingShowStatus = {
-  _: 'userPrivacySettingShowStatus',
+/** Describes a venue */
+export type venue = {
+  _: 'venue',
+  /** Venue location; as defined by the sender */
+  location: location,
+  /** Venue name; as defined by the sender */
+  title: string,
+  /** Venue address; as defined by the sender */
+  address: string,
+  /**
+   * Provider of the venue database; as defined by the sender. Currently only "foursquare"
+   * needs to be supported
+   */
+  provider: string,
+  /** Identifier of the venue in the provider database; as defined by the sender */
+  id: string,
 }
 
-export type userPrivacySettingShowStatusOptional = {|
-  _: 'userPrivacySettingShowStatus',
+/** Describes a venue */
+export type venueOptional = {|
+  _: 'venue',
+  /** Venue location; as defined by the sender */
+  location?: locationOptional,
+  /** Venue name; as defined by the sender */
+  title?: string,
+  /** Venue address; as defined by the sender */
+  address?: string,
+  /**
+   * Provider of the venue database; as defined by the sender. Currently only "foursquare"
+   * needs to be supported
+   */
+  provider?: string,
+  /** Identifier of the venue in the provider database; as defined by the sender */
+  id?: string,
 |}
 
-export type userPrivacySettingAllowChatInvites = {
-  _: 'userPrivacySettingAllowChatInvites',
+/** Describes a game */
+export type game = {
+  _: 'game',
+  /** Game ID */
+  id: (number | string),
+  /** Game short name. To share a game use the URL https://t.me/{bot_username}?game={game_short_name} */
+  short_name: string,
+  /** Game title */
+  title: string,
+  /** Game text, usually containing scoreboards for a game */
+  text: formattedText,
+  /** Game description */
+  description: string,
+  /** Game photo */
+  photo: photo,
+  /** Game animation; may be null */
+  animation: animation,
 }
 
-export type userPrivacySettingAllowChatInvitesOptional = {|
-  _: 'userPrivacySettingAllowChatInvites',
+/** Describes a game */
+export type gameOptional = {|
+  _: 'game',
+  /** Game ID */
+  id?: (number | string),
+  /** Game short name. To share a game use the URL https://t.me/{bot_username}?game={game_short_name} */
+  short_name?: string,
+  /** Game title */
+  title?: string,
+  /** Game text, usually containing scoreboards for a game */
+  text?: formattedTextOptional,
+  /** Game description */
+  description?: string,
+  /** Game photo */
+  photo?: photoOptional,
+  /** Game animation; may be null */
+  animation?: animationOptional,
 |}
 
-export type userPrivacySettingAllowCalls = {
-  _: 'userPrivacySettingAllowCalls',
+/** Describes a user profile photo */
+export type profilePhoto = {
+  _: 'profilePhoto',
+  /**
+   * Photo identifier; 0 for an empty photo. Can be used to find a photo in a list of
+   * userProfilePhotos
+   */
+  id: (number | string),
+  /** A small (160x160) user profile photo */
+  small: file,
+  /** A big (640x640) user profile photo */
+  big: file,
 }
 
-export type userPrivacySettingAllowCallsOptional = {|
-  _: 'userPrivacySettingAllowCalls',
+/** Describes a user profile photo */
+export type profilePhotoOptional = {|
+  _: 'profilePhoto',
+  /**
+   * Photo identifier; 0 for an empty photo. Can be used to find a photo in a list of
+   * userProfilePhotos
+   */
+  id?: (number | string),
+  /** A small (160x160) user profile photo */
+  small?: fileOptional,
+  /** A big (640x640) user profile photo */
+  big?: fileOptional,
 |}
 
-export type userPrivacySettingRuleAllowAll = {
-  _: 'userPrivacySettingRuleAllowAll',
+/** Describes the photo of a chat */
+export type chatPhoto = {
+  _: 'chatPhoto',
+  /** A small (160x160) chat photo */
+  small: file,
+  /** A big (640x640) chat photo */
+  big: file,
 }
 
-export type userPrivacySettingRuleAllowAllOptional = {|
-  _: 'userPrivacySettingRuleAllowAll',
+/** Describes the photo of a chat */
+export type chatPhotoOptional = {|
+  _: 'chatPhoto',
+  /** A small (160x160) chat photo */
+  small?: fileOptional,
+  /** A big (640x640) chat photo */
+  big?: fileOptional,
 |}
 
-export type userPrivacySettingRuleAllowContacts = {
-  _: 'userPrivacySettingRuleAllowContacts',
+/** The phone number of user A is not known to user B */
+export type linkStateNone = {
+  _: 'linkStateNone',
 }
 
-export type userPrivacySettingRuleAllowContactsOptional = {|
-  _: 'userPrivacySettingRuleAllowContacts',
+/** The phone number of user A is not known to user B */
+export type linkStateNoneOptional = {|
+  _: 'linkStateNone',
 |}
 
-export type userPrivacySettingRuleAllowUsers = {
-  _: 'userPrivacySettingRuleAllowUsers',
-  user_ids: number[],
+/**
+ * The phone number of user A is known but that number has not been saved to the contacts
+ * list of user B
+ */
+export type linkStateKnowsPhoneNumber = {
+  _: 'linkStateKnowsPhoneNumber',
 }
 
-export type userPrivacySettingRuleAllowUsersOptional = {|
-  _: 'userPrivacySettingRuleAllowUsers',
-  user_ids?: number[],
+/**
+ * The phone number of user A is known but that number has not been saved to the contacts
+ * list of user B
+ */
+export type linkStateKnowsPhoneNumberOptional = {|
+  _: 'linkStateKnowsPhoneNumber',
 |}
 
-export type userPrivacySettingRuleRestrictAll = {
-  _: 'userPrivacySettingRuleRestrictAll',
+/** The phone number of user A has been saved to the contacts list of user B */
+export type linkStateIsContact = {
+  _: 'linkStateIsContact',
 }
 
-export type userPrivacySettingRuleRestrictAllOptional = {|
-  _: 'userPrivacySettingRuleRestrictAll',
+/** The phone number of user A has been saved to the contacts list of user B */
+export type linkStateIsContactOptional = {|
+  _: 'linkStateIsContact',
 |}
 
-export type userPrivacySettingRuleRestrictContacts = {
-  _: 'userPrivacySettingRuleRestrictContacts',
-}
-
-export type userPrivacySettingRuleRestrictContactsOptional = {|
-  _: 'userPrivacySettingRuleRestrictContacts',
-|}
-
-export type userPrivacySettingRuleRestrictUsers = {
-  _: 'userPrivacySettingRuleRestrictUsers',
-  user_ids: number[],
-}
-
-export type userPrivacySettingRuleRestrictUsersOptional = {|
-  _: 'userPrivacySettingRuleRestrictUsers',
-  user_ids?: number[],
-|}
-
-export type userPrivacySettingRules = {
-  _: 'userPrivacySettingRules',
-  rules: UserPrivacySettingRule[],
-}
-
-export type userPrivacySettingRulesOptional = {|
-  _: 'userPrivacySettingRules',
-  rules?: UserPrivacySettingRuleOptional[],
-|}
-
-export type userProfilePhotos = {
-  _: 'userProfilePhotos',
-  total_count: number,
-  photos: photo[],
-}
-
-export type userProfilePhotosOptional = {|
-  _: 'userProfilePhotos',
-  total_count?: number,
-  photos?: photoOptional[],
-|}
-
-export type userStatusEmpty = {
-  _: 'userStatusEmpty',
-}
-
-export type userStatusEmptyOptional = {|
-  _: 'userStatusEmpty',
-|}
-
-export type userStatusOnline = {
-  _: 'userStatusOnline',
-  expires: number,
-}
-
-export type userStatusOnlineOptional = {|
-  _: 'userStatusOnline',
-  expires?: number,
-|}
-
-export type userStatusOffline = {
-  _: 'userStatusOffline',
-  was_online: number,
-}
-
-export type userStatusOfflineOptional = {|
-  _: 'userStatusOffline',
-  was_online?: number,
-|}
-
-export type userStatusRecently = {
-  _: 'userStatusRecently',
-}
-
-export type userStatusRecentlyOptional = {|
-  _: 'userStatusRecently',
-|}
-
-export type userStatusLastWeek = {
-  _: 'userStatusLastWeek',
-}
-
-export type userStatusLastWeekOptional = {|
-  _: 'userStatusLastWeek',
-|}
-
-export type userStatusLastMonth = {
-  _: 'userStatusLastMonth',
-}
-
-export type userStatusLastMonthOptional = {|
-  _: 'userStatusLastMonth',
-|}
-
+/** A regular user */
 export type userTypeRegular = {
   _: 'userTypeRegular',
 }
 
+/** A regular user */
 export type userTypeRegularOptional = {|
   _: 'userTypeRegular',
 |}
 
+/**
+ * A deleted user or deleted bot. No information on the user besides the user_id is
+ * available. It is not possible to perform any active actions on this type of user
+ */
 export type userTypeDeleted = {
   _: 'userTypeDeleted',
 }
 
+/**
+ * A deleted user or deleted bot. No information on the user besides the user_id is
+ * available. It is not possible to perform any active actions on this type of user
+ */
 export type userTypeDeletedOptional = {|
   _: 'userTypeDeleted',
 |}
 
+/** A bot (see https://core.telegram.org/bots) */
 export type userTypeBot = {
   _: 'userTypeBot',
+  /** True, if the bot can be invited to basic group and supergroup chats */
   can_join_groups: boolean,
+  /**
+   * True, if the bot can read all messages in basic group or supergroup chats and not
+   * just those addressed to the bot. In private and channel chats a bot can always read
+   * all messages
+   */
   can_read_all_group_messages: boolean,
+  /** True, if the bot supports inline queries */
   is_inline: boolean,
+  /** Placeholder for inline queries (displayed on the client input field) */
   inline_query_placeholder: string,
+  /**
+   * True, if the location of the user should be sent with every inline query to this
+   * bot
+   */
   need_location: boolean,
 }
 
+/** A bot (see https://core.telegram.org/bots) */
 export type userTypeBotOptional = {|
   _: 'userTypeBot',
+  /** True, if the bot can be invited to basic group and supergroup chats */
   can_join_groups?: boolean,
+  /**
+   * True, if the bot can read all messages in basic group or supergroup chats and not
+   * just those addressed to the bot. In private and channel chats a bot can always read
+   * all messages
+   */
   can_read_all_group_messages?: boolean,
+  /** True, if the bot supports inline queries */
   is_inline?: boolean,
+  /** Placeholder for inline queries (displayed on the client input field) */
   inline_query_placeholder?: string,
+  /**
+   * True, if the location of the user should be sent with every inline query to this
+   * bot
+   */
   need_location?: boolean,
 |}
 
+/**
+ * No information on the user besides the user_id is available, yet this user has not
+ * been deleted. This object is extremely rare and must be handled like a deleted user.
+ * It is not possible to perform any actions on users of this type
+ */
 export type userTypeUnknown = {
   _: 'userTypeUnknown',
 }
 
+/**
+ * No information on the user besides the user_id is available, yet this user has not
+ * been deleted. This object is extremely rare and must be handled like a deleted user.
+ * It is not possible to perform any actions on users of this type
+ */
 export type userTypeUnknownOptional = {|
   _: 'userTypeUnknown',
 |}
 
+/** Represents commands supported by a bot */
+export type botCommand = {
+  _: 'botCommand',
+  /** Text of the bot command */
+  command: string,
+  /** Description of the bot command */
+  description: string,
+}
+
+/** Represents commands supported by a bot */
+export type botCommandOptional = {|
+  _: 'botCommand',
+  /** Text of the bot command */
+  command?: string,
+  /** Description of the bot command */
+  description?: string,
+|}
+
+/** Provides information about a bot and its supported commands */
+export type botInfo = {
+  _: 'botInfo',
+  /** Long description shown on the user info page */
+  description: string,
+  /** A list of commands supported by the bot */
+  commands: botCommand[],
+}
+
+/** Provides information about a bot and its supported commands */
+export type botInfoOptional = {|
+  _: 'botInfo',
+  /** Long description shown on the user info page */
+  description?: string,
+  /** A list of commands supported by the bot */
+  commands?: botCommandOptional[],
+|}
+
+/** Represents a user */
+export type user = {
+  _: 'user',
+  /** User identifier */
+  id: number,
+  /** First name of the user */
+  first_name: string,
+  /** Last name of the user */
+  last_name: string,
+  /** Username of the user */
+  username: string,
+  /** Phone number of the user */
+  phone_number: string,
+  /** Current online status of the user */
+  status: UserStatus,
+  /** Profile photo of the user; may be null */
+  profile_photo: profilePhoto,
+  /** Relationship from the current user to the other user */
+  outgoing_link: LinkState,
+  /** Relationship from the other user to the current user */
+  incoming_link: LinkState,
+  /** True, if the user is verified */
+  is_verified: boolean,
+  /**
+   * If non-empty, it contains the reason why access to this user must be restricted.
+   * The format of the string is "{type}: {description}". {type} contains the type of
+   * the restriction and at least one of the suffixes "-all", "-ios", "-android", or "-wp",
+   * which describe the platforms on which access should be restricted. (For example,
+   * "terms-ios-android". {description} contains a human-readable description of the restriction,
+   * which can be shown to the user)
+   */
+  restriction_reason: string,
+  /**
+   * If false, the user is inaccessible, and the only information known about the user
+   * is inside this class. It can't be passed to any method except GetUser
+   */
+  have_access: boolean,
+  /** Type of the user */
+  type: UserType,
+  /** IETF language tag of the user's language; only available to bots */
+  language_code: string,
+}
+
+/** Represents a user */
+export type userOptional = {|
+  _: 'user',
+  /** User identifier */
+  id?: number,
+  /** First name of the user */
+  first_name?: string,
+  /** Last name of the user */
+  last_name?: string,
+  /** Username of the user */
+  username?: string,
+  /** Phone number of the user */
+  phone_number?: string,
+  /** Current online status of the user */
+  status?: UserStatusOptional,
+  /** Profile photo of the user; may be null */
+  profile_photo?: profilePhotoOptional,
+  /** Relationship from the current user to the other user */
+  outgoing_link?: LinkStateOptional,
+  /** Relationship from the other user to the current user */
+  incoming_link?: LinkStateOptional,
+  /** True, if the user is verified */
+  is_verified?: boolean,
+  /**
+   * If non-empty, it contains the reason why access to this user must be restricted.
+   * The format of the string is "{type}: {description}". {type} contains the type of
+   * the restriction and at least one of the suffixes "-all", "-ios", "-android", or "-wp",
+   * which describe the platforms on which access should be restricted. (For example,
+   * "terms-ios-android". {description} contains a human-readable description of the restriction,
+   * which can be shown to the user)
+   */
+  restriction_reason?: string,
+  /**
+   * If false, the user is inaccessible, and the only information known about the user
+   * is inside this class. It can't be passed to any method except GetUser
+   */
+  have_access?: boolean,
+  /** Type of the user */
+  type?: UserTypeOptional,
+  /** IETF language tag of the user's language; only available to bots */
+  language_code?: string,
+|}
+
+/** Contains full information about a user (except the full list of profile photos) */
+export type userFullInfo = {
+  _: 'userFullInfo',
+  /** True, if the user is blacklisted by the current user */
+  is_blocked: boolean,
+  /** True, if the user can be called */
+  can_be_called: boolean,
+  /** True, if the user can't be called due to their privacy settings */
+  has_private_calls: boolean,
+  /** A short user bio */
+  bio: string,
+  /** For bots, the text that is included with the link when users share the bot */
+  share_text: string,
+  /**
+   * Number of group chats where both the other user and the current user are a member;
+   * 0 for the current user
+   */
+  group_in_common_count: number,
+  /** If the user is a bot, information about the bot; may be null */
+  bot_info: botInfo,
+}
+
+/** Contains full information about a user (except the full list of profile photos) */
+export type userFullInfoOptional = {|
+  _: 'userFullInfo',
+  /** True, if the user is blacklisted by the current user */
+  is_blocked?: boolean,
+  /** True, if the user can be called */
+  can_be_called?: boolean,
+  /** True, if the user can't be called due to their privacy settings */
+  has_private_calls?: boolean,
+  /** A short user bio */
+  bio?: string,
+  /** For bots, the text that is included with the link when users share the bot */
+  share_text?: string,
+  /**
+   * Number of group chats where both the other user and the current user are a member;
+   * 0 for the current user
+   */
+  group_in_common_count?: number,
+  /** If the user is a bot, information about the bot; may be null */
+  bot_info?: botInfoOptional,
+|}
+
+/** Contains part of the list of user photos */
+export type userProfilePhotos = {
+  _: 'userProfilePhotos',
+  /** Total number of user profile photos */
+  total_count: number,
+  /** A list of photos */
+  photos: photo[],
+}
+
+/** Contains part of the list of user photos */
+export type userProfilePhotosOptional = {|
+  _: 'userProfilePhotos',
+  /** Total number of user profile photos */
+  total_count?: number,
+  /** A list of photos */
+  photos?: photoOptional[],
+|}
+
+/** Represents a list of users */
 export type users = {
   _: 'users',
+  /** Approximate total count of users found */
   total_count: number,
+  /** A list of user identifiers */
   user_ids: number[],
 }
 
+/** Represents a list of users */
 export type usersOptional = {|
   _: 'users',
+  /** Approximate total count of users found */
   total_count?: number,
+  /** A list of user identifiers */
   user_ids?: number[],
 |}
 
-export type validatedOrderInfo = {
-  _: 'validatedOrderInfo',
-  order_info_id: string,
-  shipping_options: shippingOption[],
+/** The user is the creator of a chat and has all the administrator privileges */
+export type chatMemberStatusCreator = {
+  _: 'chatMemberStatusCreator',
+  /** True, if the user is a member of the chat */
+  is_member: boolean,
 }
 
-export type validatedOrderInfoOptional = {|
-  _: 'validatedOrderInfo',
-  order_info_id?: string,
-  shipping_options?: shippingOptionOptional[],
+/** The user is the creator of a chat and has all the administrator privileges */
+export type chatMemberStatusCreatorOptional = {|
+  _: 'chatMemberStatusCreator',
+  /** True, if the user is a member of the chat */
+  is_member?: boolean,
 |}
 
-export type venue = {
-  _: 'venue',
-  location: location,
-  title: string,
-  address: string,
-  provider: string,
-  id: string,
+/**
+ * The user is a member of a chat and has some additional privileges. In basic groups,
+ * administrators can edit and delete messages sent by others, add new members, and
+ * ban unprivileged members. In supergroups and channels, there are more detailed options
+ * for administrator privileges
+ */
+export type chatMemberStatusAdministrator = {
+  _: 'chatMemberStatusAdministrator',
+  /** True, if the current user can edit the administrator privileges for the called user */
+  can_be_edited: boolean,
+  /** True, if the administrator can change the chat title, photo, and other settings */
+  can_change_info: boolean,
+  /** True, if the administrator can create channel posts; applicable to channels only */
+  can_post_messages: boolean,
+  /**
+   * True, if the administrator can edit messages of other users and pin messages; applicable
+   * to channels only
+   */
+  can_edit_messages: boolean,
+  /** True, if the administrator can delete messages of other users */
+  can_delete_messages: boolean,
+  /** True, if the administrator can invite new users to the chat */
+  can_invite_users: boolean,
+  /** True, if the administrator can restrict, ban, or unban chat members */
+  can_restrict_members: boolean,
+  /** True, if the administrator can pin messages; applicable to supergroups only */
+  can_pin_messages: boolean,
+  /**
+   * True, if the administrator can add new administrators with a subset of his own privileges
+   * or demote administrators that were directly or indirectly promoted by him
+   */
+  can_promote_members: boolean,
 }
 
-export type venueOptional = {|
-  _: 'venue',
-  location?: locationOptional,
-  title?: string,
-  address?: string,
-  provider?: string,
-  id?: string,
+/**
+ * The user is a member of a chat and has some additional privileges. In basic groups,
+ * administrators can edit and delete messages sent by others, add new members, and
+ * ban unprivileged members. In supergroups and channels, there are more detailed options
+ * for administrator privileges
+ */
+export type chatMemberStatusAdministratorOptional = {|
+  _: 'chatMemberStatusAdministrator',
+  /** True, if the current user can edit the administrator privileges for the called user */
+  can_be_edited?: boolean,
+  /** True, if the administrator can change the chat title, photo, and other settings */
+  can_change_info?: boolean,
+  /** True, if the administrator can create channel posts; applicable to channels only */
+  can_post_messages?: boolean,
+  /**
+   * True, if the administrator can edit messages of other users and pin messages; applicable
+   * to channels only
+   */
+  can_edit_messages?: boolean,
+  /** True, if the administrator can delete messages of other users */
+  can_delete_messages?: boolean,
+  /** True, if the administrator can invite new users to the chat */
+  can_invite_users?: boolean,
+  /** True, if the administrator can restrict, ban, or unban chat members */
+  can_restrict_members?: boolean,
+  /** True, if the administrator can pin messages; applicable to supergroups only */
+  can_pin_messages?: boolean,
+  /**
+   * True, if the administrator can add new administrators with a subset of his own privileges
+   * or demote administrators that were directly or indirectly promoted by him
+   */
+  can_promote_members?: boolean,
 |}
 
-export type video = {
-  _: 'video',
-  duration: number,
-  width: number,
-  height: number,
-  file_name: string,
-  mime_type: string,
-  has_stickers: boolean,
-  supports_streaming: boolean,
-  thumbnail: photoSize,
-  video: file,
+/** The user is a member of a chat, without any additional privileges or restrictions */
+export type chatMemberStatusMember = {
+  _: 'chatMemberStatusMember',
 }
 
-export type videoOptional = {|
-  _: 'video',
-  duration?: number,
-  width?: number,
-  height?: number,
-  file_name?: string,
-  mime_type?: string,
-  has_stickers?: boolean,
-  supports_streaming?: boolean,
-  thumbnail?: photoSizeOptional,
-  video?: fileOptional,
+/** The user is a member of a chat, without any additional privileges or restrictions */
+export type chatMemberStatusMemberOptional = {|
+  _: 'chatMemberStatusMember',
 |}
 
-export type videoNote = {
-  _: 'videoNote',
-  duration: number,
-  length: number,
-  thumbnail: photoSize,
-  video: file,
+/**
+ * The user is under certain restrictions in the chat. Not supported in basic groups
+ * and channels
+ */
+export type chatMemberStatusRestricted = {
+  _: 'chatMemberStatusRestricted',
+  /** True, if the user is a member of the chat */
+  is_member: boolean,
+  /**
+   * Point in time (Unix timestamp) when restrictions will be lifted from the user; 0
+   * if never. If the user is restricted for more than 366 days or for less than 30 seconds
+   * from the current time, the user is considered to be restricted forever
+   */
+  restricted_until_date: number,
+  /** True, if the user can send text messages, contacts, locations, and venues */
+  can_send_messages: boolean,
+  /**
+   * True, if the user can send audio files, documents, photos, videos, video notes, and
+   * voice notes. Implies can_send_messages permissions
+   */
+  can_send_media_messages: boolean,
+  /**
+   * True, if the user can send animations, games, and stickers and use inline bots. Implies
+   * can_send_media_messages permissions
+   */
+  can_send_other_messages: boolean,
+  /**
+   * True, if the user may add a web page preview to his messages. Implies can_send_messages
+   * permissions
+   */
+  can_add_web_page_previews: boolean,
 }
 
-export type videoNoteOptional = {|
-  _: 'videoNote',
-  duration?: number,
-  length?: number,
-  thumbnail?: photoSizeOptional,
-  video?: fileOptional,
+/**
+ * The user is under certain restrictions in the chat. Not supported in basic groups
+ * and channels
+ */
+export type chatMemberStatusRestrictedOptional = {|
+  _: 'chatMemberStatusRestricted',
+  /** True, if the user is a member of the chat */
+  is_member?: boolean,
+  /**
+   * Point in time (Unix timestamp) when restrictions will be lifted from the user; 0
+   * if never. If the user is restricted for more than 366 days or for less than 30 seconds
+   * from the current time, the user is considered to be restricted forever
+   */
+  restricted_until_date?: number,
+  /** True, if the user can send text messages, contacts, locations, and venues */
+  can_send_messages?: boolean,
+  /**
+   * True, if the user can send audio files, documents, photos, videos, video notes, and
+   * voice notes. Implies can_send_messages permissions
+   */
+  can_send_media_messages?: boolean,
+  /**
+   * True, if the user can send animations, games, and stickers and use inline bots. Implies
+   * can_send_media_messages permissions
+   */
+  can_send_other_messages?: boolean,
+  /**
+   * True, if the user may add a web page preview to his messages. Implies can_send_messages
+   * permissions
+   */
+  can_add_web_page_previews?: boolean,
 |}
 
-export type voiceNote = {
-  _: 'voiceNote',
-  duration: number,
-  waveform: string,
-  mime_type: string,
-  voice: file,
+/** The user is not a chat member */
+export type chatMemberStatusLeft = {
+  _: 'chatMemberStatusLeft',
 }
 
-export type voiceNoteOptional = {|
-  _: 'voiceNote',
-  duration?: number,
-  waveform?: string,
-  mime_type?: string,
-  voice?: fileOptional,
+/** The user is not a chat member */
+export type chatMemberStatusLeftOptional = {|
+  _: 'chatMemberStatusLeft',
 |}
 
-export type wallpaper = {
-  _: 'wallpaper',
+/**
+ * The user was banned (and hence is not a member of the chat). Implies the user can't
+ * return to the chat or view messages
+ */
+export type chatMemberStatusBanned = {
+  _: 'chatMemberStatusBanned',
+  /**
+   * Point in time (Unix timestamp) when the user will be unbanned; 0 if never. If the
+   * user is banned for more than 366 days or for less than 30 seconds from the current
+   * time, the user is considered to be banned forever
+   */
+  banned_until_date: number,
+}
+
+/**
+ * The user was banned (and hence is not a member of the chat). Implies the user can't
+ * return to the chat or view messages
+ */
+export type chatMemberStatusBannedOptional = {|
+  _: 'chatMemberStatusBanned',
+  /**
+   * Point in time (Unix timestamp) when the user will be unbanned; 0 if never. If the
+   * user is banned for more than 366 days or for less than 30 seconds from the current
+   * time, the user is considered to be banned forever
+   */
+  banned_until_date?: number,
+|}
+
+/** A user with information about joining/leaving a chat */
+export type chatMember = {
+  _: 'chatMember',
+  /** User identifier of the chat member */
+  user_id: number,
+  /** Identifier of a user that invited/promoted/banned this member in the chat; 0 if unknown */
+  inviter_user_id: number,
+  /** Point in time (Unix timestamp) when the user joined a chat */
+  joined_chat_date: number,
+  /** Status of the member in the chat */
+  status: ChatMemberStatus,
+  /**
+   * If the user is a bot, information about the bot; may be null. Can be null even for
+   * a bot if the bot is not a chat member
+   */
+  bot_info: botInfo,
+}
+
+/** A user with information about joining/leaving a chat */
+export type chatMemberOptional = {|
+  _: 'chatMember',
+  /** User identifier of the chat member */
+  user_id?: number,
+  /** Identifier of a user that invited/promoted/banned this member in the chat; 0 if unknown */
+  inviter_user_id?: number,
+  /** Point in time (Unix timestamp) when the user joined a chat */
+  joined_chat_date?: number,
+  /** Status of the member in the chat */
+  status?: ChatMemberStatusOptional,
+  /**
+   * If the user is a bot, information about the bot; may be null. Can be null even for
+   * a bot if the bot is not a chat member
+   */
+  bot_info?: botInfoOptional,
+|}
+
+/** Contains a list of chat members */
+export type chatMembers = {
+  _: 'chatMembers',
+  /** Approximate total count of chat members found */
+  total_count: number,
+  /** A list of chat members */
+  members: chatMember[],
+}
+
+/** Contains a list of chat members */
+export type chatMembersOptional = {|
+  _: 'chatMembers',
+  /** Approximate total count of chat members found */
+  total_count?: number,
+  /** A list of chat members */
+  members?: chatMemberOptional[],
+|}
+
+/** Returns recently active users in reverse chronological order */
+export type supergroupMembersFilterRecent = {
+  _: 'supergroupMembersFilterRecent',
+}
+
+/** Returns recently active users in reverse chronological order */
+export type supergroupMembersFilterRecentOptional = {|
+  _: 'supergroupMembersFilterRecent',
+|}
+
+/** Returns the creator and administrators */
+export type supergroupMembersFilterAdministrators = {
+  _: 'supergroupMembersFilterAdministrators',
+}
+
+/** Returns the creator and administrators */
+export type supergroupMembersFilterAdministratorsOptional = {|
+  _: 'supergroupMembersFilterAdministrators',
+|}
+
+/** Used to search for supergroup or channel members via a (string) query */
+export type supergroupMembersFilterSearch = {
+  _: 'supergroupMembersFilterSearch',
+  /** Query to search for */
+  query: string,
+}
+
+/** Used to search for supergroup or channel members via a (string) query */
+export type supergroupMembersFilterSearchOptional = {|
+  _: 'supergroupMembersFilterSearch',
+  /** Query to search for */
+  query?: string,
+|}
+
+/** Returns restricted supergroup members; can be used only by administrators */
+export type supergroupMembersFilterRestricted = {
+  _: 'supergroupMembersFilterRestricted',
+  /** Query to search for */
+  query: string,
+}
+
+/** Returns restricted supergroup members; can be used only by administrators */
+export type supergroupMembersFilterRestrictedOptional = {|
+  _: 'supergroupMembersFilterRestricted',
+  /** Query to search for */
+  query?: string,
+|}
+
+/** Returns users banned from the supergroup or channel; can be used only by administrators */
+export type supergroupMembersFilterBanned = {
+  _: 'supergroupMembersFilterBanned',
+  /** Query to search for */
+  query: string,
+}
+
+/** Returns users banned from the supergroup or channel; can be used only by administrators */
+export type supergroupMembersFilterBannedOptional = {|
+  _: 'supergroupMembersFilterBanned',
+  /** Query to search for */
+  query?: string,
+|}
+
+/** Returns bot members of the supergroup or channel */
+export type supergroupMembersFilterBots = {
+  _: 'supergroupMembersFilterBots',
+}
+
+/** Returns bot members of the supergroup or channel */
+export type supergroupMembersFilterBotsOptional = {|
+  _: 'supergroupMembersFilterBots',
+|}
+
+/**
+ * Represents a basic group of 0-200 users (must be upgraded to a supergroup to accommodate
+ * more than 200 users)
+ */
+export type basicGroup = {
+  _: 'basicGroup',
+  /** Group identifier */
   id: number,
-  sizes: photoSize[],
-  color: number,
+  /** Number of members in the group */
+  member_count: number,
+  /** Status of the current user in the group */
+  status: ChatMemberStatus,
+  /** True, if all members have been granted administrator rights in the group */
+  everyone_is_administrator: boolean,
+  /** True, if the group is active */
+  is_active: boolean,
+  /** Identifier of the supergroup to which this group was upgraded; 0 if none */
+  upgraded_to_supergroup_id: number,
 }
 
-export type wallpaperOptional = {|
-  _: 'wallpaper',
+/**
+ * Represents a basic group of 0-200 users (must be upgraded to a supergroup to accommodate
+ * more than 200 users)
+ */
+export type basicGroupOptional = {|
+  _: 'basicGroup',
+  /** Group identifier */
   id?: number,
-  sizes?: photoSizeOptional[],
-  color?: number,
+  /** Number of members in the group */
+  member_count?: number,
+  /** Status of the current user in the group */
+  status?: ChatMemberStatusOptional,
+  /** True, if all members have been granted administrator rights in the group */
+  everyone_is_administrator?: boolean,
+  /** True, if the group is active */
+  is_active?: boolean,
+  /** Identifier of the supergroup to which this group was upgraded; 0 if none */
+  upgraded_to_supergroup_id?: number,
 |}
 
-export type wallpapers = {
-  _: 'wallpapers',
-  wallpapers: wallpaper[],
+/** Contains full information about a basic group */
+export type basicGroupFullInfo = {
+  _: 'basicGroupFullInfo',
+  /** User identifier of the creator of the group; 0 if unknown */
+  creator_user_id: number,
+  /** Group members */
+  members: chatMember[],
+  /**
+   * Invite link for this group; available only for the group creator and only after it
+   * has been generated at least once
+   */
+  invite_link: string,
 }
 
-export type wallpapersOptional = {|
-  _: 'wallpapers',
-  wallpapers?: wallpaperOptional[],
-|}
-
-export type webPage = {
-  _: 'webPage',
-  url: string,
-  display_url: string,
-  type: string,
-  site_name: string,
-  title: string,
-  description: string,
-  photo: photo,
-  embed_url: string,
-  embed_type: string,
-  embed_width: number,
-  embed_height: number,
-  duration: number,
-  author: string,
-  animation: animation,
-  audio: audio,
-  document: document,
-  sticker: sticker,
-  video: video,
-  video_note: videoNote,
-  voice_note: voiceNote,
-  has_instant_view: boolean,
-}
-
-export type webPageOptional = {|
-  _: 'webPage',
-  url?: string,
-  display_url?: string,
-  type?: string,
-  site_name?: string,
-  title?: string,
-  description?: string,
-  photo?: photoOptional,
-  embed_url?: string,
-  embed_type?: string,
-  embed_width?: number,
-  embed_height?: number,
-  duration?: number,
-  author?: string,
-  animation?: animationOptional,
-  audio?: audioOptional,
-  document?: documentOptional,
-  sticker?: stickerOptional,
-  video?: videoOptional,
-  video_note?: videoNoteOptional,
-  voice_note?: voiceNoteOptional,
-  has_instant_view?: boolean,
-|}
-
-export type webPageInstantView = {
-  _: 'webPageInstantView',
-  page_blocks: PageBlock[],
-  is_full: boolean,
-}
-
-export type webPageInstantViewOptional = {|
-  _: 'webPageInstantView',
-  page_blocks?: PageBlockOptional[],
-  is_full?: boolean,
-|}
-
-export type acceptCall = {|
-  _: 'acceptCall',
-  call_id?: number,
-  protocol?: callProtocolOptional,
-|}
-
-export type acceptCallReturnType = ok
-
-export type addChatMember = {|
-  _: 'addChatMember',
-  chat_id?: number,
-  user_id?: number,
-  forward_limit?: number,
-|}
-
-export type addChatMemberReturnType = ok
-
-export type addChatMembers = {|
-  _: 'addChatMembers',
-  chat_id?: number,
-  user_ids?: number[],
-|}
-
-export type addChatMembersReturnType = ok
-
-export type addFavoriteSticker = {|
-  _: 'addFavoriteSticker',
-  sticker?: InputFileOptional,
-|}
-
-export type addFavoriteStickerReturnType = ok
-
-export type addNetworkStatistics = {|
-  _: 'addNetworkStatistics',
-  entry?: NetworkStatisticsEntryOptional,
-|}
-
-export type addNetworkStatisticsReturnType = ok
-
-export type addRecentSticker = {|
-  _: 'addRecentSticker',
-  is_attached?: boolean,
-  sticker?: InputFileOptional,
-|}
-
-export type addRecentStickerReturnType = stickers
-
-export type addRecentlyFoundChat = {|
-  _: 'addRecentlyFoundChat',
-  chat_id?: number,
-|}
-
-export type addRecentlyFoundChatReturnType = ok
-
-export type addSavedAnimation = {|
-  _: 'addSavedAnimation',
-  animation?: InputFileOptional,
-|}
-
-export type addSavedAnimationReturnType = ok
-
-export type addStickerToSet = {|
-  _: 'addStickerToSet',
-  user_id?: number,
-  name?: string,
-  sticker?: inputStickerOptional,
-|}
-
-export type addStickerToSetReturnType = stickerSet
-
-export type answerCallbackQuery = {|
-  _: 'answerCallbackQuery',
-  callback_query_id?: number,
-  text?: string,
-  show_alert?: boolean,
-  url?: string,
-  cache_time?: number,
-|}
-
-export type answerCallbackQueryReturnType = ok
-
-export type answerCustomQuery = {|
-  _: 'answerCustomQuery',
-  custom_query_id?: number,
-  data?: string,
-|}
-
-export type answerCustomQueryReturnType = ok
-
-export type answerInlineQuery = {|
-  _: 'answerInlineQuery',
-  inline_query_id?: number,
-  is_personal?: boolean,
-  results?: InputInlineQueryResultOptional[],
-  cache_time?: number,
-  next_offset?: string,
-  switch_pm_text?: string,
-  switch_pm_parameter?: string,
-|}
-
-export type answerInlineQueryReturnType = ok
-
-export type answerPreCheckoutQuery = {|
-  _: 'answerPreCheckoutQuery',
-  pre_checkout_query_id?: number,
-  error_message?: string,
-|}
-
-export type answerPreCheckoutQueryReturnType = ok
-
-export type answerShippingQuery = {|
-  _: 'answerShippingQuery',
-  shipping_query_id?: number,
-  shipping_options?: shippingOptionOptional[],
-  error_message?: string,
-|}
-
-export type answerShippingQueryReturnType = ok
-
-export type blockUser = {|
-  _: 'blockUser',
-  user_id?: number,
-|}
-
-export type blockUserReturnType = ok
-
-export type cancelDownloadFile = {|
-  _: 'cancelDownloadFile',
-  file_id?: number,
-  only_if_pending?: boolean,
-|}
-
-export type cancelDownloadFileReturnType = ok
-
-export type cancelUploadFile = {|
-  _: 'cancelUploadFile',
-  file_id?: number,
-|}
-
-export type cancelUploadFileReturnType = ok
-
-export type changeChatReportSpamState = {|
-  _: 'changeChatReportSpamState',
-  chat_id?: number,
-  is_spam_chat?: boolean,
-|}
-
-export type changeChatReportSpamStateReturnType = ok
-
-export type changeImportedContacts = {|
-  _: 'changeImportedContacts',
-  contacts?: contactOptional[],
-|}
-
-export type changeImportedContactsReturnType = importedContacts
-
-export type changePhoneNumber = {|
-  _: 'changePhoneNumber',
-  phone_number?: string,
-  allow_flash_call?: boolean,
-  is_current_phone_number?: boolean,
-|}
-
-export type changePhoneNumberReturnType = authenticationCodeInfo
-
-export type changeStickerSet = {|
-  _: 'changeStickerSet',
-  set_id?: number,
-  is_installed?: boolean,
-  is_archived?: boolean,
-|}
-
-export type changeStickerSetReturnType = ok
-
-export type checkAuthenticationBotToken = {|
-  _: 'checkAuthenticationBotToken',
-  token?: string,
-|}
-
-export type checkAuthenticationBotTokenReturnType = ok
-
-export type checkAuthenticationCode = {|
-  _: 'checkAuthenticationCode',
-  code?: string,
-  first_name?: string,
-  last_name?: string,
-|}
-
-export type checkAuthenticationCodeReturnType = ok
-
-export type checkAuthenticationPassword = {|
-  _: 'checkAuthenticationPassword',
-  password?: string,
-|}
-
-export type checkAuthenticationPasswordReturnType = ok
-
-export type checkChangePhoneNumberCode = {|
-  _: 'checkChangePhoneNumberCode',
-  code?: string,
-|}
-
-export type checkChangePhoneNumberCodeReturnType = ok
-
-export type checkChatInviteLink = {|
-  _: 'checkChatInviteLink',
+/** Contains full information about a basic group */
+export type basicGroupFullInfoOptional = {|
+  _: 'basicGroupFullInfo',
+  /** User identifier of the creator of the group; 0 if unknown */
+  creator_user_id?: number,
+  /** Group members */
+  members?: chatMemberOptional[],
+  /**
+   * Invite link for this group; available only for the group creator and only after it
+   * has been generated at least once
+   */
   invite_link?: string,
 |}
 
-export type checkChatInviteLinkReturnType = chatInviteLinkInfo
+/**
+ * Represents a supergroup or channel with zero or more members (subscribers in the
+ * case of channels). From the point of view of the system, a channel is a special kind
+ * of a supergroup: only administrators can post and see the list of members, and posts
+ * from all administrators use the name and photo of the channel instead of individual
+ * names and profile photos. Unlike supergroups, channels can have an unlimited number
+ * of subscribers
+ */
+export type supergroup = {
+  _: 'supergroup',
+  /** Supergroup or channel identifier */
+  id: number,
+  /** Username of the supergroup or channel; empty for private supergroups or channels */
+  username: string,
+  /**
+   * Point in time (Unix timestamp) when the current user joined, or the point in time
+   * when the supergroup or channel was created, in case the user is not a member
+   */
+  date: number,
+  /** Status of the current user in the supergroup or channel */
+  status: ChatMemberStatus,
+  /**
+   * Member count; 0 if unknown. Currently it is guaranteed to be known only if the supergroup
+   * or channel was found through SearchPublicChats
+   */
+  member_count: number,
+  /**
+   * True, if any member of the supergroup can invite other members. This field has no
+   * meaning for channels
+   */
+  anyone_can_invite: boolean,
+  /**
+   * True, if messages sent to the channel should contain information about the sender.
+   * This field is only applicable to channels
+   */
+  sign_messages: boolean,
+  /** True, if the supergroup is a channel */
+  is_channel: boolean,
+  /** True, if the supergroup or channel is verified */
+  is_verified: boolean,
+  /**
+   * If non-empty, contains the reason why access to this supergroup or channel must be
+   * restricted. Format of the string is "{type}: {description}". {type} Contains the
+   * type of the restriction and at least one of the suffixes "-all", "-ios", "-android",
+   * or "-wp", which describe the platforms on which access should be restricted. (For
+   * example, "terms-ios-android". {description} contains a human-readable description
+   * of the restriction, which can be shown to the user)
+   */
+  restriction_reason: string,
+}
 
-export type checkChatUsername = {|
-  _: 'checkChatUsername',
+/**
+ * Represents a supergroup or channel with zero or more members (subscribers in the
+ * case of channels). From the point of view of the system, a channel is a special kind
+ * of a supergroup: only administrators can post and see the list of members, and posts
+ * from all administrators use the name and photo of the channel instead of individual
+ * names and profile photos. Unlike supergroups, channels can have an unlimited number
+ * of subscribers
+ */
+export type supergroupOptional = {|
+  _: 'supergroup',
+  /** Supergroup or channel identifier */
+  id?: number,
+  /** Username of the supergroup or channel; empty for private supergroups or channels */
+  username?: string,
+  /**
+   * Point in time (Unix timestamp) when the current user joined, or the point in time
+   * when the supergroup or channel was created, in case the user is not a member
+   */
+  date?: number,
+  /** Status of the current user in the supergroup or channel */
+  status?: ChatMemberStatusOptional,
+  /**
+   * Member count; 0 if unknown. Currently it is guaranteed to be known only if the supergroup
+   * or channel was found through SearchPublicChats
+   */
+  member_count?: number,
+  /**
+   * True, if any member of the supergroup can invite other members. This field has no
+   * meaning for channels
+   */
+  anyone_can_invite?: boolean,
+  /**
+   * True, if messages sent to the channel should contain information about the sender.
+   * This field is only applicable to channels
+   */
+  sign_messages?: boolean,
+  /** True, if the supergroup is a channel */
+  is_channel?: boolean,
+  /** True, if the supergroup or channel is verified */
+  is_verified?: boolean,
+  /**
+   * If non-empty, contains the reason why access to this supergroup or channel must be
+   * restricted. Format of the string is "{type}: {description}". {type} Contains the
+   * type of the restriction and at least one of the suffixes "-all", "-ios", "-android",
+   * or "-wp", which describe the platforms on which access should be restricted. (For
+   * example, "terms-ios-android". {description} contains a human-readable description
+   * of the restriction, which can be shown to the user)
+   */
+  restriction_reason?: string,
+|}
+
+/** Contains full information about a supergroup or channel */
+export type supergroupFullInfo = {
+  _: 'supergroupFullInfo',
+  /** Supergroup or channel description */
+  description: string,
+  /** Number of members in the supergroup or channel; 0 if unknown */
+  member_count: number,
+  /** Number of privileged users in the supergroup or channel; 0 if unknown */
+  administrator_count: number,
+  /** Number of restricted users in the supergroup; 0 if unknown */
+  restricted_count: number,
+  /** Number of users banned from chat; 0 if unknown */
+  banned_count: number,
+  /** True, if members of the chat can be retrieved */
+  can_get_members: boolean,
+  /** True, if the chat can be made public */
+  can_set_username: boolean,
+  /** True, if the supergroup sticker set can be changed */
+  can_set_sticker_set: boolean,
+  /**
+   * True, if new chat members will have access to old messages. In public supergroups
+   * and both public and private channels, old messages are always available, so this
+   * option affects only private supergroups. The value of this field is only available
+   * for chat administrators
+   */
+  is_all_history_available: boolean,
+  /** Identifier of the supergroup sticker set; 0 if none */
+  sticker_set_id: (number | string),
+  /** Invite link for this chat */
+  invite_link: string,
+  /** Identifier of the pinned message in the chat; 0 if none */
+  pinned_message_id: number,
+  /** Identifier of the basic group from which supergroup was upgraded; 0 if none */
+  upgraded_from_basic_group_id: number,
+  /**
+   * Identifier of the last message in the basic group from which supergroup was upgraded;
+   * 0 if none
+   */
+  upgraded_from_max_message_id: number,
+}
+
+/** Contains full information about a supergroup or channel */
+export type supergroupFullInfoOptional = {|
+  _: 'supergroupFullInfo',
+  /** Supergroup or channel description */
+  description?: string,
+  /** Number of members in the supergroup or channel; 0 if unknown */
+  member_count?: number,
+  /** Number of privileged users in the supergroup or channel; 0 if unknown */
+  administrator_count?: number,
+  /** Number of restricted users in the supergroup; 0 if unknown */
+  restricted_count?: number,
+  /** Number of users banned from chat; 0 if unknown */
+  banned_count?: number,
+  /** True, if members of the chat can be retrieved */
+  can_get_members?: boolean,
+  /** True, if the chat can be made public */
+  can_set_username?: boolean,
+  /** True, if the supergroup sticker set can be changed */
+  can_set_sticker_set?: boolean,
+  /**
+   * True, if new chat members will have access to old messages. In public supergroups
+   * and both public and private channels, old messages are always available, so this
+   * option affects only private supergroups. The value of this field is only available
+   * for chat administrators
+   */
+  is_all_history_available?: boolean,
+  /** Identifier of the supergroup sticker set; 0 if none */
+  sticker_set_id?: (number | string),
+  /** Invite link for this chat */
+  invite_link?: string,
+  /** Identifier of the pinned message in the chat; 0 if none */
+  pinned_message_id?: number,
+  /** Identifier of the basic group from which supergroup was upgraded; 0 if none */
+  upgraded_from_basic_group_id?: number,
+  /**
+   * Identifier of the last message in the basic group from which supergroup was upgraded;
+   * 0 if none
+   */
+  upgraded_from_max_message_id?: number,
+|}
+
+/** The secret chat is not yet created; waiting for the other user to get online */
+export type secretChatStatePending = {
+  _: 'secretChatStatePending',
+}
+
+/** The secret chat is not yet created; waiting for the other user to get online */
+export type secretChatStatePendingOptional = {|
+  _: 'secretChatStatePending',
+|}
+
+/** The secret chat is ready to use */
+export type secretChatStateReady = {
+  _: 'secretChatStateReady',
+}
+
+/** The secret chat is ready to use */
+export type secretChatStateReadyOptional = {|
+  _: 'secretChatStateReady',
+|}
+
+/** The secret chat is closed */
+export type secretChatStateClosed = {
+  _: 'secretChatStateClosed',
+}
+
+/** The secret chat is closed */
+export type secretChatStateClosedOptional = {|
+  _: 'secretChatStateClosed',
+|}
+
+/** Represents a secret chat */
+export type secretChat = {
+  _: 'secretChat',
+  /** Secret chat identifier */
+  id: number,
+  /** Identifier of the chat partner */
+  user_id: number,
+  /** State of the secret chat */
+  state: SecretChatState,
+  /** True, if the chat was created by the current user; otherwise false */
+  is_outbound: boolean,
+  /** Current message Time To Live setting (self-destruct timer) for the chat, in seconds */
+  ttl: number,
+  /**
+   * Hash of the currently used key for comparison with the hash of the chat partner's
+   * key. This is a string of 36 bytes, which must be used to make a 12x12 square image
+   * with a color depth of 4. The first 16 bytes should be used to make a central 8x8
+   * square, while the remaining 20 bytes should be used to construct a 2-pixel-wide border
+   * around that square. Alternatively, the first 32 bytes of the hash can be converted
+   * to the hexadecimal format and printed as 32 2-digit hex numbers
+   */
+  key_hash: string,
+  /**
+   * Secret chat layer; determines features supported by the other client. Video notes
+   * are supported if the layer >= 66
+   */
+  layer: number,
+}
+
+/** Represents a secret chat */
+export type secretChatOptional = {|
+  _: 'secretChat',
+  /** Secret chat identifier */
+  id?: number,
+  /** Identifier of the chat partner */
+  user_id?: number,
+  /** State of the secret chat */
+  state?: SecretChatStateOptional,
+  /** True, if the chat was created by the current user; otherwise false */
+  is_outbound?: boolean,
+  /** Current message Time To Live setting (self-destruct timer) for the chat, in seconds */
+  ttl?: number,
+  /**
+   * Hash of the currently used key for comparison with the hash of the chat partner's
+   * key. This is a string of 36 bytes, which must be used to make a 12x12 square image
+   * with a color depth of 4. The first 16 bytes should be used to make a central 8x8
+   * square, while the remaining 20 bytes should be used to construct a 2-pixel-wide border
+   * around that square. Alternatively, the first 32 bytes of the hash can be converted
+   * to the hexadecimal format and printed as 32 2-digit hex numbers
+   */
+  key_hash?: string,
+  /**
+   * Secret chat layer; determines features supported by the other client. Video notes
+   * are supported if the layer >= 66
+   */
+  layer?: number,
+|}
+
+/** The message was originally written by a known user */
+export type messageForwardedFromUser = {
+  _: 'messageForwardedFromUser',
+  /** Identifier of the user that originally sent this message */
+  sender_user_id: number,
+  /** Point in time (Unix timestamp) when the message was originally sent */
+  date: number,
+  /**
+   * For messages forwarded to the chat with the current user (saved messages), the identifier
+   * of the chat from which the message was forwarded; 0 if unknown
+   */
+  forwarded_from_chat_id: number,
+  /**
+   * For messages forwarded to the chat with the current user (saved messages) the identifier
+   * of the original message from which the new message was forwarded; 0 if unknown
+   */
+  forwarded_from_message_id: number,
+}
+
+/** The message was originally written by a known user */
+export type messageForwardedFromUserOptional = {|
+  _: 'messageForwardedFromUser',
+  /** Identifier of the user that originally sent this message */
+  sender_user_id?: number,
+  /** Point in time (Unix timestamp) when the message was originally sent */
+  date?: number,
+  /**
+   * For messages forwarded to the chat with the current user (saved messages), the identifier
+   * of the chat from which the message was forwarded; 0 if unknown
+   */
+  forwarded_from_chat_id?: number,
+  /**
+   * For messages forwarded to the chat with the current user (saved messages) the identifier
+   * of the original message from which the new message was forwarded; 0 if unknown
+   */
+  forwarded_from_message_id?: number,
+|}
+
+/** The message was originally a post in a channel */
+export type messageForwardedPost = {
+  _: 'messageForwardedPost',
+  /** Identifier of the chat from which the message was forwarded */
+  chat_id: number,
+  /** Post author signature */
+  author_signature: string,
+  /** Point in time (Unix timestamp) when the message was originally sent */
+  date: number,
+  /**
+   * Message identifier of the original message from which the new message was forwarded;
+   * 0 if unknown
+   */
+  message_id: number,
+  /**
+   * For messages forwarded to the chat with the current user (saved messages), the identifier
+   * of the chat from which the message was forwarded; 0 if unknown
+   */
+  forwarded_from_chat_id: number,
+  /**
+   * For messages forwarded to the chat with the current user (saved messages), the identifier
+   * of the original message from which the new message was forwarded; 0 if unknown
+   */
+  forwarded_from_message_id: number,
+}
+
+/** The message was originally a post in a channel */
+export type messageForwardedPostOptional = {|
+  _: 'messageForwardedPost',
+  /** Identifier of the chat from which the message was forwarded */
   chat_id?: number,
+  /** Post author signature */
+  author_signature?: string,
+  /** Point in time (Unix timestamp) when the message was originally sent */
+  date?: number,
+  /**
+   * Message identifier of the original message from which the new message was forwarded;
+   * 0 if unknown
+   */
+  message_id?: number,
+  /**
+   * For messages forwarded to the chat with the current user (saved messages), the identifier
+   * of the chat from which the message was forwarded; 0 if unknown
+   */
+  forwarded_from_chat_id?: number,
+  /**
+   * For messages forwarded to the chat with the current user (saved messages), the identifier
+   * of the original message from which the new message was forwarded; 0 if unknown
+   */
+  forwarded_from_message_id?: number,
+|}
+
+/** The message is being sent now, but has not yet been delivered to the server */
+export type messageSendingStatePending = {
+  _: 'messageSendingStatePending',
+}
+
+/** The message is being sent now, but has not yet been delivered to the server */
+export type messageSendingStatePendingOptional = {|
+  _: 'messageSendingStatePending',
+|}
+
+/** The message failed to be sent */
+export type messageSendingStateFailed = {
+  _: 'messageSendingStateFailed',
+}
+
+/** The message failed to be sent */
+export type messageSendingStateFailedOptional = {|
+  _: 'messageSendingStateFailed',
+|}
+
+/** Describes a message */
+export type message = {
+  _: 'message',
+  /** Unique message identifier */
+  id: number,
+  /**
+   * Identifier of the user who sent the message; 0 if unknown. It is unknown for channel
+   * posts
+   */
+  sender_user_id: number,
+  /** Chat identifier */
+  chat_id: number,
+  /** Information about the sending state of the message; may be null */
+  sending_state: MessageSendingState,
+  /** True, if the message is outgoing */
+  is_outgoing: boolean,
+  /** True, if the message can be edited */
+  can_be_edited: boolean,
+  /** True, if the message can be forwarded */
+  can_be_forwarded: boolean,
+  /**
+   * True, if the message can be deleted only for the current user while other users will
+   * continue to see it
+   */
+  can_be_deleted_only_for_self: boolean,
+  /** True, if the message can be deleted for all users */
+  can_be_deleted_for_all_users: boolean,
+  /**
+   * True, if the message is a channel post. All messages to channels are channel posts,
+   * all other messages are not channel posts
+   */
+  is_channel_post: boolean,
+  /** True, if the message contains an unread mention for the current user */
+  contains_unread_mention: boolean,
+  /** Point in time (Unix timestamp) when the message was sent */
+  date: number,
+  /** Point in time (Unix timestamp) when the message was last edited */
+  edit_date: number,
+  /** Information about the initial message sender; may be null */
+  forward_info: MessageForwardInfo,
+  /**
+   * If non-zero, the identifier of the message this message is replying to; can be the
+   * identifier of a deleted message
+   */
+  reply_to_message_id: number,
+  /**
+   * For self-destructing messages, the message's TTL (Time To Live), in seconds; 0 if
+   * none. TDLib will send updateDeleteMessages or updateMessageContent once the TTL expires
+   */
+  ttl: number,
+  /** Time left before the message expires, in seconds */
+  ttl_expires_in: number,
+  /** If non-zero, the user identifier of the bot through which this message was sent */
+  via_bot_user_id: number,
+  /** For channel posts, optional author signature */
+  author_signature: string,
+  /** Number of times this message was viewed */
+  views: number,
+  /**
+   * Unique identifier of an album this message belongs to. Only photos and videos can
+   * be grouped together in albums
+   */
+  media_album_id: (number | string),
+  /** Content of the message */
+  content: MessageContent,
+  /** Reply markup for the message; may be null */
+  reply_markup: ReplyMarkup,
+}
+
+/** Describes a message */
+export type messageOptional = {|
+  _: 'message',
+  /** Unique message identifier */
+  id?: number,
+  /**
+   * Identifier of the user who sent the message; 0 if unknown. It is unknown for channel
+   * posts
+   */
+  sender_user_id?: number,
+  /** Chat identifier */
+  chat_id?: number,
+  /** Information about the sending state of the message; may be null */
+  sending_state?: MessageSendingStateOptional,
+  /** True, if the message is outgoing */
+  is_outgoing?: boolean,
+  /** True, if the message can be edited */
+  can_be_edited?: boolean,
+  /** True, if the message can be forwarded */
+  can_be_forwarded?: boolean,
+  /**
+   * True, if the message can be deleted only for the current user while other users will
+   * continue to see it
+   */
+  can_be_deleted_only_for_self?: boolean,
+  /** True, if the message can be deleted for all users */
+  can_be_deleted_for_all_users?: boolean,
+  /**
+   * True, if the message is a channel post. All messages to channels are channel posts,
+   * all other messages are not channel posts
+   */
+  is_channel_post?: boolean,
+  /** True, if the message contains an unread mention for the current user */
+  contains_unread_mention?: boolean,
+  /** Point in time (Unix timestamp) when the message was sent */
+  date?: number,
+  /** Point in time (Unix timestamp) when the message was last edited */
+  edit_date?: number,
+  /** Information about the initial message sender; may be null */
+  forward_info?: MessageForwardInfoOptional,
+  /**
+   * If non-zero, the identifier of the message this message is replying to; can be the
+   * identifier of a deleted message
+   */
+  reply_to_message_id?: number,
+  /**
+   * For self-destructing messages, the message's TTL (Time To Live), in seconds; 0 if
+   * none. TDLib will send updateDeleteMessages or updateMessageContent once the TTL expires
+   */
+  ttl?: number,
+  /** Time left before the message expires, in seconds */
+  ttl_expires_in?: number,
+  /** If non-zero, the user identifier of the bot through which this message was sent */
+  via_bot_user_id?: number,
+  /** For channel posts, optional author signature */
+  author_signature?: string,
+  /** Number of times this message was viewed */
+  views?: number,
+  /**
+   * Unique identifier of an album this message belongs to. Only photos and videos can
+   * be grouped together in albums
+   */
+  media_album_id?: (number | string),
+  /** Content of the message */
+  content?: MessageContentOptional,
+  /** Reply markup for the message; may be null */
+  reply_markup?: ReplyMarkupOptional,
+|}
+
+/** Contains a list of messages */
+export type messages = {
+  _: 'messages',
+  /** Approximate total count of messages found */
+  total_count: number,
+  /** List of messages; messages may be null */
+  messages: message[],
+}
+
+/** Contains a list of messages */
+export type messagesOptional = {|
+  _: 'messages',
+  /** Approximate total count of messages found */
+  total_count?: number,
+  /** List of messages; messages may be null */
+  messages?: messageOptional[],
+|}
+
+/** Contains a list of messages found by a search */
+export type foundMessages = {
+  _: 'foundMessages',
+  /** List of messages */
+  messages: message[],
+  /** Value to pass as from_search_id to get more results */
+  next_from_search_id: (number | string),
+}
+
+/** Contains a list of messages found by a search */
+export type foundMessagesOptional = {|
+  _: 'foundMessages',
+  /** List of messages */
+  messages?: messageOptional[],
+  /** Value to pass as from_search_id to get more results */
+  next_from_search_id?: (number | string),
+|}
+
+/** Notification settings applied to a particular chat */
+export type notificationSettingsScopeChat = {
+  _: 'notificationSettingsScopeChat',
+  /** Chat identifier */
+  chat_id: number,
+}
+
+/** Notification settings applied to a particular chat */
+export type notificationSettingsScopeChatOptional = {|
+  _: 'notificationSettingsScopeChat',
+  /** Chat identifier */
+  chat_id?: number,
+|}
+
+/** Notification settings applied to all private chats */
+export type notificationSettingsScopePrivateChats = {
+  _: 'notificationSettingsScopePrivateChats',
+}
+
+/** Notification settings applied to all private chats */
+export type notificationSettingsScopePrivateChatsOptional = {|
+  _: 'notificationSettingsScopePrivateChats',
+|}
+
+/**
+ * Notification settings applied to all basic groups and channels. (Supergroups have
+ * no common settings)
+ */
+export type notificationSettingsScopeBasicGroupChats = {
+  _: 'notificationSettingsScopeBasicGroupChats',
+}
+
+/**
+ * Notification settings applied to all basic groups and channels. (Supergroups have
+ * no common settings)
+ */
+export type notificationSettingsScopeBasicGroupChatsOptional = {|
+  _: 'notificationSettingsScopeBasicGroupChats',
+|}
+
+/** Notification settings applied to all chats */
+export type notificationSettingsScopeAllChats = {
+  _: 'notificationSettingsScopeAllChats',
+}
+
+/** Notification settings applied to all chats */
+export type notificationSettingsScopeAllChatsOptional = {|
+  _: 'notificationSettingsScopeAllChats',
+|}
+
+/** Contains information about notification settings for a chat or several chats */
+export type notificationSettings = {
+  _: 'notificationSettings',
+  /** Time left before notifications will be unmuted, in seconds */
+  mute_for: number,
+  /** An audio file name for notification sounds; only applies to iOS applications */
+  sound: string,
+  /** True, if message content should be displayed in notifications */
+  show_preview: boolean,
+}
+
+/** Contains information about notification settings for a chat or several chats */
+export type notificationSettingsOptional = {|
+  _: 'notificationSettings',
+  /** Time left before notifications will be unmuted, in seconds */
+  mute_for?: number,
+  /** An audio file name for notification sounds; only applies to iOS applications */
+  sound?: string,
+  /** True, if message content should be displayed in notifications */
+  show_preview?: boolean,
+|}
+
+/** Contains information about a message draft */
+export type draftMessage = {
+  _: 'draftMessage',
+  /** Identifier of the message to reply to; 0 if none */
+  reply_to_message_id: number,
+  /** Content of the message draft; this should always be of type inputMessageText */
+  input_message_text: InputMessageContent,
+}
+
+/** Contains information about a message draft */
+export type draftMessageOptional = {|
+  _: 'draftMessage',
+  /** Identifier of the message to reply to; 0 if none */
+  reply_to_message_id?: number,
+  /** Content of the message draft; this should always be of type inputMessageText */
+  input_message_text?: InputMessageContentOptional,
+|}
+
+/** An ordinary chat with a user */
+export type chatTypePrivate = {
+  _: 'chatTypePrivate',
+  /** User identifier */
+  user_id: number,
+}
+
+/** An ordinary chat with a user */
+export type chatTypePrivateOptional = {|
+  _: 'chatTypePrivate',
+  /** User identifier */
+  user_id?: number,
+|}
+
+/** A basic group (i.e., a chat with 0-200 other users) */
+export type chatTypeBasicGroup = {
+  _: 'chatTypeBasicGroup',
+  /** Basic group identifier */
+  basic_group_id: number,
+}
+
+/** A basic group (i.e., a chat with 0-200 other users) */
+export type chatTypeBasicGroupOptional = {|
+  _: 'chatTypeBasicGroup',
+  /** Basic group identifier */
+  basic_group_id?: number,
+|}
+
+/**
+ * A supergroup (i.e. a chat with up to GetOption("supergroup_max_size") other users),
+ * or channel (with unlimited members)
+ */
+export type chatTypeSupergroup = {
+  _: 'chatTypeSupergroup',
+  /** Supergroup or channel identifier */
+  supergroup_id: number,
+  /** True, if the supergroup is a channel */
+  is_channel: boolean,
+}
+
+/**
+ * A supergroup (i.e. a chat with up to GetOption("supergroup_max_size") other users),
+ * or channel (with unlimited members)
+ */
+export type chatTypeSupergroupOptional = {|
+  _: 'chatTypeSupergroup',
+  /** Supergroup or channel identifier */
+  supergroup_id?: number,
+  /** True, if the supergroup is a channel */
+  is_channel?: boolean,
+|}
+
+/** A secret chat with a user */
+export type chatTypeSecret = {
+  _: 'chatTypeSecret',
+  /** Secret chat identifier */
+  secret_chat_id: number,
+  /** User identifier of the secret chat peer */
+  user_id: number,
+}
+
+/** A secret chat with a user */
+export type chatTypeSecretOptional = {|
+  _: 'chatTypeSecret',
+  /** Secret chat identifier */
+  secret_chat_id?: number,
+  /** User identifier of the secret chat peer */
+  user_id?: number,
+|}
+
+/** A chat. (Can be a private chat, basic group, supergroup, or secret chat) */
+export type chat = {
+  _: 'chat',
+  /** Chat unique identifier */
+  id: number,
+  /** Type of the chat */
+  type: ChatType,
+  /** Chat title */
+  title: string,
+  /** Chat photo; may be null */
+  photo: chatPhoto,
+  /** Last message in the chat; may be null */
+  last_message: message,
+  /**
+   * Descending parameter by which chats are sorted in the main chat list. If the order
+   * number of two chats is the same, they must be sorted in descending order by ID. If
+   * 0, the position of the chat in the list is undetermined
+   */
+  order: (number | string),
+  /** True, if the chat is pinned */
+  is_pinned: boolean,
+  /** True, if the chat can be reported to Telegram moderators through reportChat */
+  can_be_reported: boolean,
+  /** Number of unread messages in the chat */
+  unread_count: number,
+  /** Identifier of the last read incoming message */
+  last_read_inbox_message_id: number,
+  /** Identifier of the last read outgoing message */
+  last_read_outbox_message_id: number,
+  /** Number of unread messages with a mention/reply in the chat */
+  unread_mention_count: number,
+  /** Notification settings for this chat */
+  notification_settings: notificationSettings,
+  /**
+   * Identifier of the message from which reply markup needs to be used; 0 if there is
+   * no default custom reply markup in the chat
+   */
+  reply_markup_message_id: number,
+  /** A draft of a message in the chat; may be null */
+  draft_message: draftMessage,
+  /**
+   * Contains client-specific data associated with the chat. (For example, the chat position
+   * or local chat notification settings can be stored here.) Persistent if a message
+   * database is used
+   */
+  client_data: string,
+}
+
+/** A chat. (Can be a private chat, basic group, supergroup, or secret chat) */
+export type chatOptional = {|
+  _: 'chat',
+  /** Chat unique identifier */
+  id?: number,
+  /** Type of the chat */
+  type?: ChatTypeOptional,
+  /** Chat title */
+  title?: string,
+  /** Chat photo; may be null */
+  photo?: chatPhotoOptional,
+  /** Last message in the chat; may be null */
+  last_message?: messageOptional,
+  /**
+   * Descending parameter by which chats are sorted in the main chat list. If the order
+   * number of two chats is the same, they must be sorted in descending order by ID. If
+   * 0, the position of the chat in the list is undetermined
+   */
+  order?: (number | string),
+  /** True, if the chat is pinned */
+  is_pinned?: boolean,
+  /** True, if the chat can be reported to Telegram moderators through reportChat */
+  can_be_reported?: boolean,
+  /** Number of unread messages in the chat */
+  unread_count?: number,
+  /** Identifier of the last read incoming message */
+  last_read_inbox_message_id?: number,
+  /** Identifier of the last read outgoing message */
+  last_read_outbox_message_id?: number,
+  /** Number of unread messages with a mention/reply in the chat */
+  unread_mention_count?: number,
+  /** Notification settings for this chat */
+  notification_settings?: notificationSettingsOptional,
+  /**
+   * Identifier of the message from which reply markup needs to be used; 0 if there is
+   * no default custom reply markup in the chat
+   */
+  reply_markup_message_id?: number,
+  /** A draft of a message in the chat; may be null */
+  draft_message?: draftMessageOptional,
+  /**
+   * Contains client-specific data associated with the chat. (For example, the chat position
+   * or local chat notification settings can be stored here.) Persistent if a message
+   * database is used
+   */
+  client_data?: string,
+|}
+
+/** Represents a list of chats */
+export type chats = {
+  _: 'chats',
+  /** List of chat identifiers */
+  chat_ids: number[],
+}
+
+/** Represents a list of chats */
+export type chatsOptional = {|
+  _: 'chats',
+  /** List of chat identifiers */
+  chat_ids?: number[],
+|}
+
+/** Contains a chat invite link */
+export type chatInviteLink = {
+  _: 'chatInviteLink',
+  /** Chat invite link */
+  invite_link: string,
+}
+
+/** Contains a chat invite link */
+export type chatInviteLinkOptional = {|
+  _: 'chatInviteLink',
+  /** Chat invite link */
+  invite_link?: string,
+|}
+
+/** Contains information about a chat invite link */
+export type chatInviteLinkInfo = {
+  _: 'chatInviteLinkInfo',
+  /** Chat identifier of the invite link; 0 if the user is not a member of this chat */
+  chat_id: number,
+  /** Contains information about the type of the chat */
+  type: ChatType,
+  /** Title of the chat */
+  title: string,
+  /** Chat photo; may be null */
+  photo: chatPhoto,
+  /** Number of members */
+  member_count: number,
+  /** User identifiers of some chat members that may be known to the current user */
+  member_user_ids: number[],
+  /** True, if the chat is a public supergroup or channel with a username */
+  is_public: boolean,
+}
+
+/** Contains information about a chat invite link */
+export type chatInviteLinkInfoOptional = {|
+  _: 'chatInviteLinkInfo',
+  /** Chat identifier of the invite link; 0 if the user is not a member of this chat */
+  chat_id?: number,
+  /** Contains information about the type of the chat */
+  type?: ChatTypeOptional,
+  /** Title of the chat */
+  title?: string,
+  /** Chat photo; may be null */
+  photo?: chatPhotoOptional,
+  /** Number of members */
+  member_count?: number,
+  /** User identifiers of some chat members that may be known to the current user */
+  member_user_ids?: number[],
+  /** True, if the chat is a public supergroup or channel with a username */
+  is_public?: boolean,
+|}
+
+/** A simple button, with text that should be sent when the button is pressed */
+export type keyboardButtonTypeText = {
+  _: 'keyboardButtonTypeText',
+}
+
+/** A simple button, with text that should be sent when the button is pressed */
+export type keyboardButtonTypeTextOptional = {|
+  _: 'keyboardButtonTypeText',
+|}
+
+/**
+ * A button that sends the user's phone number when pressed; available only in private
+ * chats
+ */
+export type keyboardButtonTypeRequestPhoneNumber = {
+  _: 'keyboardButtonTypeRequestPhoneNumber',
+}
+
+/**
+ * A button that sends the user's phone number when pressed; available only in private
+ * chats
+ */
+export type keyboardButtonTypeRequestPhoneNumberOptional = {|
+  _: 'keyboardButtonTypeRequestPhoneNumber',
+|}
+
+/** A button that sends the user's location when pressed; available only in private chats */
+export type keyboardButtonTypeRequestLocation = {
+  _: 'keyboardButtonTypeRequestLocation',
+}
+
+/** A button that sends the user's location when pressed; available only in private chats */
+export type keyboardButtonTypeRequestLocationOptional = {|
+  _: 'keyboardButtonTypeRequestLocation',
+|}
+
+/** Represents a single button in a bot keyboard */
+export type keyboardButton = {
+  _: 'keyboardButton',
+  /** Text of the button */
+  text: string,
+  /** Type of the button */
+  type: KeyboardButtonType,
+}
+
+/** Represents a single button in a bot keyboard */
+export type keyboardButtonOptional = {|
+  _: 'keyboardButton',
+  /** Text of the button */
+  text?: string,
+  /** Type of the button */
+  type?: KeyboardButtonTypeOptional,
+|}
+
+/** A button that opens a specified URL */
+export type inlineKeyboardButtonTypeUrl = {
+  _: 'inlineKeyboardButtonTypeUrl',
+  /** URL to open */
+  url: string,
+}
+
+/** A button that opens a specified URL */
+export type inlineKeyboardButtonTypeUrlOptional = {|
+  _: 'inlineKeyboardButtonTypeUrl',
+  /** URL to open */
+  url?: string,
+|}
+
+/** A button that sends a special callback query to a bot */
+export type inlineKeyboardButtonTypeCallback = {
+  _: 'inlineKeyboardButtonTypeCallback',
+  /** Data to be sent to the bot via a callback query */
+  data: string,
+}
+
+/** A button that sends a special callback query to a bot */
+export type inlineKeyboardButtonTypeCallbackOptional = {|
+  _: 'inlineKeyboardButtonTypeCallback',
+  /** Data to be sent to the bot via a callback query */
+  data?: string,
+|}
+
+/**
+ * A button with a game that sends a special callback query to a bot. This button must
+ * be in the first column and row of the keyboard and can be attached only to a message
+ * with content of the type messageGame
+ */
+export type inlineKeyboardButtonTypeCallbackGame = {
+  _: 'inlineKeyboardButtonTypeCallbackGame',
+}
+
+/**
+ * A button with a game that sends a special callback query to a bot. This button must
+ * be in the first column and row of the keyboard and can be attached only to a message
+ * with content of the type messageGame
+ */
+export type inlineKeyboardButtonTypeCallbackGameOptional = {|
+  _: 'inlineKeyboardButtonTypeCallbackGame',
+|}
+
+/** A button that forces an inline query to the bot to be inserted in the input field */
+export type inlineKeyboardButtonTypeSwitchInline = {
+  _: 'inlineKeyboardButtonTypeSwitchInline',
+  /** Inline query to be sent to the bot */
+  query: string,
+  /** True, if the inline query should be sent from the current chat */
+  in_current_chat: boolean,
+}
+
+/** A button that forces an inline query to the bot to be inserted in the input field */
+export type inlineKeyboardButtonTypeSwitchInlineOptional = {|
+  _: 'inlineKeyboardButtonTypeSwitchInline',
+  /** Inline query to be sent to the bot */
+  query?: string,
+  /** True, if the inline query should be sent from the current chat */
+  in_current_chat?: boolean,
+|}
+
+/**
+ * A button to buy something. This button must be in the first column and row of the
+ * keyboard and can be attached only to a message with content of the type messageInvoice
+ */
+export type inlineKeyboardButtonTypeBuy = {
+  _: 'inlineKeyboardButtonTypeBuy',
+}
+
+/**
+ * A button to buy something. This button must be in the first column and row of the
+ * keyboard and can be attached only to a message with content of the type messageInvoice
+ */
+export type inlineKeyboardButtonTypeBuyOptional = {|
+  _: 'inlineKeyboardButtonTypeBuy',
+|}
+
+/** Represents a single button in an inline keyboard */
+export type inlineKeyboardButton = {
+  _: 'inlineKeyboardButton',
+  /** Text of the button */
+  text: string,
+  /** Type of the button */
+  type: InlineKeyboardButtonType,
+}
+
+/** Represents a single button in an inline keyboard */
+export type inlineKeyboardButtonOptional = {|
+  _: 'inlineKeyboardButton',
+  /** Text of the button */
+  text?: string,
+  /** Type of the button */
+  type?: InlineKeyboardButtonTypeOptional,
+|}
+
+/**
+ * Instructs clients to remove the keyboard once this message has been received. This
+ * kind of keyboard can't be received in an incoming message; instead, UpdateChatReplyMarkup
+ * with message_id == 0 will be sent
+ */
+export type replyMarkupRemoveKeyboard = {
+  _: 'replyMarkupRemoveKeyboard',
+  /**
+   * True, if the keyboard is removed only for the mentioned users or the target user
+   * of a reply
+   */
+  is_personal: boolean,
+}
+
+/**
+ * Instructs clients to remove the keyboard once this message has been received. This
+ * kind of keyboard can't be received in an incoming message; instead, UpdateChatReplyMarkup
+ * with message_id == 0 will be sent
+ */
+export type replyMarkupRemoveKeyboardOptional = {|
+  _: 'replyMarkupRemoveKeyboard',
+  /**
+   * True, if the keyboard is removed only for the mentioned users or the target user
+   * of a reply
+   */
+  is_personal?: boolean,
+|}
+
+/** Instructs clients to force a reply to this message */
+export type replyMarkupForceReply = {
+  _: 'replyMarkupForceReply',
+  /**
+   * True, if a forced reply must automatically be shown to the current user. For outgoing
+   * messages, specify true to show the forced reply only for the mentioned users and
+   * for the target user of a reply
+   */
+  is_personal: boolean,
+}
+
+/** Instructs clients to force a reply to this message */
+export type replyMarkupForceReplyOptional = {|
+  _: 'replyMarkupForceReply',
+  /**
+   * True, if a forced reply must automatically be shown to the current user. For outgoing
+   * messages, specify true to show the forced reply only for the mentioned users and
+   * for the target user of a reply
+   */
+  is_personal?: boolean,
+|}
+
+/** Contains a custom keyboard layout to quickly reply to bots */
+export type replyMarkupShowKeyboard = {
+  _: 'replyMarkupShowKeyboard',
+  /** A list of rows of bot keyboard buttons */
+  rows: keyboardButton[][],
+  /** True, if the client needs to resize the keyboard vertically */
+  resize_keyboard: boolean,
+  /** True, if the client needs to hide the keyboard after use */
+  one_time: boolean,
+  /**
+   * True, if the keyboard must automatically be shown to the current user. For outgoing
+   * messages, specify true to show the keyboard only for the mentioned users and for
+   * the target user of a reply
+   */
+  is_personal: boolean,
+}
+
+/** Contains a custom keyboard layout to quickly reply to bots */
+export type replyMarkupShowKeyboardOptional = {|
+  _: 'replyMarkupShowKeyboard',
+  /** A list of rows of bot keyboard buttons */
+  rows?: keyboardButtonOptional[][],
+  /** True, if the client needs to resize the keyboard vertically */
+  resize_keyboard?: boolean,
+  /** True, if the client needs to hide the keyboard after use */
+  one_time?: boolean,
+  /**
+   * True, if the keyboard must automatically be shown to the current user. For outgoing
+   * messages, specify true to show the keyboard only for the mentioned users and for
+   * the target user of a reply
+   */
+  is_personal?: boolean,
+|}
+
+/** Contains an inline keyboard layout */
+export type replyMarkupInlineKeyboard = {
+  _: 'replyMarkupInlineKeyboard',
+  /** A list of rows of inline keyboard buttons */
+  rows: inlineKeyboardButton[][],
+}
+
+/** Contains an inline keyboard layout */
+export type replyMarkupInlineKeyboardOptional = {|
+  _: 'replyMarkupInlineKeyboard',
+  /** A list of rows of inline keyboard buttons */
+  rows?: inlineKeyboardButtonOptional[][],
+|}
+
+/** A plain text */
+export type richTextPlain = {
+  _: 'richTextPlain',
+  /** Text */
+  text: string,
+}
+
+/** A plain text */
+export type richTextPlainOptional = {|
+  _: 'richTextPlain',
+  /** Text */
+  text?: string,
+|}
+
+/** A bold rich text */
+export type richTextBold = {
+  _: 'richTextBold',
+  /** Text */
+  text: RichText,
+}
+
+/** A bold rich text */
+export type richTextBoldOptional = {|
+  _: 'richTextBold',
+  /** Text */
+  text?: RichTextOptional,
+|}
+
+/** An italicized rich text */
+export type richTextItalic = {
+  _: 'richTextItalic',
+  /** Text */
+  text: RichText,
+}
+
+/** An italicized rich text */
+export type richTextItalicOptional = {|
+  _: 'richTextItalic',
+  /** Text */
+  text?: RichTextOptional,
+|}
+
+/** An underlined rich text */
+export type richTextUnderline = {
+  _: 'richTextUnderline',
+  /** Text */
+  text: RichText,
+}
+
+/** An underlined rich text */
+export type richTextUnderlineOptional = {|
+  _: 'richTextUnderline',
+  /** Text */
+  text?: RichTextOptional,
+|}
+
+/** A strike-through rich text */
+export type richTextStrikethrough = {
+  _: 'richTextStrikethrough',
+  /** Text */
+  text: RichText,
+}
+
+/** A strike-through rich text */
+export type richTextStrikethroughOptional = {|
+  _: 'richTextStrikethrough',
+  /** Text */
+  text?: RichTextOptional,
+|}
+
+/** A fixed-width rich text */
+export type richTextFixed = {
+  _: 'richTextFixed',
+  /** Text */
+  text: RichText,
+}
+
+/** A fixed-width rich text */
+export type richTextFixedOptional = {|
+  _: 'richTextFixed',
+  /** Text */
+  text?: RichTextOptional,
+|}
+
+/** A rich text URL link */
+export type richTextUrl = {
+  _: 'richTextUrl',
+  /** Text */
+  text: RichText,
+  /** URL */
+  url: string,
+}
+
+/** A rich text URL link */
+export type richTextUrlOptional = {|
+  _: 'richTextUrl',
+  /** Text */
+  text?: RichTextOptional,
+  /** URL */
+  url?: string,
+|}
+
+/** A rich text email link */
+export type richTextEmailAddress = {
+  _: 'richTextEmailAddress',
+  /** Text */
+  text: RichText,
+  /** Email address */
+  email_address: string,
+}
+
+/** A rich text email link */
+export type richTextEmailAddressOptional = {|
+  _: 'richTextEmailAddress',
+  /** Text */
+  text?: RichTextOptional,
+  /** Email address */
+  email_address?: string,
+|}
+
+/** A concatenation of rich texts */
+export type richTexts = {
+  _: 'richTexts',
+  /** Texts */
+  texts: RichText[],
+}
+
+/** A concatenation of rich texts */
+export type richTextsOptional = {|
+  _: 'richTexts',
+  /** Texts */
+  texts?: RichTextOptional[],
+|}
+
+/** The title of a page */
+export type pageBlockTitle = {
+  _: 'pageBlockTitle',
+  /** Title */
+  title: RichText,
+}
+
+/** The title of a page */
+export type pageBlockTitleOptional = {|
+  _: 'pageBlockTitle',
+  /** Title */
+  title?: RichTextOptional,
+|}
+
+/** The subtitle of a page */
+export type pageBlockSubtitle = {
+  _: 'pageBlockSubtitle',
+  /** Subtitle */
+  subtitle: RichText,
+}
+
+/** The subtitle of a page */
+export type pageBlockSubtitleOptional = {|
+  _: 'pageBlockSubtitle',
+  /** Subtitle */
+  subtitle?: RichTextOptional,
+|}
+
+/** The author and publishing date of a page */
+export type pageBlockAuthorDate = {
+  _: 'pageBlockAuthorDate',
+  /** Author */
+  author: RichText,
+  /** Point in time (Unix timestamp) when the article was published; 0 if unknown */
+  publish_date: number,
+}
+
+/** The author and publishing date of a page */
+export type pageBlockAuthorDateOptional = {|
+  _: 'pageBlockAuthorDate',
+  /** Author */
+  author?: RichTextOptional,
+  /** Point in time (Unix timestamp) when the article was published; 0 if unknown */
+  publish_date?: number,
+|}
+
+/** A header */
+export type pageBlockHeader = {
+  _: 'pageBlockHeader',
+  /** Header */
+  header: RichText,
+}
+
+/** A header */
+export type pageBlockHeaderOptional = {|
+  _: 'pageBlockHeader',
+  /** Header */
+  header?: RichTextOptional,
+|}
+
+/** A subheader */
+export type pageBlockSubheader = {
+  _: 'pageBlockSubheader',
+  /** Subheader */
+  subheader: RichText,
+}
+
+/** A subheader */
+export type pageBlockSubheaderOptional = {|
+  _: 'pageBlockSubheader',
+  /** Subheader */
+  subheader?: RichTextOptional,
+|}
+
+/** A text paragraph */
+export type pageBlockParagraph = {
+  _: 'pageBlockParagraph',
+  /** Paragraph text */
+  text: RichText,
+}
+
+/** A text paragraph */
+export type pageBlockParagraphOptional = {|
+  _: 'pageBlockParagraph',
+  /** Paragraph text */
+  text?: RichTextOptional,
+|}
+
+/** A preformatted text paragraph */
+export type pageBlockPreformatted = {
+  _: 'pageBlockPreformatted',
+  /** Paragraph text */
+  text: RichText,
+  /** Programming language for which the text should be formatted */
+  language: string,
+}
+
+/** A preformatted text paragraph */
+export type pageBlockPreformattedOptional = {|
+  _: 'pageBlockPreformatted',
+  /** Paragraph text */
+  text?: RichTextOptional,
+  /** Programming language for which the text should be formatted */
+  language?: string,
+|}
+
+/** The footer of a page */
+export type pageBlockFooter = {
+  _: 'pageBlockFooter',
+  /** Footer */
+  footer: RichText,
+}
+
+/** The footer of a page */
+export type pageBlockFooterOptional = {|
+  _: 'pageBlockFooter',
+  /** Footer */
+  footer?: RichTextOptional,
+|}
+
+/** An empty block separating a page */
+export type pageBlockDivider = {
+  _: 'pageBlockDivider',
+}
+
+/** An empty block separating a page */
+export type pageBlockDividerOptional = {|
+  _: 'pageBlockDivider',
+|}
+
+/**
+ * An invisible anchor on a page, which can be used in a URL to open the page from the
+ * specified anchor
+ */
+export type pageBlockAnchor = {
+  _: 'pageBlockAnchor',
+  /** Name of the anchor */
+  name: string,
+}
+
+/**
+ * An invisible anchor on a page, which can be used in a URL to open the page from the
+ * specified anchor
+ */
+export type pageBlockAnchorOptional = {|
+  _: 'pageBlockAnchor',
+  /** Name of the anchor */
+  name?: string,
+|}
+
+/** A list of texts */
+export type pageBlockList = {
+  _: 'pageBlockList',
+  /** Texts */
+  items: RichText[],
+  /** True, if the items should be marked with numbers */
+  is_ordered: boolean,
+}
+
+/** A list of texts */
+export type pageBlockListOptional = {|
+  _: 'pageBlockList',
+  /** Texts */
+  items?: RichTextOptional[],
+  /** True, if the items should be marked with numbers */
+  is_ordered?: boolean,
+|}
+
+/** A block quote */
+export type pageBlockBlockQuote = {
+  _: 'pageBlockBlockQuote',
+  /** Quote text */
+  text: RichText,
+  /** Quote caption */
+  caption: RichText,
+}
+
+/** A block quote */
+export type pageBlockBlockQuoteOptional = {|
+  _: 'pageBlockBlockQuote',
+  /** Quote text */
+  text?: RichTextOptional,
+  /** Quote caption */
+  caption?: RichTextOptional,
+|}
+
+/** A pull quote */
+export type pageBlockPullQuote = {
+  _: 'pageBlockPullQuote',
+  /** Quote text */
+  text: RichText,
+  /** Quote caption */
+  caption: RichText,
+}
+
+/** A pull quote */
+export type pageBlockPullQuoteOptional = {|
+  _: 'pageBlockPullQuote',
+  /** Quote text */
+  text?: RichTextOptional,
+  /** Quote caption */
+  caption?: RichTextOptional,
+|}
+
+/** An animation */
+export type pageBlockAnimation = {
+  _: 'pageBlockAnimation',
+  /** Animation file; may be null */
+  animation: animation,
+  /** Animation caption */
+  caption: RichText,
+  /** True, if the animation should be played automatically */
+  need_autoplay: boolean,
+}
+
+/** An animation */
+export type pageBlockAnimationOptional = {|
+  _: 'pageBlockAnimation',
+  /** Animation file; may be null */
+  animation?: animationOptional,
+  /** Animation caption */
+  caption?: RichTextOptional,
+  /** True, if the animation should be played automatically */
+  need_autoplay?: boolean,
+|}
+
+/** An audio file */
+export type pageBlockAudio = {
+  _: 'pageBlockAudio',
+  /** Audio file; may be null */
+  audio: audio,
+  /** Audio file caption */
+  caption: RichText,
+}
+
+/** An audio file */
+export type pageBlockAudioOptional = {|
+  _: 'pageBlockAudio',
+  /** Audio file; may be null */
+  audio?: audioOptional,
+  /** Audio file caption */
+  caption?: RichTextOptional,
+|}
+
+/** A photo */
+export type pageBlockPhoto = {
+  _: 'pageBlockPhoto',
+  /** Photo file; may be null */
+  photo: photo,
+  /** Photo caption */
+  caption: RichText,
+}
+
+/** A photo */
+export type pageBlockPhotoOptional = {|
+  _: 'pageBlockPhoto',
+  /** Photo file; may be null */
+  photo?: photoOptional,
+  /** Photo caption */
+  caption?: RichTextOptional,
+|}
+
+/** A video */
+export type pageBlockVideo = {
+  _: 'pageBlockVideo',
+  /** Video file; may be null */
+  video: video,
+  /** Video caption */
+  caption: RichText,
+  /** True, if the video should be played automatically */
+  need_autoplay: boolean,
+  /** True, if the video should be looped */
+  is_looped: boolean,
+}
+
+/** A video */
+export type pageBlockVideoOptional = {|
+  _: 'pageBlockVideo',
+  /** Video file; may be null */
+  video?: videoOptional,
+  /** Video caption */
+  caption?: RichTextOptional,
+  /** True, if the video should be played automatically */
+  need_autoplay?: boolean,
+  /** True, if the video should be looped */
+  is_looped?: boolean,
+|}
+
+/** A page cover */
+export type pageBlockCover = {
+  _: 'pageBlockCover',
+  /** Cover */
+  cover: PageBlock,
+}
+
+/** A page cover */
+export type pageBlockCoverOptional = {|
+  _: 'pageBlockCover',
+  /** Cover */
+  cover?: PageBlockOptional,
+|}
+
+/** An embedded web page */
+export type pageBlockEmbedded = {
+  _: 'pageBlockEmbedded',
+  /** Web page URL, if available */
+  url: string,
+  /** HTML-markup of the embedded page */
+  html: string,
+  /** Poster photo, if available; may be null */
+  poster_photo: photo,
+  /** Block width */
+  width: number,
+  /** Block height */
+  height: number,
+  /** Block caption */
+  caption: RichText,
+  /** True, if the block should be full width */
+  is_full_width: boolean,
+  /** True, if scrolling should be allowed */
+  allow_scrolling: boolean,
+}
+
+/** An embedded web page */
+export type pageBlockEmbeddedOptional = {|
+  _: 'pageBlockEmbedded',
+  /** Web page URL, if available */
+  url?: string,
+  /** HTML-markup of the embedded page */
+  html?: string,
+  /** Poster photo, if available; may be null */
+  poster_photo?: photoOptional,
+  /** Block width */
+  width?: number,
+  /** Block height */
+  height?: number,
+  /** Block caption */
+  caption?: RichTextOptional,
+  /** True, if the block should be full width */
+  is_full_width?: boolean,
+  /** True, if scrolling should be allowed */
+  allow_scrolling?: boolean,
+|}
+
+/** An embedded post */
+export type pageBlockEmbeddedPost = {
+  _: 'pageBlockEmbeddedPost',
+  /** Web page URL */
+  url: string,
+  /** Post author */
+  author: string,
+  /** Post author photo */
+  author_photo: photo,
+  /** Point in time (Unix timestamp) when the post was created; 0 if unknown */
+  date: number,
+  /** Post content */
+  page_blocks: PageBlock[],
+  /** Post caption */
+  caption: RichText,
+}
+
+/** An embedded post */
+export type pageBlockEmbeddedPostOptional = {|
+  _: 'pageBlockEmbeddedPost',
+  /** Web page URL */
+  url?: string,
+  /** Post author */
+  author?: string,
+  /** Post author photo */
+  author_photo?: photoOptional,
+  /** Point in time (Unix timestamp) when the post was created; 0 if unknown */
+  date?: number,
+  /** Post content */
+  page_blocks?: PageBlockOptional[],
+  /** Post caption */
+  caption?: RichTextOptional,
+|}
+
+/** A collage */
+export type pageBlockCollage = {
+  _: 'pageBlockCollage',
+  /** Collage item contents */
+  page_blocks: PageBlock[],
+  /** Block caption */
+  caption: RichText,
+}
+
+/** A collage */
+export type pageBlockCollageOptional = {|
+  _: 'pageBlockCollage',
+  /** Collage item contents */
+  page_blocks?: PageBlockOptional[],
+  /** Block caption */
+  caption?: RichTextOptional,
+|}
+
+/** A slideshow */
+export type pageBlockSlideshow = {
+  _: 'pageBlockSlideshow',
+  /** Slideshow item contents */
+  page_blocks: PageBlock[],
+  /** Block caption */
+  caption: RichText,
+}
+
+/** A slideshow */
+export type pageBlockSlideshowOptional = {|
+  _: 'pageBlockSlideshow',
+  /** Slideshow item contents */
+  page_blocks?: PageBlockOptional[],
+  /** Block caption */
+  caption?: RichTextOptional,
+|}
+
+/** A link to a chat */
+export type pageBlockChatLink = {
+  _: 'pageBlockChatLink',
+  /** Chat title */
+  title: string,
+  /** Chat photo; may be null */
+  photo: chatPhoto,
+  /** Chat username, by which all other information about the chat should be resolved */
+  username: string,
+}
+
+/** A link to a chat */
+export type pageBlockChatLinkOptional = {|
+  _: 'pageBlockChatLink',
+  /** Chat title */
+  title?: string,
+  /** Chat photo; may be null */
+  photo?: chatPhotoOptional,
+  /** Chat username, by which all other information about the chat should be resolved */
   username?: string,
 |}
 
-export type checkChatUsernameReturnType = CheckChatUsernameResult
+/** Describes an instant view page for a web page */
+export type webPageInstantView = {
+  _: 'webPageInstantView',
+  /** Content of the web page */
+  page_blocks: PageBlock[],
+  /**
+   * True, if the instant view contains the full page. A network request might be needed
+   * to get the full web page instant view
+   */
+  is_full: boolean,
+}
 
-export type checkDatabaseEncryptionKey = {|
-  _: 'checkDatabaseEncryptionKey',
-  encryption_key?: string,
+/** Describes an instant view page for a web page */
+export type webPageInstantViewOptional = {|
+  _: 'webPageInstantView',
+  /** Content of the web page */
+  page_blocks?: PageBlockOptional[],
+  /**
+   * True, if the instant view contains the full page. A network request might be needed
+   * to get the full web page instant view
+   */
+  is_full?: boolean,
 |}
 
-export type checkDatabaseEncryptionKeyReturnType = ok
+/** Describes a web page preview */
+export type webPage = {
+  _: 'webPage',
+  /** Original URL of the link */
+  url: string,
+  /** URL to display */
+  display_url: string,
+  /**
+   * Type of the web page. Can be: article, photo, audio, video, document, profile, app,
+   * or something else
+   */
+  type: string,
+  /** Short name of the site (e.g., Google Docs, App Store) */
+  site_name: string,
+  /** Title of the content */
+  title: string,
+  /** Description of the content */
+  description: string,
+  /** Image representing the content; may be null */
+  photo: photo,
+  /** URL to show in the embedded preview */
+  embed_url: string,
+  /** MIME type of the embedded preview, (e.g., text/html or video/mp4) */
+  embed_type: string,
+  /** Width of the embedded preview */
+  embed_width: number,
+  /** Height of the embedded preview */
+  embed_height: number,
+  /** Duration of the content, in seconds */
+  duration: number,
+  /** Author of the content */
+  author: string,
+  /** Preview of the content as an animation, if available; may be null */
+  animation: animation,
+  /** Preview of the content as an audio file, if available; may be null */
+  audio: audio,
+  /**
+   * Preview of the content as a document, if available (currently only available for
+   * small PDF files and ZIP archives); may be null
+   */
+  document: document,
+  /** Preview of the content as a sticker for small WEBP files, if available; may be null */
+  sticker: sticker,
+  /** Preview of the content as a video, if available; may be null */
+  video: video,
+  /** Preview of the content as a video note, if available; may be null */
+  video_note: videoNote,
+  /** Preview of the content as a voice note, if available; may be null */
+  voice_note: voiceNote,
+  /** True, if the web page has an instant view */
+  has_instant_view: boolean,
+}
 
-export type clearImportedContacts = {|
-  _: 'clearImportedContacts',
-|}
-
-export type clearImportedContactsReturnType = ok
-
-export type clearRecentStickers = {|
-  _: 'clearRecentStickers',
-  is_attached?: boolean,
-|}
-
-export type clearRecentStickersReturnType = ok
-
-export type clearRecentlyFoundChats = {|
-  _: 'clearRecentlyFoundChats',
-|}
-
-export type clearRecentlyFoundChatsReturnType = ok
-
-export type close = {|
-  _: 'close',
-|}
-
-export type closeReturnType = ok
-
-export type closeChat = {|
-  _: 'closeChat',
-  chat_id?: number,
-|}
-
-export type closeChatReturnType = ok
-
-export type closeSecretChat = {|
-  _: 'closeSecretChat',
-  secret_chat_id?: number,
-|}
-
-export type closeSecretChatReturnType = ok
-
-export type createBasicGroupChat = {|
-  _: 'createBasicGroupChat',
-  basic_group_id?: number,
-  force?: boolean,
-|}
-
-export type createBasicGroupChatReturnType = chat
-
-export type createCall = {|
-  _: 'createCall',
-  user_id?: number,
-  protocol?: callProtocolOptional,
-|}
-
-export type createCallReturnType = callId
-
-export type createNewBasicGroupChat = {|
-  _: 'createNewBasicGroupChat',
-  user_ids?: number[],
+/** Describes a web page preview */
+export type webPageOptional = {|
+  _: 'webPage',
+  /** Original URL of the link */
+  url?: string,
+  /** URL to display */
+  display_url?: string,
+  /**
+   * Type of the web page. Can be: article, photo, audio, video, document, profile, app,
+   * or something else
+   */
+  type?: string,
+  /** Short name of the site (e.g., Google Docs, App Store) */
+  site_name?: string,
+  /** Title of the content */
   title?: string,
-|}
-
-export type createNewBasicGroupChatReturnType = chat
-
-export type createNewSecretChat = {|
-  _: 'createNewSecretChat',
-  user_id?: number,
-|}
-
-export type createNewSecretChatReturnType = chat
-
-export type createNewStickerSet = {|
-  _: 'createNewStickerSet',
-  user_id?: number,
-  title?: string,
-  name?: string,
-  is_masks?: boolean,
-  stickers?: inputStickerOptional[],
-|}
-
-export type createNewStickerSetReturnType = stickerSet
-
-export type createNewSupergroupChat = {|
-  _: 'createNewSupergroupChat',
-  title?: string,
-  is_channel?: boolean,
+  /** Description of the content */
   description?: string,
-|}
-
-export type createNewSupergroupChatReturnType = chat
-
-export type createPrivateChat = {|
-  _: 'createPrivateChat',
-  user_id?: number,
-  force?: boolean,
-|}
-
-export type createPrivateChatReturnType = chat
-
-export type createSecretChat = {|
-  _: 'createSecretChat',
-  secret_chat_id?: number,
-|}
-
-export type createSecretChatReturnType = chat
-
-export type createSupergroupChat = {|
-  _: 'createSupergroupChat',
-  supergroup_id?: number,
-  force?: boolean,
-|}
-
-export type createSupergroupChatReturnType = chat
-
-export type createTemporaryPassword = {|
-  _: 'createTemporaryPassword',
-  password?: string,
-  valid_for?: number,
-|}
-
-export type createTemporaryPasswordReturnType = temporaryPasswordState
-
-export type deleteAccount = {|
-  _: 'deleteAccount',
-  reason?: string,
-|}
-
-export type deleteAccountReturnType = ok
-
-export type deleteChatHistory = {|
-  _: 'deleteChatHistory',
-  chat_id?: number,
-  remove_from_chat_list?: boolean,
-|}
-
-export type deleteChatHistoryReturnType = ok
-
-export type deleteChatMessagesFromUser = {|
-  _: 'deleteChatMessagesFromUser',
-  chat_id?: number,
-  user_id?: number,
-|}
-
-export type deleteChatMessagesFromUserReturnType = ok
-
-export type deleteChatReplyMarkup = {|
-  _: 'deleteChatReplyMarkup',
-  chat_id?: number,
-  message_id?: number,
-|}
-
-export type deleteChatReplyMarkupReturnType = ok
-
-export type deleteFile = {|
-  _: 'deleteFile',
-  file_id?: number,
-|}
-
-export type deleteFileReturnType = ok
-
-export type deleteMessages = {|
-  _: 'deleteMessages',
-  chat_id?: number,
-  message_ids?: number[],
-  revoke?: boolean,
-|}
-
-export type deleteMessagesReturnType = ok
-
-export type deleteProfilePhoto = {|
-  _: 'deleteProfilePhoto',
-  profile_photo_id?: number,
-|}
-
-export type deleteProfilePhotoReturnType = ok
-
-export type deleteSavedCredentials = {|
-  _: 'deleteSavedCredentials',
-|}
-
-export type deleteSavedCredentialsReturnType = ok
-
-export type deleteSavedOrderInfo = {|
-  _: 'deleteSavedOrderInfo',
-|}
-
-export type deleteSavedOrderInfoReturnType = ok
-
-export type deleteSupergroup = {|
-  _: 'deleteSupergroup',
-  supergroup_id?: number,
-|}
-
-export type deleteSupergroupReturnType = ok
-
-export type destroy = {|
-  _: 'destroy',
-|}
-
-export type destroyReturnType = ok
-
-export type discardCall = {|
-  _: 'discardCall',
-  call_id?: number,
-  is_disconnected?: boolean,
+  /** Image representing the content; may be null */
+  photo?: photoOptional,
+  /** URL to show in the embedded preview */
+  embed_url?: string,
+  /** MIME type of the embedded preview, (e.g., text/html or video/mp4) */
+  embed_type?: string,
+  /** Width of the embedded preview */
+  embed_width?: number,
+  /** Height of the embedded preview */
+  embed_height?: number,
+  /** Duration of the content, in seconds */
   duration?: number,
-  connection_id?: number,
+  /** Author of the content */
+  author?: string,
+  /** Preview of the content as an animation, if available; may be null */
+  animation?: animationOptional,
+  /** Preview of the content as an audio file, if available; may be null */
+  audio?: audioOptional,
+  /**
+   * Preview of the content as a document, if available (currently only available for
+   * small PDF files and ZIP archives); may be null
+   */
+  document?: documentOptional,
+  /** Preview of the content as a sticker for small WEBP files, if available; may be null */
+  sticker?: stickerOptional,
+  /** Preview of the content as a video, if available; may be null */
+  video?: videoOptional,
+  /** Preview of the content as a video note, if available; may be null */
+  video_note?: videoNoteOptional,
+  /** Preview of the content as a voice note, if available; may be null */
+  voice_note?: voiceNoteOptional,
+  /** True, if the web page has an instant view */
+  has_instant_view?: boolean,
 |}
 
-export type discardCallReturnType = ok
+/** Portion of the price of a product (e.g., "delivery cost", "tax amount") */
+export type labeledPricePart = {
+  _: 'labeledPricePart',
+  /** Label for this portion of the product price */
+  label: string,
+  /** Currency amount in minimal quantity of the currency */
+  amount: number,
+}
 
-export type disconnectAllWebsites = {|
-  _: 'disconnectAllWebsites',
+/** Portion of the price of a product (e.g., "delivery cost", "tax amount") */
+export type labeledPricePartOptional = {|
+  _: 'labeledPricePart',
+  /** Label for this portion of the product price */
+  label?: string,
+  /** Currency amount in minimal quantity of the currency */
+  amount?: number,
 |}
 
-export type disconnectAllWebsitesReturnType = ok
+/** Product invoice */
+export type invoice = {
+  _: 'invoice',
+  /** ISO 4217 currency code */
+  currency: string,
+  /** A list of objects used to calculate the total price of the product */
+  price_parts: labeledPricePart[],
+  /** True, if the payment is a test payment */
+  is_test: boolean,
+  /** True, if the user's name is needed for payment */
+  need_name: boolean,
+  /** True, if the user's phone number is needed for payment */
+  need_phone_number: boolean,
+  /** True, if the user's email address is needed for payment */
+  need_email_address: boolean,
+  /** True, if the user's shipping address is needed for payment */
+  need_shipping_address: boolean,
+  /** True, if the user's phone number will be sent to the provider */
+  send_phone_number_to_provider: boolean,
+  /** True, if the user's email address will be sent to the provider */
+  send_email_address_to_provider: boolean,
+  /** True, if the total price depends on the shipping method */
+  is_flexible: boolean,
+}
 
-export type disconnectWebsite = {|
-  _: 'disconnectWebsite',
-  website_id?: number,
+/** Product invoice */
+export type invoiceOptional = {|
+  _: 'invoice',
+  /** ISO 4217 currency code */
+  currency?: string,
+  /** A list of objects used to calculate the total price of the product */
+  price_parts?: labeledPricePartOptional[],
+  /** True, if the payment is a test payment */
+  is_test?: boolean,
+  /** True, if the user's name is needed for payment */
+  need_name?: boolean,
+  /** True, if the user's phone number is needed for payment */
+  need_phone_number?: boolean,
+  /** True, if the user's email address is needed for payment */
+  need_email_address?: boolean,
+  /** True, if the user's shipping address is needed for payment */
+  need_shipping_address?: boolean,
+  /** True, if the user's phone number will be sent to the provider */
+  send_phone_number_to_provider?: boolean,
+  /** True, if the user's email address will be sent to the provider */
+  send_email_address_to_provider?: boolean,
+  /** True, if the total price depends on the shipping method */
+  is_flexible?: boolean,
 |}
 
-export type disconnectWebsiteReturnType = ok
+/** Describes a shipping address */
+export type shippingAddress = {
+  _: 'shippingAddress',
+  /** Two-letter ISO 3166-1 alpha-2 country code */
+  country_code: string,
+  /** State, if applicable */
+  state: string,
+  /** City */
+  city: string,
+  /** First line of the address */
+  street_line1: string,
+  /** Second line of the address */
+  street_line2: string,
+  /** Address postal code */
+  postal_code: string,
+}
 
-export type downloadFile = {|
-  _: 'downloadFile',
-  file_id?: number,
-  priority?: number,
+/** Describes a shipping address */
+export type shippingAddressOptional = {|
+  _: 'shippingAddress',
+  /** Two-letter ISO 3166-1 alpha-2 country code */
+  country_code?: string,
+  /** State, if applicable */
+  state?: string,
+  /** City */
+  city?: string,
+  /** First line of the address */
+  street_line1?: string,
+  /** Second line of the address */
+  street_line2?: string,
+  /** Address postal code */
+  postal_code?: string,
 |}
 
-export type downloadFileReturnType = file
+/** Order information */
+export type orderInfo = {
+  _: 'orderInfo',
+  /** Name of the user */
+  name: string,
+  /** Phone number of the user */
+  phone_number: string,
+  /** Email address of the user */
+  email_address: string,
+  /** Shipping address for this order; may be null */
+  shipping_address: shippingAddress,
+}
 
-export type editInlineMessageCaption = {|
-  _: 'editInlineMessageCaption',
-  inline_message_id?: string,
-  reply_markup?: ReplyMarkupOptional,
+/** Order information */
+export type orderInfoOptional = {|
+  _: 'orderInfo',
+  /** Name of the user */
+  name?: string,
+  /** Phone number of the user */
+  phone_number?: string,
+  /** Email address of the user */
+  email_address?: string,
+  /** Shipping address for this order; may be null */
+  shipping_address?: shippingAddressOptional,
+|}
+
+/** One shipping option */
+export type shippingOption = {
+  _: 'shippingOption',
+  /** Shipping option identifier */
+  id: string,
+  /** Option title */
+  title: string,
+  /** A list of objects used to calculate the total shipping costs */
+  price_parts: labeledPricePart[],
+}
+
+/** One shipping option */
+export type shippingOptionOptional = {|
+  _: 'shippingOption',
+  /** Shipping option identifier */
+  id?: string,
+  /** Option title */
+  title?: string,
+  /** A list of objects used to calculate the total shipping costs */
+  price_parts?: labeledPricePartOptional[],
+|}
+
+/** Contains information about saved card credentials */
+export type savedCredentials = {
+  _: 'savedCredentials',
+  /** Unique identifier of the saved credentials */
+  id: string,
+  /** Title of the saved credentials */
+  title: string,
+}
+
+/** Contains information about saved card credentials */
+export type savedCredentialsOptional = {|
+  _: 'savedCredentials',
+  /** Unique identifier of the saved credentials */
+  id?: string,
+  /** Title of the saved credentials */
+  title?: string,
+|}
+
+/**
+ * Applies if a user chooses some previously saved payment credentials. To use their
+ * previously saved credentials, the user must have a valid temporary password
+ */
+export type inputCredentialsSaved = {
+  _: 'inputCredentialsSaved',
+  /** Identifier of the saved credentials */
+  saved_credentials_id: string,
+}
+
+/**
+ * Applies if a user chooses some previously saved payment credentials. To use their
+ * previously saved credentials, the user must have a valid temporary password
+ */
+export type inputCredentialsSavedOptional = {|
+  _: 'inputCredentialsSaved',
+  /** Identifier of the saved credentials */
+  saved_credentials_id?: string,
+|}
+
+/** Applies if a user enters new credentials on a payment provider website */
+export type inputCredentialsNew = {
+  _: 'inputCredentialsNew',
+  /** Contains JSON-encoded data with a credential identifier from the payment provider */
+  data: string,
+  /** True, if the credential identifier can be saved on the server side */
+  allow_save: boolean,
+}
+
+/** Applies if a user enters new credentials on a payment provider website */
+export type inputCredentialsNewOptional = {|
+  _: 'inputCredentialsNew',
+  /** Contains JSON-encoded data with a credential identifier from the payment provider */
+  data?: string,
+  /** True, if the credential identifier can be saved on the server side */
+  allow_save?: boolean,
+|}
+
+/** Applies if a user enters new credentials using Android Pay */
+export type inputCredentialsAndroidPay = {
+  _: 'inputCredentialsAndroidPay',
+  /** JSON-encoded data with the credential identifier */
+  data: string,
+}
+
+/** Applies if a user enters new credentials using Android Pay */
+export type inputCredentialsAndroidPayOptional = {|
+  _: 'inputCredentialsAndroidPay',
+  /** JSON-encoded data with the credential identifier */
+  data?: string,
+|}
+
+/** Applies if a user enters new credentials using Apple Pay */
+export type inputCredentialsApplePay = {
+  _: 'inputCredentialsApplePay',
+  /** JSON-encoded data with the credential identifier */
+  data: string,
+}
+
+/** Applies if a user enters new credentials using Apple Pay */
+export type inputCredentialsApplePayOptional = {|
+  _: 'inputCredentialsApplePay',
+  /** JSON-encoded data with the credential identifier */
+  data?: string,
+|}
+
+/** Stripe payment provider */
+export type paymentsProviderStripe = {
+  _: 'paymentsProviderStripe',
+  /** Stripe API publishable key */
+  publishable_key: string,
+  /** True, if the user country must be provided */
+  need_country: boolean,
+  /** True, if the user ZIP/postal code must be provided */
+  need_postal_code: boolean,
+  /** True, if the cardholder name must be provided */
+  need_cardholder_name: boolean,
+}
+
+/** Stripe payment provider */
+export type paymentsProviderStripeOptional = {|
+  _: 'paymentsProviderStripe',
+  /** Stripe API publishable key */
+  publishable_key?: string,
+  /** True, if the user country must be provided */
+  need_country?: boolean,
+  /** True, if the user ZIP/postal code must be provided */
+  need_postal_code?: boolean,
+  /** True, if the cardholder name must be provided */
+  need_cardholder_name?: boolean,
+|}
+
+/** Contains information about an invoice payment form */
+export type paymentForm = {
+  _: 'paymentForm',
+  /** Full information of the invoice */
+  invoice: invoice,
+  /** Payment form URL */
+  url: string,
+  /**
+   * Contains information about the payment provider, if available, to support it natively
+   * without the need for opening the URL; may be null
+   */
+  payments_provider: paymentsProviderStripe,
+  /** Saved server-side order information; may be null */
+  saved_order_info: orderInfo,
+  /** Contains information about saved card credentials; may be null */
+  saved_credentials: savedCredentials,
+  /** True, if the user can choose to save credentials */
+  can_save_credentials: boolean,
+  /**
+   * True, if the user will be able to save credentials protected by a password they set
+   * up
+   */
+  need_password: boolean,
+}
+
+/** Contains information about an invoice payment form */
+export type paymentFormOptional = {|
+  _: 'paymentForm',
+  /** Full information of the invoice */
+  invoice?: invoiceOptional,
+  /** Payment form URL */
+  url?: string,
+  /**
+   * Contains information about the payment provider, if available, to support it natively
+   * without the need for opening the URL; may be null
+   */
+  payments_provider?: paymentsProviderStripeOptional,
+  /** Saved server-side order information; may be null */
+  saved_order_info?: orderInfoOptional,
+  /** Contains information about saved card credentials; may be null */
+  saved_credentials?: savedCredentialsOptional,
+  /** True, if the user can choose to save credentials */
+  can_save_credentials?: boolean,
+  /**
+   * True, if the user will be able to save credentials protected by a password they set
+   * up
+   */
+  need_password?: boolean,
+|}
+
+/**
+ * Contains a temporary identifier of validated order information, which is stored for
+ * one hour. Also contains the available shipping options
+ */
+export type validatedOrderInfo = {
+  _: 'validatedOrderInfo',
+  /** Temporary identifier of the order information */
+  order_info_id: string,
+  /** Available shipping options */
+  shipping_options: shippingOption[],
+}
+
+/**
+ * Contains a temporary identifier of validated order information, which is stored for
+ * one hour. Also contains the available shipping options
+ */
+export type validatedOrderInfoOptional = {|
+  _: 'validatedOrderInfo',
+  /** Temporary identifier of the order information */
+  order_info_id?: string,
+  /** Available shipping options */
+  shipping_options?: shippingOptionOptional[],
+|}
+
+/** Contains the result of a payment request */
+export type paymentResult = {
+  _: 'paymentResult',
+  /**
+   * True, if the payment request was successful; otherwise the verification_url will
+   * be not empty
+   */
+  success: boolean,
+  /** URL for additional payment credentials verification */
+  verification_url: string,
+}
+
+/** Contains the result of a payment request */
+export type paymentResultOptional = {|
+  _: 'paymentResult',
+  /**
+   * True, if the payment request was successful; otherwise the verification_url will
+   * be not empty
+   */
+  success?: boolean,
+  /** URL for additional payment credentials verification */
+  verification_url?: string,
+|}
+
+/** Contains information about a successful payment */
+export type paymentReceipt = {
+  _: 'paymentReceipt',
+  /** Point in time (Unix timestamp) when the payment was made */
+  date: number,
+  /** User identifier of the payment provider bot */
+  payments_provider_user_id: number,
+  /** Contains information about the invoice */
+  invoice: invoice,
+  /** Contains order information; may be null */
+  order_info: orderInfo,
+  /** Chosen shipping option; may be null */
+  shipping_option: shippingOption,
+  /** Title of the saved credentials */
+  credentials_title: string,
+}
+
+/** Contains information about a successful payment */
+export type paymentReceiptOptional = {|
+  _: 'paymentReceipt',
+  /** Point in time (Unix timestamp) when the payment was made */
+  date?: number,
+  /** User identifier of the payment provider bot */
+  payments_provider_user_id?: number,
+  /** Contains information about the invoice */
+  invoice?: invoiceOptional,
+  /** Contains order information; may be null */
+  order_info?: orderInfoOptional,
+  /** Chosen shipping option; may be null */
+  shipping_option?: shippingOptionOptional,
+  /** Title of the saved credentials */
+  credentials_title?: string,
+|}
+
+/** A text message */
+export type messageText = {
+  _: 'messageText',
+  /** Text of the message */
+  text: formattedText,
+  /** A preview of the web page that's mentioned in the text; may be null */
+  web_page: webPage,
+}
+
+/** A text message */
+export type messageTextOptional = {|
+  _: 'messageText',
+  /** Text of the message */
+  text?: formattedTextOptional,
+  /** A preview of the web page that's mentioned in the text; may be null */
+  web_page?: webPageOptional,
+|}
+
+/** An animation message (GIF-style). */
+export type messageAnimation = {
+  _: 'messageAnimation',
+  /** Message content */
+  animation: animation,
+  /** Animation caption */
+  caption: formattedText,
+  /**
+   * True, if the animation thumbnail must be blurred and the animation must be shown
+   * only while tapped
+   */
+  is_secret: boolean,
+}
+
+/** An animation message (GIF-style). */
+export type messageAnimationOptional = {|
+  _: 'messageAnimation',
+  /** Message content */
+  animation?: animationOptional,
+  /** Animation caption */
+  caption?: formattedTextOptional,
+  /**
+   * True, if the animation thumbnail must be blurred and the animation must be shown
+   * only while tapped
+   */
+  is_secret?: boolean,
+|}
+
+/** An audio message */
+export type messageAudio = {
+  _: 'messageAudio',
+  /** Message content */
+  audio: audio,
+  /** Audio caption */
+  caption: formattedText,
+}
+
+/** An audio message */
+export type messageAudioOptional = {|
+  _: 'messageAudio',
+  /** Message content */
+  audio?: audioOptional,
+  /** Audio caption */
   caption?: formattedTextOptional,
 |}
 
-export type editInlineMessageCaptionReturnType = ok
+/** A document message (general file) */
+export type messageDocument = {
+  _: 'messageDocument',
+  /** Message content */
+  document: document,
+  /** Document caption */
+  caption: formattedText,
+}
 
-export type editInlineMessageLiveLocation = {|
-  _: 'editInlineMessageLiveLocation',
-  inline_message_id?: string,
-  reply_markup?: ReplyMarkupOptional,
-  location?: locationOptional,
-|}
-
-export type editInlineMessageLiveLocationReturnType = ok
-
-export type editInlineMessageReplyMarkup = {|
-  _: 'editInlineMessageReplyMarkup',
-  inline_message_id?: string,
-  reply_markup?: ReplyMarkupOptional,
-|}
-
-export type editInlineMessageReplyMarkupReturnType = ok
-
-export type editInlineMessageText = {|
-  _: 'editInlineMessageText',
-  inline_message_id?: string,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
-
-export type editInlineMessageTextReturnType = ok
-
-export type editMessageCaption = {|
-  _: 'editMessageCaption',
-  chat_id?: number,
-  message_id?: number,
-  reply_markup?: ReplyMarkupOptional,
+/** A document message (general file) */
+export type messageDocumentOptional = {|
+  _: 'messageDocument',
+  /** Message content */
+  document?: documentOptional,
+  /** Document caption */
   caption?: formattedTextOptional,
 |}
 
-export type editMessageCaptionReturnType = message
+/** A photo message */
+export type messagePhoto = {
+  _: 'messagePhoto',
+  /** Message content */
+  photo: photo,
+  /** Photo caption */
+  caption: formattedText,
+  /** True, if the photo must be blurred and must be shown only while tapped */
+  is_secret: boolean,
+}
 
-export type editMessageLiveLocation = {|
-  _: 'editMessageLiveLocation',
-  chat_id?: number,
-  message_id?: number,
-  reply_markup?: ReplyMarkupOptional,
+/** A photo message */
+export type messagePhotoOptional = {|
+  _: 'messagePhoto',
+  /** Message content */
+  photo?: photoOptional,
+  /** Photo caption */
+  caption?: formattedTextOptional,
+  /** True, if the photo must be blurred and must be shown only while tapped */
+  is_secret?: boolean,
+|}
+
+/** An expired photo message (self-destructed after TTL has elapsed) */
+export type messageExpiredPhoto = {
+  _: 'messageExpiredPhoto',
+}
+
+/** An expired photo message (self-destructed after TTL has elapsed) */
+export type messageExpiredPhotoOptional = {|
+  _: 'messageExpiredPhoto',
+|}
+
+/** A sticker message */
+export type messageSticker = {
+  _: 'messageSticker',
+  /** Message content */
+  sticker: sticker,
+}
+
+/** A sticker message */
+export type messageStickerOptional = {|
+  _: 'messageSticker',
+  /** Message content */
+  sticker?: stickerOptional,
+|}
+
+/** A video message */
+export type messageVideo = {
+  _: 'messageVideo',
+  /** Message content */
+  video: video,
+  /** Video caption */
+  caption: formattedText,
+  /**
+   * True, if the video thumbnail must be blurred and the video must be shown only while
+   * tapped
+   */
+  is_secret: boolean,
+}
+
+/** A video message */
+export type messageVideoOptional = {|
+  _: 'messageVideo',
+  /** Message content */
+  video?: videoOptional,
+  /** Video caption */
+  caption?: formattedTextOptional,
+  /**
+   * True, if the video thumbnail must be blurred and the video must be shown only while
+   * tapped
+   */
+  is_secret?: boolean,
+|}
+
+/** An expired video message (self-destructed after TTL has elapsed) */
+export type messageExpiredVideo = {
+  _: 'messageExpiredVideo',
+}
+
+/** An expired video message (self-destructed after TTL has elapsed) */
+export type messageExpiredVideoOptional = {|
+  _: 'messageExpiredVideo',
+|}
+
+/** A video note message */
+export type messageVideoNote = {
+  _: 'messageVideoNote',
+  /** Message content */
+  video_note: videoNote,
+  /** True, if at least one of the recipients has viewed the video note */
+  is_viewed: boolean,
+  /**
+   * True, if the video note thumbnail must be blurred and the video note must be shown
+   * only while tapped
+   */
+  is_secret: boolean,
+}
+
+/** A video note message */
+export type messageVideoNoteOptional = {|
+  _: 'messageVideoNote',
+  /** Message content */
+  video_note?: videoNoteOptional,
+  /** True, if at least one of the recipients has viewed the video note */
+  is_viewed?: boolean,
+  /**
+   * True, if the video note thumbnail must be blurred and the video note must be shown
+   * only while tapped
+   */
+  is_secret?: boolean,
+|}
+
+/** A voice note message */
+export type messageVoiceNote = {
+  _: 'messageVoiceNote',
+  /** Message content */
+  voice_note: voiceNote,
+  /** Voice note caption */
+  caption: formattedText,
+  /** True, if at least one of the recipients has listened to the voice note */
+  is_listened: boolean,
+}
+
+/** A voice note message */
+export type messageVoiceNoteOptional = {|
+  _: 'messageVoiceNote',
+  /** Message content */
+  voice_note?: voiceNoteOptional,
+  /** Voice note caption */
+  caption?: formattedTextOptional,
+  /** True, if at least one of the recipients has listened to the voice note */
+  is_listened?: boolean,
+|}
+
+/** A message with a location */
+export type messageLocation = {
+  _: 'messageLocation',
+  /** Message content */
+  location: location,
+  /**
+   * Time relative to the message sent date until which the location can be updated, in
+   * seconds
+   */
+  live_period: number,
+  /**
+   * Left time for which the location can be updated, in seconds. updateMessageContent
+   * is not sent when this field changes
+   */
+  expires_in: number,
+}
+
+/** A message with a location */
+export type messageLocationOptional = {|
+  _: 'messageLocation',
+  /** Message content */
   location?: locationOptional,
+  /**
+   * Time relative to the message sent date until which the location can be updated, in
+   * seconds
+   */
+  live_period?: number,
+  /**
+   * Left time for which the location can be updated, in seconds. updateMessageContent
+   * is not sent when this field changes
+   */
+  expires_in?: number,
 |}
 
-export type editMessageLiveLocationReturnType = message
+/** A message with information about a venue */
+export type messageVenue = {
+  _: 'messageVenue',
+  /** Message content */
+  venue: venue,
+}
 
-export type editMessageReplyMarkup = {|
-  _: 'editMessageReplyMarkup',
-  chat_id?: number,
+/** A message with information about a venue */
+export type messageVenueOptional = {|
+  _: 'messageVenue',
+  /** Message content */
+  venue?: venueOptional,
+|}
+
+/** A message with a user contact */
+export type messageContact = {
+  _: 'messageContact',
+  /** Message content */
+  contact: contact,
+}
+
+/** A message with a user contact */
+export type messageContactOptional = {|
+  _: 'messageContact',
+  /** Message content */
+  contact?: contactOptional,
+|}
+
+/** A message with a game */
+export type messageGame = {
+  _: 'messageGame',
+  /** Game */
+  game: game,
+}
+
+/** A message with a game */
+export type messageGameOptional = {|
+  _: 'messageGame',
+  /** Game */
+  game?: gameOptional,
+|}
+
+/** A message with an invoice from a bot */
+export type messageInvoice = {
+  _: 'messageInvoice',
+  /** Product title */
+  title: string,
+  /** Product description */
+  description: string,
+  /** Product photo; may be null */
+  photo: photo,
+  /** Currency for the product price */
+  currency: string,
+  /** Product total price in the minimal quantity of the currency */
+  total_amount: number,
+  /** Unique invoice bot start_parameter. To share an invoice use the URL https://t.me/{bot_username}?start={start_parameter} */
+  start_parameter: string,
+  /** True, if the invoice is a test invoice */
+  is_test: boolean,
+  /** True, if the shipping address should be specified */
+  need_shipping_address: boolean,
+  /** The identifier of the message with the receipt, after the product has been purchased */
+  receipt_message_id: number,
+}
+
+/** A message with an invoice from a bot */
+export type messageInvoiceOptional = {|
+  _: 'messageInvoice',
+  /** Product title */
+  title?: string,
+  /** Product description */
+  description?: string,
+  /** Product photo; may be null */
+  photo?: photoOptional,
+  /** Currency for the product price */
+  currency?: string,
+  /** Product total price in the minimal quantity of the currency */
+  total_amount?: number,
+  /** Unique invoice bot start_parameter. To share an invoice use the URL https://t.me/{bot_username}?start={start_parameter} */
+  start_parameter?: string,
+  /** True, if the invoice is a test invoice */
+  is_test?: boolean,
+  /** True, if the shipping address should be specified */
+  need_shipping_address?: boolean,
+  /** The identifier of the message with the receipt, after the product has been purchased */
+  receipt_message_id?: number,
+|}
+
+/** A message with information about an ended call */
+export type messageCall = {
+  _: 'messageCall',
+  /** Reason why the call was discarded */
+  discard_reason: CallDiscardReason,
+  /** Call duration, in seconds */
+  duration: number,
+}
+
+/** A message with information about an ended call */
+export type messageCallOptional = {|
+  _: 'messageCall',
+  /** Reason why the call was discarded */
+  discard_reason?: CallDiscardReasonOptional,
+  /** Call duration, in seconds */
+  duration?: number,
+|}
+
+/** A newly created basic group */
+export type messageBasicGroupChatCreate = {
+  _: 'messageBasicGroupChatCreate',
+  /** Title of the basic group */
+  title: string,
+  /** User identifiers of members in the basic group */
+  member_user_ids: number[],
+}
+
+/** A newly created basic group */
+export type messageBasicGroupChatCreateOptional = {|
+  _: 'messageBasicGroupChatCreate',
+  /** Title of the basic group */
+  title?: string,
+  /** User identifiers of members in the basic group */
+  member_user_ids?: number[],
+|}
+
+/** A newly created supergroup or channel */
+export type messageSupergroupChatCreate = {
+  _: 'messageSupergroupChatCreate',
+  /** Title of the supergroup or channel */
+  title: string,
+}
+
+/** A newly created supergroup or channel */
+export type messageSupergroupChatCreateOptional = {|
+  _: 'messageSupergroupChatCreate',
+  /** Title of the supergroup or channel */
+  title?: string,
+|}
+
+/** An updated chat title */
+export type messageChatChangeTitle = {
+  _: 'messageChatChangeTitle',
+  /** New chat title */
+  title: string,
+}
+
+/** An updated chat title */
+export type messageChatChangeTitleOptional = {|
+  _: 'messageChatChangeTitle',
+  /** New chat title */
+  title?: string,
+|}
+
+/** An updated chat photo */
+export type messageChatChangePhoto = {
+  _: 'messageChatChangePhoto',
+  /** New chat photo */
+  photo: photo,
+}
+
+/** An updated chat photo */
+export type messageChatChangePhotoOptional = {|
+  _: 'messageChatChangePhoto',
+  /** New chat photo */
+  photo?: photoOptional,
+|}
+
+/** A deleted chat photo */
+export type messageChatDeletePhoto = {
+  _: 'messageChatDeletePhoto',
+}
+
+/** A deleted chat photo */
+export type messageChatDeletePhotoOptional = {|
+  _: 'messageChatDeletePhoto',
+|}
+
+/** New chat members were added */
+export type messageChatAddMembers = {
+  _: 'messageChatAddMembers',
+  /** User identifiers of the new members */
+  member_user_ids: number[],
+}
+
+/** New chat members were added */
+export type messageChatAddMembersOptional = {|
+  _: 'messageChatAddMembers',
+  /** User identifiers of the new members */
+  member_user_ids?: number[],
+|}
+
+/** A new member joined the chat by invite link */
+export type messageChatJoinByLink = {
+  _: 'messageChatJoinByLink',
+}
+
+/** A new member joined the chat by invite link */
+export type messageChatJoinByLinkOptional = {|
+  _: 'messageChatJoinByLink',
+|}
+
+/** A chat member was deleted */
+export type messageChatDeleteMember = {
+  _: 'messageChatDeleteMember',
+  /** User identifier of the deleted chat member */
+  user_id: number,
+}
+
+/** A chat member was deleted */
+export type messageChatDeleteMemberOptional = {|
+  _: 'messageChatDeleteMember',
+  /** User identifier of the deleted chat member */
+  user_id?: number,
+|}
+
+/** A basic group was upgraded to a supergroup and was deactivated as the result */
+export type messageChatUpgradeTo = {
+  _: 'messageChatUpgradeTo',
+  /** Identifier of the supergroup to which the basic group was upgraded */
+  supergroup_id: number,
+}
+
+/** A basic group was upgraded to a supergroup and was deactivated as the result */
+export type messageChatUpgradeToOptional = {|
+  _: 'messageChatUpgradeTo',
+  /** Identifier of the supergroup to which the basic group was upgraded */
+  supergroup_id?: number,
+|}
+
+/** A supergroup has been created from a basic group */
+export type messageChatUpgradeFrom = {
+  _: 'messageChatUpgradeFrom',
+  /** Title of the newly created supergroup */
+  title: string,
+  /** The identifier of the original basic group */
+  basic_group_id: number,
+}
+
+/** A supergroup has been created from a basic group */
+export type messageChatUpgradeFromOptional = {|
+  _: 'messageChatUpgradeFrom',
+  /** Title of the newly created supergroup */
+  title?: string,
+  /** The identifier of the original basic group */
+  basic_group_id?: number,
+|}
+
+/** A message has been pinned */
+export type messagePinMessage = {
+  _: 'messagePinMessage',
+  /** Identifier of the pinned message, can be an identifier of a deleted message */
+  message_id: number,
+}
+
+/** A message has been pinned */
+export type messagePinMessageOptional = {|
+  _: 'messagePinMessage',
+  /** Identifier of the pinned message, can be an identifier of a deleted message */
   message_id?: number,
-  reply_markup?: ReplyMarkupOptional,
 |}
 
-export type editMessageReplyMarkupReturnType = message
+/** A screenshot of a message in the chat has been taken */
+export type messageScreenshotTaken = {
+  _: 'messageScreenshotTaken',
+}
 
-export type editMessageText = {|
-  _: 'editMessageText',
-  chat_id?: number,
+/** A screenshot of a message in the chat has been taken */
+export type messageScreenshotTakenOptional = {|
+  _: 'messageScreenshotTaken',
+|}
+
+/** The TTL (Time To Live) setting messages in a secret chat has been changed */
+export type messageChatSetTtl = {
+  _: 'messageChatSetTtl',
+  /** New TTL */
+  ttl: number,
+}
+
+/** The TTL (Time To Live) setting messages in a secret chat has been changed */
+export type messageChatSetTtlOptional = {|
+  _: 'messageChatSetTtl',
+  /** New TTL */
+  ttl?: number,
+|}
+
+/** A non-standard action has happened in the chat */
+export type messageCustomServiceAction = {
+  _: 'messageCustomServiceAction',
+  /** Message text to be shown in the chat */
+  text: string,
+}
+
+/** A non-standard action has happened in the chat */
+export type messageCustomServiceActionOptional = {|
+  _: 'messageCustomServiceAction',
+  /** Message text to be shown in the chat */
+  text?: string,
+|}
+
+/** A new high score was achieved in a game */
+export type messageGameScore = {
+  _: 'messageGameScore',
+  /** Identifier of the message with the game, can be an identifier of a deleted message */
+  game_message_id: number,
+  /**
+   * Identifier of the game, may be different from the games presented in the message
+   * with the game
+   */
+  game_id: (number | string),
+  /** New score */
+  score: number,
+}
+
+/** A new high score was achieved in a game */
+export type messageGameScoreOptional = {|
+  _: 'messageGameScore',
+  /** Identifier of the message with the game, can be an identifier of a deleted message */
+  game_message_id?: number,
+  /**
+   * Identifier of the game, may be different from the games presented in the message
+   * with the game
+   */
+  game_id?: (number | string),
+  /** New score */
+  score?: number,
+|}
+
+/** A payment has been completed */
+export type messagePaymentSuccessful = {
+  _: 'messagePaymentSuccessful',
+  /**
+   * Identifier of the message with the corresponding invoice; can be an identifier of
+   * a deleted message
+   */
+  invoice_message_id: number,
+  /** Currency for the price of the product */
+  currency: string,
+  /** Total price for the product, in the minimal quantity of the currency */
+  total_amount: number,
+}
+
+/** A payment has been completed */
+export type messagePaymentSuccessfulOptional = {|
+  _: 'messagePaymentSuccessful',
+  /**
+   * Identifier of the message with the corresponding invoice; can be an identifier of
+   * a deleted message
+   */
+  invoice_message_id?: number,
+  /** Currency for the price of the product */
+  currency?: string,
+  /** Total price for the product, in the minimal quantity of the currency */
+  total_amount?: number,
+|}
+
+/** A payment has been completed; for bots only */
+export type messagePaymentSuccessfulBot = {
+  _: 'messagePaymentSuccessfulBot',
+  /**
+   * Identifier of the message with the corresponding invoice; can be an identifier of
+   * a deleted message
+   */
+  invoice_message_id: number,
+  /** Currency for price of the product */
+  currency: string,
+  /** Total price for the product, in the minimal quantity of the currency */
+  total_amount: number,
+  /** Invoice payload */
+  invoice_payload: string,
+  /** Identifier of the shipping option chosen by the user, may be empty if not applicable */
+  shipping_option_id: string,
+  /** Information about the order; may be null */
+  order_info: orderInfo,
+  /** Telegram payment identifier */
+  telegram_payment_charge_id: string,
+  /** Provider payment identifier */
+  provider_payment_charge_id: string,
+}
+
+/** A payment has been completed; for bots only */
+export type messagePaymentSuccessfulBotOptional = {|
+  _: 'messagePaymentSuccessfulBot',
+  /**
+   * Identifier of the message with the corresponding invoice; can be an identifier of
+   * a deleted message
+   */
+  invoice_message_id?: number,
+  /** Currency for price of the product */
+  currency?: string,
+  /** Total price for the product, in the minimal quantity of the currency */
+  total_amount?: number,
+  /** Invoice payload */
+  invoice_payload?: string,
+  /** Identifier of the shipping option chosen by the user, may be empty if not applicable */
+  shipping_option_id?: string,
+  /** Information about the order; may be null */
+  order_info?: orderInfoOptional,
+  /** Telegram payment identifier */
+  telegram_payment_charge_id?: string,
+  /** Provider payment identifier */
+  provider_payment_charge_id?: string,
+|}
+
+/** A contact has registered with Telegram */
+export type messageContactRegistered = {
+  _: 'messageContactRegistered',
+}
+
+/** A contact has registered with Telegram */
+export type messageContactRegisteredOptional = {|
+  _: 'messageContactRegistered',
+|}
+
+/**
+ * The current user has connected a website by logging in using Telegram Login Widget
+ * on it
+ */
+export type messageWebsiteConnected = {
+  _: 'messageWebsiteConnected',
+  /** Domain name of the connected website */
+  domain_name: string,
+}
+
+/**
+ * The current user has connected a website by logging in using Telegram Login Widget
+ * on it
+ */
+export type messageWebsiteConnectedOptional = {|
+  _: 'messageWebsiteConnected',
+  /** Domain name of the connected website */
+  domain_name?: string,
+|}
+
+/** Message content that is not supported by the client */
+export type messageUnsupported = {
+  _: 'messageUnsupported',
+}
+
+/** Message content that is not supported by the client */
+export type messageUnsupportedOptional = {|
+  _: 'messageUnsupported',
+|}
+
+/** A mention of a user by their username */
+export type textEntityTypeMention = {
+  _: 'textEntityTypeMention',
+}
+
+/** A mention of a user by their username */
+export type textEntityTypeMentionOptional = {|
+  _: 'textEntityTypeMention',
+|}
+
+/** A hashtag text, beginning with "#" */
+export type textEntityTypeHashtag = {
+  _: 'textEntityTypeHashtag',
+}
+
+/** A hashtag text, beginning with "#" */
+export type textEntityTypeHashtagOptional = {|
+  _: 'textEntityTypeHashtag',
+|}
+
+/**
+ * A cashtag text, beginning with "$" and consisting of capital english letters (i.e.
+ * "$USD")
+ */
+export type textEntityTypeCashtag = {
+  _: 'textEntityTypeCashtag',
+}
+
+/**
+ * A cashtag text, beginning with "$" and consisting of capital english letters (i.e.
+ * "$USD")
+ */
+export type textEntityTypeCashtagOptional = {|
+  _: 'textEntityTypeCashtag',
+|}
+
+/**
+ * A bot command, beginning with "/". This shouldn't be highlighted if there are no
+ * bots in the chat
+ */
+export type textEntityTypeBotCommand = {
+  _: 'textEntityTypeBotCommand',
+}
+
+/**
+ * A bot command, beginning with "/". This shouldn't be highlighted if there are no
+ * bots in the chat
+ */
+export type textEntityTypeBotCommandOptional = {|
+  _: 'textEntityTypeBotCommand',
+|}
+
+/** An HTTP URL */
+export type textEntityTypeUrl = {
+  _: 'textEntityTypeUrl',
+}
+
+/** An HTTP URL */
+export type textEntityTypeUrlOptional = {|
+  _: 'textEntityTypeUrl',
+|}
+
+/** An email address */
+export type textEntityTypeEmailAddress = {
+  _: 'textEntityTypeEmailAddress',
+}
+
+/** An email address */
+export type textEntityTypeEmailAddressOptional = {|
+  _: 'textEntityTypeEmailAddress',
+|}
+
+/** A bold text */
+export type textEntityTypeBold = {
+  _: 'textEntityTypeBold',
+}
+
+/** A bold text */
+export type textEntityTypeBoldOptional = {|
+  _: 'textEntityTypeBold',
+|}
+
+/** An italic text */
+export type textEntityTypeItalic = {
+  _: 'textEntityTypeItalic',
+}
+
+/** An italic text */
+export type textEntityTypeItalicOptional = {|
+  _: 'textEntityTypeItalic',
+|}
+
+/** Text that must be formatted as if inside a code HTML tag */
+export type textEntityTypeCode = {
+  _: 'textEntityTypeCode',
+}
+
+/** Text that must be formatted as if inside a code HTML tag */
+export type textEntityTypeCodeOptional = {|
+  _: 'textEntityTypeCode',
+|}
+
+/** Text that must be formatted as if inside a pre HTML tag */
+export type textEntityTypePre = {
+  _: 'textEntityTypePre',
+}
+
+/** Text that must be formatted as if inside a pre HTML tag */
+export type textEntityTypePreOptional = {|
+  _: 'textEntityTypePre',
+|}
+
+/** Text that must be formatted as if inside pre, and code HTML tags */
+export type textEntityTypePreCode = {
+  _: 'textEntityTypePreCode',
+  /** Programming language of the code; as defined by the sender */
+  language: string,
+}
+
+/** Text that must be formatted as if inside pre, and code HTML tags */
+export type textEntityTypePreCodeOptional = {|
+  _: 'textEntityTypePreCode',
+  /** Programming language of the code; as defined by the sender */
+  language?: string,
+|}
+
+/** A text description shown instead of a raw URL */
+export type textEntityTypeTextUrl = {
+  _: 'textEntityTypeTextUrl',
+  /** URL to be opened when the link is clicked */
+  url: string,
+}
+
+/** A text description shown instead of a raw URL */
+export type textEntityTypeTextUrlOptional = {|
+  _: 'textEntityTypeTextUrl',
+  /** URL to be opened when the link is clicked */
+  url?: string,
+|}
+
+/** A text shows instead of a raw mention of the user (e.g., when the user has no username) */
+export type textEntityTypeMentionName = {
+  _: 'textEntityTypeMentionName',
+  /** Identifier of the mentioned user */
+  user_id: number,
+}
+
+/** A text shows instead of a raw mention of the user (e.g., when the user has no username) */
+export type textEntityTypeMentionNameOptional = {|
+  _: 'textEntityTypeMentionName',
+  /** Identifier of the mentioned user */
+  user_id?: number,
+|}
+
+/** A phone number */
+export type textEntityTypePhoneNumber = {
+  _: 'textEntityTypePhoneNumber',
+}
+
+/** A phone number */
+export type textEntityTypePhoneNumberOptional = {|
+  _: 'textEntityTypePhoneNumber',
+|}
+
+/**
+ * A thumbnail to be sent along with a file; should be in JPEG or WEBP format for stickers,
+ * and less than 200 kB in size
+ */
+export type inputThumbnail = {
+  _: 'inputThumbnail',
+  /** Thumbnail file to send. Sending thumbnails by file_id is currently not supported */
+  thumbnail: InputFile,
+  /** Thumbnail width, usually shouldn't exceed 90. Use 0 if unknown */
+  width: number,
+  /** Thumbnail height, usually shouldn't exceed 90. Use 0 if unknown */
+  height: number,
+}
+
+/**
+ * A thumbnail to be sent along with a file; should be in JPEG or WEBP format for stickers,
+ * and less than 200 kB in size
+ */
+export type inputThumbnailOptional = {|
+  _: 'inputThumbnail',
+  /** Thumbnail file to send. Sending thumbnails by file_id is currently not supported */
+  thumbnail?: InputFileOptional,
+  /** Thumbnail width, usually shouldn't exceed 90. Use 0 if unknown */
+  width?: number,
+  /** Thumbnail height, usually shouldn't exceed 90. Use 0 if unknown */
+  height?: number,
+|}
+
+/** A text message */
+export type inputMessageText = {
+  _: 'inputMessageText',
+  /**
+   * Formatted text to be sent. Only Bold, Italic, Code, Pre, PreCode and TextUrl entities
+   * are allowed to be specified manually
+   */
+  text: formattedText,
+  /** True, if rich web page previews for URLs in the message text should be disabled */
+  disable_web_page_preview: boolean,
+  /** True, if a chat message draft should be deleted */
+  clear_draft: boolean,
+}
+
+/** A text message */
+export type inputMessageTextOptional = {|
+  _: 'inputMessageText',
+  /**
+   * Formatted text to be sent. Only Bold, Italic, Code, Pre, PreCode and TextUrl entities
+   * are allowed to be specified manually
+   */
+  text?: formattedTextOptional,
+  /** True, if rich web page previews for URLs in the message text should be disabled */
+  disable_web_page_preview?: boolean,
+  /** True, if a chat message draft should be deleted */
+  clear_draft?: boolean,
+|}
+
+/** An animation message (GIF-style). */
+export type inputMessageAnimation = {
+  _: 'inputMessageAnimation',
+  /** Animation file to be sent */
+  animation: InputFile,
+  /** Animation thumbnail, if available */
+  thumbnail: inputThumbnail,
+  /** Duration of the animation, in seconds */
+  duration: number,
+  /** Width of the animation; may be replaced by the server */
+  width: number,
+  /** Height of the animation; may be replaced by the server */
+  height: number,
+  /** Animation caption; 0-200 characters */
+  caption: formattedText,
+}
+
+/** An animation message (GIF-style). */
+export type inputMessageAnimationOptional = {|
+  _: 'inputMessageAnimation',
+  /** Animation file to be sent */
+  animation?: InputFileOptional,
+  /** Animation thumbnail, if available */
+  thumbnail?: inputThumbnailOptional,
+  /** Duration of the animation, in seconds */
+  duration?: number,
+  /** Width of the animation; may be replaced by the server */
+  width?: number,
+  /** Height of the animation; may be replaced by the server */
+  height?: number,
+  /** Animation caption; 0-200 characters */
+  caption?: formattedTextOptional,
+|}
+
+/** An audio message */
+export type inputMessageAudio = {
+  _: 'inputMessageAudio',
+  /** Audio file to be sent */
+  audio: InputFile,
+  /** Thumbnail of the cover for the album, if available */
+  album_cover_thumbnail: inputThumbnail,
+  /** Duration of the audio, in seconds; may be replaced by the server */
+  duration: number,
+  /** Title of the audio; 0-64 characters; may be replaced by the server */
+  title: string,
+  /** Performer of the audio; 0-64 characters, may be replaced by the server */
+  performer: string,
+  /** Audio caption; 0-200 characters */
+  caption: formattedText,
+}
+
+/** An audio message */
+export type inputMessageAudioOptional = {|
+  _: 'inputMessageAudio',
+  /** Audio file to be sent */
+  audio?: InputFileOptional,
+  /** Thumbnail of the cover for the album, if available */
+  album_cover_thumbnail?: inputThumbnailOptional,
+  /** Duration of the audio, in seconds; may be replaced by the server */
+  duration?: number,
+  /** Title of the audio; 0-64 characters; may be replaced by the server */
+  title?: string,
+  /** Performer of the audio; 0-64 characters, may be replaced by the server */
+  performer?: string,
+  /** Audio caption; 0-200 characters */
+  caption?: formattedTextOptional,
+|}
+
+/** A document message (general file) */
+export type inputMessageDocument = {
+  _: 'inputMessageDocument',
+  /** Document to be sent */
+  document: InputFile,
+  /** Document thumbnail, if available */
+  thumbnail: inputThumbnail,
+  /** Document caption; 0-200 characters */
+  caption: formattedText,
+}
+
+/** A document message (general file) */
+export type inputMessageDocumentOptional = {|
+  _: 'inputMessageDocument',
+  /** Document to be sent */
+  document?: InputFileOptional,
+  /** Document thumbnail, if available */
+  thumbnail?: inputThumbnailOptional,
+  /** Document caption; 0-200 characters */
+  caption?: formattedTextOptional,
+|}
+
+/** A photo message */
+export type inputMessagePhoto = {
+  _: 'inputMessagePhoto',
+  /** Photo to send */
+  photo: InputFile,
+  /** Photo thumbnail to be sent, this is sent to the other party in secret chats only */
+  thumbnail: inputThumbnail,
+  /** File identifiers of the stickers added to the photo, if applicable */
+  added_sticker_file_ids: number[],
+  /** Photo width */
+  width: number,
+  /** Photo height */
+  height: number,
+  /** Photo caption; 0-200 characters */
+  caption: formattedText,
+  /**
+   * Photo TTL (Time To Live), in seconds (0-60). A non-zero TTL can be specified only
+   * in private chats
+   */
+  ttl: number,
+}
+
+/** A photo message */
+export type inputMessagePhotoOptional = {|
+  _: 'inputMessagePhoto',
+  /** Photo to send */
+  photo?: InputFileOptional,
+  /** Photo thumbnail to be sent, this is sent to the other party in secret chats only */
+  thumbnail?: inputThumbnailOptional,
+  /** File identifiers of the stickers added to the photo, if applicable */
+  added_sticker_file_ids?: number[],
+  /** Photo width */
+  width?: number,
+  /** Photo height */
+  height?: number,
+  /** Photo caption; 0-200 characters */
+  caption?: formattedTextOptional,
+  /**
+   * Photo TTL (Time To Live), in seconds (0-60). A non-zero TTL can be specified only
+   * in private chats
+   */
+  ttl?: number,
+|}
+
+/** A sticker message */
+export type inputMessageSticker = {
+  _: 'inputMessageSticker',
+  /** Sticker to be sent */
+  sticker: InputFile,
+  /** Sticker thumbnail, if available */
+  thumbnail: inputThumbnail,
+  /** Sticker width */
+  width: number,
+  /** Sticker height */
+  height: number,
+}
+
+/** A sticker message */
+export type inputMessageStickerOptional = {|
+  _: 'inputMessageSticker',
+  /** Sticker to be sent */
+  sticker?: InputFileOptional,
+  /** Sticker thumbnail, if available */
+  thumbnail?: inputThumbnailOptional,
+  /** Sticker width */
+  width?: number,
+  /** Sticker height */
+  height?: number,
+|}
+
+/** A video message */
+export type inputMessageVideo = {
+  _: 'inputMessageVideo',
+  /** Video to be sent */
+  video: InputFile,
+  /** Video thumbnail, if available */
+  thumbnail: inputThumbnail,
+  /** File identifiers of the stickers added to the video, if applicable */
+  added_sticker_file_ids: number[],
+  /** Duration of the video, in seconds */
+  duration: number,
+  /** Video width */
+  width: number,
+  /** Video height */
+  height: number,
+  /** True, if the video should be tried to be streamed */
+  supports_streaming: boolean,
+  /** Video caption; 0-200 characters */
+  caption: formattedText,
+  /**
+   * Video TTL (Time To Live), in seconds (0-60). A non-zero TTL can be specified only
+   * in private chats
+   */
+  ttl: number,
+}
+
+/** A video message */
+export type inputMessageVideoOptional = {|
+  _: 'inputMessageVideo',
+  /** Video to be sent */
+  video?: InputFileOptional,
+  /** Video thumbnail, if available */
+  thumbnail?: inputThumbnailOptional,
+  /** File identifiers of the stickers added to the video, if applicable */
+  added_sticker_file_ids?: number[],
+  /** Duration of the video, in seconds */
+  duration?: number,
+  /** Video width */
+  width?: number,
+  /** Video height */
+  height?: number,
+  /** True, if the video should be tried to be streamed */
+  supports_streaming?: boolean,
+  /** Video caption; 0-200 characters */
+  caption?: formattedTextOptional,
+  /**
+   * Video TTL (Time To Live), in seconds (0-60). A non-zero TTL can be specified only
+   * in private chats
+   */
+  ttl?: number,
+|}
+
+/** A video note message */
+export type inputMessageVideoNote = {
+  _: 'inputMessageVideoNote',
+  /** Video note to be sent */
+  video_note: InputFile,
+  /** Video thumbnail, if available */
+  thumbnail: inputThumbnail,
+  /** Duration of the video, in seconds */
+  duration: number,
+  /** Video width and height; must be positive and not greater than 640 */
+  length: number,
+}
+
+/** A video note message */
+export type inputMessageVideoNoteOptional = {|
+  _: 'inputMessageVideoNote',
+  /** Video note to be sent */
+  video_note?: InputFileOptional,
+  /** Video thumbnail, if available */
+  thumbnail?: inputThumbnailOptional,
+  /** Duration of the video, in seconds */
+  duration?: number,
+  /** Video width and height; must be positive and not greater than 640 */
+  length?: number,
+|}
+
+/** A voice note message */
+export type inputMessageVoiceNote = {
+  _: 'inputMessageVoiceNote',
+  /** Voice note to be sent */
+  voice_note: InputFile,
+  /** Duration of the voice note, in seconds */
+  duration: number,
+  /** Waveform representation of the voice note, in 5-bit format */
+  waveform: string,
+  /** Voice note caption; 0-200 characters */
+  caption: formattedText,
+}
+
+/** A voice note message */
+export type inputMessageVoiceNoteOptional = {|
+  _: 'inputMessageVoiceNote',
+  /** Voice note to be sent */
+  voice_note?: InputFileOptional,
+  /** Duration of the voice note, in seconds */
+  duration?: number,
+  /** Waveform representation of the voice note, in 5-bit format */
+  waveform?: string,
+  /** Voice note caption; 0-200 characters */
+  caption?: formattedTextOptional,
+|}
+
+/** A message with a location */
+export type inputMessageLocation = {
+  _: 'inputMessageLocation',
+  /** Location to be sent */
+  location: location,
+  /**
+   * Period for which the location can be updated, in seconds; should bebetween 60 and
+   * 86400 for a live location and 0 otherwise
+   */
+  live_period: number,
+}
+
+/** A message with a location */
+export type inputMessageLocationOptional = {|
+  _: 'inputMessageLocation',
+  /** Location to be sent */
+  location?: locationOptional,
+  /**
+   * Period for which the location can be updated, in seconds; should bebetween 60 and
+   * 86400 for a live location and 0 otherwise
+   */
+  live_period?: number,
+|}
+
+/** A message with information about a venue */
+export type inputMessageVenue = {
+  _: 'inputMessageVenue',
+  /** Venue to send */
+  venue: venue,
+}
+
+/** A message with information about a venue */
+export type inputMessageVenueOptional = {|
+  _: 'inputMessageVenue',
+  /** Venue to send */
+  venue?: venueOptional,
+|}
+
+/** A message containing a user contact */
+export type inputMessageContact = {
+  _: 'inputMessageContact',
+  /** Contact to send */
+  contact: contact,
+}
+
+/** A message containing a user contact */
+export type inputMessageContactOptional = {|
+  _: 'inputMessageContact',
+  /** Contact to send */
+  contact?: contactOptional,
+|}
+
+/** A message with a game; not supported for channels or secret chats */
+export type inputMessageGame = {
+  _: 'inputMessageGame',
+  /** User identifier of the bot that owns the game */
+  bot_user_id: number,
+  /** Short name of the game */
+  game_short_name: string,
+}
+
+/** A message with a game; not supported for channels or secret chats */
+export type inputMessageGameOptional = {|
+  _: 'inputMessageGame',
+  /** User identifier of the bot that owns the game */
+  bot_user_id?: number,
+  /** Short name of the game */
+  game_short_name?: string,
+|}
+
+/** A message with an invoice; can be used only by bots and only in private chats */
+export type inputMessageInvoice = {
+  _: 'inputMessageInvoice',
+  /** Invoice */
+  invoice: invoice,
+  /** Product title; 1-32 characters */
+  title: string,
+  /** Product description; 0-255 characters */
+  description: string,
+  /** Product photo URL; optional */
+  photo_url: string,
+  /** Product photo size */
+  photo_size: number,
+  /** Product photo width */
+  photo_width: number,
+  /** Product photo height */
+  photo_height: number,
+  /** The invoice payload */
+  payload: string,
+  /** Payment provider token */
+  provider_token: string,
+  /** JSON-encoded data about the invoice, which will be shared with the payment provider */
+  provider_data: string,
+  /** Unique invoice bot start_parameter for the generation of this invoice */
+  start_parameter: string,
+}
+
+/** A message with an invoice; can be used only by bots and only in private chats */
+export type inputMessageInvoiceOptional = {|
+  _: 'inputMessageInvoice',
+  /** Invoice */
+  invoice?: invoiceOptional,
+  /** Product title; 1-32 characters */
+  title?: string,
+  /** Product description; 0-255 characters */
+  description?: string,
+  /** Product photo URL; optional */
+  photo_url?: string,
+  /** Product photo size */
+  photo_size?: number,
+  /** Product photo width */
+  photo_width?: number,
+  /** Product photo height */
+  photo_height?: number,
+  /** The invoice payload */
+  payload?: string,
+  /** Payment provider token */
+  provider_token?: string,
+  /** JSON-encoded data about the invoice, which will be shared with the payment provider */
+  provider_data?: string,
+  /** Unique invoice bot start_parameter for the generation of this invoice */
+  start_parameter?: string,
+|}
+
+/** A forwarded message */
+export type inputMessageForwarded = {
+  _: 'inputMessageForwarded',
+  /** Identifier for the chat this forwarded message came from */
+  from_chat_id: number,
+  /** Identifier of the message to forward */
+  message_id: number,
+  /**
+   * True, if a game message should be shared within a launched game; applies only to
+   * game messages
+   */
+  in_game_share: boolean,
+}
+
+/** A forwarded message */
+export type inputMessageForwardedOptional = {|
+  _: 'inputMessageForwarded',
+  /** Identifier for the chat this forwarded message came from */
+  from_chat_id?: number,
+  /** Identifier of the message to forward */
   message_id?: number,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
+  /**
+   * True, if a game message should be shared within a launched game; applies only to
+   * game messages
+   */
+  in_game_share?: boolean,
 |}
 
-export type editMessageTextReturnType = message
+/** Returns all found messages, no filter is applied */
+export type searchMessagesFilterEmpty = {
+  _: 'searchMessagesFilterEmpty',
+}
 
-export type finishFileGeneration = {|
-  _: 'finishFileGeneration',
-  generation_id?: number,
+/** Returns all found messages, no filter is applied */
+export type searchMessagesFilterEmptyOptional = {|
+  _: 'searchMessagesFilterEmpty',
+|}
+
+/** Returns only animation messages */
+export type searchMessagesFilterAnimation = {
+  _: 'searchMessagesFilterAnimation',
+}
+
+/** Returns only animation messages */
+export type searchMessagesFilterAnimationOptional = {|
+  _: 'searchMessagesFilterAnimation',
+|}
+
+/** Returns only audio messages */
+export type searchMessagesFilterAudio = {
+  _: 'searchMessagesFilterAudio',
+}
+
+/** Returns only audio messages */
+export type searchMessagesFilterAudioOptional = {|
+  _: 'searchMessagesFilterAudio',
+|}
+
+/** Returns only document messages */
+export type searchMessagesFilterDocument = {
+  _: 'searchMessagesFilterDocument',
+}
+
+/** Returns only document messages */
+export type searchMessagesFilterDocumentOptional = {|
+  _: 'searchMessagesFilterDocument',
+|}
+
+/** Returns only photo messages */
+export type searchMessagesFilterPhoto = {
+  _: 'searchMessagesFilterPhoto',
+}
+
+/** Returns only photo messages */
+export type searchMessagesFilterPhotoOptional = {|
+  _: 'searchMessagesFilterPhoto',
+|}
+
+/** Returns only video messages */
+export type searchMessagesFilterVideo = {
+  _: 'searchMessagesFilterVideo',
+}
+
+/** Returns only video messages */
+export type searchMessagesFilterVideoOptional = {|
+  _: 'searchMessagesFilterVideo',
+|}
+
+/** Returns only voice note messages */
+export type searchMessagesFilterVoiceNote = {
+  _: 'searchMessagesFilterVoiceNote',
+}
+
+/** Returns only voice note messages */
+export type searchMessagesFilterVoiceNoteOptional = {|
+  _: 'searchMessagesFilterVoiceNote',
+|}
+
+/** Returns only photo and video messages */
+export type searchMessagesFilterPhotoAndVideo = {
+  _: 'searchMessagesFilterPhotoAndVideo',
+}
+
+/** Returns only photo and video messages */
+export type searchMessagesFilterPhotoAndVideoOptional = {|
+  _: 'searchMessagesFilterPhotoAndVideo',
+|}
+
+/** Returns only messages containing URLs */
+export type searchMessagesFilterUrl = {
+  _: 'searchMessagesFilterUrl',
+}
+
+/** Returns only messages containing URLs */
+export type searchMessagesFilterUrlOptional = {|
+  _: 'searchMessagesFilterUrl',
+|}
+
+/** Returns only messages containing chat photos */
+export type searchMessagesFilterChatPhoto = {
+  _: 'searchMessagesFilterChatPhoto',
+}
+
+/** Returns only messages containing chat photos */
+export type searchMessagesFilterChatPhotoOptional = {|
+  _: 'searchMessagesFilterChatPhoto',
+|}
+
+/** Returns only call messages */
+export type searchMessagesFilterCall = {
+  _: 'searchMessagesFilterCall',
+}
+
+/** Returns only call messages */
+export type searchMessagesFilterCallOptional = {|
+  _: 'searchMessagesFilterCall',
+|}
+
+/** Returns only incoming call messages with missed/declined discard reasons */
+export type searchMessagesFilterMissedCall = {
+  _: 'searchMessagesFilterMissedCall',
+}
+
+/** Returns only incoming call messages with missed/declined discard reasons */
+export type searchMessagesFilterMissedCallOptional = {|
+  _: 'searchMessagesFilterMissedCall',
+|}
+
+/** Returns only video note messages */
+export type searchMessagesFilterVideoNote = {
+  _: 'searchMessagesFilterVideoNote',
+}
+
+/** Returns only video note messages */
+export type searchMessagesFilterVideoNoteOptional = {|
+  _: 'searchMessagesFilterVideoNote',
+|}
+
+/** Returns only voice and video note messages */
+export type searchMessagesFilterVoiceAndVideoNote = {
+  _: 'searchMessagesFilterVoiceAndVideoNote',
+}
+
+/** Returns only voice and video note messages */
+export type searchMessagesFilterVoiceAndVideoNoteOptional = {|
+  _: 'searchMessagesFilterVoiceAndVideoNote',
+|}
+
+/**
+ * Returns only messages with mentions of the current user, or messages that are replies
+ * to their messages
+ */
+export type searchMessagesFilterMention = {
+  _: 'searchMessagesFilterMention',
+}
+
+/**
+ * Returns only messages with mentions of the current user, or messages that are replies
+ * to their messages
+ */
+export type searchMessagesFilterMentionOptional = {|
+  _: 'searchMessagesFilterMention',
+|}
+
+/**
+ * Returns only messages with unread mentions of the current user or messages that are
+ * replies to their messages. When using this filter the results can't be additionally
+ * filtered by a query or by the sending user
+ */
+export type searchMessagesFilterUnreadMention = {
+  _: 'searchMessagesFilterUnreadMention',
+}
+
+/**
+ * Returns only messages with unread mentions of the current user or messages that are
+ * replies to their messages. When using this filter the results can't be additionally
+ * filtered by a query or by the sending user
+ */
+export type searchMessagesFilterUnreadMentionOptional = {|
+  _: 'searchMessagesFilterUnreadMention',
+|}
+
+/** The user is typing a message */
+export type chatActionTyping = {
+  _: 'chatActionTyping',
+}
+
+/** The user is typing a message */
+export type chatActionTypingOptional = {|
+  _: 'chatActionTyping',
+|}
+
+/** The user is recording a video */
+export type chatActionRecordingVideo = {
+  _: 'chatActionRecordingVideo',
+}
+
+/** The user is recording a video */
+export type chatActionRecordingVideoOptional = {|
+  _: 'chatActionRecordingVideo',
+|}
+
+/** The user is uploading a video */
+export type chatActionUploadingVideo = {
+  _: 'chatActionUploadingVideo',
+  /** Upload progress, as a percentage */
+  progress: number,
+}
+
+/** The user is uploading a video */
+export type chatActionUploadingVideoOptional = {|
+  _: 'chatActionUploadingVideo',
+  /** Upload progress, as a percentage */
+  progress?: number,
+|}
+
+/** The user is recording a voice note */
+export type chatActionRecordingVoiceNote = {
+  _: 'chatActionRecordingVoiceNote',
+}
+
+/** The user is recording a voice note */
+export type chatActionRecordingVoiceNoteOptional = {|
+  _: 'chatActionRecordingVoiceNote',
+|}
+
+/** The user is uploading a voice note */
+export type chatActionUploadingVoiceNote = {
+  _: 'chatActionUploadingVoiceNote',
+  /** Upload progress, as a percentage */
+  progress: number,
+}
+
+/** The user is uploading a voice note */
+export type chatActionUploadingVoiceNoteOptional = {|
+  _: 'chatActionUploadingVoiceNote',
+  /** Upload progress, as a percentage */
+  progress?: number,
+|}
+
+/** The user is uploading a photo */
+export type chatActionUploadingPhoto = {
+  _: 'chatActionUploadingPhoto',
+  /** Upload progress, as a percentage */
+  progress: number,
+}
+
+/** The user is uploading a photo */
+export type chatActionUploadingPhotoOptional = {|
+  _: 'chatActionUploadingPhoto',
+  /** Upload progress, as a percentage */
+  progress?: number,
+|}
+
+/** The user is uploading a document */
+export type chatActionUploadingDocument = {
+  _: 'chatActionUploadingDocument',
+  /** Upload progress, as a percentage */
+  progress: number,
+}
+
+/** The user is uploading a document */
+export type chatActionUploadingDocumentOptional = {|
+  _: 'chatActionUploadingDocument',
+  /** Upload progress, as a percentage */
+  progress?: number,
+|}
+
+/** The user is picking a location or venue to send */
+export type chatActionChoosingLocation = {
+  _: 'chatActionChoosingLocation',
+}
+
+/** The user is picking a location or venue to send */
+export type chatActionChoosingLocationOptional = {|
+  _: 'chatActionChoosingLocation',
+|}
+
+/** The user is picking a contact to send */
+export type chatActionChoosingContact = {
+  _: 'chatActionChoosingContact',
+}
+
+/** The user is picking a contact to send */
+export type chatActionChoosingContactOptional = {|
+  _: 'chatActionChoosingContact',
+|}
+
+/** The user has started to play a game */
+export type chatActionStartPlayingGame = {
+  _: 'chatActionStartPlayingGame',
+}
+
+/** The user has started to play a game */
+export type chatActionStartPlayingGameOptional = {|
+  _: 'chatActionStartPlayingGame',
+|}
+
+/** The user is recording a video note */
+export type chatActionRecordingVideoNote = {
+  _: 'chatActionRecordingVideoNote',
+}
+
+/** The user is recording a video note */
+export type chatActionRecordingVideoNoteOptional = {|
+  _: 'chatActionRecordingVideoNote',
+|}
+
+/** The user is uploading a video note */
+export type chatActionUploadingVideoNote = {
+  _: 'chatActionUploadingVideoNote',
+  /** Upload progress, as a percentage */
+  progress: number,
+}
+
+/** The user is uploading a video note */
+export type chatActionUploadingVideoNoteOptional = {|
+  _: 'chatActionUploadingVideoNote',
+  /** Upload progress, as a percentage */
+  progress?: number,
+|}
+
+/** The user has cancelled the previous action */
+export type chatActionCancel = {
+  _: 'chatActionCancel',
+}
+
+/** The user has cancelled the previous action */
+export type chatActionCancelOptional = {|
+  _: 'chatActionCancel',
+|}
+
+/** The user status was never changed */
+export type userStatusEmpty = {
+  _: 'userStatusEmpty',
+}
+
+/** The user status was never changed */
+export type userStatusEmptyOptional = {|
+  _: 'userStatusEmpty',
+|}
+
+/** The user is online */
+export type userStatusOnline = {
+  _: 'userStatusOnline',
+  /** Point in time (Unix timestamp) when the user's online status will expire */
+  expires: number,
+}
+
+/** The user is online */
+export type userStatusOnlineOptional = {|
+  _: 'userStatusOnline',
+  /** Point in time (Unix timestamp) when the user's online status will expire */
+  expires?: number,
+|}
+
+/** The user is offline */
+export type userStatusOffline = {
+  _: 'userStatusOffline',
+  /** Point in time (Unix timestamp) when the user was last online */
+  was_online: number,
+}
+
+/** The user is offline */
+export type userStatusOfflineOptional = {|
+  _: 'userStatusOffline',
+  /** Point in time (Unix timestamp) when the user was last online */
+  was_online?: number,
+|}
+
+/** The user was online recently */
+export type userStatusRecently = {
+  _: 'userStatusRecently',
+}
+
+/** The user was online recently */
+export type userStatusRecentlyOptional = {|
+  _: 'userStatusRecently',
+|}
+
+/** The user is offline, but was online last week */
+export type userStatusLastWeek = {
+  _: 'userStatusLastWeek',
+}
+
+/** The user is offline, but was online last week */
+export type userStatusLastWeekOptional = {|
+  _: 'userStatusLastWeek',
+|}
+
+/** The user is offline, but was online last month */
+export type userStatusLastMonth = {
+  _: 'userStatusLastMonth',
+}
+
+/** The user is offline, but was online last month */
+export type userStatusLastMonthOptional = {|
+  _: 'userStatusLastMonth',
+|}
+
+/** Represents a list of stickers */
+export type stickers = {
+  _: 'stickers',
+  /** List of stickers */
+  stickers: sticker[],
+}
+
+/** Represents a list of stickers */
+export type stickersOptional = {|
+  _: 'stickers',
+  /** List of stickers */
+  stickers?: stickerOptional[],
+|}
+
+/**
+ * Represents a list of all emoji corresponding to a sticker in a sticker set. The list
+ * is only for informational purposes, because a sticker is always sent with a fixed
+ * emoji from the corresponding Sticker object
+ */
+export type stickerEmojis = {
+  _: 'stickerEmojis',
+  /** List of emojis */
+  emojis: string[],
+}
+
+/**
+ * Represents a list of all emoji corresponding to a sticker in a sticker set. The list
+ * is only for informational purposes, because a sticker is always sent with a fixed
+ * emoji from the corresponding Sticker object
+ */
+export type stickerEmojisOptional = {|
+  _: 'stickerEmojis',
+  /** List of emojis */
+  emojis?: string[],
+|}
+
+/** Represents a sticker set */
+export type stickerSet = {
+  _: 'stickerSet',
+  /** Identifier of the sticker set */
+  id: (number | string),
+  /** Title of the sticker set */
+  title: string,
+  /** Name of the sticker set */
+  name: string,
+  /** True, if the sticker set has been installed by the current user */
+  is_installed: boolean,
+  /**
+   * True, if the sticker set has been archived. A sticker set can't be installed and
+   * archived simultaneously
+   */
+  is_archived: boolean,
+  /** True, if the sticker set is official */
+  is_official: boolean,
+  /** True, if the stickers in the set are masks */
+  is_masks: boolean,
+  /** True for already viewed trending sticker sets */
+  is_viewed: boolean,
+  /** List of stickers in this set */
+  stickers: sticker[],
+  /** A list of emoji corresponding to the stickers in the same order */
+  emojis: stickerEmojis[],
+}
+
+/** Represents a sticker set */
+export type stickerSetOptional = {|
+  _: 'stickerSet',
+  /** Identifier of the sticker set */
+  id?: (number | string),
+  /** Title of the sticker set */
+  title?: string,
+  /** Name of the sticker set */
+  name?: string,
+  /** True, if the sticker set has been installed by the current user */
+  is_installed?: boolean,
+  /**
+   * True, if the sticker set has been archived. A sticker set can't be installed and
+   * archived simultaneously
+   */
+  is_archived?: boolean,
+  /** True, if the sticker set is official */
+  is_official?: boolean,
+  /** True, if the stickers in the set are masks */
+  is_masks?: boolean,
+  /** True for already viewed trending sticker sets */
+  is_viewed?: boolean,
+  /** List of stickers in this set */
+  stickers?: stickerOptional[],
+  /** A list of emoji corresponding to the stickers in the same order */
+  emojis?: stickerEmojisOptional[],
+|}
+
+/** Represents short information about a sticker set */
+export type stickerSetInfo = {
+  _: 'stickerSetInfo',
+  /** Identifier of the sticker set */
+  id: (number | string),
+  /** Title of the sticker set */
+  title: string,
+  /** Name of the sticker set */
+  name: string,
+  /** True, if the sticker set has been installed by current user */
+  is_installed: boolean,
+  /**
+   * True, if the sticker set has been archived. A sticker set can't be installed and
+   * archived simultaneously
+   */
+  is_archived: boolean,
+  /** True, if the sticker set is official */
+  is_official: boolean,
+  /** True, if the stickers in the set are masks */
+  is_masks: boolean,
+  /** True for already viewed trending sticker sets */
+  is_viewed: boolean,
+  /** Total number of stickers in the set */
+  size: number,
+  /**
+   * Contains up to the first 5 stickers from the set, depending on the context. If the
+   * client needs more stickers the full set should be requested
+   */
+  covers: sticker[],
+}
+
+/** Represents short information about a sticker set */
+export type stickerSetInfoOptional = {|
+  _: 'stickerSetInfo',
+  /** Identifier of the sticker set */
+  id?: (number | string),
+  /** Title of the sticker set */
+  title?: string,
+  /** Name of the sticker set */
+  name?: string,
+  /** True, if the sticker set has been installed by current user */
+  is_installed?: boolean,
+  /**
+   * True, if the sticker set has been archived. A sticker set can't be installed and
+   * archived simultaneously
+   */
+  is_archived?: boolean,
+  /** True, if the sticker set is official */
+  is_official?: boolean,
+  /** True, if the stickers in the set are masks */
+  is_masks?: boolean,
+  /** True for already viewed trending sticker sets */
+  is_viewed?: boolean,
+  /** Total number of stickers in the set */
+  size?: number,
+  /**
+   * Contains up to the first 5 stickers from the set, depending on the context. If the
+   * client needs more stickers the full set should be requested
+   */
+  covers?: stickerOptional[],
+|}
+
+/** Represents a list of sticker sets */
+export type stickerSets = {
+  _: 'stickerSets',
+  /** Approximate total number of sticker sets found */
+  total_count: number,
+  /** List of sticker sets */
+  sets: stickerSetInfo[],
+}
+
+/** Represents a list of sticker sets */
+export type stickerSetsOptional = {|
+  _: 'stickerSets',
+  /** Approximate total number of sticker sets found */
+  total_count?: number,
+  /** List of sticker sets */
+  sets?: stickerSetInfoOptional[],
+|}
+
+/** The call wasn't discarded, or the reason is unknown */
+export type callDiscardReasonEmpty = {
+  _: 'callDiscardReasonEmpty',
+}
+
+/** The call wasn't discarded, or the reason is unknown */
+export type callDiscardReasonEmptyOptional = {|
+  _: 'callDiscardReasonEmpty',
+|}
+
+/**
+ * The call was ended before the conversation started. It was cancelled by the caller
+ * or missed by the other party
+ */
+export type callDiscardReasonMissed = {
+  _: 'callDiscardReasonMissed',
+}
+
+/**
+ * The call was ended before the conversation started. It was cancelled by the caller
+ * or missed by the other party
+ */
+export type callDiscardReasonMissedOptional = {|
+  _: 'callDiscardReasonMissed',
+|}
+
+/**
+ * The call was ended before the conversation started. It was declined by the other
+ * party
+ */
+export type callDiscardReasonDeclined = {
+  _: 'callDiscardReasonDeclined',
+}
+
+/**
+ * The call was ended before the conversation started. It was declined by the other
+ * party
+ */
+export type callDiscardReasonDeclinedOptional = {|
+  _: 'callDiscardReasonDeclined',
+|}
+
+/** The call was ended during the conversation because the users were disconnected */
+export type callDiscardReasonDisconnected = {
+  _: 'callDiscardReasonDisconnected',
+}
+
+/** The call was ended during the conversation because the users were disconnected */
+export type callDiscardReasonDisconnectedOptional = {|
+  _: 'callDiscardReasonDisconnected',
+|}
+
+/** The call was ended because one of the parties hung up */
+export type callDiscardReasonHungUp = {
+  _: 'callDiscardReasonHungUp',
+}
+
+/** The call was ended because one of the parties hung up */
+export type callDiscardReasonHungUpOptional = {|
+  _: 'callDiscardReasonHungUp',
+|}
+
+/** Specifies the supported call protocols */
+export type callProtocol = {
+  _: 'callProtocol',
+  /** True, if UDP peer-to-peer connections are supported */
+  udp_p2p: boolean,
+  /** True, if connection through UDP reflectors is supported */
+  udp_reflector: boolean,
+  /** Minimum supported API layer; use 65 */
+  min_layer: number,
+  /** Maximum supported API layer; use 65 */
+  max_layer: number,
+}
+
+/** Specifies the supported call protocols */
+export type callProtocolOptional = {|
+  _: 'callProtocol',
+  /** True, if UDP peer-to-peer connections are supported */
+  udp_p2p?: boolean,
+  /** True, if connection through UDP reflectors is supported */
+  udp_reflector?: boolean,
+  /** Minimum supported API layer; use 65 */
+  min_layer?: number,
+  /** Maximum supported API layer; use 65 */
+  max_layer?: number,
+|}
+
+/** Describes the address of UDP reflectors */
+export type callConnection = {
+  _: 'callConnection',
+  /** Reflector identifier */
+  id: (number | string),
+  /** IPv4 reflector address */
+  ip: string,
+  /** IPv6 reflector address */
+  ipv6: string,
+  /** Reflector port number */
+  port: number,
+  /** Connection peer tag */
+  peer_tag: string,
+}
+
+/** Describes the address of UDP reflectors */
+export type callConnectionOptional = {|
+  _: 'callConnection',
+  /** Reflector identifier */
+  id?: (number | string),
+  /** IPv4 reflector address */
+  ip?: string,
+  /** IPv6 reflector address */
+  ipv6?: string,
+  /** Reflector port number */
+  port?: number,
+  /** Connection peer tag */
+  peer_tag?: string,
+|}
+
+/** Contains the call identifier */
+export type callId = {
+  _: 'callId',
+  /** Call identifier */
+  id: number,
+}
+
+/** Contains the call identifier */
+export type callIdOptional = {|
+  _: 'callId',
+  /** Call identifier */
+  id?: number,
+|}
+
+/** The call is pending, waiting to be accepted by a user */
+export type callStatePending = {
+  _: 'callStatePending',
+  /** True, if the call has already been created by the server */
+  is_created: boolean,
+  /** True, if the call has already been received by the other party */
+  is_received: boolean,
+}
+
+/** The call is pending, waiting to be accepted by a user */
+export type callStatePendingOptional = {|
+  _: 'callStatePending',
+  /** True, if the call has already been created by the server */
+  is_created?: boolean,
+  /** True, if the call has already been received by the other party */
+  is_received?: boolean,
+|}
+
+/** The call has been answered and encryption keys are being exchanged */
+export type callStateExchangingKeys = {
+  _: 'callStateExchangingKeys',
+}
+
+/** The call has been answered and encryption keys are being exchanged */
+export type callStateExchangingKeysOptional = {|
+  _: 'callStateExchangingKeys',
+|}
+
+/** The call is ready to use */
+export type callStateReady = {
+  _: 'callStateReady',
+  /** Call protocols supported by the peer */
+  protocol: callProtocol,
+  /** Available UDP reflectors */
+  connections: callConnection[],
+  /** A JSON-encoded call config */
+  config: string,
+  /** Call encryption key */
+  encryption_key: string,
+  /** Encryption key emojis fingerprint */
+  emojis: string[],
+}
+
+/** The call is ready to use */
+export type callStateReadyOptional = {|
+  _: 'callStateReady',
+  /** Call protocols supported by the peer */
+  protocol?: callProtocolOptional,
+  /** Available UDP reflectors */
+  connections?: callConnectionOptional[],
+  /** A JSON-encoded call config */
+  config?: string,
+  /** Call encryption key */
+  encryption_key?: string,
+  /** Encryption key emojis fingerprint */
+  emojis?: string[],
+|}
+
+/** The call is hanging up after discardCall has been called */
+export type callStateHangingUp = {
+  _: 'callStateHangingUp',
+}
+
+/** The call is hanging up after discardCall has been called */
+export type callStateHangingUpOptional = {|
+  _: 'callStateHangingUp',
+|}
+
+/** The call has ended successfully */
+export type callStateDiscarded = {
+  _: 'callStateDiscarded',
+  /** The reason, why the call has ended */
+  reason: CallDiscardReason,
+  /** True, if the call rating should be sent to the server */
+  need_rating: boolean,
+  /** True, if the call debug information should be sent to the server */
+  need_debug_information: boolean,
+}
+
+/** The call has ended successfully */
+export type callStateDiscardedOptional = {|
+  _: 'callStateDiscarded',
+  /** The reason, why the call has ended */
+  reason?: CallDiscardReasonOptional,
+  /** True, if the call rating should be sent to the server */
+  need_rating?: boolean,
+  /** True, if the call debug information should be sent to the server */
+  need_debug_information?: boolean,
+|}
+
+/** The call has ended with an error */
+export type callStateError = {
+  _: 'callStateError',
+  /**
+   * Error. An error with the code 4005000 will be returned if an outgoing call is missed
+   * because of an expired timeout
+   */
+  error: error,
+}
+
+/** The call has ended with an error */
+export type callStateErrorOptional = {|
+  _: 'callStateError',
+  /**
+   * Error. An error with the code 4005000 will be returned if an outgoing call is missed
+   * because of an expired timeout
+   */
   error?: errorOptional,
 |}
 
-export type finishFileGenerationReturnType = ok
+/** Describes a call */
+export type call = {
+  _: 'call',
+  /** Call identifier, not persistent */
+  id: number,
+  /** Peer user identifier */
+  user_id: number,
+  /** True, if the call is outgoing */
+  is_outgoing: boolean,
+  /** Call state */
+  state: CallState,
+}
 
-export type forwardMessages = {|
-  _: 'forwardMessages',
+/** Describes a call */
+export type callOptional = {|
+  _: 'call',
+  /** Call identifier, not persistent */
+  id?: number,
+  /** Peer user identifier */
+  user_id?: number,
+  /** True, if the call is outgoing */
+  is_outgoing?: boolean,
+  /** Call state */
+  state?: CallStateOptional,
+|}
+
+/** Represents a list of animations */
+export type animations = {
+  _: 'animations',
+  /** List of animations */
+  animations: animation[],
+}
+
+/** Represents a list of animations */
+export type animationsOptional = {|
+  _: 'animations',
+  /** List of animations */
+  animations?: animationOptional[],
+|}
+
+/** Represents the result of an ImportContacts request */
+export type importedContacts = {
+  _: 'importedContacts',
+  /**
+   * User identifiers of the imported contacts in the same order as they were specified
+   * in the request; 0 if the contact is not yet a registered user
+   */
+  user_ids: number[],
+  /**
+   * The number of users that imported the corresponding contact; 0 for already registered
+   * users or if unavailable
+   */
+  importer_count: number[],
+}
+
+/** Represents the result of an ImportContacts request */
+export type importedContactsOptional = {|
+  _: 'importedContacts',
+  /**
+   * User identifiers of the imported contacts in the same order as they were specified
+   * in the request; 0 if the contact is not yet a registered user
+   */
+  user_ids?: number[],
+  /**
+   * The number of users that imported the corresponding contact; 0 for already registered
+   * users or if unavailable
+   */
+  importer_count?: number[],
+|}
+
+/** Represents a link to an animated GIF */
+export type inputInlineQueryResultAnimatedGif = {
+  _: 'inputInlineQueryResultAnimatedGif',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Title of the query result */
+  title: string,
+  /** URL of the static result thumbnail (JPEG or GIF), if it exists */
+  thumbnail_url: string,
+  /** The URL of the GIF-file (file size must not exceed 1MB) */
+  gif_url: string,
+  /** Duration of the GIF, in seconds */
+  gif_duration: number,
+  /** Width of the GIF */
+  gif_width: number,
+  /** Height of the GIF */
+  gif_height: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup: ReplyMarkup,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageAnimation, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content: InputMessageContent,
+}
+
+/** Represents a link to an animated GIF */
+export type inputInlineQueryResultAnimatedGifOptional = {|
+  _: 'inputInlineQueryResultAnimatedGif',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Title of the query result */
+  title?: string,
+  /** URL of the static result thumbnail (JPEG or GIF), if it exists */
+  thumbnail_url?: string,
+  /** The URL of the GIF-file (file size must not exceed 1MB) */
+  gif_url?: string,
+  /** Duration of the GIF, in seconds */
+  gif_duration?: number,
+  /** Width of the GIF */
+  gif_width?: number,
+  /** Height of the GIF */
+  gif_height?: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageAnimation, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/** Represents a link to an animated (i.e. without sound) H.264/MPEG-4 AVC video */
+export type inputInlineQueryResultAnimatedMpeg4 = {
+  _: 'inputInlineQueryResultAnimatedMpeg4',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Title of the result */
+  title: string,
+  /** URL of the static result thumbnail (JPEG or GIF), if it exists */
+  thumbnail_url: string,
+  /** The URL of the MPEG4-file (file size must not exceed 1MB) */
+  mpeg4_url: string,
+  /** Duration of the video, in seconds */
+  mpeg4_duration: number,
+  /** Width of the video */
+  mpeg4_width: number,
+  /** Height of the video */
+  mpeg4_height: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup: ReplyMarkup,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageAnimation, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content: InputMessageContent,
+}
+
+/** Represents a link to an animated (i.e. without sound) H.264/MPEG-4 AVC video */
+export type inputInlineQueryResultAnimatedMpeg4Optional = {|
+  _: 'inputInlineQueryResultAnimatedMpeg4',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Title of the result */
+  title?: string,
+  /** URL of the static result thumbnail (JPEG or GIF), if it exists */
+  thumbnail_url?: string,
+  /** The URL of the MPEG4-file (file size must not exceed 1MB) */
+  mpeg4_url?: string,
+  /** Duration of the video, in seconds */
+  mpeg4_duration?: number,
+  /** Width of the video */
+  mpeg4_width?: number,
+  /** Height of the video */
+  mpeg4_height?: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageAnimation, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/** Represents a link to an article or web page */
+export type inputInlineQueryResultArticle = {
+  _: 'inputInlineQueryResultArticle',
+  /** Unique identifier of the query result */
+  id: string,
+  /** URL of the result, if it exists */
+  url: string,
+  /** True, if the URL must be not shown */
+  hide_url: boolean,
+  /** Title of the result */
+  title: string,
+  /** A short description of the result */
+  description: string,
+  /** URL of the result thumbnail, if it exists */
+  thumbnail_url: string,
+  /** Thumbnail width, if known */
+  thumbnail_width: number,
+  /** Thumbnail height, if known */
+  thumbnail_height: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup: ReplyMarkup,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content: InputMessageContent,
+}
+
+/** Represents a link to an article or web page */
+export type inputInlineQueryResultArticleOptional = {|
+  _: 'inputInlineQueryResultArticle',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** URL of the result, if it exists */
+  url?: string,
+  /** True, if the URL must be not shown */
+  hide_url?: boolean,
+  /** Title of the result */
+  title?: string,
+  /** A short description of the result */
+  description?: string,
+  /** URL of the result thumbnail, if it exists */
+  thumbnail_url?: string,
+  /** Thumbnail width, if known */
+  thumbnail_width?: number,
+  /** Thumbnail height, if known */
+  thumbnail_height?: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/** Represents a link to an MP3 audio file */
+export type inputInlineQueryResultAudio = {
+  _: 'inputInlineQueryResultAudio',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Title of the audio file */
+  title: string,
+  /** Performer of the audio file */
+  performer: string,
+  /** The URL of the audio file */
+  audio_url: string,
+  /** Audio file duration, in seconds */
+  audio_duration: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup: ReplyMarkup,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageAudio, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content: InputMessageContent,
+}
+
+/** Represents a link to an MP3 audio file */
+export type inputInlineQueryResultAudioOptional = {|
+  _: 'inputInlineQueryResultAudio',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Title of the audio file */
+  title?: string,
+  /** Performer of the audio file */
+  performer?: string,
+  /** The URL of the audio file */
+  audio_url?: string,
+  /** Audio file duration, in seconds */
+  audio_duration?: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageAudio, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/** Represents a user contact */
+export type inputInlineQueryResultContact = {
+  _: 'inputInlineQueryResultContact',
+  /** Unique identifier of the query result */
+  id: string,
+  /** User contact */
+  contact: contact,
+  /** URL of the result thumbnail, if it exists */
+  thumbnail_url: string,
+  /** Thumbnail width, if known */
+  thumbnail_width: number,
+  /** Thumbnail height, if known */
+  thumbnail_height: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup: ReplyMarkup,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content: InputMessageContent,
+}
+
+/** Represents a user contact */
+export type inputInlineQueryResultContactOptional = {|
+  _: 'inputInlineQueryResultContact',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** User contact */
+  contact?: contactOptional,
+  /** URL of the result thumbnail, if it exists */
+  thumbnail_url?: string,
+  /** Thumbnail width, if known */
+  thumbnail_width?: number,
+  /** Thumbnail height, if known */
+  thumbnail_height?: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/** Represents a link to a file */
+export type inputInlineQueryResultDocument = {
+  _: 'inputInlineQueryResultDocument',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Title of the resulting file */
+  title: string,
+  /** Short description of the result, if known */
+  description: string,
+  /** URL of the file */
+  document_url: string,
+  /**
+   * MIME type of the file content; only "application/pdf" and "application/zip" are currently
+   * allowed
+   */
+  mime_type: string,
+  /** The URL of the file thumbnail, if it exists */
+  thumbnail_url: string,
+  /** Width of the thumbnail */
+  thumbnail_width: number,
+  /** Height of the thumbnail */
+  thumbnail_height: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup: ReplyMarkup,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageDocument, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content: InputMessageContent,
+}
+
+/** Represents a link to a file */
+export type inputInlineQueryResultDocumentOptional = {|
+  _: 'inputInlineQueryResultDocument',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Title of the resulting file */
+  title?: string,
+  /** Short description of the result, if known */
+  description?: string,
+  /** URL of the file */
+  document_url?: string,
+  /**
+   * MIME type of the file content; only "application/pdf" and "application/zip" are currently
+   * allowed
+   */
+  mime_type?: string,
+  /** The URL of the file thumbnail, if it exists */
+  thumbnail_url?: string,
+  /** Width of the thumbnail */
+  thumbnail_width?: number,
+  /** Height of the thumbnail */
+  thumbnail_height?: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageDocument, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/** Represents a game */
+export type inputInlineQueryResultGame = {
+  _: 'inputInlineQueryResultGame',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Short name of the game */
+  game_short_name: string,
+  /** Message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup: ReplyMarkup,
+}
+
+/** Represents a game */
+export type inputInlineQueryResultGameOptional = {|
+  _: 'inputInlineQueryResultGame',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Short name of the game */
+  game_short_name?: string,
+  /** Message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup?: ReplyMarkupOptional,
+|}
+
+/** Represents a point on the map */
+export type inputInlineQueryResultLocation = {
+  _: 'inputInlineQueryResultLocation',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Location result */
+  location: location,
+  /**
+   * Amount of time relative to the message sent time until the location can be updated,
+   * in seconds
+   */
+  live_period: number,
+  /** Title of the result */
+  title: string,
+  /** URL of the result thumbnail, if it exists */
+  thumbnail_url: string,
+  /** Thumbnail width, if known */
+  thumbnail_width: number,
+  /** Thumbnail height, if known */
+  thumbnail_height: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup: ReplyMarkup,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content: InputMessageContent,
+}
+
+/** Represents a point on the map */
+export type inputInlineQueryResultLocationOptional = {|
+  _: 'inputInlineQueryResultLocation',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Location result */
+  location?: locationOptional,
+  /**
+   * Amount of time relative to the message sent time until the location can be updated,
+   * in seconds
+   */
+  live_period?: number,
+  /** Title of the result */
+  title?: string,
+  /** URL of the result thumbnail, if it exists */
+  thumbnail_url?: string,
+  /** Thumbnail width, if known */
+  thumbnail_width?: number,
+  /** Thumbnail height, if known */
+  thumbnail_height?: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/** Represents link to a JPEG image */
+export type inputInlineQueryResultPhoto = {
+  _: 'inputInlineQueryResultPhoto',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Title of the result, if known */
+  title: string,
+  /** A short description of the result, if known */
+  description: string,
+  /** URL of the photo thumbnail, if it exists */
+  thumbnail_url: string,
+  /** The URL of the JPEG photo (photo size must not exceed 5MB) */
+  photo_url: string,
+  /** Width of the photo */
+  photo_width: number,
+  /** Height of the photo */
+  photo_height: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup: ReplyMarkup,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessagePhoto, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content: InputMessageContent,
+}
+
+/** Represents link to a JPEG image */
+export type inputInlineQueryResultPhotoOptional = {|
+  _: 'inputInlineQueryResultPhoto',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Title of the result, if known */
+  title?: string,
+  /** A short description of the result, if known */
+  description?: string,
+  /** URL of the photo thumbnail, if it exists */
+  thumbnail_url?: string,
+  /** The URL of the JPEG photo (photo size must not exceed 5MB) */
+  photo_url?: string,
+  /** Width of the photo */
+  photo_width?: number,
+  /** Height of the photo */
+  photo_height?: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessagePhoto, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/** Represents a link to a WEBP sticker */
+export type inputInlineQueryResultSticker = {
+  _: 'inputInlineQueryResultSticker',
+  /** Unique identifier of the query result */
+  id: string,
+  /** URL of the sticker thumbnail, if it exists */
+  thumbnail_url: string,
+  /** The URL of the WEBP sticker (sticker file size must not exceed 5MB) */
+  sticker_url: string,
+  /** Width of the sticker */
+  sticker_width: number,
+  /** Height of the sticker */
+  sticker_height: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup: ReplyMarkup,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * inputMessageSticker, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content: InputMessageContent,
+}
+
+/** Represents a link to a WEBP sticker */
+export type inputInlineQueryResultStickerOptional = {|
+  _: 'inputInlineQueryResultSticker',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** URL of the sticker thumbnail, if it exists */
+  thumbnail_url?: string,
+  /** The URL of the WEBP sticker (sticker file size must not exceed 5MB) */
+  sticker_url?: string,
+  /** Width of the sticker */
+  sticker_width?: number,
+  /** Height of the sticker */
+  sticker_height?: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * inputMessageSticker, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/** Represents information about a venue */
+export type inputInlineQueryResultVenue = {
+  _: 'inputInlineQueryResultVenue',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Venue result */
+  venue: venue,
+  /** URL of the result thumbnail, if it exists */
+  thumbnail_url: string,
+  /** Thumbnail width, if known */
+  thumbnail_width: number,
+  /** Thumbnail height, if known */
+  thumbnail_height: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup: ReplyMarkup,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content: InputMessageContent,
+}
+
+/** Represents information about a venue */
+export type inputInlineQueryResultVenueOptional = {|
+  _: 'inputInlineQueryResultVenue',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Venue result */
+  venue?: venueOptional,
+  /** URL of the result thumbnail, if it exists */
+  thumbnail_url?: string,
+  /** Thumbnail width, if known */
+  thumbnail_width?: number,
+  /** Thumbnail height, if known */
+  thumbnail_height?: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/** Represents a link to a page containing an embedded video player or a video file */
+export type inputInlineQueryResultVideo = {
+  _: 'inputInlineQueryResultVideo',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Title of the result */
+  title: string,
+  /** A short description of the result, if known */
+  description: string,
+  /** The URL of the video thumbnail (JPEG), if it exists */
+  thumbnail_url: string,
+  /** URL of the embedded video player or video file */
+  video_url: string,
+  /**
+   * MIME type of the content of the video URL, only "text/html" or "video/mp4" are currently
+   * supported
+   */
+  mime_type: string,
+  /** Width of the video */
+  video_width: number,
+  /** Height of the video */
+  video_height: number,
+  /** Video duration, in seconds */
+  video_duration: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup: ReplyMarkup,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageVideo, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content: InputMessageContent,
+}
+
+/** Represents a link to a page containing an embedded video player or a video file */
+export type inputInlineQueryResultVideoOptional = {|
+  _: 'inputInlineQueryResultVideo',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Title of the result */
+  title?: string,
+  /** A short description of the result, if known */
+  description?: string,
+  /** The URL of the video thumbnail (JPEG), if it exists */
+  thumbnail_url?: string,
+  /** URL of the embedded video player or video file */
+  video_url?: string,
+  /**
+   * MIME type of the content of the video URL, only "text/html" or "video/mp4" are currently
+   * supported
+   */
+  mime_type?: string,
+  /** Width of the video */
+  video_width?: number,
+  /** Height of the video */
+  video_height?: number,
+  /** Video duration, in seconds */
+  video_duration?: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageVideo, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/**
+ * Represents a link to an opus-encoded audio file within an OGG container, single channel
+ * audio
+ */
+export type inputInlineQueryResultVoiceNote = {
+  _: 'inputInlineQueryResultVoiceNote',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Title of the voice note */
+  title: string,
+  /** The URL of the voice note file */
+  voice_note_url: string,
+  /** Duration of the voice note, in seconds */
+  voice_note_duration: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup: ReplyMarkup,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageVoiceNote, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content: InputMessageContent,
+}
+
+/**
+ * Represents a link to an opus-encoded audio file within an OGG container, single channel
+ * audio
+ */
+export type inputInlineQueryResultVoiceNoteOptional = {|
+  _: 'inputInlineQueryResultVoiceNote',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Title of the voice note */
+  title?: string,
+  /** The URL of the voice note file */
+  voice_note_url?: string,
+  /** Duration of the voice note, in seconds */
+  voice_note_duration?: number,
+  /** The message reply markup. Must be of type replyMarkupInlineKeyboard or null */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * The content of the message to be sent. Must be one of the following types: InputMessageText,
+   * InputMessageVoiceNote, InputMessageLocation, InputMessageVenue or InputMessageContact
+   */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/** Represents a link to an article or web page */
+export type inlineQueryResultArticle = {
+  _: 'inlineQueryResultArticle',
+  /** Unique identifier of the query result */
+  id: string,
+  /** URL of the result, if it exists */
+  url: string,
+  /** True, if the URL must be not shown */
+  hide_url: boolean,
+  /** Title of the result */
+  title: string,
+  /** A short description of the result */
+  description: string,
+  /** Result thumbnail; may be null */
+  thumbnail: photoSize,
+}
+
+/** Represents a link to an article or web page */
+export type inlineQueryResultArticleOptional = {|
+  _: 'inlineQueryResultArticle',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** URL of the result, if it exists */
+  url?: string,
+  /** True, if the URL must be not shown */
+  hide_url?: boolean,
+  /** Title of the result */
+  title?: string,
+  /** A short description of the result */
+  description?: string,
+  /** Result thumbnail; may be null */
+  thumbnail?: photoSizeOptional,
+|}
+
+/** Represents a user contact */
+export type inlineQueryResultContact = {
+  _: 'inlineQueryResultContact',
+  /** Unique identifier of the query result */
+  id: string,
+  /** A user contact */
+  contact: contact,
+  /** Result thumbnail; may be null */
+  thumbnail: photoSize,
+}
+
+/** Represents a user contact */
+export type inlineQueryResultContactOptional = {|
+  _: 'inlineQueryResultContact',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** A user contact */
+  contact?: contactOptional,
+  /** Result thumbnail; may be null */
+  thumbnail?: photoSizeOptional,
+|}
+
+/** Represents a point on the map */
+export type inlineQueryResultLocation = {
+  _: 'inlineQueryResultLocation',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Location result */
+  location: location,
+  /** Title of the result */
+  title: string,
+  /** Result thumbnail; may be null */
+  thumbnail: photoSize,
+}
+
+/** Represents a point on the map */
+export type inlineQueryResultLocationOptional = {|
+  _: 'inlineQueryResultLocation',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Location result */
+  location?: locationOptional,
+  /** Title of the result */
+  title?: string,
+  /** Result thumbnail; may be null */
+  thumbnail?: photoSizeOptional,
+|}
+
+/** Represents information about a venue */
+export type inlineQueryResultVenue = {
+  _: 'inlineQueryResultVenue',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Venue result */
+  venue: venue,
+  /** Result thumbnail; may be null */
+  thumbnail: photoSize,
+}
+
+/** Represents information about a venue */
+export type inlineQueryResultVenueOptional = {|
+  _: 'inlineQueryResultVenue',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Venue result */
+  venue?: venueOptional,
+  /** Result thumbnail; may be null */
+  thumbnail?: photoSizeOptional,
+|}
+
+/** Represents information about a game */
+export type inlineQueryResultGame = {
+  _: 'inlineQueryResultGame',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Game result */
+  game: game,
+}
+
+/** Represents information about a game */
+export type inlineQueryResultGameOptional = {|
+  _: 'inlineQueryResultGame',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Game result */
+  game?: gameOptional,
+|}
+
+/** Represents an animation file */
+export type inlineQueryResultAnimation = {
+  _: 'inlineQueryResultAnimation',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Animation file */
+  animation: animation,
+  /** Animation title */
+  title: string,
+}
+
+/** Represents an animation file */
+export type inlineQueryResultAnimationOptional = {|
+  _: 'inlineQueryResultAnimation',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Animation file */
+  animation?: animationOptional,
+  /** Animation title */
+  title?: string,
+|}
+
+/** Represents an audio file */
+export type inlineQueryResultAudio = {
+  _: 'inlineQueryResultAudio',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Audio file */
+  audio: audio,
+}
+
+/** Represents an audio file */
+export type inlineQueryResultAudioOptional = {|
+  _: 'inlineQueryResultAudio',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Audio file */
+  audio?: audioOptional,
+|}
+
+/** Represents a document */
+export type inlineQueryResultDocument = {
+  _: 'inlineQueryResultDocument',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Document */
+  document: document,
+  /** Document title */
+  title: string,
+  /** Document description */
+  description: string,
+}
+
+/** Represents a document */
+export type inlineQueryResultDocumentOptional = {|
+  _: 'inlineQueryResultDocument',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Document */
+  document?: documentOptional,
+  /** Document title */
+  title?: string,
+  /** Document description */
+  description?: string,
+|}
+
+/** Represents a photo */
+export type inlineQueryResultPhoto = {
+  _: 'inlineQueryResultPhoto',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Photo */
+  photo: photo,
+  /** Title of the result, if known */
+  title: string,
+  /** A short description of the result, if known */
+  description: string,
+}
+
+/** Represents a photo */
+export type inlineQueryResultPhotoOptional = {|
+  _: 'inlineQueryResultPhoto',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Photo */
+  photo?: photoOptional,
+  /** Title of the result, if known */
+  title?: string,
+  /** A short description of the result, if known */
+  description?: string,
+|}
+
+/** Represents a sticker */
+export type inlineQueryResultSticker = {
+  _: 'inlineQueryResultSticker',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Sticker */
+  sticker: sticker,
+}
+
+/** Represents a sticker */
+export type inlineQueryResultStickerOptional = {|
+  _: 'inlineQueryResultSticker',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Sticker */
+  sticker?: stickerOptional,
+|}
+
+/** Represents a video */
+export type inlineQueryResultVideo = {
+  _: 'inlineQueryResultVideo',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Video */
+  video: video,
+  /** Title of the video */
+  title: string,
+  /** Description of the video */
+  description: string,
+}
+
+/** Represents a video */
+export type inlineQueryResultVideoOptional = {|
+  _: 'inlineQueryResultVideo',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Video */
+  video?: videoOptional,
+  /** Title of the video */
+  title?: string,
+  /** Description of the video */
+  description?: string,
+|}
+
+/** Represents a voice note */
+export type inlineQueryResultVoiceNote = {
+  _: 'inlineQueryResultVoiceNote',
+  /** Unique identifier of the query result */
+  id: string,
+  /** Voice note */
+  voice_note: voiceNote,
+  /** Title of the voice note */
+  title: string,
+}
+
+/** Represents a voice note */
+export type inlineQueryResultVoiceNoteOptional = {|
+  _: 'inlineQueryResultVoiceNote',
+  /** Unique identifier of the query result */
+  id?: string,
+  /** Voice note */
+  voice_note?: voiceNoteOptional,
+  /** Title of the voice note */
+  title?: string,
+|}
+
+/**
+ * Represents the results of the inline query. Use sendInlineQueryResultMessage to send
+ * the result of the query
+ */
+export type inlineQueryResults = {
+  _: 'inlineQueryResults',
+  /** Unique identifier of the inline query */
+  inline_query_id: (number | string),
+  /** The offset for the next request. If empty, there are no more results */
+  next_offset: string,
+  /** Results of the query */
+  results: InlineQueryResult[],
+  /**
+   * If non-empty, this text should be shown on the button, which opens a private chat
+   * with the bot and sends the bot a start message with the switch_pm_parameter
+   */
+  switch_pm_text: string,
+  /** Parameter for the bot start message */
+  switch_pm_parameter: string,
+}
+
+/**
+ * Represents the results of the inline query. Use sendInlineQueryResultMessage to send
+ * the result of the query
+ */
+export type inlineQueryResultsOptional = {|
+  _: 'inlineQueryResults',
+  /** Unique identifier of the inline query */
+  inline_query_id?: (number | string),
+  /** The offset for the next request. If empty, there are no more results */
+  next_offset?: string,
+  /** Results of the query */
+  results?: InlineQueryResultOptional[],
+  /**
+   * If non-empty, this text should be shown on the button, which opens a private chat
+   * with the bot and sends the bot a start message with the switch_pm_parameter
+   */
+  switch_pm_text?: string,
+  /** Parameter for the bot start message */
+  switch_pm_parameter?: string,
+|}
+
+/** The payload from a general callback button */
+export type callbackQueryPayloadData = {
+  _: 'callbackQueryPayloadData',
+  /** Data that was attached to the callback button */
+  data: string,
+}
+
+/** The payload from a general callback button */
+export type callbackQueryPayloadDataOptional = {|
+  _: 'callbackQueryPayloadData',
+  /** Data that was attached to the callback button */
+  data?: string,
+|}
+
+/** The payload from a game callback button */
+export type callbackQueryPayloadGame = {
+  _: 'callbackQueryPayloadGame',
+  /** A short name of the game that was attached to the callback button */
+  game_short_name: string,
+}
+
+/** The payload from a game callback button */
+export type callbackQueryPayloadGameOptional = {|
+  _: 'callbackQueryPayloadGame',
+  /** A short name of the game that was attached to the callback button */
+  game_short_name?: string,
+|}
+
+/** Contains a bot's answer to a callback query */
+export type callbackQueryAnswer = {
+  _: 'callbackQueryAnswer',
+  /** Text of the answer */
+  text: string,
+  /** True, if an alert should be shown to the user instead of a toast notification */
+  show_alert: boolean,
+  /** URL to be opened */
+  url: string,
+}
+
+/** Contains a bot's answer to a callback query */
+export type callbackQueryAnswerOptional = {|
+  _: 'callbackQueryAnswer',
+  /** Text of the answer */
+  text?: string,
+  /** True, if an alert should be shown to the user instead of a toast notification */
+  show_alert?: boolean,
+  /** URL to be opened */
+  url?: string,
+|}
+
+/** Contains the result of a custom request */
+export type customRequestResult = {
+  _: 'customRequestResult',
+  /** A JSON-serialized result */
+  result: string,
+}
+
+/** Contains the result of a custom request */
+export type customRequestResultOptional = {|
+  _: 'customRequestResult',
+  /** A JSON-serialized result */
+  result?: string,
+|}
+
+/** Contains one row of the game high score table */
+export type gameHighScore = {
+  _: 'gameHighScore',
+  /** Position in the high score table */
+  position: number,
+  /** User identifier */
+  user_id: number,
+  /** User score */
+  score: number,
+}
+
+/** Contains one row of the game high score table */
+export type gameHighScoreOptional = {|
+  _: 'gameHighScore',
+  /** Position in the high score table */
+  position?: number,
+  /** User identifier */
+  user_id?: number,
+  /** User score */
+  score?: number,
+|}
+
+/** Contains a list of game high scores */
+export type gameHighScores = {
+  _: 'gameHighScores',
+  /** A list of game high scores */
+  scores: gameHighScore[],
+}
+
+/** Contains a list of game high scores */
+export type gameHighScoresOptional = {|
+  _: 'gameHighScores',
+  /** A list of game high scores */
+  scores?: gameHighScoreOptional[],
+|}
+
+/** A message was edited */
+export type chatEventMessageEdited = {
+  _: 'chatEventMessageEdited',
+  /** The original message before the edit */
+  old_message: message,
+  /** The message after it was edited */
+  new_message: message,
+}
+
+/** A message was edited */
+export type chatEventMessageEditedOptional = {|
+  _: 'chatEventMessageEdited',
+  /** The original message before the edit */
+  old_message?: messageOptional,
+  /** The message after it was edited */
+  new_message?: messageOptional,
+|}
+
+/** A message was deleted */
+export type chatEventMessageDeleted = {
+  _: 'chatEventMessageDeleted',
+  /** Deleted message */
+  message: message,
+}
+
+/** A message was deleted */
+export type chatEventMessageDeletedOptional = {|
+  _: 'chatEventMessageDeleted',
+  /** Deleted message */
+  message?: messageOptional,
+|}
+
+/** A message was pinned */
+export type chatEventMessagePinned = {
+  _: 'chatEventMessagePinned',
+  /** Pinned message */
+  message: message,
+}
+
+/** A message was pinned */
+export type chatEventMessagePinnedOptional = {|
+  _: 'chatEventMessagePinned',
+  /** Pinned message */
+  message?: messageOptional,
+|}
+
+/** A message was unpinned */
+export type chatEventMessageUnpinned = {
+  _: 'chatEventMessageUnpinned',
+}
+
+/** A message was unpinned */
+export type chatEventMessageUnpinnedOptional = {|
+  _: 'chatEventMessageUnpinned',
+|}
+
+/** A new member joined the chat */
+export type chatEventMemberJoined = {
+  _: 'chatEventMemberJoined',
+}
+
+/** A new member joined the chat */
+export type chatEventMemberJoinedOptional = {|
+  _: 'chatEventMemberJoined',
+|}
+
+/** A member left the chat */
+export type chatEventMemberLeft = {
+  _: 'chatEventMemberLeft',
+}
+
+/** A member left the chat */
+export type chatEventMemberLeftOptional = {|
+  _: 'chatEventMemberLeft',
+|}
+
+/** A new chat member was invited */
+export type chatEventMemberInvited = {
+  _: 'chatEventMemberInvited',
+  /** New member user identifier */
+  user_id: number,
+  /** New member status */
+  status: ChatMemberStatus,
+}
+
+/** A new chat member was invited */
+export type chatEventMemberInvitedOptional = {|
+  _: 'chatEventMemberInvited',
+  /** New member user identifier */
+  user_id?: number,
+  /** New member status */
+  status?: ChatMemberStatusOptional,
+|}
+
+/**
+ * A chat member has gained/lost administrator status, or the list of their administrator
+ * privileges has changed
+ */
+export type chatEventMemberPromoted = {
+  _: 'chatEventMemberPromoted',
+  /** Chat member user identifier */
+  user_id: number,
+  /** Previous status of the chat member */
+  old_status: ChatMemberStatus,
+  /** New status of the chat member */
+  new_status: ChatMemberStatus,
+}
+
+/**
+ * A chat member has gained/lost administrator status, or the list of their administrator
+ * privileges has changed
+ */
+export type chatEventMemberPromotedOptional = {|
+  _: 'chatEventMemberPromoted',
+  /** Chat member user identifier */
+  user_id?: number,
+  /** Previous status of the chat member */
+  old_status?: ChatMemberStatusOptional,
+  /** New status of the chat member */
+  new_status?: ChatMemberStatusOptional,
+|}
+
+/**
+ * A chat member was restricted/unrestricted or banned/unbanned, or the list of their
+ * restrictions has changed
+ */
+export type chatEventMemberRestricted = {
+  _: 'chatEventMemberRestricted',
+  /** Chat member user identifier */
+  user_id: number,
+  /** Previous status of the chat member */
+  old_status: ChatMemberStatus,
+  /** New status of the chat member */
+  new_status: ChatMemberStatus,
+}
+
+/**
+ * A chat member was restricted/unrestricted or banned/unbanned, or the list of their
+ * restrictions has changed
+ */
+export type chatEventMemberRestrictedOptional = {|
+  _: 'chatEventMemberRestricted',
+  /** Chat member user identifier */
+  user_id?: number,
+  /** Previous status of the chat member */
+  old_status?: ChatMemberStatusOptional,
+  /** New status of the chat member */
+  new_status?: ChatMemberStatusOptional,
+|}
+
+/** The chat title was changed */
+export type chatEventTitleChanged = {
+  _: 'chatEventTitleChanged',
+  /** Previous chat title */
+  old_title: string,
+  /** New chat title */
+  new_title: string,
+}
+
+/** The chat title was changed */
+export type chatEventTitleChangedOptional = {|
+  _: 'chatEventTitleChanged',
+  /** Previous chat title */
+  old_title?: string,
+  /** New chat title */
+  new_title?: string,
+|}
+
+/** The chat description was changed */
+export type chatEventDescriptionChanged = {
+  _: 'chatEventDescriptionChanged',
+  /** Previous chat description */
+  old_description: string,
+  /** New chat description */
+  new_description: string,
+}
+
+/** The chat description was changed */
+export type chatEventDescriptionChangedOptional = {|
+  _: 'chatEventDescriptionChanged',
+  /** Previous chat description */
+  old_description?: string,
+  /** New chat description */
+  new_description?: string,
+|}
+
+/** The chat username was changed */
+export type chatEventUsernameChanged = {
+  _: 'chatEventUsernameChanged',
+  /** Previous chat username */
+  old_username: string,
+  /** New chat username */
+  new_username: string,
+}
+
+/** The chat username was changed */
+export type chatEventUsernameChangedOptional = {|
+  _: 'chatEventUsernameChanged',
+  /** Previous chat username */
+  old_username?: string,
+  /** New chat username */
+  new_username?: string,
+|}
+
+/** The chat photo was changed */
+export type chatEventPhotoChanged = {
+  _: 'chatEventPhotoChanged',
+  /** Previous chat photo value; may be null */
+  old_photo: chatPhoto,
+  /** New chat photo value; may be null */
+  new_photo: chatPhoto,
+}
+
+/** The chat photo was changed */
+export type chatEventPhotoChangedOptional = {|
+  _: 'chatEventPhotoChanged',
+  /** Previous chat photo value; may be null */
+  old_photo?: chatPhotoOptional,
+  /** New chat photo value; may be null */
+  new_photo?: chatPhotoOptional,
+|}
+
+/** The anyone_can_invite setting of a supergroup chat was toggled */
+export type chatEventInvitesToggled = {
+  _: 'chatEventInvitesToggled',
+  /** New value of anyone_can_invite */
+  anyone_can_invite: boolean,
+}
+
+/** The anyone_can_invite setting of a supergroup chat was toggled */
+export type chatEventInvitesToggledOptional = {|
+  _: 'chatEventInvitesToggled',
+  /** New value of anyone_can_invite */
+  anyone_can_invite?: boolean,
+|}
+
+/** The sign_messages setting of a channel was toggled */
+export type chatEventSignMessagesToggled = {
+  _: 'chatEventSignMessagesToggled',
+  /** New value of sign_messages */
+  sign_messages: boolean,
+}
+
+/** The sign_messages setting of a channel was toggled */
+export type chatEventSignMessagesToggledOptional = {|
+  _: 'chatEventSignMessagesToggled',
+  /** New value of sign_messages */
+  sign_messages?: boolean,
+|}
+
+/** The supergroup sticker set was changed */
+export type chatEventStickerSetChanged = {
+  _: 'chatEventStickerSetChanged',
+  /** Previous identifier of the chat sticker set; 0 if none */
+  old_sticker_set_id: (number | string),
+  /** New identifier of the chat sticker set; 0 if none */
+  new_sticker_set_id: (number | string),
+}
+
+/** The supergroup sticker set was changed */
+export type chatEventStickerSetChangedOptional = {|
+  _: 'chatEventStickerSetChanged',
+  /** Previous identifier of the chat sticker set; 0 if none */
+  old_sticker_set_id?: (number | string),
+  /** New identifier of the chat sticker set; 0 if none */
+  new_sticker_set_id?: (number | string),
+|}
+
+/** The is_all_history_available setting of a supergroup was toggled */
+export type chatEventIsAllHistoryAvailableToggled = {
+  _: 'chatEventIsAllHistoryAvailableToggled',
+  /** New value of is_all_history_available */
+  is_all_history_available: boolean,
+}
+
+/** The is_all_history_available setting of a supergroup was toggled */
+export type chatEventIsAllHistoryAvailableToggledOptional = {|
+  _: 'chatEventIsAllHistoryAvailableToggled',
+  /** New value of is_all_history_available */
+  is_all_history_available?: boolean,
+|}
+
+/** Represents a chat event */
+export type chatEvent = {
+  _: 'chatEvent',
+  /** Chat event identifier */
+  id: (number | string),
+  /** Point in time (Unix timestamp) when the event happened */
+  date: number,
+  /** Identifier of the user who performed the action that triggered the event */
+  user_id: number,
+  /** Action performed by the user */
+  action: ChatEventAction,
+}
+
+/** Represents a chat event */
+export type chatEventOptional = {|
+  _: 'chatEvent',
+  /** Chat event identifier */
+  id?: (number | string),
+  /** Point in time (Unix timestamp) when the event happened */
+  date?: number,
+  /** Identifier of the user who performed the action that triggered the event */
+  user_id?: number,
+  /** Action performed by the user */
+  action?: ChatEventActionOptional,
+|}
+
+/** Contains a list of chat events */
+export type chatEvents = {
+  _: 'chatEvents',
+  /** List of events */
+  events: chatEvent[],
+}
+
+/** Contains a list of chat events */
+export type chatEventsOptional = {|
+  _: 'chatEvents',
+  /** List of events */
+  events?: chatEventOptional[],
+|}
+
+/** Represents a set of filters used to obtain a chat event log */
+export type chatEventLogFilters = {
+  _: 'chatEventLogFilters',
+  /** True, if message edits should be returned */
+  message_edits: boolean,
+  /** True, if message deletions should be returned */
+  message_deletions: boolean,
+  /** True, if pin/unpin events should be returned */
+  message_pins: boolean,
+  /** True, if members joining events should be returned */
+  member_joins: boolean,
+  /** True, if members leaving events should be returned */
+  member_leaves: boolean,
+  /** True, if invited member events should be returned */
+  member_invites: boolean,
+  /** True, if member promotion/demotion events should be returned */
+  member_promotions: boolean,
+  /** True, if member restricted/unrestricted/banned/unbanned events should be returned */
+  member_restrictions: boolean,
+  /** True, if changes in chat information should be returned */
+  info_changes: boolean,
+  /** True, if changes in chat settings should be returned */
+  setting_changes: boolean,
+}
+
+/** Represents a set of filters used to obtain a chat event log */
+export type chatEventLogFiltersOptional = {|
+  _: 'chatEventLogFilters',
+  /** True, if message edits should be returned */
+  message_edits?: boolean,
+  /** True, if message deletions should be returned */
+  message_deletions?: boolean,
+  /** True, if pin/unpin events should be returned */
+  message_pins?: boolean,
+  /** True, if members joining events should be returned */
+  member_joins?: boolean,
+  /** True, if members leaving events should be returned */
+  member_leaves?: boolean,
+  /** True, if invited member events should be returned */
+  member_invites?: boolean,
+  /** True, if member promotion/demotion events should be returned */
+  member_promotions?: boolean,
+  /** True, if member restricted/unrestricted/banned/unbanned events should be returned */
+  member_restrictions?: boolean,
+  /** True, if changes in chat information should be returned */
+  info_changes?: boolean,
+  /** True, if changes in chat settings should be returned */
+  setting_changes?: boolean,
+|}
+
+/** A token for Google Cloud Messaging */
+export type deviceTokenGoogleCloudMessaging = {
+  _: 'deviceTokenGoogleCloudMessaging',
+  /** Device registration token, may be empty to de-register a device */
+  token: string,
+}
+
+/** A token for Google Cloud Messaging */
+export type deviceTokenGoogleCloudMessagingOptional = {|
+  _: 'deviceTokenGoogleCloudMessaging',
+  /** Device registration token, may be empty to de-register a device */
+  token?: string,
+|}
+
+/** A token for Apple Push Notification service */
+export type deviceTokenApplePush = {
+  _: 'deviceTokenApplePush',
+  /** Device token, may be empty to de-register a device */
+  device_token: string,
+  /** True, if App Sandbox is enabled */
+  is_app_sandbox: boolean,
+}
+
+/** A token for Apple Push Notification service */
+export type deviceTokenApplePushOptional = {|
+  _: 'deviceTokenApplePush',
+  /** Device token, may be empty to de-register a device */
+  device_token?: string,
+  /** True, if App Sandbox is enabled */
+  is_app_sandbox?: boolean,
+|}
+
+/** A token for Apple Push Notification service VoIP notifications */
+export type deviceTokenApplePushVoIP = {
+  _: 'deviceTokenApplePushVoIP',
+  /** Device token, may be empty to de-register a device */
+  device_token: string,
+  /** True, if App Sandbox is enabled */
+  is_app_sandbox: boolean,
+}
+
+/** A token for Apple Push Notification service VoIP notifications */
+export type deviceTokenApplePushVoIPOptional = {|
+  _: 'deviceTokenApplePushVoIP',
+  /** Device token, may be empty to de-register a device */
+  device_token?: string,
+  /** True, if App Sandbox is enabled */
+  is_app_sandbox?: boolean,
+|}
+
+/** A token for Windows Push Notification Services */
+export type deviceTokenWindowsPush = {
+  _: 'deviceTokenWindowsPush',
+  /**
+   * The access token that will be used to send notifications, may be empty to de-register
+   * a device
+   */
+  access_token: string,
+}
+
+/** A token for Windows Push Notification Services */
+export type deviceTokenWindowsPushOptional = {|
+  _: 'deviceTokenWindowsPush',
+  /**
+   * The access token that will be used to send notifications, may be empty to de-register
+   * a device
+   */
+  access_token?: string,
+|}
+
+/** A token for Microsoft Push Notification Service */
+export type deviceTokenMicrosoftPush = {
+  _: 'deviceTokenMicrosoftPush',
+  /** Push notification channel URI, may be empty to de-register a device */
+  channel_uri: string,
+}
+
+/** A token for Microsoft Push Notification Service */
+export type deviceTokenMicrosoftPushOptional = {|
+  _: 'deviceTokenMicrosoftPush',
+  /** Push notification channel URI, may be empty to de-register a device */
+  channel_uri?: string,
+|}
+
+/** A token for Microsoft Push Notification Service VoIP channel */
+export type deviceTokenMicrosoftPushVoIP = {
+  _: 'deviceTokenMicrosoftPushVoIP',
+  /** Push notification channel URI, may be empty to de-register a device */
+  channel_uri: string,
+}
+
+/** A token for Microsoft Push Notification Service VoIP channel */
+export type deviceTokenMicrosoftPushVoIPOptional = {|
+  _: 'deviceTokenMicrosoftPushVoIP',
+  /** Push notification channel URI, may be empty to de-register a device */
+  channel_uri?: string,
+|}
+
+/** A token for web Push API */
+export type deviceTokenWebPush = {
+  _: 'deviceTokenWebPush',
+  /**
+   * Absolute URL exposed by the push service where the application server can send push
+   * messages, may be empty to de-register a device
+   */
+  endpoint: string,
+  /** Base64url-encoded P-256 elliptic curve Diffie-Hellman public key */
+  p256dh_base64url: string,
+  /** Base64url-encoded authentication secret */
+  auth_base64url: string,
+}
+
+/** A token for web Push API */
+export type deviceTokenWebPushOptional = {|
+  _: 'deviceTokenWebPush',
+  /**
+   * Absolute URL exposed by the push service where the application server can send push
+   * messages, may be empty to de-register a device
+   */
+  endpoint?: string,
+  /** Base64url-encoded P-256 elliptic curve Diffie-Hellman public key */
+  p256dh_base64url?: string,
+  /** Base64url-encoded authentication secret */
+  auth_base64url?: string,
+|}
+
+/** A token for Simple Push API for Firefox OS */
+export type deviceTokenSimplePush = {
+  _: 'deviceTokenSimplePush',
+  /**
+   * Absolute URL exposed by the push service where the application server can send push
+   * messages, may be empty to de-register a device
+   */
+  endpoint: string,
+}
+
+/** A token for Simple Push API for Firefox OS */
+export type deviceTokenSimplePushOptional = {|
+  _: 'deviceTokenSimplePush',
+  /**
+   * Absolute URL exposed by the push service where the application server can send push
+   * messages, may be empty to de-register a device
+   */
+  endpoint?: string,
+|}
+
+/** A token for Ubuntu Push Client service */
+export type deviceTokenUbuntuPush = {
+  _: 'deviceTokenUbuntuPush',
+  /** Token, may be empty to de-register a device */
+  token: string,
+}
+
+/** A token for Ubuntu Push Client service */
+export type deviceTokenUbuntuPushOptional = {|
+  _: 'deviceTokenUbuntuPush',
+  /** Token, may be empty to de-register a device */
+  token?: string,
+|}
+
+/** A token for BlackBerry Push Service */
+export type deviceTokenBlackBerryPush = {
+  _: 'deviceTokenBlackBerryPush',
+  /** Token, may be empty to de-register a device */
+  token: string,
+}
+
+/** A token for BlackBerry Push Service */
+export type deviceTokenBlackBerryPushOptional = {|
+  _: 'deviceTokenBlackBerryPush',
+  /** Token, may be empty to de-register a device */
+  token?: string,
+|}
+
+/** A token for Tizen Push Service */
+export type deviceTokenTizenPush = {
+  _: 'deviceTokenTizenPush',
+  /** Push service registration identifier, may be empty to de-register a device */
+  reg_id: string,
+}
+
+/** A token for Tizen Push Service */
+export type deviceTokenTizenPushOptional = {|
+  _: 'deviceTokenTizenPush',
+  /** Push service registration identifier, may be empty to de-register a device */
+  reg_id?: string,
+|}
+
+/** Contains information about a wallpaper */
+export type wallpaper = {
+  _: 'wallpaper',
+  /** Unique persistent wallpaper identifier */
+  id: number,
+  /**
+   * Available variants of the wallpaper in different sizes. These photos can only be
+   * downloaded; they can't be sent in a message
+   */
+  sizes: photoSize[],
+  /**
+   * Main color of the wallpaper in RGB24 format; should be treated as background color
+   * if no photos are specified
+   */
+  color: number,
+}
+
+/** Contains information about a wallpaper */
+export type wallpaperOptional = {|
+  _: 'wallpaper',
+  /** Unique persistent wallpaper identifier */
+  id?: number,
+  /**
+   * Available variants of the wallpaper in different sizes. These photos can only be
+   * downloaded; they can't be sent in a message
+   */
+  sizes?: photoSizeOptional[],
+  /**
+   * Main color of the wallpaper in RGB24 format; should be treated as background color
+   * if no photos are specified
+   */
+  color?: number,
+|}
+
+/** Contains a list of wallpapers */
+export type wallpapers = {
+  _: 'wallpapers',
+  /** A list of wallpapers */
+  wallpapers: wallpaper[],
+}
+
+/** Contains a list of wallpapers */
+export type wallpapersOptional = {|
+  _: 'wallpapers',
+  /** A list of wallpapers */
+  wallpapers?: wallpaperOptional[],
+|}
+
+/** Contains a list of hashtags */
+export type hashtags = {
+  _: 'hashtags',
+  /** A list of hashtags */
+  hashtags: string[],
+}
+
+/** Contains a list of hashtags */
+export type hashtagsOptional = {|
+  _: 'hashtags',
+  /** A list of hashtags */
+  hashtags?: string[],
+|}
+
+/** The username can be set */
+export type checkChatUsernameResultOk = {
+  _: 'checkChatUsernameResultOk',
+}
+
+/** The username can be set */
+export type checkChatUsernameResultOkOptional = {|
+  _: 'checkChatUsernameResultOk',
+|}
+
+/** The username is invalid */
+export type checkChatUsernameResultUsernameInvalid = {
+  _: 'checkChatUsernameResultUsernameInvalid',
+}
+
+/** The username is invalid */
+export type checkChatUsernameResultUsernameInvalidOptional = {|
+  _: 'checkChatUsernameResultUsernameInvalid',
+|}
+
+/** The username is occupied */
+export type checkChatUsernameResultUsernameOccupied = {
+  _: 'checkChatUsernameResultUsernameOccupied',
+}
+
+/** The username is occupied */
+export type checkChatUsernameResultUsernameOccupiedOptional = {|
+  _: 'checkChatUsernameResultUsernameOccupied',
+|}
+
+/** The user has too much public chats, one of them should be made private first */
+export type checkChatUsernameResultPublicChatsTooMuch = {
+  _: 'checkChatUsernameResultPublicChatsTooMuch',
+}
+
+/** The user has too much public chats, one of them should be made private first */
+export type checkChatUsernameResultPublicChatsTooMuchOptional = {|
+  _: 'checkChatUsernameResultPublicChatsTooMuch',
+|}
+
+/** The user can't be a member of a public supergroup */
+export type checkChatUsernameResultPublicGroupsUnavailable = {
+  _: 'checkChatUsernameResultPublicGroupsUnavailable',
+}
+
+/** The user can't be a member of a public supergroup */
+export type checkChatUsernameResultPublicGroupsUnavailableOptional = {|
+  _: 'checkChatUsernameResultPublicGroupsUnavailable',
+|}
+
+/** Boolean option */
+export type optionValueBoolean = {
+  _: 'optionValueBoolean',
+  /** The value of the option */
+  value: boolean,
+}
+
+/** Boolean option */
+export type optionValueBooleanOptional = {|
+  _: 'optionValueBoolean',
+  /** The value of the option */
+  value?: boolean,
+|}
+
+/** An unknown option or an option which has a default value */
+export type optionValueEmpty = {
+  _: 'optionValueEmpty',
+}
+
+/** An unknown option or an option which has a default value */
+export type optionValueEmptyOptional = {|
+  _: 'optionValueEmpty',
+|}
+
+/** An integer option */
+export type optionValueInteger = {
+  _: 'optionValueInteger',
+  /** The value of the option */
+  value: number,
+}
+
+/** An integer option */
+export type optionValueIntegerOptional = {|
+  _: 'optionValueInteger',
+  /** The value of the option */
+  value?: number,
+|}
+
+/** A string option */
+export type optionValueString = {
+  _: 'optionValueString',
+  /** The value of the option */
+  value: string,
+}
+
+/** A string option */
+export type optionValueStringOptional = {|
+  _: 'optionValueString',
+  /** The value of the option */
+  value?: string,
+|}
+
+/** A rule to allow all users to do something */
+export type userPrivacySettingRuleAllowAll = {
+  _: 'userPrivacySettingRuleAllowAll',
+}
+
+/** A rule to allow all users to do something */
+export type userPrivacySettingRuleAllowAllOptional = {|
+  _: 'userPrivacySettingRuleAllowAll',
+|}
+
+/** A rule to allow all of a user's contacts to do something */
+export type userPrivacySettingRuleAllowContacts = {
+  _: 'userPrivacySettingRuleAllowContacts',
+}
+
+/** A rule to allow all of a user's contacts to do something */
+export type userPrivacySettingRuleAllowContactsOptional = {|
+  _: 'userPrivacySettingRuleAllowContacts',
+|}
+
+/** A rule to allow certain specified users to do something */
+export type userPrivacySettingRuleAllowUsers = {
+  _: 'userPrivacySettingRuleAllowUsers',
+  /** The user identifiers */
+  user_ids: number[],
+}
+
+/** A rule to allow certain specified users to do something */
+export type userPrivacySettingRuleAllowUsersOptional = {|
+  _: 'userPrivacySettingRuleAllowUsers',
+  /** The user identifiers */
+  user_ids?: number[],
+|}
+
+/** A rule to restrict all users from doing something */
+export type userPrivacySettingRuleRestrictAll = {
+  _: 'userPrivacySettingRuleRestrictAll',
+}
+
+/** A rule to restrict all users from doing something */
+export type userPrivacySettingRuleRestrictAllOptional = {|
+  _: 'userPrivacySettingRuleRestrictAll',
+|}
+
+/** A rule to restrict all contacts of a user from doing something */
+export type userPrivacySettingRuleRestrictContacts = {
+  _: 'userPrivacySettingRuleRestrictContacts',
+}
+
+/** A rule to restrict all contacts of a user from doing something */
+export type userPrivacySettingRuleRestrictContactsOptional = {|
+  _: 'userPrivacySettingRuleRestrictContacts',
+|}
+
+/** A rule to restrict all specified users from doing something */
+export type userPrivacySettingRuleRestrictUsers = {
+  _: 'userPrivacySettingRuleRestrictUsers',
+  /** The user identifiers */
+  user_ids: number[],
+}
+
+/** A rule to restrict all specified users from doing something */
+export type userPrivacySettingRuleRestrictUsersOptional = {|
+  _: 'userPrivacySettingRuleRestrictUsers',
+  /** The user identifiers */
+  user_ids?: number[],
+|}
+
+/**
+ * A list of privacy rules. Rules are matched in the specified order. The first matched
+ * rule defines the privacy setting for a given user. If no rule matches, the action
+ * is not allowed
+ */
+export type userPrivacySettingRules = {
+  _: 'userPrivacySettingRules',
+  /** A list of rules */
+  rules: UserPrivacySettingRule[],
+}
+
+/**
+ * A list of privacy rules. Rules are matched in the specified order. The first matched
+ * rule defines the privacy setting for a given user. If no rule matches, the action
+ * is not allowed
+ */
+export type userPrivacySettingRulesOptional = {|
+  _: 'userPrivacySettingRules',
+  /** A list of rules */
+  rules?: UserPrivacySettingRuleOptional[],
+|}
+
+/** A privacy setting for managing whether the user's online status is visible */
+export type userPrivacySettingShowStatus = {
+  _: 'userPrivacySettingShowStatus',
+}
+
+/** A privacy setting for managing whether the user's online status is visible */
+export type userPrivacySettingShowStatusOptional = {|
+  _: 'userPrivacySettingShowStatus',
+|}
+
+/** A privacy setting for managing whether the user can be invited to chats */
+export type userPrivacySettingAllowChatInvites = {
+  _: 'userPrivacySettingAllowChatInvites',
+}
+
+/** A privacy setting for managing whether the user can be invited to chats */
+export type userPrivacySettingAllowChatInvitesOptional = {|
+  _: 'userPrivacySettingAllowChatInvites',
+|}
+
+/** A privacy setting for managing whether the user can be called */
+export type userPrivacySettingAllowCalls = {
+  _: 'userPrivacySettingAllowCalls',
+}
+
+/** A privacy setting for managing whether the user can be called */
+export type userPrivacySettingAllowCallsOptional = {|
+  _: 'userPrivacySettingAllowCalls',
+|}
+
+/**
+ * Contains information about the period of inactivity after which the current user's
+ * account will automatically be deleted
+ */
+export type accountTtl = {
+  _: 'accountTtl',
+  /**
+   * Number of days of inactivity before the account will be flagged for deletion; should
+   * range from 30-366 days
+   */
+  days: number,
+}
+
+/**
+ * Contains information about the period of inactivity after which the current user's
+ * account will automatically be deleted
+ */
+export type accountTtlOptional = {|
+  _: 'accountTtl',
+  /**
+   * Number of days of inactivity before the account will be flagged for deletion; should
+   * range from 30-366 days
+   */
+  days?: number,
+|}
+
+/**
+ * Contains information about one session in a Telegram application used by the current
+ * user
+ */
+export type session = {
+  _: 'session',
+  /** Session identifier */
+  id: (number | string),
+  /** True, if this session is the current session */
+  is_current: boolean,
+  /** Telegram API identifier, as provided by the application */
+  api_id: number,
+  /** Name of the application, as provided by the application */
+  application_name: string,
+  /** The version of the application, as provided by the application */
+  application_version: string,
+  /**
+   * True, if the application is an official application or uses the api_id of an official
+   * application
+   */
+  is_official_application: boolean,
+  /**
+   * Model of the device the application has been run or is running on, as provided by
+   * the application
+   */
+  device_model: string,
+  /**
+   * Operating system the application has been run or is running on, as provided by the
+   * application
+   */
+  platform: string,
+  /**
+   * Version of the operating system the application has been run or is running on, as
+   * provided by the application
+   */
+  system_version: string,
+  /** Point in time (Unix timestamp) when the user has logged in */
+  log_in_date: number,
+  /** Point in time (Unix timestamp) when the session was last used */
+  last_active_date: number,
+  /** IP address from which the session was created, in human-readable format */
+  ip: string,
+  /**
+   * A two-letter country code for the country from which the session was created, based
+   * on the IP address
+   */
+  country: string,
+  /** Region code from which the session was created, based on the IP address */
+  region: string,
+}
+
+/**
+ * Contains information about one session in a Telegram application used by the current
+ * user
+ */
+export type sessionOptional = {|
+  _: 'session',
+  /** Session identifier */
+  id?: (number | string),
+  /** True, if this session is the current session */
+  is_current?: boolean,
+  /** Telegram API identifier, as provided by the application */
+  api_id?: number,
+  /** Name of the application, as provided by the application */
+  application_name?: string,
+  /** The version of the application, as provided by the application */
+  application_version?: string,
+  /**
+   * True, if the application is an official application or uses the api_id of an official
+   * application
+   */
+  is_official_application?: boolean,
+  /**
+   * Model of the device the application has been run or is running on, as provided by
+   * the application
+   */
+  device_model?: string,
+  /**
+   * Operating system the application has been run or is running on, as provided by the
+   * application
+   */
+  platform?: string,
+  /**
+   * Version of the operating system the application has been run or is running on, as
+   * provided by the application
+   */
+  system_version?: string,
+  /** Point in time (Unix timestamp) when the user has logged in */
+  log_in_date?: number,
+  /** Point in time (Unix timestamp) when the session was last used */
+  last_active_date?: number,
+  /** IP address from which the session was created, in human-readable format */
+  ip?: string,
+  /**
+   * A two-letter country code for the country from which the session was created, based
+   * on the IP address
+   */
+  country?: string,
+  /** Region code from which the session was created, based on the IP address */
+  region?: string,
+|}
+
+/** Contains a list of sessions */
+export type sessions = {
+  _: 'sessions',
+  /** List of sessions */
+  sessions: session[],
+}
+
+/** Contains a list of sessions */
+export type sessionsOptional = {|
+  _: 'sessions',
+  /** List of sessions */
+  sessions?: sessionOptional[],
+|}
+
+/** Contains information about one website the current user is logged in with Telegram */
+export type connectedWebsite = {
+  _: 'connectedWebsite',
+  /** Website identifier */
+  id: (number | string),
+  /** The domain name of the website */
+  domain_name: string,
+  /** User identifier of a bot linked with the website */
+  bot_user_id: number,
+  /** The version of a browser used to log in */
+  browser: string,
+  /** Operating system the browser is running on */
+  platform: string,
+  /** Point in time (Unix timestamp) when the user was logged in */
+  log_in_date: number,
+  /** Point in time (Unix timestamp) when obtained authorization was last used */
+  last_active_date: number,
+  /** IP address from which the user was logged in, in human-readable format */
+  ip: string,
+  /**
+   * Human-readable description of a country and a region, from which the user was logged
+   * in, based on the IP address
+   */
+  location: string,
+}
+
+/** Contains information about one website the current user is logged in with Telegram */
+export type connectedWebsiteOptional = {|
+  _: 'connectedWebsite',
+  /** Website identifier */
+  id?: (number | string),
+  /** The domain name of the website */
+  domain_name?: string,
+  /** User identifier of a bot linked with the website */
+  bot_user_id?: number,
+  /** The version of a browser used to log in */
+  browser?: string,
+  /** Operating system the browser is running on */
+  platform?: string,
+  /** Point in time (Unix timestamp) when the user was logged in */
+  log_in_date?: number,
+  /** Point in time (Unix timestamp) when obtained authorization was last used */
+  last_active_date?: number,
+  /** IP address from which the user was logged in, in human-readable format */
+  ip?: string,
+  /**
+   * Human-readable description of a country and a region, from which the user was logged
+   * in, based on the IP address
+   */
+  location?: string,
+|}
+
+/** Contains a list of websites the current user is logged in with Telegram */
+export type connectedWebsites = {
+  _: 'connectedWebsites',
+  /** List of connected websites */
+  websites: connectedWebsite[],
+}
+
+/** Contains a list of websites the current user is logged in with Telegram */
+export type connectedWebsitesOptional = {|
+  _: 'connectedWebsites',
+  /** List of connected websites */
+  websites?: connectedWebsiteOptional[],
+|}
+
+/** Contains information about the availability of the "Report spam" action for a chat */
+export type chatReportSpamState = {
+  _: 'chatReportSpamState',
+  /** True, if a prompt with the "Report spam" action should be shown to the user */
+  can_report_spam: boolean,
+}
+
+/** Contains information about the availability of the "Report spam" action for a chat */
+export type chatReportSpamStateOptional = {|
+  _: 'chatReportSpamState',
+  /** True, if a prompt with the "Report spam" action should be shown to the user */
+  can_report_spam?: boolean,
+|}
+
+/** The chat contains spam messages */
+export type chatReportReasonSpam = {
+  _: 'chatReportReasonSpam',
+}
+
+/** The chat contains spam messages */
+export type chatReportReasonSpamOptional = {|
+  _: 'chatReportReasonSpam',
+|}
+
+/** The chat promotes violence */
+export type chatReportReasonViolence = {
+  _: 'chatReportReasonViolence',
+}
+
+/** The chat promotes violence */
+export type chatReportReasonViolenceOptional = {|
+  _: 'chatReportReasonViolence',
+|}
+
+/** The chat contains pornographic messages */
+export type chatReportReasonPornography = {
+  _: 'chatReportReasonPornography',
+}
+
+/** The chat contains pornographic messages */
+export type chatReportReasonPornographyOptional = {|
+  _: 'chatReportReasonPornography',
+|}
+
+/** A custom reason provided by the user */
+export type chatReportReasonCustom = {
+  _: 'chatReportReasonCustom',
+  /** Report text */
+  text: string,
+}
+
+/** A custom reason provided by the user */
+export type chatReportReasonCustomOptional = {|
+  _: 'chatReportReasonCustom',
+  /** Report text */
+  text?: string,
+|}
+
+/** Contains a public HTTPS link to a message in a public supergroup or channel */
+export type publicMessageLink = {
+  _: 'publicMessageLink',
+  /** Message link */
+  link: string,
+  /** HTML-code for embedding the message */
+  html: string,
+}
+
+/** Contains a public HTTPS link to a message in a public supergroup or channel */
+export type publicMessageLinkOptional = {|
+  _: 'publicMessageLink',
+  /** Message link */
+  link?: string,
+  /** HTML-code for embedding the message */
+  html?: string,
+|}
+
+/** The data is not a file */
+export type fileTypeNone = {
+  _: 'fileTypeNone',
+}
+
+/** The data is not a file */
+export type fileTypeNoneOptional = {|
+  _: 'fileTypeNone',
+|}
+
+/** The file is an animation */
+export type fileTypeAnimation = {
+  _: 'fileTypeAnimation',
+}
+
+/** The file is an animation */
+export type fileTypeAnimationOptional = {|
+  _: 'fileTypeAnimation',
+|}
+
+/** The file is an audio file */
+export type fileTypeAudio = {
+  _: 'fileTypeAudio',
+}
+
+/** The file is an audio file */
+export type fileTypeAudioOptional = {|
+  _: 'fileTypeAudio',
+|}
+
+/** The file is a document */
+export type fileTypeDocument = {
+  _: 'fileTypeDocument',
+}
+
+/** The file is a document */
+export type fileTypeDocumentOptional = {|
+  _: 'fileTypeDocument',
+|}
+
+/** The file is a photo */
+export type fileTypePhoto = {
+  _: 'fileTypePhoto',
+}
+
+/** The file is a photo */
+export type fileTypePhotoOptional = {|
+  _: 'fileTypePhoto',
+|}
+
+/** The file is a profile photo */
+export type fileTypeProfilePhoto = {
+  _: 'fileTypeProfilePhoto',
+}
+
+/** The file is a profile photo */
+export type fileTypeProfilePhotoOptional = {|
+  _: 'fileTypeProfilePhoto',
+|}
+
+/** The file was sent to a secret chat (the file type is not known to the server) */
+export type fileTypeSecret = {
+  _: 'fileTypeSecret',
+}
+
+/** The file was sent to a secret chat (the file type is not known to the server) */
+export type fileTypeSecretOptional = {|
+  _: 'fileTypeSecret',
+|}
+
+/** The file is a sticker */
+export type fileTypeSticker = {
+  _: 'fileTypeSticker',
+}
+
+/** The file is a sticker */
+export type fileTypeStickerOptional = {|
+  _: 'fileTypeSticker',
+|}
+
+/** The file is a thumbnail of another file */
+export type fileTypeThumbnail = {
+  _: 'fileTypeThumbnail',
+}
+
+/** The file is a thumbnail of another file */
+export type fileTypeThumbnailOptional = {|
+  _: 'fileTypeThumbnail',
+|}
+
+/** The file type is not yet known */
+export type fileTypeUnknown = {
+  _: 'fileTypeUnknown',
+}
+
+/** The file type is not yet known */
+export type fileTypeUnknownOptional = {|
+  _: 'fileTypeUnknown',
+|}
+
+/** The file is a video */
+export type fileTypeVideo = {
+  _: 'fileTypeVideo',
+}
+
+/** The file is a video */
+export type fileTypeVideoOptional = {|
+  _: 'fileTypeVideo',
+|}
+
+/** The file is a video note */
+export type fileTypeVideoNote = {
+  _: 'fileTypeVideoNote',
+}
+
+/** The file is a video note */
+export type fileTypeVideoNoteOptional = {|
+  _: 'fileTypeVideoNote',
+|}
+
+/** The file is a voice note */
+export type fileTypeVoiceNote = {
+  _: 'fileTypeVoiceNote',
+}
+
+/** The file is a voice note */
+export type fileTypeVoiceNoteOptional = {|
+  _: 'fileTypeVoiceNote',
+|}
+
+/** The file is a wallpaper */
+export type fileTypeWallpaper = {
+  _: 'fileTypeWallpaper',
+}
+
+/** The file is a wallpaper */
+export type fileTypeWallpaperOptional = {|
+  _: 'fileTypeWallpaper',
+|}
+
+/** The file is a thumbnail of a file from a secret chat */
+export type fileTypeSecretThumbnail = {
+  _: 'fileTypeSecretThumbnail',
+}
+
+/** The file is a thumbnail of a file from a secret chat */
+export type fileTypeSecretThumbnailOptional = {|
+  _: 'fileTypeSecretThumbnail',
+|}
+
+/** Contains the storage usage statistics for a specific file type */
+export type storageStatisticsByFileType = {
+  _: 'storageStatisticsByFileType',
+  /** File type */
+  file_type: FileType,
+  /** Total size of the files */
+  size: number,
+  /** Total number of files */
+  count: number,
+}
+
+/** Contains the storage usage statistics for a specific file type */
+export type storageStatisticsByFileTypeOptional = {|
+  _: 'storageStatisticsByFileType',
+  /** File type */
+  file_type?: FileTypeOptional,
+  /** Total size of the files */
+  size?: number,
+  /** Total number of files */
+  count?: number,
+|}
+
+/** Contains the storage usage statistics for a specific chat */
+export type storageStatisticsByChat = {
+  _: 'storageStatisticsByChat',
+  /** Chat identifier; 0 if none */
+  chat_id: number,
+  /** Total size of the files in the chat */
+  size: number,
+  /** Total number of files in the chat */
+  count: number,
+  /** Statistics split by file types */
+  by_file_type: storageStatisticsByFileType[],
+}
+
+/** Contains the storage usage statistics for a specific chat */
+export type storageStatisticsByChatOptional = {|
+  _: 'storageStatisticsByChat',
+  /** Chat identifier; 0 if none */
   chat_id?: number,
-  from_chat_id?: number,
-  message_ids?: number[],
+  /** Total size of the files in the chat */
+  size?: number,
+  /** Total number of files in the chat */
+  count?: number,
+  /** Statistics split by file types */
+  by_file_type?: storageStatisticsByFileTypeOptional[],
+|}
+
+/** Contains the exact storage usage statistics split by chats and file type */
+export type storageStatistics = {
+  _: 'storageStatistics',
+  /** Total size of files */
+  size: number,
+  /** Total number of files */
+  count: number,
+  /** Statistics split by chats */
+  by_chat: storageStatisticsByChat[],
+}
+
+/** Contains the exact storage usage statistics split by chats and file type */
+export type storageStatisticsOptional = {|
+  _: 'storageStatistics',
+  /** Total size of files */
+  size?: number,
+  /** Total number of files */
+  count?: number,
+  /** Statistics split by chats */
+  by_chat?: storageStatisticsByChatOptional[],
+|}
+
+/** Contains approximate storage usage statistics, excluding files of unknown file type */
+export type storageStatisticsFast = {
+  _: 'storageStatisticsFast',
+  /** Approximate total size of files */
+  files_size: number,
+  /** Approximate number of files */
+  file_count: number,
+  /** Size of the database */
+  database_size: number,
+}
+
+/** Contains approximate storage usage statistics, excluding files of unknown file type */
+export type storageStatisticsFastOptional = {|
+  _: 'storageStatisticsFast',
+  /** Approximate total size of files */
+  files_size?: number,
+  /** Approximate number of files */
+  file_count?: number,
+  /** Size of the database */
+  database_size?: number,
+|}
+
+/** The network is not available */
+export type networkTypeNone = {
+  _: 'networkTypeNone',
+}
+
+/** The network is not available */
+export type networkTypeNoneOptional = {|
+  _: 'networkTypeNone',
+|}
+
+/** A mobile network */
+export type networkTypeMobile = {
+  _: 'networkTypeMobile',
+}
+
+/** A mobile network */
+export type networkTypeMobileOptional = {|
+  _: 'networkTypeMobile',
+|}
+
+/** A mobile roaming network */
+export type networkTypeMobileRoaming = {
+  _: 'networkTypeMobileRoaming',
+}
+
+/** A mobile roaming network */
+export type networkTypeMobileRoamingOptional = {|
+  _: 'networkTypeMobileRoaming',
+|}
+
+/** A Wi-Fi network */
+export type networkTypeWiFi = {
+  _: 'networkTypeWiFi',
+}
+
+/** A Wi-Fi network */
+export type networkTypeWiFiOptional = {|
+  _: 'networkTypeWiFi',
+|}
+
+/** A different network type (e.g., Ethernet network) */
+export type networkTypeOther = {
+  _: 'networkTypeOther',
+}
+
+/** A different network type (e.g., Ethernet network) */
+export type networkTypeOtherOptional = {|
+  _: 'networkTypeOther',
+|}
+
+/**
+ * Contains information about the total amount of data that was used to send and receive
+ * files
+ */
+export type networkStatisticsEntryFile = {
+  _: 'networkStatisticsEntryFile',
+  /** Type of the file the data is part of */
+  file_type: FileType,
+  /**
+   * Type of the network the data was sent through. Call setNetworkType to maintain the
+   * actual network type
+   */
+  network_type: NetworkType,
+  /** Total number of bytes sent */
+  sent_bytes: number,
+  /** Total number of bytes received */
+  received_bytes: number,
+}
+
+/**
+ * Contains information about the total amount of data that was used to send and receive
+ * files
+ */
+export type networkStatisticsEntryFileOptional = {|
+  _: 'networkStatisticsEntryFile',
+  /** Type of the file the data is part of */
+  file_type?: FileTypeOptional,
+  /**
+   * Type of the network the data was sent through. Call setNetworkType to maintain the
+   * actual network type
+   */
+  network_type?: NetworkTypeOptional,
+  /** Total number of bytes sent */
+  sent_bytes?: number,
+  /** Total number of bytes received */
+  received_bytes?: number,
+|}
+
+/** Contains information about the total amount of data that was used for calls */
+export type networkStatisticsEntryCall = {
+  _: 'networkStatisticsEntryCall',
+  /**
+   * Type of the network the data was sent through. Call setNetworkType to maintain the
+   * actual network type
+   */
+  network_type: NetworkType,
+  /** Total number of bytes sent */
+  sent_bytes: number,
+  /** Total number of bytes received */
+  received_bytes: number,
+  /** Total call duration, in seconds */
+  duration: number,
+}
+
+/** Contains information about the total amount of data that was used for calls */
+export type networkStatisticsEntryCallOptional = {|
+  _: 'networkStatisticsEntryCall',
+  /**
+   * Type of the network the data was sent through. Call setNetworkType to maintain the
+   * actual network type
+   */
+  network_type?: NetworkTypeOptional,
+  /** Total number of bytes sent */
+  sent_bytes?: number,
+  /** Total number of bytes received */
+  received_bytes?: number,
+  /** Total call duration, in seconds */
+  duration?: number,
+|}
+
+/** A full list of available network statistic entries */
+export type networkStatistics = {
+  _: 'networkStatistics',
+  /** Point in time (Unix timestamp) when the app began collecting statistics */
+  since_date: number,
+  /** Network statistics entries */
+  entries: NetworkStatisticsEntry[],
+}
+
+/** A full list of available network statistic entries */
+export type networkStatisticsOptional = {|
+  _: 'networkStatistics',
+  /** Point in time (Unix timestamp) when the app began collecting statistics */
+  since_date?: number,
+  /** Network statistics entries */
+  entries?: NetworkStatisticsEntryOptional[],
+|}
+
+/**
+ * Currently waiting for the network to become available. Use SetNetworkType to change
+ * the available network type
+ */
+export type connectionStateWaitingForNetwork = {
+  _: 'connectionStateWaitingForNetwork',
+}
+
+/**
+ * Currently waiting for the network to become available. Use SetNetworkType to change
+ * the available network type
+ */
+export type connectionStateWaitingForNetworkOptional = {|
+  _: 'connectionStateWaitingForNetwork',
+|}
+
+/** Currently establishing a connection with a proxy server */
+export type connectionStateConnectingToProxy = {
+  _: 'connectionStateConnectingToProxy',
+}
+
+/** Currently establishing a connection with a proxy server */
+export type connectionStateConnectingToProxyOptional = {|
+  _: 'connectionStateConnectingToProxy',
+|}
+
+/** Currently establishing a connection to the Telegram servers */
+export type connectionStateConnecting = {
+  _: 'connectionStateConnecting',
+}
+
+/** Currently establishing a connection to the Telegram servers */
+export type connectionStateConnectingOptional = {|
+  _: 'connectionStateConnecting',
+|}
+
+/** Downloading data received while the client was offline */
+export type connectionStateUpdating = {
+  _: 'connectionStateUpdating',
+}
+
+/** Downloading data received while the client was offline */
+export type connectionStateUpdatingOptional = {|
+  _: 'connectionStateUpdating',
+|}
+
+/** There is a working connection to the Telegram servers */
+export type connectionStateReady = {
+  _: 'connectionStateReady',
+}
+
+/** There is a working connection to the Telegram servers */
+export type connectionStateReadyOptional = {|
+  _: 'connectionStateReady',
+|}
+
+/** A category containing frequently used private chats with non-bot users */
+export type topChatCategoryUsers = {
+  _: 'topChatCategoryUsers',
+}
+
+/** A category containing frequently used private chats with non-bot users */
+export type topChatCategoryUsersOptional = {|
+  _: 'topChatCategoryUsers',
+|}
+
+/** A category containing frequently used private chats with bot users */
+export type topChatCategoryBots = {
+  _: 'topChatCategoryBots',
+}
+
+/** A category containing frequently used private chats with bot users */
+export type topChatCategoryBotsOptional = {|
+  _: 'topChatCategoryBots',
+|}
+
+/** A category containing frequently used basic groups and supergroups */
+export type topChatCategoryGroups = {
+  _: 'topChatCategoryGroups',
+}
+
+/** A category containing frequently used basic groups and supergroups */
+export type topChatCategoryGroupsOptional = {|
+  _: 'topChatCategoryGroups',
+|}
+
+/** A category containing frequently used channels */
+export type topChatCategoryChannels = {
+  _: 'topChatCategoryChannels',
+}
+
+/** A category containing frequently used channels */
+export type topChatCategoryChannelsOptional = {|
+  _: 'topChatCategoryChannels',
+|}
+
+/**
+ * A category containing frequently used chats with inline bots sorted by their usage
+ * in inline mode
+ */
+export type topChatCategoryInlineBots = {
+  _: 'topChatCategoryInlineBots',
+}
+
+/**
+ * A category containing frequently used chats with inline bots sorted by their usage
+ * in inline mode
+ */
+export type topChatCategoryInlineBotsOptional = {|
+  _: 'topChatCategoryInlineBots',
+|}
+
+/** A category containing frequently used chats used for calls */
+export type topChatCategoryCalls = {
+  _: 'topChatCategoryCalls',
+}
+
+/** A category containing frequently used chats used for calls */
+export type topChatCategoryCallsOptional = {|
+  _: 'topChatCategoryCalls',
+|}
+
+/** A URL linking to a user */
+export type tMeUrlTypeUser = {
+  _: 'tMeUrlTypeUser',
+  /** Identifier of the user */
+  user_id: number,
+}
+
+/** A URL linking to a user */
+export type tMeUrlTypeUserOptional = {|
+  _: 'tMeUrlTypeUser',
+  /** Identifier of the user */
+  user_id?: number,
+|}
+
+/** A URL linking to a public supergroup or channel */
+export type tMeUrlTypeSupergroup = {
+  _: 'tMeUrlTypeSupergroup',
+  /** Identifier of the supergroup or channel */
+  supergroup_id: number,
+}
+
+/** A URL linking to a public supergroup or channel */
+export type tMeUrlTypeSupergroupOptional = {|
+  _: 'tMeUrlTypeSupergroup',
+  /** Identifier of the supergroup or channel */
+  supergroup_id?: number,
+|}
+
+/** A chat invite link */
+export type tMeUrlTypeChatInvite = {
+  _: 'tMeUrlTypeChatInvite',
+  /** Chat invite link info */
+  info: chatInviteLinkInfo,
+}
+
+/** A chat invite link */
+export type tMeUrlTypeChatInviteOptional = {|
+  _: 'tMeUrlTypeChatInvite',
+  /** Chat invite link info */
+  info?: chatInviteLinkInfoOptional,
+|}
+
+/** A URL linking to a sticker set */
+export type tMeUrlTypeStickerSet = {
+  _: 'tMeUrlTypeStickerSet',
+  /** Identifier of the sticker set */
+  sticker_set_id: (number | string),
+}
+
+/** A URL linking to a sticker set */
+export type tMeUrlTypeStickerSetOptional = {|
+  _: 'tMeUrlTypeStickerSet',
+  /** Identifier of the sticker set */
+  sticker_set_id?: (number | string),
+|}
+
+/** Represents a URL linking to an internal Telegram entity */
+export type tMeUrl = {
+  _: 'tMeUrl',
+  /** URL */
+  url: string,
+  /** Type of the URL */
+  type: TMeUrlType,
+}
+
+/** Represents a URL linking to an internal Telegram entity */
+export type tMeUrlOptional = {|
+  _: 'tMeUrl',
+  /** URL */
+  url?: string,
+  /** Type of the URL */
+  type?: TMeUrlTypeOptional,
+|}
+
+/** Contains a list of t.me URLs */
+export type tMeUrls = {
+  _: 'tMeUrls',
+  /** List of URLs */
+  urls: tMeUrl[],
+}
+
+/** Contains a list of t.me URLs */
+export type tMeUrlsOptional = {|
+  _: 'tMeUrls',
+  /** List of URLs */
+  urls?: tMeUrlOptional[],
+|}
+
+/** Contains a counter */
+export type count = {
+  _: 'count',
+  /** Count */
+  count: number,
+}
+
+/** Contains a counter */
+export type countOptional = {|
+  _: 'count',
+  /** Count */
+  count?: number,
+|}
+
+/** Contains some text */
+export type text = {
+  _: 'text',
+  /** Text */
+  text: string,
+}
+
+/** Contains some text */
+export type textOptional = {|
+  _: 'text',
+  /** Text */
+  text?: string,
+|}
+
+/** The text should be parsed in markdown-style */
+export type textParseModeMarkdown = {
+  _: 'textParseModeMarkdown',
+}
+
+/** The text should be parsed in markdown-style */
+export type textParseModeMarkdownOptional = {|
+  _: 'textParseModeMarkdown',
+|}
+
+/** The text should be parsed in HTML-style */
+export type textParseModeHTML = {
+  _: 'textParseModeHTML',
+}
+
+/** The text should be parsed in HTML-style */
+export type textParseModeHTMLOptional = {|
+  _: 'textParseModeHTML',
+|}
+
+/** An empty proxy server */
+export type proxyEmpty = {
+  _: 'proxyEmpty',
+}
+
+/** An empty proxy server */
+export type proxyEmptyOptional = {|
+  _: 'proxyEmpty',
+|}
+
+/** A SOCKS5 proxy server */
+export type proxySocks5 = {
+  _: 'proxySocks5',
+  /** Proxy server IP address */
+  server: string,
+  /** Proxy server port */
+  port: number,
+  /** Username for logging in */
+  username: string,
+  /** Password for logging in */
+  password: string,
+}
+
+/** A SOCKS5 proxy server */
+export type proxySocks5Optional = {|
+  _: 'proxySocks5',
+  /** Proxy server IP address */
+  server?: string,
+  /** Proxy server port */
+  port?: number,
+  /** Username for logging in */
+  username?: string,
+  /** Password for logging in */
+  password?: string,
+|}
+
+/** Describes a sticker that should be added to a sticker set */
+export type inputSticker = {
+  _: 'inputSticker',
+  /** PNG image with the sticker; must be up to 512 kB in size and fit in a 512x512 square */
+  png_sticker: InputFile,
+  /** Emoji corresponding to the sticker */
+  emojis: string,
+  /** For masks, position where the mask should be placed; may be null */
+  mask_position: maskPosition,
+}
+
+/** Describes a sticker that should be added to a sticker set */
+export type inputStickerOptional = {|
+  _: 'inputSticker',
+  /** PNG image with the sticker; must be up to 512 kB in size and fit in a 512x512 square */
+  png_sticker?: InputFileOptional,
+  /** Emoji corresponding to the sticker */
+  emojis?: string,
+  /** For masks, position where the mask should be placed; may be null */
+  mask_position?: maskPositionOptional,
+|}
+
+/** The user authorization state has changed */
+export type updateAuthorizationState = {
+  _: 'updateAuthorizationState',
+  /** New authorization state */
+  authorization_state: AuthorizationState,
+}
+
+/** The user authorization state has changed */
+export type updateAuthorizationStateOptional = {|
+  _: 'updateAuthorizationState',
+  /** New authorization state */
+  authorization_state?: AuthorizationStateOptional,
+|}
+
+/** A new message was received; can also be an outgoing message */
+export type updateNewMessage = {
+  _: 'updateNewMessage',
+  /** The new message */
+  message: message,
+  /** True, if this message must not generate a notification */
+  disable_notification: boolean,
+  /** True, if the message contains a mention of the current user */
+  contains_mention: boolean,
+}
+
+/** A new message was received; can also be an outgoing message */
+export type updateNewMessageOptional = {|
+  _: 'updateNewMessage',
+  /** The new message */
+  message?: messageOptional,
+  /** True, if this message must not generate a notification */
   disable_notification?: boolean,
-  from_background?: boolean,
-  as_album?: boolean,
+  /** True, if the message contains a mention of the current user */
+  contains_mention?: boolean,
 |}
 
-export type forwardMessagesReturnType = messages
+/**
+ * A request to send a message has reached the Telegram server. This doesn't mean that
+ * the message will be sent successfully or even that the send message request will
+ * be processed. This update will be sent only if the option "use_quick_ack" is set
+ * to true. This update may be sent multiple times for the same message
+ */
+export type updateMessageSendAcknowledged = {
+  _: 'updateMessageSendAcknowledged',
+  /** The chat identifier of the sent message */
+  chat_id: number,
+  /** A temporary message identifier */
+  message_id: number,
+}
 
-export type generateChatInviteLink = {|
-  _: 'generateChatInviteLink',
+/**
+ * A request to send a message has reached the Telegram server. This doesn't mean that
+ * the message will be sent successfully or even that the send message request will
+ * be processed. This update will be sent only if the option "use_quick_ack" is set
+ * to true. This update may be sent multiple times for the same message
+ */
+export type updateMessageSendAcknowledgedOptional = {|
+  _: 'updateMessageSendAcknowledged',
+  /** The chat identifier of the sent message */
   chat_id?: number,
+  /** A temporary message identifier */
+  message_id?: number,
 |}
 
-export type generateChatInviteLinkReturnType = chatInviteLink
+/** A message has been successfully sent */
+export type updateMessageSendSucceeded = {
+  _: 'updateMessageSendSucceeded',
+  /**
+   * Information about the sent message. Usually only the message identifier, date, and
+   * content are changed, but almost all other fields can also change
+   */
+  message: message,
+  /** The previous temporary message identifier */
+  old_message_id: number,
+}
 
-export type getAccountTtl = {|
-  _: 'getAccountTtl',
+/** A message has been successfully sent */
+export type updateMessageSendSucceededOptional = {|
+  _: 'updateMessageSendSucceeded',
+  /**
+   * Information about the sent message. Usually only the message identifier, date, and
+   * content are changed, but almost all other fields can also change
+   */
+  message?: messageOptional,
+  /** The previous temporary message identifier */
+  old_message_id?: number,
 |}
 
-export type getAccountTtlReturnType = accountTtl
+/**
+ * A message failed to send. Be aware that some messages being sent can be irrecoverably
+ * deleted, in which case updateDeleteMessages will be received instead of this update
+ */
+export type updateMessageSendFailed = {
+  _: 'updateMessageSendFailed',
+  /** Contains information about the message that failed to send */
+  message: message,
+  /** The previous temporary message identifier */
+  old_message_id: number,
+  /** An error code */
+  error_code: number,
+  /** Error message */
+  error_message: string,
+}
 
-export type getActiveLiveLocationMessages = {|
-  _: 'getActiveLiveLocationMessages',
+/**
+ * A message failed to send. Be aware that some messages being sent can be irrecoverably
+ * deleted, in which case updateDeleteMessages will be received instead of this update
+ */
+export type updateMessageSendFailedOptional = {|
+  _: 'updateMessageSendFailed',
+  /** Contains information about the message that failed to send */
+  message?: messageOptional,
+  /** The previous temporary message identifier */
+  old_message_id?: number,
+  /** An error code */
+  error_code?: number,
+  /** Error message */
+  error_message?: string,
 |}
 
-export type getActiveLiveLocationMessagesReturnType = messages
+/** The message content has changed */
+export type updateMessageContent = {
+  _: 'updateMessageContent',
+  /** Chat identifier */
+  chat_id: number,
+  /** Message identifier */
+  message_id: number,
+  /** New message content */
+  new_content: MessageContent,
+}
 
-export type getActiveSessions = {|
-  _: 'getActiveSessions',
+/** The message content has changed */
+export type updateMessageContentOptional = {|
+  _: 'updateMessageContent',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Message identifier */
+  message_id?: number,
+  /** New message content */
+  new_content?: MessageContentOptional,
 |}
 
-export type getActiveSessionsReturnType = sessions
+/** A message was edited. Changes in the message content will come in a separate updateMessageContent */
+export type updateMessageEdited = {
+  _: 'updateMessageEdited',
+  /** Chat identifier */
+  chat_id: number,
+  /** Message identifier */
+  message_id: number,
+  /** Point in time (Unix timestamp) when the message was edited */
+  edit_date: number,
+  /** New message reply markup; may be null */
+  reply_markup: ReplyMarkup,
+}
 
-export type getArchivedStickerSets = {|
-  _: 'getArchivedStickerSets',
+/** A message was edited. Changes in the message content will come in a separate updateMessageContent */
+export type updateMessageEditedOptional = {|
+  _: 'updateMessageEdited',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Message identifier */
+  message_id?: number,
+  /** Point in time (Unix timestamp) when the message was edited */
+  edit_date?: number,
+  /** New message reply markup; may be null */
+  reply_markup?: ReplyMarkupOptional,
+|}
+
+/** The view count of the message has changed */
+export type updateMessageViews = {
+  _: 'updateMessageViews',
+  /** Chat identifier */
+  chat_id: number,
+  /** Message identifier */
+  message_id: number,
+  /** New value of the view count */
+  views: number,
+}
+
+/** The view count of the message has changed */
+export type updateMessageViewsOptional = {|
+  _: 'updateMessageViews',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Message identifier */
+  message_id?: number,
+  /** New value of the view count */
+  views?: number,
+|}
+
+/**
+ * The message content was opened. Updates voice note messages to "listened", video
+ * note messages to "viewed" and starts the TTL timer for self-destructing messages
+ */
+export type updateMessageContentOpened = {
+  _: 'updateMessageContentOpened',
+  /** Chat identifier */
+  chat_id: number,
+  /** Message identifier */
+  message_id: number,
+}
+
+/**
+ * The message content was opened. Updates voice note messages to "listened", video
+ * note messages to "viewed" and starts the TTL timer for self-destructing messages
+ */
+export type updateMessageContentOpenedOptional = {|
+  _: 'updateMessageContentOpened',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Message identifier */
+  message_id?: number,
+|}
+
+/** A message with an unread mention was read */
+export type updateMessageMentionRead = {
+  _: 'updateMessageMentionRead',
+  /** Chat identifier */
+  chat_id: number,
+  /** Message identifier */
+  message_id: number,
+  /** The new number of unread mention messages left in the chat */
+  unread_mention_count: number,
+}
+
+/** A message with an unread mention was read */
+export type updateMessageMentionReadOptional = {|
+  _: 'updateMessageMentionRead',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Message identifier */
+  message_id?: number,
+  /** The new number of unread mention messages left in the chat */
+  unread_mention_count?: number,
+|}
+
+/**
+ * A new chat has been loaded/created. This update is guaranteed to come before the
+ * chat identifier is returned to the client. The chat field changes will be reported
+ * through separate updates
+ */
+export type updateNewChat = {
+  _: 'updateNewChat',
+  /** The chat */
+  chat: chat,
+}
+
+/**
+ * A new chat has been loaded/created. This update is guaranteed to come before the
+ * chat identifier is returned to the client. The chat field changes will be reported
+ * through separate updates
+ */
+export type updateNewChatOptional = {|
+  _: 'updateNewChat',
+  /** The chat */
+  chat?: chatOptional,
+|}
+
+/** The title of a chat was changed */
+export type updateChatTitle = {
+  _: 'updateChatTitle',
+  /** Chat identifier */
+  chat_id: number,
+  /** The new chat title */
+  title: string,
+}
+
+/** The title of a chat was changed */
+export type updateChatTitleOptional = {|
+  _: 'updateChatTitle',
+  /** Chat identifier */
+  chat_id?: number,
+  /** The new chat title */
+  title?: string,
+|}
+
+/** A chat photo was changed */
+export type updateChatPhoto = {
+  _: 'updateChatPhoto',
+  /** Chat identifier */
+  chat_id: number,
+  /** The new chat photo; may be null */
+  photo: chatPhoto,
+}
+
+/** A chat photo was changed */
+export type updateChatPhotoOptional = {|
+  _: 'updateChatPhoto',
+  /** Chat identifier */
+  chat_id?: number,
+  /** The new chat photo; may be null */
+  photo?: chatPhotoOptional,
+|}
+
+/**
+ * The last message of a chat was changed. If last_message is null then the last message
+ * in the chat became unknown. Some new unknown messages might be added to the chat
+ * in this case
+ */
+export type updateChatLastMessage = {
+  _: 'updateChatLastMessage',
+  /** Chat identifier */
+  chat_id: number,
+  /** The new last message in the chat; may be null */
+  last_message: message,
+  /** New value of the chat order */
+  order: (number | string),
+}
+
+/**
+ * The last message of a chat was changed. If last_message is null then the last message
+ * in the chat became unknown. Some new unknown messages might be added to the chat
+ * in this case
+ */
+export type updateChatLastMessageOptional = {|
+  _: 'updateChatLastMessage',
+  /** Chat identifier */
+  chat_id?: number,
+  /** The new last message in the chat; may be null */
+  last_message?: messageOptional,
+  /** New value of the chat order */
+  order?: (number | string),
+|}
+
+/**
+ * The order of the chat in the chats list has changed. Instead of this update updateChatLastMessage,
+ * updateChatIsPinned or updateChatDraftMessage might be sent
+ */
+export type updateChatOrder = {
+  _: 'updateChatOrder',
+  /** Chat identifier */
+  chat_id: number,
+  /** New value of the order */
+  order: (number | string),
+}
+
+/**
+ * The order of the chat in the chats list has changed. Instead of this update updateChatLastMessage,
+ * updateChatIsPinned or updateChatDraftMessage might be sent
+ */
+export type updateChatOrderOptional = {|
+  _: 'updateChatOrder',
+  /** Chat identifier */
+  chat_id?: number,
+  /** New value of the order */
+  order?: (number | string),
+|}
+
+/** A chat was pinned or unpinned */
+export type updateChatIsPinned = {
+  _: 'updateChatIsPinned',
+  /** Chat identifier */
+  chat_id: number,
+  /** New value of is_pinned */
+  is_pinned: boolean,
+  /** New value of the chat order */
+  order: (number | string),
+}
+
+/** A chat was pinned or unpinned */
+export type updateChatIsPinnedOptional = {|
+  _: 'updateChatIsPinned',
+  /** Chat identifier */
+  chat_id?: number,
+  /** New value of is_pinned */
+  is_pinned?: boolean,
+  /** New value of the chat order */
+  order?: (number | string),
+|}
+
+/** Incoming messages were read or number of unread messages has been changed */
+export type updateChatReadInbox = {
+  _: 'updateChatReadInbox',
+  /** Chat identifier */
+  chat_id: number,
+  /** Identifier of the last read incoming message */
+  last_read_inbox_message_id: number,
+  /** The number of unread messages left in the chat */
+  unread_count: number,
+}
+
+/** Incoming messages were read or number of unread messages has been changed */
+export type updateChatReadInboxOptional = {|
+  _: 'updateChatReadInbox',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Identifier of the last read incoming message */
+  last_read_inbox_message_id?: number,
+  /** The number of unread messages left in the chat */
+  unread_count?: number,
+|}
+
+/** Outgoing messages were read */
+export type updateChatReadOutbox = {
+  _: 'updateChatReadOutbox',
+  /** Chat identifier */
+  chat_id: number,
+  /** Identifier of last read outgoing message */
+  last_read_outbox_message_id: number,
+}
+
+/** Outgoing messages were read */
+export type updateChatReadOutboxOptional = {|
+  _: 'updateChatReadOutbox',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Identifier of last read outgoing message */
+  last_read_outbox_message_id?: number,
+|}
+
+/** The chat unread_mention_count has changed */
+export type updateChatUnreadMentionCount = {
+  _: 'updateChatUnreadMentionCount',
+  /** Chat identifier */
+  chat_id: number,
+  /** The number of unread mention messages left in the chat */
+  unread_mention_count: number,
+}
+
+/** The chat unread_mention_count has changed */
+export type updateChatUnreadMentionCountOptional = {|
+  _: 'updateChatUnreadMentionCount',
+  /** Chat identifier */
+  chat_id?: number,
+  /** The number of unread mention messages left in the chat */
+  unread_mention_count?: number,
+|}
+
+/** Notification settings for some chats were updated */
+export type updateNotificationSettings = {
+  _: 'updateNotificationSettings',
+  /** Types of chats for which notification settings were updated */
+  scope: NotificationSettingsScope,
+  /** The new notification settings */
+  notification_settings: notificationSettings,
+}
+
+/** Notification settings for some chats were updated */
+export type updateNotificationSettingsOptional = {|
+  _: 'updateNotificationSettings',
+  /** Types of chats for which notification settings were updated */
+  scope?: NotificationSettingsScopeOptional,
+  /** The new notification settings */
+  notification_settings?: notificationSettingsOptional,
+|}
+
+/**
+ * The default chat reply markup was changed. Can occur because new messages with reply
+ * markup were received or because an old reply markup was hidden by the user
+ */
+export type updateChatReplyMarkup = {
+  _: 'updateChatReplyMarkup',
+  /** Chat identifier */
+  chat_id: number,
+  /**
+   * Identifier of the message from which reply markup needs to be used; 0 if there is
+   * no default custom reply markup in the chat
+   */
+  reply_markup_message_id: number,
+}
+
+/**
+ * The default chat reply markup was changed. Can occur because new messages with reply
+ * markup were received or because an old reply markup was hidden by the user
+ */
+export type updateChatReplyMarkupOptional = {|
+  _: 'updateChatReplyMarkup',
+  /** Chat identifier */
+  chat_id?: number,
+  /**
+   * Identifier of the message from which reply markup needs to be used; 0 if there is
+   * no default custom reply markup in the chat
+   */
+  reply_markup_message_id?: number,
+|}
+
+/**
+ * A draft has changed. Be aware that the update may come in the currently opened chat
+ * but with old content of the draft. If the user has changed the content of the draft,
+ * this update shouldn't be applied
+ */
+export type updateChatDraftMessage = {
+  _: 'updateChatDraftMessage',
+  /** Chat identifier */
+  chat_id: number,
+  /** The new draft message; may be null */
+  draft_message: draftMessage,
+  /** New value of the chat order */
+  order: (number | string),
+}
+
+/**
+ * A draft has changed. Be aware that the update may come in the currently opened chat
+ * but with old content of the draft. If the user has changed the content of the draft,
+ * this update shouldn't be applied
+ */
+export type updateChatDraftMessageOptional = {|
+  _: 'updateChatDraftMessage',
+  /** Chat identifier */
+  chat_id?: number,
+  /** The new draft message; may be null */
+  draft_message?: draftMessageOptional,
+  /** New value of the chat order */
+  order?: (number | string),
+|}
+
+/** Some messages were deleted */
+export type updateDeleteMessages = {
+  _: 'updateDeleteMessages',
+  /** Chat identifier */
+  chat_id: number,
+  /** Identifiers of the deleted messages */
+  message_ids: number[],
+  /**
+   * True, if the messages are permanently deleted by a user (as opposed to just becoming
+   * unaccessible)
+   */
+  is_permanent: boolean,
+  /**
+   * True, if the messages are deleted only from the cache and can possibly be retrieved
+   * again in the future
+   */
+  from_cache: boolean,
+}
+
+/** Some messages were deleted */
+export type updateDeleteMessagesOptional = {|
+  _: 'updateDeleteMessages',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Identifiers of the deleted messages */
+  message_ids?: number[],
+  /**
+   * True, if the messages are permanently deleted by a user (as opposed to just becoming
+   * unaccessible)
+   */
+  is_permanent?: boolean,
+  /**
+   * True, if the messages are deleted only from the cache and can possibly be retrieved
+   * again in the future
+   */
+  from_cache?: boolean,
+|}
+
+/** User activity in the chat has changed */
+export type updateUserChatAction = {
+  _: 'updateUserChatAction',
+  /** Chat identifier */
+  chat_id: number,
+  /** Identifier of a user performing an action */
+  user_id: number,
+  /** The action description */
+  action: ChatAction,
+}
+
+/** User activity in the chat has changed */
+export type updateUserChatActionOptional = {|
+  _: 'updateUserChatAction',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Identifier of a user performing an action */
+  user_id?: number,
+  /** The action description */
+  action?: ChatActionOptional,
+|}
+
+/** The user went online or offline */
+export type updateUserStatus = {
+  _: 'updateUserStatus',
+  /** User identifier */
+  user_id: number,
+  /** New status of the user */
+  status: UserStatus,
+}
+
+/** The user went online or offline */
+export type updateUserStatusOptional = {|
+  _: 'updateUserStatus',
+  /** User identifier */
+  user_id?: number,
+  /** New status of the user */
+  status?: UserStatusOptional,
+|}
+
+/**
+ * Some data of a user has changed. This update is guaranteed to come before the user
+ * identifier is returned to the client
+ */
+export type updateUser = {
+  _: 'updateUser',
+  /** New data about the user */
+  user: user,
+}
+
+/**
+ * Some data of a user has changed. This update is guaranteed to come before the user
+ * identifier is returned to the client
+ */
+export type updateUserOptional = {|
+  _: 'updateUser',
+  /** New data about the user */
+  user?: userOptional,
+|}
+
+/**
+ * Some data of a basic group has changed. This update is guaranteed to come before
+ * the basic group identifier is returned to the client
+ */
+export type updateBasicGroup = {
+  _: 'updateBasicGroup',
+  /** New data about the group */
+  basic_group: basicGroup,
+}
+
+/**
+ * Some data of a basic group has changed. This update is guaranteed to come before
+ * the basic group identifier is returned to the client
+ */
+export type updateBasicGroupOptional = {|
+  _: 'updateBasicGroup',
+  /** New data about the group */
+  basic_group?: basicGroupOptional,
+|}
+
+/**
+ * Some data of a supergroup or a channel has changed. This update is guaranteed to
+ * come before the supergroup identifier is returned to the client
+ */
+export type updateSupergroup = {
+  _: 'updateSupergroup',
+  /** New data about the supergroup */
+  supergroup: supergroup,
+}
+
+/**
+ * Some data of a supergroup or a channel has changed. This update is guaranteed to
+ * come before the supergroup identifier is returned to the client
+ */
+export type updateSupergroupOptional = {|
+  _: 'updateSupergroup',
+  /** New data about the supergroup */
+  supergroup?: supergroupOptional,
+|}
+
+/**
+ * Some data of a secret chat has changed. This update is guaranteed to come before
+ * the secret chat identifier is returned to the client
+ */
+export type updateSecretChat = {
+  _: 'updateSecretChat',
+  /** New data about the secret chat */
+  secret_chat: secretChat,
+}
+
+/**
+ * Some data of a secret chat has changed. This update is guaranteed to come before
+ * the secret chat identifier is returned to the client
+ */
+export type updateSecretChatOptional = {|
+  _: 'updateSecretChat',
+  /** New data about the secret chat */
+  secret_chat?: secretChatOptional,
+|}
+
+/** Some data from userFullInfo has been changed */
+export type updateUserFullInfo = {
+  _: 'updateUserFullInfo',
+  /** User identifier */
+  user_id: number,
+  /** New full information about the user */
+  user_full_info: userFullInfo,
+}
+
+/** Some data from userFullInfo has been changed */
+export type updateUserFullInfoOptional = {|
+  _: 'updateUserFullInfo',
+  /** User identifier */
+  user_id?: number,
+  /** New full information about the user */
+  user_full_info?: userFullInfoOptional,
+|}
+
+/** Some data from basicGroupFullInfo has been changed */
+export type updateBasicGroupFullInfo = {
+  _: 'updateBasicGroupFullInfo',
+  /** Identifier of a basic group */
+  basic_group_id: number,
+  /** New full information about the group */
+  basic_group_full_info: basicGroupFullInfo,
+}
+
+/** Some data from basicGroupFullInfo has been changed */
+export type updateBasicGroupFullInfoOptional = {|
+  _: 'updateBasicGroupFullInfo',
+  /** Identifier of a basic group */
+  basic_group_id?: number,
+  /** New full information about the group */
+  basic_group_full_info?: basicGroupFullInfoOptional,
+|}
+
+/** Some data from supergroupFullInfo has been changed */
+export type updateSupergroupFullInfo = {
+  _: 'updateSupergroupFullInfo',
+  /** Identifier of the supergroup or channel */
+  supergroup_id: number,
+  /** New full information about the supergroup */
+  supergroup_full_info: supergroupFullInfo,
+}
+
+/** Some data from supergroupFullInfo has been changed */
+export type updateSupergroupFullInfoOptional = {|
+  _: 'updateSupergroupFullInfo',
+  /** Identifier of the supergroup or channel */
+  supergroup_id?: number,
+  /** New full information about the supergroup */
+  supergroup_full_info?: supergroupFullInfoOptional,
+|}
+
+/**
+ * Service notification from the server. Upon receiving this the client must show a
+ * popup with the content of the notification
+ */
+export type updateServiceNotification = {
+  _: 'updateServiceNotification',
+  /** Notification type */
+  type: string,
+  /** Notification content */
+  content: MessageContent,
+}
+
+/**
+ * Service notification from the server. Upon receiving this the client must show a
+ * popup with the content of the notification
+ */
+export type updateServiceNotificationOptional = {|
+  _: 'updateServiceNotification',
+  /** Notification type */
+  type?: string,
+  /** Notification content */
+  content?: MessageContentOptional,
+|}
+
+/** Information about a file was updated */
+export type updateFile = {
+  _: 'updateFile',
+  /** New data about the file */
+  file: file,
+}
+
+/** Information about a file was updated */
+export type updateFileOptional = {|
+  _: 'updateFile',
+  /** New data about the file */
+  file?: fileOptional,
+|}
+
+/** The file generation process needs to be started by the client */
+export type updateFileGenerationStart = {
+  _: 'updateFileGenerationStart',
+  /** Unique identifier for the generation process */
+  generation_id: (number | string),
+  /** The path to a file from which a new file is generated, may be empty */
+  original_path: string,
+  /** The path to a file that should be created and where the new file should be generated */
+  destination_path: string,
+  /**
+   * String specifying the conversion applied to the original file. If conversion is "#url#"
+   * than original_path contains a HTTP/HTTPS URL of a file, which should be downloaded
+   * by the client
+   */
+  conversion: string,
+}
+
+/** The file generation process needs to be started by the client */
+export type updateFileGenerationStartOptional = {|
+  _: 'updateFileGenerationStart',
+  /** Unique identifier for the generation process */
+  generation_id?: (number | string),
+  /** The path to a file from which a new file is generated, may be empty */
+  original_path?: string,
+  /** The path to a file that should be created and where the new file should be generated */
+  destination_path?: string,
+  /**
+   * String specifying the conversion applied to the original file. If conversion is "#url#"
+   * than original_path contains a HTTP/HTTPS URL of a file, which should be downloaded
+   * by the client
+   */
+  conversion?: string,
+|}
+
+/** File generation is no longer needed */
+export type updateFileGenerationStop = {
+  _: 'updateFileGenerationStop',
+  /** Unique identifier for the generation process */
+  generation_id: (number | string),
+}
+
+/** File generation is no longer needed */
+export type updateFileGenerationStopOptional = {|
+  _: 'updateFileGenerationStop',
+  /** Unique identifier for the generation process */
+  generation_id?: (number | string),
+|}
+
+/** New call was created or information about a call was updated */
+export type updateCall = {
+  _: 'updateCall',
+  /** New data about a call */
+  call: call,
+}
+
+/** New call was created or information about a call was updated */
+export type updateCallOptional = {|
+  _: 'updateCall',
+  /** New data about a call */
+  call?: callOptional,
+|}
+
+/** Some privacy setting rules have been changed */
+export type updateUserPrivacySettingRules = {
+  _: 'updateUserPrivacySettingRules',
+  /** The privacy setting */
+  setting: UserPrivacySetting,
+  /** New privacy rules */
+  rules: userPrivacySettingRules,
+}
+
+/** Some privacy setting rules have been changed */
+export type updateUserPrivacySettingRulesOptional = {|
+  _: 'updateUserPrivacySettingRules',
+  /** The privacy setting */
+  setting?: UserPrivacySettingOptional,
+  /** New privacy rules */
+  rules?: userPrivacySettingRulesOptional,
+|}
+
+/**
+ * Number of unread messages has changed. This update is sent only if a message database
+ * is used
+ */
+export type updateUnreadMessageCount = {
+  _: 'updateUnreadMessageCount',
+  /** Total number of unread messages */
+  unread_count: number,
+  /** Total number of unread messages in unmuted chats */
+  unread_unmuted_count: number,
+}
+
+/**
+ * Number of unread messages has changed. This update is sent only if a message database
+ * is used
+ */
+export type updateUnreadMessageCountOptional = {|
+  _: 'updateUnreadMessageCount',
+  /** Total number of unread messages */
+  unread_count?: number,
+  /** Total number of unread messages in unmuted chats */
+  unread_unmuted_count?: number,
+|}
+
+/** An option changed its value */
+export type updateOption = {
+  _: 'updateOption',
+  /** The option name */
+  name: string,
+  /** The new option value */
+  value: OptionValue,
+}
+
+/** An option changed its value */
+export type updateOptionOptional = {|
+  _: 'updateOption',
+  /** The option name */
+  name?: string,
+  /** The new option value */
+  value?: OptionValueOptional,
+|}
+
+/** The list of installed sticker sets was updated */
+export type updateInstalledStickerSets = {
+  _: 'updateInstalledStickerSets',
+  /** True, if the list of installed mask sticker sets was updated */
+  is_masks: boolean,
+  /** The new list of installed ordinary sticker sets */
+  sticker_set_ids: (number | string)[],
+}
+
+/** The list of installed sticker sets was updated */
+export type updateInstalledStickerSetsOptional = {|
+  _: 'updateInstalledStickerSets',
+  /** True, if the list of installed mask sticker sets was updated */
   is_masks?: boolean,
-  offset_sticker_set_id?: number,
-  limit?: number,
+  /** The new list of installed ordinary sticker sets */
+  sticker_set_ids?: (number | string)[],
 |}
 
-export type getArchivedStickerSetsReturnType = stickerSets
+/** The list of trending sticker sets was updated or some of them were viewed */
+export type updateTrendingStickerSets = {
+  _: 'updateTrendingStickerSets',
+  /** The new list of trending sticker sets */
+  sticker_sets: stickerSets,
+}
 
-export type getAttachedStickerSets = {|
-  _: 'getAttachedStickerSets',
-  file_id?: number,
+/** The list of trending sticker sets was updated or some of them were viewed */
+export type updateTrendingStickerSetsOptional = {|
+  _: 'updateTrendingStickerSets',
+  /** The new list of trending sticker sets */
+  sticker_sets?: stickerSetsOptional,
 |}
 
-export type getAttachedStickerSetsReturnType = stickerSets
+/** The list of recently used stickers was updated */
+export type updateRecentStickers = {
+  _: 'updateRecentStickers',
+  /**
+   * True, if the list of stickers attached to photo or video files was updated, otherwise
+   * the list of sent stickers is updated
+   */
+  is_attached: boolean,
+  /** The new list of file identifiers of recently used stickers */
+  sticker_ids: number[],
+}
 
+/** The list of recently used stickers was updated */
+export type updateRecentStickersOptional = {|
+  _: 'updateRecentStickers',
+  /**
+   * True, if the list of stickers attached to photo or video files was updated, otherwise
+   * the list of sent stickers is updated
+   */
+  is_attached?: boolean,
+  /** The new list of file identifiers of recently used stickers */
+  sticker_ids?: number[],
+|}
+
+/** The list of favorite stickers was updated */
+export type updateFavoriteStickers = {
+  _: 'updateFavoriteStickers',
+  /** The new list of file identifiers of favorite stickers */
+  sticker_ids: number[],
+}
+
+/** The list of favorite stickers was updated */
+export type updateFavoriteStickersOptional = {|
+  _: 'updateFavoriteStickers',
+  /** The new list of file identifiers of favorite stickers */
+  sticker_ids?: number[],
+|}
+
+/** The list of saved animations was updated */
+export type updateSavedAnimations = {
+  _: 'updateSavedAnimations',
+  /** The new list of file identifiers of saved animations */
+  animation_ids: number[],
+}
+
+/** The list of saved animations was updated */
+export type updateSavedAnimationsOptional = {|
+  _: 'updateSavedAnimations',
+  /** The new list of file identifiers of saved animations */
+  animation_ids?: number[],
+|}
+
+/** The connection state has changed */
+export type updateConnectionState = {
+  _: 'updateConnectionState',
+  /** The new connection state */
+  state: ConnectionState,
+}
+
+/** The connection state has changed */
+export type updateConnectionStateOptional = {|
+  _: 'updateConnectionState',
+  /** The new connection state */
+  state?: ConnectionStateOptional,
+|}
+
+/** A new incoming inline query; for bots only */
+export type updateNewInlineQuery = {
+  _: 'updateNewInlineQuery',
+  /** Unique query identifier */
+  id: (number | string),
+  /** Identifier of the user who sent the query */
+  sender_user_id: number,
+  /** User location, provided by the client; may be null */
+  user_location: location,
+  /** Text of the query */
+  query: string,
+  /** Offset of the first entry to return */
+  offset: string,
+}
+
+/** A new incoming inline query; for bots only */
+export type updateNewInlineQueryOptional = {|
+  _: 'updateNewInlineQuery',
+  /** Unique query identifier */
+  id?: (number | string),
+  /** Identifier of the user who sent the query */
+  sender_user_id?: number,
+  /** User location, provided by the client; may be null */
+  user_location?: locationOptional,
+  /** Text of the query */
+  query?: string,
+  /** Offset of the first entry to return */
+  offset?: string,
+|}
+
+/** The user has chosen a result of an inline query; for bots only */
+export type updateNewChosenInlineResult = {
+  _: 'updateNewChosenInlineResult',
+  /** Identifier of the user who sent the query */
+  sender_user_id: number,
+  /** User location, provided by the client; may be null */
+  user_location: location,
+  /** Text of the query */
+  query: string,
+  /** Identifier of the chosen result */
+  result_id: string,
+  /** Identifier of the sent inline message, if known */
+  inline_message_id: string,
+}
+
+/** The user has chosen a result of an inline query; for bots only */
+export type updateNewChosenInlineResultOptional = {|
+  _: 'updateNewChosenInlineResult',
+  /** Identifier of the user who sent the query */
+  sender_user_id?: number,
+  /** User location, provided by the client; may be null */
+  user_location?: locationOptional,
+  /** Text of the query */
+  query?: string,
+  /** Identifier of the chosen result */
+  result_id?: string,
+  /** Identifier of the sent inline message, if known */
+  inline_message_id?: string,
+|}
+
+/** A new incoming callback query; for bots only */
+export type updateNewCallbackQuery = {
+  _: 'updateNewCallbackQuery',
+  /** Unique query identifier */
+  id: (number | string),
+  /** Identifier of the user who sent the query */
+  sender_user_id: number,
+  /** Identifier of the chat, in which the query was sent */
+  chat_id: number,
+  /** Identifier of the message, from which the query originated */
+  message_id: number,
+  /** Identifier that uniquely corresponds to the chat to which the message was sent */
+  chat_instance: (number | string),
+  /** Query payload */
+  payload: CallbackQueryPayload,
+}
+
+/** A new incoming callback query; for bots only */
+export type updateNewCallbackQueryOptional = {|
+  _: 'updateNewCallbackQuery',
+  /** Unique query identifier */
+  id?: (number | string),
+  /** Identifier of the user who sent the query */
+  sender_user_id?: number,
+  /** Identifier of the chat, in which the query was sent */
+  chat_id?: number,
+  /** Identifier of the message, from which the query originated */
+  message_id?: number,
+  /** Identifier that uniquely corresponds to the chat to which the message was sent */
+  chat_instance?: (number | string),
+  /** Query payload */
+  payload?: CallbackQueryPayloadOptional,
+|}
+
+/** A new incoming callback query from a message sent via a bot; for bots only */
+export type updateNewInlineCallbackQuery = {
+  _: 'updateNewInlineCallbackQuery',
+  /** Unique query identifier */
+  id: (number | string),
+  /** Identifier of the user who sent the query */
+  sender_user_id: number,
+  /** Identifier of the inline message, from which the query originated */
+  inline_message_id: string,
+  /** An identifier uniquely corresponding to the chat a message was sent to */
+  chat_instance: (number | string),
+  /** Query payload */
+  payload: CallbackQueryPayload,
+}
+
+/** A new incoming callback query from a message sent via a bot; for bots only */
+export type updateNewInlineCallbackQueryOptional = {|
+  _: 'updateNewInlineCallbackQuery',
+  /** Unique query identifier */
+  id?: (number | string),
+  /** Identifier of the user who sent the query */
+  sender_user_id?: number,
+  /** Identifier of the inline message, from which the query originated */
+  inline_message_id?: string,
+  /** An identifier uniquely corresponding to the chat a message was sent to */
+  chat_instance?: (number | string),
+  /** Query payload */
+  payload?: CallbackQueryPayloadOptional,
+|}
+
+/** A new incoming shipping query; for bots only. Only for invoices with flexible price */
+export type updateNewShippingQuery = {
+  _: 'updateNewShippingQuery',
+  /** Unique query identifier */
+  id: (number | string),
+  /** Identifier of the user who sent the query */
+  sender_user_id: number,
+  /** Invoice payload */
+  invoice_payload: string,
+  /** User shipping address */
+  shipping_address: shippingAddress,
+}
+
+/** A new incoming shipping query; for bots only. Only for invoices with flexible price */
+export type updateNewShippingQueryOptional = {|
+  _: 'updateNewShippingQuery',
+  /** Unique query identifier */
+  id?: (number | string),
+  /** Identifier of the user who sent the query */
+  sender_user_id?: number,
+  /** Invoice payload */
+  invoice_payload?: string,
+  /** User shipping address */
+  shipping_address?: shippingAddressOptional,
+|}
+
+/**
+ * A new incoming pre-checkout query; for bots only. Contains full information about
+ * a checkout
+ */
+export type updateNewPreCheckoutQuery = {
+  _: 'updateNewPreCheckoutQuery',
+  /** Unique query identifier */
+  id: (number | string),
+  /** Identifier of the user who sent the query */
+  sender_user_id: number,
+  /** Currency for the product price */
+  currency: string,
+  /** Total price for the product, in the minimal quantity of the currency */
+  total_amount: number,
+  /** Invoice payload */
+  invoice_payload: string,
+  /** Identifier of a shipping option chosen by the user; may be empty if not applicable */
+  shipping_option_id: string,
+  /** Information about the order; may be null */
+  order_info: orderInfo,
+}
+
+/**
+ * A new incoming pre-checkout query; for bots only. Contains full information about
+ * a checkout
+ */
+export type updateNewPreCheckoutQueryOptional = {|
+  _: 'updateNewPreCheckoutQuery',
+  /** Unique query identifier */
+  id?: (number | string),
+  /** Identifier of the user who sent the query */
+  sender_user_id?: number,
+  /** Currency for the product price */
+  currency?: string,
+  /** Total price for the product, in the minimal quantity of the currency */
+  total_amount?: number,
+  /** Invoice payload */
+  invoice_payload?: string,
+  /** Identifier of a shipping option chosen by the user; may be empty if not applicable */
+  shipping_option_id?: string,
+  /** Information about the order; may be null */
+  order_info?: orderInfoOptional,
+|}
+
+/** A new incoming event; for bots only */
+export type updateNewCustomEvent = {
+  _: 'updateNewCustomEvent',
+  /** A JSON-serialized event */
+  event: string,
+}
+
+/** A new incoming event; for bots only */
+export type updateNewCustomEventOptional = {|
+  _: 'updateNewCustomEvent',
+  /** A JSON-serialized event */
+  event?: string,
+|}
+
+/** A new incoming query; for bots only */
+export type updateNewCustomQuery = {
+  _: 'updateNewCustomQuery',
+  /** The query identifier */
+  id: (number | string),
+  /** JSON-serialized query data */
+  data: string,
+  /** Query timeout */
+  timeout: number,
+}
+
+/** A new incoming query; for bots only */
+export type updateNewCustomQueryOptional = {|
+  _: 'updateNewCustomQuery',
+  /** The query identifier */
+  id?: (number | string),
+  /** JSON-serialized query data */
+  data?: string,
+  /** Query timeout */
+  timeout?: number,
+|}
+
+/** A simple object containing a number; for testing only */
+export type testInt = {
+  _: 'testInt',
+  /** Number */
+  value: number,
+}
+
+/** A simple object containing a number; for testing only */
+export type testIntOptional = {|
+  _: 'testInt',
+  /** Number */
+  value?: number,
+|}
+
+/** A simple object containing a string; for testing only */
+export type testString = {
+  _: 'testString',
+  /** String */
+  value: string,
+}
+
+/** A simple object containing a string; for testing only */
+export type testStringOptional = {|
+  _: 'testString',
+  /** String */
+  value?: string,
+|}
+
+/** A simple object containing a sequence of bytes; for testing only */
+export type testBytes = {
+  _: 'testBytes',
+  /** Bytes */
+  value: string,
+}
+
+/** A simple object containing a sequence of bytes; for testing only */
+export type testBytesOptional = {|
+  _: 'testBytes',
+  /** Bytes */
+  value?: string,
+|}
+
+/** A simple object containing a vector of numbers; for testing only */
+export type testVectorInt = {
+  _: 'testVectorInt',
+  /** Vector of numbers */
+  value: number[],
+}
+
+/** A simple object containing a vector of numbers; for testing only */
+export type testVectorIntOptional = {|
+  _: 'testVectorInt',
+  /** Vector of numbers */
+  value?: number[],
+|}
+
+/** A simple object containing a vector of objects that hold a number; for testing only */
+export type testVectorIntObject = {
+  _: 'testVectorIntObject',
+  /** Vector of objects */
+  value: testInt[],
+}
+
+/** A simple object containing a vector of objects that hold a number; for testing only */
+export type testVectorIntObjectOptional = {|
+  _: 'testVectorIntObject',
+  /** Vector of objects */
+  value?: testIntOptional[],
+|}
+
+/** A simple object containing a vector of strings; for testing only */
+export type testVectorString = {
+  _: 'testVectorString',
+  /** Vector of strings */
+  value: string[],
+}
+
+/** A simple object containing a vector of strings; for testing only */
+export type testVectorStringOptional = {|
+  _: 'testVectorString',
+  /** Vector of strings */
+  value?: string[],
+|}
+
+/** A simple object containing a vector of objects that hold a string; for testing only */
+export type testVectorStringObject = {
+  _: 'testVectorStringObject',
+  /** Vector of objects */
+  value: testString[],
+}
+
+/** A simple object containing a vector of objects that hold a string; for testing only */
+export type testVectorStringObjectOptional = {|
+  _: 'testVectorStringObject',
+  /** Vector of objects */
+  value?: testStringOptional[],
+|}
+
+/**
+ * Returns the current authorization state; this is an offline request. For informational
+ * purposes only. Use updateAuthorizationState instead to maintain the current authorization
+ * state
+ */
 export type getAuthorizationState = {|
   _: 'getAuthorizationState',
 |}
 
-export type getAuthorizationStateReturnType = AuthorizationState
-
-export type getBasicGroup = {|
-  _: 'getBasicGroup',
-  basic_group_id?: number,
-|}
-
-export type getBasicGroupReturnType = basicGroup
-
-export type getBasicGroupFullInfo = {|
-  _: 'getBasicGroupFullInfo',
-  basic_group_id?: number,
-|}
-
-export type getBasicGroupFullInfoReturnType = basicGroupFullInfo
-
-export type getBlockedUsers = {|
-  _: 'getBlockedUsers',
-  offset?: number,
-  limit?: number,
-|}
-
-export type getBlockedUsersReturnType = users
-
-export type getCallbackQueryAnswer = {|
-  _: 'getCallbackQueryAnswer',
-  chat_id?: number,
-  message_id?: number,
-  payload?: CallbackQueryPayloadOptional,
-|}
-
-export type getCallbackQueryAnswerReturnType = callbackQueryAnswer
-
-export type getChat = {|
-  _: 'getChat',
-  chat_id?: number,
-|}
-
-export type getChatReturnType = chat
-
-export type getChatAdministrators = {|
-  _: 'getChatAdministrators',
-  chat_id?: number,
-|}
-
-export type getChatAdministratorsReturnType = users
-
-export type getChatEventLog = {|
-  _: 'getChatEventLog',
-  chat_id?: number,
-  query?: string,
-  from_event_id?: number,
-  limit?: number,
-  filters?: chatEventLogFiltersOptional,
-  user_ids?: number[],
-|}
-
-export type getChatEventLogReturnType = chatEvents
-
-export type getChatHistory = {|
-  _: 'getChatHistory',
-  chat_id?: number,
-  from_message_id?: number,
-  offset?: number,
-  limit?: number,
-  only_local?: boolean,
-|}
-
-export type getChatHistoryReturnType = messages
-
-export type getChatMember = {|
-  _: 'getChatMember',
-  chat_id?: number,
-  user_id?: number,
-|}
-
-export type getChatMemberReturnType = chatMember
-
-export type getChatMessageByDate = {|
-  _: 'getChatMessageByDate',
-  chat_id?: number,
-  date?: number,
-|}
-
-export type getChatMessageByDateReturnType = message
-
-export type getChatPinnedMessage = {|
-  _: 'getChatPinnedMessage',
-  chat_id?: number,
-|}
-
-export type getChatPinnedMessageReturnType = message
-
-export type getChatReportSpamState = {|
-  _: 'getChatReportSpamState',
-  chat_id?: number,
-|}
-
-export type getChatReportSpamStateReturnType = chatReportSpamState
-
-export type getChats = {|
-  _: 'getChats',
-  offset_order?: (number | string),
-  offset_chat_id?: (number | string),
-  limit?: number,
-|}
-
-export type getChatsReturnType = chats
-
-export type getConnectedWebsites = {|
-  _: 'getConnectedWebsites',
-|}
-
-export type getConnectedWebsitesReturnType = connectedWebsites
-
-export type getCountryCode = {|
-  _: 'getCountryCode',
-|}
-
-export type getCountryCodeReturnType = text
-
-export type getCreatedPublicChats = {|
-  _: 'getCreatedPublicChats',
-|}
-
-export type getCreatedPublicChatsReturnType = chats
-
-export type getFavoriteStickers = {|
-  _: 'getFavoriteStickers',
-|}
-
-export type getFavoriteStickersReturnType = stickers
-
-export type getFile = {|
-  _: 'getFile',
-  file_id?: number,
-|}
-
-export type getFileReturnType = file
-
-export type getFileExtension = {|
-  _: 'getFileExtension',
-  mime_type?: string,
-|}
-
-export type getFileExtensionReturnType = text
-
-export type getFileMimeType = {|
-  _: 'getFileMimeType',
-  file_name?: string,
-|}
-
-export type getFileMimeTypeReturnType = text
-
-export type getGameHighScores = {|
-  _: 'getGameHighScores',
-  chat_id?: number,
-  message_id?: number,
-  user_id?: number,
-|}
-
-export type getGameHighScoresReturnType = gameHighScores
-
-export type getGroupsInCommon = {|
-  _: 'getGroupsInCommon',
-  user_id?: number,
-  offset_chat_id?: number,
-  limit?: number,
-|}
-
-export type getGroupsInCommonReturnType = chats
-
-export type getImportedContactCount = {|
-  _: 'getImportedContactCount',
-|}
-
-export type getImportedContactCountReturnType = count
-
-export type getInlineGameHighScores = {|
-  _: 'getInlineGameHighScores',
-  inline_message_id?: string,
-  user_id?: number,
-|}
-
-export type getInlineGameHighScoresReturnType = gameHighScores
-
-export type getInlineQueryResults = {|
-  _: 'getInlineQueryResults',
-  bot_user_id?: number,
-  chat_id?: number,
-  user_location?: locationOptional,
-  query?: string,
-  offset?: string,
-|}
-
-export type getInlineQueryResultsReturnType = inlineQueryResults
-
-export type getInstalledStickerSets = {|
-  _: 'getInstalledStickerSets',
-  is_masks?: boolean,
-|}
-
-export type getInstalledStickerSetsReturnType = stickerSets
-
-export type getInviteText = {|
-  _: 'getInviteText',
-|}
-
-export type getInviteTextReturnType = text
-
-export type getMe = {|
-  _: 'getMe',
-|}
-
-export type getMeReturnType = user
-
-export type getMessage = {|
-  _: 'getMessage',
-  chat_id?: number,
-  message_id?: number,
-|}
-
-export type getMessageReturnType = message
-
-export type getMessages = {|
-  _: 'getMessages',
-  chat_id?: number,
-  message_ids?: number[],
-|}
-
-export type getMessagesReturnType = messages
-
-export type getNetworkStatistics = {|
-  _: 'getNetworkStatistics',
-  only_current?: boolean,
-|}
-
-export type getNetworkStatisticsReturnType = networkStatistics
-
-export type getNotificationSettings = {|
-  _: 'getNotificationSettings',
-  scope?: NotificationSettingsScopeOptional,
-|}
-
-export type getNotificationSettingsReturnType = notificationSettings
-
-export type getOption = {|
-  _: 'getOption',
-  name?: string,
-|}
-
-export type getOptionReturnType = OptionValue
-
-export type getPasswordState = {|
-  _: 'getPasswordState',
-|}
-
-export type getPasswordStateReturnType = passwordState
-
-export type getPaymentForm = {|
-  _: 'getPaymentForm',
-  chat_id?: number,
-  message_id?: number,
-|}
-
-export type getPaymentFormReturnType = paymentForm
-
-export type getPaymentReceipt = {|
-  _: 'getPaymentReceipt',
-  chat_id?: number,
-  message_id?: number,
-|}
-
-export type getPaymentReceiptReturnType = paymentReceipt
-
-export type getProxy = {|
-  _: 'getProxy',
-|}
-
-export type getProxyReturnType = Proxy
-
-export type getPublicMessageLink = {|
-  _: 'getPublicMessageLink',
-  chat_id?: number,
-  message_id?: number,
-  for_album?: boolean,
-|}
-
-export type getPublicMessageLinkReturnType = publicMessageLink
-
-export type getRecentInlineBots = {|
-  _: 'getRecentInlineBots',
-|}
-
-export type getRecentInlineBotsReturnType = users
-
-export type getRecentStickers = {|
-  _: 'getRecentStickers',
-  is_attached?: boolean,
-|}
-
-export type getRecentStickersReturnType = stickers
-
-export type getRecentlyVisitedTMeUrls = {|
-  _: 'getRecentlyVisitedTMeUrls',
-  referrer?: string,
-|}
-
-export type getRecentlyVisitedTMeUrlsReturnType = tMeUrls
-
-export type getRecoveryEmailAddress = {|
-  _: 'getRecoveryEmailAddress',
-  password?: string,
-|}
-
-export type getRecoveryEmailAddressReturnType = recoveryEmailAddress
-
-export type getRemoteFile = {|
-  _: 'getRemoteFile',
-  remote_file_id?: string,
-  file_type?: FileTypeOptional,
-|}
-
-export type getRemoteFileReturnType = file
-
-export type getRepliedMessage = {|
-  _: 'getRepliedMessage',
-  chat_id?: number,
-  message_id?: number,
-|}
-
-export type getRepliedMessageReturnType = message
-
-export type getSavedAnimations = {|
-  _: 'getSavedAnimations',
-|}
-
-export type getSavedAnimationsReturnType = animations
-
-export type getSavedOrderInfo = {|
-  _: 'getSavedOrderInfo',
-|}
-
-export type getSavedOrderInfoReturnType = orderInfo
-
-export type getSecretChat = {|
-  _: 'getSecretChat',
-  secret_chat_id?: number,
-|}
-
-export type getSecretChatReturnType = secretChat
-
-export type getStickerEmojis = {|
-  _: 'getStickerEmojis',
-  sticker?: InputFileOptional,
-|}
-
-export type getStickerEmojisReturnType = stickerEmojis
-
-export type getStickerSet = {|
-  _: 'getStickerSet',
-  set_id?: number,
-|}
-
-export type getStickerSetReturnType = stickerSet
-
-export type getStickers = {|
-  _: 'getStickers',
-  emoji?: string,
-  limit?: number,
-|}
-
-export type getStickersReturnType = stickers
-
-export type getStorageStatistics = {|
-  _: 'getStorageStatistics',
-  chat_limit?: number,
-|}
-
-export type getStorageStatisticsReturnType = storageStatistics
-
-export type getStorageStatisticsFast = {|
-  _: 'getStorageStatisticsFast',
-|}
-
-export type getStorageStatisticsFastReturnType = storageStatisticsFast
-
-export type getSupergroup = {|
-  _: 'getSupergroup',
-  supergroup_id?: number,
-|}
-
-export type getSupergroupReturnType = supergroup
-
-export type getSupergroupFullInfo = {|
-  _: 'getSupergroupFullInfo',
-  supergroup_id?: number,
-|}
-
-export type getSupergroupFullInfoReturnType = supergroupFullInfo
-
-export type getSupergroupMembers = {|
-  _: 'getSupergroupMembers',
-  supergroup_id?: number,
-  filter?: SupergroupMembersFilterOptional,
-  offset?: number,
-  limit?: number,
-|}
-
-export type getSupergroupMembersReturnType = chatMembers
-
-export type getSupportUser = {|
-  _: 'getSupportUser',
-|}
-
-export type getSupportUserReturnType = user
-
-export type getTemporaryPasswordState = {|
-  _: 'getTemporaryPasswordState',
-|}
-
-export type getTemporaryPasswordStateReturnType = temporaryPasswordState
-
-export type getTermsOfService = {|
-  _: 'getTermsOfService',
-|}
-
-export type getTermsOfServiceReturnType = text
-
-export type getTextEntities = {|
-  _: 'getTextEntities',
-  text?: string,
-|}
-
-export type getTextEntitiesReturnType = textEntities
-
-export type getTopChats = {|
-  _: 'getTopChats',
-  category?: TopChatCategoryOptional,
-  limit?: number,
-|}
-
-export type getTopChatsReturnType = chats
-
-export type getTrendingStickerSets = {|
-  _: 'getTrendingStickerSets',
-|}
-
-export type getTrendingStickerSetsReturnType = stickerSets
-
-export type getUser = {|
-  _: 'getUser',
-  user_id?: number,
-|}
-
-export type getUserReturnType = user
-
-export type getUserFullInfo = {|
-  _: 'getUserFullInfo',
-  user_id?: number,
-|}
-
-export type getUserFullInfoReturnType = userFullInfo
-
-export type getUserPrivacySettingRules = {|
-  _: 'getUserPrivacySettingRules',
-  setting?: UserPrivacySettingOptional,
-|}
-
-export type getUserPrivacySettingRulesReturnType = userPrivacySettingRules
-
-export type getUserProfilePhotos = {|
-  _: 'getUserProfilePhotos',
-  user_id?: number,
-  offset?: number,
-  limit?: number,
-|}
-
-export type getUserProfilePhotosReturnType = userProfilePhotos
-
-export type getWallpapers = {|
-  _: 'getWallpapers',
-|}
-
-export type getWallpapersReturnType = wallpapers
-
-export type getWebPageInstantView = {|
-  _: 'getWebPageInstantView',
-  url?: string,
-  force_full?: boolean,
-|}
-
-export type getWebPageInstantViewReturnType = webPageInstantView
-
-export type getWebPagePreview = {|
-  _: 'getWebPagePreview',
-  text?: formattedTextOptional,
-|}
-
-export type getWebPagePreviewReturnType = webPage
-
-export type importContacts = {|
-  _: 'importContacts',
-  contacts?: contactOptional[],
-|}
-
-export type importContactsReturnType = importedContacts
-
-export type joinChatByInviteLink = {|
-  _: 'joinChatByInviteLink',
-  invite_link?: string,
-|}
-
-export type joinChatByInviteLinkReturnType = chat
-
-export type logOut = {|
-  _: 'logOut',
-|}
-
-export type logOutReturnType = ok
-
-export type openChat = {|
-  _: 'openChat',
-  chat_id?: number,
-|}
-
-export type openChatReturnType = ok
-
-export type openMessageContent = {|
-  _: 'openMessageContent',
-  chat_id?: number,
-  message_id?: number,
-|}
-
-export type openMessageContentReturnType = ok
-
-export type optimizeStorage = {|
-  _: 'optimizeStorage',
-  size?: number,
-  ttl?: number,
-  count?: number,
-  immunity_delay?: number,
-  file_types?: FileTypeOptional[],
-  chat_ids?: number[],
-  exclude_chat_ids?: number[],
-  chat_limit?: number,
-|}
-
-export type optimizeStorageReturnType = storageStatistics
-
-export type parseTextEntities = {|
-  _: 'parseTextEntities',
-  text?: string,
-  parse_mode?: TextParseModeOptional,
-|}
-
-export type parseTextEntitiesReturnType = formattedText
-
-export type pinSupergroupMessage = {|
-  _: 'pinSupergroupMessage',
-  supergroup_id?: number,
-  message_id?: number,
-  disable_notification?: boolean,
-|}
-
-export type pinSupergroupMessageReturnType = ok
-
-export type processDcUpdate = {|
-  _: 'processDcUpdate',
-  dc?: string,
-  addr?: string,
-|}
-
-export type processDcUpdateReturnType = ok
-
-export type readAllChatMentions = {|
-  _: 'readAllChatMentions',
-  chat_id?: number,
-|}
-
-export type readAllChatMentionsReturnType = ok
-
-export type recoverAuthenticationPassword = {|
-  _: 'recoverAuthenticationPassword',
-  recovery_code?: string,
-|}
-
-export type recoverAuthenticationPasswordReturnType = ok
-
-export type recoverPassword = {|
-  _: 'recoverPassword',
-  recovery_code?: string,
-|}
-
-export type recoverPasswordReturnType = passwordState
-
-export type registerDevice = {|
-  _: 'registerDevice',
-  device_token?: DeviceTokenOptional,
-  other_user_ids?: number[],
-|}
-
-export type registerDeviceReturnType = ok
-
-export type removeContacts = {|
-  _: 'removeContacts',
-  user_ids?: number[],
-|}
-
-export type removeContactsReturnType = ok
-
-export type removeFavoriteSticker = {|
-  _: 'removeFavoriteSticker',
-  sticker?: InputFileOptional,
-|}
-
-export type removeFavoriteStickerReturnType = ok
-
-export type removeRecentHashtag = {|
-  _: 'removeRecentHashtag',
-  hashtag?: string,
-|}
-
-export type removeRecentHashtagReturnType = ok
-
-export type removeRecentSticker = {|
-  _: 'removeRecentSticker',
-  is_attached?: boolean,
-  sticker?: InputFileOptional,
-|}
-
-export type removeRecentStickerReturnType = ok
-
-export type removeRecentlyFoundChat = {|
-  _: 'removeRecentlyFoundChat',
-  chat_id?: number,
-|}
-
-export type removeRecentlyFoundChatReturnType = ok
-
-export type removeSavedAnimation = {|
-  _: 'removeSavedAnimation',
-  animation?: InputFileOptional,
-|}
-
-export type removeSavedAnimationReturnType = ok
-
-export type removeStickerFromSet = {|
-  _: 'removeStickerFromSet',
-  sticker?: InputFileOptional,
-|}
-
-export type removeStickerFromSetReturnType = ok
-
-export type removeTopChat = {|
-  _: 'removeTopChat',
-  category?: TopChatCategoryOptional,
-  chat_id?: number,
-|}
-
-export type removeTopChatReturnType = ok
-
-export type reorderInstalledStickerSets = {|
-  _: 'reorderInstalledStickerSets',
-  is_masks?: boolean,
-  sticker_set_ids?: number[],
-|}
-
-export type reorderInstalledStickerSetsReturnType = ok
-
-export type reportChat = {|
-  _: 'reportChat',
-  chat_id?: number,
-  reason?: ChatReportReasonOptional,
-  message_ids?: number[],
-|}
-
-export type reportChatReturnType = ok
-
-export type reportSupergroupSpam = {|
-  _: 'reportSupergroupSpam',
-  supergroup_id?: number,
-  user_id?: number,
-  message_ids?: number[],
-|}
-
-export type reportSupergroupSpamReturnType = ok
-
-export type requestAuthenticationPasswordRecovery = {|
-  _: 'requestAuthenticationPasswordRecovery',
-|}
-
-export type requestAuthenticationPasswordRecoveryReturnType = ok
-
-export type requestPasswordRecovery = {|
-  _: 'requestPasswordRecovery',
-|}
-
-export type requestPasswordRecoveryReturnType = passwordRecoveryInfo
-
+/**
+ * Sets the parameters for TDLib initialization. Works only when the current authorization
+ * state is authorizationStateWaitTdlibParameters
+ */
+export type setTdlibParameters = {|
+  _: 'setTdlibParameters',
+  /** Parameters */
+  parameters?: tdlibParametersOptional,
+|}
+
+/**
+ * Checks the database encryption key for correctness. Works only when the current authorization
+ * state is authorizationStateWaitEncryptionKey
+ */
+export type checkDatabaseEncryptionKey = {|
+  _: 'checkDatabaseEncryptionKey',
+  /** Encryption key to check or set up */
+  encryption_key?: string,
+|}
+
+/**
+ * Sets the phone number of the user and sends an authentication code to the user. Works
+ * only when the current authorization state is authorizationStateWaitPhoneNumber
+ */
+export type setAuthenticationPhoneNumber = {|
+  _: 'setAuthenticationPhoneNumber',
+  /** The phone number of the user, in international format */
+  phone_number?: string,
+  /**
+   * Pass true if the authentication code may be sent via flash call to the specified
+   * phone number
+   */
+  allow_flash_call?: boolean,
+  /**
+   * Pass true if the phone number is used on the current device. Ignored if allow_flash_call
+   * is false
+   */
+  is_current_phone_number?: boolean,
+|}
+
+/**
+ * Re-sends an authentication code to the user. Works only when the current authorization
+ * state is authorizationStateWaitCode and the next_code_type of the result is not null
+ */
 export type resendAuthenticationCode = {|
   _: 'resendAuthenticationCode',
 |}
 
-export type resendAuthenticationCodeReturnType = ok
-
-export type resendChangePhoneNumberCode = {|
-  _: 'resendChangePhoneNumberCode',
+/**
+ * Checks the authentication code. Works only when the current authorization state is
+ * authorizationStateWaitCode
+ */
+export type checkAuthenticationCode = {|
+  _: 'checkAuthenticationCode',
+  /** The verification code received via SMS, Telegram message, phone call, or flash call */
+  code?: string,
+  /** If the user is not yet registered, the first name of the user; 1-255 characters */
+  first_name?: string,
+  /** If the user is not yet registered; the last name of the user; optional; 0-255 characters */
+  last_name?: string,
 |}
 
-export type resendChangePhoneNumberCodeReturnType = authenticationCodeInfo
+/**
+ * Checks the authentication password for correctness. Works only when the current authorization
+ * state is authorizationStateWaitPassword
+ */
+export type checkAuthenticationPassword = {|
+  _: 'checkAuthenticationPassword',
+  /** The password to check */
+  password?: string,
+|}
 
+/**
+ * Requests to send a password recovery code to an email address that was previously
+ * set up. Works only when the current authorization state is authorizationStateWaitPassword
+ */
+export type requestAuthenticationPasswordRecovery = {|
+  _: 'requestAuthenticationPasswordRecovery',
+|}
+
+/**
+ * Recovers the password with a password recovery code sent to an email address that
+ * was previously set up. Works only when the current authorization state is authorizationStateWaitPassword
+ */
+export type recoverAuthenticationPassword = {|
+  _: 'recoverAuthenticationPassword',
+  /** Recovery code to check */
+  recovery_code?: string,
+|}
+
+/**
+ * Checks the authentication token of a bot; to log in as a bot. Works only when the
+ * current authorization state is authorizationStateWaitPhoneNumber. Can be used instead
+ * of setAuthenticationPhoneNumber and checkAuthenticationCode to log in
+ */
+export type checkAuthenticationBotToken = {|
+  _: 'checkAuthenticationBotToken',
+  /** The bot token */
+  token?: string,
+|}
+
+/**
+ * Closes the TDLib instance after a proper logout. Requires an available network connection.
+ * All local data will be destroyed. After the logout completes, updateAuthorizationState
+ * with authorizationStateClosed will be sent
+ */
+export type logOut = {|
+  _: 'logOut',
+|}
+
+/**
+ * Closes the TDLib instance. All databases will be flushed to disk and properly closed.
+ * After the close completes, updateAuthorizationState with authorizationStateClosed
+ * will be sent
+ */
+export type close = {|
+  _: 'close',
+|}
+
+/**
+ * Closes the TDLib instance, destroying all local data without a proper logout. The
+ * current user session will remain in the list of all active sessions. All local data
+ * will be destroyed. After the destruction completes updateAuthorizationState with
+ * authorizationStateClosed will be sent
+ */
+export type destroy = {|
+  _: 'destroy',
+|}
+
+/**
+ * Changes the database encryption key. Usually the encryption key is never changed
+ * and is stored in some OS keychain
+ */
+export type setDatabaseEncryptionKey = {|
+  _: 'setDatabaseEncryptionKey',
+  /** New encryption key */
+  new_encryption_key?: string,
+|}
+
+/** Returns the current state of 2-step verification */
+export type getPasswordState = {|
+  _: 'getPasswordState',
+|}
+
+/**
+ * Changes the password for the user. If a new recovery email address is specified,
+ * then the error EMAIL_UNCONFIRMED is returned and the password change will not be
+ * applied until the new recovery email address has been confirmed. The application
+ * should periodically call getPasswordState to check whether the new email address
+ * has been confirmed
+ */
+export type setPassword = {|
+  _: 'setPassword',
+  /** Previous password of the user */
+  old_password?: string,
+  /** New password of the user; may be empty to remove the password */
+  new_password?: string,
+  /** New password hint; may be empty */
+  new_hint?: string,
+  /** Pass true if the recovery email address should be changed */
+  set_recovery_email_address?: boolean,
+  /** New recovery email address; may be empty */
+  new_recovery_email_address?: string,
+|}
+
+/**
+ * Returns a recovery email address that was previously set up. This method can be used
+ * to verify a password provided by the user
+ */
+export type getRecoveryEmailAddress = {|
+  _: 'getRecoveryEmailAddress',
+  /** The password for the current user */
+  password?: string,
+|}
+
+/**
+ * Changes the recovery email address of the user. If a new recovery email address is
+ * specified, then the error EMAIL_UNCONFIRMED is returned and the email address will
+ * not be changed until the new email has been confirmed. The application should periodically
+ * call getPasswordState to check whether the email address has been confirmed. If new_recovery_email_address
+ * is the same as the email address that is currently set up, this call succeeds immediately
+ * and aborts all other requests waiting for an email confirmation
+ */
+export type setRecoveryEmailAddress = {|
+  _: 'setRecoveryEmailAddress',
+  /** Password of the current user */
+  password?: string,
+  /** New recovery email address */
+  new_recovery_email_address?: string,
+|}
+
+/**
+ * Requests to send a password recovery code to an email address that was previously
+ * set up
+ */
+export type requestPasswordRecovery = {|
+  _: 'requestPasswordRecovery',
+|}
+
+/**
+ * Recovers the password using a recovery code sent to an email address that was previously
+ * set up
+ */
+export type recoverPassword = {|
+  _: 'recoverPassword',
+  /** Recovery code to check */
+  recovery_code?: string,
+|}
+
+/** Creates a new temporary password for processing payments */
+export type createTemporaryPassword = {|
+  _: 'createTemporaryPassword',
+  /** Persistent user password */
+  password?: string,
+  /**
+   * Time during which the temporary password will be valid, in seconds; should be between
+   * 60 and 86400
+   */
+  valid_for?: number,
+|}
+
+/** Returns information about the current temporary password */
+export type getTemporaryPasswordState = {|
+  _: 'getTemporaryPasswordState',
+|}
+
+/** Handles a DC_UPDATE push service notification. Can be called before authorization */
+export type processDcUpdate = {|
+  _: 'processDcUpdate',
+  /** Value of the "dc" parameter of the notification */
+  dc?: string,
+  /** Value of the "addr" parameter of the notification */
+  addr?: string,
+|}
+
+/** Returns the current user */
+export type getMe = {|
+  _: 'getMe',
+|}
+
+/**
+ * Returns information about a user by their identifier. This is an offline request
+ * if the current user is not a bot
+ */
+export type getUser = {|
+  _: 'getUser',
+  /** User identifier */
+  user_id?: number,
+|}
+
+/** Returns full information about a user by their identifier */
+export type getUserFullInfo = {|
+  _: 'getUserFullInfo',
+  /** User identifier */
+  user_id?: number,
+|}
+
+/**
+ * Returns information about a basic group by its identifier. This is an offline request
+ * if the current user is not a bot
+ */
+export type getBasicGroup = {|
+  _: 'getBasicGroup',
+  /** Basic group identifier */
+  basic_group_id?: number,
+|}
+
+/** Returns full information about a basic group by its identifier */
+export type getBasicGroupFullInfo = {|
+  _: 'getBasicGroupFullInfo',
+  /** Basic group identifier */
+  basic_group_id?: number,
+|}
+
+/**
+ * Returns information about a supergroup or channel by its identifier. This is an offline
+ * request if the current user is not a bot
+ */
+export type getSupergroup = {|
+  _: 'getSupergroup',
+  /** Supergroup or channel identifier */
+  supergroup_id?: number,
+|}
+
+/**
+ * Returns full information about a supergroup or channel by its identifier, cached
+ * for up to 1 minute
+ */
+export type getSupergroupFullInfo = {|
+  _: 'getSupergroupFullInfo',
+  /** Supergroup or channel identifier */
+  supergroup_id?: number,
+|}
+
+/** Returns information about a secret chat by its identifier. This is an offline request */
+export type getSecretChat = {|
+  _: 'getSecretChat',
+  /** Secret chat identifier */
+  secret_chat_id?: number,
+|}
+
+/**
+ * Returns information about a chat by its identifier, this is an offline request if
+ * the current user is not a bot
+ */
+export type getChat = {|
+  _: 'getChat',
+  /** Chat identifier */
+  chat_id?: number,
+|}
+
+/** Returns information about a message */
+export type getMessage = {|
+  _: 'getMessage',
+  /** Identifier of the chat the message belongs to */
+  chat_id?: number,
+  /** Identifier of the message to get */
+  message_id?: number,
+|}
+
+/** Returns information about a message that is replied by given message */
+export type getRepliedMessage = {|
+  _: 'getRepliedMessage',
+  /** Identifier of the chat the message belongs to */
+  chat_id?: number,
+  /** Identifier of the message reply to which get */
+  message_id?: number,
+|}
+
+/** Returns information about a pinned chat message */
+export type getChatPinnedMessage = {|
+  _: 'getChatPinnedMessage',
+  /** Identifier of the chat the message belongs to */
+  chat_id?: number,
+|}
+
+/**
+ * Returns information about messages. If a message is not found, returns null on the
+ * corresponding position of the result
+ */
+export type getMessages = {|
+  _: 'getMessages',
+  /** Identifier of the chat the messages belong to */
+  chat_id?: number,
+  /** Identifiers of the messages to get */
+  message_ids?: number[],
+|}
+
+/** Returns information about a file; this is an offline request */
+export type getFile = {|
+  _: 'getFile',
+  /** Identifier of the file to get */
+  file_id?: number,
+|}
+
+/**
+ * Returns information about a file by its remote ID; this is an offline request. Can
+ * be used to register a URL as a file for further uploading, or sending as a message
+ */
+export type getRemoteFile = {|
+  _: 'getRemoteFile',
+  /** Remote identifier of the file to get */
+  remote_file_id?: string,
+  /** File type, if known */
+  file_type?: FileTypeOptional,
+|}
+
+/**
+ * Returns an ordered list of chats. Chats are sorted by the pair (order, chat_id) in
+ * decreasing order. (For example, to get a list of chats from the beginning, the offset_order
+ * should be equal to 2^63 - 1). For optimal performance the number of returned chats
+ * is chosen by the library.
+ */
+export type getChats = {|
+  _: 'getChats',
+  /** Chat order to return chats from */
+  offset_order?: (number | string),
+  /** Chat identifier to return chats from */
+  offset_chat_id?: number,
+  /**
+   * The maximum number of chats to be returned. It is possible that fewer chats than
+   * the limit are returned even if the end of the list is not reached
+   */
+  limit?: number,
+|}
+
+/**
+ * Searches a public chat by its username. Currently only private chats, supergroups
+ * and channels can be public. Returns the chat if found; otherwise an error is returned
+ */
+export type searchPublicChat = {|
+  _: 'searchPublicChat',
+  /** Username to be resolved */
+  username?: string,
+|}
+
+/**
+ * Searches public chats by looking for specified query in their username and title.
+ * Currently only private chats, supergroups and channels can be public. Returns a meaningful
+ * number of results. Returns nothing if the length of the searched username prefix
+ * is less than 5. Excludes private chats with contacts and chats from the chat list
+ * from the results
+ */
+export type searchPublicChats = {|
+  _: 'searchPublicChats',
+  /** Query to search for */
+  query?: string,
+|}
+
+/**
+ * Searches for the specified query in the title and username of already known chats,
+ * this is an offline request. Returns chats in the order seen in the chat list
+ */
+export type searchChats = {|
+  _: 'searchChats',
+  /** Query to search for. If the query is empty, returns up to 20 recently found chats */
+  query?: string,
+  /** Maximum number of chats to be returned */
+  limit?: number,
+|}
+
+/**
+ * Searches for the specified query in the title and username of already known chats
+ * via request to the server. Returns chats in the order seen in the chat list
+ */
+export type searchChatsOnServer = {|
+  _: 'searchChatsOnServer',
+  /** Query to search for */
+  query?: string,
+  /** Maximum number of chats to be returned */
+  limit?: number,
+|}
+
+/**
+ * Returns a list of frequently used chats. Supported only if the chat info database
+ * is enabled
+ */
+export type getTopChats = {|
+  _: 'getTopChats',
+  /** Category of chats to be returned */
+  category?: TopChatCategoryOptional,
+  /** Maximum number of chats to be returned; up to 30 */
+  limit?: number,
+|}
+
+/**
+ * Removes a chat from the list of frequently used chats. Supported only if the chat
+ * info database is enabled
+ */
+export type removeTopChat = {|
+  _: 'removeTopChat',
+  /** Category of frequently used chats */
+  category?: TopChatCategoryOptional,
+  /** Chat identifier */
+  chat_id?: number,
+|}
+
+/**
+ * Adds a chat to the list of recently found chats. The chat is added to the beginning
+ * of the list. If the chat is already in the list, it will be removed from the list
+ * first
+ */
+export type addRecentlyFoundChat = {|
+  _: 'addRecentlyFoundChat',
+  /** Identifier of the chat to add */
+  chat_id?: number,
+|}
+
+/** Removes a chat from the list of recently found chats */
+export type removeRecentlyFoundChat = {|
+  _: 'removeRecentlyFoundChat',
+  /** Identifier of the chat to be removed */
+  chat_id?: number,
+|}
+
+/** Clears the list of recently found chats */
+export type clearRecentlyFoundChats = {|
+  _: 'clearRecentlyFoundChats',
+|}
+
+/** Checks whether a username can be set for a chat */
+export type checkChatUsername = {|
+  _: 'checkChatUsername',
+  /**
+   * Chat identifier; should be identifier of a supergroup chat, or a channel chat, or
+   * a private chat with self, or zero if chat is being created
+   */
+  chat_id?: (number | string),
+  /** Username to be checked */
+  username?: string,
+|}
+
+/** Returns a list of public chats created by the user */
+export type getCreatedPublicChats = {|
+  _: 'getCreatedPublicChats',
+|}
+
+/**
+ * Returns a list of common chats with a given user. Chats are sorted by their type
+ * and creation date
+ */
+export type getGroupsInCommon = {|
+  _: 'getGroupsInCommon',
+  /** User identifier */
+  user_id?: number,
+  /** Chat identifier starting from which to return chats; use 0 for the first request */
+  offset_chat_id?: number,
+  /** Maximum number of chats to be returned; up to 100 */
+  limit?: number,
+|}
+
+/**
+ * Returns messages in a chat. The messages are returned in a reverse chronological
+ * order (i.e., in order of decreasing message_id). For optimal performance the number
+ * of returned messages is chosen by the library. This is an offline request if only_local
+ * is true
+ */
+export type getChatHistory = {|
+  _: 'getChatHistory',
+  /** Chat identifier */
+  chat_id?: number,
+  /**
+   * Identifier of the message starting from which history must be fetched; use 0 to get
+   * results from the beginning (i.e., from oldest to newest)
+   */
+  from_message_id?: number,
+  /**
+   * Specify 0 to get results from exactly the from_message_id or a negative offset to
+   * get the specified message and some newer messages
+   */
+  offset?: number,
+  /**
+   * The maximum number of messages to be returned; must be positive and can't be greater
+   * than 100. If the offset is negative, the limit must be greater than -offset. Fewer
+   * messages may be returned than specified by the limit, even if the end of the message
+   * history has not been reached
+   */
+  limit?: number,
+  /**
+   * If true, returns only messages that are available locally without sending network
+   * requests
+   */
+  only_local?: boolean,
+|}
+
+/**
+ * Deletes all messages in the chat only for the user. Cannot be used in channels and
+ * public supergroups
+ */
+export type deleteChatHistory = {|
+  _: 'deleteChatHistory',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Pass true if the chat should be removed from the chats list */
+  remove_from_chat_list?: boolean,
+|}
+
+/**
+ * Searches for messages with given words in the chat. Returns the results in reverse
+ * chronological order, i.e. in order of decreasing message_id. Cannot be used in secret
+ * chats with a non-empty query (searchSecretMessages should be used instead), or without
+ * an enabled message database. For optimal performance the number of returned messages
+ * is chosen by the library
+ */
+export type searchChatMessages = {|
+  _: 'searchChatMessages',
+  /** Identifier of the chat in which to search messages */
+  chat_id?: number,
+  /** Query to search for */
+  query?: string,
+  /**
+   * If not 0, only messages sent by the specified user will be returned. Not supported
+   * in secret chats
+   */
+  sender_user_id?: number,
+  /**
+   * Identifier of the message starting from which history must be fetched; use 0 to get
+   * results from the beginning
+   */
+  from_message_id?: number,
+  /**
+   * Specify 0 to get results from exactly the from_message_id or a negative offset to
+   * get the specified message and some newer messages
+   */
+  offset?: number,
+  /**
+   * The maximum number of messages to be returned; must be positive and can't be greater
+   * than 100. If the offset is negative, the limit must be greater than -offset. Fewer
+   * messages may be returned than specified by the limit, even if the end of the message
+   * history has not been reached
+   */
+  limit?: number,
+  /** Filter for message content in the search results */
+  filter?: SearchMessagesFilterOptional,
+|}
+
+/**
+ * Searches for messages in all chats except secret chats. Returns the results in reverse
+ * chronological order (i.e., in order of decreasing (date, chat_id, message_id)). For
+ * optimal performance the number of returned messages is chosen by the library
+ */
+export type searchMessages = {|
+  _: 'searchMessages',
+  /** Query to search for */
+  query?: string,
+  /**
+   * The date of the message starting from which the results should be fetched. Use 0
+   * or any date in the future to get results from the beginning
+   */
+  offset_date?: number,
+  /** The chat identifier of the last found message, or 0 for the first request */
+  offset_chat_id?: number,
+  /** The message identifier of the last found message, or 0 for the first request */
+  offset_message_id?: number,
+  /**
+   * The maximum number of messages to be returned, up to 100. Fewer messages may be returned
+   * than specified by the limit, even if the end of the message history has not been
+   * reached
+   */
+  limit?: number,
+|}
+
+/**
+ * Searches for messages in secret chats. Returns the results in reverse chronological
+ * order. For optimal performance the number of returned messages is chosen by the library
+ */
+export type searchSecretMessages = {|
+  _: 'searchSecretMessages',
+  /** Identifier of the chat in which to search. Specify 0 to search in all secret chats */
+  chat_id?: number,
+  /** Query to search for. If empty, searchChatMessages should be used instead */
+  query?: string,
+  /**
+   * The identifier from the result of a previous request, use 0 to get results from the
+   * beginning
+   */
+  from_search_id?: (number | string),
+  /**
+   * Maximum number of messages to be returned; up to 100. Fewer messages may be returned
+   * than specified by the limit, even if the end of the message history has not been
+   * reached
+   */
+  limit?: number,
+  /** A filter for the content of messages in the search results */
+  filter?: SearchMessagesFilterOptional,
+|}
+
+/**
+ * Searches for call messages. Returns the results in reverse chronological order (i.
+ * e., in order of decreasing message_id). For optimal performance the number of returned
+ * messages is chosen by the library
+ */
+export type searchCallMessages = {|
+  _: 'searchCallMessages',
+  /** Identifier of the message from which to search; use 0 to get results from the beginning */
+  from_message_id?: number,
+  /**
+   * The maximum number of messages to be returned; up to 100. Fewer messages may be returned
+   * than specified by the limit, even if the end of the message history has not been
+   * reached
+   */
+  limit?: number,
+  /** If true, returns only messages with missed calls */
+  only_missed?: boolean,
+|}
+
+/**
+ * Returns information about the recent locations of chat members that were sent to
+ * the chat. Returns up to 1 location message per user
+ */
+export type searchChatRecentLocationMessages = {|
+  _: 'searchChatRecentLocationMessages',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Maximum number of messages to be returned */
+  limit?: number,
+|}
+
+/**
+ * Returns all active live locations that should be updated by the client. The list
+ * is persistent across application restarts only if the message database is used
+ */
+export type getActiveLiveLocationMessages = {|
+  _: 'getActiveLiveLocationMessages',
+|}
+
+/** Returns the last message sent in a chat no later than the specified date */
+export type getChatMessageByDate = {|
+  _: 'getChatMessageByDate',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Point in time (Unix timestamp) relative to which to search for messages */
+  date?: number,
+|}
+
+/**
+ * Returns a public HTTPS link to a message. Available only for messages in public supergroups
+ * and channels
+ */
+export type getPublicMessageLink = {|
+  _: 'getPublicMessageLink',
+  /** Identifier of the chat to which the message belongs */
+  chat_id?: number,
+  /** Identifier of the message */
+  message_id?: number,
+  /** Pass true if a link for a whole media album should be returned */
+  for_album?: boolean,
+|}
+
+/** Sends a message. Returns the sent message */
+export type sendMessage = {|
+  _: 'sendMessage',
+  /** Target chat */
+  chat_id?: number,
+  /** Identifier of the message to reply to or 0 */
+  reply_to_message_id?: number,
+  /** Pass true to disable notification for the message. Not supported in secret chats */
+  disable_notification?: boolean,
+  /** Pass true if the message is sent from the background */
+  from_background?: boolean,
+  /** Markup for replying to the message; for bots only */
+  reply_markup?: ReplyMarkupOptional,
+  /** The content of the message to be sent */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/**
+ * Sends messages grouped together into an album. Currently only photo and video messages
+ * can be grouped into an album. Returns sent messages
+ */
+export type sendMessageAlbum = {|
+  _: 'sendMessageAlbum',
+  /** Target chat */
+  chat_id?: number,
+  /** Identifier of a message to reply to or 0 */
+  reply_to_message_id?: number,
+  /** Pass true to disable notification for the messages. Not supported in secret chats */
+  disable_notification?: boolean,
+  /** Pass true if the messages are sent from the background */
+  from_background?: boolean,
+  /** Contents of messages to be sent */
+  input_message_contents?: InputMessageContentOptional[],
+|}
+
+/**
+ * Invites a bot to a chat (if it is not yet a member) and sends it the /start command.
+ * Bots can't be invited to a private chat other than the chat with the bot. Bots can't
+ * be invited to channels (although they can be added as admins) and secret chats. Returns
+ * the sent message
+ */
+export type sendBotStartMessage = {|
+  _: 'sendBotStartMessage',
+  /** Identifier of the bot */
+  bot_user_id?: number,
+  /** Identifier of the target chat */
+  chat_id?: number,
+  /** A hidden parameter sent to the bot for deep linking purposes (https://api.telegram.org/bots#deep-linking) */
+  parameter?: string,
+|}
+
+/**
+ * Sends the result of an inline query as a message. Returns the sent message. Always
+ * clears a chat draft message
+ */
+export type sendInlineQueryResultMessage = {|
+  _: 'sendInlineQueryResultMessage',
+  /** Target chat */
+  chat_id?: number,
+  /** Identifier of a message to reply to or 0 */
+  reply_to_message_id?: number,
+  /** Pass true to disable notification for the message. Not supported in secret chats */
+  disable_notification?: boolean,
+  /** Pass true if the message is sent from background */
+  from_background?: boolean,
+  /** Identifier of the inline query */
+  query_id?: (number | string),
+  /** Identifier of the inline result */
+  result_id?: string,
+|}
+
+/**
+ * Forwards previously sent messages. Returns the forwarded messages in the same order
+ * as the message identifiers passed in message_ids. If a message can't be forwarded,
+ * null will be returned instead of the message
+ */
+export type forwardMessages = {|
+  _: 'forwardMessages',
+  /** Identifier of the chat to which to forward messages */
+  chat_id?: number,
+  /** Identifier of the chat from which to forward messages */
+  from_chat_id?: number,
+  /** Identifiers of the messages to forward */
+  message_ids?: number[],
+  /**
+   * Pass true to disable notification for the message, doesn't work if messages are forwarded
+   * to a secret chat
+   */
+  disable_notification?: boolean,
+  /** Pass true if the message is sent from the background */
+  from_background?: boolean,
+  /**
+   * True, if the messages should be grouped into an album after forwarding. For this
+   * to work, no more than 10 messages may be forwarded, and all of them must be photo
+   * or video messages
+   */
+  as_album?: boolean,
+|}
+
+/**
+ * Changes the current TTL setting (sets a new self-destruct timer) in a secret chat
+ * and sends the corresponding message
+ */
+export type sendChatSetTtlMessage = {|
+  _: 'sendChatSetTtlMessage',
+  /** Chat identifier */
+  chat_id?: number,
+  /** New TTL value, in seconds */
+  ttl?: number,
+|}
+
+/**
+ * Sends a notification about a screenshot taken in a chat. Supported only in private
+ * and secret chats
+ */
+export type sendChatScreenshotTakenNotification = {|
+  _: 'sendChatScreenshotTakenNotification',
+  /** Chat identifier */
+  chat_id?: number,
+|}
+
+/** Deletes messages */
+export type deleteMessages = {|
+  _: 'deleteMessages',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Identifiers of the messages to be deleted */
+  message_ids?: number[],
+  /**
+   * Pass true to try to delete outgoing messages for all chat members (may fail if messages
+   * are too old). Always true for supergroups, channels and secret chats
+   */
+  revoke?: boolean,
+|}
+
+/**
+ * Deletes all messages sent by the specified user to a chat. Supported only in supergroups;
+ * requires can_delete_messages administrator privileges
+ */
+export type deleteChatMessagesFromUser = {|
+  _: 'deleteChatMessagesFromUser',
+  /** Chat identifier */
+  chat_id?: number,
+  /** User identifier */
+  user_id?: number,
+|}
+
+/**
+ * Edits the text of a message (or a text of a game message). Non-bot users can edit
+ * messages for a limited period of time. Returns the edited message after the edit
+ * is completed on the server side
+ */
+export type editMessageText = {|
+  _: 'editMessageText',
+  /** The chat the message belongs to */
+  chat_id?: number,
+  /** Identifier of the message */
+  message_id?: number,
+  /** The new message reply markup; for bots only */
+  reply_markup?: ReplyMarkupOptional,
+  /** New text content of the message. Should be of type InputMessageText */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/**
+ * Edits the message content of a live location. Messages can be edited for a limited
+ * period of time specified in the live location. Returns the edited message after the
+ * edit is completed server-side
+ */
+export type editMessageLiveLocation = {|
+  _: 'editMessageLiveLocation',
+  /** The chat the message belongs to */
+  chat_id?: number,
+  /** Identifier of the message */
+  message_id?: number,
+  /** Tew message reply markup; for bots only */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * New location content of the message; may be null. Pass null to stop sharing the live
+   * location
+   */
+  location?: locationOptional,
+|}
+
+/**
+ * Edits the message content caption. Non-bots can edit messages for a limited period
+ * of time. Returns the edited message after the edit is completed server-side
+ */
+export type editMessageCaption = {|
+  _: 'editMessageCaption',
+  /** The chat the message belongs to */
+  chat_id?: number,
+  /** Identifier of the message */
+  message_id?: number,
+  /** The new message reply markup; for bots only */
+  reply_markup?: ReplyMarkupOptional,
+  /** New message content caption; 0-200 characters */
+  caption?: formattedTextOptional,
+|}
+
+/**
+ * Edits the message reply markup; for bots only. Returns the edited message after the
+ * edit is completed server-side
+ */
+export type editMessageReplyMarkup = {|
+  _: 'editMessageReplyMarkup',
+  /** The chat the message belongs to */
+  chat_id?: number,
+  /** Identifier of the message */
+  message_id?: number,
+  /** New message reply markup */
+  reply_markup?: ReplyMarkupOptional,
+|}
+
+/** Edits the text of an inline text or game message sent via a bot; for bots only */
+export type editInlineMessageText = {|
+  _: 'editInlineMessageText',
+  /** Inline message identifier */
+  inline_message_id?: string,
+  /** New message reply markup */
+  reply_markup?: ReplyMarkupOptional,
+  /** New text content of the message. Should be of type InputMessageText */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/**
+ * Edits the content of a live location in an inline message sent via a bot; for bots
+ * only
+ */
+export type editInlineMessageLiveLocation = {|
+  _: 'editInlineMessageLiveLocation',
+  /** Inline message identifier */
+  inline_message_id?: string,
+  /** New message reply markup */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * New location content of the message; may be null. Pass null to stop sharing the live
+   * location
+   */
+  location?: locationOptional,
+|}
+
+/** Edits the caption of an inline message sent via a bot; for bots only */
+export type editInlineMessageCaption = {|
+  _: 'editInlineMessageCaption',
+  /** Inline message identifier */
+  inline_message_id?: string,
+  /** New message reply markup */
+  reply_markup?: ReplyMarkupOptional,
+  /** New message content caption; 0-200 characters */
+  caption?: formattedTextOptional,
+|}
+
+/** Edits the reply markup of an inline message sent via a bot; for bots only */
+export type editInlineMessageReplyMarkup = {|
+  _: 'editInlineMessageReplyMarkup',
+  /** Inline message identifier */
+  inline_message_id?: string,
+  /** New message reply markup */
+  reply_markup?: ReplyMarkupOptional,
+|}
+
+/**
+ * Returns all entities (mentions, hashtags, cashtags, bot commands, URLs, and email
+ * addresses) contained in the text. This is an offline method. Can be called before
+ * authorization. Can be called synchronously
+ */
+export type getTextEntities = {|
+  _: 'getTextEntities',
+  /** The text in which to look for entites */
+  text?: string,
+|}
+
+/**
+ * Parses Bold, Italic, Code, Pre, PreCode and TextUrl entities contained in the text.
+ * This is an offline method. Can be called before authorization. Can be called synchronously
+ */
+export type parseTextEntities = {|
+  _: 'parseTextEntities',
+  /** The text which should be parsed */
+  text?: string,
+  /** Text parse mode */
+  parse_mode?: TextParseModeOptional,
+|}
+
+/**
+ * Returns the MIME type of a file, guessed by its extension. Returns an empty string
+ * on failure. This is an offline method. Can be called before authorization. Can be
+ * called synchronously
+ */
+export type getFileMimeType = {|
+  _: 'getFileMimeType',
+  /** The name of the file or path to the file */
+  file_name?: string,
+|}
+
+/**
+ * Returns the extension of a file, guessed by its MIME type. Returns an empty string
+ * on failure. This is an offline method. Can be called before authorization. Can be
+ * called synchronously
+ */
+export type getFileExtension = {|
+  _: 'getFileExtension',
+  /** The MIME type of the file */
+  mime_type?: string,
+|}
+
+/**
+ * Sends an inline query to a bot and returns its results. Returns an error with code
+ * 502 if the bot fails to answer the query before the query timeout expires
+ */
+export type getInlineQueryResults = {|
+  _: 'getInlineQueryResults',
+  /** The identifier of the target bot */
+  bot_user_id?: number,
+  /** Identifier of the chat, where the query was sent */
+  chat_id?: number,
+  /** Location of the user, only if needed */
+  user_location?: locationOptional,
+  /** Text of the query */
+  query?: string,
+  /** Offset of the first entry to return */
+  offset?: string,
+|}
+
+/** Sets the result of an inline query; for bots only */
+export type answerInlineQuery = {|
+  _: 'answerInlineQuery',
+  /** Identifier of the inline query */
+  inline_query_id?: (number | string),
+  /** True, if the result of the query can be cached for the specified user */
+  is_personal?: boolean,
+  /** The results of the query */
+  results?: InputInlineQueryResultOptional[],
+  /** Allowed time to cache the results of the query, in seconds */
+  cache_time?: number,
+  /** Offset for the next inline query; pass an empty string if there are no more results */
+  next_offset?: string,
+  /**
+   * If non-empty, this text should be shown on the button that opens a private chat with
+   * the bot and sends a start message to the bot with the parameter switch_pm_parameter
+   */
+  switch_pm_text?: string,
+  /** The parameter for the bot start message */
+  switch_pm_parameter?: string,
+|}
+
+/**
+ * Sends a callback query to a bot and returns an answer. Returns an error with code
+ * 502 if the bot fails to answer the query before the query timeout expires
+ */
+export type getCallbackQueryAnswer = {|
+  _: 'getCallbackQueryAnswer',
+  /** Identifier of the chat with the message */
+  chat_id?: number,
+  /** Identifier of the message from which the query originated */
+  message_id?: number,
+  /** Query payload */
+  payload?: CallbackQueryPayloadOptional,
+|}
+
+/** Sets the result of a callback query; for bots only */
+export type answerCallbackQuery = {|
+  _: 'answerCallbackQuery',
+  /** Identifier of the callback query */
+  callback_query_id?: (number | string),
+  /** Text of the answer */
+  text?: string,
+  /** If true, an alert should be shown to the user instead of a toast notification */
+  show_alert?: boolean,
+  /** URL to be opened */
+  url?: string,
+  /** Time during which the result of the query can be cached, in seconds */
+  cache_time?: number,
+|}
+
+/** Sets the result of a shipping query; for bots only */
+export type answerShippingQuery = {|
+  _: 'answerShippingQuery',
+  /** Identifier of the shipping query */
+  shipping_query_id?: (number | string),
+  /** Available shipping options */
+  shipping_options?: shippingOptionOptional[],
+  /** An error message, empty on success */
+  error_message?: string,
+|}
+
+/** Sets the result of a pre-checkout query; for bots only */
+export type answerPreCheckoutQuery = {|
+  _: 'answerPreCheckoutQuery',
+  /** Identifier of the pre-checkout query */
+  pre_checkout_query_id?: (number | string),
+  /** An error message, empty on success */
+  error_message?: string,
+|}
+
+/** Updates the game score of the specified user in the game; for bots only */
+export type setGameScore = {|
+  _: 'setGameScore',
+  /** The chat to which the message with the game */
+  chat_id?: number,
+  /** Identifier of the message */
+  message_id?: number,
+  /** True, if the message should be edited */
+  edit_message?: boolean,
+  /** User identifier */
+  user_id?: number,
+  /** The new score */
+  score?: number,
+  /**
+   * Pass true to update the score even if it decreases. If the score is 0, the user will
+   * be deleted from the high score table
+   */
+  force?: boolean,
+|}
+
+/** Updates the game score of the specified user in a game; for bots only */
+export type setInlineGameScore = {|
+  _: 'setInlineGameScore',
+  /** Inline message identifier */
+  inline_message_id?: string,
+  /** True, if the message should be edited */
+  edit_message?: boolean,
+  /** User identifier */
+  user_id?: number,
+  /** The new score */
+  score?: number,
+  /**
+   * Pass true to update the score even if it decreases. If the score is 0, the user will
+   * be deleted from the high score table
+   */
+  force?: boolean,
+|}
+
+/**
+ * Returns the high scores for a game and some part of the high score table in the range
+ * of the specified user; for bots only
+ */
+export type getGameHighScores = {|
+  _: 'getGameHighScores',
+  /** The chat that contains the message with the game */
+  chat_id?: number,
+  /** Identifier of the message */
+  message_id?: number,
+  /** User identifier */
+  user_id?: number,
+|}
+
+/**
+ * Returns game high scores and some part of the high score table in the range of the
+ * specified user; for bots only
+ */
+export type getInlineGameHighScores = {|
+  _: 'getInlineGameHighScores',
+  /** Inline message identifier */
+  inline_message_id?: string,
+  /** User identifier */
+  user_id?: number,
+|}
+
+/**
+ * Deletes the default reply markup from a chat. Must be called after a one-time keyboard
+ * or a ForceReply reply markup has been used. UpdateChatReplyMarkup will be sent if
+ * the reply markup will be changed
+ */
+export type deleteChatReplyMarkup = {|
+  _: 'deleteChatReplyMarkup',
+  /** Chat identifier */
+  chat_id?: number,
+  /** The message identifier of the used keyboard */
+  message_id?: number,
+|}
+
+/** Sends a notification about user activity in a chat */
+export type sendChatAction = {|
+  _: 'sendChatAction',
+  /** Chat identifier */
+  chat_id?: number,
+  /** The action description */
+  action?: ChatActionOptional,
+|}
+
+/**
+ * This method should be called if the chat is opened by the user. Many useful activities
+ * depend on the chat being opened or closed (e.g., in supergroups and channels all
+ * updates are received only for opened chats)
+ */
+export type openChat = {|
+  _: 'openChat',
+  /** Chat identifier */
+  chat_id?: number,
+|}
+
+/**
+ * This method should be called if the chat is closed by the user. Many useful activities
+ * depend on the chat being opened or closed
+ */
+export type closeChat = {|
+  _: 'closeChat',
+  /** Chat identifier */
+  chat_id?: number,
+|}
+
+/**
+ * This method should be called if messages are being viewed by the user. Many useful
+ * activities depend on whether the messages are currently being viewed or not (e.g.,
+ * marking messages as read, incrementing a view counter, updating a view counter, removing
+ * deleted messages in supergroups and channels)
+ */
+export type viewMessages = {|
+  _: 'viewMessages',
+  /** Chat identifier */
+  chat_id?: number,
+  /** The identifiers of the messages being viewed */
+  message_ids?: number[],
+  /** True, if messages in closed chats should be marked as read */
+  force_read?: boolean,
+|}
+
+/**
+ * This method should be called if the message content has been opened (e.g., the user
+ * has opened a photo, video, document, location or venue, or has listened to an audio
+ * file or voice note message). An updateMessageContentOpened update will be generated
+ * if something has changed
+ */
+export type openMessageContent = {|
+  _: 'openMessageContent',
+  /** Chat identifier of the message */
+  chat_id?: number,
+  /** Identifier of the message with the opened content */
+  message_id?: number,
+|}
+
+/** Marks all mentions in a chat as read */
+export type readAllChatMentions = {|
+  _: 'readAllChatMentions',
+  /** Chat identifier */
+  chat_id?: number,
+|}
+
+/** Returns an existing chat corresponding to a given user */
+export type createPrivateChat = {|
+  _: 'createPrivateChat',
+  /** User identifier */
+  user_id?: number,
+  /**
+   * If true, the chat will be created without network request. In this case all information
+   * about the chat except its type, title and photo can be incorrect
+   */
+  force?: boolean,
+|}
+
+/** Returns an existing chat corresponding to a known basic group */
+export type createBasicGroupChat = {|
+  _: 'createBasicGroupChat',
+  /** Basic group identifier */
+  basic_group_id?: number,
+  /**
+   * If true, the chat will be created without network request. In this case all information
+   * about the chat except its type, title and photo can be incorrect
+   */
+  force?: boolean,
+|}
+
+/** Returns an existing chat corresponding to a known supergroup or channel */
+export type createSupergroupChat = {|
+  _: 'createSupergroupChat',
+  /** Supergroup or channel identifier */
+  supergroup_id?: number,
+  /**
+   * If true, the chat will be created without network request. In this case all information
+   * about the chat except its type, title and photo can be incorrect
+   */
+  force?: boolean,
+|}
+
+/** Returns an existing chat corresponding to a known secret chat */
+export type createSecretChat = {|
+  _: 'createSecretChat',
+  /** Secret chat identifier */
+  secret_chat_id?: number,
+|}
+
+/**
+ * Creates a new basic group and sends a corresponding messageBasicGroupChatCreate.
+ * Returns the newly created chat
+ */
+export type createNewBasicGroupChat = {|
+  _: 'createNewBasicGroupChat',
+  /** Identifiers of users to be added to the basic group */
+  user_ids?: number[],
+  /** Title of the new basic group; 1-255 characters */
+  title?: string,
+|}
+
+/**
+ * Creates a new supergroup or channel and sends a corresponding messageSupergroupChatCreate.
+ * Returns the newly created chat
+ */
+export type createNewSupergroupChat = {|
+  _: 'createNewSupergroupChat',
+  /** Title of the new chat; 1-255 characters */
+  title?: string,
+  /** True, if a channel chat should be created */
+  is_channel?: boolean,
+  /** Chat description; 0-255 characters */
+  description?: string,
+|}
+
+/** Creates a new secret chat. Returns the newly created chat */
+export type createNewSecretChat = {|
+  _: 'createNewSecretChat',
+  /** Identifier of the target user */
+  user_id?: number,
+|}
+
+/**
+ * Creates a new supergroup from an existing basic group and sends a corresponding messageChatUpgradeTo
+ * and messageChatUpgradeFrom. Deactivates the original basic group
+ */
+export type upgradeBasicGroupChatToSupergroupChat = {|
+  _: 'upgradeBasicGroupChatToSupergroupChat',
+  /** Identifier of the chat to upgrade */
+  chat_id?: number,
+|}
+
+/**
+ * Changes the chat title. Supported only for basic groups, supergroups and channels.
+ * Requires administrator rights in basic groups and the appropriate administrator rights
+ * in supergroups and channels. The title will not be changed until the request to the
+ * server has been completed
+ */
+export type setChatTitle = {|
+  _: 'setChatTitle',
+  /** Chat identifier */
+  chat_id?: number,
+  /** New title of the chat; 1-255 characters */
+  title?: string,
+|}
+
+/**
+ * Changes the photo of a chat. Supported only for basic groups, supergroups and channels.
+ * Requires administrator rights in basic groups and the appropriate administrator rights
+ * in supergroups and channels. The photo will not be changed before request to the
+ * server has been completed
+ */
+export type setChatPhoto = {|
+  _: 'setChatPhoto',
+  /** Chat identifier */
+  chat_id?: number,
+  /**
+   * New chat photo. You can use a zero InputFileId to delete the chat photo. Files that
+   * are accessible only by HTTP URL are not acceptable
+   */
+  photo?: InputFileOptional,
+|}
+
+/** Changes the draft message in a chat */
+export type setChatDraftMessage = {|
+  _: 'setChatDraftMessage',
+  /** Chat identifier */
+  chat_id?: number,
+  /** New draft message; may be null */
+  draft_message?: draftMessageOptional,
+|}
+
+/**
+ * Changes the pinned state of a chat. You can pin up to GetOption("pinned_chat_count_max")
+ * non-secret chats and the same number of secret chats
+ */
+export type toggleChatIsPinned = {|
+  _: 'toggleChatIsPinned',
+  /** Chat identifier */
+  chat_id?: number,
+  /** New value of is_pinned */
+  is_pinned?: boolean,
+|}
+
+/** Changes client data associated with a chat */
+export type setChatClientData = {|
+  _: 'setChatClientData',
+  /** Chat identifier */
+  chat_id?: number,
+  /** New value of client_data */
+  client_data?: string,
+|}
+
+/**
+ * Adds a new member to a chat. Members can't be added to private or secret chats. Members
+ * will not be added until the chat state has been synchronized with the server
+ */
+export type addChatMember = {|
+  _: 'addChatMember',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Identifier of the user */
+  user_id?: number,
+  /**
+   * The number of earlier messages from the chat to be forwarded to the new member; up
+   * to 300. Ignored for supergroups and channels
+   */
+  forward_limit?: number,
+|}
+
+/**
+ * Adds multiple new members to a chat. Currently this option is only available for
+ * supergroups and channels. This option can't be used to join a chat. Members can't
+ * be added to a channel if it has more than 200 members. Members will not be added
+ * until the chat state has been synchronized with the server
+ */
+export type addChatMembers = {|
+  _: 'addChatMembers',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Identifiers of the users to be added to the chat */
+  user_ids?: number[],
+|}
+
+/**
+ * Changes the status of a chat member, needs appropriate privileges. This function
+ * is currently not suitable for adding new members to the chat; instead, use addChatMember.
+ * The chat member status will not be changed until it has been synchronized with the
+ * server
+ */
+export type setChatMemberStatus = {|
+  _: 'setChatMemberStatus',
+  /** Chat identifier */
+  chat_id?: number,
+  /** User identifier */
+  user_id?: number,
+  /** The new status of the member in the chat */
+  status?: ChatMemberStatusOptional,
+|}
+
+/** Returns information about a single member of a chat */
+export type getChatMember = {|
+  _: 'getChatMember',
+  /** Chat identifier */
+  chat_id?: number,
+  /** User identifier */
+  user_id?: number,
+|}
+
+/**
+ * Searches for a specified query in the first name, last name and username of the members
+ * of a specified chat. Requires administrator rights in channels
+ */
+export type searchChatMembers = {|
+  _: 'searchChatMembers',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Query to search for */
+  query?: string,
+  /** The maximum number of users to be returned */
+  limit?: number,
+|}
+
+/** Returns a list of users who are administrators of the chat */
+export type getChatAdministrators = {|
+  _: 'getChatAdministrators',
+  /** Chat identifier */
+  chat_id?: number,
+|}
+
+/** Changes the order of pinned chats */
+export type setPinnedChats = {|
+  _: 'setPinnedChats',
+  /** The new list of pinned chats */
+  chat_ids?: number[],
+|}
+
+/**
+ * Asynchronously downloads a file from the cloud. updateFile will be used to notify
+ * about the download progress and successful completion of the download. Returns file
+ * state just after the download has been started
+ */
+export type downloadFile = {|
+  _: 'downloadFile',
+  /** Identifier of the file to download */
+  file_id?: number,
+  /**
+   * Priority of the download (1-32). The higher the priority, the earlier the file will
+   * be downloaded. If the priorities of two files are equal, then the last one for which
+   * downloadFile was called will be downloaded first
+   */
+  priority?: number,
+|}
+
+/** Stops the downloading of a file. If a file has already been downloaded, does nothing */
+export type cancelDownloadFile = {|
+  _: 'cancelDownloadFile',
+  /** Identifier of a file to stop downloading */
+  file_id?: number,
+  /**
+   * Pass true to stop downloading only if it hasn't been started, i.e. request hasn't
+   * been sent to server
+   */
+  only_if_pending?: boolean,
+|}
+
+/**
+ * Asynchronously uploads a file to the cloud without sending it in a message. updateFile
+ * will be used to notify about upload progress and successful completion of the upload.
+ * The file will not have a persistent remote identifier until it will be sent in a
+ * message
+ */
+export type uploadFile = {|
+  _: 'uploadFile',
+  /** File to upload */
+  file?: InputFileOptional,
+  /** File type */
+  file_type?: FileTypeOptional,
+  /**
+   * Priority of the upload (1-32). The higher the priority, the earlier the file will
+   * be uploaded. If the priorities of two files are equal, then the first one for which
+   * uploadFile was called will be uploaded first
+   */
+  priority?: number,
+|}
+
+/**
+ * Stops the uploading of a file. Supported only for files uploaded by using uploadFile.
+ * For other files the behavior is undefined
+ */
+export type cancelUploadFile = {|
+  _: 'cancelUploadFile',
+  /** Identifier of the file to stop uploading */
+  file_id?: number,
+|}
+
+/** The next part of a file was generated */
+export type setFileGenerationProgress = {|
+  _: 'setFileGenerationProgress',
+  /** The identifier of the generation process */
+  generation_id?: (number | string),
+  /** Expected size of the generated file, in bytes; 0 if unknown */
+  expected_size?: number,
+  /** The number of bytes already generated */
+  local_prefix_size?: number,
+|}
+
+/** Finishes the file generation */
+export type finishFileGeneration = {|
+  _: 'finishFileGeneration',
+  /** The identifier of the generation process */
+  generation_id?: (number | string),
+  /** If set, means that file generation has failed and should be terminated */
+  error?: errorOptional,
+|}
+
+/** Deletes a file from the TDLib file cache */
+export type deleteFile = {|
+  _: 'deleteFile',
+  /** Identifier of the file to delete */
+  file_id?: number,
+|}
+
+/**
+ * Generates a new invite link for a chat; the previously generated link is revoked.
+ * Available for basic groups, supergroups, and channels. In basic groups this can be
+ * called only by the group's creator; in supergroups and channels this requires appropriate
+ * administrator rights
+ */
+export type generateChatInviteLink = {|
+  _: 'generateChatInviteLink',
+  /** Chat identifier */
+  chat_id?: number,
+|}
+
+/**
+ * Checks the validity of an invite link for a chat and returns information about the
+ * corresponding chat
+ */
+export type checkChatInviteLink = {|
+  _: 'checkChatInviteLink',
+  /**
+   * Invite link to be checked; should begin with "https://t.me/joinchat/", "https://telegram.me/joinchat/",
+   * or "https://telegram.dog/joinchat/"
+   */
+  invite_link?: string,
+|}
+
+/**
+ * Uses an invite link to add the current user to the chat if possible. The new member
+ * will not be added until the chat state has been synchronized with the server
+ */
+export type joinChatByInviteLink = {|
+  _: 'joinChatByInviteLink',
+  /**
+   * Invite link to import; should begin with "https://t.me/joinchat/", "https://telegram.me/joinchat/",
+   * or "https://telegram.dog/joinchat/"
+   */
+  invite_link?: string,
+|}
+
+/** Creates a new call */
+export type createCall = {|
+  _: 'createCall',
+  /** Identifier of the user to be called */
+  user_id?: number,
+  /** Description of the call protocols supported by the client */
+  protocol?: callProtocolOptional,
+|}
+
+/** Accepts an incoming call */
+export type acceptCall = {|
+  _: 'acceptCall',
+  /** Call identifier */
+  call_id?: number,
+  /** Description of the call protocols supported by the client */
+  protocol?: callProtocolOptional,
+|}
+
+/** Discards a call */
+export type discardCall = {|
+  _: 'discardCall',
+  /** Call identifier */
+  call_id?: number,
+  /** True, if the user was disconnected */
+  is_disconnected?: boolean,
+  /** The call duration, in seconds */
+  duration?: number,
+  /** Identifier of the connection used during the call */
+  connection_id?: (number | string),
+|}
+
+/** Sends a call rating */
+export type sendCallRating = {|
+  _: 'sendCallRating',
+  /** Call identifier */
+  call_id?: number,
+  /** Call rating; 1-5 */
+  rating?: number,
+  /** An optional user comment if the rating is less than 5 */
+  comment?: string,
+|}
+
+/** Sends debug information for a call */
+export type sendCallDebugInformation = {|
+  _: 'sendCallDebugInformation',
+  /** Call identifier */
+  call_id?: number,
+  /** Debug information in application-specific format */
+  debug_information?: string,
+|}
+
+/** Adds a user to the blacklist */
+export type blockUser = {|
+  _: 'blockUser',
+  /** User identifier */
+  user_id?: number,
+|}
+
+/** Removes a user from the blacklist */
+export type unblockUser = {|
+  _: 'unblockUser',
+  /** User identifier */
+  user_id?: number,
+|}
+
+/** Returns users that were blocked by the current user */
+export type getBlockedUsers = {|
+  _: 'getBlockedUsers',
+  /** Number of users to skip in the result; must be non-negative */
+  offset?: number,
+  /** Maximum number of users to return; up to 100 */
+  limit?: number,
+|}
+
+/** Adds new contacts or edits existing contacts; contacts' user identifiers are ignored */
+export type importContacts = {|
+  _: 'importContacts',
+  /** The list of contacts to import or edit */
+  contacts?: contactOptional[],
+|}
+
+/**
+ * Searches for the specified query in the first names, last names and usernames of
+ * the known user contacts
+ */
+export type searchContacts = {|
+  _: 'searchContacts',
+  /** Query to search for; can be empty to return all contacts */
+  query?: string,
+  /** Maximum number of users to be returned */
+  limit?: number,
+|}
+
+/** Removes users from the contacts list */
+export type removeContacts = {|
+  _: 'removeContacts',
+  /** Identifiers of users to be deleted */
+  user_ids?: number[],
+|}
+
+/** Returns the total number of imported contacts */
+export type getImportedContactCount = {|
+  _: 'getImportedContactCount',
+|}
+
+/**
+ * Changes imported contacts using the list of current user contacts saved on the device.
+ * Imports newly added contacts and, if at least the file database is enabled, deletes
+ * recently deleted contacts. Query result depends on the result of the previous query,
+ * so only one query is possible at the same time
+ */
+export type changeImportedContacts = {|
+  _: 'changeImportedContacts',
+  /** The new list of contacts */
+  contacts?: contactOptional[],
+|}
+
+/** Clears all imported contacts */
+export type clearImportedContacts = {|
+  _: 'clearImportedContacts',
+|}
+
+/**
+ * Returns the profile photos of a user. The result of this query may be outdated: some
+ * photos might have been deleted already
+ */
+export type getUserProfilePhotos = {|
+  _: 'getUserProfilePhotos',
+  /** User identifier */
+  user_id?: number,
+  /** The number of photos to skip; must be non-negative */
+  offset?: number,
+  /** Maximum number of photos to be returned; up to 100 */
+  limit?: number,
+|}
+
+/**
+ * Returns stickers from the installed sticker sets that correspond to a given emoji.
+ * If the emoji is not empty, favorite and recently used stickers may also be returned
+ */
+export type getStickers = {|
+  _: 'getStickers',
+  /** String representation of emoji. If empty, returns all known installed stickers */
+  emoji?: string,
+  /** Maximum number of stickers to be returned */
+  limit?: number,
+|}
+
+/** Searches for stickers from public sticker sets that correspond to a given emoji */
+export type searchStickers = {|
+  _: 'searchStickers',
+  /** String representation of emoji; must be non-empty */
+  emoji?: string,
+  /** Maximum number of stickers to be returned */
+  limit?: number,
+|}
+
+/** Returns a list of installed sticker sets */
+export type getInstalledStickerSets = {|
+  _: 'getInstalledStickerSets',
+  /** Pass true to return mask sticker sets; pass false to return ordinary sticker sets */
+  is_masks?: boolean,
+|}
+
+/** Returns a list of archived sticker sets */
+export type getArchivedStickerSets = {|
+  _: 'getArchivedStickerSets',
+  /** Pass true to return mask stickers sets; pass false to return ordinary sticker sets */
+  is_masks?: boolean,
+  /** Identifier of the sticker set from which to return the result */
+  offset_sticker_set_id?: (number | string),
+  /** Maximum number of sticker sets to return */
+  limit?: number,
+|}
+
+/** Returns a list of trending sticker sets */
+export type getTrendingStickerSets = {|
+  _: 'getTrendingStickerSets',
+|}
+
+/**
+ * Returns a list of sticker sets attached to a file. Currently only photos and videos
+ * can have attached sticker sets
+ */
+export type getAttachedStickerSets = {|
+  _: 'getAttachedStickerSets',
+  /** File identifier */
+  file_id?: number,
+|}
+
+/** Returns information about a sticker set by its identifier */
+export type getStickerSet = {|
+  _: 'getStickerSet',
+  /** Identifier of the sticker set */
+  set_id?: (number | string),
+|}
+
+/** Searches for a sticker set by its name */
+export type searchStickerSet = {|
+  _: 'searchStickerSet',
+  /** Name of the sticker set */
+  name?: string,
+|}
+
+/**
+ * Searches for installed sticker sets by looking for specified query in their title
+ * and name
+ */
+export type searchInstalledStickerSets = {|
+  _: 'searchInstalledStickerSets',
+  /** Pass true to return mask sticker sets; pass false to return ordinary sticker sets */
+  is_masks?: boolean,
+  /** Query to search for */
+  query?: string,
+  /** Maximum number of sticker sets to return */
+  limit?: number,
+|}
+
+/**
+ * Searches for ordinary sticker sets by looking for specified query in their title
+ * and name. Excludes installed sticker sets from the results
+ */
+export type searchStickerSets = {|
+  _: 'searchStickerSets',
+  /** Query to search for */
+  query?: string,
+|}
+
+/** Installs/uninstalls or activates/archives a sticker set */
+export type changeStickerSet = {|
+  _: 'changeStickerSet',
+  /** Identifier of the sticker set */
+  set_id?: (number | string),
+  /** The new value of is_installed */
+  is_installed?: boolean,
+  /** The new value of is_archived. A sticker set can't be installed and archived simultaneously */
+  is_archived?: boolean,
+|}
+
+/** Informs the server that some trending sticker sets have been viewed by the user */
+export type viewTrendingStickerSets = {|
+  _: 'viewTrendingStickerSets',
+  /** Identifiers of viewed trending sticker sets */
+  sticker_set_ids?: (number | string)[],
+|}
+
+/** Changes the order of installed sticker sets */
+export type reorderInstalledStickerSets = {|
+  _: 'reorderInstalledStickerSets',
+  /**
+   * Pass true to change the order of mask sticker sets; pass false to change the order
+   * of ordinary sticker sets
+   */
+  is_masks?: boolean,
+  /** Identifiers of installed sticker sets in the new correct order */
+  sticker_set_ids?: (number | string)[],
+|}
+
+/** Returns a list of recently used stickers */
+export type getRecentStickers = {|
+  _: 'getRecentStickers',
+  /**
+   * Pass true to return stickers and masks that were recently attached to photos or video
+   * files; pass false to return recently sent stickers
+   */
+  is_attached?: boolean,
+|}
+
+/**
+ * Manually adds a new sticker to the list of recently used stickers. The new sticker
+ * is added to the top of the list. If the sticker was already in the list, it is removed
+ * from the list first. Only stickers belonging to a sticker set can be added to this
+ * list
+ */
+export type addRecentSticker = {|
+  _: 'addRecentSticker',
+  /**
+   * Pass true to add the sticker to the list of stickers recently attached to photo or
+   * video files; pass false to add the sticker to the list of recently sent stickers
+   */
+  is_attached?: boolean,
+  /** Sticker file to add */
+  sticker?: InputFileOptional,
+|}
+
+/** Removes a sticker from the list of recently used stickers */
+export type removeRecentSticker = {|
+  _: 'removeRecentSticker',
+  /**
+   * Pass true to remove the sticker from the list of stickers recently attached to photo
+   * or video files; pass false to remove the sticker from the list of recently sent stickers
+   */
+  is_attached?: boolean,
+  /** Sticker file to delete */
+  sticker?: InputFileOptional,
+|}
+
+/** Clears the list of recently used stickers */
+export type clearRecentStickers = {|
+  _: 'clearRecentStickers',
+  /**
+   * Pass true to clear the list of stickers recently attached to photo or video files;
+   * pass false to clear the list of recently sent stickers
+   */
+  is_attached?: boolean,
+|}
+
+/** Returns favorite stickers */
+export type getFavoriteStickers = {|
+  _: 'getFavoriteStickers',
+|}
+
+/**
+ * Adds a new sticker to the list of favorite stickers. The new sticker is added to
+ * the top of the list. If the sticker was already in the list, it is removed from the
+ * list first. Only stickers belonging to a sticker set can be added to this list
+ */
+export type addFavoriteSticker = {|
+  _: 'addFavoriteSticker',
+  /** Sticker file to add */
+  sticker?: InputFileOptional,
+|}
+
+/** Removes a sticker from the list of favorite stickers */
+export type removeFavoriteSticker = {|
+  _: 'removeFavoriteSticker',
+  /** Sticker file to delete from the list */
+  sticker?: InputFileOptional,
+|}
+
+/** Returns emoji corresponding to a sticker */
+export type getStickerEmojis = {|
+  _: 'getStickerEmojis',
+  /** Sticker file identifier */
+  sticker?: InputFileOptional,
+|}
+
+/** Returns saved animations */
+export type getSavedAnimations = {|
+  _: 'getSavedAnimations',
+|}
+
+/**
+ * Manually adds a new animation to the list of saved animations. The new animation
+ * is added to the beginning of the list. If the animation was already in the list,
+ * it is removed first. Only non-secret video animations with MIME type "video/mp4"
+ * can be added to the list
+ */
+export type addSavedAnimation = {|
+  _: 'addSavedAnimation',
+  /**
+   * The animation file to be added. Only animations known to the server (i.e. successfully
+   * sent via a message) can be added to the list
+   */
+  animation?: InputFileOptional,
+|}
+
+/** Removes an animation from the list of saved animations */
+export type removeSavedAnimation = {|
+  _: 'removeSavedAnimation',
+  /** Animation file to be removed */
+  animation?: InputFileOptional,
+|}
+
+/** Returns up to 20 recently used inline bots in the order of their last usage */
+export type getRecentInlineBots = {|
+  _: 'getRecentInlineBots',
+|}
+
+/** Searches for recently used hashtags by their prefix */
+export type searchHashtags = {|
+  _: 'searchHashtags',
+  /** Hashtag prefix to search for */
+  prefix?: string,
+  /** Maximum number of hashtags to be returned */
+  limit?: number,
+|}
+
+/** Removes a hashtag from the list of recently used hashtags */
+export type removeRecentHashtag = {|
+  _: 'removeRecentHashtag',
+  /** Hashtag to delete */
+  hashtag?: string,
+|}
+
+/**
+ * Returns a web page preview by the text of the message. Do not call this function
+ * too often. Returns a 404 error if the web page has no preview
+ */
+export type getWebPagePreview = {|
+  _: 'getWebPagePreview',
+  /** Message text with formatting */
+  text?: formattedTextOptional,
+|}
+
+/**
+ * Returns an instant view version of a web page if available. Returns a 404 error if
+ * the web page has no instant view page
+ */
+export type getWebPageInstantView = {|
+  _: 'getWebPageInstantView',
+  /** The web page URL */
+  url?: string,
+  /** If true, the full instant view for the web page will be returned */
+  force_full?: boolean,
+|}
+
+/** Returns the notification settings for a given scope */
+export type getNotificationSettings = {|
+  _: 'getNotificationSettings',
+  /** Scope for which to return the notification settings information */
+  scope?: NotificationSettingsScopeOptional,
+|}
+
+/** Changes notification settings for a given scope */
+export type setNotificationSettings = {|
+  _: 'setNotificationSettings',
+  /** Scope for which to change the notification settings */
+  scope?: NotificationSettingsScopeOptional,
+  /** The new notification settings for the given scope */
+  notification_settings?: notificationSettingsOptional,
+|}
+
+/**
+ * Resets all notification settings to their default values. By default, the only muted
+ * chats are supergroups, the sound is set to "default" and message previews are shown
+ */
 export type resetAllNotificationSettings = {|
   _: 'resetAllNotificationSettings',
 |}
 
-export type resetAllNotificationSettingsReturnType = ok
-
-export type resetNetworkStatistics = {|
-  _: 'resetNetworkStatistics',
-|}
-
-export type resetNetworkStatisticsReturnType = ok
-
-export type searchCallMessages = {|
-  _: 'searchCallMessages',
-  from_message_id?: number,
-  limit?: number,
-  only_missed?: boolean,
-|}
-
-export type searchCallMessagesReturnType = messages
-
-export type searchChatMembers = {|
-  _: 'searchChatMembers',
-  chat_id?: number,
-  query?: string,
-  limit?: number,
-|}
-
-export type searchChatMembersReturnType = chatMembers
-
-export type searchChatMessages = {|
-  _: 'searchChatMessages',
-  chat_id?: number,
-  query?: string,
-  sender_user_id?: number,
-  from_message_id?: number,
-  offset?: number,
-  limit?: number,
-  filter?: SearchMessagesFilterOptional,
-|}
-
-export type searchChatMessagesReturnType = messages
-
-export type searchChatRecentLocationMessages = {|
-  _: 'searchChatRecentLocationMessages',
-  chat_id?: number,
-  limit?: number,
-|}
-
-export type searchChatRecentLocationMessagesReturnType = messages
-
-export type searchChats = {|
-  _: 'searchChats',
-  query?: string,
-  limit?: number,
-|}
-
-export type searchChatsReturnType = chats
-
-export type searchChatsOnServer = {|
-  _: 'searchChatsOnServer',
-  query?: string,
-  limit?: number,
-|}
-
-export type searchChatsOnServerReturnType = chats
-
-export type searchContacts = {|
-  _: 'searchContacts',
-  query?: string,
-  limit?: number,
-|}
-
-export type searchContactsReturnType = users
-
-export type searchHashtags = {|
-  _: 'searchHashtags',
-  prefix?: string,
-  limit?: number,
-|}
-
-export type searchHashtagsReturnType = hashtags
-
-export type searchInstalledStickerSets = {|
-  _: 'searchInstalledStickerSets',
-  is_masks?: boolean,
-  query?: string,
-  limit?: number,
-|}
-
-export type searchInstalledStickerSetsReturnType = stickerSets
-
-export type searchMessages = {|
-  _: 'searchMessages',
-  query?: string,
-  offset_date?: number,
-  offset_chat_id?: number,
-  offset_message_id?: number,
-  limit?: number,
-|}
-
-export type searchMessagesReturnType = messages
-
-export type searchPublicChat = {|
-  _: 'searchPublicChat',
-  username?: string,
-|}
-
-export type searchPublicChatReturnType = chat
-
-export type searchPublicChats = {|
-  _: 'searchPublicChats',
-  query?: string,
-|}
-
-export type searchPublicChatsReturnType = chats
-
-export type searchSecretMessages = {|
-  _: 'searchSecretMessages',
-  chat_id?: number,
-  query?: string,
-  from_search_id?: number,
-  limit?: number,
-  filter?: SearchMessagesFilterOptional,
-|}
-
-export type searchSecretMessagesReturnType = foundMessages
-
-export type searchStickerSet = {|
-  _: 'searchStickerSet',
-  name?: string,
-|}
-
-export type searchStickerSetReturnType = stickerSet
-
-export type searchStickerSets = {|
-  _: 'searchStickerSets',
-  query?: string,
-|}
-
-export type searchStickerSetsReturnType = stickerSets
-
-export type searchStickers = {|
-  _: 'searchStickers',
-  emoji?: string,
-  limit?: number,
-|}
-
-export type searchStickersReturnType = stickers
-
-export type sendBotStartMessage = {|
-  _: 'sendBotStartMessage',
-  bot_user_id?: number,
-  chat_id?: number,
-  parameter?: string,
-|}
-
-export type sendBotStartMessageReturnType = message
-
-export type sendCallDebugInformation = {|
-  _: 'sendCallDebugInformation',
-  call_id?: number,
-  debug_information?: string,
-|}
-
-export type sendCallDebugInformationReturnType = ok
-
-export type sendCallRating = {|
-  _: 'sendCallRating',
-  call_id?: number,
-  rating?: number,
-  comment?: string,
-|}
-
-export type sendCallRatingReturnType = ok
-
-export type sendChatAction = {|
-  _: 'sendChatAction',
-  chat_id?: number,
-  action?: ChatActionOptional,
-|}
-
-export type sendChatActionReturnType = ok
-
-export type sendChatScreenshotTakenNotification = {|
-  _: 'sendChatScreenshotTakenNotification',
-  chat_id?: number,
-|}
-
-export type sendChatScreenshotTakenNotificationReturnType = ok
-
-export type sendChatSetTtlMessage = {|
-  _: 'sendChatSetTtlMessage',
-  chat_id?: number,
-  ttl?: number,
-|}
-
-export type sendChatSetTtlMessageReturnType = message
-
-export type sendCustomRequest = {|
-  _: 'sendCustomRequest',
-  method?: string,
-  parameters?: string,
-|}
-
-export type sendCustomRequestReturnType = customRequestResult
-
-export type sendInlineQueryResultMessage = {|
-  _: 'sendInlineQueryResultMessage',
-  chat_id?: number,
-  reply_to_message_id?: number,
-  disable_notification?: boolean,
-  from_background?: boolean,
-  query_id?: number,
-  result_id?: string,
-|}
-
-export type sendInlineQueryResultMessageReturnType = message
-
-export type sendMessage = {|
-  _: 'sendMessage',
-  chat_id?: number,
-  reply_to_message_id?: number,
-  disable_notification?: boolean,
-  from_background?: boolean,
-  reply_markup?: ReplyMarkupOptional,
-  input_message_content?: InputMessageContentOptional,
-|}
-
-export type sendMessageReturnType = message
-
-export type sendMessageAlbum = {|
-  _: 'sendMessageAlbum',
-  chat_id?: number,
-  reply_to_message_id?: number,
-  disable_notification?: boolean,
-  from_background?: boolean,
-  input_message_contents?: InputMessageContentOptional[],
-|}
-
-export type sendMessageAlbumReturnType = messages
-
-export type sendPaymentForm = {|
-  _: 'sendPaymentForm',
-  chat_id?: number,
-  message_id?: number,
-  order_info_id?: string,
-  shipping_option_id?: string,
-  credentials?: InputCredentialsOptional,
-|}
-
-export type sendPaymentFormReturnType = paymentResult
-
-export type setAccountTtl = {|
-  _: 'setAccountTtl',
-  ttl?: accountTtlOptional,
-|}
-
-export type setAccountTtlReturnType = ok
-
-export type setAlarm = {|
-  _: 'setAlarm',
-  seconds?: number,
-|}
-
-export type setAlarmReturnType = ok
-
-export type setAuthenticationPhoneNumber = {|
-  _: 'setAuthenticationPhoneNumber',
-  phone_number?: string,
-  allow_flash_call?: boolean,
-  is_current_phone_number?: boolean,
-|}
-
-export type setAuthenticationPhoneNumberReturnType = ok
-
-export type setBio = {|
-  _: 'setBio',
-  bio?: string,
-|}
-
-export type setBioReturnType = ok
-
-export type setBotUpdatesStatus = {|
-  _: 'setBotUpdatesStatus',
-  pending_update_count?: number,
-  error_message?: string,
-|}
-
-export type setBotUpdatesStatusReturnType = ok
-
-export type setChatClientData = {|
-  _: 'setChatClientData',
-  chat_id?: number,
-  client_data?: string,
-|}
-
-export type setChatClientDataReturnType = ok
-
-export type setChatDraftMessage = {|
-  _: 'setChatDraftMessage',
-  chat_id?: number,
-  draft_message?: draftMessageOptional,
-|}
-
-export type setChatDraftMessageReturnType = ok
-
-export type setChatMemberStatus = {|
-  _: 'setChatMemberStatus',
-  chat_id?: number,
-  user_id?: number,
-  status?: ChatMemberStatusOptional,
-|}
-
-export type setChatMemberStatusReturnType = ok
-
-export type setChatPhoto = {|
-  _: 'setChatPhoto',
-  chat_id?: number,
+/**
+ * Uploads a new profile photo for the current user. If something changes, updateUser
+ * will be sent
+ */
+export type setProfilePhoto = {|
+  _: 'setProfilePhoto',
+  /** Profile photo to set. inputFileId and inputFileRemote may still be unsupported */
   photo?: InputFileOptional,
 |}
 
-export type setChatPhotoReturnType = ok
-
-export type setChatTitle = {|
-  _: 'setChatTitle',
-  chat_id?: number,
-  title?: string,
+/** Deletes a profile photo. If something changes, updateUser will be sent */
+export type deleteProfilePhoto = {|
+  _: 'deleteProfilePhoto',
+  /** Identifier of the profile photo to delete */
+  profile_photo_id?: (number | string),
 |}
 
-export type setChatTitleReturnType = ok
-
-export type setDatabaseEncryptionKey = {|
-  _: 'setDatabaseEncryptionKey',
-  new_encryption_key?: string,
-|}
-
-export type setDatabaseEncryptionKeyReturnType = ok
-
-export type setFileGenerationProgress = {|
-  _: 'setFileGenerationProgress',
-  generation_id?: number,
-  expected_size?: number,
-  local_prefix_size?: number,
-|}
-
-export type setFileGenerationProgressReturnType = ok
-
-export type setGameScore = {|
-  _: 'setGameScore',
-  chat_id?: number,
-  message_id?: number,
-  edit_message?: boolean,
-  user_id?: number,
-  score?: number,
-  force?: boolean,
-|}
-
-export type setGameScoreReturnType = message
-
-export type setInlineGameScore = {|
-  _: 'setInlineGameScore',
-  inline_message_id?: string,
-  edit_message?: boolean,
-  user_id?: number,
-  score?: number,
-  force?: boolean,
-|}
-
-export type setInlineGameScoreReturnType = ok
-
+/**
+ * Changes the first and last name of the current user. If something changes, updateUser
+ * will be sent
+ */
 export type setName = {|
   _: 'setName',
+  /** The new value of the first name for the user; 1-255 characters */
   first_name?: string,
+  /** The new value of the optional last name for the user; 0-255 characters */
   last_name?: string,
 |}
 
-export type setNameReturnType = ok
-
-export type setNetworkType = {|
-  _: 'setNetworkType',
-  type?: NetworkTypeOptional,
+/** Changes the bio of the current user */
+export type setBio = {|
+  _: 'setBio',
+  /** The new value of the user bio; 0-70 characters without line feeds */
+  bio?: string,
 |}
 
-export type setNetworkTypeReturnType = ok
-
-export type setNotificationSettings = {|
-  _: 'setNotificationSettings',
-  scope?: NotificationSettingsScopeOptional,
-  notification_settings?: notificationSettingsOptional,
-|}
-
-export type setNotificationSettingsReturnType = ok
-
-export type setOption = {|
-  _: 'setOption',
-  name?: string,
-  value?: OptionValueOptional,
-|}
-
-export type setOptionReturnType = ok
-
-export type setPassword = {|
-  _: 'setPassword',
-  old_password?: string,
-  new_password?: string,
-  new_hint?: string,
-  set_recovery_email_address?: boolean,
-  new_recovery_email_address?: string,
-|}
-
-export type setPasswordReturnType = passwordState
-
-export type setPinnedChats = {|
-  _: 'setPinnedChats',
-  chat_ids?: number[],
-|}
-
-export type setPinnedChatsReturnType = ok
-
-export type setProfilePhoto = {|
-  _: 'setProfilePhoto',
-  photo?: InputFileOptional,
-|}
-
-export type setProfilePhotoReturnType = ok
-
-export type setProxy = {|
-  _: 'setProxy',
-  proxy?: ProxyOptional,
-|}
-
-export type setProxyReturnType = ok
-
-export type setRecoveryEmailAddress = {|
-  _: 'setRecoveryEmailAddress',
-  password?: string,
-  new_recovery_email_address?: string,
-|}
-
-export type setRecoveryEmailAddressReturnType = passwordState
-
-export type setStickerPositionInSet = {|
-  _: 'setStickerPositionInSet',
-  sticker?: InputFileOptional,
-  position?: number,
-|}
-
-export type setStickerPositionInSetReturnType = ok
-
-export type setSupergroupDescription = {|
-  _: 'setSupergroupDescription',
-  supergroup_id?: number,
-  description?: string,
-|}
-
-export type setSupergroupDescriptionReturnType = ok
-
-export type setSupergroupStickerSet = {|
-  _: 'setSupergroupStickerSet',
-  supergroup_id?: number,
-  sticker_set_id?: number,
-|}
-
-export type setSupergroupStickerSetReturnType = ok
-
-export type setSupergroupUsername = {|
-  _: 'setSupergroupUsername',
-  supergroup_id?: number,
-  username?: string,
-|}
-
-export type setSupergroupUsernameReturnType = ok
-
-export type setTdlibParameters = {|
-  _: 'setTdlibParameters',
-  parameters?: tdlibParametersOptional,
-|}
-
-export type setTdlibParametersReturnType = ok
-
-export type setUserPrivacySettingRules = {|
-  _: 'setUserPrivacySettingRules',
-  setting?: UserPrivacySettingOptional,
-  rules?: userPrivacySettingRulesOptional,
-|}
-
-export type setUserPrivacySettingRulesReturnType = ok
-
+/**
+ * Changes the username of the current user. If something changes, updateUser will be
+ * sent
+ */
 export type setUsername = {|
   _: 'setUsername',
+  /** The new value of the username. Use an empty string to remove the username */
   username?: string,
 |}
 
-export type setUsernameReturnType = ok
+/**
+ * Changes the phone number of the user and sends an authentication code to the user's
+ * new phone number. On success, returns information about the sent code
+ */
+export type changePhoneNumber = {|
+  _: 'changePhoneNumber',
+  /** The new phone number of the user in international format */
+  phone_number?: string,
+  /** Pass true if the code can be sent via flash call to the specified phone number */
+  allow_flash_call?: boolean,
+  /**
+   * Pass true if the phone number is used on the current device. Ignored if allow_flash_call
+   * is false
+   */
+  is_current_phone_number?: boolean,
+|}
 
+/**
+ * Re-sends the authentication code sent to confirm a new phone number for the user.
+ * Works only if the previously received authenticationCodeInfo next_code_type was not
+ * null
+ */
+export type resendChangePhoneNumberCode = {|
+  _: 'resendChangePhoneNumberCode',
+|}
+
+/** Checks the authentication code sent to confirm a new phone number of the user */
+export type checkChangePhoneNumberCode = {|
+  _: 'checkChangePhoneNumberCode',
+  /** Verification code received by SMS, phone call or flash call */
+  code?: string,
+|}
+
+/** Returns all active sessions of the current user */
+export type getActiveSessions = {|
+  _: 'getActiveSessions',
+|}
+
+/** Terminates a session of the current user */
+export type terminateSession = {|
+  _: 'terminateSession',
+  /** Session identifier */
+  session_id?: (number | string),
+|}
+
+/** Terminates all other sessions of the current user */
 export type terminateAllOtherSessions = {|
   _: 'terminateAllOtherSessions',
 |}
 
-export type terminateAllOtherSessionsReturnType = ok
-
-export type terminateSession = {|
-  _: 'terminateSession',
-  session_id?: number,
+/** Returns all website where the current user used Telegram to log in */
+export type getConnectedWebsites = {|
+  _: 'getConnectedWebsites',
 |}
 
-export type terminateSessionReturnType = ok
-
-export type testCallBytes = {|
-  _: 'testCallBytes',
-  x?: string,
+/** Disconnects website from the current user's Telegram account */
+export type disconnectWebsite = {|
+  _: 'disconnectWebsite',
+  /** Website identifier */
+  website_id?: (number | string),
 |}
 
-export type testCallBytesReturnType = testBytes
+/** Disconnects all websites from the current user's Telegram account */
+export type disconnectAllWebsites = {|
+  _: 'disconnectAllWebsites',
+|}
 
+/**
+ * Toggles the "All members are admins" setting in basic groups; requires creator privileges
+ * in the group
+ */
+export type toggleBasicGroupAdministrators = {|
+  _: 'toggleBasicGroupAdministrators',
+  /** Identifier of the basic group */
+  basic_group_id?: number,
+  /** New value of everyone_is_administrator */
+  everyone_is_administrator?: boolean,
+|}
+
+/**
+ * Changes the username of a supergroup or channel, requires creator privileges in the
+ * supergroup or channel
+ */
+export type setSupergroupUsername = {|
+  _: 'setSupergroupUsername',
+  /** Identifier of the supergroup or channel */
+  supergroup_id?: number,
+  /** New value of the username. Use an empty string to remove the username */
+  username?: string,
+|}
+
+/** Changes the sticker set of a supergroup; requires appropriate rights in the supergroup */
+export type setSupergroupStickerSet = {|
+  _: 'setSupergroupStickerSet',
+  /** Identifier of the supergroup */
+  supergroup_id?: number,
+  /**
+   * New value of the supergroup sticker set identifier. Use 0 to remove the supergroup
+   * sticker set
+   */
+  sticker_set_id?: (number | string),
+|}
+
+/**
+ * Toggles whether all members of a supergroup can add new members; requires appropriate
+ * administrator rights in the supergroup.
+ */
+export type toggleSupergroupInvites = {|
+  _: 'toggleSupergroupInvites',
+  /** Identifier of the supergroup */
+  supergroup_id?: number,
+  /** New value of anyone_can_invite */
+  anyone_can_invite?: boolean,
+|}
+
+/**
+ * Toggles sender signatures messages sent in a channel; requires appropriate administrator
+ * rights in the channel.
+ */
+export type toggleSupergroupSignMessages = {|
+  _: 'toggleSupergroupSignMessages',
+  /** Identifier of the channel */
+  supergroup_id?: number,
+  /** New value of sign_messages */
+  sign_messages?: boolean,
+|}
+
+/**
+ * Toggles whether the message history of a supergroup is available to new members;
+ * requires appropriate administrator rights in the supergroup.
+ */
+export type toggleSupergroupIsAllHistoryAvailable = {|
+  _: 'toggleSupergroupIsAllHistoryAvailable',
+  /** The identifier of the supergroup */
+  supergroup_id?: number,
+  /** The new value of is_all_history_available */
+  is_all_history_available?: boolean,
+|}
+
+/**
+ * Changes information about a supergroup or channel; requires appropriate administrator
+ * rights
+ */
+export type setSupergroupDescription = {|
+  _: 'setSupergroupDescription',
+  /** Identifier of the supergroup or channel */
+  supergroup_id?: number,
+  /** New supergroup or channel description; 0-255 characters */
+  description?: string,
+|}
+
+/**
+ * Pins a message in a supergroup or channel; requires appropriate administrator rights
+ * in the supergroup or channel
+ */
+export type pinSupergroupMessage = {|
+  _: 'pinSupergroupMessage',
+  /** Identifier of the supergroup or channel */
+  supergroup_id?: number,
+  /** Identifier of the new pinned message */
+  message_id?: number,
+  /** True, if there should be no notification about the pinned message */
+  disable_notification?: boolean,
+|}
+
+/**
+ * Removes the pinned message from a supergroup or channel; requires appropriate administrator
+ * rights in the supergroup or channel
+ */
+export type unpinSupergroupMessage = {|
+  _: 'unpinSupergroupMessage',
+  /** Identifier of the supergroup or channel */
+  supergroup_id?: number,
+|}
+
+/** Reports some messages from a user in a supergroup as spam */
+export type reportSupergroupSpam = {|
+  _: 'reportSupergroupSpam',
+  /** Supergroup identifier */
+  supergroup_id?: number,
+  /** User identifier */
+  user_id?: number,
+  /** Identifiers of messages sent in the supergroup by the user. This list must be non-empty */
+  message_ids?: number[],
+|}
+
+/**
+ * Returns information about members or banned users in a supergroup or channel. Can
+ * be used only if SupergroupFullInfo.can_get_members == true; additionally, administrator
+ * privileges may be required for some filters
+ */
+export type getSupergroupMembers = {|
+  _: 'getSupergroupMembers',
+  /** Identifier of the supergroup or channel */
+  supergroup_id?: number,
+  /** The type of users to return. By default, supergroupMembersRecent */
+  filter?: SupergroupMembersFilterOptional,
+  /** Number of users to skip */
+  offset?: number,
+  /** The maximum number of users be returned; up to 200 */
+  limit?: number,
+|}
+
+/**
+ * Deletes a supergroup or channel along with all messages in the corresponding chat.
+ * This will release the supergroup or channel username and remove all members; requires
+ * creator privileges in the supergroup or channel. Chats with more than 1000 members
+ * can't be deleted using this method
+ */
+export type deleteSupergroup = {|
+  _: 'deleteSupergroup',
+  /** Identifier of the supergroup or channel */
+  supergroup_id?: number,
+|}
+
+/** Closes a secret chat, effectively transfering its state to secretChatStateClosed */
+export type closeSecretChat = {|
+  _: 'closeSecretChat',
+  /** Secret chat identifier */
+  secret_chat_id?: number,
+|}
+
+/**
+ * Returns a list of service actions taken by chat members and administrators in the
+ * last 48 hours. Available only in supergroups and channels. Requires administrator
+ * rights. Returns results in reverse chronological order (i. e., in order of decreasing
+ * event_id)
+ */
+export type getChatEventLog = {|
+  _: 'getChatEventLog',
+  /** Chat identifier */
+  chat_id?: number,
+  /** Search query by which to filter events */
+  query?: string,
+  /**
+   * Identifier of an event from which to return results. Use 0 to get results from the
+   * latest events
+   */
+  from_event_id?: (number | string),
+  /** Maximum number of events to return; up to 100 */
+  limit?: number,
+  /** The types of events to return. By default, all types will be returned */
+  filters?: chatEventLogFiltersOptional,
+  /**
+   * User identifiers by which to filter events. By default, events relating to all users
+   * will be returned
+   */
+  user_ids?: number[],
+|}
+
+/**
+ * Returns an invoice payment form. This method should be called when the user presses
+ * inlineKeyboardButtonBuy
+ */
+export type getPaymentForm = {|
+  _: 'getPaymentForm',
+  /** Chat identifier of the Invoice message */
+  chat_id?: number,
+  /** Message identifier */
+  message_id?: number,
+|}
+
+/**
+ * Validates the order information provided by a user and returns the available shipping
+ * options for a flexible invoice
+ */
+export type validateOrderInfo = {|
+  _: 'validateOrderInfo',
+  /** Chat identifier of the Invoice message */
+  chat_id?: number,
+  /** Message identifier */
+  message_id?: number,
+  /** The order information, provided by the user */
+  order_info?: orderInfoOptional,
+  /** True, if the order information can be saved */
+  allow_save?: boolean,
+|}
+
+/** Sends a filled-out payment form to the bot for final verification */
+export type sendPaymentForm = {|
+  _: 'sendPaymentForm',
+  /** Chat identifier of the Invoice message */
+  chat_id?: number,
+  /** Message identifier */
+  message_id?: number,
+  /** Identifier returned by ValidateOrderInfo, or an empty string */
+  order_info_id?: string,
+  /** Identifier of a chosen shipping option, if applicable */
+  shipping_option_id?: string,
+  /** The credentials chosen by user for payment */
+  credentials?: InputCredentialsOptional,
+|}
+
+/** Returns information about a successful payment */
+export type getPaymentReceipt = {|
+  _: 'getPaymentReceipt',
+  /** Chat identifier of the PaymentSuccessful message */
+  chat_id?: number,
+  /** Message identifier */
+  message_id?: number,
+|}
+
+/** Returns saved order info, if any */
+export type getSavedOrderInfo = {|
+  _: 'getSavedOrderInfo',
+|}
+
+/** Deletes saved order info */
+export type deleteSavedOrderInfo = {|
+  _: 'deleteSavedOrderInfo',
+|}
+
+/** Deletes saved credentials for all payment provider bots */
+export type deleteSavedCredentials = {|
+  _: 'deleteSavedCredentials',
+|}
+
+/** Returns a user that can be contacted to get support */
+export type getSupportUser = {|
+  _: 'getSupportUser',
+|}
+
+/** Returns background wallpapers */
+export type getWallpapers = {|
+  _: 'getWallpapers',
+|}
+
+/** Registers the currently used device for receiving push notifications */
+export type registerDevice = {|
+  _: 'registerDevice',
+  /** Device token */
+  device_token?: DeviceTokenOptional,
+  /** List of at most 100 user identifiers of other users currently using the client */
+  other_user_ids?: number[],
+|}
+
+/** Returns t.me URLs recently visited by a newly registered user */
+export type getRecentlyVisitedTMeUrls = {|
+  _: 'getRecentlyVisitedTMeUrls',
+  /** Google Play referrer to identify the user */
+  referrer?: string,
+|}
+
+/** Changes user privacy settings */
+export type setUserPrivacySettingRules = {|
+  _: 'setUserPrivacySettingRules',
+  /** The privacy setting */
+  setting?: UserPrivacySettingOptional,
+  /** The new privacy rules */
+  rules?: userPrivacySettingRulesOptional,
+|}
+
+/** Returns the current privacy settings */
+export type getUserPrivacySettingRules = {|
+  _: 'getUserPrivacySettingRules',
+  /** The privacy setting */
+  setting?: UserPrivacySettingOptional,
+|}
+
+/**
+ * Returns the value of an option by its name. (Check the list of available options
+ * on https://core.telegram.org/tdlib/options.) Can be called before authorization
+ */
+export type getOption = {|
+  _: 'getOption',
+  /** The name of the option */
+  name?: string,
+|}
+
+/**
+ * Sets the value of an option. (Check the list of available options on https://core.telegram.org/tdlib/options.)
+ * Only writable options can be set. Can be called before authorization
+ */
+export type setOption = {|
+  _: 'setOption',
+  /** The name of the option */
+  name?: string,
+  /** The new value of the option */
+  value?: OptionValueOptional,
+|}
+
+/**
+ * Changes the period of inactivity after which the account of the current user will
+ * automatically be deleted
+ */
+export type setAccountTtl = {|
+  _: 'setAccountTtl',
+  /** New account TTL */
+  ttl?: accountTtlOptional,
+|}
+
+/**
+ * Returns the period of inactivity after which the account of the current user will
+ * automatically be deleted
+ */
+export type getAccountTtl = {|
+  _: 'getAccountTtl',
+|}
+
+/**
+ * Deletes the account of the current user, deleting all information associated with
+ * the user from the server. The phone number of the account can be used to create a
+ * new account
+ */
+export type deleteAccount = {|
+  _: 'deleteAccount',
+  /** The reason why the account was deleted; optional */
+  reason?: string,
+|}
+
+/** Returns information on whether the current chat can be reported as spam */
+export type getChatReportSpamState = {|
+  _: 'getChatReportSpamState',
+  /** Chat identifier */
+  chat_id?: number,
+|}
+
+/**
+ * Used to let the server know whether a chat is spam or not. Can be used only if ChatReportSpamState.can_report_spam
+ * is true. After this request, ChatReportSpamState.can_report_spam becomes false forever
+ */
+export type changeChatReportSpamState = {|
+  _: 'changeChatReportSpamState',
+  /** Chat identifier */
+  chat_id?: number,
+  /** If true, the chat will be reported as spam; otherwise it will be marked as not spam */
+  is_spam_chat?: boolean,
+|}
+
+/**
+ * Reports a chat to the Telegram moderators. Supported only for supergroups, channels,
+ * or private chats with bots, since other chats can't be checked by moderators
+ */
+export type reportChat = {|
+  _: 'reportChat',
+  /** Chat identifier */
+  chat_id?: number,
+  /** The reason for reporting the chat */
+  reason?: ChatReportReasonOptional,
+  /** Identifiers of reported messages, if any */
+  message_ids?: number[],
+|}
+
+/** Returns storage usage statistics */
+export type getStorageStatistics = {|
+  _: 'getStorageStatistics',
+  /**
+   * Maximum number of chats with the largest storage usage for which separate statistics
+   * should be returned. All other chats will be grouped in entries with chat_id == 0.
+   * If the chat info database is not used, the chat_limit is ignored and is always set
+   * to 0
+   */
+  chat_limit?: number,
+|}
+
+/** Quickly returns approximate storage usage statistics */
+export type getStorageStatisticsFast = {|
+  _: 'getStorageStatisticsFast',
+|}
+
+/**
+ * Optimizes storage usage, i.e. deletes some files and returns new storage usage statistics.
+ * Secret thumbnails can't be deleted
+ */
+export type optimizeStorage = {|
+  _: 'optimizeStorage',
+  /** Limit on the total size of files after deletion. Pass -1 to use the default limit */
+  size?: number,
+  /**
+   * Limit on the time that has passed since the last time a file was accessed (or creation
+   * time for some filesystems). Pass -1 to use the default limit
+   */
+  ttl?: number,
+  /** Limit on the total count of files after deletion. Pass -1 to use the default limit */
+  count?: number,
+  /**
+   * The amount of time after the creation of a file during which it can't be deleted,
+   * in seconds. Pass -1 to use the default value
+   */
+  immunity_delay?: number,
+  /**
+   * If not empty, only files with the given type(s) are considered. By default, all types
+   * except thumbnails, profile photos, stickers and wallpapers are deleted
+   */
+  file_types?: FileTypeOptional[],
+  /**
+   * If not empty, only files from the given chats are considered. Use 0 as chat identifier
+   * to delete files not belonging to any chat (e.g., profile photos)
+   */
+  chat_ids?: number[],
+  /**
+   * If not empty, files from the given chats are excluded. Use 0 as chat identifier to
+   * exclude all files not belonging to any chat (e.g., profile photos)
+   */
+  exclude_chat_ids?: number[],
+  /** Same as in getStorageStatistics. Affects only returned statistics */
+  chat_limit?: number,
+|}
+
+/**
+ * Sets the current network type. Can be called before authorization. Calling this method
+ * forces all network connections to reopen, mitigating the delay in switching between
+ * different networks, so it should be called whenever the network is changed, even
+ * if the network type remains the same. Network type is used to check whether the library
+ * can use the network at all and also for collecting detailed network data usage statistics
+ */
+export type setNetworkType = {|
+  _: 'setNetworkType',
+  /** The new network type. By default, networkTypeOther */
+  type?: NetworkTypeOptional,
+|}
+
+/** Returns network data usage statistics. Can be called before authorization */
+export type getNetworkStatistics = {|
+  _: 'getNetworkStatistics',
+  /** If true, returns only data for the current library launch */
+  only_current?: boolean,
+|}
+
+/** Adds the specified data to data usage statistics. Can be called before authorization */
+export type addNetworkStatistics = {|
+  _: 'addNetworkStatistics',
+  /** The network statistics entry with the data to be added to statistics */
+  entry?: NetworkStatisticsEntryOptional,
+|}
+
+/** Resets all network data usage statistics to zero. Can be called before authorization */
+export type resetNetworkStatistics = {|
+  _: 'resetNetworkStatistics',
+|}
+
+/**
+ * Informs the server about the number of pending bot updates if they haven't been processed
+ * for a long time; for bots only
+ */
+export type setBotUpdatesStatus = {|
+  _: 'setBotUpdatesStatus',
+  /** The number of pending updates */
+  pending_update_count?: number,
+  /** The last error message */
+  error_message?: string,
+|}
+
+/** Uploads a PNG image with a sticker; for bots only; returns the uploaded file */
+export type uploadStickerFile = {|
+  _: 'uploadStickerFile',
+  /** Sticker file owner */
+  user_id?: number,
+  /** PNG image with the sticker; must be up to 512 kB in size and fit in 512x512 square */
+  png_sticker?: InputFileOptional,
+|}
+
+/** Creates a new sticker set; for bots only. Returns the newly created sticker set */
+export type createNewStickerSet = {|
+  _: 'createNewStickerSet',
+  /** Sticker set owner */
+  user_id?: number,
+  /** Sticker set title; 1-64 characters */
+  title?: string,
+  /**
+   * Sticker set name. Can contain only English letters, digits and underscores. Must
+   * end with *"_by_<bot username>"* (*<bot_username>* is case insensitive); 1-64 characters
+   */
+  name?: string,
+  /** True, if stickers are masks */
+  is_masks?: boolean,
+  /** List of stickers to be added to the set */
+  stickers?: inputStickerOptional[],
+|}
+
+/** Adds a new sticker to a set; for bots only. Returns the sticker set */
+export type addStickerToSet = {|
+  _: 'addStickerToSet',
+  /** Sticker set owner */
+  user_id?: number,
+  /** Sticker set name */
+  name?: string,
+  /** Sticker to add to the set */
+  sticker?: inputStickerOptional,
+|}
+
+/**
+ * Changes the position of a sticker in the set to which it belongs; for bots only.
+ * The sticker set must have been created by the bot
+ */
+export type setStickerPositionInSet = {|
+  _: 'setStickerPositionInSet',
+  /** Sticker */
+  sticker?: InputFileOptional,
+  /** New position of the sticker in the set, zero-based */
+  position?: number,
+|}
+
+/**
+ * Removes a sticker from the set to which it belongs; for bots only. The sticker set
+ * must have been created by the bot
+ */
+export type removeStickerFromSet = {|
+  _: 'removeStickerFromSet',
+  /** Sticker */
+  sticker?: InputFileOptional,
+|}
+
+/** Sends a custom request; for bots only */
+export type sendCustomRequest = {|
+  _: 'sendCustomRequest',
+  /** The method name */
+  method?: string,
+  /** JSON-serialized method parameters */
+  parameters?: string,
+|}
+
+/** Answers a custom query; for bots only */
+export type answerCustomQuery = {|
+  _: 'answerCustomQuery',
+  /** Identifier of a custom query */
+  custom_query_id?: (number | string),
+  /** JSON-serialized answer to the query */
+  data?: string,
+|}
+
+/** Succeeds after a specified amount of time has passed. Can be called before authorization */
+export type setAlarm = {|
+  _: 'setAlarm',
+  /** Number of seconds before the function returns */
+  seconds?: number,
+|}
+
+/**
+ * Uses current user IP to found his country. Returns two-letter ISO 3166-1 alpha-2
+ * country code. Can be called before authorization
+ */
+export type getCountryCode = {|
+  _: 'getCountryCode',
+|}
+
+/**
+ * Returns the default text for invitation messages to be used as a placeholder when
+ * the current user invites friends to Telegram
+ */
+export type getInviteText = {|
+  _: 'getInviteText',
+|}
+
+/** Returns the terms of service. Can be called before authorization */
+export type getTermsOfService = {|
+  _: 'getTermsOfService',
+|}
+
+/** Sets the proxy server for network requests. Can be called before authorization */
+export type setProxy = {|
+  _: 'setProxy',
+  /** Proxy server to use. Specify null to remove the proxy server */
+  proxy?: ProxyOptional,
+|}
+
+/** Returns the proxy that is currently set up. Can be called before authorization */
+export type getProxy = {|
+  _: 'getProxy',
+|}
+
+/** Does nothing; for testing only */
 export type testCallEmpty = {|
   _: 'testCallEmpty',
 |}
 
-export type testCallEmptyReturnType = ok
-
+/** Returns the received string; for testing only */
 export type testCallString = {|
   _: 'testCallString',
+  /** String to return */
   x?: string,
 |}
 
-export type testCallStringReturnType = testString
+/** Returns the received bytes; for testing only */
+export type testCallBytes = {|
+  _: 'testCallBytes',
+  /** Bytes to return */
+  x?: string,
+|}
 
+/** Returns the received vector of numbers; for testing only */
 export type testCallVectorInt = {|
   _: 'testCallVectorInt',
+  /** Vector of numbers to return */
   x?: number[],
 |}
 
-export type testCallVectorIntReturnType = testVectorInt
-
+/** Returns the received vector of objects containing a number; for testing only */
 export type testCallVectorIntObject = {|
   _: 'testCallVectorIntObject',
+  /** Vector of objects to return */
   x?: testIntOptional[],
 |}
 
-export type testCallVectorIntObjectReturnType = testVectorIntObject
-
+/** For testing only request. Returns the received vector of strings; for testing only */
 export type testCallVectorString = {|
   _: 'testCallVectorString',
+  /** Vector of strings to return */
   x?: string[],
 |}
 
-export type testCallVectorStringReturnType = testVectorString
-
+/** Returns the received vector of objects containing a string; for testing only */
 export type testCallVectorStringObject = {|
   _: 'testCallVectorStringObject',
+  /** Vector of objects to return */
   x?: testStringOptional[],
 |}
 
-export type testCallVectorStringObjectReturnType = testVectorStringObject
-
-export type testGetDifference = {|
-  _: 'testGetDifference',
+/** Returns the squared received number; for testing only */
+export type testSquareInt = {|
+  _: 'testSquareInt',
+  /** Number to square */
+  x?: number,
 |}
 
-export type testGetDifferenceReturnType = ok
-
+/** Sends a simple network request to the Telegram servers; for testing only */
 export type testNetwork = {|
   _: 'testNetwork',
 |}
 
-export type testNetworkReturnType = ok
-
-export type testSquareInt = {|
-  _: 'testSquareInt',
-  x?: number,
+/** Forces an updates.getDifference call to the Telegram servers; for testing only */
+export type testGetDifference = {|
+  _: 'testGetDifference',
 |}
 
-export type testSquareIntReturnType = testInt
-
-export type testUseError = {|
-  _: 'testUseError',
-|}
-
-export type testUseErrorReturnType = error
-
+/** Does nothing and ensures that the Update object is used; for testing only */
 export type testUseUpdate = {|
   _: 'testUseUpdate',
 |}
 
-export type testUseUpdateReturnType = Update
-
-export type toggleBasicGroupAdministrators = {|
-  _: 'toggleBasicGroupAdministrators',
-  basic_group_id?: number,
-  everyone_is_administrator?: boolean,
+/** Does nothing and ensures that the Error object is used; for testing only */
+export type testUseError = {|
+  _: 'testUseError',
 |}
 
-export type toggleBasicGroupAdministratorsReturnType = ok
+// ----
 
-export type toggleChatIsPinned = {|
-  _: 'toggleChatIsPinned',
-  chat_id?: number,
-  is_pinned?: boolean,
-|}
-
-export type toggleChatIsPinnedReturnType = ok
-
-export type toggleSupergroupInvites = {|
-  _: 'toggleSupergroupInvites',
-  supergroup_id?: number,
-  anyone_can_invite?: boolean,
-|}
-
-export type toggleSupergroupInvitesReturnType = ok
-
-export type toggleSupergroupIsAllHistoryAvailable = {|
-  _: 'toggleSupergroupIsAllHistoryAvailable',
-  supergroup_id?: number,
-  is_all_history_available?: boolean,
-|}
-
-export type toggleSupergroupIsAllHistoryAvailableReturnType = ok
-
-export type toggleSupergroupSignMessages = {|
-  _: 'toggleSupergroupSignMessages',
-  supergroup_id?: number,
-  sign_messages?: boolean,
-|}
-
-export type toggleSupergroupSignMessagesReturnType = ok
-
-export type unblockUser = {|
-  _: 'unblockUser',
-  user_id?: number,
-|}
-
-export type unblockUserReturnType = ok
-
-export type unpinSupergroupMessage = {|
-  _: 'unpinSupergroupMessage',
-  supergroup_id?: number,
-|}
-
-export type unpinSupergroupMessageReturnType = ok
-
-export type upgradeBasicGroupChatToSupergroupChat = {|
-  _: 'upgradeBasicGroupChatToSupergroupChat',
-  chat_id?: number,
-|}
-
-export type upgradeBasicGroupChatToSupergroupChatReturnType = chat
-
-export type uploadFile = {|
-  _: 'uploadFile',
-  file?: InputFileOptional,
-  file_type?: FileTypeOptional,
-  priority?: number,
-|}
-
-export type uploadFileReturnType = file
-
-export type uploadStickerFile = {|
-  _: 'uploadStickerFile',
-  user_id?: number,
-  png_sticker?: InputFileOptional,
-|}
-
-export type uploadStickerFileReturnType = file
-
-export type validateOrderInfo = {|
-  _: 'validateOrderInfo',
-  chat_id?: number,
-  message_id?: number,
-  order_info?: orderInfoOptional,
-  allow_save?: boolean,
-|}
-
-export type validateOrderInfoReturnType = validatedOrderInfo
-
-export type viewMessages = {|
-  _: 'viewMessages',
-  chat_id?: number,
-  message_ids?: number[],
-  force_read?: boolean,
-|}
-
-export type viewMessagesReturnType = ok
-
-export type viewTrendingStickerSets = {|
-  _: 'viewTrendingStickerSets',
-  sticker_set_ids?: number[],
-|}
-
-export type viewTrendingStickerSetsReturnType = ok
-
-// -----------
-
-export type TDObject =
-  | accountTtl
-  | animation
-  | animations
-  | audio
-  | authenticationCodeInfo
-  | basicGroup
-  | basicGroupFullInfo
-  | botCommand
-  | botInfo
-  | call
-  | callConnection
-  | callId
-  | callProtocol
-  | callbackQueryAnswer
-  | chat
-  | chatEvent
-  | chatEventLogFilters
-  | chatEvents
-  | chatInviteLink
-  | chatInviteLinkInfo
-  | chatMember
-  | chatMembers
-  | chatPhoto
-  | chatReportSpamState
-  | chats
-  | connectedWebsite
-  | connectedWebsites
-  | contact
-  | count
-  | customRequestResult
-  | document
-  | draftMessage
+export type Error =
   | error
-  | file
-  | formattedText
-  | foundMessages
-  | game
-  | gameHighScore
-  | gameHighScores
-  | hashtags
-  | importedContacts
-  | inlineKeyboardButton
-  | inlineQueryResults
-  | inputSticker
-  | inputThumbnail
-  | invoice
-  | keyboardButton
-  | labeledPricePart
-  | localFile
-  | location
-  | maskPosition
-  | message
-  | messages
-  | networkStatistics
-  | notificationSettings
-  | ok
-  | orderInfo
-  | passwordRecoveryInfo
-  | passwordState
-  | paymentForm
-  | paymentReceipt
-  | paymentResult
-  | paymentsProviderStripe
-  | photo
-  | photoSize
-  | profilePhoto
-  | publicMessageLink
-  | recoveryEmailAddress
-  | remoteFile
-  | savedCredentials
-  | secretChat
-  | session
-  | sessions
-  | shippingAddress
-  | shippingOption
-  | sticker
-  | stickerEmojis
-  | stickerSet
-  | stickerSetInfo
-  | stickerSets
-  | stickers
-  | storageStatistics
-  | storageStatisticsByChat
-  | storageStatisticsByFileType
-  | storageStatisticsFast
-  | supergroup
-  | supergroupFullInfo
-  | tMeUrl
-  | tMeUrls
-  | tdlibParameters
-  | temporaryPasswordState
-  | testBytes
-  | testInt
-  | testString
-  | testVectorInt
-  | testVectorIntObject
-  | testVectorString
-  | testVectorStringObject
-  | text
-  | textEntities
-  | textEntity
-  | user
-  | userFullInfo
-  | userPrivacySettingRules
-  | userProfilePhotos
-  | users
-  | validatedOrderInfo
-  | venue
-  | video
-  | videoNote
-  | voiceNote
-  | wallpaper
-  | wallpapers
-  | webPage
-  | webPageInstantView
-  | AuthenticationCodeType
-  | AuthorizationState
-  | CallDiscardReason
-  | CallState
-  | CallbackQueryPayload
-  | ChatAction
-  | ChatEventAction
-  | ChatMemberStatus
-  | ChatReportReason
-  | ChatType
-  | CheckChatUsernameResult
-  | ConnectionState
-  | DeviceToken
-  | FileType
-  | InlineKeyboardButtonType
-  | InlineQueryResult
-  | InputCredentials
-  | InputFile
-  | InputInlineQueryResult
-  | InputMessageContent
-  | KeyboardButtonType
-  | LinkState
-  | MaskPoint
-  | MessageContent
-  | MessageForwardInfo
-  | MessageSendingState
-  | NetworkStatisticsEntry
-  | NetworkType
-  | NotificationSettingsScope
-  | OptionValue
-  | PageBlock
-  | Proxy
-  | ReplyMarkup
-  | RichText
-  | SearchMessagesFilter
-  | SecretChatState
-  | SupergroupMembersFilter
-  | TMeUrlType
-  | TextEntityType
-  | TextParseMode
-  | TopChatCategory
-  | Update
-  | UserPrivacySetting
-  | UserPrivacySettingRule
-  | UserStatus
-  | UserType
 
-export type TDObjectOptional =
-  | accountTtlOptional
-  | animationOptional
-  | animationsOptional
-  | audioOptional
-  | authenticationCodeInfoOptional
-  | basicGroupOptional
-  | basicGroupFullInfoOptional
-  | botCommandOptional
-  | botInfoOptional
-  | callOptional
-  | callConnectionOptional
-  | callIdOptional
-  | callProtocolOptional
-  | callbackQueryAnswerOptional
-  | chatOptional
-  | chatEventOptional
-  | chatEventLogFiltersOptional
-  | chatEventsOptional
-  | chatInviteLinkOptional
-  | chatInviteLinkInfoOptional
-  | chatMemberOptional
-  | chatMembersOptional
-  | chatPhotoOptional
-  | chatReportSpamStateOptional
-  | chatsOptional
-  | connectedWebsiteOptional
-  | connectedWebsitesOptional
-  | contactOptional
-  | countOptional
-  | customRequestResultOptional
-  | documentOptional
-  | draftMessageOptional
+export type ErrorOptional =
   | errorOptional
-  | fileOptional
-  | formattedTextOptional
-  | foundMessagesOptional
-  | gameOptional
-  | gameHighScoreOptional
-  | gameHighScoresOptional
-  | hashtagsOptional
-  | importedContactsOptional
-  | inlineKeyboardButtonOptional
-  | inlineQueryResultsOptional
-  | inputStickerOptional
-  | inputThumbnailOptional
-  | invoiceOptional
-  | keyboardButtonOptional
-  | labeledPricePartOptional
-  | localFileOptional
-  | locationOptional
-  | maskPositionOptional
-  | messageOptional
-  | messagesOptional
-  | networkStatisticsOptional
-  | notificationSettingsOptional
+
+export type Ok =
+  | ok
+
+export type OkOptional =
   | okOptional
-  | orderInfoOptional
-  | passwordRecoveryInfoOptional
-  | passwordStateOptional
-  | paymentFormOptional
-  | paymentReceiptOptional
-  | paymentResultOptional
-  | paymentsProviderStripeOptional
-  | photoOptional
-  | photoSizeOptional
-  | profilePhotoOptional
-  | publicMessageLinkOptional
-  | recoveryEmailAddressOptional
-  | remoteFileOptional
-  | savedCredentialsOptional
-  | secretChatOptional
-  | sessionOptional
-  | sessionsOptional
-  | shippingAddressOptional
-  | shippingOptionOptional
-  | stickerOptional
-  | stickerEmojisOptional
-  | stickerSetOptional
-  | stickerSetInfoOptional
-  | stickerSetsOptional
-  | stickersOptional
-  | storageStatisticsOptional
-  | storageStatisticsByChatOptional
-  | storageStatisticsByFileTypeOptional
-  | storageStatisticsFastOptional
-  | supergroupOptional
-  | supergroupFullInfoOptional
-  | tMeUrlOptional
-  | tMeUrlsOptional
+
+export type TdlibParameters =
+  | tdlibParameters
+
+export type TdlibParametersOptional =
   | tdlibParametersOptional
-  | temporaryPasswordStateOptional
-  | testBytesOptional
-  | testIntOptional
-  | testStringOptional
-  | testVectorIntOptional
-  | testVectorIntObjectOptional
-  | testVectorStringOptional
-  | testVectorStringObjectOptional
-  | textOptional
-  | textEntitiesOptional
-  | textEntityOptional
-  | userOptional
-  | userFullInfoOptional
-  | userPrivacySettingRulesOptional
-  | userProfilePhotosOptional
-  | usersOptional
-  | validatedOrderInfoOptional
-  | venueOptional
-  | videoOptional
-  | videoNoteOptional
-  | voiceNoteOptional
-  | wallpaperOptional
-  | wallpapersOptional
-  | webPageOptional
-  | webPageInstantViewOptional
-  | AuthenticationCodeTypeOptional
-  | AuthorizationStateOptional
-  | CallDiscardReasonOptional
-  | CallStateOptional
-  | CallbackQueryPayloadOptional
-  | ChatActionOptional
-  | ChatEventActionOptional
-  | ChatMemberStatusOptional
-  | ChatReportReasonOptional
-  | ChatTypeOptional
-  | CheckChatUsernameResultOptional
-  | ConnectionStateOptional
-  | DeviceTokenOptional
-  | FileTypeOptional
-  | InlineKeyboardButtonTypeOptional
-  | InlineQueryResultOptional
-  | InputCredentialsOptional
-  | InputFileOptional
-  | InputInlineQueryResultOptional
-  | InputMessageContentOptional
-  | KeyboardButtonTypeOptional
-  | LinkStateOptional
-  | MaskPointOptional
-  | MessageContentOptional
-  | MessageForwardInfoOptional
-  | MessageSendingStateOptional
-  | NetworkStatisticsEntryOptional
-  | NetworkTypeOptional
-  | NotificationSettingsScopeOptional
-  | OptionValueOptional
-  | PageBlockOptional
-  | ProxyOptional
-  | ReplyMarkupOptional
-  | RichTextOptional
-  | SearchMessagesFilterOptional
-  | SecretChatStateOptional
-  | SupergroupMembersFilterOptional
-  | TMeUrlTypeOptional
-  | TextEntityTypeOptional
-  | TextParseModeOptional
-  | TopChatCategoryOptional
-  | UpdateOptional
-  | UserPrivacySettingOptional
-  | UserPrivacySettingRuleOptional
-  | UserStatusOptional
-  | UserTypeOptional
 
-export type TDFunction =
-  | acceptCall
-  | addChatMember
-  | addChatMembers
-  | addFavoriteSticker
-  | addNetworkStatistics
-  | addRecentSticker
-  | addRecentlyFoundChat
-  | addSavedAnimation
-  | addStickerToSet
-  | answerCallbackQuery
-  | answerCustomQuery
-  | answerInlineQuery
-  | answerPreCheckoutQuery
-  | answerShippingQuery
-  | blockUser
-  | cancelDownloadFile
-  | cancelUploadFile
-  | changeChatReportSpamState
-  | changeImportedContacts
-  | changePhoneNumber
-  | changeStickerSet
-  | checkAuthenticationBotToken
-  | checkAuthenticationCode
-  | checkAuthenticationPassword
-  | checkChangePhoneNumberCode
-  | checkChatInviteLink
-  | checkChatUsername
-  | checkDatabaseEncryptionKey
-  | clearImportedContacts
-  | clearRecentStickers
-  | clearRecentlyFoundChats
-  | close
-  | closeChat
-  | closeSecretChat
-  | createBasicGroupChat
-  | createCall
-  | createNewBasicGroupChat
-  | createNewSecretChat
-  | createNewStickerSet
-  | createNewSupergroupChat
-  | createPrivateChat
-  | createSecretChat
-  | createSupergroupChat
-  | createTemporaryPassword
-  | deleteAccount
-  | deleteChatHistory
-  | deleteChatMessagesFromUser
-  | deleteChatReplyMarkup
-  | deleteFile
-  | deleteMessages
-  | deleteProfilePhoto
-  | deleteSavedCredentials
-  | deleteSavedOrderInfo
-  | deleteSupergroup
-  | destroy
-  | discardCall
-  | disconnectAllWebsites
-  | disconnectWebsite
-  | downloadFile
-  | editInlineMessageCaption
-  | editInlineMessageLiveLocation
-  | editInlineMessageReplyMarkup
-  | editInlineMessageText
-  | editMessageCaption
-  | editMessageLiveLocation
-  | editMessageReplyMarkup
-  | editMessageText
-  | finishFileGeneration
-  | forwardMessages
-  | generateChatInviteLink
-  | getAccountTtl
-  | getActiveLiveLocationMessages
-  | getActiveSessions
-  | getArchivedStickerSets
-  | getAttachedStickerSets
-  | getAuthorizationState
-  | getBasicGroup
-  | getBasicGroupFullInfo
-  | getBlockedUsers
-  | getCallbackQueryAnswer
-  | getChat
-  | getChatAdministrators
-  | getChatEventLog
-  | getChatHistory
-  | getChatMember
-  | getChatMessageByDate
-  | getChatPinnedMessage
-  | getChatReportSpamState
-  | getChats
-  | getConnectedWebsites
-  | getCountryCode
-  | getCreatedPublicChats
-  | getFavoriteStickers
-  | getFile
-  | getFileExtension
-  | getFileMimeType
-  | getGameHighScores
-  | getGroupsInCommon
-  | getImportedContactCount
-  | getInlineGameHighScores
-  | getInlineQueryResults
-  | getInstalledStickerSets
-  | getInviteText
-  | getMe
-  | getMessage
-  | getMessages
-  | getNetworkStatistics
-  | getNotificationSettings
-  | getOption
-  | getPasswordState
-  | getPaymentForm
-  | getPaymentReceipt
-  | getProxy
-  | getPublicMessageLink
-  | getRecentInlineBots
-  | getRecentStickers
-  | getRecentlyVisitedTMeUrls
-  | getRecoveryEmailAddress
-  | getRemoteFile
-  | getRepliedMessage
-  | getSavedAnimations
-  | getSavedOrderInfo
-  | getSecretChat
-  | getStickerEmojis
-  | getStickerSet
-  | getStickers
-  | getStorageStatistics
-  | getStorageStatisticsFast
-  | getSupergroup
-  | getSupergroupFullInfo
-  | getSupergroupMembers
-  | getSupportUser
-  | getTemporaryPasswordState
-  | getTermsOfService
-  | getTextEntities
-  | getTopChats
-  | getTrendingStickerSets
-  | getUser
-  | getUserFullInfo
-  | getUserPrivacySettingRules
-  | getUserProfilePhotos
-  | getWallpapers
-  | getWebPageInstantView
-  | getWebPagePreview
-  | importContacts
-  | joinChatByInviteLink
-  | logOut
-  | openChat
-  | openMessageContent
-  | optimizeStorage
-  | parseTextEntities
-  | pinSupergroupMessage
-  | processDcUpdate
-  | readAllChatMentions
-  | recoverAuthenticationPassword
-  | recoverPassword
-  | registerDevice
-  | removeContacts
-  | removeFavoriteSticker
-  | removeRecentHashtag
-  | removeRecentSticker
-  | removeRecentlyFoundChat
-  | removeSavedAnimation
-  | removeStickerFromSet
-  | removeTopChat
-  | reorderInstalledStickerSets
-  | reportChat
-  | reportSupergroupSpam
-  | requestAuthenticationPasswordRecovery
-  | requestPasswordRecovery
-  | resendAuthenticationCode
-  | resendChangePhoneNumberCode
-  | resetAllNotificationSettings
-  | resetNetworkStatistics
-  | searchCallMessages
-  | searchChatMembers
-  | searchChatMessages
-  | searchChatRecentLocationMessages
-  | searchChats
-  | searchChatsOnServer
-  | searchContacts
-  | searchHashtags
-  | searchInstalledStickerSets
-  | searchMessages
-  | searchPublicChat
-  | searchPublicChats
-  | searchSecretMessages
-  | searchStickerSet
-  | searchStickerSets
-  | searchStickers
-  | sendBotStartMessage
-  | sendCallDebugInformation
-  | sendCallRating
-  | sendChatAction
-  | sendChatScreenshotTakenNotification
-  | sendChatSetTtlMessage
-  | sendCustomRequest
-  | sendInlineQueryResultMessage
-  | sendMessage
-  | sendMessageAlbum
-  | sendPaymentForm
-  | setAccountTtl
-  | setAlarm
-  | setAuthenticationPhoneNumber
-  | setBio
-  | setBotUpdatesStatus
-  | setChatClientData
-  | setChatDraftMessage
-  | setChatMemberStatus
-  | setChatPhoto
-  | setChatTitle
-  | setDatabaseEncryptionKey
-  | setFileGenerationProgress
-  | setGameScore
-  | setInlineGameScore
-  | setName
-  | setNetworkType
-  | setNotificationSettings
-  | setOption
-  | setPassword
-  | setPinnedChats
-  | setProfilePhoto
-  | setProxy
-  | setRecoveryEmailAddress
-  | setStickerPositionInSet
-  | setSupergroupDescription
-  | setSupergroupStickerSet
-  | setSupergroupUsername
-  | setTdlibParameters
-  | setUserPrivacySettingRules
-  | setUsername
-  | terminateAllOtherSessions
-  | terminateSession
-  | testCallBytes
-  | testCallEmpty
-  | testCallString
-  | testCallVectorInt
-  | testCallVectorIntObject
-  | testCallVectorString
-  | testCallVectorStringObject
-  | testGetDifference
-  | testNetwork
-  | testSquareInt
-  | testUseError
-  | testUseUpdate
-  | toggleBasicGroupAdministrators
-  | toggleChatIsPinned
-  | toggleSupergroupInvites
-  | toggleSupergroupIsAllHistoryAvailable
-  | toggleSupergroupSignMessages
-  | unblockUser
-  | unpinSupergroupMessage
-  | upgradeBasicGroupChatToSupergroupChat
-  | uploadFile
-  | uploadStickerFile
-  | validateOrderInfo
-  | viewMessages
-  | viewTrendingStickerSets
-
+/**
+ * Provides information about the method by which an authentication code is delivered
+ * to the user
+ */
 export type AuthenticationCodeType =
   | authenticationCodeTypeTelegramMessage
   | authenticationCodeTypeSms
   | authenticationCodeTypeCall
   | authenticationCodeTypeFlashCall
 
+/**
+ * Provides information about the method by which an authentication code is delivered
+ * to the user
+ */
 export type AuthenticationCodeTypeOptional =
   | authenticationCodeTypeTelegramMessageOptional
   | authenticationCodeTypeSmsOptional
   | authenticationCodeTypeCallOptional
   | authenticationCodeTypeFlashCallOptional
 
+export type AuthenticationCodeInfo =
+  | authenticationCodeInfo
+
+export type AuthenticationCodeInfoOptional =
+  | authenticationCodeInfoOptional
+
+/** Represents the current authorization state of the client */
 export type AuthorizationState =
   | authorizationStateWaitTdlibParameters
   | authorizationStateWaitEncryptionKey
@@ -8833,6 +13497,7 @@ export type AuthorizationState =
   | authorizationStateClosing
   | authorizationStateClosed
 
+/** Represents the current authorization state of the client */
 export type AuthorizationStateOptional =
   | authorizationStateWaitTdlibParametersOptional
   | authorizationStateWaitEncryptionKeyOptional
@@ -8844,112 +13509,265 @@ export type AuthorizationStateOptional =
   | authorizationStateClosingOptional
   | authorizationStateClosedOptional
 
-export type CallDiscardReason =
-  | callDiscardReasonEmpty
-  | callDiscardReasonMissed
-  | callDiscardReasonDeclined
-  | callDiscardReasonDisconnected
-  | callDiscardReasonHungUp
+export type PasswordState =
+  | passwordState
 
-export type CallDiscardReasonOptional =
-  | callDiscardReasonEmptyOptional
-  | callDiscardReasonMissedOptional
-  | callDiscardReasonDeclinedOptional
-  | callDiscardReasonDisconnectedOptional
-  | callDiscardReasonHungUpOptional
+export type PasswordStateOptional =
+  | passwordStateOptional
 
-export type CallState =
-  | callStatePending
-  | callStateExchangingKeys
-  | callStateReady
-  | callStateHangingUp
-  | callStateDiscarded
-  | callStateError
+export type PasswordRecoveryInfo =
+  | passwordRecoveryInfo
 
-export type CallStateOptional =
-  | callStatePendingOptional
-  | callStateExchangingKeysOptional
-  | callStateReadyOptional
-  | callStateHangingUpOptional
-  | callStateDiscardedOptional
-  | callStateErrorOptional
+export type PasswordRecoveryInfoOptional =
+  | passwordRecoveryInfoOptional
 
-export type CallbackQueryPayload =
-  | callbackQueryPayloadData
-  | callbackQueryPayloadGame
+export type RecoveryEmailAddress =
+  | recoveryEmailAddress
 
-export type CallbackQueryPayloadOptional =
-  | callbackQueryPayloadDataOptional
-  | callbackQueryPayloadGameOptional
+export type RecoveryEmailAddressOptional =
+  | recoveryEmailAddressOptional
 
-export type ChatAction =
-  | chatActionTyping
-  | chatActionRecordingVideo
-  | chatActionUploadingVideo
-  | chatActionRecordingVoiceNote
-  | chatActionUploadingVoiceNote
-  | chatActionUploadingPhoto
-  | chatActionUploadingDocument
-  | chatActionChoosingLocation
-  | chatActionChoosingContact
-  | chatActionStartPlayingGame
-  | chatActionRecordingVideoNote
-  | chatActionUploadingVideoNote
-  | chatActionCancel
+export type TemporaryPasswordState =
+  | temporaryPasswordState
 
-export type ChatActionOptional =
-  | chatActionTypingOptional
-  | chatActionRecordingVideoOptional
-  | chatActionUploadingVideoOptional
-  | chatActionRecordingVoiceNoteOptional
-  | chatActionUploadingVoiceNoteOptional
-  | chatActionUploadingPhotoOptional
-  | chatActionUploadingDocumentOptional
-  | chatActionChoosingLocationOptional
-  | chatActionChoosingContactOptional
-  | chatActionStartPlayingGameOptional
-  | chatActionRecordingVideoNoteOptional
-  | chatActionUploadingVideoNoteOptional
-  | chatActionCancelOptional
+export type TemporaryPasswordStateOptional =
+  | temporaryPasswordStateOptional
 
-export type ChatEventAction =
-  | chatEventMessageEdited
-  | chatEventMessageDeleted
-  | chatEventMessagePinned
-  | chatEventMessageUnpinned
-  | chatEventMemberJoined
-  | chatEventMemberLeft
-  | chatEventMemberInvited
-  | chatEventMemberPromoted
-  | chatEventMemberRestricted
-  | chatEventTitleChanged
-  | chatEventDescriptionChanged
-  | chatEventUsernameChanged
-  | chatEventPhotoChanged
-  | chatEventInvitesToggled
-  | chatEventSignMessagesToggled
-  | chatEventStickerSetChanged
-  | chatEventIsAllHistoryAvailableToggled
+export type LocalFile =
+  | localFile
 
-export type ChatEventActionOptional =
-  | chatEventMessageEditedOptional
-  | chatEventMessageDeletedOptional
-  | chatEventMessagePinnedOptional
-  | chatEventMessageUnpinnedOptional
-  | chatEventMemberJoinedOptional
-  | chatEventMemberLeftOptional
-  | chatEventMemberInvitedOptional
-  | chatEventMemberPromotedOptional
-  | chatEventMemberRestrictedOptional
-  | chatEventTitleChangedOptional
-  | chatEventDescriptionChangedOptional
-  | chatEventUsernameChangedOptional
-  | chatEventPhotoChangedOptional
-  | chatEventInvitesToggledOptional
-  | chatEventSignMessagesToggledOptional
-  | chatEventStickerSetChangedOptional
-  | chatEventIsAllHistoryAvailableToggledOptional
+export type LocalFileOptional =
+  | localFileOptional
 
+export type RemoteFile =
+  | remoteFile
+
+export type RemoteFileOptional =
+  | remoteFileOptional
+
+export type File =
+  | file
+
+export type FileOptional =
+  | fileOptional
+
+/** Points to a file */
+export type InputFile =
+  | inputFileId
+  | inputFileRemote
+  | inputFileLocal
+  | inputFileGenerated
+
+/** Points to a file */
+export type InputFileOptional =
+  | inputFileIdOptional
+  | inputFileRemoteOptional
+  | inputFileLocalOptional
+  | inputFileGeneratedOptional
+
+export type PhotoSize =
+  | photoSize
+
+export type PhotoSizeOptional =
+  | photoSizeOptional
+
+/** Part of the face, relative to which a mask should be placed */
+export type MaskPoint =
+  | maskPointForehead
+  | maskPointEyes
+  | maskPointMouth
+  | maskPointChin
+
+/** Part of the face, relative to which a mask should be placed */
+export type MaskPointOptional =
+  | maskPointForeheadOptional
+  | maskPointEyesOptional
+  | maskPointMouthOptional
+  | maskPointChinOptional
+
+export type MaskPosition =
+  | maskPosition
+
+export type MaskPositionOptional =
+  | maskPositionOptional
+
+export type TextEntity =
+  | textEntity
+
+export type TextEntityOptional =
+  | textEntityOptional
+
+export type TextEntities =
+  | textEntities
+
+export type TextEntitiesOptional =
+  | textEntitiesOptional
+
+export type FormattedText =
+  | formattedText
+
+export type FormattedTextOptional =
+  | formattedTextOptional
+
+export type Animation =
+  | animation
+
+export type AnimationOptional =
+  | animationOptional
+
+export type Audio =
+  | audio
+
+export type AudioOptional =
+  | audioOptional
+
+export type Document =
+  | document
+
+export type DocumentOptional =
+  | documentOptional
+
+export type Photo =
+  | photo
+
+export type PhotoOptional =
+  | photoOptional
+
+export type Sticker =
+  | sticker
+
+export type StickerOptional =
+  | stickerOptional
+
+export type Video =
+  | video
+
+export type VideoOptional =
+  | videoOptional
+
+export type VideoNote =
+  | videoNote
+
+export type VideoNoteOptional =
+  | videoNoteOptional
+
+export type VoiceNote =
+  | voiceNote
+
+export type VoiceNoteOptional =
+  | voiceNoteOptional
+
+export type Contact =
+  | contact
+
+export type ContactOptional =
+  | contactOptional
+
+export type Location =
+  | location
+
+export type LocationOptional =
+  | locationOptional
+
+export type Venue =
+  | venue
+
+export type VenueOptional =
+  | venueOptional
+
+export type Game =
+  | game
+
+export type GameOptional =
+  | gameOptional
+
+export type ProfilePhoto =
+  | profilePhoto
+
+export type ProfilePhotoOptional =
+  | profilePhotoOptional
+
+export type ChatPhoto =
+  | chatPhoto
+
+export type ChatPhotoOptional =
+  | chatPhotoOptional
+
+/**
+ * Represents the relationship between user A and user B. For incoming_link, user A
+ * is the current user; for outgoing_link, user B is the current user
+ */
+export type LinkState =
+  | linkStateNone
+  | linkStateKnowsPhoneNumber
+  | linkStateIsContact
+
+/**
+ * Represents the relationship between user A and user B. For incoming_link, user A
+ * is the current user; for outgoing_link, user B is the current user
+ */
+export type LinkStateOptional =
+  | linkStateNoneOptional
+  | linkStateKnowsPhoneNumberOptional
+  | linkStateIsContactOptional
+
+/**
+ * Represents the type of the user. The following types are possible: regular users,
+ * deleted users and bots
+ */
+export type UserType =
+  | userTypeRegular
+  | userTypeDeleted
+  | userTypeBot
+  | userTypeUnknown
+
+/**
+ * Represents the type of the user. The following types are possible: regular users,
+ * deleted users and bots
+ */
+export type UserTypeOptional =
+  | userTypeRegularOptional
+  | userTypeDeletedOptional
+  | userTypeBotOptional
+  | userTypeUnknownOptional
+
+export type BotCommand =
+  | botCommand
+
+export type BotCommandOptional =
+  | botCommandOptional
+
+export type BotInfo =
+  | botInfo
+
+export type BotInfoOptional =
+  | botInfoOptional
+
+export type User =
+  | user
+
+export type UserOptional =
+  | userOptional
+
+export type UserFullInfo =
+  | userFullInfo
+
+export type UserFullInfoOptional =
+  | userFullInfoOptional
+
+export type UserProfilePhotos =
+  | userProfilePhotos
+
+export type UserProfilePhotosOptional =
+  | userProfilePhotosOptional
+
+export type Users =
+  | users
+
+export type UsersOptional =
+  | usersOptional
+
+/** Provides information about the status of a member in a chat */
 export type ChatMemberStatus =
   | chatMemberStatusCreator
   | chatMemberStatusAdministrator
@@ -8958,6 +13776,7 @@ export type ChatMemberStatus =
   | chatMemberStatusLeft
   | chatMemberStatusBanned
 
+/** Provides information about the status of a member in a chat */
 export type ChatMemberStatusOptional =
   | chatMemberStatusCreatorOptional
   | chatMemberStatusAdministratorOptional
@@ -8966,118 +13785,199 @@ export type ChatMemberStatusOptional =
   | chatMemberStatusLeftOptional
   | chatMemberStatusBannedOptional
 
-export type ChatReportReason =
-  | chatReportReasonSpam
-  | chatReportReasonViolence
-  | chatReportReasonPornography
-  | chatReportReasonCustom
+export type ChatMember =
+  | chatMember
 
-export type ChatReportReasonOptional =
-  | chatReportReasonSpamOptional
-  | chatReportReasonViolenceOptional
-  | chatReportReasonPornographyOptional
-  | chatReportReasonCustomOptional
+export type ChatMemberOptional =
+  | chatMemberOptional
 
+export type ChatMembers =
+  | chatMembers
+
+export type ChatMembersOptional =
+  | chatMembersOptional
+
+/** Specifies the kind of chat members to return in getSupergroupMembers */
+export type SupergroupMembersFilter =
+  | supergroupMembersFilterRecent
+  | supergroupMembersFilterAdministrators
+  | supergroupMembersFilterSearch
+  | supergroupMembersFilterRestricted
+  | supergroupMembersFilterBanned
+  | supergroupMembersFilterBots
+
+/** Specifies the kind of chat members to return in getSupergroupMembers */
+export type SupergroupMembersFilterOptional =
+  | supergroupMembersFilterRecentOptional
+  | supergroupMembersFilterAdministratorsOptional
+  | supergroupMembersFilterSearchOptional
+  | supergroupMembersFilterRestrictedOptional
+  | supergroupMembersFilterBannedOptional
+  | supergroupMembersFilterBotsOptional
+
+export type BasicGroup =
+  | basicGroup
+
+export type BasicGroupOptional =
+  | basicGroupOptional
+
+export type BasicGroupFullInfo =
+  | basicGroupFullInfo
+
+export type BasicGroupFullInfoOptional =
+  | basicGroupFullInfoOptional
+
+export type Supergroup =
+  | supergroup
+
+export type SupergroupOptional =
+  | supergroupOptional
+
+export type SupergroupFullInfo =
+  | supergroupFullInfo
+
+export type SupergroupFullInfoOptional =
+  | supergroupFullInfoOptional
+
+/** Describes the current secret chat state */
+export type SecretChatState =
+  | secretChatStatePending
+  | secretChatStateReady
+  | secretChatStateClosed
+
+/** Describes the current secret chat state */
+export type SecretChatStateOptional =
+  | secretChatStatePendingOptional
+  | secretChatStateReadyOptional
+  | secretChatStateClosedOptional
+
+export type SecretChat =
+  | secretChat
+
+export type SecretChatOptional =
+  | secretChatOptional
+
+/** Contains information about the initial sender of a forwarded message */
+export type MessageForwardInfo =
+  | messageForwardedFromUser
+  | messageForwardedPost
+
+/** Contains information about the initial sender of a forwarded message */
+export type MessageForwardInfoOptional =
+  | messageForwardedFromUserOptional
+  | messageForwardedPostOptional
+
+/** Contains information about the sending state of the message */
+export type MessageSendingState =
+  | messageSendingStatePending
+  | messageSendingStateFailed
+
+/** Contains information about the sending state of the message */
+export type MessageSendingStateOptional =
+  | messageSendingStatePendingOptional
+  | messageSendingStateFailedOptional
+
+export type Message =
+  | message
+
+export type MessageOptional =
+  | messageOptional
+
+export type Messages =
+  | messages
+
+export type MessagesOptional =
+  | messagesOptional
+
+export type FoundMessages =
+  | foundMessages
+
+export type FoundMessagesOptional =
+  | foundMessagesOptional
+
+/** Describes the types of chats for which notification settings are applied */
+export type NotificationSettingsScope =
+  | notificationSettingsScopeChat
+  | notificationSettingsScopePrivateChats
+  | notificationSettingsScopeBasicGroupChats
+  | notificationSettingsScopeAllChats
+
+/** Describes the types of chats for which notification settings are applied */
+export type NotificationSettingsScopeOptional =
+  | notificationSettingsScopeChatOptional
+  | notificationSettingsScopePrivateChatsOptional
+  | notificationSettingsScopeBasicGroupChatsOptional
+  | notificationSettingsScopeAllChatsOptional
+
+export type NotificationSettings =
+  | notificationSettings
+
+export type NotificationSettingsOptional =
+  | notificationSettingsOptional
+
+export type DraftMessage =
+  | draftMessage
+
+export type DraftMessageOptional =
+  | draftMessageOptional
+
+/** Describes the type of a chat */
 export type ChatType =
   | chatTypePrivate
   | chatTypeBasicGroup
   | chatTypeSupergroup
   | chatTypeSecret
 
+/** Describes the type of a chat */
 export type ChatTypeOptional =
   | chatTypePrivateOptional
   | chatTypeBasicGroupOptional
   | chatTypeSupergroupOptional
   | chatTypeSecretOptional
 
-export type CheckChatUsernameResult =
-  | checkChatUsernameResultOk
-  | checkChatUsernameResultUsernameInvalid
-  | checkChatUsernameResultUsernameOccupied
-  | checkChatUsernameResultPublicChatsTooMuch
-  | checkChatUsernameResultPublicGroupsUnavailable
+export type Chat =
+  | chat
 
-export type CheckChatUsernameResultOptional =
-  | checkChatUsernameResultOkOptional
-  | checkChatUsernameResultUsernameInvalidOptional
-  | checkChatUsernameResultUsernameOccupiedOptional
-  | checkChatUsernameResultPublicChatsTooMuchOptional
-  | checkChatUsernameResultPublicGroupsUnavailableOptional
+export type ChatOptional =
+  | chatOptional
 
-export type ConnectionState =
-  | connectionStateWaitingForNetwork
-  | connectionStateConnectingToProxy
-  | connectionStateConnecting
-  | connectionStateUpdating
-  | connectionStateReady
+export type Chats =
+  | chats
 
-export type ConnectionStateOptional =
-  | connectionStateWaitingForNetworkOptional
-  | connectionStateConnectingToProxyOptional
-  | connectionStateConnectingOptional
-  | connectionStateUpdatingOptional
-  | connectionStateReadyOptional
+export type ChatsOptional =
+  | chatsOptional
 
-export type DeviceToken =
-  | deviceTokenGoogleCloudMessaging
-  | deviceTokenApplePush
-  | deviceTokenApplePushVoIP
-  | deviceTokenWindowsPush
-  | deviceTokenMicrosoftPush
-  | deviceTokenMicrosoftPushVoIP
-  | deviceTokenWebPush
-  | deviceTokenSimplePush
-  | deviceTokenUbuntuPush
-  | deviceTokenBlackBerryPush
-  | deviceTokenTizenPush
+export type ChatInviteLink =
+  | chatInviteLink
 
-export type DeviceTokenOptional =
-  | deviceTokenGoogleCloudMessagingOptional
-  | deviceTokenApplePushOptional
-  | deviceTokenApplePushVoIPOptional
-  | deviceTokenWindowsPushOptional
-  | deviceTokenMicrosoftPushOptional
-  | deviceTokenMicrosoftPushVoIPOptional
-  | deviceTokenWebPushOptional
-  | deviceTokenSimplePushOptional
-  | deviceTokenUbuntuPushOptional
-  | deviceTokenBlackBerryPushOptional
-  | deviceTokenTizenPushOptional
+export type ChatInviteLinkOptional =
+  | chatInviteLinkOptional
 
-export type FileType =
-  | fileTypeNone
-  | fileTypeAnimation
-  | fileTypeAudio
-  | fileTypeDocument
-  | fileTypePhoto
-  | fileTypeProfilePhoto
-  | fileTypeSecret
-  | fileTypeSticker
-  | fileTypeThumbnail
-  | fileTypeUnknown
-  | fileTypeVideo
-  | fileTypeVideoNote
-  | fileTypeVoiceNote
-  | fileTypeWallpaper
-  | fileTypeSecretThumbnail
+export type ChatInviteLinkInfo =
+  | chatInviteLinkInfo
 
-export type FileTypeOptional =
-  | fileTypeNoneOptional
-  | fileTypeAnimationOptional
-  | fileTypeAudioOptional
-  | fileTypeDocumentOptional
-  | fileTypePhotoOptional
-  | fileTypeProfilePhotoOptional
-  | fileTypeSecretOptional
-  | fileTypeStickerOptional
-  | fileTypeThumbnailOptional
-  | fileTypeUnknownOptional
-  | fileTypeVideoOptional
-  | fileTypeVideoNoteOptional
-  | fileTypeVoiceNoteOptional
-  | fileTypeWallpaperOptional
-  | fileTypeSecretThumbnailOptional
+export type ChatInviteLinkInfoOptional =
+  | chatInviteLinkInfoOptional
 
+/** Describes a keyboard button type */
+export type KeyboardButtonType =
+  | keyboardButtonTypeText
+  | keyboardButtonTypeRequestPhoneNumber
+  | keyboardButtonTypeRequestLocation
+
+/** Describes a keyboard button type */
+export type KeyboardButtonTypeOptional =
+  | keyboardButtonTypeTextOptional
+  | keyboardButtonTypeRequestPhoneNumberOptional
+  | keyboardButtonTypeRequestLocationOptional
+
+export type KeyboardButton =
+  | keyboardButton
+
+export type KeyboardButtonOptional =
+  | keyboardButtonOptional
+
+/** Describes the type of an inline keyboard button */
 export type InlineKeyboardButtonType =
   | inlineKeyboardButtonTypeUrl
   | inlineKeyboardButtonTypeCallback
@@ -9085,6 +13985,7 @@ export type InlineKeyboardButtonType =
   | inlineKeyboardButtonTypeSwitchInline
   | inlineKeyboardButtonTypeBuy
 
+/** Describes the type of an inline keyboard button */
 export type InlineKeyboardButtonTypeOptional =
   | inlineKeyboardButtonTypeUrlOptional
   | inlineKeyboardButtonTypeCallbackOptional
@@ -9092,154 +13993,201 @@ export type InlineKeyboardButtonTypeOptional =
   | inlineKeyboardButtonTypeSwitchInlineOptional
   | inlineKeyboardButtonTypeBuyOptional
 
-export type InlineQueryResult =
-  | inlineQueryResultArticle
-  | inlineQueryResultContact
-  | inlineQueryResultLocation
-  | inlineQueryResultVenue
-  | inlineQueryResultGame
-  | inlineQueryResultAnimation
-  | inlineQueryResultAudio
-  | inlineQueryResultDocument
-  | inlineQueryResultPhoto
-  | inlineQueryResultSticker
-  | inlineQueryResultVideo
-  | inlineQueryResultVoiceNote
+export type InlineKeyboardButton =
+  | inlineKeyboardButton
 
-export type InlineQueryResultOptional =
-  | inlineQueryResultArticleOptional
-  | inlineQueryResultContactOptional
-  | inlineQueryResultLocationOptional
-  | inlineQueryResultVenueOptional
-  | inlineQueryResultGameOptional
-  | inlineQueryResultAnimationOptional
-  | inlineQueryResultAudioOptional
-  | inlineQueryResultDocumentOptional
-  | inlineQueryResultPhotoOptional
-  | inlineQueryResultStickerOptional
-  | inlineQueryResultVideoOptional
-  | inlineQueryResultVoiceNoteOptional
+export type InlineKeyboardButtonOptional =
+  | inlineKeyboardButtonOptional
 
+/**
+ * Contains a description of a custom keyboard and actions that can be done with it
+ * to quickly reply to bots
+ */
+export type ReplyMarkup =
+  | replyMarkupRemoveKeyboard
+  | replyMarkupForceReply
+  | replyMarkupShowKeyboard
+  | replyMarkupInlineKeyboard
+
+/**
+ * Contains a description of a custom keyboard and actions that can be done with it
+ * to quickly reply to bots
+ */
+export type ReplyMarkupOptional =
+  | replyMarkupRemoveKeyboardOptional
+  | replyMarkupForceReplyOptional
+  | replyMarkupShowKeyboardOptional
+  | replyMarkupInlineKeyboardOptional
+
+/** Describes a text object inside an instant-view web page */
+export type RichText =
+  | richTextPlain
+  | richTextBold
+  | richTextItalic
+  | richTextUnderline
+  | richTextStrikethrough
+  | richTextFixed
+  | richTextUrl
+  | richTextEmailAddress
+  | richTexts
+
+/** Describes a text object inside an instant-view web page */
+export type RichTextOptional =
+  | richTextPlainOptional
+  | richTextBoldOptional
+  | richTextItalicOptional
+  | richTextUnderlineOptional
+  | richTextStrikethroughOptional
+  | richTextFixedOptional
+  | richTextUrlOptional
+  | richTextEmailAddressOptional
+  | richTextsOptional
+
+/** Describes a block of an instant view web page */
+export type PageBlock =
+  | pageBlockTitle
+  | pageBlockSubtitle
+  | pageBlockAuthorDate
+  | pageBlockHeader
+  | pageBlockSubheader
+  | pageBlockParagraph
+  | pageBlockPreformatted
+  | pageBlockFooter
+  | pageBlockDivider
+  | pageBlockAnchor
+  | pageBlockList
+  | pageBlockBlockQuote
+  | pageBlockPullQuote
+  | pageBlockAnimation
+  | pageBlockAudio
+  | pageBlockPhoto
+  | pageBlockVideo
+  | pageBlockCover
+  | pageBlockEmbedded
+  | pageBlockEmbeddedPost
+  | pageBlockCollage
+  | pageBlockSlideshow
+  | pageBlockChatLink
+
+/** Describes a block of an instant view web page */
+export type PageBlockOptional =
+  | pageBlockTitleOptional
+  | pageBlockSubtitleOptional
+  | pageBlockAuthorDateOptional
+  | pageBlockHeaderOptional
+  | pageBlockSubheaderOptional
+  | pageBlockParagraphOptional
+  | pageBlockPreformattedOptional
+  | pageBlockFooterOptional
+  | pageBlockDividerOptional
+  | pageBlockAnchorOptional
+  | pageBlockListOptional
+  | pageBlockBlockQuoteOptional
+  | pageBlockPullQuoteOptional
+  | pageBlockAnimationOptional
+  | pageBlockAudioOptional
+  | pageBlockPhotoOptional
+  | pageBlockVideoOptional
+  | pageBlockCoverOptional
+  | pageBlockEmbeddedOptional
+  | pageBlockEmbeddedPostOptional
+  | pageBlockCollageOptional
+  | pageBlockSlideshowOptional
+  | pageBlockChatLinkOptional
+
+export type WebPageInstantView =
+  | webPageInstantView
+
+export type WebPageInstantViewOptional =
+  | webPageInstantViewOptional
+
+export type WebPage =
+  | webPage
+
+export type WebPageOptional =
+  | webPageOptional
+
+export type LabeledPricePart =
+  | labeledPricePart
+
+export type LabeledPricePartOptional =
+  | labeledPricePartOptional
+
+export type Invoice =
+  | invoice
+
+export type InvoiceOptional =
+  | invoiceOptional
+
+export type ShippingAddress =
+  | shippingAddress
+
+export type ShippingAddressOptional =
+  | shippingAddressOptional
+
+export type OrderInfo =
+  | orderInfo
+
+export type OrderInfoOptional =
+  | orderInfoOptional
+
+export type ShippingOption =
+  | shippingOption
+
+export type ShippingOptionOptional =
+  | shippingOptionOptional
+
+export type SavedCredentials =
+  | savedCredentials
+
+export type SavedCredentialsOptional =
+  | savedCredentialsOptional
+
+/** Contains information about the payment method chosen by the user */
 export type InputCredentials =
   | inputCredentialsSaved
   | inputCredentialsNew
   | inputCredentialsAndroidPay
   | inputCredentialsApplePay
 
+/** Contains information about the payment method chosen by the user */
 export type InputCredentialsOptional =
   | inputCredentialsSavedOptional
   | inputCredentialsNewOptional
   | inputCredentialsAndroidPayOptional
   | inputCredentialsApplePayOptional
 
-export type InputFile =
-  | inputFileId
-  | inputFileRemote
-  | inputFileLocal
-  | inputFileGenerated
+export type PaymentsProviderStripe =
+  | paymentsProviderStripe
 
-export type InputFileOptional =
-  | inputFileIdOptional
-  | inputFileRemoteOptional
-  | inputFileLocalOptional
-  | inputFileGeneratedOptional
+export type PaymentsProviderStripeOptional =
+  | paymentsProviderStripeOptional
 
-export type InputInlineQueryResult =
-  | inputInlineQueryResultAnimatedGif
-  | inputInlineQueryResultAnimatedMpeg4
-  | inputInlineQueryResultArticle
-  | inputInlineQueryResultAudio
-  | inputInlineQueryResultContact
-  | inputInlineQueryResultDocument
-  | inputInlineQueryResultGame
-  | inputInlineQueryResultLocation
-  | inputInlineQueryResultPhoto
-  | inputInlineQueryResultSticker
-  | inputInlineQueryResultVenue
-  | inputInlineQueryResultVideo
-  | inputInlineQueryResultVoiceNote
+export type PaymentForm =
+  | paymentForm
 
-export type InputInlineQueryResultOptional =
-  | inputInlineQueryResultAnimatedGifOptional
-  | inputInlineQueryResultAnimatedMpeg4Optional
-  | inputInlineQueryResultArticleOptional
-  | inputInlineQueryResultAudioOptional
-  | inputInlineQueryResultContactOptional
-  | inputInlineQueryResultDocumentOptional
-  | inputInlineQueryResultGameOptional
-  | inputInlineQueryResultLocationOptional
-  | inputInlineQueryResultPhotoOptional
-  | inputInlineQueryResultStickerOptional
-  | inputInlineQueryResultVenueOptional
-  | inputInlineQueryResultVideoOptional
-  | inputInlineQueryResultVoiceNoteOptional
+export type PaymentFormOptional =
+  | paymentFormOptional
 
-export type InputMessageContent =
-  | inputMessageText
-  | inputMessageAnimation
-  | inputMessageAudio
-  | inputMessageDocument
-  | inputMessagePhoto
-  | inputMessageSticker
-  | inputMessageVideo
-  | inputMessageVideoNote
-  | inputMessageVoiceNote
-  | inputMessageLocation
-  | inputMessageVenue
-  | inputMessageContact
-  | inputMessageGame
-  | inputMessageInvoice
-  | inputMessageForwarded
+export type ValidatedOrderInfo =
+  | validatedOrderInfo
 
-export type InputMessageContentOptional =
-  | inputMessageTextOptional
-  | inputMessageAnimationOptional
-  | inputMessageAudioOptional
-  | inputMessageDocumentOptional
-  | inputMessagePhotoOptional
-  | inputMessageStickerOptional
-  | inputMessageVideoOptional
-  | inputMessageVideoNoteOptional
-  | inputMessageVoiceNoteOptional
-  | inputMessageLocationOptional
-  | inputMessageVenueOptional
-  | inputMessageContactOptional
-  | inputMessageGameOptional
-  | inputMessageInvoiceOptional
-  | inputMessageForwardedOptional
+export type ValidatedOrderInfoOptional =
+  | validatedOrderInfoOptional
 
-export type KeyboardButtonType =
-  | keyboardButtonTypeText
-  | keyboardButtonTypeRequestPhoneNumber
-  | keyboardButtonTypeRequestLocation
+export type PaymentResult =
+  | paymentResult
 
-export type KeyboardButtonTypeOptional =
-  | keyboardButtonTypeTextOptional
-  | keyboardButtonTypeRequestPhoneNumberOptional
-  | keyboardButtonTypeRequestLocationOptional
+export type PaymentResultOptional =
+  | paymentResultOptional
 
-export type LinkState =
-  | linkStateNone
-  | linkStateKnowsPhoneNumber
-  | linkStateIsContact
+export type PaymentReceipt =
+  | paymentReceipt
 
-export type LinkStateOptional =
-  | linkStateNoneOptional
-  | linkStateKnowsPhoneNumberOptional
-  | linkStateIsContactOptional
+export type PaymentReceiptOptional =
+  | paymentReceiptOptional
 
-export type MaskPoint =
-  | maskPointForehead
-  | maskPointEyes
-  | maskPointMouth
-  | maskPointChin
-
-export type MaskPointOptional =
-  | maskPointForeheadOptional
-  | maskPointEyesOptional
-  | maskPointMouthOptional
-  | maskPointChinOptional
-
+/** Contains the content of a message */
 export type MessageContent =
   | messageText
   | messageAnimation
@@ -9279,6 +14227,7 @@ export type MessageContent =
   | messageWebsiteConnected
   | messageUnsupported
 
+/** Contains the content of a message */
 export type MessageContentOptional =
   | messageTextOptional
   | messageAnimationOptional
@@ -9318,160 +14267,83 @@ export type MessageContentOptional =
   | messageWebsiteConnectedOptional
   | messageUnsupportedOptional
 
-export type MessageForwardInfo =
-  | messageForwardedFromUser
-  | messageForwardedPost
+/** Represents a part of the text which must be formatted differently */
+export type TextEntityType =
+  | textEntityTypeMention
+  | textEntityTypeHashtag
+  | textEntityTypeCashtag
+  | textEntityTypeBotCommand
+  | textEntityTypeUrl
+  | textEntityTypeEmailAddress
+  | textEntityTypeBold
+  | textEntityTypeItalic
+  | textEntityTypeCode
+  | textEntityTypePre
+  | textEntityTypePreCode
+  | textEntityTypeTextUrl
+  | textEntityTypeMentionName
+  | textEntityTypePhoneNumber
 
-export type MessageForwardInfoOptional =
-  | messageForwardedFromUserOptional
-  | messageForwardedPostOptional
+/** Represents a part of the text which must be formatted differently */
+export type TextEntityTypeOptional =
+  | textEntityTypeMentionOptional
+  | textEntityTypeHashtagOptional
+  | textEntityTypeCashtagOptional
+  | textEntityTypeBotCommandOptional
+  | textEntityTypeUrlOptional
+  | textEntityTypeEmailAddressOptional
+  | textEntityTypeBoldOptional
+  | textEntityTypeItalicOptional
+  | textEntityTypeCodeOptional
+  | textEntityTypePreOptional
+  | textEntityTypePreCodeOptional
+  | textEntityTypeTextUrlOptional
+  | textEntityTypeMentionNameOptional
+  | textEntityTypePhoneNumberOptional
 
-export type MessageSendingState =
-  | messageSendingStatePending
-  | messageSendingStateFailed
+export type InputThumbnail =
+  | inputThumbnail
 
-export type MessageSendingStateOptional =
-  | messageSendingStatePendingOptional
-  | messageSendingStateFailedOptional
+export type InputThumbnailOptional =
+  | inputThumbnailOptional
 
-export type NetworkStatisticsEntry =
-  | networkStatisticsEntryFile
-  | networkStatisticsEntryCall
+/** The content of a message to send */
+export type InputMessageContent =
+  | inputMessageText
+  | inputMessageAnimation
+  | inputMessageAudio
+  | inputMessageDocument
+  | inputMessagePhoto
+  | inputMessageSticker
+  | inputMessageVideo
+  | inputMessageVideoNote
+  | inputMessageVoiceNote
+  | inputMessageLocation
+  | inputMessageVenue
+  | inputMessageContact
+  | inputMessageGame
+  | inputMessageInvoice
+  | inputMessageForwarded
 
-export type NetworkStatisticsEntryOptional =
-  | networkStatisticsEntryFileOptional
-  | networkStatisticsEntryCallOptional
+/** The content of a message to send */
+export type InputMessageContentOptional =
+  | inputMessageTextOptional
+  | inputMessageAnimationOptional
+  | inputMessageAudioOptional
+  | inputMessageDocumentOptional
+  | inputMessagePhotoOptional
+  | inputMessageStickerOptional
+  | inputMessageVideoOptional
+  | inputMessageVideoNoteOptional
+  | inputMessageVoiceNoteOptional
+  | inputMessageLocationOptional
+  | inputMessageVenueOptional
+  | inputMessageContactOptional
+  | inputMessageGameOptional
+  | inputMessageInvoiceOptional
+  | inputMessageForwardedOptional
 
-export type NetworkType =
-  | networkTypeNone
-  | networkTypeMobile
-  | networkTypeMobileRoaming
-  | networkTypeWiFi
-  | networkTypeOther
-
-export type NetworkTypeOptional =
-  | networkTypeNoneOptional
-  | networkTypeMobileOptional
-  | networkTypeMobileRoamingOptional
-  | networkTypeWiFiOptional
-  | networkTypeOtherOptional
-
-export type NotificationSettingsScope =
-  | notificationSettingsScopeChat
-  | notificationSettingsScopePrivateChats
-  | notificationSettingsScopeBasicGroupChats
-  | notificationSettingsScopeAllChats
-
-export type NotificationSettingsScopeOptional =
-  | notificationSettingsScopeChatOptional
-  | notificationSettingsScopePrivateChatsOptional
-  | notificationSettingsScopeBasicGroupChatsOptional
-  | notificationSettingsScopeAllChatsOptional
-
-export type OptionValue =
-  | optionValueBoolean
-  | optionValueEmpty
-  | optionValueInteger
-  | optionValueString
-
-export type OptionValueOptional =
-  | optionValueBooleanOptional
-  | optionValueEmptyOptional
-  | optionValueIntegerOptional
-  | optionValueStringOptional
-
-export type PageBlock =
-  | pageBlockTitle
-  | pageBlockSubtitle
-  | pageBlockAuthorDate
-  | pageBlockHeader
-  | pageBlockSubheader
-  | pageBlockParagraph
-  | pageBlockPreformatted
-  | pageBlockFooter
-  | pageBlockDivider
-  | pageBlockAnchor
-  | pageBlockList
-  | pageBlockBlockQuote
-  | pageBlockPullQuote
-  | pageBlockAnimation
-  | pageBlockAudio
-  | pageBlockPhoto
-  | pageBlockVideo
-  | pageBlockCover
-  | pageBlockEmbedded
-  | pageBlockEmbeddedPost
-  | pageBlockCollage
-  | pageBlockSlideshow
-  | pageBlockChatLink
-
-export type PageBlockOptional =
-  | pageBlockTitleOptional
-  | pageBlockSubtitleOptional
-  | pageBlockAuthorDateOptional
-  | pageBlockHeaderOptional
-  | pageBlockSubheaderOptional
-  | pageBlockParagraphOptional
-  | pageBlockPreformattedOptional
-  | pageBlockFooterOptional
-  | pageBlockDividerOptional
-  | pageBlockAnchorOptional
-  | pageBlockListOptional
-  | pageBlockBlockQuoteOptional
-  | pageBlockPullQuoteOptional
-  | pageBlockAnimationOptional
-  | pageBlockAudioOptional
-  | pageBlockPhotoOptional
-  | pageBlockVideoOptional
-  | pageBlockCoverOptional
-  | pageBlockEmbeddedOptional
-  | pageBlockEmbeddedPostOptional
-  | pageBlockCollageOptional
-  | pageBlockSlideshowOptional
-  | pageBlockChatLinkOptional
-
-export type Proxy =
-  | proxyEmpty
-  | proxySocks5
-
-export type ProxyOptional =
-  | proxyEmptyOptional
-  | proxySocks5Optional
-
-export type ReplyMarkup =
-  | replyMarkupRemoveKeyboard
-  | replyMarkupForceReply
-  | replyMarkupShowKeyboard
-  | replyMarkupInlineKeyboard
-
-export type ReplyMarkupOptional =
-  | replyMarkupRemoveKeyboardOptional
-  | replyMarkupForceReplyOptional
-  | replyMarkupShowKeyboardOptional
-  | replyMarkupInlineKeyboardOptional
-
-export type RichText =
-  | richTextPlain
-  | richTextBold
-  | richTextItalic
-  | richTextUnderline
-  | richTextStrikethrough
-  | richTextFixed
-  | richTextUrl
-  | richTextEmailAddress
-  | richTexts
-
-export type RichTextOptional =
-  | richTextPlainOptional
-  | richTextBoldOptional
-  | richTextItalicOptional
-  | richTextUnderlineOptional
-  | richTextStrikethroughOptional
-  | richTextFixedOptional
-  | richTextUrlOptional
-  | richTextEmailAddressOptional
-  | richTextsOptional
-
+/** Represents a filter for message search results */
 export type SearchMessagesFilter =
   | searchMessagesFilterEmpty
   | searchMessagesFilterAnimation
@@ -9490,6 +14362,7 @@ export type SearchMessagesFilter =
   | searchMessagesFilterMention
   | searchMessagesFilterUnreadMention
 
+/** Represents a filter for message search results */
 export type SearchMessagesFilterOptional =
   | searchMessagesFilterEmptyOptional
   | searchMessagesFilterAnimationOptional
@@ -9508,84 +14381,604 @@ export type SearchMessagesFilterOptional =
   | searchMessagesFilterMentionOptional
   | searchMessagesFilterUnreadMentionOptional
 
-export type SecretChatState =
-  | secretChatStatePending
-  | secretChatStateReady
-  | secretChatStateClosed
+/** Describes the different types of activity in a chat */
+export type ChatAction =
+  | chatActionTyping
+  | chatActionRecordingVideo
+  | chatActionUploadingVideo
+  | chatActionRecordingVoiceNote
+  | chatActionUploadingVoiceNote
+  | chatActionUploadingPhoto
+  | chatActionUploadingDocument
+  | chatActionChoosingLocation
+  | chatActionChoosingContact
+  | chatActionStartPlayingGame
+  | chatActionRecordingVideoNote
+  | chatActionUploadingVideoNote
+  | chatActionCancel
 
-export type SecretChatStateOptional =
-  | secretChatStatePendingOptional
-  | secretChatStateReadyOptional
-  | secretChatStateClosedOptional
+/** Describes the different types of activity in a chat */
+export type ChatActionOptional =
+  | chatActionTypingOptional
+  | chatActionRecordingVideoOptional
+  | chatActionUploadingVideoOptional
+  | chatActionRecordingVoiceNoteOptional
+  | chatActionUploadingVoiceNoteOptional
+  | chatActionUploadingPhotoOptional
+  | chatActionUploadingDocumentOptional
+  | chatActionChoosingLocationOptional
+  | chatActionChoosingContactOptional
+  | chatActionStartPlayingGameOptional
+  | chatActionRecordingVideoNoteOptional
+  | chatActionUploadingVideoNoteOptional
+  | chatActionCancelOptional
 
-export type SupergroupMembersFilter =
-  | supergroupMembersFilterRecent
-  | supergroupMembersFilterAdministrators
-  | supergroupMembersFilterSearch
-  | supergroupMembersFilterRestricted
-  | supergroupMembersFilterBanned
-  | supergroupMembersFilterBots
+/** Describes the last time the user was online */
+export type UserStatus =
+  | userStatusEmpty
+  | userStatusOnline
+  | userStatusOffline
+  | userStatusRecently
+  | userStatusLastWeek
+  | userStatusLastMonth
 
-export type SupergroupMembersFilterOptional =
-  | supergroupMembersFilterRecentOptional
-  | supergroupMembersFilterAdministratorsOptional
-  | supergroupMembersFilterSearchOptional
-  | supergroupMembersFilterRestrictedOptional
-  | supergroupMembersFilterBannedOptional
-  | supergroupMembersFilterBotsOptional
+/** Describes the last time the user was online */
+export type UserStatusOptional =
+  | userStatusEmptyOptional
+  | userStatusOnlineOptional
+  | userStatusOfflineOptional
+  | userStatusRecentlyOptional
+  | userStatusLastWeekOptional
+  | userStatusLastMonthOptional
 
-export type TMeUrlType =
-  | tMeUrlTypeUser
-  | tMeUrlTypeSupergroup
-  | tMeUrlTypeChatInvite
-  | tMeUrlTypeStickerSet
+export type Stickers =
+  | stickers
 
-export type TMeUrlTypeOptional =
-  | tMeUrlTypeUserOptional
-  | tMeUrlTypeSupergroupOptional
-  | tMeUrlTypeChatInviteOptional
-  | tMeUrlTypeStickerSetOptional
+export type StickersOptional =
+  | stickersOptional
 
-export type TextEntityType =
-  | textEntityTypeMention
-  | textEntityTypeHashtag
-  | textEntityTypeCashtag
-  | textEntityTypeBotCommand
-  | textEntityTypeUrl
-  | textEntityTypeEmailAddress
-  | textEntityTypeBold
-  | textEntityTypeItalic
-  | textEntityTypeCode
-  | textEntityTypePre
-  | textEntityTypePreCode
-  | textEntityTypeTextUrl
-  | textEntityTypeMentionName
-  | textEntityTypePhoneNumber
+export type StickerEmojis =
+  | stickerEmojis
 
-export type TextEntityTypeOptional =
-  | textEntityTypeMentionOptional
-  | textEntityTypeHashtagOptional
-  | textEntityTypeCashtagOptional
-  | textEntityTypeBotCommandOptional
-  | textEntityTypeUrlOptional
-  | textEntityTypeEmailAddressOptional
-  | textEntityTypeBoldOptional
-  | textEntityTypeItalicOptional
-  | textEntityTypeCodeOptional
-  | textEntityTypePreOptional
-  | textEntityTypePreCodeOptional
-  | textEntityTypeTextUrlOptional
-  | textEntityTypeMentionNameOptional
-  | textEntityTypePhoneNumberOptional
+export type StickerEmojisOptional =
+  | stickerEmojisOptional
 
-export type TextParseMode =
-  | textParseModeMarkdown
-  | textParseModeHTML
+export type StickerSet =
+  | stickerSet
 
-export type TextParseModeOptional =
-  | textParseModeMarkdownOptional
-  | textParseModeHTMLOptional
+export type StickerSetOptional =
+  | stickerSetOptional
 
+export type StickerSetInfo =
+  | stickerSetInfo
+
+export type StickerSetInfoOptional =
+  | stickerSetInfoOptional
+
+export type StickerSets =
+  | stickerSets
+
+export type StickerSetsOptional =
+  | stickerSetsOptional
+
+/** Describes the reason why a call was discarded */
+export type CallDiscardReason =
+  | callDiscardReasonEmpty
+  | callDiscardReasonMissed
+  | callDiscardReasonDeclined
+  | callDiscardReasonDisconnected
+  | callDiscardReasonHungUp
+
+/** Describes the reason why a call was discarded */
+export type CallDiscardReasonOptional =
+  | callDiscardReasonEmptyOptional
+  | callDiscardReasonMissedOptional
+  | callDiscardReasonDeclinedOptional
+  | callDiscardReasonDisconnectedOptional
+  | callDiscardReasonHungUpOptional
+
+export type CallProtocol =
+  | callProtocol
+
+export type CallProtocolOptional =
+  | callProtocolOptional
+
+export type CallConnection =
+  | callConnection
+
+export type CallConnectionOptional =
+  | callConnectionOptional
+
+export type CallId =
+  | callId
+
+export type CallIdOptional =
+  | callIdOptional
+
+/** Describes the current call state */
+export type CallState =
+  | callStatePending
+  | callStateExchangingKeys
+  | callStateReady
+  | callStateHangingUp
+  | callStateDiscarded
+  | callStateError
+
+/** Describes the current call state */
+export type CallStateOptional =
+  | callStatePendingOptional
+  | callStateExchangingKeysOptional
+  | callStateReadyOptional
+  | callStateHangingUpOptional
+  | callStateDiscardedOptional
+  | callStateErrorOptional
+
+export type Call =
+  | call
+
+export type CallOptional =
+  | callOptional
+
+export type Animations =
+  | animations
+
+export type AnimationsOptional =
+  | animationsOptional
+
+export type ImportedContacts =
+  | importedContacts
+
+export type ImportedContactsOptional =
+  | importedContactsOptional
+
+/** Represents a single result of an inline query; for bots only */
+export type InputInlineQueryResult =
+  | inputInlineQueryResultAnimatedGif
+  | inputInlineQueryResultAnimatedMpeg4
+  | inputInlineQueryResultArticle
+  | inputInlineQueryResultAudio
+  | inputInlineQueryResultContact
+  | inputInlineQueryResultDocument
+  | inputInlineQueryResultGame
+  | inputInlineQueryResultLocation
+  | inputInlineQueryResultPhoto
+  | inputInlineQueryResultSticker
+  | inputInlineQueryResultVenue
+  | inputInlineQueryResultVideo
+  | inputInlineQueryResultVoiceNote
+
+/** Represents a single result of an inline query; for bots only */
+export type InputInlineQueryResultOptional =
+  | inputInlineQueryResultAnimatedGifOptional
+  | inputInlineQueryResultAnimatedMpeg4Optional
+  | inputInlineQueryResultArticleOptional
+  | inputInlineQueryResultAudioOptional
+  | inputInlineQueryResultContactOptional
+  | inputInlineQueryResultDocumentOptional
+  | inputInlineQueryResultGameOptional
+  | inputInlineQueryResultLocationOptional
+  | inputInlineQueryResultPhotoOptional
+  | inputInlineQueryResultStickerOptional
+  | inputInlineQueryResultVenueOptional
+  | inputInlineQueryResultVideoOptional
+  | inputInlineQueryResultVoiceNoteOptional
+
+/** Represents a single result of an inline query */
+export type InlineQueryResult =
+  | inlineQueryResultArticle
+  | inlineQueryResultContact
+  | inlineQueryResultLocation
+  | inlineQueryResultVenue
+  | inlineQueryResultGame
+  | inlineQueryResultAnimation
+  | inlineQueryResultAudio
+  | inlineQueryResultDocument
+  | inlineQueryResultPhoto
+  | inlineQueryResultSticker
+  | inlineQueryResultVideo
+  | inlineQueryResultVoiceNote
+
+/** Represents a single result of an inline query */
+export type InlineQueryResultOptional =
+  | inlineQueryResultArticleOptional
+  | inlineQueryResultContactOptional
+  | inlineQueryResultLocationOptional
+  | inlineQueryResultVenueOptional
+  | inlineQueryResultGameOptional
+  | inlineQueryResultAnimationOptional
+  | inlineQueryResultAudioOptional
+  | inlineQueryResultDocumentOptional
+  | inlineQueryResultPhotoOptional
+  | inlineQueryResultStickerOptional
+  | inlineQueryResultVideoOptional
+  | inlineQueryResultVoiceNoteOptional
+
+export type InlineQueryResults =
+  | inlineQueryResults
+
+export type InlineQueryResultsOptional =
+  | inlineQueryResultsOptional
+
+/** Represents a payload of a callback query */
+export type CallbackQueryPayload =
+  | callbackQueryPayloadData
+  | callbackQueryPayloadGame
+
+/** Represents a payload of a callback query */
+export type CallbackQueryPayloadOptional =
+  | callbackQueryPayloadDataOptional
+  | callbackQueryPayloadGameOptional
+
+export type CallbackQueryAnswer =
+  | callbackQueryAnswer
+
+export type CallbackQueryAnswerOptional =
+  | callbackQueryAnswerOptional
+
+export type CustomRequestResult =
+  | customRequestResult
+
+export type CustomRequestResultOptional =
+  | customRequestResultOptional
+
+export type GameHighScore =
+  | gameHighScore
+
+export type GameHighScoreOptional =
+  | gameHighScoreOptional
+
+export type GameHighScores =
+  | gameHighScores
+
+export type GameHighScoresOptional =
+  | gameHighScoresOptional
+
+/** Represents a chat event */
+export type ChatEventAction =
+  | chatEventMessageEdited
+  | chatEventMessageDeleted
+  | chatEventMessagePinned
+  | chatEventMessageUnpinned
+  | chatEventMemberJoined
+  | chatEventMemberLeft
+  | chatEventMemberInvited
+  | chatEventMemberPromoted
+  | chatEventMemberRestricted
+  | chatEventTitleChanged
+  | chatEventDescriptionChanged
+  | chatEventUsernameChanged
+  | chatEventPhotoChanged
+  | chatEventInvitesToggled
+  | chatEventSignMessagesToggled
+  | chatEventStickerSetChanged
+  | chatEventIsAllHistoryAvailableToggled
+
+/** Represents a chat event */
+export type ChatEventActionOptional =
+  | chatEventMessageEditedOptional
+  | chatEventMessageDeletedOptional
+  | chatEventMessagePinnedOptional
+  | chatEventMessageUnpinnedOptional
+  | chatEventMemberJoinedOptional
+  | chatEventMemberLeftOptional
+  | chatEventMemberInvitedOptional
+  | chatEventMemberPromotedOptional
+  | chatEventMemberRestrictedOptional
+  | chatEventTitleChangedOptional
+  | chatEventDescriptionChangedOptional
+  | chatEventUsernameChangedOptional
+  | chatEventPhotoChangedOptional
+  | chatEventInvitesToggledOptional
+  | chatEventSignMessagesToggledOptional
+  | chatEventStickerSetChangedOptional
+  | chatEventIsAllHistoryAvailableToggledOptional
+
+export type ChatEvent =
+  | chatEvent
+
+export type ChatEventOptional =
+  | chatEventOptional
+
+export type ChatEvents =
+  | chatEvents
+
+export type ChatEventsOptional =
+  | chatEventsOptional
+
+export type ChatEventLogFilters =
+  | chatEventLogFilters
+
+export type ChatEventLogFiltersOptional =
+  | chatEventLogFiltersOptional
+
+/**
+ * Represents a data needed to subscribe for push notifications. To use specific push
+ * notification service, you must specify the correct application platform and upload
+ * valid server authentication data at https://my.telegram.org
+ */
+export type DeviceToken =
+  | deviceTokenGoogleCloudMessaging
+  | deviceTokenApplePush
+  | deviceTokenApplePushVoIP
+  | deviceTokenWindowsPush
+  | deviceTokenMicrosoftPush
+  | deviceTokenMicrosoftPushVoIP
+  | deviceTokenWebPush
+  | deviceTokenSimplePush
+  | deviceTokenUbuntuPush
+  | deviceTokenBlackBerryPush
+  | deviceTokenTizenPush
+
+/**
+ * Represents a data needed to subscribe for push notifications. To use specific push
+ * notification service, you must specify the correct application platform and upload
+ * valid server authentication data at https://my.telegram.org
+ */
+export type DeviceTokenOptional =
+  | deviceTokenGoogleCloudMessagingOptional
+  | deviceTokenApplePushOptional
+  | deviceTokenApplePushVoIPOptional
+  | deviceTokenWindowsPushOptional
+  | deviceTokenMicrosoftPushOptional
+  | deviceTokenMicrosoftPushVoIPOptional
+  | deviceTokenWebPushOptional
+  | deviceTokenSimplePushOptional
+  | deviceTokenUbuntuPushOptional
+  | deviceTokenBlackBerryPushOptional
+  | deviceTokenTizenPushOptional
+
+export type Wallpaper =
+  | wallpaper
+
+export type WallpaperOptional =
+  | wallpaperOptional
+
+export type Wallpapers =
+  | wallpapers
+
+export type WallpapersOptional =
+  | wallpapersOptional
+
+export type Hashtags =
+  | hashtags
+
+export type HashtagsOptional =
+  | hashtagsOptional
+
+/** Represents result of checking whether a username can be set for a chat */
+export type CheckChatUsernameResult =
+  | checkChatUsernameResultOk
+  | checkChatUsernameResultUsernameInvalid
+  | checkChatUsernameResultUsernameOccupied
+  | checkChatUsernameResultPublicChatsTooMuch
+  | checkChatUsernameResultPublicGroupsUnavailable
+
+/** Represents result of checking whether a username can be set for a chat */
+export type CheckChatUsernameResultOptional =
+  | checkChatUsernameResultOkOptional
+  | checkChatUsernameResultUsernameInvalidOptional
+  | checkChatUsernameResultUsernameOccupiedOptional
+  | checkChatUsernameResultPublicChatsTooMuchOptional
+  | checkChatUsernameResultPublicGroupsUnavailableOptional
+
+/** Represents the value of an option */
+export type OptionValue =
+  | optionValueBoolean
+  | optionValueEmpty
+  | optionValueInteger
+  | optionValueString
+
+/** Represents the value of an option */
+export type OptionValueOptional =
+  | optionValueBooleanOptional
+  | optionValueEmptyOptional
+  | optionValueIntegerOptional
+  | optionValueStringOptional
+
+/** Represents a single rule for managing privacy settings */
+export type UserPrivacySettingRule =
+  | userPrivacySettingRuleAllowAll
+  | userPrivacySettingRuleAllowContacts
+  | userPrivacySettingRuleAllowUsers
+  | userPrivacySettingRuleRestrictAll
+  | userPrivacySettingRuleRestrictContacts
+  | userPrivacySettingRuleRestrictUsers
+
+/** Represents a single rule for managing privacy settings */
+export type UserPrivacySettingRuleOptional =
+  | userPrivacySettingRuleAllowAllOptional
+  | userPrivacySettingRuleAllowContactsOptional
+  | userPrivacySettingRuleAllowUsersOptional
+  | userPrivacySettingRuleRestrictAllOptional
+  | userPrivacySettingRuleRestrictContactsOptional
+  | userPrivacySettingRuleRestrictUsersOptional
+
+export type UserPrivacySettingRules =
+  | userPrivacySettingRules
+
+export type UserPrivacySettingRulesOptional =
+  | userPrivacySettingRulesOptional
+
+/** Describes available user privacy settings */
+export type UserPrivacySetting =
+  | userPrivacySettingShowStatus
+  | userPrivacySettingAllowChatInvites
+  | userPrivacySettingAllowCalls
+
+/** Describes available user privacy settings */
+export type UserPrivacySettingOptional =
+  | userPrivacySettingShowStatusOptional
+  | userPrivacySettingAllowChatInvitesOptional
+  | userPrivacySettingAllowCallsOptional
+
+export type AccountTtl =
+  | accountTtl
+
+export type AccountTtlOptional =
+  | accountTtlOptional
+
+export type Session =
+  | session
+
+export type SessionOptional =
+  | sessionOptional
+
+export type Sessions =
+  | sessions
+
+export type SessionsOptional =
+  | sessionsOptional
+
+export type ConnectedWebsite =
+  | connectedWebsite
+
+export type ConnectedWebsiteOptional =
+  | connectedWebsiteOptional
+
+export type ConnectedWebsites =
+  | connectedWebsites
+
+export type ConnectedWebsitesOptional =
+  | connectedWebsitesOptional
+
+export type ChatReportSpamState =
+  | chatReportSpamState
+
+export type ChatReportSpamStateOptional =
+  | chatReportSpamStateOptional
+
+/** Describes the reason why a chat is reported */
+export type ChatReportReason =
+  | chatReportReasonSpam
+  | chatReportReasonViolence
+  | chatReportReasonPornography
+  | chatReportReasonCustom
+
+/** Describes the reason why a chat is reported */
+export type ChatReportReasonOptional =
+  | chatReportReasonSpamOptional
+  | chatReportReasonViolenceOptional
+  | chatReportReasonPornographyOptional
+  | chatReportReasonCustomOptional
+
+export type PublicMessageLink =
+  | publicMessageLink
+
+export type PublicMessageLinkOptional =
+  | publicMessageLinkOptional
+
+/** Represents the type of a file */
+export type FileType =
+  | fileTypeNone
+  | fileTypeAnimation
+  | fileTypeAudio
+  | fileTypeDocument
+  | fileTypePhoto
+  | fileTypeProfilePhoto
+  | fileTypeSecret
+  | fileTypeSticker
+  | fileTypeThumbnail
+  | fileTypeUnknown
+  | fileTypeVideo
+  | fileTypeVideoNote
+  | fileTypeVoiceNote
+  | fileTypeWallpaper
+  | fileTypeSecretThumbnail
+
+/** Represents the type of a file */
+export type FileTypeOptional =
+  | fileTypeNoneOptional
+  | fileTypeAnimationOptional
+  | fileTypeAudioOptional
+  | fileTypeDocumentOptional
+  | fileTypePhotoOptional
+  | fileTypeProfilePhotoOptional
+  | fileTypeSecretOptional
+  | fileTypeStickerOptional
+  | fileTypeThumbnailOptional
+  | fileTypeUnknownOptional
+  | fileTypeVideoOptional
+  | fileTypeVideoNoteOptional
+  | fileTypeVoiceNoteOptional
+  | fileTypeWallpaperOptional
+  | fileTypeSecretThumbnailOptional
+
+export type StorageStatisticsByFileType =
+  | storageStatisticsByFileType
+
+export type StorageStatisticsByFileTypeOptional =
+  | storageStatisticsByFileTypeOptional
+
+export type StorageStatisticsByChat =
+  | storageStatisticsByChat
+
+export type StorageStatisticsByChatOptional =
+  | storageStatisticsByChatOptional
+
+export type StorageStatistics =
+  | storageStatistics
+
+export type StorageStatisticsOptional =
+  | storageStatisticsOptional
+
+export type StorageStatisticsFast =
+  | storageStatisticsFast
+
+export type StorageStatisticsFastOptional =
+  | storageStatisticsFastOptional
+
+/** Represents the type of a network */
+export type NetworkType =
+  | networkTypeNone
+  | networkTypeMobile
+  | networkTypeMobileRoaming
+  | networkTypeWiFi
+  | networkTypeOther
+
+/** Represents the type of a network */
+export type NetworkTypeOptional =
+  | networkTypeNoneOptional
+  | networkTypeMobileOptional
+  | networkTypeMobileRoamingOptional
+  | networkTypeWiFiOptional
+  | networkTypeOtherOptional
+
+/** Contains statistics about network usage */
+export type NetworkStatisticsEntry =
+  | networkStatisticsEntryFile
+  | networkStatisticsEntryCall
+
+/** Contains statistics about network usage */
+export type NetworkStatisticsEntryOptional =
+  | networkStatisticsEntryFileOptional
+  | networkStatisticsEntryCallOptional
+
+export type NetworkStatistics =
+  | networkStatistics
+
+export type NetworkStatisticsOptional =
+  | networkStatisticsOptional
+
+/** Describes the current state of the connection to Telegram servers */
+export type ConnectionState =
+  | connectionStateWaitingForNetwork
+  | connectionStateConnectingToProxy
+  | connectionStateConnecting
+  | connectionStateUpdating
+  | connectionStateReady
+
+/** Describes the current state of the connection to Telegram servers */
+export type ConnectionStateOptional =
+  | connectionStateWaitingForNetworkOptional
+  | connectionStateConnectingToProxyOptional
+  | connectionStateConnectingOptional
+  | connectionStateUpdatingOptional
+  | connectionStateReadyOptional
+
+/**
+ * Represents the categories of chats for which a list of frequently used chats can
+ * be retrieved
+ */
 export type TopChatCategory =
   | topChatCategoryUsers
   | topChatCategoryBots
@@ -9594,6 +14987,10 @@ export type TopChatCategory =
   | topChatCategoryInlineBots
   | topChatCategoryCalls
 
+/**
+ * Represents the categories of chats for which a list of frequently used chats can
+ * be retrieved
+ */
 export type TopChatCategoryOptional =
   | topChatCategoryUsersOptional
   | topChatCategoryBotsOptional
@@ -9602,6 +14999,71 @@ export type TopChatCategoryOptional =
   | topChatCategoryInlineBotsOptional
   | topChatCategoryCallsOptional
 
+/** Describes the type of a URL linking to an internal Telegram entity */
+export type TMeUrlType =
+  | tMeUrlTypeUser
+  | tMeUrlTypeSupergroup
+  | tMeUrlTypeChatInvite
+  | tMeUrlTypeStickerSet
+
+/** Describes the type of a URL linking to an internal Telegram entity */
+export type TMeUrlTypeOptional =
+  | tMeUrlTypeUserOptional
+  | tMeUrlTypeSupergroupOptional
+  | tMeUrlTypeChatInviteOptional
+  | tMeUrlTypeStickerSetOptional
+
+export type TMeUrl =
+  | tMeUrl
+
+export type TMeUrlOptional =
+  | tMeUrlOptional
+
+export type TMeUrls =
+  | tMeUrls
+
+export type TMeUrlsOptional =
+  | tMeUrlsOptional
+
+export type Count =
+  | count
+
+export type CountOptional =
+  | countOptional
+
+export type Text =
+  | text
+
+export type TextOptional =
+  | textOptional
+
+/** Describes the way the text should be parsed for TextEntities */
+export type TextParseMode =
+  | textParseModeMarkdown
+  | textParseModeHTML
+
+/** Describes the way the text should be parsed for TextEntities */
+export type TextParseModeOptional =
+  | textParseModeMarkdownOptional
+  | textParseModeHTMLOptional
+
+/** Contains information about a proxy server */
+export type Proxy =
+  | proxyEmpty
+  | proxySocks5
+
+/** Contains information about a proxy server */
+export type ProxyOptional =
+  | proxyEmptyOptional
+  | proxySocks5Optional
+
+export type InputSticker =
+  | inputSticker
+
+export type InputStickerOptional =
+  | inputStickerOptional
+
+/** Contains notifications about data changes */
 export type Update =
   | updateAuthorizationState
   | updateNewMessage
@@ -9658,6 +15120,7 @@ export type Update =
   | updateNewCustomEvent
   | updateNewCustomQuery
 
+/** Contains notifications about data changes */
 export type UpdateOptional =
   | updateAuthorizationStateOptional
   | updateNewMessageOptional
@@ -9714,841 +15177,1415 @@ export type UpdateOptional =
   | updateNewCustomEventOptional
   | updateNewCustomQueryOptional
 
-export type UserPrivacySetting =
-  | userPrivacySettingShowStatus
-  | userPrivacySettingAllowChatInvites
-  | userPrivacySettingAllowCalls
+export type TestInt =
+  | testInt
 
-export type UserPrivacySettingOptional =
-  | userPrivacySettingShowStatusOptional
-  | userPrivacySettingAllowChatInvitesOptional
-  | userPrivacySettingAllowCallsOptional
+export type TestIntOptional =
+  | testIntOptional
 
-export type UserPrivacySettingRule =
-  | userPrivacySettingRuleAllowAll
-  | userPrivacySettingRuleAllowContacts
-  | userPrivacySettingRuleAllowUsers
-  | userPrivacySettingRuleRestrictAll
-  | userPrivacySettingRuleRestrictContacts
-  | userPrivacySettingRuleRestrictUsers
+export type TestString =
+  | testString
 
-export type UserPrivacySettingRuleOptional =
-  | userPrivacySettingRuleAllowAllOptional
-  | userPrivacySettingRuleAllowContactsOptional
-  | userPrivacySettingRuleAllowUsersOptional
-  | userPrivacySettingRuleRestrictAllOptional
-  | userPrivacySettingRuleRestrictContactsOptional
-  | userPrivacySettingRuleRestrictUsersOptional
+export type TestStringOptional =
+  | testStringOptional
 
-export type UserStatus =
-  | userStatusEmpty
-  | userStatusOnline
-  | userStatusOffline
-  | userStatusRecently
-  | userStatusLastWeek
-  | userStatusLastMonth
+export type TestBytes =
+  | testBytes
 
-export type UserStatusOptional =
-  | userStatusEmptyOptional
-  | userStatusOnlineOptional
-  | userStatusOfflineOptional
-  | userStatusRecentlyOptional
-  | userStatusLastWeekOptional
-  | userStatusLastMonthOptional
+export type TestBytesOptional =
+  | testBytesOptional
 
-export type UserType =
-  | userTypeRegular
-  | userTypeDeleted
-  | userTypeBot
-  | userTypeUnknown
+export type TestVectorInt =
+  | testVectorInt
 
-export type UserTypeOptional =
-  | userTypeRegularOptional
-  | userTypeDeletedOptional
-  | userTypeBotOptional
-  | userTypeUnknownOptional
+export type TestVectorIntOptional =
+  | testVectorIntOptional
 
-// -----------
+export type TestVectorIntObject =
+  | testVectorIntObject
+
+export type TestVectorIntObjectOptional =
+  | testVectorIntObjectOptional
+
+export type TestVectorString =
+  | testVectorString
+
+export type TestVectorStringOptional =
+  | testVectorStringOptional
+
+export type TestVectorStringObject =
+  | testVectorStringObject
+
+export type TestVectorStringObjectOptional =
+  | testVectorStringObjectOptional
+
+export type TDFunction =
+  | getAuthorizationState
+  | setTdlibParameters
+  | checkDatabaseEncryptionKey
+  | setAuthenticationPhoneNumber
+  | resendAuthenticationCode
+  | checkAuthenticationCode
+  | checkAuthenticationPassword
+  | requestAuthenticationPasswordRecovery
+  | recoverAuthenticationPassword
+  | checkAuthenticationBotToken
+  | logOut
+  | close
+  | destroy
+  | setDatabaseEncryptionKey
+  | getPasswordState
+  | setPassword
+  | getRecoveryEmailAddress
+  | setRecoveryEmailAddress
+  | requestPasswordRecovery
+  | recoverPassword
+  | createTemporaryPassword
+  | getTemporaryPasswordState
+  | processDcUpdate
+  | getMe
+  | getUser
+  | getUserFullInfo
+  | getBasicGroup
+  | getBasicGroupFullInfo
+  | getSupergroup
+  | getSupergroupFullInfo
+  | getSecretChat
+  | getChat
+  | getMessage
+  | getRepliedMessage
+  | getChatPinnedMessage
+  | getMessages
+  | getFile
+  | getRemoteFile
+  | getChats
+  | searchPublicChat
+  | searchPublicChats
+  | searchChats
+  | searchChatsOnServer
+  | getTopChats
+  | removeTopChat
+  | addRecentlyFoundChat
+  | removeRecentlyFoundChat
+  | clearRecentlyFoundChats
+  | checkChatUsername
+  | getCreatedPublicChats
+  | getGroupsInCommon
+  | getChatHistory
+  | deleteChatHistory
+  | searchChatMessages
+  | searchMessages
+  | searchSecretMessages
+  | searchCallMessages
+  | searchChatRecentLocationMessages
+  | getActiveLiveLocationMessages
+  | getChatMessageByDate
+  | getPublicMessageLink
+  | sendMessage
+  | sendMessageAlbum
+  | sendBotStartMessage
+  | sendInlineQueryResultMessage
+  | forwardMessages
+  | sendChatSetTtlMessage
+  | sendChatScreenshotTakenNotification
+  | deleteMessages
+  | deleteChatMessagesFromUser
+  | editMessageText
+  | editMessageLiveLocation
+  | editMessageCaption
+  | editMessageReplyMarkup
+  | editInlineMessageText
+  | editInlineMessageLiveLocation
+  | editInlineMessageCaption
+  | editInlineMessageReplyMarkup
+  | getTextEntities
+  | parseTextEntities
+  | getFileMimeType
+  | getFileExtension
+  | getInlineQueryResults
+  | answerInlineQuery
+  | getCallbackQueryAnswer
+  | answerCallbackQuery
+  | answerShippingQuery
+  | answerPreCheckoutQuery
+  | setGameScore
+  | setInlineGameScore
+  | getGameHighScores
+  | getInlineGameHighScores
+  | deleteChatReplyMarkup
+  | sendChatAction
+  | openChat
+  | closeChat
+  | viewMessages
+  | openMessageContent
+  | readAllChatMentions
+  | createPrivateChat
+  | createBasicGroupChat
+  | createSupergroupChat
+  | createSecretChat
+  | createNewBasicGroupChat
+  | createNewSupergroupChat
+  | createNewSecretChat
+  | upgradeBasicGroupChatToSupergroupChat
+  | setChatTitle
+  | setChatPhoto
+  | setChatDraftMessage
+  | toggleChatIsPinned
+  | setChatClientData
+  | addChatMember
+  | addChatMembers
+  | setChatMemberStatus
+  | getChatMember
+  | searchChatMembers
+  | getChatAdministrators
+  | setPinnedChats
+  | downloadFile
+  | cancelDownloadFile
+  | uploadFile
+  | cancelUploadFile
+  | setFileGenerationProgress
+  | finishFileGeneration
+  | deleteFile
+  | generateChatInviteLink
+  | checkChatInviteLink
+  | joinChatByInviteLink
+  | createCall
+  | acceptCall
+  | discardCall
+  | sendCallRating
+  | sendCallDebugInformation
+  | blockUser
+  | unblockUser
+  | getBlockedUsers
+  | importContacts
+  | searchContacts
+  | removeContacts
+  | getImportedContactCount
+  | changeImportedContacts
+  | clearImportedContacts
+  | getUserProfilePhotos
+  | getStickers
+  | searchStickers
+  | getInstalledStickerSets
+  | getArchivedStickerSets
+  | getTrendingStickerSets
+  | getAttachedStickerSets
+  | getStickerSet
+  | searchStickerSet
+  | searchInstalledStickerSets
+  | searchStickerSets
+  | changeStickerSet
+  | viewTrendingStickerSets
+  | reorderInstalledStickerSets
+  | getRecentStickers
+  | addRecentSticker
+  | removeRecentSticker
+  | clearRecentStickers
+  | getFavoriteStickers
+  | addFavoriteSticker
+  | removeFavoriteSticker
+  | getStickerEmojis
+  | getSavedAnimations
+  | addSavedAnimation
+  | removeSavedAnimation
+  | getRecentInlineBots
+  | searchHashtags
+  | removeRecentHashtag
+  | getWebPagePreview
+  | getWebPageInstantView
+  | getNotificationSettings
+  | setNotificationSettings
+  | resetAllNotificationSettings
+  | setProfilePhoto
+  | deleteProfilePhoto
+  | setName
+  | setBio
+  | setUsername
+  | changePhoneNumber
+  | resendChangePhoneNumberCode
+  | checkChangePhoneNumberCode
+  | getActiveSessions
+  | terminateSession
+  | terminateAllOtherSessions
+  | getConnectedWebsites
+  | disconnectWebsite
+  | disconnectAllWebsites
+  | toggleBasicGroupAdministrators
+  | setSupergroupUsername
+  | setSupergroupStickerSet
+  | toggleSupergroupInvites
+  | toggleSupergroupSignMessages
+  | toggleSupergroupIsAllHistoryAvailable
+  | setSupergroupDescription
+  | pinSupergroupMessage
+  | unpinSupergroupMessage
+  | reportSupergroupSpam
+  | getSupergroupMembers
+  | deleteSupergroup
+  | closeSecretChat
+  | getChatEventLog
+  | getPaymentForm
+  | validateOrderInfo
+  | sendPaymentForm
+  | getPaymentReceipt
+  | getSavedOrderInfo
+  | deleteSavedOrderInfo
+  | deleteSavedCredentials
+  | getSupportUser
+  | getWallpapers
+  | registerDevice
+  | getRecentlyVisitedTMeUrls
+  | setUserPrivacySettingRules
+  | getUserPrivacySettingRules
+  | getOption
+  | setOption
+  | setAccountTtl
+  | getAccountTtl
+  | deleteAccount
+  | getChatReportSpamState
+  | changeChatReportSpamState
+  | reportChat
+  | getStorageStatistics
+  | getStorageStatisticsFast
+  | optimizeStorage
+  | setNetworkType
+  | getNetworkStatistics
+  | addNetworkStatistics
+  | resetNetworkStatistics
+  | setBotUpdatesStatus
+  | uploadStickerFile
+  | createNewStickerSet
+  | addStickerToSet
+  | setStickerPositionInSet
+  | removeStickerFromSet
+  | sendCustomRequest
+  | answerCustomQuery
+  | setAlarm
+  | getCountryCode
+  | getInviteText
+  | getTermsOfService
+  | setProxy
+  | getProxy
+  | testCallEmpty
+  | testCallString
+  | testCallBytes
+  | testCallVectorInt
+  | testCallVectorIntObject
+  | testCallVectorString
+  | testCallVectorStringObject
+  | testSquareInt
+  | testNetwork
+  | testGetDifference
+  | testUseUpdate
+  | testUseError
+
+export type TDObject =
+  | Error
+  | Ok
+  | TdlibParameters
+  | AuthenticationCodeType
+  | AuthenticationCodeInfo
+  | AuthorizationState
+  | PasswordState
+  | PasswordRecoveryInfo
+  | RecoveryEmailAddress
+  | TemporaryPasswordState
+  | LocalFile
+  | RemoteFile
+  | File
+  | InputFile
+  | PhotoSize
+  | MaskPoint
+  | MaskPosition
+  | TextEntity
+  | TextEntities
+  | FormattedText
+  | Animation
+  | Audio
+  | Document
+  | Photo
+  | Sticker
+  | Video
+  | VideoNote
+  | VoiceNote
+  | Contact
+  | Location
+  | Venue
+  | Game
+  | ProfilePhoto
+  | ChatPhoto
+  | LinkState
+  | UserType
+  | BotCommand
+  | BotInfo
+  | User
+  | UserFullInfo
+  | UserProfilePhotos
+  | Users
+  | ChatMemberStatus
+  | ChatMember
+  | ChatMembers
+  | SupergroupMembersFilter
+  | BasicGroup
+  | BasicGroupFullInfo
+  | Supergroup
+  | SupergroupFullInfo
+  | SecretChatState
+  | SecretChat
+  | MessageForwardInfo
+  | MessageSendingState
+  | Message
+  | Messages
+  | FoundMessages
+  | NotificationSettingsScope
+  | NotificationSettings
+  | DraftMessage
+  | ChatType
+  | Chat
+  | Chats
+  | ChatInviteLink
+  | ChatInviteLinkInfo
+  | KeyboardButtonType
+  | KeyboardButton
+  | InlineKeyboardButtonType
+  | InlineKeyboardButton
+  | ReplyMarkup
+  | RichText
+  | PageBlock
+  | WebPageInstantView
+  | WebPage
+  | LabeledPricePart
+  | Invoice
+  | ShippingAddress
+  | OrderInfo
+  | ShippingOption
+  | SavedCredentials
+  | InputCredentials
+  | PaymentsProviderStripe
+  | PaymentForm
+  | ValidatedOrderInfo
+  | PaymentResult
+  | PaymentReceipt
+  | MessageContent
+  | TextEntityType
+  | InputThumbnail
+  | InputMessageContent
+  | SearchMessagesFilter
+  | ChatAction
+  | UserStatus
+  | Stickers
+  | StickerEmojis
+  | StickerSet
+  | StickerSetInfo
+  | StickerSets
+  | CallDiscardReason
+  | CallProtocol
+  | CallConnection
+  | CallId
+  | CallState
+  | Call
+  | Animations
+  | ImportedContacts
+  | InputInlineQueryResult
+  | InlineQueryResult
+  | InlineQueryResults
+  | CallbackQueryPayload
+  | CallbackQueryAnswer
+  | CustomRequestResult
+  | GameHighScore
+  | GameHighScores
+  | ChatEventAction
+  | ChatEvent
+  | ChatEvents
+  | ChatEventLogFilters
+  | DeviceToken
+  | Wallpaper
+  | Wallpapers
+  | Hashtags
+  | CheckChatUsernameResult
+  | OptionValue
+  | UserPrivacySettingRule
+  | UserPrivacySettingRules
+  | UserPrivacySetting
+  | AccountTtl
+  | Session
+  | Sessions
+  | ConnectedWebsite
+  | ConnectedWebsites
+  | ChatReportSpamState
+  | ChatReportReason
+  | PublicMessageLink
+  | FileType
+  | StorageStatisticsByFileType
+  | StorageStatisticsByChat
+  | StorageStatistics
+  | StorageStatisticsFast
+  | NetworkType
+  | NetworkStatisticsEntry
+  | NetworkStatistics
+  | ConnectionState
+  | TopChatCategory
+  | TMeUrlType
+  | TMeUrl
+  | TMeUrls
+  | Count
+  | Text
+  | TextParseMode
+  | Proxy
+  | InputSticker
+  | Update
+  | TestInt
+  | TestString
+  | TestBytes
+  | TestVectorInt
+  | TestVectorIntObject
+  | TestVectorString
+  | TestVectorStringObject
+
+export type TDObjectOptional =
+  | ErrorOptional
+  | OkOptional
+  | TdlibParametersOptional
+  | AuthenticationCodeTypeOptional
+  | AuthenticationCodeInfoOptional
+  | AuthorizationStateOptional
+  | PasswordStateOptional
+  | PasswordRecoveryInfoOptional
+  | RecoveryEmailAddressOptional
+  | TemporaryPasswordStateOptional
+  | LocalFileOptional
+  | RemoteFileOptional
+  | FileOptional
+  | InputFileOptional
+  | PhotoSizeOptional
+  | MaskPointOptional
+  | MaskPositionOptional
+  | TextEntityOptional
+  | TextEntitiesOptional
+  | FormattedTextOptional
+  | AnimationOptional
+  | AudioOptional
+  | DocumentOptional
+  | PhotoOptional
+  | StickerOptional
+  | VideoOptional
+  | VideoNoteOptional
+  | VoiceNoteOptional
+  | ContactOptional
+  | LocationOptional
+  | VenueOptional
+  | GameOptional
+  | ProfilePhotoOptional
+  | ChatPhotoOptional
+  | LinkStateOptional
+  | UserTypeOptional
+  | BotCommandOptional
+  | BotInfoOptional
+  | UserOptional
+  | UserFullInfoOptional
+  | UserProfilePhotosOptional
+  | UsersOptional
+  | ChatMemberStatusOptional
+  | ChatMemberOptional
+  | ChatMembersOptional
+  | SupergroupMembersFilterOptional
+  | BasicGroupOptional
+  | BasicGroupFullInfoOptional
+  | SupergroupOptional
+  | SupergroupFullInfoOptional
+  | SecretChatStateOptional
+  | SecretChatOptional
+  | MessageForwardInfoOptional
+  | MessageSendingStateOptional
+  | MessageOptional
+  | MessagesOptional
+  | FoundMessagesOptional
+  | NotificationSettingsScopeOptional
+  | NotificationSettingsOptional
+  | DraftMessageOptional
+  | ChatTypeOptional
+  | ChatOptional
+  | ChatsOptional
+  | ChatInviteLinkOptional
+  | ChatInviteLinkInfoOptional
+  | KeyboardButtonTypeOptional
+  | KeyboardButtonOptional
+  | InlineKeyboardButtonTypeOptional
+  | InlineKeyboardButtonOptional
+  | ReplyMarkupOptional
+  | RichTextOptional
+  | PageBlockOptional
+  | WebPageInstantViewOptional
+  | WebPageOptional
+  | LabeledPricePartOptional
+  | InvoiceOptional
+  | ShippingAddressOptional
+  | OrderInfoOptional
+  | ShippingOptionOptional
+  | SavedCredentialsOptional
+  | InputCredentialsOptional
+  | PaymentsProviderStripeOptional
+  | PaymentFormOptional
+  | ValidatedOrderInfoOptional
+  | PaymentResultOptional
+  | PaymentReceiptOptional
+  | MessageContentOptional
+  | TextEntityTypeOptional
+  | InputThumbnailOptional
+  | InputMessageContentOptional
+  | SearchMessagesFilterOptional
+  | ChatActionOptional
+  | UserStatusOptional
+  | StickersOptional
+  | StickerEmojisOptional
+  | StickerSetOptional
+  | StickerSetInfoOptional
+  | StickerSetsOptional
+  | CallDiscardReasonOptional
+  | CallProtocolOptional
+  | CallConnectionOptional
+  | CallIdOptional
+  | CallStateOptional
+  | CallOptional
+  | AnimationsOptional
+  | ImportedContactsOptional
+  | InputInlineQueryResultOptional
+  | InlineQueryResultOptional
+  | InlineQueryResultsOptional
+  | CallbackQueryPayloadOptional
+  | CallbackQueryAnswerOptional
+  | CustomRequestResultOptional
+  | GameHighScoreOptional
+  | GameHighScoresOptional
+  | ChatEventActionOptional
+  | ChatEventOptional
+  | ChatEventsOptional
+  | ChatEventLogFiltersOptional
+  | DeviceTokenOptional
+  | WallpaperOptional
+  | WallpapersOptional
+  | HashtagsOptional
+  | CheckChatUsernameResultOptional
+  | OptionValueOptional
+  | UserPrivacySettingRuleOptional
+  | UserPrivacySettingRulesOptional
+  | UserPrivacySettingOptional
+  | AccountTtlOptional
+  | SessionOptional
+  | SessionsOptional
+  | ConnectedWebsiteOptional
+  | ConnectedWebsitesOptional
+  | ChatReportSpamStateOptional
+  | ChatReportReasonOptional
+  | PublicMessageLinkOptional
+  | FileTypeOptional
+  | StorageStatisticsByFileTypeOptional
+  | StorageStatisticsByChatOptional
+  | StorageStatisticsOptional
+  | StorageStatisticsFastOptional
+  | NetworkTypeOptional
+  | NetworkStatisticsEntryOptional
+  | NetworkStatisticsOptional
+  | ConnectionStateOptional
+  | TopChatCategoryOptional
+  | TMeUrlTypeOptional
+  | TMeUrlOptional
+  | TMeUrlsOptional
+  | CountOptional
+  | TextOptional
+  | TextParseModeOptional
+  | ProxyOptional
+  | InputStickerOptional
+  | UpdateOptional
+  | TestIntOptional
+  | TestStringOptional
+  | TestBytesOptional
+  | TestVectorIntOptional
+  | TestVectorIntObjectOptional
+  | TestVectorStringOptional
+  | TestVectorStringObjectOptional
+
+// ----
 
 export type Invoke =
-  & ((query: acceptCall) => Promise<acceptCallReturnType>)
-  & ((query: addChatMember) => Promise<addChatMemberReturnType>)
-  & ((query: addChatMembers) => Promise<addChatMembersReturnType>)
-  & ((query: addFavoriteSticker) => Promise<addFavoriteStickerReturnType>)
-  & ((query: addNetworkStatistics) => Promise<addNetworkStatisticsReturnType>)
-  & ((query: addRecentSticker) => Promise<addRecentStickerReturnType>)
-  & ((query: addRecentlyFoundChat) => Promise<addRecentlyFoundChatReturnType>)
-  & ((query: addSavedAnimation) => Promise<addSavedAnimationReturnType>)
-  & ((query: addStickerToSet) => Promise<addStickerToSetReturnType>)
-  & ((query: answerCallbackQuery) => Promise<answerCallbackQueryReturnType>)
-  & ((query: answerCustomQuery) => Promise<answerCustomQueryReturnType>)
-  & ((query: answerInlineQuery) => Promise<answerInlineQueryReturnType>)
-  & ((query: answerPreCheckoutQuery) => Promise<answerPreCheckoutQueryReturnType>)
-  & ((query: answerShippingQuery) => Promise<answerShippingQueryReturnType>)
-  & ((query: blockUser) => Promise<blockUserReturnType>)
-  & ((query: cancelDownloadFile) => Promise<cancelDownloadFileReturnType>)
-  & ((query: cancelUploadFile) => Promise<cancelUploadFileReturnType>)
-  & ((query: changeChatReportSpamState) => Promise<changeChatReportSpamStateReturnType>)
-  & ((query: changeImportedContacts) => Promise<changeImportedContactsReturnType>)
-  & ((query: changePhoneNumber) => Promise<changePhoneNumberReturnType>)
-  & ((query: changeStickerSet) => Promise<changeStickerSetReturnType>)
-  & ((query: checkAuthenticationBotToken) => Promise<checkAuthenticationBotTokenReturnType>)
-  & ((query: checkAuthenticationCode) => Promise<checkAuthenticationCodeReturnType>)
-  & ((query: checkAuthenticationPassword) => Promise<checkAuthenticationPasswordReturnType>)
-  & ((query: checkChangePhoneNumberCode) => Promise<checkChangePhoneNumberCodeReturnType>)
-  & ((query: checkChatInviteLink) => Promise<checkChatInviteLinkReturnType>)
-  & ((query: checkChatUsername) => Promise<checkChatUsernameReturnType>)
-  & ((query: checkDatabaseEncryptionKey) => Promise<checkDatabaseEncryptionKeyReturnType>)
-  & ((query: clearImportedContacts) => Promise<clearImportedContactsReturnType>)
-  & ((query: clearRecentStickers) => Promise<clearRecentStickersReturnType>)
-  & ((query: clearRecentlyFoundChats) => Promise<clearRecentlyFoundChatsReturnType>)
-  & ((query: close) => Promise<closeReturnType>)
-  & ((query: closeChat) => Promise<closeChatReturnType>)
-  & ((query: closeSecretChat) => Promise<closeSecretChatReturnType>)
-  & ((query: createBasicGroupChat) => Promise<createBasicGroupChatReturnType>)
-  & ((query: createCall) => Promise<createCallReturnType>)
-  & ((query: createNewBasicGroupChat) => Promise<createNewBasicGroupChatReturnType>)
-  & ((query: createNewSecretChat) => Promise<createNewSecretChatReturnType>)
-  & ((query: createNewStickerSet) => Promise<createNewStickerSetReturnType>)
-  & ((query: createNewSupergroupChat) => Promise<createNewSupergroupChatReturnType>)
-  & ((query: createPrivateChat) => Promise<createPrivateChatReturnType>)
-  & ((query: createSecretChat) => Promise<createSecretChatReturnType>)
-  & ((query: createSupergroupChat) => Promise<createSupergroupChatReturnType>)
-  & ((query: createTemporaryPassword) => Promise<createTemporaryPasswordReturnType>)
-  & ((query: deleteAccount) => Promise<deleteAccountReturnType>)
-  & ((query: deleteChatHistory) => Promise<deleteChatHistoryReturnType>)
-  & ((query: deleteChatMessagesFromUser) => Promise<deleteChatMessagesFromUserReturnType>)
-  & ((query: deleteChatReplyMarkup) => Promise<deleteChatReplyMarkupReturnType>)
-  & ((query: deleteFile) => Promise<deleteFileReturnType>)
-  & ((query: deleteMessages) => Promise<deleteMessagesReturnType>)
-  & ((query: deleteProfilePhoto) => Promise<deleteProfilePhotoReturnType>)
-  & ((query: deleteSavedCredentials) => Promise<deleteSavedCredentialsReturnType>)
-  & ((query: deleteSavedOrderInfo) => Promise<deleteSavedOrderInfoReturnType>)
-  & ((query: deleteSupergroup) => Promise<deleteSupergroupReturnType>)
-  & ((query: destroy) => Promise<destroyReturnType>)
-  & ((query: discardCall) => Promise<discardCallReturnType>)
-  & ((query: disconnectAllWebsites) => Promise<disconnectAllWebsitesReturnType>)
-  & ((query: disconnectWebsite) => Promise<disconnectWebsiteReturnType>)
-  & ((query: downloadFile) => Promise<downloadFileReturnType>)
-  & ((query: editInlineMessageCaption) => Promise<editInlineMessageCaptionReturnType>)
-  & ((query: editInlineMessageLiveLocation) => Promise<editInlineMessageLiveLocationReturnType>)
-  & ((query: editInlineMessageReplyMarkup) => Promise<editInlineMessageReplyMarkupReturnType>)
-  & ((query: editInlineMessageText) => Promise<editInlineMessageTextReturnType>)
-  & ((query: editMessageCaption) => Promise<editMessageCaptionReturnType>)
-  & ((query: editMessageLiveLocation) => Promise<editMessageLiveLocationReturnType>)
-  & ((query: editMessageReplyMarkup) => Promise<editMessageReplyMarkupReturnType>)
-  & ((query: editMessageText) => Promise<editMessageTextReturnType>)
-  & ((query: finishFileGeneration) => Promise<finishFileGenerationReturnType>)
-  & ((query: forwardMessages) => Promise<forwardMessagesReturnType>)
-  & ((query: generateChatInviteLink) => Promise<generateChatInviteLinkReturnType>)
-  & ((query: getAccountTtl) => Promise<getAccountTtlReturnType>)
-  & ((query: getActiveLiveLocationMessages) => Promise<getActiveLiveLocationMessagesReturnType>)
-  & ((query: getActiveSessions) => Promise<getActiveSessionsReturnType>)
-  & ((query: getArchivedStickerSets) => Promise<getArchivedStickerSetsReturnType>)
-  & ((query: getAttachedStickerSets) => Promise<getAttachedStickerSetsReturnType>)
-  & ((query: getAuthorizationState) => Promise<getAuthorizationStateReturnType>)
-  & ((query: getBasicGroup) => Promise<getBasicGroupReturnType>)
-  & ((query: getBasicGroupFullInfo) => Promise<getBasicGroupFullInfoReturnType>)
-  & ((query: getBlockedUsers) => Promise<getBlockedUsersReturnType>)
-  & ((query: getCallbackQueryAnswer) => Promise<getCallbackQueryAnswerReturnType>)
-  & ((query: getChat) => Promise<getChatReturnType>)
-  & ((query: getChatAdministrators) => Promise<getChatAdministratorsReturnType>)
-  & ((query: getChatEventLog) => Promise<getChatEventLogReturnType>)
-  & ((query: getChatHistory) => Promise<getChatHistoryReturnType>)
-  & ((query: getChatMember) => Promise<getChatMemberReturnType>)
-  & ((query: getChatMessageByDate) => Promise<getChatMessageByDateReturnType>)
-  & ((query: getChatPinnedMessage) => Promise<getChatPinnedMessageReturnType>)
-  & ((query: getChatReportSpamState) => Promise<getChatReportSpamStateReturnType>)
-  & ((query: getChats) => Promise<getChatsReturnType>)
-  & ((query: getConnectedWebsites) => Promise<getConnectedWebsitesReturnType>)
-  & ((query: getCountryCode) => Promise<getCountryCodeReturnType>)
-  & ((query: getCreatedPublicChats) => Promise<getCreatedPublicChatsReturnType>)
-  & ((query: getFavoriteStickers) => Promise<getFavoriteStickersReturnType>)
-  & ((query: getFile) => Promise<getFileReturnType>)
-  & ((query: getFileExtension) => Promise<getFileExtensionReturnType>)
-  & ((query: getFileMimeType) => Promise<getFileMimeTypeReturnType>)
-  & ((query: getGameHighScores) => Promise<getGameHighScoresReturnType>)
-  & ((query: getGroupsInCommon) => Promise<getGroupsInCommonReturnType>)
-  & ((query: getImportedContactCount) => Promise<getImportedContactCountReturnType>)
-  & ((query: getInlineGameHighScores) => Promise<getInlineGameHighScoresReturnType>)
-  & ((query: getInlineQueryResults) => Promise<getInlineQueryResultsReturnType>)
-  & ((query: getInstalledStickerSets) => Promise<getInstalledStickerSetsReturnType>)
-  & ((query: getInviteText) => Promise<getInviteTextReturnType>)
-  & ((query: getMe) => Promise<getMeReturnType>)
-  & ((query: getMessage) => Promise<getMessageReturnType>)
-  & ((query: getMessages) => Promise<getMessagesReturnType>)
-  & ((query: getNetworkStatistics) => Promise<getNetworkStatisticsReturnType>)
-  & ((query: getNotificationSettings) => Promise<getNotificationSettingsReturnType>)
-  & ((query: getOption) => Promise<getOptionReturnType>)
-  & ((query: getPasswordState) => Promise<getPasswordStateReturnType>)
-  & ((query: getPaymentForm) => Promise<getPaymentFormReturnType>)
-  & ((query: getPaymentReceipt) => Promise<getPaymentReceiptReturnType>)
-  & ((query: getProxy) => Promise<getProxyReturnType>)
-  & ((query: getPublicMessageLink) => Promise<getPublicMessageLinkReturnType>)
-  & ((query: getRecentInlineBots) => Promise<getRecentInlineBotsReturnType>)
-  & ((query: getRecentStickers) => Promise<getRecentStickersReturnType>)
-  & ((query: getRecentlyVisitedTMeUrls) => Promise<getRecentlyVisitedTMeUrlsReturnType>)
-  & ((query: getRecoveryEmailAddress) => Promise<getRecoveryEmailAddressReturnType>)
-  & ((query: getRemoteFile) => Promise<getRemoteFileReturnType>)
-  & ((query: getRepliedMessage) => Promise<getRepliedMessageReturnType>)
-  & ((query: getSavedAnimations) => Promise<getSavedAnimationsReturnType>)
-  & ((query: getSavedOrderInfo) => Promise<getSavedOrderInfoReturnType>)
-  & ((query: getSecretChat) => Promise<getSecretChatReturnType>)
-  & ((query: getStickerEmojis) => Promise<getStickerEmojisReturnType>)
-  & ((query: getStickerSet) => Promise<getStickerSetReturnType>)
-  & ((query: getStickers) => Promise<getStickersReturnType>)
-  & ((query: getStorageStatistics) => Promise<getStorageStatisticsReturnType>)
-  & ((query: getStorageStatisticsFast) => Promise<getStorageStatisticsFastReturnType>)
-  & ((query: getSupergroup) => Promise<getSupergroupReturnType>)
-  & ((query: getSupergroupFullInfo) => Promise<getSupergroupFullInfoReturnType>)
-  & ((query: getSupergroupMembers) => Promise<getSupergroupMembersReturnType>)
-  & ((query: getSupportUser) => Promise<getSupportUserReturnType>)
-  & ((query: getTemporaryPasswordState) => Promise<getTemporaryPasswordStateReturnType>)
-  & ((query: getTermsOfService) => Promise<getTermsOfServiceReturnType>)
-  & ((query: getTextEntities) => Promise<getTextEntitiesReturnType>)
-  & ((query: getTopChats) => Promise<getTopChatsReturnType>)
-  & ((query: getTrendingStickerSets) => Promise<getTrendingStickerSetsReturnType>)
-  & ((query: getUser) => Promise<getUserReturnType>)
-  & ((query: getUserFullInfo) => Promise<getUserFullInfoReturnType>)
-  & ((query: getUserPrivacySettingRules) => Promise<getUserPrivacySettingRulesReturnType>)
-  & ((query: getUserProfilePhotos) => Promise<getUserProfilePhotosReturnType>)
-  & ((query: getWallpapers) => Promise<getWallpapersReturnType>)
-  & ((query: getWebPageInstantView) => Promise<getWebPageInstantViewReturnType>)
-  & ((query: getWebPagePreview) => Promise<getWebPagePreviewReturnType>)
-  & ((query: importContacts) => Promise<importContactsReturnType>)
-  & ((query: joinChatByInviteLink) => Promise<joinChatByInviteLinkReturnType>)
-  & ((query: logOut) => Promise<logOutReturnType>)
-  & ((query: openChat) => Promise<openChatReturnType>)
-  & ((query: openMessageContent) => Promise<openMessageContentReturnType>)
-  & ((query: optimizeStorage) => Promise<optimizeStorageReturnType>)
-  & ((query: parseTextEntities) => Promise<parseTextEntitiesReturnType>)
-  & ((query: pinSupergroupMessage) => Promise<pinSupergroupMessageReturnType>)
-  & ((query: processDcUpdate) => Promise<processDcUpdateReturnType>)
-  & ((query: readAllChatMentions) => Promise<readAllChatMentionsReturnType>)
-  & ((query: recoverAuthenticationPassword) => Promise<recoverAuthenticationPasswordReturnType>)
-  & ((query: recoverPassword) => Promise<recoverPasswordReturnType>)
-  & ((query: registerDevice) => Promise<registerDeviceReturnType>)
-  & ((query: removeContacts) => Promise<removeContactsReturnType>)
-  & ((query: removeFavoriteSticker) => Promise<removeFavoriteStickerReturnType>)
-  & ((query: removeRecentHashtag) => Promise<removeRecentHashtagReturnType>)
-  & ((query: removeRecentSticker) => Promise<removeRecentStickerReturnType>)
-  & ((query: removeRecentlyFoundChat) => Promise<removeRecentlyFoundChatReturnType>)
-  & ((query: removeSavedAnimation) => Promise<removeSavedAnimationReturnType>)
-  & ((query: removeStickerFromSet) => Promise<removeStickerFromSetReturnType>)
-  & ((query: removeTopChat) => Promise<removeTopChatReturnType>)
-  & ((query: reorderInstalledStickerSets) => Promise<reorderInstalledStickerSetsReturnType>)
-  & ((query: reportChat) => Promise<reportChatReturnType>)
-  & ((query: reportSupergroupSpam) => Promise<reportSupergroupSpamReturnType>)
-  & ((query: requestAuthenticationPasswordRecovery) => Promise<requestAuthenticationPasswordRecoveryReturnType>)
-  & ((query: requestPasswordRecovery) => Promise<requestPasswordRecoveryReturnType>)
-  & ((query: resendAuthenticationCode) => Promise<resendAuthenticationCodeReturnType>)
-  & ((query: resendChangePhoneNumberCode) => Promise<resendChangePhoneNumberCodeReturnType>)
-  & ((query: resetAllNotificationSettings) => Promise<resetAllNotificationSettingsReturnType>)
-  & ((query: resetNetworkStatistics) => Promise<resetNetworkStatisticsReturnType>)
-  & ((query: searchCallMessages) => Promise<searchCallMessagesReturnType>)
-  & ((query: searchChatMembers) => Promise<searchChatMembersReturnType>)
-  & ((query: searchChatMessages) => Promise<searchChatMessagesReturnType>)
-  & ((query: searchChatRecentLocationMessages) => Promise<searchChatRecentLocationMessagesReturnType>)
-  & ((query: searchChats) => Promise<searchChatsReturnType>)
-  & ((query: searchChatsOnServer) => Promise<searchChatsOnServerReturnType>)
-  & ((query: searchContacts) => Promise<searchContactsReturnType>)
-  & ((query: searchHashtags) => Promise<searchHashtagsReturnType>)
-  & ((query: searchInstalledStickerSets) => Promise<searchInstalledStickerSetsReturnType>)
-  & ((query: searchMessages) => Promise<searchMessagesReturnType>)
-  & ((query: searchPublicChat) => Promise<searchPublicChatReturnType>)
-  & ((query: searchPublicChats) => Promise<searchPublicChatsReturnType>)
-  & ((query: searchSecretMessages) => Promise<searchSecretMessagesReturnType>)
-  & ((query: searchStickerSet) => Promise<searchStickerSetReturnType>)
-  & ((query: searchStickerSets) => Promise<searchStickerSetsReturnType>)
-  & ((query: searchStickers) => Promise<searchStickersReturnType>)
-  & ((query: sendBotStartMessage) => Promise<sendBotStartMessageReturnType>)
-  & ((query: sendCallDebugInformation) => Promise<sendCallDebugInformationReturnType>)
-  & ((query: sendCallRating) => Promise<sendCallRatingReturnType>)
-  & ((query: sendChatAction) => Promise<sendChatActionReturnType>)
-  & ((query: sendChatScreenshotTakenNotification) => Promise<sendChatScreenshotTakenNotificationReturnType>)
-  & ((query: sendChatSetTtlMessage) => Promise<sendChatSetTtlMessageReturnType>)
-  & ((query: sendCustomRequest) => Promise<sendCustomRequestReturnType>)
-  & ((query: sendInlineQueryResultMessage) => Promise<sendInlineQueryResultMessageReturnType>)
-  & ((query: sendMessage) => Promise<sendMessageReturnType>)
-  & ((query: sendMessageAlbum) => Promise<sendMessageAlbumReturnType>)
-  & ((query: sendPaymentForm) => Promise<sendPaymentFormReturnType>)
-  & ((query: setAccountTtl) => Promise<setAccountTtlReturnType>)
-  & ((query: setAlarm) => Promise<setAlarmReturnType>)
-  & ((query: setAuthenticationPhoneNumber) => Promise<setAuthenticationPhoneNumberReturnType>)
-  & ((query: setBio) => Promise<setBioReturnType>)
-  & ((query: setBotUpdatesStatus) => Promise<setBotUpdatesStatusReturnType>)
-  & ((query: setChatClientData) => Promise<setChatClientDataReturnType>)
-  & ((query: setChatDraftMessage) => Promise<setChatDraftMessageReturnType>)
-  & ((query: setChatMemberStatus) => Promise<setChatMemberStatusReturnType>)
-  & ((query: setChatPhoto) => Promise<setChatPhotoReturnType>)
-  & ((query: setChatTitle) => Promise<setChatTitleReturnType>)
-  & ((query: setDatabaseEncryptionKey) => Promise<setDatabaseEncryptionKeyReturnType>)
-  & ((query: setFileGenerationProgress) => Promise<setFileGenerationProgressReturnType>)
-  & ((query: setGameScore) => Promise<setGameScoreReturnType>)
-  & ((query: setInlineGameScore) => Promise<setInlineGameScoreReturnType>)
-  & ((query: setName) => Promise<setNameReturnType>)
-  & ((query: setNetworkType) => Promise<setNetworkTypeReturnType>)
-  & ((query: setNotificationSettings) => Promise<setNotificationSettingsReturnType>)
-  & ((query: setOption) => Promise<setOptionReturnType>)
-  & ((query: setPassword) => Promise<setPasswordReturnType>)
-  & ((query: setPinnedChats) => Promise<setPinnedChatsReturnType>)
-  & ((query: setProfilePhoto) => Promise<setProfilePhotoReturnType>)
-  & ((query: setProxy) => Promise<setProxyReturnType>)
-  & ((query: setRecoveryEmailAddress) => Promise<setRecoveryEmailAddressReturnType>)
-  & ((query: setStickerPositionInSet) => Promise<setStickerPositionInSetReturnType>)
-  & ((query: setSupergroupDescription) => Promise<setSupergroupDescriptionReturnType>)
-  & ((query: setSupergroupStickerSet) => Promise<setSupergroupStickerSetReturnType>)
-  & ((query: setSupergroupUsername) => Promise<setSupergroupUsernameReturnType>)
-  & ((query: setTdlibParameters) => Promise<setTdlibParametersReturnType>)
-  & ((query: setUserPrivacySettingRules) => Promise<setUserPrivacySettingRulesReturnType>)
-  & ((query: setUsername) => Promise<setUsernameReturnType>)
-  & ((query: terminateAllOtherSessions) => Promise<terminateAllOtherSessionsReturnType>)
-  & ((query: terminateSession) => Promise<terminateSessionReturnType>)
-  & ((query: testCallBytes) => Promise<testCallBytesReturnType>)
-  & ((query: testCallEmpty) => Promise<testCallEmptyReturnType>)
-  & ((query: testCallString) => Promise<testCallStringReturnType>)
-  & ((query: testCallVectorInt) => Promise<testCallVectorIntReturnType>)
-  & ((query: testCallVectorIntObject) => Promise<testCallVectorIntObjectReturnType>)
-  & ((query: testCallVectorString) => Promise<testCallVectorStringReturnType>)
-  & ((query: testCallVectorStringObject) => Promise<testCallVectorStringObjectReturnType>)
-  & ((query: testGetDifference) => Promise<testGetDifferenceReturnType>)
-  & ((query: testNetwork) => Promise<testNetworkReturnType>)
-  & ((query: testSquareInt) => Promise<testSquareIntReturnType>)
-  & ((query: testUseError) => Promise<testUseErrorReturnType>)
-  & ((query: testUseUpdate) => Promise<testUseUpdateReturnType>)
-  & ((query: toggleBasicGroupAdministrators) => Promise<toggleBasicGroupAdministratorsReturnType>)
-  & ((query: toggleChatIsPinned) => Promise<toggleChatIsPinnedReturnType>)
-  & ((query: toggleSupergroupInvites) => Promise<toggleSupergroupInvitesReturnType>)
-  & ((query: toggleSupergroupIsAllHistoryAvailable) => Promise<toggleSupergroupIsAllHistoryAvailableReturnType>)
-  & ((query: toggleSupergroupSignMessages) => Promise<toggleSupergroupSignMessagesReturnType>)
-  & ((query: unblockUser) => Promise<unblockUserReturnType>)
-  & ((query: unpinSupergroupMessage) => Promise<unpinSupergroupMessageReturnType>)
-  & ((query: upgradeBasicGroupChatToSupergroupChat) => Promise<upgradeBasicGroupChatToSupergroupChatReturnType>)
-  & ((query: uploadFile) => Promise<uploadFileReturnType>)
-  & ((query: uploadStickerFile) => Promise<uploadStickerFileReturnType>)
-  & ((query: validateOrderInfo) => Promise<validateOrderInfoReturnType>)
-  & ((query: viewMessages) => Promise<viewMessagesReturnType>)
-  & ((query: viewTrendingStickerSets) => Promise<viewTrendingStickerSetsReturnType>)
+  & ((query: getAuthorizationState) => Promise<AuthorizationState>)
+  & ((query: setTdlibParameters) => Promise<Ok>)
+  & ((query: checkDatabaseEncryptionKey) => Promise<Ok>)
+  & ((query: setAuthenticationPhoneNumber) => Promise<Ok>)
+  & ((query: resendAuthenticationCode) => Promise<Ok>)
+  & ((query: checkAuthenticationCode) => Promise<Ok>)
+  & ((query: checkAuthenticationPassword) => Promise<Ok>)
+  & ((query: requestAuthenticationPasswordRecovery) => Promise<Ok>)
+  & ((query: recoverAuthenticationPassword) => Promise<Ok>)
+  & ((query: checkAuthenticationBotToken) => Promise<Ok>)
+  & ((query: logOut) => Promise<Ok>)
+  & ((query: close) => Promise<Ok>)
+  & ((query: destroy) => Promise<Ok>)
+  & ((query: setDatabaseEncryptionKey) => Promise<Ok>)
+  & ((query: getPasswordState) => Promise<PasswordState>)
+  & ((query: setPassword) => Promise<PasswordState>)
+  & ((query: getRecoveryEmailAddress) => Promise<RecoveryEmailAddress>)
+  & ((query: setRecoveryEmailAddress) => Promise<PasswordState>)
+  & ((query: requestPasswordRecovery) => Promise<PasswordRecoveryInfo>)
+  & ((query: recoverPassword) => Promise<PasswordState>)
+  & ((query: createTemporaryPassword) => Promise<TemporaryPasswordState>)
+  & ((query: getTemporaryPasswordState) => Promise<TemporaryPasswordState>)
+  & ((query: processDcUpdate) => Promise<Ok>)
+  & ((query: getMe) => Promise<User>)
+  & ((query: getUser) => Promise<User>)
+  & ((query: getUserFullInfo) => Promise<UserFullInfo>)
+  & ((query: getBasicGroup) => Promise<BasicGroup>)
+  & ((query: getBasicGroupFullInfo) => Promise<BasicGroupFullInfo>)
+  & ((query: getSupergroup) => Promise<Supergroup>)
+  & ((query: getSupergroupFullInfo) => Promise<SupergroupFullInfo>)
+  & ((query: getSecretChat) => Promise<SecretChat>)
+  & ((query: getChat) => Promise<Chat>)
+  & ((query: getMessage) => Promise<Message>)
+  & ((query: getRepliedMessage) => Promise<Message>)
+  & ((query: getChatPinnedMessage) => Promise<Message>)
+  & ((query: getMessages) => Promise<Messages>)
+  & ((query: getFile) => Promise<File>)
+  & ((query: getRemoteFile) => Promise<File>)
+  & ((query: getChats) => Promise<Chats>)
+  & ((query: searchPublicChat) => Promise<Chat>)
+  & ((query: searchPublicChats) => Promise<Chats>)
+  & ((query: searchChats) => Promise<Chats>)
+  & ((query: searchChatsOnServer) => Promise<Chats>)
+  & ((query: getTopChats) => Promise<Chats>)
+  & ((query: removeTopChat) => Promise<Ok>)
+  & ((query: addRecentlyFoundChat) => Promise<Ok>)
+  & ((query: removeRecentlyFoundChat) => Promise<Ok>)
+  & ((query: clearRecentlyFoundChats) => Promise<Ok>)
+  & ((query: checkChatUsername) => Promise<CheckChatUsernameResult>)
+  & ((query: getCreatedPublicChats) => Promise<Chats>)
+  & ((query: getGroupsInCommon) => Promise<Chats>)
+  & ((query: getChatHistory) => Promise<Messages>)
+  & ((query: deleteChatHistory) => Promise<Ok>)
+  & ((query: searchChatMessages) => Promise<Messages>)
+  & ((query: searchMessages) => Promise<Messages>)
+  & ((query: searchSecretMessages) => Promise<FoundMessages>)
+  & ((query: searchCallMessages) => Promise<Messages>)
+  & ((query: searchChatRecentLocationMessages) => Promise<Messages>)
+  & ((query: getActiveLiveLocationMessages) => Promise<Messages>)
+  & ((query: getChatMessageByDate) => Promise<Message>)
+  & ((query: getPublicMessageLink) => Promise<PublicMessageLink>)
+  & ((query: sendMessage) => Promise<Message>)
+  & ((query: sendMessageAlbum) => Promise<Messages>)
+  & ((query: sendBotStartMessage) => Promise<Message>)
+  & ((query: sendInlineQueryResultMessage) => Promise<Message>)
+  & ((query: forwardMessages) => Promise<Messages>)
+  & ((query: sendChatSetTtlMessage) => Promise<Message>)
+  & ((query: sendChatScreenshotTakenNotification) => Promise<Ok>)
+  & ((query: deleteMessages) => Promise<Ok>)
+  & ((query: deleteChatMessagesFromUser) => Promise<Ok>)
+  & ((query: editMessageText) => Promise<Message>)
+  & ((query: editMessageLiveLocation) => Promise<Message>)
+  & ((query: editMessageCaption) => Promise<Message>)
+  & ((query: editMessageReplyMarkup) => Promise<Message>)
+  & ((query: editInlineMessageText) => Promise<Ok>)
+  & ((query: editInlineMessageLiveLocation) => Promise<Ok>)
+  & ((query: editInlineMessageCaption) => Promise<Ok>)
+  & ((query: editInlineMessageReplyMarkup) => Promise<Ok>)
+  & ((query: getTextEntities) => Promise<TextEntities>)
+  & ((query: parseTextEntities) => Promise<FormattedText>)
+  & ((query: getFileMimeType) => Promise<Text>)
+  & ((query: getFileExtension) => Promise<Text>)
+  & ((query: getInlineQueryResults) => Promise<InlineQueryResults>)
+  & ((query: answerInlineQuery) => Promise<Ok>)
+  & ((query: getCallbackQueryAnswer) => Promise<CallbackQueryAnswer>)
+  & ((query: answerCallbackQuery) => Promise<Ok>)
+  & ((query: answerShippingQuery) => Promise<Ok>)
+  & ((query: answerPreCheckoutQuery) => Promise<Ok>)
+  & ((query: setGameScore) => Promise<Message>)
+  & ((query: setInlineGameScore) => Promise<Ok>)
+  & ((query: getGameHighScores) => Promise<GameHighScores>)
+  & ((query: getInlineGameHighScores) => Promise<GameHighScores>)
+  & ((query: deleteChatReplyMarkup) => Promise<Ok>)
+  & ((query: sendChatAction) => Promise<Ok>)
+  & ((query: openChat) => Promise<Ok>)
+  & ((query: closeChat) => Promise<Ok>)
+  & ((query: viewMessages) => Promise<Ok>)
+  & ((query: openMessageContent) => Promise<Ok>)
+  & ((query: readAllChatMentions) => Promise<Ok>)
+  & ((query: createPrivateChat) => Promise<Chat>)
+  & ((query: createBasicGroupChat) => Promise<Chat>)
+  & ((query: createSupergroupChat) => Promise<Chat>)
+  & ((query: createSecretChat) => Promise<Chat>)
+  & ((query: createNewBasicGroupChat) => Promise<Chat>)
+  & ((query: createNewSupergroupChat) => Promise<Chat>)
+  & ((query: createNewSecretChat) => Promise<Chat>)
+  & ((query: upgradeBasicGroupChatToSupergroupChat) => Promise<Chat>)
+  & ((query: setChatTitle) => Promise<Ok>)
+  & ((query: setChatPhoto) => Promise<Ok>)
+  & ((query: setChatDraftMessage) => Promise<Ok>)
+  & ((query: toggleChatIsPinned) => Promise<Ok>)
+  & ((query: setChatClientData) => Promise<Ok>)
+  & ((query: addChatMember) => Promise<Ok>)
+  & ((query: addChatMembers) => Promise<Ok>)
+  & ((query: setChatMemberStatus) => Promise<Ok>)
+  & ((query: getChatMember) => Promise<ChatMember>)
+  & ((query: searchChatMembers) => Promise<ChatMembers>)
+  & ((query: getChatAdministrators) => Promise<Users>)
+  & ((query: setPinnedChats) => Promise<Ok>)
+  & ((query: downloadFile) => Promise<File>)
+  & ((query: cancelDownloadFile) => Promise<Ok>)
+  & ((query: uploadFile) => Promise<File>)
+  & ((query: cancelUploadFile) => Promise<Ok>)
+  & ((query: setFileGenerationProgress) => Promise<Ok>)
+  & ((query: finishFileGeneration) => Promise<Ok>)
+  & ((query: deleteFile) => Promise<Ok>)
+  & ((query: generateChatInviteLink) => Promise<ChatInviteLink>)
+  & ((query: checkChatInviteLink) => Promise<ChatInviteLinkInfo>)
+  & ((query: joinChatByInviteLink) => Promise<Chat>)
+  & ((query: createCall) => Promise<CallId>)
+  & ((query: acceptCall) => Promise<Ok>)
+  & ((query: discardCall) => Promise<Ok>)
+  & ((query: sendCallRating) => Promise<Ok>)
+  & ((query: sendCallDebugInformation) => Promise<Ok>)
+  & ((query: blockUser) => Promise<Ok>)
+  & ((query: unblockUser) => Promise<Ok>)
+  & ((query: getBlockedUsers) => Promise<Users>)
+  & ((query: importContacts) => Promise<ImportedContacts>)
+  & ((query: searchContacts) => Promise<Users>)
+  & ((query: removeContacts) => Promise<Ok>)
+  & ((query: getImportedContactCount) => Promise<Count>)
+  & ((query: changeImportedContacts) => Promise<ImportedContacts>)
+  & ((query: clearImportedContacts) => Promise<Ok>)
+  & ((query: getUserProfilePhotos) => Promise<UserProfilePhotos>)
+  & ((query: getStickers) => Promise<Stickers>)
+  & ((query: searchStickers) => Promise<Stickers>)
+  & ((query: getInstalledStickerSets) => Promise<StickerSets>)
+  & ((query: getArchivedStickerSets) => Promise<StickerSets>)
+  & ((query: getTrendingStickerSets) => Promise<StickerSets>)
+  & ((query: getAttachedStickerSets) => Promise<StickerSets>)
+  & ((query: getStickerSet) => Promise<StickerSet>)
+  & ((query: searchStickerSet) => Promise<StickerSet>)
+  & ((query: searchInstalledStickerSets) => Promise<StickerSets>)
+  & ((query: searchStickerSets) => Promise<StickerSets>)
+  & ((query: changeStickerSet) => Promise<Ok>)
+  & ((query: viewTrendingStickerSets) => Promise<Ok>)
+  & ((query: reorderInstalledStickerSets) => Promise<Ok>)
+  & ((query: getRecentStickers) => Promise<Stickers>)
+  & ((query: addRecentSticker) => Promise<Stickers>)
+  & ((query: removeRecentSticker) => Promise<Ok>)
+  & ((query: clearRecentStickers) => Promise<Ok>)
+  & ((query: getFavoriteStickers) => Promise<Stickers>)
+  & ((query: addFavoriteSticker) => Promise<Ok>)
+  & ((query: removeFavoriteSticker) => Promise<Ok>)
+  & ((query: getStickerEmojis) => Promise<StickerEmojis>)
+  & ((query: getSavedAnimations) => Promise<Animations>)
+  & ((query: addSavedAnimation) => Promise<Ok>)
+  & ((query: removeSavedAnimation) => Promise<Ok>)
+  & ((query: getRecentInlineBots) => Promise<Users>)
+  & ((query: searchHashtags) => Promise<Hashtags>)
+  & ((query: removeRecentHashtag) => Promise<Ok>)
+  & ((query: getWebPagePreview) => Promise<WebPage>)
+  & ((query: getWebPageInstantView) => Promise<WebPageInstantView>)
+  & ((query: getNotificationSettings) => Promise<NotificationSettings>)
+  & ((query: setNotificationSettings) => Promise<Ok>)
+  & ((query: resetAllNotificationSettings) => Promise<Ok>)
+  & ((query: setProfilePhoto) => Promise<Ok>)
+  & ((query: deleteProfilePhoto) => Promise<Ok>)
+  & ((query: setName) => Promise<Ok>)
+  & ((query: setBio) => Promise<Ok>)
+  & ((query: setUsername) => Promise<Ok>)
+  & ((query: changePhoneNumber) => Promise<AuthenticationCodeInfo>)
+  & ((query: resendChangePhoneNumberCode) => Promise<AuthenticationCodeInfo>)
+  & ((query: checkChangePhoneNumberCode) => Promise<Ok>)
+  & ((query: getActiveSessions) => Promise<Sessions>)
+  & ((query: terminateSession) => Promise<Ok>)
+  & ((query: terminateAllOtherSessions) => Promise<Ok>)
+  & ((query: getConnectedWebsites) => Promise<ConnectedWebsites>)
+  & ((query: disconnectWebsite) => Promise<Ok>)
+  & ((query: disconnectAllWebsites) => Promise<Ok>)
+  & ((query: toggleBasicGroupAdministrators) => Promise<Ok>)
+  & ((query: setSupergroupUsername) => Promise<Ok>)
+  & ((query: setSupergroupStickerSet) => Promise<Ok>)
+  & ((query: toggleSupergroupInvites) => Promise<Ok>)
+  & ((query: toggleSupergroupSignMessages) => Promise<Ok>)
+  & ((query: toggleSupergroupIsAllHistoryAvailable) => Promise<Ok>)
+  & ((query: setSupergroupDescription) => Promise<Ok>)
+  & ((query: pinSupergroupMessage) => Promise<Ok>)
+  & ((query: unpinSupergroupMessage) => Promise<Ok>)
+  & ((query: reportSupergroupSpam) => Promise<Ok>)
+  & ((query: getSupergroupMembers) => Promise<ChatMembers>)
+  & ((query: deleteSupergroup) => Promise<Ok>)
+  & ((query: closeSecretChat) => Promise<Ok>)
+  & ((query: getChatEventLog) => Promise<ChatEvents>)
+  & ((query: getPaymentForm) => Promise<PaymentForm>)
+  & ((query: validateOrderInfo) => Promise<ValidatedOrderInfo>)
+  & ((query: sendPaymentForm) => Promise<PaymentResult>)
+  & ((query: getPaymentReceipt) => Promise<PaymentReceipt>)
+  & ((query: getSavedOrderInfo) => Promise<OrderInfo>)
+  & ((query: deleteSavedOrderInfo) => Promise<Ok>)
+  & ((query: deleteSavedCredentials) => Promise<Ok>)
+  & ((query: getSupportUser) => Promise<User>)
+  & ((query: getWallpapers) => Promise<Wallpapers>)
+  & ((query: registerDevice) => Promise<Ok>)
+  & ((query: getRecentlyVisitedTMeUrls) => Promise<TMeUrls>)
+  & ((query: setUserPrivacySettingRules) => Promise<Ok>)
+  & ((query: getUserPrivacySettingRules) => Promise<UserPrivacySettingRules>)
+  & ((query: getOption) => Promise<OptionValue>)
+  & ((query: setOption) => Promise<Ok>)
+  & ((query: setAccountTtl) => Promise<Ok>)
+  & ((query: getAccountTtl) => Promise<AccountTtl>)
+  & ((query: deleteAccount) => Promise<Ok>)
+  & ((query: getChatReportSpamState) => Promise<ChatReportSpamState>)
+  & ((query: changeChatReportSpamState) => Promise<Ok>)
+  & ((query: reportChat) => Promise<Ok>)
+  & ((query: getStorageStatistics) => Promise<StorageStatistics>)
+  & ((query: getStorageStatisticsFast) => Promise<StorageStatisticsFast>)
+  & ((query: optimizeStorage) => Promise<StorageStatistics>)
+  & ((query: setNetworkType) => Promise<Ok>)
+  & ((query: getNetworkStatistics) => Promise<NetworkStatistics>)
+  & ((query: addNetworkStatistics) => Promise<Ok>)
+  & ((query: resetNetworkStatistics) => Promise<Ok>)
+  & ((query: setBotUpdatesStatus) => Promise<Ok>)
+  & ((query: uploadStickerFile) => Promise<File>)
+  & ((query: createNewStickerSet) => Promise<StickerSet>)
+  & ((query: addStickerToSet) => Promise<StickerSet>)
+  & ((query: setStickerPositionInSet) => Promise<Ok>)
+  & ((query: removeStickerFromSet) => Promise<Ok>)
+  & ((query: sendCustomRequest) => Promise<CustomRequestResult>)
+  & ((query: answerCustomQuery) => Promise<Ok>)
+  & ((query: setAlarm) => Promise<Ok>)
+  & ((query: getCountryCode) => Promise<Text>)
+  & ((query: getInviteText) => Promise<Text>)
+  & ((query: getTermsOfService) => Promise<Text>)
+  & ((query: setProxy) => Promise<Ok>)
+  & ((query: getProxy) => Promise<Proxy>)
+  & ((query: testCallEmpty) => Promise<Ok>)
+  & ((query: testCallString) => Promise<TestString>)
+  & ((query: testCallBytes) => Promise<TestBytes>)
+  & ((query: testCallVectorInt) => Promise<TestVectorInt>)
+  & ((query: testCallVectorIntObject) => Promise<TestVectorIntObject>)
+  & ((query: testCallVectorString) => Promise<TestVectorString>)
+  & ((query: testCallVectorStringObject) => Promise<TestVectorStringObject>)
+  & ((query: testSquareInt) => Promise<TestInt>)
+  & ((query: testNetwork) => Promise<Ok>)
+  & ((query: testGetDifference) => Promise<Ok>)
+  & ((query: testUseUpdate) => Promise<Update>)
+  & ((query: testUseError) => Promise<Error>)
 
 export type Execute =
-  & ((query: acceptCall) => acceptCallReturnType | error | null)
-  & ((query: addChatMember) => addChatMemberReturnType | error | null)
-  & ((query: addChatMembers) => addChatMembersReturnType | error | null)
-  & ((query: addFavoriteSticker) => addFavoriteStickerReturnType | error | null)
-  & ((query: addNetworkStatistics) => addNetworkStatisticsReturnType | error | null)
-  & ((query: addRecentSticker) => addRecentStickerReturnType | error | null)
-  & ((query: addRecentlyFoundChat) => addRecentlyFoundChatReturnType | error | null)
-  & ((query: addSavedAnimation) => addSavedAnimationReturnType | error | null)
-  & ((query: addStickerToSet) => addStickerToSetReturnType | error | null)
-  & ((query: answerCallbackQuery) => answerCallbackQueryReturnType | error | null)
-  & ((query: answerCustomQuery) => answerCustomQueryReturnType | error | null)
-  & ((query: answerInlineQuery) => answerInlineQueryReturnType | error | null)
-  & ((query: answerPreCheckoutQuery) => answerPreCheckoutQueryReturnType | error | null)
-  & ((query: answerShippingQuery) => answerShippingQueryReturnType | error | null)
-  & ((query: blockUser) => blockUserReturnType | error | null)
-  & ((query: cancelDownloadFile) => cancelDownloadFileReturnType | error | null)
-  & ((query: cancelUploadFile) => cancelUploadFileReturnType | error | null)
-  & ((query: changeChatReportSpamState) => changeChatReportSpamStateReturnType | error | null)
-  & ((query: changeImportedContacts) => changeImportedContactsReturnType | error | null)
-  & ((query: changePhoneNumber) => changePhoneNumberReturnType | error | null)
-  & ((query: changeStickerSet) => changeStickerSetReturnType | error | null)
-  & ((query: checkAuthenticationBotToken) => checkAuthenticationBotTokenReturnType | error | null)
-  & ((query: checkAuthenticationCode) => checkAuthenticationCodeReturnType | error | null)
-  & ((query: checkAuthenticationPassword) => checkAuthenticationPasswordReturnType | error | null)
-  & ((query: checkChangePhoneNumberCode) => checkChangePhoneNumberCodeReturnType | error | null)
-  & ((query: checkChatInviteLink) => checkChatInviteLinkReturnType | error | null)
-  & ((query: checkChatUsername) => checkChatUsernameReturnType | error | null)
-  & ((query: checkDatabaseEncryptionKey) => checkDatabaseEncryptionKeyReturnType | error | null)
-  & ((query: clearImportedContacts) => clearImportedContactsReturnType | error | null)
-  & ((query: clearRecentStickers) => clearRecentStickersReturnType | error | null)
-  & ((query: clearRecentlyFoundChats) => clearRecentlyFoundChatsReturnType | error | null)
-  & ((query: close) => closeReturnType | error | null)
-  & ((query: closeChat) => closeChatReturnType | error | null)
-  & ((query: closeSecretChat) => closeSecretChatReturnType | error | null)
-  & ((query: createBasicGroupChat) => createBasicGroupChatReturnType | error | null)
-  & ((query: createCall) => createCallReturnType | error | null)
-  & ((query: createNewBasicGroupChat) => createNewBasicGroupChatReturnType | error | null)
-  & ((query: createNewSecretChat) => createNewSecretChatReturnType | error | null)
-  & ((query: createNewStickerSet) => createNewStickerSetReturnType | error | null)
-  & ((query: createNewSupergroupChat) => createNewSupergroupChatReturnType | error | null)
-  & ((query: createPrivateChat) => createPrivateChatReturnType | error | null)
-  & ((query: createSecretChat) => createSecretChatReturnType | error | null)
-  & ((query: createSupergroupChat) => createSupergroupChatReturnType | error | null)
-  & ((query: createTemporaryPassword) => createTemporaryPasswordReturnType | error | null)
-  & ((query: deleteAccount) => deleteAccountReturnType | error | null)
-  & ((query: deleteChatHistory) => deleteChatHistoryReturnType | error | null)
-  & ((query: deleteChatMessagesFromUser) => deleteChatMessagesFromUserReturnType | error | null)
-  & ((query: deleteChatReplyMarkup) => deleteChatReplyMarkupReturnType | error | null)
-  & ((query: deleteFile) => deleteFileReturnType | error | null)
-  & ((query: deleteMessages) => deleteMessagesReturnType | error | null)
-  & ((query: deleteProfilePhoto) => deleteProfilePhotoReturnType | error | null)
-  & ((query: deleteSavedCredentials) => deleteSavedCredentialsReturnType | error | null)
-  & ((query: deleteSavedOrderInfo) => deleteSavedOrderInfoReturnType | error | null)
-  & ((query: deleteSupergroup) => deleteSupergroupReturnType | error | null)
-  & ((query: destroy) => destroyReturnType | error | null)
-  & ((query: discardCall) => discardCallReturnType | error | null)
-  & ((query: disconnectAllWebsites) => disconnectAllWebsitesReturnType | error | null)
-  & ((query: disconnectWebsite) => disconnectWebsiteReturnType | error | null)
-  & ((query: downloadFile) => downloadFileReturnType | error | null)
-  & ((query: editInlineMessageCaption) => editInlineMessageCaptionReturnType | error | null)
-  & ((query: editInlineMessageLiveLocation) => editInlineMessageLiveLocationReturnType | error | null)
-  & ((query: editInlineMessageReplyMarkup) => editInlineMessageReplyMarkupReturnType | error | null)
-  & ((query: editInlineMessageText) => editInlineMessageTextReturnType | error | null)
-  & ((query: editMessageCaption) => editMessageCaptionReturnType | error | null)
-  & ((query: editMessageLiveLocation) => editMessageLiveLocationReturnType | error | null)
-  & ((query: editMessageReplyMarkup) => editMessageReplyMarkupReturnType | error | null)
-  & ((query: editMessageText) => editMessageTextReturnType | error | null)
-  & ((query: finishFileGeneration) => finishFileGenerationReturnType | error | null)
-  & ((query: forwardMessages) => forwardMessagesReturnType | error | null)
-  & ((query: generateChatInviteLink) => generateChatInviteLinkReturnType | error | null)
-  & ((query: getAccountTtl) => getAccountTtlReturnType | error | null)
-  & ((query: getActiveLiveLocationMessages) => getActiveLiveLocationMessagesReturnType | error | null)
-  & ((query: getActiveSessions) => getActiveSessionsReturnType | error | null)
-  & ((query: getArchivedStickerSets) => getArchivedStickerSetsReturnType | error | null)
-  & ((query: getAttachedStickerSets) => getAttachedStickerSetsReturnType | error | null)
-  & ((query: getAuthorizationState) => getAuthorizationStateReturnType | error | null)
-  & ((query: getBasicGroup) => getBasicGroupReturnType | error | null)
-  & ((query: getBasicGroupFullInfo) => getBasicGroupFullInfoReturnType | error | null)
-  & ((query: getBlockedUsers) => getBlockedUsersReturnType | error | null)
-  & ((query: getCallbackQueryAnswer) => getCallbackQueryAnswerReturnType | error | null)
-  & ((query: getChat) => getChatReturnType | error | null)
-  & ((query: getChatAdministrators) => getChatAdministratorsReturnType | error | null)
-  & ((query: getChatEventLog) => getChatEventLogReturnType | error | null)
-  & ((query: getChatHistory) => getChatHistoryReturnType | error | null)
-  & ((query: getChatMember) => getChatMemberReturnType | error | null)
-  & ((query: getChatMessageByDate) => getChatMessageByDateReturnType | error | null)
-  & ((query: getChatPinnedMessage) => getChatPinnedMessageReturnType | error | null)
-  & ((query: getChatReportSpamState) => getChatReportSpamStateReturnType | error | null)
-  & ((query: getChats) => getChatsReturnType | error | null)
-  & ((query: getConnectedWebsites) => getConnectedWebsitesReturnType | error | null)
-  & ((query: getCountryCode) => getCountryCodeReturnType | error | null)
-  & ((query: getCreatedPublicChats) => getCreatedPublicChatsReturnType | error | null)
-  & ((query: getFavoriteStickers) => getFavoriteStickersReturnType | error | null)
-  & ((query: getFile) => getFileReturnType | error | null)
-  & ((query: getFileExtension) => getFileExtensionReturnType | error | null)
-  & ((query: getFileMimeType) => getFileMimeTypeReturnType | error | null)
-  & ((query: getGameHighScores) => getGameHighScoresReturnType | error | null)
-  & ((query: getGroupsInCommon) => getGroupsInCommonReturnType | error | null)
-  & ((query: getImportedContactCount) => getImportedContactCountReturnType | error | null)
-  & ((query: getInlineGameHighScores) => getInlineGameHighScoresReturnType | error | null)
-  & ((query: getInlineQueryResults) => getInlineQueryResultsReturnType | error | null)
-  & ((query: getInstalledStickerSets) => getInstalledStickerSetsReturnType | error | null)
-  & ((query: getInviteText) => getInviteTextReturnType | error | null)
-  & ((query: getMe) => getMeReturnType | error | null)
-  & ((query: getMessage) => getMessageReturnType | error | null)
-  & ((query: getMessages) => getMessagesReturnType | error | null)
-  & ((query: getNetworkStatistics) => getNetworkStatisticsReturnType | error | null)
-  & ((query: getNotificationSettings) => getNotificationSettingsReturnType | error | null)
-  & ((query: getOption) => getOptionReturnType | error | null)
-  & ((query: getPasswordState) => getPasswordStateReturnType | error | null)
-  & ((query: getPaymentForm) => getPaymentFormReturnType | error | null)
-  & ((query: getPaymentReceipt) => getPaymentReceiptReturnType | error | null)
-  & ((query: getProxy) => getProxyReturnType | error | null)
-  & ((query: getPublicMessageLink) => getPublicMessageLinkReturnType | error | null)
-  & ((query: getRecentInlineBots) => getRecentInlineBotsReturnType | error | null)
-  & ((query: getRecentStickers) => getRecentStickersReturnType | error | null)
-  & ((query: getRecentlyVisitedTMeUrls) => getRecentlyVisitedTMeUrlsReturnType | error | null)
-  & ((query: getRecoveryEmailAddress) => getRecoveryEmailAddressReturnType | error | null)
-  & ((query: getRemoteFile) => getRemoteFileReturnType | error | null)
-  & ((query: getRepliedMessage) => getRepliedMessageReturnType | error | null)
-  & ((query: getSavedAnimations) => getSavedAnimationsReturnType | error | null)
-  & ((query: getSavedOrderInfo) => getSavedOrderInfoReturnType | error | null)
-  & ((query: getSecretChat) => getSecretChatReturnType | error | null)
-  & ((query: getStickerEmojis) => getStickerEmojisReturnType | error | null)
-  & ((query: getStickerSet) => getStickerSetReturnType | error | null)
-  & ((query: getStickers) => getStickersReturnType | error | null)
-  & ((query: getStorageStatistics) => getStorageStatisticsReturnType | error | null)
-  & ((query: getStorageStatisticsFast) => getStorageStatisticsFastReturnType | error | null)
-  & ((query: getSupergroup) => getSupergroupReturnType | error | null)
-  & ((query: getSupergroupFullInfo) => getSupergroupFullInfoReturnType | error | null)
-  & ((query: getSupergroupMembers) => getSupergroupMembersReturnType | error | null)
-  & ((query: getSupportUser) => getSupportUserReturnType | error | null)
-  & ((query: getTemporaryPasswordState) => getTemporaryPasswordStateReturnType | error | null)
-  & ((query: getTermsOfService) => getTermsOfServiceReturnType | error | null)
-  & ((query: getTextEntities) => getTextEntitiesReturnType | error | null)
-  & ((query: getTopChats) => getTopChatsReturnType | error | null)
-  & ((query: getTrendingStickerSets) => getTrendingStickerSetsReturnType | error | null)
-  & ((query: getUser) => getUserReturnType | error | null)
-  & ((query: getUserFullInfo) => getUserFullInfoReturnType | error | null)
-  & ((query: getUserPrivacySettingRules) => getUserPrivacySettingRulesReturnType | error | null)
-  & ((query: getUserProfilePhotos) => getUserProfilePhotosReturnType | error | null)
-  & ((query: getWallpapers) => getWallpapersReturnType | error | null)
-  & ((query: getWebPageInstantView) => getWebPageInstantViewReturnType | error | null)
-  & ((query: getWebPagePreview) => getWebPagePreviewReturnType | error | null)
-  & ((query: importContacts) => importContactsReturnType | error | null)
-  & ((query: joinChatByInviteLink) => joinChatByInviteLinkReturnType | error | null)
-  & ((query: logOut) => logOutReturnType | error | null)
-  & ((query: openChat) => openChatReturnType | error | null)
-  & ((query: openMessageContent) => openMessageContentReturnType | error | null)
-  & ((query: optimizeStorage) => optimizeStorageReturnType | error | null)
-  & ((query: parseTextEntities) => parseTextEntitiesReturnType | error | null)
-  & ((query: pinSupergroupMessage) => pinSupergroupMessageReturnType | error | null)
-  & ((query: processDcUpdate) => processDcUpdateReturnType | error | null)
-  & ((query: readAllChatMentions) => readAllChatMentionsReturnType | error | null)
-  & ((query: recoverAuthenticationPassword) => recoverAuthenticationPasswordReturnType | error | null)
-  & ((query: recoverPassword) => recoverPasswordReturnType | error | null)
-  & ((query: registerDevice) => registerDeviceReturnType | error | null)
-  & ((query: removeContacts) => removeContactsReturnType | error | null)
-  & ((query: removeFavoriteSticker) => removeFavoriteStickerReturnType | error | null)
-  & ((query: removeRecentHashtag) => removeRecentHashtagReturnType | error | null)
-  & ((query: removeRecentSticker) => removeRecentStickerReturnType | error | null)
-  & ((query: removeRecentlyFoundChat) => removeRecentlyFoundChatReturnType | error | null)
-  & ((query: removeSavedAnimation) => removeSavedAnimationReturnType | error | null)
-  & ((query: removeStickerFromSet) => removeStickerFromSetReturnType | error | null)
-  & ((query: removeTopChat) => removeTopChatReturnType | error | null)
-  & ((query: reorderInstalledStickerSets) => reorderInstalledStickerSetsReturnType | error | null)
-  & ((query: reportChat) => reportChatReturnType | error | null)
-  & ((query: reportSupergroupSpam) => reportSupergroupSpamReturnType | error | null)
-  & ((query: requestAuthenticationPasswordRecovery) => requestAuthenticationPasswordRecoveryReturnType | error | null)
-  & ((query: requestPasswordRecovery) => requestPasswordRecoveryReturnType | error | null)
-  & ((query: resendAuthenticationCode) => resendAuthenticationCodeReturnType | error | null)
-  & ((query: resendChangePhoneNumberCode) => resendChangePhoneNumberCodeReturnType | error | null)
-  & ((query: resetAllNotificationSettings) => resetAllNotificationSettingsReturnType | error | null)
-  & ((query: resetNetworkStatistics) => resetNetworkStatisticsReturnType | error | null)
-  & ((query: searchCallMessages) => searchCallMessagesReturnType | error | null)
-  & ((query: searchChatMembers) => searchChatMembersReturnType | error | null)
-  & ((query: searchChatMessages) => searchChatMessagesReturnType | error | null)
-  & ((query: searchChatRecentLocationMessages) => searchChatRecentLocationMessagesReturnType | error | null)
-  & ((query: searchChats) => searchChatsReturnType | error | null)
-  & ((query: searchChatsOnServer) => searchChatsOnServerReturnType | error | null)
-  & ((query: searchContacts) => searchContactsReturnType | error | null)
-  & ((query: searchHashtags) => searchHashtagsReturnType | error | null)
-  & ((query: searchInstalledStickerSets) => searchInstalledStickerSetsReturnType | error | null)
-  & ((query: searchMessages) => searchMessagesReturnType | error | null)
-  & ((query: searchPublicChat) => searchPublicChatReturnType | error | null)
-  & ((query: searchPublicChats) => searchPublicChatsReturnType | error | null)
-  & ((query: searchSecretMessages) => searchSecretMessagesReturnType | error | null)
-  & ((query: searchStickerSet) => searchStickerSetReturnType | error | null)
-  & ((query: searchStickerSets) => searchStickerSetsReturnType | error | null)
-  & ((query: searchStickers) => searchStickersReturnType | error | null)
-  & ((query: sendBotStartMessage) => sendBotStartMessageReturnType | error | null)
-  & ((query: sendCallDebugInformation) => sendCallDebugInformationReturnType | error | null)
-  & ((query: sendCallRating) => sendCallRatingReturnType | error | null)
-  & ((query: sendChatAction) => sendChatActionReturnType | error | null)
-  & ((query: sendChatScreenshotTakenNotification) => sendChatScreenshotTakenNotificationReturnType | error | null)
-  & ((query: sendChatSetTtlMessage) => sendChatSetTtlMessageReturnType | error | null)
-  & ((query: sendCustomRequest) => sendCustomRequestReturnType | error | null)
-  & ((query: sendInlineQueryResultMessage) => sendInlineQueryResultMessageReturnType | error | null)
-  & ((query: sendMessage) => sendMessageReturnType | error | null)
-  & ((query: sendMessageAlbum) => sendMessageAlbumReturnType | error | null)
-  & ((query: sendPaymentForm) => sendPaymentFormReturnType | error | null)
-  & ((query: setAccountTtl) => setAccountTtlReturnType | error | null)
-  & ((query: setAlarm) => setAlarmReturnType | error | null)
-  & ((query: setAuthenticationPhoneNumber) => setAuthenticationPhoneNumberReturnType | error | null)
-  & ((query: setBio) => setBioReturnType | error | null)
-  & ((query: setBotUpdatesStatus) => setBotUpdatesStatusReturnType | error | null)
-  & ((query: setChatClientData) => setChatClientDataReturnType | error | null)
-  & ((query: setChatDraftMessage) => setChatDraftMessageReturnType | error | null)
-  & ((query: setChatMemberStatus) => setChatMemberStatusReturnType | error | null)
-  & ((query: setChatPhoto) => setChatPhotoReturnType | error | null)
-  & ((query: setChatTitle) => setChatTitleReturnType | error | null)
-  & ((query: setDatabaseEncryptionKey) => setDatabaseEncryptionKeyReturnType | error | null)
-  & ((query: setFileGenerationProgress) => setFileGenerationProgressReturnType | error | null)
-  & ((query: setGameScore) => setGameScoreReturnType | error | null)
-  & ((query: setInlineGameScore) => setInlineGameScoreReturnType | error | null)
-  & ((query: setName) => setNameReturnType | error | null)
-  & ((query: setNetworkType) => setNetworkTypeReturnType | error | null)
-  & ((query: setNotificationSettings) => setNotificationSettingsReturnType | error | null)
-  & ((query: setOption) => setOptionReturnType | error | null)
-  & ((query: setPassword) => setPasswordReturnType | error | null)
-  & ((query: setPinnedChats) => setPinnedChatsReturnType | error | null)
-  & ((query: setProfilePhoto) => setProfilePhotoReturnType | error | null)
-  & ((query: setProxy) => setProxyReturnType | error | null)
-  & ((query: setRecoveryEmailAddress) => setRecoveryEmailAddressReturnType | error | null)
-  & ((query: setStickerPositionInSet) => setStickerPositionInSetReturnType | error | null)
-  & ((query: setSupergroupDescription) => setSupergroupDescriptionReturnType | error | null)
-  & ((query: setSupergroupStickerSet) => setSupergroupStickerSetReturnType | error | null)
-  & ((query: setSupergroupUsername) => setSupergroupUsernameReturnType | error | null)
-  & ((query: setTdlibParameters) => setTdlibParametersReturnType | error | null)
-  & ((query: setUserPrivacySettingRules) => setUserPrivacySettingRulesReturnType | error | null)
-  & ((query: setUsername) => setUsernameReturnType | error | null)
-  & ((query: terminateAllOtherSessions) => terminateAllOtherSessionsReturnType | error | null)
-  & ((query: terminateSession) => terminateSessionReturnType | error | null)
-  & ((query: testCallBytes) => testCallBytesReturnType | error | null)
-  & ((query: testCallEmpty) => testCallEmptyReturnType | error | null)
-  & ((query: testCallString) => testCallStringReturnType | error | null)
-  & ((query: testCallVectorInt) => testCallVectorIntReturnType | error | null)
-  & ((query: testCallVectorIntObject) => testCallVectorIntObjectReturnType | error | null)
-  & ((query: testCallVectorString) => testCallVectorStringReturnType | error | null)
-  & ((query: testCallVectorStringObject) => testCallVectorStringObjectReturnType | error | null)
-  & ((query: testGetDifference) => testGetDifferenceReturnType | error | null)
-  & ((query: testNetwork) => testNetworkReturnType | error | null)
-  & ((query: testSquareInt) => testSquareIntReturnType | error | null)
-  & ((query: testUseError) => testUseErrorReturnType | error | null)
-  & ((query: testUseUpdate) => testUseUpdateReturnType | error | null)
-  & ((query: toggleBasicGroupAdministrators) => toggleBasicGroupAdministratorsReturnType | error | null)
-  & ((query: toggleChatIsPinned) => toggleChatIsPinnedReturnType | error | null)
-  & ((query: toggleSupergroupInvites) => toggleSupergroupInvitesReturnType | error | null)
-  & ((query: toggleSupergroupIsAllHistoryAvailable) => toggleSupergroupIsAllHistoryAvailableReturnType | error | null)
-  & ((query: toggleSupergroupSignMessages) => toggleSupergroupSignMessagesReturnType | error | null)
-  & ((query: unblockUser) => unblockUserReturnType | error | null)
-  & ((query: unpinSupergroupMessage) => unpinSupergroupMessageReturnType | error | null)
-  & ((query: upgradeBasicGroupChatToSupergroupChat) => upgradeBasicGroupChatToSupergroupChatReturnType | error | null)
-  & ((query: uploadFile) => uploadFileReturnType | error | null)
-  & ((query: uploadStickerFile) => uploadStickerFileReturnType | error | null)
-  & ((query: validateOrderInfo) => validateOrderInfoReturnType | error | null)
-  & ((query: viewMessages) => viewMessagesReturnType | error | null)
-  & ((query: viewTrendingStickerSets) => viewTrendingStickerSetsReturnType | error | null)
+  & ((query: getAuthorizationState) => AuthorizationState | error | null)
+  & ((query: setTdlibParameters) => Ok | error | null)
+  & ((query: checkDatabaseEncryptionKey) => Ok | error | null)
+  & ((query: setAuthenticationPhoneNumber) => Ok | error | null)
+  & ((query: resendAuthenticationCode) => Ok | error | null)
+  & ((query: checkAuthenticationCode) => Ok | error | null)
+  & ((query: checkAuthenticationPassword) => Ok | error | null)
+  & ((query: requestAuthenticationPasswordRecovery) => Ok | error | null)
+  & ((query: recoverAuthenticationPassword) => Ok | error | null)
+  & ((query: checkAuthenticationBotToken) => Ok | error | null)
+  & ((query: logOut) => Ok | error | null)
+  & ((query: close) => Ok | error | null)
+  & ((query: destroy) => Ok | error | null)
+  & ((query: setDatabaseEncryptionKey) => Ok | error | null)
+  & ((query: getPasswordState) => PasswordState | error | null)
+  & ((query: setPassword) => PasswordState | error | null)
+  & ((query: getRecoveryEmailAddress) => RecoveryEmailAddress | error | null)
+  & ((query: setRecoveryEmailAddress) => PasswordState | error | null)
+  & ((query: requestPasswordRecovery) => PasswordRecoveryInfo | error | null)
+  & ((query: recoverPassword) => PasswordState | error | null)
+  & ((query: createTemporaryPassword) => TemporaryPasswordState | error | null)
+  & ((query: getTemporaryPasswordState) => TemporaryPasswordState | error | null)
+  & ((query: processDcUpdate) => Ok | error | null)
+  & ((query: getMe) => User | error | null)
+  & ((query: getUser) => User | error | null)
+  & ((query: getUserFullInfo) => UserFullInfo | error | null)
+  & ((query: getBasicGroup) => BasicGroup | error | null)
+  & ((query: getBasicGroupFullInfo) => BasicGroupFullInfo | error | null)
+  & ((query: getSupergroup) => Supergroup | error | null)
+  & ((query: getSupergroupFullInfo) => SupergroupFullInfo | error | null)
+  & ((query: getSecretChat) => SecretChat | error | null)
+  & ((query: getChat) => Chat | error | null)
+  & ((query: getMessage) => Message | error | null)
+  & ((query: getRepliedMessage) => Message | error | null)
+  & ((query: getChatPinnedMessage) => Message | error | null)
+  & ((query: getMessages) => Messages | error | null)
+  & ((query: getFile) => File | error | null)
+  & ((query: getRemoteFile) => File | error | null)
+  & ((query: getChats) => Chats | error | null)
+  & ((query: searchPublicChat) => Chat | error | null)
+  & ((query: searchPublicChats) => Chats | error | null)
+  & ((query: searchChats) => Chats | error | null)
+  & ((query: searchChatsOnServer) => Chats | error | null)
+  & ((query: getTopChats) => Chats | error | null)
+  & ((query: removeTopChat) => Ok | error | null)
+  & ((query: addRecentlyFoundChat) => Ok | error | null)
+  & ((query: removeRecentlyFoundChat) => Ok | error | null)
+  & ((query: clearRecentlyFoundChats) => Ok | error | null)
+  & ((query: checkChatUsername) => CheckChatUsernameResult | error | null)
+  & ((query: getCreatedPublicChats) => Chats | error | null)
+  & ((query: getGroupsInCommon) => Chats | error | null)
+  & ((query: getChatHistory) => Messages | error | null)
+  & ((query: deleteChatHistory) => Ok | error | null)
+  & ((query: searchChatMessages) => Messages | error | null)
+  & ((query: searchMessages) => Messages | error | null)
+  & ((query: searchSecretMessages) => FoundMessages | error | null)
+  & ((query: searchCallMessages) => Messages | error | null)
+  & ((query: searchChatRecentLocationMessages) => Messages | error | null)
+  & ((query: getActiveLiveLocationMessages) => Messages | error | null)
+  & ((query: getChatMessageByDate) => Message | error | null)
+  & ((query: getPublicMessageLink) => PublicMessageLink | error | null)
+  & ((query: sendMessage) => Message | error | null)
+  & ((query: sendMessageAlbum) => Messages | error | null)
+  & ((query: sendBotStartMessage) => Message | error | null)
+  & ((query: sendInlineQueryResultMessage) => Message | error | null)
+  & ((query: forwardMessages) => Messages | error | null)
+  & ((query: sendChatSetTtlMessage) => Message | error | null)
+  & ((query: sendChatScreenshotTakenNotification) => Ok | error | null)
+  & ((query: deleteMessages) => Ok | error | null)
+  & ((query: deleteChatMessagesFromUser) => Ok | error | null)
+  & ((query: editMessageText) => Message | error | null)
+  & ((query: editMessageLiveLocation) => Message | error | null)
+  & ((query: editMessageCaption) => Message | error | null)
+  & ((query: editMessageReplyMarkup) => Message | error | null)
+  & ((query: editInlineMessageText) => Ok | error | null)
+  & ((query: editInlineMessageLiveLocation) => Ok | error | null)
+  & ((query: editInlineMessageCaption) => Ok | error | null)
+  & ((query: editInlineMessageReplyMarkup) => Ok | error | null)
+  & ((query: getTextEntities) => TextEntities | error | null)
+  & ((query: parseTextEntities) => FormattedText | error | null)
+  & ((query: getFileMimeType) => Text | error | null)
+  & ((query: getFileExtension) => Text | error | null)
+  & ((query: getInlineQueryResults) => InlineQueryResults | error | null)
+  & ((query: answerInlineQuery) => Ok | error | null)
+  & ((query: getCallbackQueryAnswer) => CallbackQueryAnswer | error | null)
+  & ((query: answerCallbackQuery) => Ok | error | null)
+  & ((query: answerShippingQuery) => Ok | error | null)
+  & ((query: answerPreCheckoutQuery) => Ok | error | null)
+  & ((query: setGameScore) => Message | error | null)
+  & ((query: setInlineGameScore) => Ok | error | null)
+  & ((query: getGameHighScores) => GameHighScores | error | null)
+  & ((query: getInlineGameHighScores) => GameHighScores | error | null)
+  & ((query: deleteChatReplyMarkup) => Ok | error | null)
+  & ((query: sendChatAction) => Ok | error | null)
+  & ((query: openChat) => Ok | error | null)
+  & ((query: closeChat) => Ok | error | null)
+  & ((query: viewMessages) => Ok | error | null)
+  & ((query: openMessageContent) => Ok | error | null)
+  & ((query: readAllChatMentions) => Ok | error | null)
+  & ((query: createPrivateChat) => Chat | error | null)
+  & ((query: createBasicGroupChat) => Chat | error | null)
+  & ((query: createSupergroupChat) => Chat | error | null)
+  & ((query: createSecretChat) => Chat | error | null)
+  & ((query: createNewBasicGroupChat) => Chat | error | null)
+  & ((query: createNewSupergroupChat) => Chat | error | null)
+  & ((query: createNewSecretChat) => Chat | error | null)
+  & ((query: upgradeBasicGroupChatToSupergroupChat) => Chat | error | null)
+  & ((query: setChatTitle) => Ok | error | null)
+  & ((query: setChatPhoto) => Ok | error | null)
+  & ((query: setChatDraftMessage) => Ok | error | null)
+  & ((query: toggleChatIsPinned) => Ok | error | null)
+  & ((query: setChatClientData) => Ok | error | null)
+  & ((query: addChatMember) => Ok | error | null)
+  & ((query: addChatMembers) => Ok | error | null)
+  & ((query: setChatMemberStatus) => Ok | error | null)
+  & ((query: getChatMember) => ChatMember | error | null)
+  & ((query: searchChatMembers) => ChatMembers | error | null)
+  & ((query: getChatAdministrators) => Users | error | null)
+  & ((query: setPinnedChats) => Ok | error | null)
+  & ((query: downloadFile) => File | error | null)
+  & ((query: cancelDownloadFile) => Ok | error | null)
+  & ((query: uploadFile) => File | error | null)
+  & ((query: cancelUploadFile) => Ok | error | null)
+  & ((query: setFileGenerationProgress) => Ok | error | null)
+  & ((query: finishFileGeneration) => Ok | error | null)
+  & ((query: deleteFile) => Ok | error | null)
+  & ((query: generateChatInviteLink) => ChatInviteLink | error | null)
+  & ((query: checkChatInviteLink) => ChatInviteLinkInfo | error | null)
+  & ((query: joinChatByInviteLink) => Chat | error | null)
+  & ((query: createCall) => CallId | error | null)
+  & ((query: acceptCall) => Ok | error | null)
+  & ((query: discardCall) => Ok | error | null)
+  & ((query: sendCallRating) => Ok | error | null)
+  & ((query: sendCallDebugInformation) => Ok | error | null)
+  & ((query: blockUser) => Ok | error | null)
+  & ((query: unblockUser) => Ok | error | null)
+  & ((query: getBlockedUsers) => Users | error | null)
+  & ((query: importContacts) => ImportedContacts | error | null)
+  & ((query: searchContacts) => Users | error | null)
+  & ((query: removeContacts) => Ok | error | null)
+  & ((query: getImportedContactCount) => Count | error | null)
+  & ((query: changeImportedContacts) => ImportedContacts | error | null)
+  & ((query: clearImportedContacts) => Ok | error | null)
+  & ((query: getUserProfilePhotos) => UserProfilePhotos | error | null)
+  & ((query: getStickers) => Stickers | error | null)
+  & ((query: searchStickers) => Stickers | error | null)
+  & ((query: getInstalledStickerSets) => StickerSets | error | null)
+  & ((query: getArchivedStickerSets) => StickerSets | error | null)
+  & ((query: getTrendingStickerSets) => StickerSets | error | null)
+  & ((query: getAttachedStickerSets) => StickerSets | error | null)
+  & ((query: getStickerSet) => StickerSet | error | null)
+  & ((query: searchStickerSet) => StickerSet | error | null)
+  & ((query: searchInstalledStickerSets) => StickerSets | error | null)
+  & ((query: searchStickerSets) => StickerSets | error | null)
+  & ((query: changeStickerSet) => Ok | error | null)
+  & ((query: viewTrendingStickerSets) => Ok | error | null)
+  & ((query: reorderInstalledStickerSets) => Ok | error | null)
+  & ((query: getRecentStickers) => Stickers | error | null)
+  & ((query: addRecentSticker) => Stickers | error | null)
+  & ((query: removeRecentSticker) => Ok | error | null)
+  & ((query: clearRecentStickers) => Ok | error | null)
+  & ((query: getFavoriteStickers) => Stickers | error | null)
+  & ((query: addFavoriteSticker) => Ok | error | null)
+  & ((query: removeFavoriteSticker) => Ok | error | null)
+  & ((query: getStickerEmojis) => StickerEmojis | error | null)
+  & ((query: getSavedAnimations) => Animations | error | null)
+  & ((query: addSavedAnimation) => Ok | error | null)
+  & ((query: removeSavedAnimation) => Ok | error | null)
+  & ((query: getRecentInlineBots) => Users | error | null)
+  & ((query: searchHashtags) => Hashtags | error | null)
+  & ((query: removeRecentHashtag) => Ok | error | null)
+  & ((query: getWebPagePreview) => WebPage | error | null)
+  & ((query: getWebPageInstantView) => WebPageInstantView | error | null)
+  & ((query: getNotificationSettings) => NotificationSettings | error | null)
+  & ((query: setNotificationSettings) => Ok | error | null)
+  & ((query: resetAllNotificationSettings) => Ok | error | null)
+  & ((query: setProfilePhoto) => Ok | error | null)
+  & ((query: deleteProfilePhoto) => Ok | error | null)
+  & ((query: setName) => Ok | error | null)
+  & ((query: setBio) => Ok | error | null)
+  & ((query: setUsername) => Ok | error | null)
+  & ((query: changePhoneNumber) => AuthenticationCodeInfo | error | null)
+  & ((query: resendChangePhoneNumberCode) => AuthenticationCodeInfo | error | null)
+  & ((query: checkChangePhoneNumberCode) => Ok | error | null)
+  & ((query: getActiveSessions) => Sessions | error | null)
+  & ((query: terminateSession) => Ok | error | null)
+  & ((query: terminateAllOtherSessions) => Ok | error | null)
+  & ((query: getConnectedWebsites) => ConnectedWebsites | error | null)
+  & ((query: disconnectWebsite) => Ok | error | null)
+  & ((query: disconnectAllWebsites) => Ok | error | null)
+  & ((query: toggleBasicGroupAdministrators) => Ok | error | null)
+  & ((query: setSupergroupUsername) => Ok | error | null)
+  & ((query: setSupergroupStickerSet) => Ok | error | null)
+  & ((query: toggleSupergroupInvites) => Ok | error | null)
+  & ((query: toggleSupergroupSignMessages) => Ok | error | null)
+  & ((query: toggleSupergroupIsAllHistoryAvailable) => Ok | error | null)
+  & ((query: setSupergroupDescription) => Ok | error | null)
+  & ((query: pinSupergroupMessage) => Ok | error | null)
+  & ((query: unpinSupergroupMessage) => Ok | error | null)
+  & ((query: reportSupergroupSpam) => Ok | error | null)
+  & ((query: getSupergroupMembers) => ChatMembers | error | null)
+  & ((query: deleteSupergroup) => Ok | error | null)
+  & ((query: closeSecretChat) => Ok | error | null)
+  & ((query: getChatEventLog) => ChatEvents | error | null)
+  & ((query: getPaymentForm) => PaymentForm | error | null)
+  & ((query: validateOrderInfo) => ValidatedOrderInfo | error | null)
+  & ((query: sendPaymentForm) => PaymentResult | error | null)
+  & ((query: getPaymentReceipt) => PaymentReceipt | error | null)
+  & ((query: getSavedOrderInfo) => OrderInfo | error | null)
+  & ((query: deleteSavedOrderInfo) => Ok | error | null)
+  & ((query: deleteSavedCredentials) => Ok | error | null)
+  & ((query: getSupportUser) => User | error | null)
+  & ((query: getWallpapers) => Wallpapers | error | null)
+  & ((query: registerDevice) => Ok | error | null)
+  & ((query: getRecentlyVisitedTMeUrls) => TMeUrls | error | null)
+  & ((query: setUserPrivacySettingRules) => Ok | error | null)
+  & ((query: getUserPrivacySettingRules) => UserPrivacySettingRules | error | null)
+  & ((query: getOption) => OptionValue | error | null)
+  & ((query: setOption) => Ok | error | null)
+  & ((query: setAccountTtl) => Ok | error | null)
+  & ((query: getAccountTtl) => AccountTtl | error | null)
+  & ((query: deleteAccount) => Ok | error | null)
+  & ((query: getChatReportSpamState) => ChatReportSpamState | error | null)
+  & ((query: changeChatReportSpamState) => Ok | error | null)
+  & ((query: reportChat) => Ok | error | null)
+  & ((query: getStorageStatistics) => StorageStatistics | error | null)
+  & ((query: getStorageStatisticsFast) => StorageStatisticsFast | error | null)
+  & ((query: optimizeStorage) => StorageStatistics | error | null)
+  & ((query: setNetworkType) => Ok | error | null)
+  & ((query: getNetworkStatistics) => NetworkStatistics | error | null)
+  & ((query: addNetworkStatistics) => Ok | error | null)
+  & ((query: resetNetworkStatistics) => Ok | error | null)
+  & ((query: setBotUpdatesStatus) => Ok | error | null)
+  & ((query: uploadStickerFile) => File | error | null)
+  & ((query: createNewStickerSet) => StickerSet | error | null)
+  & ((query: addStickerToSet) => StickerSet | error | null)
+  & ((query: setStickerPositionInSet) => Ok | error | null)
+  & ((query: removeStickerFromSet) => Ok | error | null)
+  & ((query: sendCustomRequest) => CustomRequestResult | error | null)
+  & ((query: answerCustomQuery) => Ok | error | null)
+  & ((query: setAlarm) => Ok | error | null)
+  & ((query: getCountryCode) => Text | error | null)
+  & ((query: getInviteText) => Text | error | null)
+  & ((query: getTermsOfService) => Text | error | null)
+  & ((query: setProxy) => Ok | error | null)
+  & ((query: getProxy) => Proxy | error | null)
+  & ((query: testCallEmpty) => Ok | error | null)
+  & ((query: testCallString) => TestString | error | null)
+  & ((query: testCallBytes) => TestBytes | error | null)
+  & ((query: testCallVectorInt) => TestVectorInt | error | null)
+  & ((query: testCallVectorIntObject) => TestVectorIntObject | error | null)
+  & ((query: testCallVectorString) => TestVectorString | error | null)
+  & ((query: testCallVectorStringObject) => TestVectorStringObject | error | null)
+  & ((query: testSquareInt) => TestInt | error | null)
+  & ((query: testNetwork) => Ok | error | null)
+  & ((query: testGetDifference) => Ok | error | null)
+  & ((query: testUseUpdate) => Update | error | null)
+  & ((query: testUseError) => Error | error | null)
 
 // Future<Left, Right>
 import type { Future } from 'fluture'
 
 export type InvokeFuture =
-  & ((query: acceptCall) => Future<error, acceptCallReturnType>)
-  & ((query: addChatMember) => Future<error, addChatMemberReturnType>)
-  & ((query: addChatMembers) => Future<error, addChatMembersReturnType>)
-  & ((query: addFavoriteSticker) => Future<error, addFavoriteStickerReturnType>)
-  & ((query: addNetworkStatistics) => Future<error, addNetworkStatisticsReturnType>)
-  & ((query: addRecentSticker) => Future<error, addRecentStickerReturnType>)
-  & ((query: addRecentlyFoundChat) => Future<error, addRecentlyFoundChatReturnType>)
-  & ((query: addSavedAnimation) => Future<error, addSavedAnimationReturnType>)
-  & ((query: addStickerToSet) => Future<error, addStickerToSetReturnType>)
-  & ((query: answerCallbackQuery) => Future<error, answerCallbackQueryReturnType>)
-  & ((query: answerCustomQuery) => Future<error, answerCustomQueryReturnType>)
-  & ((query: answerInlineQuery) => Future<error, answerInlineQueryReturnType>)
-  & ((query: answerPreCheckoutQuery) => Future<error, answerPreCheckoutQueryReturnType>)
-  & ((query: answerShippingQuery) => Future<error, answerShippingQueryReturnType>)
-  & ((query: blockUser) => Future<error, blockUserReturnType>)
-  & ((query: cancelDownloadFile) => Future<error, cancelDownloadFileReturnType>)
-  & ((query: cancelUploadFile) => Future<error, cancelUploadFileReturnType>)
-  & ((query: changeChatReportSpamState) => Future<error, changeChatReportSpamStateReturnType>)
-  & ((query: changeImportedContacts) => Future<error, changeImportedContactsReturnType>)
-  & ((query: changePhoneNumber) => Future<error, changePhoneNumberReturnType>)
-  & ((query: changeStickerSet) => Future<error, changeStickerSetReturnType>)
-  & ((query: checkAuthenticationBotToken) => Future<error, checkAuthenticationBotTokenReturnType>)
-  & ((query: checkAuthenticationCode) => Future<error, checkAuthenticationCodeReturnType>)
-  & ((query: checkAuthenticationPassword) => Future<error, checkAuthenticationPasswordReturnType>)
-  & ((query: checkChangePhoneNumberCode) => Future<error, checkChangePhoneNumberCodeReturnType>)
-  & ((query: checkChatInviteLink) => Future<error, checkChatInviteLinkReturnType>)
-  & ((query: checkChatUsername) => Future<error, checkChatUsernameReturnType>)
-  & ((query: checkDatabaseEncryptionKey) => Future<error, checkDatabaseEncryptionKeyReturnType>)
-  & ((query: clearImportedContacts) => Future<error, clearImportedContactsReturnType>)
-  & ((query: clearRecentStickers) => Future<error, clearRecentStickersReturnType>)
-  & ((query: clearRecentlyFoundChats) => Future<error, clearRecentlyFoundChatsReturnType>)
-  & ((query: close) => Future<error, closeReturnType>)
-  & ((query: closeChat) => Future<error, closeChatReturnType>)
-  & ((query: closeSecretChat) => Future<error, closeSecretChatReturnType>)
-  & ((query: createBasicGroupChat) => Future<error, createBasicGroupChatReturnType>)
-  & ((query: createCall) => Future<error, createCallReturnType>)
-  & ((query: createNewBasicGroupChat) => Future<error, createNewBasicGroupChatReturnType>)
-  & ((query: createNewSecretChat) => Future<error, createNewSecretChatReturnType>)
-  & ((query: createNewStickerSet) => Future<error, createNewStickerSetReturnType>)
-  & ((query: createNewSupergroupChat) => Future<error, createNewSupergroupChatReturnType>)
-  & ((query: createPrivateChat) => Future<error, createPrivateChatReturnType>)
-  & ((query: createSecretChat) => Future<error, createSecretChatReturnType>)
-  & ((query: createSupergroupChat) => Future<error, createSupergroupChatReturnType>)
-  & ((query: createTemporaryPassword) => Future<error, createTemporaryPasswordReturnType>)
-  & ((query: deleteAccount) => Future<error, deleteAccountReturnType>)
-  & ((query: deleteChatHistory) => Future<error, deleteChatHistoryReturnType>)
-  & ((query: deleteChatMessagesFromUser) => Future<error, deleteChatMessagesFromUserReturnType>)
-  & ((query: deleteChatReplyMarkup) => Future<error, deleteChatReplyMarkupReturnType>)
-  & ((query: deleteFile) => Future<error, deleteFileReturnType>)
-  & ((query: deleteMessages) => Future<error, deleteMessagesReturnType>)
-  & ((query: deleteProfilePhoto) => Future<error, deleteProfilePhotoReturnType>)
-  & ((query: deleteSavedCredentials) => Future<error, deleteSavedCredentialsReturnType>)
-  & ((query: deleteSavedOrderInfo) => Future<error, deleteSavedOrderInfoReturnType>)
-  & ((query: deleteSupergroup) => Future<error, deleteSupergroupReturnType>)
-  & ((query: destroy) => Future<error, destroyReturnType>)
-  & ((query: discardCall) => Future<error, discardCallReturnType>)
-  & ((query: disconnectAllWebsites) => Future<error, disconnectAllWebsitesReturnType>)
-  & ((query: disconnectWebsite) => Future<error, disconnectWebsiteReturnType>)
-  & ((query: downloadFile) => Future<error, downloadFileReturnType>)
-  & ((query: editInlineMessageCaption) => Future<error, editInlineMessageCaptionReturnType>)
-  & ((query: editInlineMessageLiveLocation) => Future<error, editInlineMessageLiveLocationReturnType>)
-  & ((query: editInlineMessageReplyMarkup) => Future<error, editInlineMessageReplyMarkupReturnType>)
-  & ((query: editInlineMessageText) => Future<error, editInlineMessageTextReturnType>)
-  & ((query: editMessageCaption) => Future<error, editMessageCaptionReturnType>)
-  & ((query: editMessageLiveLocation) => Future<error, editMessageLiveLocationReturnType>)
-  & ((query: editMessageReplyMarkup) => Future<error, editMessageReplyMarkupReturnType>)
-  & ((query: editMessageText) => Future<error, editMessageTextReturnType>)
-  & ((query: finishFileGeneration) => Future<error, finishFileGenerationReturnType>)
-  & ((query: forwardMessages) => Future<error, forwardMessagesReturnType>)
-  & ((query: generateChatInviteLink) => Future<error, generateChatInviteLinkReturnType>)
-  & ((query: getAccountTtl) => Future<error, getAccountTtlReturnType>)
-  & ((query: getActiveLiveLocationMessages) => Future<error, getActiveLiveLocationMessagesReturnType>)
-  & ((query: getActiveSessions) => Future<error, getActiveSessionsReturnType>)
-  & ((query: getArchivedStickerSets) => Future<error, getArchivedStickerSetsReturnType>)
-  & ((query: getAttachedStickerSets) => Future<error, getAttachedStickerSetsReturnType>)
-  & ((query: getAuthorizationState) => Future<error, getAuthorizationStateReturnType>)
-  & ((query: getBasicGroup) => Future<error, getBasicGroupReturnType>)
-  & ((query: getBasicGroupFullInfo) => Future<error, getBasicGroupFullInfoReturnType>)
-  & ((query: getBlockedUsers) => Future<error, getBlockedUsersReturnType>)
-  & ((query: getCallbackQueryAnswer) => Future<error, getCallbackQueryAnswerReturnType>)
-  & ((query: getChat) => Future<error, getChatReturnType>)
-  & ((query: getChatAdministrators) => Future<error, getChatAdministratorsReturnType>)
-  & ((query: getChatEventLog) => Future<error, getChatEventLogReturnType>)
-  & ((query: getChatHistory) => Future<error, getChatHistoryReturnType>)
-  & ((query: getChatMember) => Future<error, getChatMemberReturnType>)
-  & ((query: getChatMessageByDate) => Future<error, getChatMessageByDateReturnType>)
-  & ((query: getChatPinnedMessage) => Future<error, getChatPinnedMessageReturnType>)
-  & ((query: getChatReportSpamState) => Future<error, getChatReportSpamStateReturnType>)
-  & ((query: getChats) => Future<error, getChatsReturnType>)
-  & ((query: getConnectedWebsites) => Future<error, getConnectedWebsitesReturnType>)
-  & ((query: getCountryCode) => Future<error, getCountryCodeReturnType>)
-  & ((query: getCreatedPublicChats) => Future<error, getCreatedPublicChatsReturnType>)
-  & ((query: getFavoriteStickers) => Future<error, getFavoriteStickersReturnType>)
-  & ((query: getFile) => Future<error, getFileReturnType>)
-  & ((query: getFileExtension) => Future<error, getFileExtensionReturnType>)
-  & ((query: getFileMimeType) => Future<error, getFileMimeTypeReturnType>)
-  & ((query: getGameHighScores) => Future<error, getGameHighScoresReturnType>)
-  & ((query: getGroupsInCommon) => Future<error, getGroupsInCommonReturnType>)
-  & ((query: getImportedContactCount) => Future<error, getImportedContactCountReturnType>)
-  & ((query: getInlineGameHighScores) => Future<error, getInlineGameHighScoresReturnType>)
-  & ((query: getInlineQueryResults) => Future<error, getInlineQueryResultsReturnType>)
-  & ((query: getInstalledStickerSets) => Future<error, getInstalledStickerSetsReturnType>)
-  & ((query: getInviteText) => Future<error, getInviteTextReturnType>)
-  & ((query: getMe) => Future<error, getMeReturnType>)
-  & ((query: getMessage) => Future<error, getMessageReturnType>)
-  & ((query: getMessages) => Future<error, getMessagesReturnType>)
-  & ((query: getNetworkStatistics) => Future<error, getNetworkStatisticsReturnType>)
-  & ((query: getNotificationSettings) => Future<error, getNotificationSettingsReturnType>)
-  & ((query: getOption) => Future<error, getOptionReturnType>)
-  & ((query: getPasswordState) => Future<error, getPasswordStateReturnType>)
-  & ((query: getPaymentForm) => Future<error, getPaymentFormReturnType>)
-  & ((query: getPaymentReceipt) => Future<error, getPaymentReceiptReturnType>)
-  & ((query: getProxy) => Future<error, getProxyReturnType>)
-  & ((query: getPublicMessageLink) => Future<error, getPublicMessageLinkReturnType>)
-  & ((query: getRecentInlineBots) => Future<error, getRecentInlineBotsReturnType>)
-  & ((query: getRecentStickers) => Future<error, getRecentStickersReturnType>)
-  & ((query: getRecentlyVisitedTMeUrls) => Future<error, getRecentlyVisitedTMeUrlsReturnType>)
-  & ((query: getRecoveryEmailAddress) => Future<error, getRecoveryEmailAddressReturnType>)
-  & ((query: getRemoteFile) => Future<error, getRemoteFileReturnType>)
-  & ((query: getRepliedMessage) => Future<error, getRepliedMessageReturnType>)
-  & ((query: getSavedAnimations) => Future<error, getSavedAnimationsReturnType>)
-  & ((query: getSavedOrderInfo) => Future<error, getSavedOrderInfoReturnType>)
-  & ((query: getSecretChat) => Future<error, getSecretChatReturnType>)
-  & ((query: getStickerEmojis) => Future<error, getStickerEmojisReturnType>)
-  & ((query: getStickerSet) => Future<error, getStickerSetReturnType>)
-  & ((query: getStickers) => Future<error, getStickersReturnType>)
-  & ((query: getStorageStatistics) => Future<error, getStorageStatisticsReturnType>)
-  & ((query: getStorageStatisticsFast) => Future<error, getStorageStatisticsFastReturnType>)
-  & ((query: getSupergroup) => Future<error, getSupergroupReturnType>)
-  & ((query: getSupergroupFullInfo) => Future<error, getSupergroupFullInfoReturnType>)
-  & ((query: getSupergroupMembers) => Future<error, getSupergroupMembersReturnType>)
-  & ((query: getSupportUser) => Future<error, getSupportUserReturnType>)
-  & ((query: getTemporaryPasswordState) => Future<error, getTemporaryPasswordStateReturnType>)
-  & ((query: getTermsOfService) => Future<error, getTermsOfServiceReturnType>)
-  & ((query: getTextEntities) => Future<error, getTextEntitiesReturnType>)
-  & ((query: getTopChats) => Future<error, getTopChatsReturnType>)
-  & ((query: getTrendingStickerSets) => Future<error, getTrendingStickerSetsReturnType>)
-  & ((query: getUser) => Future<error, getUserReturnType>)
-  & ((query: getUserFullInfo) => Future<error, getUserFullInfoReturnType>)
-  & ((query: getUserPrivacySettingRules) => Future<error, getUserPrivacySettingRulesReturnType>)
-  & ((query: getUserProfilePhotos) => Future<error, getUserProfilePhotosReturnType>)
-  & ((query: getWallpapers) => Future<error, getWallpapersReturnType>)
-  & ((query: getWebPageInstantView) => Future<error, getWebPageInstantViewReturnType>)
-  & ((query: getWebPagePreview) => Future<error, getWebPagePreviewReturnType>)
-  & ((query: importContacts) => Future<error, importContactsReturnType>)
-  & ((query: joinChatByInviteLink) => Future<error, joinChatByInviteLinkReturnType>)
-  & ((query: logOut) => Future<error, logOutReturnType>)
-  & ((query: openChat) => Future<error, openChatReturnType>)
-  & ((query: openMessageContent) => Future<error, openMessageContentReturnType>)
-  & ((query: optimizeStorage) => Future<error, optimizeStorageReturnType>)
-  & ((query: parseTextEntities) => Future<error, parseTextEntitiesReturnType>)
-  & ((query: pinSupergroupMessage) => Future<error, pinSupergroupMessageReturnType>)
-  & ((query: processDcUpdate) => Future<error, processDcUpdateReturnType>)
-  & ((query: readAllChatMentions) => Future<error, readAllChatMentionsReturnType>)
-  & ((query: recoverAuthenticationPassword) => Future<error, recoverAuthenticationPasswordReturnType>)
-  & ((query: recoverPassword) => Future<error, recoverPasswordReturnType>)
-  & ((query: registerDevice) => Future<error, registerDeviceReturnType>)
-  & ((query: removeContacts) => Future<error, removeContactsReturnType>)
-  & ((query: removeFavoriteSticker) => Future<error, removeFavoriteStickerReturnType>)
-  & ((query: removeRecentHashtag) => Future<error, removeRecentHashtagReturnType>)
-  & ((query: removeRecentSticker) => Future<error, removeRecentStickerReturnType>)
-  & ((query: removeRecentlyFoundChat) => Future<error, removeRecentlyFoundChatReturnType>)
-  & ((query: removeSavedAnimation) => Future<error, removeSavedAnimationReturnType>)
-  & ((query: removeStickerFromSet) => Future<error, removeStickerFromSetReturnType>)
-  & ((query: removeTopChat) => Future<error, removeTopChatReturnType>)
-  & ((query: reorderInstalledStickerSets) => Future<error, reorderInstalledStickerSetsReturnType>)
-  & ((query: reportChat) => Future<error, reportChatReturnType>)
-  & ((query: reportSupergroupSpam) => Future<error, reportSupergroupSpamReturnType>)
-  & ((query: requestAuthenticationPasswordRecovery) => Future<error, requestAuthenticationPasswordRecoveryReturnType>)
-  & ((query: requestPasswordRecovery) => Future<error, requestPasswordRecoveryReturnType>)
-  & ((query: resendAuthenticationCode) => Future<error, resendAuthenticationCodeReturnType>)
-  & ((query: resendChangePhoneNumberCode) => Future<error, resendChangePhoneNumberCodeReturnType>)
-  & ((query: resetAllNotificationSettings) => Future<error, resetAllNotificationSettingsReturnType>)
-  & ((query: resetNetworkStatistics) => Future<error, resetNetworkStatisticsReturnType>)
-  & ((query: searchCallMessages) => Future<error, searchCallMessagesReturnType>)
-  & ((query: searchChatMembers) => Future<error, searchChatMembersReturnType>)
-  & ((query: searchChatMessages) => Future<error, searchChatMessagesReturnType>)
-  & ((query: searchChatRecentLocationMessages) => Future<error, searchChatRecentLocationMessagesReturnType>)
-  & ((query: searchChats) => Future<error, searchChatsReturnType>)
-  & ((query: searchChatsOnServer) => Future<error, searchChatsOnServerReturnType>)
-  & ((query: searchContacts) => Future<error, searchContactsReturnType>)
-  & ((query: searchHashtags) => Future<error, searchHashtagsReturnType>)
-  & ((query: searchInstalledStickerSets) => Future<error, searchInstalledStickerSetsReturnType>)
-  & ((query: searchMessages) => Future<error, searchMessagesReturnType>)
-  & ((query: searchPublicChat) => Future<error, searchPublicChatReturnType>)
-  & ((query: searchPublicChats) => Future<error, searchPublicChatsReturnType>)
-  & ((query: searchSecretMessages) => Future<error, searchSecretMessagesReturnType>)
-  & ((query: searchStickerSet) => Future<error, searchStickerSetReturnType>)
-  & ((query: searchStickerSets) => Future<error, searchStickerSetsReturnType>)
-  & ((query: searchStickers) => Future<error, searchStickersReturnType>)
-  & ((query: sendBotStartMessage) => Future<error, sendBotStartMessageReturnType>)
-  & ((query: sendCallDebugInformation) => Future<error, sendCallDebugInformationReturnType>)
-  & ((query: sendCallRating) => Future<error, sendCallRatingReturnType>)
-  & ((query: sendChatAction) => Future<error, sendChatActionReturnType>)
-  & ((query: sendChatScreenshotTakenNotification) => Future<error, sendChatScreenshotTakenNotificationReturnType>)
-  & ((query: sendChatSetTtlMessage) => Future<error, sendChatSetTtlMessageReturnType>)
-  & ((query: sendCustomRequest) => Future<error, sendCustomRequestReturnType>)
-  & ((query: sendInlineQueryResultMessage) => Future<error, sendInlineQueryResultMessageReturnType>)
-  & ((query: sendMessage) => Future<error, sendMessageReturnType>)
-  & ((query: sendMessageAlbum) => Future<error, sendMessageAlbumReturnType>)
-  & ((query: sendPaymentForm) => Future<error, sendPaymentFormReturnType>)
-  & ((query: setAccountTtl) => Future<error, setAccountTtlReturnType>)
-  & ((query: setAlarm) => Future<error, setAlarmReturnType>)
-  & ((query: setAuthenticationPhoneNumber) => Future<error, setAuthenticationPhoneNumberReturnType>)
-  & ((query: setBio) => Future<error, setBioReturnType>)
-  & ((query: setBotUpdatesStatus) => Future<error, setBotUpdatesStatusReturnType>)
-  & ((query: setChatClientData) => Future<error, setChatClientDataReturnType>)
-  & ((query: setChatDraftMessage) => Future<error, setChatDraftMessageReturnType>)
-  & ((query: setChatMemberStatus) => Future<error, setChatMemberStatusReturnType>)
-  & ((query: setChatPhoto) => Future<error, setChatPhotoReturnType>)
-  & ((query: setChatTitle) => Future<error, setChatTitleReturnType>)
-  & ((query: setDatabaseEncryptionKey) => Future<error, setDatabaseEncryptionKeyReturnType>)
-  & ((query: setFileGenerationProgress) => Future<error, setFileGenerationProgressReturnType>)
-  & ((query: setGameScore) => Future<error, setGameScoreReturnType>)
-  & ((query: setInlineGameScore) => Future<error, setInlineGameScoreReturnType>)
-  & ((query: setName) => Future<error, setNameReturnType>)
-  & ((query: setNetworkType) => Future<error, setNetworkTypeReturnType>)
-  & ((query: setNotificationSettings) => Future<error, setNotificationSettingsReturnType>)
-  & ((query: setOption) => Future<error, setOptionReturnType>)
-  & ((query: setPassword) => Future<error, setPasswordReturnType>)
-  & ((query: setPinnedChats) => Future<error, setPinnedChatsReturnType>)
-  & ((query: setProfilePhoto) => Future<error, setProfilePhotoReturnType>)
-  & ((query: setProxy) => Future<error, setProxyReturnType>)
-  & ((query: setRecoveryEmailAddress) => Future<error, setRecoveryEmailAddressReturnType>)
-  & ((query: setStickerPositionInSet) => Future<error, setStickerPositionInSetReturnType>)
-  & ((query: setSupergroupDescription) => Future<error, setSupergroupDescriptionReturnType>)
-  & ((query: setSupergroupStickerSet) => Future<error, setSupergroupStickerSetReturnType>)
-  & ((query: setSupergroupUsername) => Future<error, setSupergroupUsernameReturnType>)
-  & ((query: setTdlibParameters) => Future<error, setTdlibParametersReturnType>)
-  & ((query: setUserPrivacySettingRules) => Future<error, setUserPrivacySettingRulesReturnType>)
-  & ((query: setUsername) => Future<error, setUsernameReturnType>)
-  & ((query: terminateAllOtherSessions) => Future<error, terminateAllOtherSessionsReturnType>)
-  & ((query: terminateSession) => Future<error, terminateSessionReturnType>)
-  & ((query: testCallBytes) => Future<error, testCallBytesReturnType>)
-  & ((query: testCallEmpty) => Future<error, testCallEmptyReturnType>)
-  & ((query: testCallString) => Future<error, testCallStringReturnType>)
-  & ((query: testCallVectorInt) => Future<error, testCallVectorIntReturnType>)
-  & ((query: testCallVectorIntObject) => Future<error, testCallVectorIntObjectReturnType>)
-  & ((query: testCallVectorString) => Future<error, testCallVectorStringReturnType>)
-  & ((query: testCallVectorStringObject) => Future<error, testCallVectorStringObjectReturnType>)
-  & ((query: testGetDifference) => Future<error, testGetDifferenceReturnType>)
-  & ((query: testNetwork) => Future<error, testNetworkReturnType>)
-  & ((query: testSquareInt) => Future<error, testSquareIntReturnType>)
-  & ((query: testUseError) => Future<error, testUseErrorReturnType>)
-  & ((query: testUseUpdate) => Future<error, testUseUpdateReturnType>)
-  & ((query: toggleBasicGroupAdministrators) => Future<error, toggleBasicGroupAdministratorsReturnType>)
-  & ((query: toggleChatIsPinned) => Future<error, toggleChatIsPinnedReturnType>)
-  & ((query: toggleSupergroupInvites) => Future<error, toggleSupergroupInvitesReturnType>)
-  & ((query: toggleSupergroupIsAllHistoryAvailable) => Future<error, toggleSupergroupIsAllHistoryAvailableReturnType>)
-  & ((query: toggleSupergroupSignMessages) => Future<error, toggleSupergroupSignMessagesReturnType>)
-  & ((query: unblockUser) => Future<error, unblockUserReturnType>)
-  & ((query: unpinSupergroupMessage) => Future<error, unpinSupergroupMessageReturnType>)
-  & ((query: upgradeBasicGroupChatToSupergroupChat) => Future<error, upgradeBasicGroupChatToSupergroupChatReturnType>)
-  & ((query: uploadFile) => Future<error, uploadFileReturnType>)
-  & ((query: uploadStickerFile) => Future<error, uploadStickerFileReturnType>)
-  & ((query: validateOrderInfo) => Future<error, validateOrderInfoReturnType>)
-  & ((query: viewMessages) => Future<error, viewMessagesReturnType>)
-  & ((query: viewTrendingStickerSets) => Future<error, viewTrendingStickerSetsReturnType>)
+  & ((query: getAuthorizationState) => Future<error, AuthorizationState>)
+  & ((query: setTdlibParameters) => Future<error, Ok>)
+  & ((query: checkDatabaseEncryptionKey) => Future<error, Ok>)
+  & ((query: setAuthenticationPhoneNumber) => Future<error, Ok>)
+  & ((query: resendAuthenticationCode) => Future<error, Ok>)
+  & ((query: checkAuthenticationCode) => Future<error, Ok>)
+  & ((query: checkAuthenticationPassword) => Future<error, Ok>)
+  & ((query: requestAuthenticationPasswordRecovery) => Future<error, Ok>)
+  & ((query: recoverAuthenticationPassword) => Future<error, Ok>)
+  & ((query: checkAuthenticationBotToken) => Future<error, Ok>)
+  & ((query: logOut) => Future<error, Ok>)
+  & ((query: close) => Future<error, Ok>)
+  & ((query: destroy) => Future<error, Ok>)
+  & ((query: setDatabaseEncryptionKey) => Future<error, Ok>)
+  & ((query: getPasswordState) => Future<error, PasswordState>)
+  & ((query: setPassword) => Future<error, PasswordState>)
+  & ((query: getRecoveryEmailAddress) => Future<error, RecoveryEmailAddress>)
+  & ((query: setRecoveryEmailAddress) => Future<error, PasswordState>)
+  & ((query: requestPasswordRecovery) => Future<error, PasswordRecoveryInfo>)
+  & ((query: recoverPassword) => Future<error, PasswordState>)
+  & ((query: createTemporaryPassword) => Future<error, TemporaryPasswordState>)
+  & ((query: getTemporaryPasswordState) => Future<error, TemporaryPasswordState>)
+  & ((query: processDcUpdate) => Future<error, Ok>)
+  & ((query: getMe) => Future<error, User>)
+  & ((query: getUser) => Future<error, User>)
+  & ((query: getUserFullInfo) => Future<error, UserFullInfo>)
+  & ((query: getBasicGroup) => Future<error, BasicGroup>)
+  & ((query: getBasicGroupFullInfo) => Future<error, BasicGroupFullInfo>)
+  & ((query: getSupergroup) => Future<error, Supergroup>)
+  & ((query: getSupergroupFullInfo) => Future<error, SupergroupFullInfo>)
+  & ((query: getSecretChat) => Future<error, SecretChat>)
+  & ((query: getChat) => Future<error, Chat>)
+  & ((query: getMessage) => Future<error, Message>)
+  & ((query: getRepliedMessage) => Future<error, Message>)
+  & ((query: getChatPinnedMessage) => Future<error, Message>)
+  & ((query: getMessages) => Future<error, Messages>)
+  & ((query: getFile) => Future<error, File>)
+  & ((query: getRemoteFile) => Future<error, File>)
+  & ((query: getChats) => Future<error, Chats>)
+  & ((query: searchPublicChat) => Future<error, Chat>)
+  & ((query: searchPublicChats) => Future<error, Chats>)
+  & ((query: searchChats) => Future<error, Chats>)
+  & ((query: searchChatsOnServer) => Future<error, Chats>)
+  & ((query: getTopChats) => Future<error, Chats>)
+  & ((query: removeTopChat) => Future<error, Ok>)
+  & ((query: addRecentlyFoundChat) => Future<error, Ok>)
+  & ((query: removeRecentlyFoundChat) => Future<error, Ok>)
+  & ((query: clearRecentlyFoundChats) => Future<error, Ok>)
+  & ((query: checkChatUsername) => Future<error, CheckChatUsernameResult>)
+  & ((query: getCreatedPublicChats) => Future<error, Chats>)
+  & ((query: getGroupsInCommon) => Future<error, Chats>)
+  & ((query: getChatHistory) => Future<error, Messages>)
+  & ((query: deleteChatHistory) => Future<error, Ok>)
+  & ((query: searchChatMessages) => Future<error, Messages>)
+  & ((query: searchMessages) => Future<error, Messages>)
+  & ((query: searchSecretMessages) => Future<error, FoundMessages>)
+  & ((query: searchCallMessages) => Future<error, Messages>)
+  & ((query: searchChatRecentLocationMessages) => Future<error, Messages>)
+  & ((query: getActiveLiveLocationMessages) => Future<error, Messages>)
+  & ((query: getChatMessageByDate) => Future<error, Message>)
+  & ((query: getPublicMessageLink) => Future<error, PublicMessageLink>)
+  & ((query: sendMessage) => Future<error, Message>)
+  & ((query: sendMessageAlbum) => Future<error, Messages>)
+  & ((query: sendBotStartMessage) => Future<error, Message>)
+  & ((query: sendInlineQueryResultMessage) => Future<error, Message>)
+  & ((query: forwardMessages) => Future<error, Messages>)
+  & ((query: sendChatSetTtlMessage) => Future<error, Message>)
+  & ((query: sendChatScreenshotTakenNotification) => Future<error, Ok>)
+  & ((query: deleteMessages) => Future<error, Ok>)
+  & ((query: deleteChatMessagesFromUser) => Future<error, Ok>)
+  & ((query: editMessageText) => Future<error, Message>)
+  & ((query: editMessageLiveLocation) => Future<error, Message>)
+  & ((query: editMessageCaption) => Future<error, Message>)
+  & ((query: editMessageReplyMarkup) => Future<error, Message>)
+  & ((query: editInlineMessageText) => Future<error, Ok>)
+  & ((query: editInlineMessageLiveLocation) => Future<error, Ok>)
+  & ((query: editInlineMessageCaption) => Future<error, Ok>)
+  & ((query: editInlineMessageReplyMarkup) => Future<error, Ok>)
+  & ((query: getTextEntities) => Future<error, TextEntities>)
+  & ((query: parseTextEntities) => Future<error, FormattedText>)
+  & ((query: getFileMimeType) => Future<error, Text>)
+  & ((query: getFileExtension) => Future<error, Text>)
+  & ((query: getInlineQueryResults) => Future<error, InlineQueryResults>)
+  & ((query: answerInlineQuery) => Future<error, Ok>)
+  & ((query: getCallbackQueryAnswer) => Future<error, CallbackQueryAnswer>)
+  & ((query: answerCallbackQuery) => Future<error, Ok>)
+  & ((query: answerShippingQuery) => Future<error, Ok>)
+  & ((query: answerPreCheckoutQuery) => Future<error, Ok>)
+  & ((query: setGameScore) => Future<error, Message>)
+  & ((query: setInlineGameScore) => Future<error, Ok>)
+  & ((query: getGameHighScores) => Future<error, GameHighScores>)
+  & ((query: getInlineGameHighScores) => Future<error, GameHighScores>)
+  & ((query: deleteChatReplyMarkup) => Future<error, Ok>)
+  & ((query: sendChatAction) => Future<error, Ok>)
+  & ((query: openChat) => Future<error, Ok>)
+  & ((query: closeChat) => Future<error, Ok>)
+  & ((query: viewMessages) => Future<error, Ok>)
+  & ((query: openMessageContent) => Future<error, Ok>)
+  & ((query: readAllChatMentions) => Future<error, Ok>)
+  & ((query: createPrivateChat) => Future<error, Chat>)
+  & ((query: createBasicGroupChat) => Future<error, Chat>)
+  & ((query: createSupergroupChat) => Future<error, Chat>)
+  & ((query: createSecretChat) => Future<error, Chat>)
+  & ((query: createNewBasicGroupChat) => Future<error, Chat>)
+  & ((query: createNewSupergroupChat) => Future<error, Chat>)
+  & ((query: createNewSecretChat) => Future<error, Chat>)
+  & ((query: upgradeBasicGroupChatToSupergroupChat) => Future<error, Chat>)
+  & ((query: setChatTitle) => Future<error, Ok>)
+  & ((query: setChatPhoto) => Future<error, Ok>)
+  & ((query: setChatDraftMessage) => Future<error, Ok>)
+  & ((query: toggleChatIsPinned) => Future<error, Ok>)
+  & ((query: setChatClientData) => Future<error, Ok>)
+  & ((query: addChatMember) => Future<error, Ok>)
+  & ((query: addChatMembers) => Future<error, Ok>)
+  & ((query: setChatMemberStatus) => Future<error, Ok>)
+  & ((query: getChatMember) => Future<error, ChatMember>)
+  & ((query: searchChatMembers) => Future<error, ChatMembers>)
+  & ((query: getChatAdministrators) => Future<error, Users>)
+  & ((query: setPinnedChats) => Future<error, Ok>)
+  & ((query: downloadFile) => Future<error, File>)
+  & ((query: cancelDownloadFile) => Future<error, Ok>)
+  & ((query: uploadFile) => Future<error, File>)
+  & ((query: cancelUploadFile) => Future<error, Ok>)
+  & ((query: setFileGenerationProgress) => Future<error, Ok>)
+  & ((query: finishFileGeneration) => Future<error, Ok>)
+  & ((query: deleteFile) => Future<error, Ok>)
+  & ((query: generateChatInviteLink) => Future<error, ChatInviteLink>)
+  & ((query: checkChatInviteLink) => Future<error, ChatInviteLinkInfo>)
+  & ((query: joinChatByInviteLink) => Future<error, Chat>)
+  & ((query: createCall) => Future<error, CallId>)
+  & ((query: acceptCall) => Future<error, Ok>)
+  & ((query: discardCall) => Future<error, Ok>)
+  & ((query: sendCallRating) => Future<error, Ok>)
+  & ((query: sendCallDebugInformation) => Future<error, Ok>)
+  & ((query: blockUser) => Future<error, Ok>)
+  & ((query: unblockUser) => Future<error, Ok>)
+  & ((query: getBlockedUsers) => Future<error, Users>)
+  & ((query: importContacts) => Future<error, ImportedContacts>)
+  & ((query: searchContacts) => Future<error, Users>)
+  & ((query: removeContacts) => Future<error, Ok>)
+  & ((query: getImportedContactCount) => Future<error, Count>)
+  & ((query: changeImportedContacts) => Future<error, ImportedContacts>)
+  & ((query: clearImportedContacts) => Future<error, Ok>)
+  & ((query: getUserProfilePhotos) => Future<error, UserProfilePhotos>)
+  & ((query: getStickers) => Future<error, Stickers>)
+  & ((query: searchStickers) => Future<error, Stickers>)
+  & ((query: getInstalledStickerSets) => Future<error, StickerSets>)
+  & ((query: getArchivedStickerSets) => Future<error, StickerSets>)
+  & ((query: getTrendingStickerSets) => Future<error, StickerSets>)
+  & ((query: getAttachedStickerSets) => Future<error, StickerSets>)
+  & ((query: getStickerSet) => Future<error, StickerSet>)
+  & ((query: searchStickerSet) => Future<error, StickerSet>)
+  & ((query: searchInstalledStickerSets) => Future<error, StickerSets>)
+  & ((query: searchStickerSets) => Future<error, StickerSets>)
+  & ((query: changeStickerSet) => Future<error, Ok>)
+  & ((query: viewTrendingStickerSets) => Future<error, Ok>)
+  & ((query: reorderInstalledStickerSets) => Future<error, Ok>)
+  & ((query: getRecentStickers) => Future<error, Stickers>)
+  & ((query: addRecentSticker) => Future<error, Stickers>)
+  & ((query: removeRecentSticker) => Future<error, Ok>)
+  & ((query: clearRecentStickers) => Future<error, Ok>)
+  & ((query: getFavoriteStickers) => Future<error, Stickers>)
+  & ((query: addFavoriteSticker) => Future<error, Ok>)
+  & ((query: removeFavoriteSticker) => Future<error, Ok>)
+  & ((query: getStickerEmojis) => Future<error, StickerEmojis>)
+  & ((query: getSavedAnimations) => Future<error, Animations>)
+  & ((query: addSavedAnimation) => Future<error, Ok>)
+  & ((query: removeSavedAnimation) => Future<error, Ok>)
+  & ((query: getRecentInlineBots) => Future<error, Users>)
+  & ((query: searchHashtags) => Future<error, Hashtags>)
+  & ((query: removeRecentHashtag) => Future<error, Ok>)
+  & ((query: getWebPagePreview) => Future<error, WebPage>)
+  & ((query: getWebPageInstantView) => Future<error, WebPageInstantView>)
+  & ((query: getNotificationSettings) => Future<error, NotificationSettings>)
+  & ((query: setNotificationSettings) => Future<error, Ok>)
+  & ((query: resetAllNotificationSettings) => Future<error, Ok>)
+  & ((query: setProfilePhoto) => Future<error, Ok>)
+  & ((query: deleteProfilePhoto) => Future<error, Ok>)
+  & ((query: setName) => Future<error, Ok>)
+  & ((query: setBio) => Future<error, Ok>)
+  & ((query: setUsername) => Future<error, Ok>)
+  & ((query: changePhoneNumber) => Future<error, AuthenticationCodeInfo>)
+  & ((query: resendChangePhoneNumberCode) => Future<error, AuthenticationCodeInfo>)
+  & ((query: checkChangePhoneNumberCode) => Future<error, Ok>)
+  & ((query: getActiveSessions) => Future<error, Sessions>)
+  & ((query: terminateSession) => Future<error, Ok>)
+  & ((query: terminateAllOtherSessions) => Future<error, Ok>)
+  & ((query: getConnectedWebsites) => Future<error, ConnectedWebsites>)
+  & ((query: disconnectWebsite) => Future<error, Ok>)
+  & ((query: disconnectAllWebsites) => Future<error, Ok>)
+  & ((query: toggleBasicGroupAdministrators) => Future<error, Ok>)
+  & ((query: setSupergroupUsername) => Future<error, Ok>)
+  & ((query: setSupergroupStickerSet) => Future<error, Ok>)
+  & ((query: toggleSupergroupInvites) => Future<error, Ok>)
+  & ((query: toggleSupergroupSignMessages) => Future<error, Ok>)
+  & ((query: toggleSupergroupIsAllHistoryAvailable) => Future<error, Ok>)
+  & ((query: setSupergroupDescription) => Future<error, Ok>)
+  & ((query: pinSupergroupMessage) => Future<error, Ok>)
+  & ((query: unpinSupergroupMessage) => Future<error, Ok>)
+  & ((query: reportSupergroupSpam) => Future<error, Ok>)
+  & ((query: getSupergroupMembers) => Future<error, ChatMembers>)
+  & ((query: deleteSupergroup) => Future<error, Ok>)
+  & ((query: closeSecretChat) => Future<error, Ok>)
+  & ((query: getChatEventLog) => Future<error, ChatEvents>)
+  & ((query: getPaymentForm) => Future<error, PaymentForm>)
+  & ((query: validateOrderInfo) => Future<error, ValidatedOrderInfo>)
+  & ((query: sendPaymentForm) => Future<error, PaymentResult>)
+  & ((query: getPaymentReceipt) => Future<error, PaymentReceipt>)
+  & ((query: getSavedOrderInfo) => Future<error, OrderInfo>)
+  & ((query: deleteSavedOrderInfo) => Future<error, Ok>)
+  & ((query: deleteSavedCredentials) => Future<error, Ok>)
+  & ((query: getSupportUser) => Future<error, User>)
+  & ((query: getWallpapers) => Future<error, Wallpapers>)
+  & ((query: registerDevice) => Future<error, Ok>)
+  & ((query: getRecentlyVisitedTMeUrls) => Future<error, TMeUrls>)
+  & ((query: setUserPrivacySettingRules) => Future<error, Ok>)
+  & ((query: getUserPrivacySettingRules) => Future<error, UserPrivacySettingRules>)
+  & ((query: getOption) => Future<error, OptionValue>)
+  & ((query: setOption) => Future<error, Ok>)
+  & ((query: setAccountTtl) => Future<error, Ok>)
+  & ((query: getAccountTtl) => Future<error, AccountTtl>)
+  & ((query: deleteAccount) => Future<error, Ok>)
+  & ((query: getChatReportSpamState) => Future<error, ChatReportSpamState>)
+  & ((query: changeChatReportSpamState) => Future<error, Ok>)
+  & ((query: reportChat) => Future<error, Ok>)
+  & ((query: getStorageStatistics) => Future<error, StorageStatistics>)
+  & ((query: getStorageStatisticsFast) => Future<error, StorageStatisticsFast>)
+  & ((query: optimizeStorage) => Future<error, StorageStatistics>)
+  & ((query: setNetworkType) => Future<error, Ok>)
+  & ((query: getNetworkStatistics) => Future<error, NetworkStatistics>)
+  & ((query: addNetworkStatistics) => Future<error, Ok>)
+  & ((query: resetNetworkStatistics) => Future<error, Ok>)
+  & ((query: setBotUpdatesStatus) => Future<error, Ok>)
+  & ((query: uploadStickerFile) => Future<error, File>)
+  & ((query: createNewStickerSet) => Future<error, StickerSet>)
+  & ((query: addStickerToSet) => Future<error, StickerSet>)
+  & ((query: setStickerPositionInSet) => Future<error, Ok>)
+  & ((query: removeStickerFromSet) => Future<error, Ok>)
+  & ((query: sendCustomRequest) => Future<error, CustomRequestResult>)
+  & ((query: answerCustomQuery) => Future<error, Ok>)
+  & ((query: setAlarm) => Future<error, Ok>)
+  & ((query: getCountryCode) => Future<error, Text>)
+  & ((query: getInviteText) => Future<error, Text>)
+  & ((query: getTermsOfService) => Future<error, Text>)
+  & ((query: setProxy) => Future<error, Ok>)
+  & ((query: getProxy) => Future<error, Proxy>)
+  & ((query: testCallEmpty) => Future<error, Ok>)
+  & ((query: testCallString) => Future<error, TestString>)
+  & ((query: testCallBytes) => Future<error, TestBytes>)
+  & ((query: testCallVectorInt) => Future<error, TestVectorInt>)
+  & ((query: testCallVectorIntObject) => Future<error, TestVectorIntObject>)
+  & ((query: testCallVectorString) => Future<error, TestVectorString>)
+  & ((query: testCallVectorStringObject) => Future<error, TestVectorStringObject>)
+  & ((query: testSquareInt) => Future<error, TestInt>)
+  & ((query: testNetwork) => Future<error, Ok>)
+  & ((query: testGetDifference) => Future<error, Ok>)
+  & ((query: testUseUpdate) => Future<error, Update>)
+  & ((query: testUseError) => Future<error, Error>)
