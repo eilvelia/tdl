@@ -315,7 +315,7 @@ export class Client {
           _: 'checkDatabaseEncryptionKey'
         })
 
-        this._beforeAuth()
+        await this._beforeAuth()
           .catch(() => {})
 
         break
