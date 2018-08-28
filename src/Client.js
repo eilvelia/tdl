@@ -43,7 +43,7 @@ const defaultOptions: StrictConfigType = {
     getPassword,
     getName
   },
-  binaryPath: 'libtdjson',
+  binaryPath: process.platform === 'win32' ? 'tdjson' : 'libtdjson',
   databaseDirectory: '_td_database',
   filesDirectory: '_td_files',
   logFilePath: '',
