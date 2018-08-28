@@ -21,7 +21,8 @@ export type {
   StrictLoginDetails,
   TDLibParameters,
   LoginUser,
-  LoginBot
+  LoginBot,
+  TDLibInterface
 } from './types'
 
 export type {

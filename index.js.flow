@@ -8,6 +8,19 @@ import type {
   Execute
 } from './types/tdlib'
 
+type _Client = any
+export type TDLibInterface = {
+  create(): Promise<_Client>;
+  destroy(client: _Client): void;
+  execute(client: _Client, query: Object): Object | null;
+  receive(client: _Client, timeout: number): Promise<Object | null>;
+  send(client: _Client, query: Object): Promise<null>;
+  setLogFilePath(path: string): number;
+  setLogMaxFileSize(maxFileSize: number | string): void;
+  setLogVerbosityLevel(verbosity: number): void;
+  setLogFatalErrorCallback(fn: (errorMessage: string) => void): void;
+}
+
 export type On =
   & ((event: 'update', listener: (update: Update) => void) => Client)
   & ((event: 'error', listener: (err: TDError | Error) => void) => Client)
@@ -33,6 +46,7 @@ declare export class Client {
   constructor(options?: ConfigType): this;
   static create(options?: ConfigType): Client;
   static fromTDLib(tdlibInstance: TDLib, options?: ConfigType): Client;
+  static fromAbstractTd(tdlibInstance: TDLibInterface, options?: ConfigType): Client;
   connect: (beforeAuth?: () => Promise<mixed>) => Promise<void>;
   on: On;
   once: On;

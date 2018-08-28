@@ -6,6 +6,19 @@ import {
   Execute
 } from './types/tdlib'
 
+type _Client = any
+export interface TDLibInterface {
+  create(): Promise<_Client>
+  destroy(client: _Client): void
+  execute(client: _Client, query: Object): Object | null
+  receive(client: _Client, timeout: number): Promise<Object | null>
+  send(client: _Client, query: Object): Promise<null>
+  setLogFilePath(path: string): number
+  setLogMaxFileSize(maxFileSize: number | string): void
+  setLogVerbosityLevel(verbosity: number): void
+  setLogFatalErrorCallback(fn: (errorMessage: string) => void): void
+}
+
 export type On =
   & ((event: 'update', listener: (update: Update) => void) => Client)
   & ((event: 'error', listener: (err: TDError | Error) => void) => Client)
@@ -27,10 +40,11 @@ export type RemoveListener =
   & ((event: 'auth-needed', listener: Function, once?: boolean) => void)
   & ((event: 'auth-not-needed', listener: Function, once?: boolean) => void)
 
-export declare class Client {
+export class Client {
   constructor(options?: ConfigType)
   static create(options?: ConfigType): Client
   static fromTDLib(tdlibInstance: TDLib, options?: ConfigType): Client
+  static fromAbstractTd(tdlibInstance: TDLibInterface, options?: ConfigType): Client
   connect: (beforeAuth?: () => Promise<any>) => Promise<undefined>
   on: On
   once: On
@@ -57,7 +71,7 @@ export default Client
 
 export interface TDLibClient { readonly _TDLibClientBrand: void }
 
-export declare class TDLib {
+export class TDLib {
   constructor(libraryFile: string)
   create(): Promise<TDLibClient>
   destroy(client: TDLibClient): undefined

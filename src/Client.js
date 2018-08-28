@@ -12,7 +12,8 @@ import { getAuthCode, getPassword, getName } from './prompt'
 
 import type {
   ConfigType,
-  StrictConfigType
+  StrictConfigType,
+  TDLibInterface
 } from './types'
 
 import type {
@@ -120,6 +121,14 @@ export class Client {
     return new Client({
       ...options,
       tdlibInstance
+    })
+  }
+
+  // experimental
+  static fromAbstractTd (tdlibInstance: TDLibInterface, options: ConfigType = {}): Client {
+    return new Client({
+      ...options,
+      tdlibInstance: ((tdlibInstance: $FlowTodo): TDLib)
     })
   }
 
