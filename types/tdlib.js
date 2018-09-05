@@ -1,6 +1,6 @@
 // @flow
 
-// TDLib 1.2.0
+// TDLib 1.3.0
 
 /** An object of this type can be returned on every function call, in case of an error */
 export type error = {
@@ -242,6 +242,100 @@ export type authenticationCodeInfoOptional = {|
   timeout?: number,
 |}
 
+/** Information about the email address authentication code that was sent */
+export type emailAddressAuthenticationCodeInfo = {
+  _: 'emailAddressAuthenticationCodeInfo',
+  /** Pattern of the email address to which an authentication code was sent */
+  email_address_pattern: string,
+  /** Length of the code; 0 if unknown */
+  length: number,
+}
+
+/** Information about the email address authentication code that was sent */
+export type emailAddressAuthenticationCodeInfoOptional = {|
+  _: 'emailAddressAuthenticationCodeInfo',
+  /** Pattern of the email address to which an authentication code was sent */
+  email_address_pattern?: string,
+  /** Length of the code; 0 if unknown */
+  length?: number,
+|}
+
+/** Represents a part of the text that needs to be formatted in some unusual way */
+export type textEntity = {
+  _: 'textEntity',
+  /** Offset of the entity in UTF-16 code points */
+  offset: number,
+  /** Length of the entity, in UTF-16 code points */
+  length: number,
+  /** Type of the entity */
+  type: TextEntityType,
+}
+
+/** Represents a part of the text that needs to be formatted in some unusual way */
+export type textEntityOptional = {|
+  _: 'textEntity',
+  /** Offset of the entity in UTF-16 code points */
+  offset?: number,
+  /** Length of the entity, in UTF-16 code points */
+  length?: number,
+  /** Type of the entity */
+  type?: TextEntityTypeOptional,
+|}
+
+/** Contains a list of text entities */
+export type textEntities = {
+  _: 'textEntities',
+  /** List of text entities */
+  entities: textEntity[],
+}
+
+/** Contains a list of text entities */
+export type textEntitiesOptional = {|
+  _: 'textEntities',
+  /** List of text entities */
+  entities?: textEntityOptional[],
+|}
+
+/** A text with some entities */
+export type formattedText = {
+  _: 'formattedText',
+  /** The text */
+  text: string,
+  /** Entities contained in the text */
+  entities: textEntity[],
+}
+
+/** A text with some entities */
+export type formattedTextOptional = {|
+  _: 'formattedText',
+  /** The text */
+  text?: string,
+  /** Entities contained in the text */
+  entities?: textEntityOptional[],
+|}
+
+/** Contains Telegram terms of service */
+export type termsOfService = {
+  _: 'termsOfService',
+  /** Text of the terms of service */
+  text: formattedText,
+  /** Mininum age of a user to be able to accept the terms; 0 if any */
+  min_user_age: number,
+  /** True, if a blocking popup with terms of service must be shown to the user */
+  show_popup: boolean,
+}
+
+/** Contains Telegram terms of service */
+export type termsOfServiceOptional = {|
+  _: 'termsOfService',
+  /** Text of the terms of service */
+  text?: formattedTextOptional,
+  /** Mininum age of a user to be able to accept the terms; 0 if any */
+  min_user_age?: number,
+  /** True, if a blocking popup with terms of service must be shown to the user */
+  show_popup?: boolean,
+|}
+
 /** TDLib needs TdlibParameters for initialization */
 export type authorizationStateWaitTdlibParameters = {
   _: 'authorizationStateWaitTdlibParameters',
@@ -281,6 +375,11 @@ export type authorizationStateWaitCode = {
   _: 'authorizationStateWaitCode',
   /** True, if the user is already registered */
   is_registered: boolean,
+  /**
+   * Telegram terms of service, which should be accepted before user can continue registration;
+   * may be null
+   */
+  terms_of_service: termsOfService,
   /** Information about the authorization code that was sent */
   code_info: authenticationCodeInfo,
 }
@@ -290,6 +389,11 @@ export type authorizationStateWaitCodeOptional = {|
   _: 'authorizationStateWaitCode',
   /** True, if the user is already registered */
   is_registered?: boolean,
+  /**
+   * Telegram terms of service, which should be accepted before user can continue registration;
+   * may be null
+   */
+  terms_of_service?: termsOfServiceOptional,
   /** Information about the authorization code that was sent */
   code_info?: authenticationCodeInfoOptional,
 |}
@@ -383,41 +487,31 @@ export type authorizationStateClosedOptional = {|
 /** Represents the current state of 2-step verification */
 export type passwordState = {
   _: 'passwordState',
-  /** True if a 2-step verification password has been set up */
+  /** True if a 2-step verification password is set */
   has_password: boolean,
   /** Hint for the password; can be empty */
   password_hint: string,
-  /** True if a recovery email has been set up */
+  /** True if a recovery email is set */
   has_recovery_email_address: boolean,
-  /** Pattern of the email address to which a confirmation email was sent */
+  /** True if some Telegram Passport elements were saved */
+  has_passport_data: boolean,
+  /** Pattern of the email address to which the confirmation email was sent */
   unconfirmed_recovery_email_address_pattern: string,
 }
 
 /** Represents the current state of 2-step verification */
 export type passwordStateOptional = {|
   _: 'passwordState',
-  /** True if a 2-step verification password has been set up */
+  /** True if a 2-step verification password is set */
   has_password?: boolean,
   /** Hint for the password; can be empty */
   password_hint?: string,
-  /** True if a recovery email has been set up */
+  /** True if a recovery email is set */
   has_recovery_email_address?: boolean,
-  /** Pattern of the email address to which a confirmation email was sent */
+  /** True if some Telegram Passport elements were saved */
+  has_passport_data?: boolean,
+  /** Pattern of the email address to which the confirmation email was sent */
   unconfirmed_recovery_email_address_pattern?: string,
-|}
-
-/** Contains information available to the user after requesting password recovery */
-export type passwordRecoveryInfo = {
-  _: 'passwordRecoveryInfo',
-  /** Pattern of the email address to which a recovery email was sent */
-  recovery_email_address_pattern: string,
-}
-
-/** Contains information available to the user after requesting password recovery */
-export type passwordRecoveryInfoOptional = {|
-  _: 'passwordRecoveryInfo',
-  /** Pattern of the email address to which a recovery email was sent */
-  recovery_email_address_pattern?: string,
 |}
 
 /** Contains information about the current recovery email address */
@@ -518,7 +612,7 @@ export type localFileOptional = {|
 export type remoteFile = {
   _: 'remoteFile',
   /**
-   * Remote file identifier, may be empty. Can be used across application restarts or
+   * Remote file identifier; may be empty. Can be used across application restarts or
    * even from other devices for the current user. If the ID starts with "http://" or
    * "https://", it represents the HTTP URL of the file. TDLib is currently unable to
    * download files if only their URL is known. If downloadFile is called on such a file
@@ -543,7 +637,7 @@ export type remoteFile = {
 export type remoteFileOptional = {|
   _: 'remoteFile',
   /**
-   * Remote file identifier, may be empty. Can be used across application restarts or
+   * Remote file identifier; may be empty. Can be used across application restarts or
    * even from other devices for the current user. If the ID starts with "http://" or
    * "https://", it represents the HTTP URL of the file. TDLib is currently unable to
    * download files if only their URL is known. If downloadFile is called on such a file
@@ -646,7 +740,7 @@ export type inputFileLocalOptional = {|
 export type inputFileGenerated = {
   _: 'inputFileGenerated',
   /**
-   * Local path to a file from which the file is generated, may be empty if there is no
+   * Local path to a file from which the file is generated; may be empty if there is no
    * such file
    */
   original_path: string,
@@ -663,7 +757,7 @@ export type inputFileGenerated = {
 export type inputFileGeneratedOptional = {|
   _: 'inputFileGenerated',
   /**
-   * Local path to a file from which the file is generated, may be empty if there is no
+   * Local path to a file from which the file is generated; may be empty if there is no
    * such file
    */
   original_path?: string,
@@ -780,60 +874,6 @@ export type maskPositionOptional = {|
   y_shift?: number,
   /** Mask scaling coefficient. (For example, 2.0 means a doubled size) */
   scale?: number,
-|}
-
-/** Represents a part of the text that needs to be formatted in some unusual way */
-export type textEntity = {
-  _: 'textEntity',
-  /** Offset of the entity in UTF-16 code points */
-  offset: number,
-  /** Length of the entity, in UTF-16 code points */
-  length: number,
-  /** Type of the entity */
-  type: TextEntityType,
-}
-
-/** Represents a part of the text that needs to be formatted in some unusual way */
-export type textEntityOptional = {|
-  _: 'textEntity',
-  /** Offset of the entity in UTF-16 code points */
-  offset?: number,
-  /** Length of the entity, in UTF-16 code points */
-  length?: number,
-  /** Type of the entity */
-  type?: TextEntityTypeOptional,
-|}
-
-/** Contains a list of text entities */
-export type textEntities = {
-  _: 'textEntities',
-  /** List of text entities */
-  entities: textEntity[],
-}
-
-/** Contains a list of text entities */
-export type textEntitiesOptional = {|
-  _: 'textEntities',
-  /** List of text entities */
-  entities?: textEntityOptional[],
-|}
-
-/** A text with some entities */
-export type formattedText = {
-  _: 'formattedText',
-  /** The text */
-  text: string,
-  /** Entities contained in the text */
-  entities: textEntity[],
-}
-
-/** A text with some entities */
-export type formattedTextOptional = {|
-  _: 'formattedText',
-  /** The text */
-  text?: string,
-  /** Entities contained in the text */
-  entities?: textEntityOptional[],
 |}
 
 /** Describes an animation file. The animation must be encoded in GIF or MPEG4 format */
@@ -1127,6 +1167,8 @@ export type contact = {
   first_name: string,
   /** Last name of the user */
   last_name: string,
+  /** Additional data about the user in a form of vCard; 0-2048 bytes in length */
+  vcard: string,
   /** Identifier of the user, if known; otherwise 0 */
   user_id: number,
 }
@@ -1140,6 +1182,8 @@ export type contactOptional = {|
   first_name?: string,
   /** Last name of the user */
   last_name?: string,
+  /** Additional data about the user in a form of vCard; 0-2048 bytes in length */
+  vcard?: string,
   /** Identifier of the user, if known; otherwise 0 */
   user_id?: number,
 |}
@@ -1178,6 +1222,8 @@ export type venue = {
   provider: string,
   /** Identifier of the venue in the provider database; as defined by the sender */
   id: string,
+  /** Type of the venue in the provider database; as defined by the sender */
+  type: string,
 }
 
 /** Describes a venue */
@@ -1196,6 +1242,8 @@ export type venueOptional = {|
   provider?: string,
   /** Identifier of the venue in the provider database; as defined by the sender */
   id?: string,
+  /** Type of the venue in the provider database; as defined by the sender */
+  type?: string,
 |}
 
 /** Describes a game */
@@ -1856,6 +1904,68 @@ export type chatMembersOptional = {|
   total_count?: number,
   /** A list of chat members */
   members?: chatMemberOptional[],
+|}
+
+/** Returns the creator and administrators */
+export type chatMembersFilterAdministrators = {
+  _: 'chatMembersFilterAdministrators',
+}
+
+/** Returns the creator and administrators */
+export type chatMembersFilterAdministratorsOptional = {|
+  _: 'chatMembersFilterAdministrators',
+|}
+
+/** Returns all chat members, including restricted chat members */
+export type chatMembersFilterMembers = {
+  _: 'chatMembersFilterMembers',
+}
+
+/** Returns all chat members, including restricted chat members */
+export type chatMembersFilterMembersOptional = {|
+  _: 'chatMembersFilterMembers',
+|}
+
+/**
+ * Returns users under certain restrictions in the chat; can be used only by administrators
+ * in a supergroup
+ */
+export type chatMembersFilterRestricted = {
+  _: 'chatMembersFilterRestricted',
+}
+
+/**
+ * Returns users under certain restrictions in the chat; can be used only by administrators
+ * in a supergroup
+ */
+export type chatMembersFilterRestrictedOptional = {|
+  _: 'chatMembersFilterRestricted',
+|}
+
+/**
+ * Returns users banned from the chat; can be used only by administrators in a supergroup
+ * or in a channel
+ */
+export type chatMembersFilterBanned = {
+  _: 'chatMembersFilterBanned',
+}
+
+/**
+ * Returns users banned from the chat; can be used only by administrators in a supergroup
+ * or in a channel
+ */
+export type chatMembersFilterBannedOptional = {|
+  _: 'chatMembersFilterBanned',
+|}
+
+/** Returns bot members of the chat */
+export type chatMembersFilterBots = {
+  _: 'chatMembersFilterBots',
+}
+
+/** Returns bot members of the chat */
+export type chatMembersFilterBotsOptional = {|
+  _: 'chatMembersFilterBots',
 |}
 
 /** Returns recently active users in reverse chronological order */
@@ -2554,73 +2664,113 @@ export type foundMessagesOptional = {|
   next_from_search_id?: (number | string),
 |}
 
-/** Notification settings applied to a particular chat */
-export type notificationSettingsScopeChat = {
-  _: 'notificationSettingsScopeChat',
-  /** Chat identifier */
-  chat_id: number,
-}
-
-/** Notification settings applied to a particular chat */
-export type notificationSettingsScopeChatOptional = {|
-  _: 'notificationSettingsScopeChat',
-  /** Chat identifier */
-  chat_id?: number,
-|}
-
-/** Notification settings applied to all private chats */
+/**
+ * Notification settings applied to all private and secret chats when the corresponding
+ * chat setting has a default value
+ */
 export type notificationSettingsScopePrivateChats = {
   _: 'notificationSettingsScopePrivateChats',
 }
 
-/** Notification settings applied to all private chats */
+/**
+ * Notification settings applied to all private and secret chats when the corresponding
+ * chat setting has a default value
+ */
 export type notificationSettingsScopePrivateChatsOptional = {|
   _: 'notificationSettingsScopePrivateChats',
 |}
 
 /**
- * Notification settings applied to all basic groups and channels. (Supergroups have
- * no common settings)
+ * Notification settings applied to all basic groups, supergroups and channels when
+ * the corresponding chat setting has a default value
  */
-export type notificationSettingsScopeBasicGroupChats = {
-  _: 'notificationSettingsScopeBasicGroupChats',
+export type notificationSettingsScopeGroupChats = {
+  _: 'notificationSettingsScopeGroupChats',
 }
 
 /**
- * Notification settings applied to all basic groups and channels. (Supergroups have
- * no common settings)
+ * Notification settings applied to all basic groups, supergroups and channels when
+ * the corresponding chat setting has a default value
  */
-export type notificationSettingsScopeBasicGroupChatsOptional = {|
-  _: 'notificationSettingsScopeBasicGroupChats',
+export type notificationSettingsScopeGroupChatsOptional = {|
+  _: 'notificationSettingsScopeGroupChats',
 |}
 
-/** Notification settings applied to all chats */
-export type notificationSettingsScopeAllChats = {
-  _: 'notificationSettingsScopeAllChats',
-}
-
-/** Notification settings applied to all chats */
-export type notificationSettingsScopeAllChatsOptional = {|
-  _: 'notificationSettingsScopeAllChats',
-|}
-
-/** Contains information about notification settings for a chat or several chats */
-export type notificationSettings = {
-  _: 'notificationSettings',
+/** Contains information about notification settings for a chat */
+export type chatNotificationSettings = {
+  _: 'chatNotificationSettings',
+  /**
+   * If true, mute_for is ignored and the value for the relevant type of chat is used
+   * instead
+   */
+  use_default_mute_for: boolean,
   /** Time left before notifications will be unmuted, in seconds */
   mute_for: number,
-  /** An audio file name for notification sounds; only applies to iOS applications */
+  /** If true, sound is ignored and the value for the relevant type of chat is used instead */
+  use_default_sound: boolean,
+  /**
+   * The name of an audio file to be used for notification sounds; only applies to iOS
+   * applications
+   */
+  sound: string,
+  /**
+   * If true, show_preview is ignored and the value for the relevant type of chat is used
+   * instead
+   */
+  use_default_show_preview: boolean,
+  /** True, if message content should be displayed in notifications */
+  show_preview: boolean,
+}
+
+/** Contains information about notification settings for a chat */
+export type chatNotificationSettingsOptional = {|
+  _: 'chatNotificationSettings',
+  /**
+   * If true, mute_for is ignored and the value for the relevant type of chat is used
+   * instead
+   */
+  use_default_mute_for?: boolean,
+  /** Time left before notifications will be unmuted, in seconds */
+  mute_for?: number,
+  /** If true, sound is ignored and the value for the relevant type of chat is used instead */
+  use_default_sound?: boolean,
+  /**
+   * The name of an audio file to be used for notification sounds; only applies to iOS
+   * applications
+   */
+  sound?: string,
+  /**
+   * If true, show_preview is ignored and the value for the relevant type of chat is used
+   * instead
+   */
+  use_default_show_preview?: boolean,
+  /** True, if message content should be displayed in notifications */
+  show_preview?: boolean,
+|}
+
+/** Contains information about notification settings for several chats */
+export type scopeNotificationSettings = {
+  _: 'scopeNotificationSettings',
+  /** Time left before notifications will be unmuted, in seconds */
+  mute_for: number,
+  /**
+   * The name of an audio file to be used for notification sounds; only applies to iOS
+   * applications
+   */
   sound: string,
   /** True, if message content should be displayed in notifications */
   show_preview: boolean,
 }
 
-/** Contains information about notification settings for a chat or several chats */
-export type notificationSettingsOptional = {|
-  _: 'notificationSettings',
+/** Contains information about notification settings for several chats */
+export type scopeNotificationSettingsOptional = {|
+  _: 'scopeNotificationSettings',
   /** Time left before notifications will be unmuted, in seconds */
   mute_for?: number,
-  /** An audio file name for notification sounds; only applies to iOS applications */
+  /**
+   * The name of an audio file to be used for notification sounds; only applies to iOS
+   * applications
+   */
   sound?: string,
   /** True, if message content should be displayed in notifications */
   show_preview?: boolean,
@@ -2735,8 +2885,17 @@ export type chat = {
   order: (number | string),
   /** True, if the chat is pinned */
   is_pinned: boolean,
+  /** True, if the chat is marked as unread */
+  is_marked_as_unread: boolean,
+  /** True, if the chat is sponsored by the user's MTProxy server */
+  is_sponsored: boolean,
   /** True, if the chat can be reported to Telegram moderators through reportChat */
   can_be_reported: boolean,
+  /**
+   * Default value of the disable_notification parameter, used when a message is sent
+   * to the chat
+   */
+  default_disable_notification: boolean,
   /** Number of unread messages in the chat */
   unread_count: number,
   /** Identifier of the last read incoming message */
@@ -2746,7 +2905,7 @@ export type chat = {
   /** Number of unread messages with a mention/reply in the chat */
   unread_mention_count: number,
   /** Notification settings for this chat */
-  notification_settings: notificationSettings,
+  notification_settings: chatNotificationSettings,
   /**
    * Identifier of the message from which reply markup needs to be used; 0 if there is
    * no default custom reply markup in the chat
@@ -2783,8 +2942,17 @@ export type chatOptional = {|
   order?: (number | string),
   /** True, if the chat is pinned */
   is_pinned?: boolean,
+  /** True, if the chat is marked as unread */
+  is_marked_as_unread?: boolean,
+  /** True, if the chat is sponsored by the user's MTProxy server */
+  is_sponsored?: boolean,
   /** True, if the chat can be reported to Telegram moderators through reportChat */
   can_be_reported?: boolean,
+  /**
+   * Default value of the disable_notification parameter, used when a message is sent
+   * to the chat
+   */
+  default_disable_notification?: boolean,
   /** Number of unread messages in the chat */
   unread_count?: number,
   /** Identifier of the last read incoming message */
@@ -2794,7 +2962,7 @@ export type chatOptional = {|
   /** Number of unread messages with a mention/reply in the chat */
   unread_mention_count?: number,
   /** Notification settings for this chat */
-  notification_settings?: notificationSettingsOptional,
+  notification_settings?: chatNotificationSettingsOptional,
   /**
    * Identifier of the message from which reply markup needs to be used; 0 if there is
    * no default custom reply markup in the chat
@@ -2933,14 +3101,14 @@ export type keyboardButtonOptional = {|
 /** A button that opens a specified URL */
 export type inlineKeyboardButtonTypeUrl = {
   _: 'inlineKeyboardButtonTypeUrl',
-  /** URL to open */
+  /** HTTP or tg:// URL to open */
   url: string,
 }
 
 /** A button that opens a specified URL */
 export type inlineKeyboardButtonTypeUrlOptional = {|
   _: 'inlineKeyboardButtonTypeUrl',
-  /** URL to open */
+  /** HTTP or tg:// URL to open */
   url?: string,
 |}
 
@@ -3826,6 +3994,40 @@ export type webPageOptional = {|
   has_instant_view?: boolean,
 |}
 
+/** Describes an address */
+export type address = {
+  _: 'address',
+  /** A two-letter ISO 3166-1 alpha-2 country code */
+  country_code: string,
+  /** State, if applicable */
+  state: string,
+  /** City */
+  city: string,
+  /** First line of the address */
+  street_line1: string,
+  /** Second line of the address */
+  street_line2: string,
+  /** Address postal code */
+  postal_code: string,
+}
+
+/** Describes an address */
+export type addressOptional = {|
+  _: 'address',
+  /** A two-letter ISO 3166-1 alpha-2 country code */
+  country_code?: string,
+  /** State, if applicable */
+  state?: string,
+  /** City */
+  city?: string,
+  /** First line of the address */
+  street_line1?: string,
+  /** Second line of the address */
+  street_line2?: string,
+  /** Address postal code */
+  postal_code?: string,
+|}
+
 /** Portion of the price of a product (e.g., "delivery cost", "tax amount") */
 export type labeledPricePart = {
   _: 'labeledPricePart',
@@ -3894,40 +4096,6 @@ export type invoiceOptional = {|
   is_flexible?: boolean,
 |}
 
-/** Describes a shipping address */
-export type shippingAddress = {
-  _: 'shippingAddress',
-  /** Two-letter ISO 3166-1 alpha-2 country code */
-  country_code: string,
-  /** State, if applicable */
-  state: string,
-  /** City */
-  city: string,
-  /** First line of the address */
-  street_line1: string,
-  /** Second line of the address */
-  street_line2: string,
-  /** Address postal code */
-  postal_code: string,
-}
-
-/** Describes a shipping address */
-export type shippingAddressOptional = {|
-  _: 'shippingAddress',
-  /** Two-letter ISO 3166-1 alpha-2 country code */
-  country_code?: string,
-  /** State, if applicable */
-  state?: string,
-  /** City */
-  city?: string,
-  /** First line of the address */
-  street_line1?: string,
-  /** Second line of the address */
-  street_line2?: string,
-  /** Address postal code */
-  postal_code?: string,
-|}
-
 /** Order information */
 export type orderInfo = {
   _: 'orderInfo',
@@ -3938,7 +4106,7 @@ export type orderInfo = {
   /** Email address of the user */
   email_address: string,
   /** Shipping address for this order; may be null */
-  shipping_address: shippingAddress,
+  shipping_address: address,
 }
 
 /** Order information */
@@ -3951,7 +4119,7 @@ export type orderInfoOptional = {|
   /** Email address of the user */
   email_address?: string,
   /** Shipping address for this order; may be null */
-  shipping_address?: shippingAddressOptional,
+  shipping_address?: addressOptional,
 |}
 
 /** One shipping option */
@@ -4216,6 +4384,1228 @@ export type paymentReceiptOptional = {|
   shipping_option?: shippingOptionOptional,
   /** Title of the saved credentials */
   credentials_title?: string,
+|}
+
+/** File with the date it was uploaded */
+export type datedFile = {
+  _: 'datedFile',
+  /** The file */
+  file: file,
+  /** Point in time (Unix timestamp) when the file was uploaded */
+  date: number,
+}
+
+/** File with the date it was uploaded */
+export type datedFileOptional = {|
+  _: 'datedFile',
+  /** The file */
+  file?: fileOptional,
+  /** Point in time (Unix timestamp) when the file was uploaded */
+  date?: number,
+|}
+
+/** A Telegram Passport element containing the user's personal details */
+export type passportElementTypePersonalDetails = {
+  _: 'passportElementTypePersonalDetails',
+}
+
+/** A Telegram Passport element containing the user's personal details */
+export type passportElementTypePersonalDetailsOptional = {|
+  _: 'passportElementTypePersonalDetails',
+|}
+
+/** A Telegram Passport element containing the user's passport */
+export type passportElementTypePassport = {
+  _: 'passportElementTypePassport',
+}
+
+/** A Telegram Passport element containing the user's passport */
+export type passportElementTypePassportOptional = {|
+  _: 'passportElementTypePassport',
+|}
+
+/** A Telegram Passport element containing the user's driver license */
+export type passportElementTypeDriverLicense = {
+  _: 'passportElementTypeDriverLicense',
+}
+
+/** A Telegram Passport element containing the user's driver license */
+export type passportElementTypeDriverLicenseOptional = {|
+  _: 'passportElementTypeDriverLicense',
+|}
+
+/** A Telegram Passport element containing the user's identity card */
+export type passportElementTypeIdentityCard = {
+  _: 'passportElementTypeIdentityCard',
+}
+
+/** A Telegram Passport element containing the user's identity card */
+export type passportElementTypeIdentityCardOptional = {|
+  _: 'passportElementTypeIdentityCard',
+|}
+
+/** A Telegram Passport element containing the user's internal passport */
+export type passportElementTypeInternalPassport = {
+  _: 'passportElementTypeInternalPassport',
+}
+
+/** A Telegram Passport element containing the user's internal passport */
+export type passportElementTypeInternalPassportOptional = {|
+  _: 'passportElementTypeInternalPassport',
+|}
+
+/** A Telegram Passport element containing the user's address */
+export type passportElementTypeAddress = {
+  _: 'passportElementTypeAddress',
+}
+
+/** A Telegram Passport element containing the user's address */
+export type passportElementTypeAddressOptional = {|
+  _: 'passportElementTypeAddress',
+|}
+
+/** A Telegram Passport element containing the user's utility bill */
+export type passportElementTypeUtilityBill = {
+  _: 'passportElementTypeUtilityBill',
+}
+
+/** A Telegram Passport element containing the user's utility bill */
+export type passportElementTypeUtilityBillOptional = {|
+  _: 'passportElementTypeUtilityBill',
+|}
+
+/** A Telegram Passport element containing the user's bank statement */
+export type passportElementTypeBankStatement = {
+  _: 'passportElementTypeBankStatement',
+}
+
+/** A Telegram Passport element containing the user's bank statement */
+export type passportElementTypeBankStatementOptional = {|
+  _: 'passportElementTypeBankStatement',
+|}
+
+/** A Telegram Passport element containing the user's rental agreement */
+export type passportElementTypeRentalAgreement = {
+  _: 'passportElementTypeRentalAgreement',
+}
+
+/** A Telegram Passport element containing the user's rental agreement */
+export type passportElementTypeRentalAgreementOptional = {|
+  _: 'passportElementTypeRentalAgreement',
+|}
+
+/** A Telegram Passport element containing the registration page of the user's passport */
+export type passportElementTypePassportRegistration = {
+  _: 'passportElementTypePassportRegistration',
+}
+
+/** A Telegram Passport element containing the registration page of the user's passport */
+export type passportElementTypePassportRegistrationOptional = {|
+  _: 'passportElementTypePassportRegistration',
+|}
+
+/** A Telegram Passport element containing the user's temporary registration */
+export type passportElementTypeTemporaryRegistration = {
+  _: 'passportElementTypeTemporaryRegistration',
+}
+
+/** A Telegram Passport element containing the user's temporary registration */
+export type passportElementTypeTemporaryRegistrationOptional = {|
+  _: 'passportElementTypeTemporaryRegistration',
+|}
+
+/** A Telegram Passport element containing the user's phone number */
+export type passportElementTypePhoneNumber = {
+  _: 'passportElementTypePhoneNumber',
+}
+
+/** A Telegram Passport element containing the user's phone number */
+export type passportElementTypePhoneNumberOptional = {|
+  _: 'passportElementTypePhoneNumber',
+|}
+
+/** A Telegram Passport element containing the user's email address */
+export type passportElementTypeEmailAddress = {
+  _: 'passportElementTypeEmailAddress',
+}
+
+/** A Telegram Passport element containing the user's email address */
+export type passportElementTypeEmailAddressOptional = {|
+  _: 'passportElementTypeEmailAddress',
+|}
+
+/** Represents a date according to the Gregorian calendar */
+export type date = {
+  _: 'date',
+  /** Day of the month, 1-31 */
+  day: number,
+  /** Month, 1-12 */
+  month: number,
+  /** Year, 1-9999 */
+  year: number,
+}
+
+/** Represents a date according to the Gregorian calendar */
+export type dateOptional = {|
+  _: 'date',
+  /** Day of the month, 1-31 */
+  day?: number,
+  /** Month, 1-12 */
+  month?: number,
+  /** Year, 1-9999 */
+  year?: number,
+|}
+
+/** Contains the user's personal details */
+export type personalDetails = {
+  _: 'personalDetails',
+  /** First name of the user written in English; 1-255 characters */
+  first_name: string,
+  /** Middle name of the user written in English; 0-255 characters */
+  middle_name: string,
+  /** Last name of the user written in English; 1-255 characters */
+  last_name: string,
+  /** Native first name of the user; 1-255 characters */
+  native_first_name: string,
+  /** Native middle name of the user; 0-255 characters */
+  native_middle_name: string,
+  /** Native last name of the user; 1-255 characters */
+  native_last_name: string,
+  /** Birthdate of the user */
+  birthdate: date,
+  /** Gender of the user, "male" or "female" */
+  gender: string,
+  /** A two-letter ISO 3166-1 alpha-2 country code of the user's country */
+  country_code: string,
+  /** A two-letter ISO 3166-1 alpha-2 country code of the user's residence country */
+  residence_country_code: string,
+}
+
+/** Contains the user's personal details */
+export type personalDetailsOptional = {|
+  _: 'personalDetails',
+  /** First name of the user written in English; 1-255 characters */
+  first_name?: string,
+  /** Middle name of the user written in English; 0-255 characters */
+  middle_name?: string,
+  /** Last name of the user written in English; 1-255 characters */
+  last_name?: string,
+  /** Native first name of the user; 1-255 characters */
+  native_first_name?: string,
+  /** Native middle name of the user; 0-255 characters */
+  native_middle_name?: string,
+  /** Native last name of the user; 1-255 characters */
+  native_last_name?: string,
+  /** Birthdate of the user */
+  birthdate?: dateOptional,
+  /** Gender of the user, "male" or "female" */
+  gender?: string,
+  /** A two-letter ISO 3166-1 alpha-2 country code of the user's country */
+  country_code?: string,
+  /** A two-letter ISO 3166-1 alpha-2 country code of the user's residence country */
+  residence_country_code?: string,
+|}
+
+/** An identity document */
+export type identityDocument = {
+  _: 'identityDocument',
+  /** Document number; 1-24 characters */
+  number: string,
+  /** Document expiry date; may be null */
+  expiry_date: date,
+  /** Front side of the document */
+  front_side: datedFile,
+  /** Reverse side of the document; only for driver license and identity card */
+  reverse_side: datedFile,
+  /** Selfie with the document; may be null */
+  selfie: datedFile,
+  /** List of files containing a certified English translation of the document */
+  translation: datedFile[],
+}
+
+/** An identity document */
+export type identityDocumentOptional = {|
+  _: 'identityDocument',
+  /** Document number; 1-24 characters */
+  number?: string,
+  /** Document expiry date; may be null */
+  expiry_date?: dateOptional,
+  /** Front side of the document */
+  front_side?: datedFileOptional,
+  /** Reverse side of the document; only for driver license and identity card */
+  reverse_side?: datedFileOptional,
+  /** Selfie with the document; may be null */
+  selfie?: datedFileOptional,
+  /** List of files containing a certified English translation of the document */
+  translation?: datedFileOptional[],
+|}
+
+/** An identity document to be saved to Telegram Passport */
+export type inputIdentityDocument = {
+  _: 'inputIdentityDocument',
+  /** Document number; 1-24 characters */
+  number: string,
+  /** Document expiry date, if available */
+  expiry_date: date,
+  /** Front side of the document */
+  front_side: InputFile,
+  /** Reverse side of the document; only for driver license and identity card */
+  reverse_side: InputFile,
+  /** Selfie with the document, if available */
+  selfie: InputFile,
+  /** List of files containing a certified English translation of the document */
+  translation: InputFile[],
+}
+
+/** An identity document to be saved to Telegram Passport */
+export type inputIdentityDocumentOptional = {|
+  _: 'inputIdentityDocument',
+  /** Document number; 1-24 characters */
+  number?: string,
+  /** Document expiry date, if available */
+  expiry_date?: dateOptional,
+  /** Front side of the document */
+  front_side?: InputFileOptional,
+  /** Reverse side of the document; only for driver license and identity card */
+  reverse_side?: InputFileOptional,
+  /** Selfie with the document, if available */
+  selfie?: InputFileOptional,
+  /** List of files containing a certified English translation of the document */
+  translation?: InputFileOptional[],
+|}
+
+/** A personal document, containing some information about a user */
+export type personalDocument = {
+  _: 'personalDocument',
+  /** List of files containing the pages of the document */
+  files: datedFile[],
+  /** List of files containing a certified English translation of the document */
+  translation: datedFile[],
+}
+
+/** A personal document, containing some information about a user */
+export type personalDocumentOptional = {|
+  _: 'personalDocument',
+  /** List of files containing the pages of the document */
+  files?: datedFileOptional[],
+  /** List of files containing a certified English translation of the document */
+  translation?: datedFileOptional[],
+|}
+
+/** A personal document to be saved to Telegram Passport */
+export type inputPersonalDocument = {
+  _: 'inputPersonalDocument',
+  /** List of files containing the pages of the document */
+  files: InputFile[],
+  /** List of files containing a certified English translation of the document */
+  translation: InputFile[],
+}
+
+/** A personal document to be saved to Telegram Passport */
+export type inputPersonalDocumentOptional = {|
+  _: 'inputPersonalDocument',
+  /** List of files containing the pages of the document */
+  files?: InputFileOptional[],
+  /** List of files containing a certified English translation of the document */
+  translation?: InputFileOptional[],
+|}
+
+/** A Telegram Passport element containing the user's personal details */
+export type passportElementPersonalDetails = {
+  _: 'passportElementPersonalDetails',
+  /** Personal details of the user */
+  personal_details: personalDetails,
+}
+
+/** A Telegram Passport element containing the user's personal details */
+export type passportElementPersonalDetailsOptional = {|
+  _: 'passportElementPersonalDetails',
+  /** Personal details of the user */
+  personal_details?: personalDetailsOptional,
+|}
+
+/** A Telegram Passport element containing the user's passport */
+export type passportElementPassport = {
+  _: 'passportElementPassport',
+  /** Passport */
+  passport: identityDocument,
+}
+
+/** A Telegram Passport element containing the user's passport */
+export type passportElementPassportOptional = {|
+  _: 'passportElementPassport',
+  /** Passport */
+  passport?: identityDocumentOptional,
+|}
+
+/** A Telegram Passport element containing the user's driver license */
+export type passportElementDriverLicense = {
+  _: 'passportElementDriverLicense',
+  /** Driver license */
+  driver_license: identityDocument,
+}
+
+/** A Telegram Passport element containing the user's driver license */
+export type passportElementDriverLicenseOptional = {|
+  _: 'passportElementDriverLicense',
+  /** Driver license */
+  driver_license?: identityDocumentOptional,
+|}
+
+/** A Telegram Passport element containing the user's identity card */
+export type passportElementIdentityCard = {
+  _: 'passportElementIdentityCard',
+  /** Identity card */
+  identity_card: identityDocument,
+}
+
+/** A Telegram Passport element containing the user's identity card */
+export type passportElementIdentityCardOptional = {|
+  _: 'passportElementIdentityCard',
+  /** Identity card */
+  identity_card?: identityDocumentOptional,
+|}
+
+/** A Telegram Passport element containing the user's internal passport */
+export type passportElementInternalPassport = {
+  _: 'passportElementInternalPassport',
+  /** Internal passport */
+  internal_passport: identityDocument,
+}
+
+/** A Telegram Passport element containing the user's internal passport */
+export type passportElementInternalPassportOptional = {|
+  _: 'passportElementInternalPassport',
+  /** Internal passport */
+  internal_passport?: identityDocumentOptional,
+|}
+
+/** A Telegram Passport element containing the user's address */
+export type passportElementAddress = {
+  _: 'passportElementAddress',
+  /** Address */
+  address: address,
+}
+
+/** A Telegram Passport element containing the user's address */
+export type passportElementAddressOptional = {|
+  _: 'passportElementAddress',
+  /** Address */
+  address?: addressOptional,
+|}
+
+/** A Telegram Passport element containing the user's utility bill */
+export type passportElementUtilityBill = {
+  _: 'passportElementUtilityBill',
+  /** Utility bill */
+  utility_bill: personalDocument,
+}
+
+/** A Telegram Passport element containing the user's utility bill */
+export type passportElementUtilityBillOptional = {|
+  _: 'passportElementUtilityBill',
+  /** Utility bill */
+  utility_bill?: personalDocumentOptional,
+|}
+
+/** A Telegram Passport element containing the user's bank statement */
+export type passportElementBankStatement = {
+  _: 'passportElementBankStatement',
+  /** Bank statement */
+  bank_statement: personalDocument,
+}
+
+/** A Telegram Passport element containing the user's bank statement */
+export type passportElementBankStatementOptional = {|
+  _: 'passportElementBankStatement',
+  /** Bank statement */
+  bank_statement?: personalDocumentOptional,
+|}
+
+/** A Telegram Passport element containing the user's rental agreement */
+export type passportElementRentalAgreement = {
+  _: 'passportElementRentalAgreement',
+  /** Rental agreement */
+  rental_agreement: personalDocument,
+}
+
+/** A Telegram Passport element containing the user's rental agreement */
+export type passportElementRentalAgreementOptional = {|
+  _: 'passportElementRentalAgreement',
+  /** Rental agreement */
+  rental_agreement?: personalDocumentOptional,
+|}
+
+/** A Telegram Passport element containing the user's passport registration pages */
+export type passportElementPassportRegistration = {
+  _: 'passportElementPassportRegistration',
+  /** Passport registration pages */
+  passport_registration: personalDocument,
+}
+
+/** A Telegram Passport element containing the user's passport registration pages */
+export type passportElementPassportRegistrationOptional = {|
+  _: 'passportElementPassportRegistration',
+  /** Passport registration pages */
+  passport_registration?: personalDocumentOptional,
+|}
+
+/** A Telegram Passport element containing the user's temporary registration */
+export type passportElementTemporaryRegistration = {
+  _: 'passportElementTemporaryRegistration',
+  /** Temporary registration */
+  temporary_registration: personalDocument,
+}
+
+/** A Telegram Passport element containing the user's temporary registration */
+export type passportElementTemporaryRegistrationOptional = {|
+  _: 'passportElementTemporaryRegistration',
+  /** Temporary registration */
+  temporary_registration?: personalDocumentOptional,
+|}
+
+/** A Telegram Passport element containing the user's phone number */
+export type passportElementPhoneNumber = {
+  _: 'passportElementPhoneNumber',
+  /** Phone number */
+  phone_number: string,
+}
+
+/** A Telegram Passport element containing the user's phone number */
+export type passportElementPhoneNumberOptional = {|
+  _: 'passportElementPhoneNumber',
+  /** Phone number */
+  phone_number?: string,
+|}
+
+/** A Telegram Passport element containing the user's email address */
+export type passportElementEmailAddress = {
+  _: 'passportElementEmailAddress',
+  /** Email address */
+  email_address: string,
+}
+
+/** A Telegram Passport element containing the user's email address */
+export type passportElementEmailAddressOptional = {|
+  _: 'passportElementEmailAddress',
+  /** Email address */
+  email_address?: string,
+|}
+
+/** A Telegram Passport element to be saved containing the user's personal details */
+export type inputPassportElementPersonalDetails = {
+  _: 'inputPassportElementPersonalDetails',
+  /** Personal details of the user */
+  personal_details: personalDetails,
+}
+
+/** A Telegram Passport element to be saved containing the user's personal details */
+export type inputPassportElementPersonalDetailsOptional = {|
+  _: 'inputPassportElementPersonalDetails',
+  /** Personal details of the user */
+  personal_details?: personalDetailsOptional,
+|}
+
+/** A Telegram Passport element to be saved containing the user's passport */
+export type inputPassportElementPassport = {
+  _: 'inputPassportElementPassport',
+  /** The passport to be saved */
+  passport: inputIdentityDocument,
+}
+
+/** A Telegram Passport element to be saved containing the user's passport */
+export type inputPassportElementPassportOptional = {|
+  _: 'inputPassportElementPassport',
+  /** The passport to be saved */
+  passport?: inputIdentityDocumentOptional,
+|}
+
+/** A Telegram Passport element to be saved containing the user's driver license */
+export type inputPassportElementDriverLicense = {
+  _: 'inputPassportElementDriverLicense',
+  /** The driver license to be saved */
+  driver_license: inputIdentityDocument,
+}
+
+/** A Telegram Passport element to be saved containing the user's driver license */
+export type inputPassportElementDriverLicenseOptional = {|
+  _: 'inputPassportElementDriverLicense',
+  /** The driver license to be saved */
+  driver_license?: inputIdentityDocumentOptional,
+|}
+
+/** A Telegram Passport element to be saved containing the user's identity card */
+export type inputPassportElementIdentityCard = {
+  _: 'inputPassportElementIdentityCard',
+  /** The identity card to be saved */
+  identity_card: inputIdentityDocument,
+}
+
+/** A Telegram Passport element to be saved containing the user's identity card */
+export type inputPassportElementIdentityCardOptional = {|
+  _: 'inputPassportElementIdentityCard',
+  /** The identity card to be saved */
+  identity_card?: inputIdentityDocumentOptional,
+|}
+
+/** A Telegram Passport element to be saved containing the user's internal passport */
+export type inputPassportElementInternalPassport = {
+  _: 'inputPassportElementInternalPassport',
+  /** The internal passport to be saved */
+  internal_passport: inputIdentityDocument,
+}
+
+/** A Telegram Passport element to be saved containing the user's internal passport */
+export type inputPassportElementInternalPassportOptional = {|
+  _: 'inputPassportElementInternalPassport',
+  /** The internal passport to be saved */
+  internal_passport?: inputIdentityDocumentOptional,
+|}
+
+/** A Telegram Passport element to be saved containing the user's address */
+export type inputPassportElementAddress = {
+  _: 'inputPassportElementAddress',
+  /** The address to be saved */
+  address: address,
+}
+
+/** A Telegram Passport element to be saved containing the user's address */
+export type inputPassportElementAddressOptional = {|
+  _: 'inputPassportElementAddress',
+  /** The address to be saved */
+  address?: addressOptional,
+|}
+
+/** A Telegram Passport element to be saved containing the user's utility bill */
+export type inputPassportElementUtilityBill = {
+  _: 'inputPassportElementUtilityBill',
+  /** The utility bill to be saved */
+  utility_bill: inputPersonalDocument,
+}
+
+/** A Telegram Passport element to be saved containing the user's utility bill */
+export type inputPassportElementUtilityBillOptional = {|
+  _: 'inputPassportElementUtilityBill',
+  /** The utility bill to be saved */
+  utility_bill?: inputPersonalDocumentOptional,
+|}
+
+/** A Telegram Passport element to be saved containing the user's bank statement */
+export type inputPassportElementBankStatement = {
+  _: 'inputPassportElementBankStatement',
+  /** The bank statement to be saved */
+  bank_statement: inputPersonalDocument,
+}
+
+/** A Telegram Passport element to be saved containing the user's bank statement */
+export type inputPassportElementBankStatementOptional = {|
+  _: 'inputPassportElementBankStatement',
+  /** The bank statement to be saved */
+  bank_statement?: inputPersonalDocumentOptional,
+|}
+
+/** A Telegram Passport element to be saved containing the user's rental agreement */
+export type inputPassportElementRentalAgreement = {
+  _: 'inputPassportElementRentalAgreement',
+  /** The rental agreement to be saved */
+  rental_agreement: inputPersonalDocument,
+}
+
+/** A Telegram Passport element to be saved containing the user's rental agreement */
+export type inputPassportElementRentalAgreementOptional = {|
+  _: 'inputPassportElementRentalAgreement',
+  /** The rental agreement to be saved */
+  rental_agreement?: inputPersonalDocumentOptional,
+|}
+
+/** A Telegram Passport element to be saved containing the user's passport registration */
+export type inputPassportElementPassportRegistration = {
+  _: 'inputPassportElementPassportRegistration',
+  /** The passport registration page to be saved */
+  passport_registration: inputPersonalDocument,
+}
+
+/** A Telegram Passport element to be saved containing the user's passport registration */
+export type inputPassportElementPassportRegistrationOptional = {|
+  _: 'inputPassportElementPassportRegistration',
+  /** The passport registration page to be saved */
+  passport_registration?: inputPersonalDocumentOptional,
+|}
+
+/** A Telegram Passport element to be saved containing the user's temporary registration */
+export type inputPassportElementTemporaryRegistration = {
+  _: 'inputPassportElementTemporaryRegistration',
+  /** The temporary registration document to be saved */
+  temporary_registration: inputPersonalDocument,
+}
+
+/** A Telegram Passport element to be saved containing the user's temporary registration */
+export type inputPassportElementTemporaryRegistrationOptional = {|
+  _: 'inputPassportElementTemporaryRegistration',
+  /** The temporary registration document to be saved */
+  temporary_registration?: inputPersonalDocumentOptional,
+|}
+
+/** A Telegram Passport element to be saved containing the user's phone number */
+export type inputPassportElementPhoneNumber = {
+  _: 'inputPassportElementPhoneNumber',
+  /** The phone number to be saved */
+  phone_number: string,
+}
+
+/** A Telegram Passport element to be saved containing the user's phone number */
+export type inputPassportElementPhoneNumberOptional = {|
+  _: 'inputPassportElementPhoneNumber',
+  /** The phone number to be saved */
+  phone_number?: string,
+|}
+
+/** A Telegram Passport element to be saved containing the user's email address */
+export type inputPassportElementEmailAddress = {
+  _: 'inputPassportElementEmailAddress',
+  /** The email address to be saved */
+  email_address: string,
+}
+
+/** A Telegram Passport element to be saved containing the user's email address */
+export type inputPassportElementEmailAddressOptional = {|
+  _: 'inputPassportElementEmailAddress',
+  /** The email address to be saved */
+  email_address?: string,
+|}
+
+/** Contains information about saved Telegram Passport elements */
+export type passportElements = {
+  _: 'passportElements',
+  /** Telegram Passport elements */
+  elements: PassportElement[],
+}
+
+/** Contains information about saved Telegram Passport elements */
+export type passportElementsOptional = {|
+  _: 'passportElements',
+  /** Telegram Passport elements */
+  elements?: PassportElementOptional[],
+|}
+
+/**
+ * The element contains an error in an unspecified place. The error will be considered
+ * resolved when new data is added
+ */
+export type passportElementErrorSourceUnspecified = {
+  _: 'passportElementErrorSourceUnspecified',
+}
+
+/**
+ * The element contains an error in an unspecified place. The error will be considered
+ * resolved when new data is added
+ */
+export type passportElementErrorSourceUnspecifiedOptional = {|
+  _: 'passportElementErrorSourceUnspecified',
+|}
+
+/**
+ * One of the data fields contains an error. The error will be considered resolved when
+ * the value of the field changes
+ */
+export type passportElementErrorSourceDataField = {
+  _: 'passportElementErrorSourceDataField',
+  /** Field name */
+  field_name: string,
+}
+
+/**
+ * One of the data fields contains an error. The error will be considered resolved when
+ * the value of the field changes
+ */
+export type passportElementErrorSourceDataFieldOptional = {|
+  _: 'passportElementErrorSourceDataField',
+  /** Field name */
+  field_name?: string,
+|}
+
+/**
+ * The front side of the document contains an error. The error will be considered resolved
+ * when the file with the front side changes
+ */
+export type passportElementErrorSourceFrontSide = {
+  _: 'passportElementErrorSourceFrontSide',
+}
+
+/**
+ * The front side of the document contains an error. The error will be considered resolved
+ * when the file with the front side changes
+ */
+export type passportElementErrorSourceFrontSideOptional = {|
+  _: 'passportElementErrorSourceFrontSide',
+|}
+
+/**
+ * The reverse side of the document contains an error. The error will be considered
+ * resolved when the file with the reverse side changes
+ */
+export type passportElementErrorSourceReverseSide = {
+  _: 'passportElementErrorSourceReverseSide',
+}
+
+/**
+ * The reverse side of the document contains an error. The error will be considered
+ * resolved when the file with the reverse side changes
+ */
+export type passportElementErrorSourceReverseSideOptional = {|
+  _: 'passportElementErrorSourceReverseSide',
+|}
+
+/**
+ * The selfie with the document contains an error. The error will be considered resolved
+ * when the file with the selfie changes
+ */
+export type passportElementErrorSourceSelfie = {
+  _: 'passportElementErrorSourceSelfie',
+}
+
+/**
+ * The selfie with the document contains an error. The error will be considered resolved
+ * when the file with the selfie changes
+ */
+export type passportElementErrorSourceSelfieOptional = {|
+  _: 'passportElementErrorSourceSelfie',
+|}
+
+/**
+ * One of files with the translation of the document contains an error. The error will
+ * be considered resolved when the file changes
+ */
+export type passportElementErrorSourceTranslationFile = {
+  _: 'passportElementErrorSourceTranslationFile',
+}
+
+/**
+ * One of files with the translation of the document contains an error. The error will
+ * be considered resolved when the file changes
+ */
+export type passportElementErrorSourceTranslationFileOptional = {|
+  _: 'passportElementErrorSourceTranslationFile',
+|}
+
+/**
+ * The translation of the document contains an error. The error will be considered resolved
+ * when the list of translation files changes
+ */
+export type passportElementErrorSourceTranslationFiles = {
+  _: 'passportElementErrorSourceTranslationFiles',
+}
+
+/**
+ * The translation of the document contains an error. The error will be considered resolved
+ * when the list of translation files changes
+ */
+export type passportElementErrorSourceTranslationFilesOptional = {|
+  _: 'passportElementErrorSourceTranslationFiles',
+|}
+
+/** The file contains an error. The error will be considered resolved when the file changes */
+export type passportElementErrorSourceFile = {
+  _: 'passportElementErrorSourceFile',
+}
+
+/** The file contains an error. The error will be considered resolved when the file changes */
+export type passportElementErrorSourceFileOptional = {|
+  _: 'passportElementErrorSourceFile',
+|}
+
+/**
+ * The list of attached files contains an error. The error will be considered resolved
+ * when the list of files changes
+ */
+export type passportElementErrorSourceFiles = {
+  _: 'passportElementErrorSourceFiles',
+}
+
+/**
+ * The list of attached files contains an error. The error will be considered resolved
+ * when the list of files changes
+ */
+export type passportElementErrorSourceFilesOptional = {|
+  _: 'passportElementErrorSourceFiles',
+|}
+
+/** Contains the description of an error in a Telegram Passport element */
+export type passportElementError = {
+  _: 'passportElementError',
+  /** Type of the Telegram Passport element which has the error */
+  type: PassportElementType,
+  /** Error message */
+  message: string,
+  /** Error source */
+  source: PassportElementErrorSource,
+}
+
+/** Contains the description of an error in a Telegram Passport element */
+export type passportElementErrorOptional = {|
+  _: 'passportElementError',
+  /** Type of the Telegram Passport element which has the error */
+  type?: PassportElementTypeOptional,
+  /** Error message */
+  message?: string,
+  /** Error source */
+  source?: PassportElementErrorSourceOptional,
+|}
+
+/** Contains information about a Telegram Passport element that was requested by a service */
+export type passportSuitableElement = {
+  _: 'passportSuitableElement',
+  /** Type of the element */
+  type: PassportElementType,
+  /** True, if a selfie is required with the identity document */
+  is_selfie_required: boolean,
+  /** True, if a certified English translation is required with the document */
+  is_translation_required: boolean,
+  /**
+   * True, if personal details must include the user's name in the language of their country
+   * of residence
+   */
+  is_native_name_required: boolean,
+}
+
+/** Contains information about a Telegram Passport element that was requested by a service */
+export type passportSuitableElementOptional = {|
+  _: 'passportSuitableElement',
+  /** Type of the element */
+  type?: PassportElementTypeOptional,
+  /** True, if a selfie is required with the identity document */
+  is_selfie_required?: boolean,
+  /** True, if a certified English translation is required with the document */
+  is_translation_required?: boolean,
+  /**
+   * True, if personal details must include the user's name in the language of their country
+   * of residence
+   */
+  is_native_name_required?: boolean,
+|}
+
+/**
+ * Contains a description of the required Telegram Passport element that was requested
+ * by a service
+ */
+export type passportRequiredElement = {
+  _: 'passportRequiredElement',
+  /** List of Telegram Passport elements any of which is enough to provide */
+  suitable_elements: passportSuitableElement[],
+}
+
+/**
+ * Contains a description of the required Telegram Passport element that was requested
+ * by a service
+ */
+export type passportRequiredElementOptional = {|
+  _: 'passportRequiredElement',
+  /** List of Telegram Passport elements any of which is enough to provide */
+  suitable_elements?: passportSuitableElementOptional[],
+|}
+
+/** Contains information about a Telegram Passport authorization form that was requested */
+export type passportAuthorizationForm = {
+  _: 'passportAuthorizationForm',
+  /** Unique identifier of the authorization form */
+  id: number,
+  /**
+   * Information about the Telegram Passport elements that need to be provided to complete
+   * the form
+   */
+  required_elements: passportRequiredElement[],
+  /** Already available Telegram Passport elements */
+  elements: PassportElement[],
+  /** Errors in the elements that are already available */
+  errors: passportElementError[],
+  /** URL for the privacy policy of the service; can be empty */
+  privacy_policy_url: string,
+}
+
+/** Contains information about a Telegram Passport authorization form that was requested */
+export type passportAuthorizationFormOptional = {|
+  _: 'passportAuthorizationForm',
+  /** Unique identifier of the authorization form */
+  id?: number,
+  /**
+   * Information about the Telegram Passport elements that need to be provided to complete
+   * the form
+   */
+  required_elements?: passportRequiredElementOptional[],
+  /** Already available Telegram Passport elements */
+  elements?: PassportElementOptional[],
+  /** Errors in the elements that are already available */
+  errors?: passportElementErrorOptional[],
+  /** URL for the privacy policy of the service; can be empty */
+  privacy_policy_url?: string,
+|}
+
+/** Contains encrypted Telegram Passport data credentials */
+export type encryptedCredentials = {
+  _: 'encryptedCredentials',
+  /** The encrypted credentials */
+  data: string,
+  /** The decrypted data hash */
+  hash: string,
+  /** Secret for data decryption, encrypted with the service's public key */
+  secret: string,
+}
+
+/** Contains encrypted Telegram Passport data credentials */
+export type encryptedCredentialsOptional = {|
+  _: 'encryptedCredentials',
+  /** The encrypted credentials */
+  data?: string,
+  /** The decrypted data hash */
+  hash?: string,
+  /** Secret for data decryption, encrypted with the service's public key */
+  secret?: string,
+|}
+
+/** Contains information about an encrypted Telegram Passport element; for bots only */
+export type encryptedPassportElement = {
+  _: 'encryptedPassportElement',
+  /** Type of Telegram Passport element */
+  type: PassportElementType,
+  /** Encrypted JSON-encoded data about the user */
+  data: string,
+  /** The front side of an identity document */
+  front_side: datedFile,
+  /** The reverse side of an identity document; may be null */
+  reverse_side: datedFile,
+  /** Selfie with the document; may be null */
+  selfie: datedFile,
+  /** List of files containing a certified English translation of the document */
+  translation: datedFile[],
+  /** List of attached files */
+  files: datedFile[],
+  /** Unencrypted data, phone number or email address */
+  value: string,
+  /** Hash of the entire element */
+  hash: string,
+}
+
+/** Contains information about an encrypted Telegram Passport element; for bots only */
+export type encryptedPassportElementOptional = {|
+  _: 'encryptedPassportElement',
+  /** Type of Telegram Passport element */
+  type?: PassportElementTypeOptional,
+  /** Encrypted JSON-encoded data about the user */
+  data?: string,
+  /** The front side of an identity document */
+  front_side?: datedFileOptional,
+  /** The reverse side of an identity document; may be null */
+  reverse_side?: datedFileOptional,
+  /** Selfie with the document; may be null */
+  selfie?: datedFileOptional,
+  /** List of files containing a certified English translation of the document */
+  translation?: datedFileOptional[],
+  /** List of attached files */
+  files?: datedFileOptional[],
+  /** Unencrypted data, phone number or email address */
+  value?: string,
+  /** Hash of the entire element */
+  hash?: string,
+|}
+
+/**
+ * The element contains an error in an unspecified place. The error will be considered
+ * resolved when new data is added
+ */
+export type inputPassportElementErrorSourceUnspecified = {
+  _: 'inputPassportElementErrorSourceUnspecified',
+  /** Current hash of the entire element */
+  element_hash: string,
+}
+
+/**
+ * The element contains an error in an unspecified place. The error will be considered
+ * resolved when new data is added
+ */
+export type inputPassportElementErrorSourceUnspecifiedOptional = {|
+  _: 'inputPassportElementErrorSourceUnspecified',
+  /** Current hash of the entire element */
+  element_hash?: string,
+|}
+
+/**
+ * A data field contains an error. The error is considered resolved when the field's
+ * value changes
+ */
+export type inputPassportElementErrorSourceDataField = {
+  _: 'inputPassportElementErrorSourceDataField',
+  /** Field name */
+  field_name: string,
+  /** Current data hash */
+  data_hash: string,
+}
+
+/**
+ * A data field contains an error. The error is considered resolved when the field's
+ * value changes
+ */
+export type inputPassportElementErrorSourceDataFieldOptional = {|
+  _: 'inputPassportElementErrorSourceDataField',
+  /** Field name */
+  field_name?: string,
+  /** Current data hash */
+  data_hash?: string,
+|}
+
+/**
+ * The front side of the document contains an error. The error is considered resolved
+ * when the file with the front side of the document changes
+ */
+export type inputPassportElementErrorSourceFrontSide = {
+  _: 'inputPassportElementErrorSourceFrontSide',
+  /** Current hash of the file containing the front side */
+  file_hash: string,
+}
+
+/**
+ * The front side of the document contains an error. The error is considered resolved
+ * when the file with the front side of the document changes
+ */
+export type inputPassportElementErrorSourceFrontSideOptional = {|
+  _: 'inputPassportElementErrorSourceFrontSide',
+  /** Current hash of the file containing the front side */
+  file_hash?: string,
+|}
+
+/**
+ * The reverse side of the document contains an error. The error is considered resolved
+ * when the file with the reverse side of the document changes
+ */
+export type inputPassportElementErrorSourceReverseSide = {
+  _: 'inputPassportElementErrorSourceReverseSide',
+  /** Current hash of the file containing the reverse side */
+  file_hash: string,
+}
+
+/**
+ * The reverse side of the document contains an error. The error is considered resolved
+ * when the file with the reverse side of the document changes
+ */
+export type inputPassportElementErrorSourceReverseSideOptional = {|
+  _: 'inputPassportElementErrorSourceReverseSide',
+  /** Current hash of the file containing the reverse side */
+  file_hash?: string,
+|}
+
+/**
+ * The selfie contains an error. The error is considered resolved when the file with
+ * the selfie changes
+ */
+export type inputPassportElementErrorSourceSelfie = {
+  _: 'inputPassportElementErrorSourceSelfie',
+  /** Current hash of the file containing the selfie */
+  file_hash: string,
+}
+
+/**
+ * The selfie contains an error. The error is considered resolved when the file with
+ * the selfie changes
+ */
+export type inputPassportElementErrorSourceSelfieOptional = {|
+  _: 'inputPassportElementErrorSourceSelfie',
+  /** Current hash of the file containing the selfie */
+  file_hash?: string,
+|}
+
+/**
+ * One of the files containing the translation of the document contains an error. The
+ * error is considered resolved when the file with the translation changes
+ */
+export type inputPassportElementErrorSourceTranslationFile = {
+  _: 'inputPassportElementErrorSourceTranslationFile',
+  /** Current hash of the file containing the translation */
+  file_hash: string,
+}
+
+/**
+ * One of the files containing the translation of the document contains an error. The
+ * error is considered resolved when the file with the translation changes
+ */
+export type inputPassportElementErrorSourceTranslationFileOptional = {|
+  _: 'inputPassportElementErrorSourceTranslationFile',
+  /** Current hash of the file containing the translation */
+  file_hash?: string,
+|}
+
+/**
+ * The translation of the document contains an error. The error is considered resolved
+ * when the list of files changes
+ */
+export type inputPassportElementErrorSourceTranslationFiles = {
+  _: 'inputPassportElementErrorSourceTranslationFiles',
+  /** Current hashes of all files with the translation */
+  file_hashes: string[],
+}
+
+/**
+ * The translation of the document contains an error. The error is considered resolved
+ * when the list of files changes
+ */
+export type inputPassportElementErrorSourceTranslationFilesOptional = {|
+  _: 'inputPassportElementErrorSourceTranslationFiles',
+  /** Current hashes of all files with the translation */
+  file_hashes?: string[],
+|}
+
+/** The file contains an error. The error is considered resolved when the file changes */
+export type inputPassportElementErrorSourceFile = {
+  _: 'inputPassportElementErrorSourceFile',
+  /** Current hash of the file which has the error */
+  file_hash: string,
+}
+
+/** The file contains an error. The error is considered resolved when the file changes */
+export type inputPassportElementErrorSourceFileOptional = {|
+  _: 'inputPassportElementErrorSourceFile',
+  /** Current hash of the file which has the error */
+  file_hash?: string,
+|}
+
+/**
+ * The list of attached files contains an error. The error is considered resolved when
+ * the file list changes
+ */
+export type inputPassportElementErrorSourceFiles = {
+  _: 'inputPassportElementErrorSourceFiles',
+  /** Current hashes of all attached files */
+  file_hashes: string[],
+}
+
+/**
+ * The list of attached files contains an error. The error is considered resolved when
+ * the file list changes
+ */
+export type inputPassportElementErrorSourceFilesOptional = {|
+  _: 'inputPassportElementErrorSourceFiles',
+  /** Current hashes of all attached files */
+  file_hashes?: string[],
+|}
+
+/** Contains the description of an error in a Telegram Passport element; for bots only */
+export type inputPassportElementError = {
+  _: 'inputPassportElementError',
+  /** Type of Telegram Passport element that has the error */
+  type: PassportElementType,
+  /** Error message */
+  message: string,
+  /** Error source */
+  source: InputPassportElementErrorSource,
+}
+
+/** Contains the description of an error in a Telegram Passport element; for bots only */
+export type inputPassportElementErrorOptional = {|
+  _: 'inputPassportElementError',
+  /** Type of Telegram Passport element that has the error */
+  type?: PassportElementTypeOptional,
+  /** Error message */
+  message?: string,
+  /** Error source */
+  source?: InputPassportElementErrorSourceOptional,
 |}
 
 /** A text message */
@@ -4836,7 +6226,7 @@ export type messagePaymentSuccessfulBot = {
   total_amount: number,
   /** Invoice payload */
   invoice_payload: string,
-  /** Identifier of the shipping option chosen by the user, may be empty if not applicable */
+  /** Identifier of the shipping option chosen by the user; may be empty if not applicable */
   shipping_option_id: string,
   /** Information about the order; may be null */
   order_info: orderInfo,
@@ -4860,7 +6250,7 @@ export type messagePaymentSuccessfulBotOptional = {|
   total_amount?: number,
   /** Invoice payload */
   invoice_payload?: string,
-  /** Identifier of the shipping option chosen by the user, may be empty if not applicable */
+  /** Identifier of the shipping option chosen by the user; may be empty if not applicable */
   shipping_option_id?: string,
   /** Information about the order; may be null */
   order_info?: orderInfoOptional,
@@ -4898,6 +6288,38 @@ export type messageWebsiteConnectedOptional = {|
   _: 'messageWebsiteConnected',
   /** Domain name of the connected website */
   domain_name?: string,
+|}
+
+/** Telegram Passport data has been sent */
+export type messagePassportDataSent = {
+  _: 'messagePassportDataSent',
+  /** List of Telegram Passport element types sent */
+  types: PassportElementType[],
+}
+
+/** Telegram Passport data has been sent */
+export type messagePassportDataSentOptional = {|
+  _: 'messagePassportDataSent',
+  /** List of Telegram Passport element types sent */
+  types?: PassportElementTypeOptional[],
+|}
+
+/** Telegram Passport data has been received; for bots only */
+export type messagePassportDataReceived = {
+  _: 'messagePassportDataReceived',
+  /** List of received Telegram Passport elements */
+  elements: encryptedPassportElement[],
+  /** Encrypted data credentials */
+  credentials: encryptedCredentials,
+}
+
+/** Telegram Passport data has been received; for bots only */
+export type messagePassportDataReceivedOptional = {|
+  _: 'messagePassportDataReceived',
+  /** List of received Telegram Passport elements */
+  elements?: encryptedPassportElementOptional[],
+  /** Encrypted data credentials */
+  credentials?: encryptedCredentialsOptional,
 |}
 
 /** Message content that is not supported by the client */
@@ -5039,14 +6461,14 @@ export type textEntityTypePreCodeOptional = {|
 /** A text description shown instead of a raw URL */
 export type textEntityTypeTextUrl = {
   _: 'textEntityTypeTextUrl',
-  /** URL to be opened when the link is clicked */
+  /** HTTP or tg:// URL to be opened when the link is clicked */
   url: string,
 }
 
 /** A text description shown instead of a raw URL */
 export type textEntityTypeTextUrlOptional = {|
   _: 'textEntityTypeTextUrl',
-  /** URL to be opened when the link is clicked */
+  /** HTTP or tg:// URL to be opened when the link is clicked */
   url?: string,
 |}
 
@@ -5106,8 +6528,9 @@ export type inputThumbnailOptional = {|
 export type inputMessageText = {
   _: 'inputMessageText',
   /**
-   * Formatted text to be sent. Only Bold, Italic, Code, Pre, PreCode and TextUrl entities
-   * are allowed to be specified manually
+   * Formatted text to be sent; 1-GetOption("message_text_length_max") characters. Only
+   * Bold, Italic, Code, Pre, PreCode and TextUrl entities are allowed to be specified
+   * manually
    */
   text: formattedText,
   /** True, if rich web page previews for URLs in the message text should be disabled */
@@ -5120,8 +6543,9 @@ export type inputMessageText = {
 export type inputMessageTextOptional = {|
   _: 'inputMessageText',
   /**
-   * Formatted text to be sent. Only Bold, Italic, Code, Pre, PreCode and TextUrl entities
-   * are allowed to be specified manually
+   * Formatted text to be sent; 1-GetOption("message_text_length_max") characters. Only
+   * Bold, Italic, Code, Pre, PreCode and TextUrl entities are allowed to be specified
+   * manually
    */
   text?: formattedTextOptional,
   /** True, if rich web page previews for URLs in the message text should be disabled */
@@ -5143,7 +6567,7 @@ export type inputMessageAnimation = {
   width: number,
   /** Height of the animation; may be replaced by the server */
   height: number,
-  /** Animation caption; 0-200 characters */
+  /** Animation caption; 0-GetOption("message_caption_length_max") characters */
   caption: formattedText,
 }
 
@@ -5160,7 +6584,7 @@ export type inputMessageAnimationOptional = {|
   width?: number,
   /** Height of the animation; may be replaced by the server */
   height?: number,
-  /** Animation caption; 0-200 characters */
+  /** Animation caption; 0-GetOption("message_caption_length_max") characters */
   caption?: formattedTextOptional,
 |}
 
@@ -5177,7 +6601,7 @@ export type inputMessageAudio = {
   title: string,
   /** Performer of the audio; 0-64 characters, may be replaced by the server */
   performer: string,
-  /** Audio caption; 0-200 characters */
+  /** Audio caption; 0-GetOption("message_caption_length_max") characters */
   caption: formattedText,
 }
 
@@ -5194,7 +6618,7 @@ export type inputMessageAudioOptional = {|
   title?: string,
   /** Performer of the audio; 0-64 characters, may be replaced by the server */
   performer?: string,
-  /** Audio caption; 0-200 characters */
+  /** Audio caption; 0-GetOption("message_caption_length_max") characters */
   caption?: formattedTextOptional,
 |}
 
@@ -5205,7 +6629,7 @@ export type inputMessageDocument = {
   document: InputFile,
   /** Document thumbnail, if available */
   thumbnail: inputThumbnail,
-  /** Document caption; 0-200 characters */
+  /** Document caption; 0-GetOption("message_caption_length_max") characters */
   caption: formattedText,
 }
 
@@ -5216,7 +6640,7 @@ export type inputMessageDocumentOptional = {|
   document?: InputFileOptional,
   /** Document thumbnail, if available */
   thumbnail?: inputThumbnailOptional,
-  /** Document caption; 0-200 characters */
+  /** Document caption; 0-GetOption("message_caption_length_max") characters */
   caption?: formattedTextOptional,
 |}
 
@@ -5233,7 +6657,7 @@ export type inputMessagePhoto = {
   width: number,
   /** Photo height */
   height: number,
-  /** Photo caption; 0-200 characters */
+  /** Photo caption; 0-GetOption("message_caption_length_max") characters */
   caption: formattedText,
   /**
    * Photo TTL (Time To Live), in seconds (0-60). A non-zero TTL can be specified only
@@ -5255,7 +6679,7 @@ export type inputMessagePhotoOptional = {|
   width?: number,
   /** Photo height */
   height?: number,
-  /** Photo caption; 0-200 characters */
+  /** Photo caption; 0-GetOption("message_caption_length_max") characters */
   caption?: formattedTextOptional,
   /**
    * Photo TTL (Time To Live), in seconds (0-60). A non-zero TTL can be specified only
@@ -5307,7 +6731,7 @@ export type inputMessageVideo = {
   height: number,
   /** True, if the video should be tried to be streamed */
   supports_streaming: boolean,
-  /** Video caption; 0-200 characters */
+  /** Video caption; 0-GetOption("message_caption_length_max") characters */
   caption: formattedText,
   /**
    * Video TTL (Time To Live), in seconds (0-60). A non-zero TTL can be specified only
@@ -5333,7 +6757,7 @@ export type inputMessageVideoOptional = {|
   height?: number,
   /** True, if the video should be tried to be streamed */
   supports_streaming?: boolean,
-  /** Video caption; 0-200 characters */
+  /** Video caption; 0-GetOption("message_caption_length_max") characters */
   caption?: formattedTextOptional,
   /**
    * Video TTL (Time To Live), in seconds (0-60). A non-zero TTL can be specified only
@@ -5377,7 +6801,7 @@ export type inputMessageVoiceNote = {
   duration: number,
   /** Waveform representation of the voice note, in 5-bit format */
   waveform: string,
-  /** Voice note caption; 0-200 characters */
+  /** Voice note caption; 0-GetOption("message_caption_length_max") characters */
   caption: formattedText,
 }
 
@@ -5390,7 +6814,7 @@ export type inputMessageVoiceNoteOptional = {|
   duration?: number,
   /** Waveform representation of the voice note, in 5-bit format */
   waveform?: string,
-  /** Voice note caption; 0-200 characters */
+  /** Voice note caption; 0-GetOption("message_caption_length_max") characters */
   caption?: formattedTextOptional,
 |}
 
@@ -7858,24 +9282,166 @@ export type chatEventLogFiltersOptional = {|
   setting_changes?: boolean,
 |}
 
+/** An ordinary language pack string */
+export type languagePackStringValueOrdinary = {
+  _: 'languagePackStringValueOrdinary',
+  /** String value */
+  value: string,
+}
+
+/** An ordinary language pack string */
+export type languagePackStringValueOrdinaryOptional = {|
+  _: 'languagePackStringValueOrdinary',
+  /** String value */
+  value?: string,
+|}
+
+/**
+ * A language pack string which has different forms based on the number of some object
+ * it mentions
+ */
+export type languagePackStringValuePluralized = {
+  _: 'languagePackStringValuePluralized',
+  /** Value for zero objects */
+  zero_value: string,
+  /** Value for one object */
+  one_value: string,
+  /** Value for two objects */
+  two_value: string,
+  /** Value for few objects */
+  few_value: string,
+  /** Value for many objects */
+  many_value: string,
+  /** Default value */
+  other_value: string,
+}
+
+/**
+ * A language pack string which has different forms based on the number of some object
+ * it mentions
+ */
+export type languagePackStringValuePluralizedOptional = {|
+  _: 'languagePackStringValuePluralized',
+  /** Value for zero objects */
+  zero_value?: string,
+  /** Value for one object */
+  one_value?: string,
+  /** Value for two objects */
+  two_value?: string,
+  /** Value for few objects */
+  few_value?: string,
+  /** Value for many objects */
+  many_value?: string,
+  /** Default value */
+  other_value?: string,
+|}
+
+/**
+ * A deleted language pack string, the value should be taken from the built-in english
+ * language pack
+ */
+export type languagePackStringValueDeleted = {
+  _: 'languagePackStringValueDeleted',
+}
+
+/**
+ * A deleted language pack string, the value should be taken from the built-in english
+ * language pack
+ */
+export type languagePackStringValueDeletedOptional = {|
+  _: 'languagePackStringValueDeleted',
+|}
+
+/** Represents one language pack string */
+export type languagePackString = {
+  _: 'languagePackString',
+  /** String key */
+  key: string,
+  /** String value */
+  value: LanguagePackStringValue,
+}
+
+/** Represents one language pack string */
+export type languagePackStringOptional = {|
+  _: 'languagePackString',
+  /** String key */
+  key?: string,
+  /** String value */
+  value?: LanguagePackStringValueOptional,
+|}
+
+/** Contains a list of language pack strings */
+export type languagePackStrings = {
+  _: 'languagePackStrings',
+  /** A list of language pack strings */
+  strings: languagePackString[],
+}
+
+/** Contains a list of language pack strings */
+export type languagePackStringsOptional = {|
+  _: 'languagePackStrings',
+  /** A list of language pack strings */
+  strings?: languagePackStringOptional[],
+|}
+
+/** Contains information about a language pack */
+export type languagePackInfo = {
+  _: 'languagePackInfo',
+  /** Unique language pack identifier */
+  id: string,
+  /** Language name */
+  name: string,
+  /** Name of the language in that language */
+  native_name: string,
+  /** Total number of non-deleted strings from the language pack available locally */
+  local_string_count: number,
+}
+
+/** Contains information about a language pack */
+export type languagePackInfoOptional = {|
+  _: 'languagePackInfo',
+  /** Unique language pack identifier */
+  id?: string,
+  /** Language name */
+  name?: string,
+  /** Name of the language in that language */
+  native_name?: string,
+  /** Total number of non-deleted strings from the language pack available locally */
+  local_string_count?: number,
+|}
+
+/** Contains information about the current localization target */
+export type localizationTargetInfo = {
+  _: 'localizationTargetInfo',
+  /** List of available language packs for this application */
+  language_packs: languagePackInfo[],
+}
+
+/** Contains information about the current localization target */
+export type localizationTargetInfoOptional = {|
+  _: 'localizationTargetInfo',
+  /** List of available language packs for this application */
+  language_packs?: languagePackInfoOptional[],
+|}
+
 /** A token for Google Cloud Messaging */
 export type deviceTokenGoogleCloudMessaging = {
   _: 'deviceTokenGoogleCloudMessaging',
-  /** Device registration token, may be empty to de-register a device */
+  /** Device registration token; may be empty to de-register a device */
   token: string,
 }
 
 /** A token for Google Cloud Messaging */
 export type deviceTokenGoogleCloudMessagingOptional = {|
   _: 'deviceTokenGoogleCloudMessaging',
-  /** Device registration token, may be empty to de-register a device */
+  /** Device registration token; may be empty to de-register a device */
   token?: string,
 |}
 
 /** A token for Apple Push Notification service */
 export type deviceTokenApplePush = {
   _: 'deviceTokenApplePush',
-  /** Device token, may be empty to de-register a device */
+  /** Device token; may be empty to de-register a device */
   device_token: string,
   /** True, if App Sandbox is enabled */
   is_app_sandbox: boolean,
@@ -7884,7 +9450,7 @@ export type deviceTokenApplePush = {
 /** A token for Apple Push Notification service */
 export type deviceTokenApplePushOptional = {|
   _: 'deviceTokenApplePush',
-  /** Device token, may be empty to de-register a device */
+  /** Device token; may be empty to de-register a device */
   device_token?: string,
   /** True, if App Sandbox is enabled */
   is_app_sandbox?: boolean,
@@ -7893,7 +9459,7 @@ export type deviceTokenApplePushOptional = {|
 /** A token for Apple Push Notification service VoIP notifications */
 export type deviceTokenApplePushVoIP = {
   _: 'deviceTokenApplePushVoIP',
-  /** Device token, may be empty to de-register a device */
+  /** Device token; may be empty to de-register a device */
   device_token: string,
   /** True, if App Sandbox is enabled */
   is_app_sandbox: boolean,
@@ -7902,7 +9468,7 @@ export type deviceTokenApplePushVoIP = {
 /** A token for Apple Push Notification service VoIP notifications */
 export type deviceTokenApplePushVoIPOptional = {|
   _: 'deviceTokenApplePushVoIP',
-  /** Device token, may be empty to de-register a device */
+  /** Device token; may be empty to de-register a device */
   device_token?: string,
   /** True, if App Sandbox is enabled */
   is_app_sandbox?: boolean,
@@ -7912,7 +9478,7 @@ export type deviceTokenApplePushVoIPOptional = {|
 export type deviceTokenWindowsPush = {
   _: 'deviceTokenWindowsPush',
   /**
-   * The access token that will be used to send notifications, may be empty to de-register
+   * The access token that will be used to send notifications; may be empty to de-register
    * a device
    */
   access_token: string,
@@ -7922,7 +9488,7 @@ export type deviceTokenWindowsPush = {
 export type deviceTokenWindowsPushOptional = {|
   _: 'deviceTokenWindowsPush',
   /**
-   * The access token that will be used to send notifications, may be empty to de-register
+   * The access token that will be used to send notifications; may be empty to de-register
    * a device
    */
   access_token?: string,
@@ -7931,28 +9497,28 @@ export type deviceTokenWindowsPushOptional = {|
 /** A token for Microsoft Push Notification Service */
 export type deviceTokenMicrosoftPush = {
   _: 'deviceTokenMicrosoftPush',
-  /** Push notification channel URI, may be empty to de-register a device */
+  /** Push notification channel URI; may be empty to de-register a device */
   channel_uri: string,
 }
 
 /** A token for Microsoft Push Notification Service */
 export type deviceTokenMicrosoftPushOptional = {|
   _: 'deviceTokenMicrosoftPush',
-  /** Push notification channel URI, may be empty to de-register a device */
+  /** Push notification channel URI; may be empty to de-register a device */
   channel_uri?: string,
 |}
 
 /** A token for Microsoft Push Notification Service VoIP channel */
 export type deviceTokenMicrosoftPushVoIP = {
   _: 'deviceTokenMicrosoftPushVoIP',
-  /** Push notification channel URI, may be empty to de-register a device */
+  /** Push notification channel URI; may be empty to de-register a device */
   channel_uri: string,
 }
 
 /** A token for Microsoft Push Notification Service VoIP channel */
 export type deviceTokenMicrosoftPushVoIPOptional = {|
   _: 'deviceTokenMicrosoftPushVoIP',
-  /** Push notification channel URI, may be empty to de-register a device */
+  /** Push notification channel URI; may be empty to de-register a device */
   channel_uri?: string,
 |}
 
@@ -7961,7 +9527,7 @@ export type deviceTokenWebPush = {
   _: 'deviceTokenWebPush',
   /**
    * Absolute URL exposed by the push service where the application server can send push
-   * messages, may be empty to de-register a device
+   * messages; may be empty to de-register a device
    */
   endpoint: string,
   /** Base64url-encoded P-256 elliptic curve Diffie-Hellman public key */
@@ -7975,7 +9541,7 @@ export type deviceTokenWebPushOptional = {|
   _: 'deviceTokenWebPush',
   /**
    * Absolute URL exposed by the push service where the application server can send push
-   * messages, may be empty to de-register a device
+   * messages; may be empty to de-register a device
    */
   endpoint?: string,
   /** Base64url-encoded P-256 elliptic curve Diffie-Hellman public key */
@@ -7989,7 +9555,7 @@ export type deviceTokenSimplePush = {
   _: 'deviceTokenSimplePush',
   /**
    * Absolute URL exposed by the push service where the application server can send push
-   * messages, may be empty to de-register a device
+   * messages; may be empty to de-register a device
    */
   endpoint: string,
 }
@@ -7999,7 +9565,7 @@ export type deviceTokenSimplePushOptional = {|
   _: 'deviceTokenSimplePush',
   /**
    * Absolute URL exposed by the push service where the application server can send push
-   * messages, may be empty to de-register a device
+   * messages; may be empty to de-register a device
    */
   endpoint?: string,
 |}
@@ -8007,42 +9573,42 @@ export type deviceTokenSimplePushOptional = {|
 /** A token for Ubuntu Push Client service */
 export type deviceTokenUbuntuPush = {
   _: 'deviceTokenUbuntuPush',
-  /** Token, may be empty to de-register a device */
+  /** Token; may be empty to de-register a device */
   token: string,
 }
 
 /** A token for Ubuntu Push Client service */
 export type deviceTokenUbuntuPushOptional = {|
   _: 'deviceTokenUbuntuPush',
-  /** Token, may be empty to de-register a device */
+  /** Token; may be empty to de-register a device */
   token?: string,
 |}
 
 /** A token for BlackBerry Push Service */
 export type deviceTokenBlackBerryPush = {
   _: 'deviceTokenBlackBerryPush',
-  /** Token, may be empty to de-register a device */
+  /** Token; may be empty to de-register a device */
   token: string,
 }
 
 /** A token for BlackBerry Push Service */
 export type deviceTokenBlackBerryPushOptional = {|
   _: 'deviceTokenBlackBerryPush',
-  /** Token, may be empty to de-register a device */
+  /** Token; may be empty to de-register a device */
   token?: string,
 |}
 
 /** A token for Tizen Push Service */
 export type deviceTokenTizenPush = {
   _: 'deviceTokenTizenPush',
-  /** Push service registration identifier, may be empty to de-register a device */
+  /** Push service registration identifier; may be empty to de-register a device */
   reg_id: string,
 }
 
 /** A token for Tizen Push Service */
 export type deviceTokenTizenPushOptional = {|
   _: 'deviceTokenTizenPush',
-  /** Push service registration identifier, may be empty to de-register a device */
+  /** Push service registration identifier; may be empty to de-register a device */
   reg_id?: string,
 |}
 
@@ -8582,6 +10148,16 @@ export type chatReportReasonPornographyOptional = {|
   _: 'chatReportReasonPornography',
 |}
 
+/** The chat contains copyrighted content */
+export type chatReportReasonCopyright = {
+  _: 'chatReportReasonCopyright',
+}
+
+/** The chat contains copyrighted content */
+export type chatReportReasonCopyrightOptional = {|
+  _: 'chatReportReasonCopyright',
+|}
+
 /** A custom reason provided by the user */
 export type chatReportReasonCustom = {
   _: 'chatReportReasonCustom',
@@ -8684,6 +10260,26 @@ export type fileTypeSecretOptional = {|
   _: 'fileTypeSecret',
 |}
 
+/** The file is a thumbnail of a file from a secret chat */
+export type fileTypeSecretThumbnail = {
+  _: 'fileTypeSecretThumbnail',
+}
+
+/** The file is a thumbnail of a file from a secret chat */
+export type fileTypeSecretThumbnailOptional = {|
+  _: 'fileTypeSecretThumbnail',
+|}
+
+/** The file is a file from Secure storage used for storing Telegram Passport files */
+export type fileTypeSecure = {
+  _: 'fileTypeSecure',
+}
+
+/** The file is a file from Secure storage used for storing Telegram Passport files */
+export type fileTypeSecureOptional = {|
+  _: 'fileTypeSecure',
+|}
+
 /** The file is a sticker */
 export type fileTypeSticker = {
   _: 'fileTypeSticker',
@@ -8752,16 +10348,6 @@ export type fileTypeWallpaper = {
 /** The file is a wallpaper */
 export type fileTypeWallpaperOptional = {|
   _: 'fileTypeWallpaper',
-|}
-
-/** The file is a thumbnail of a file from a secret chat */
-export type fileTypeSecretThumbnail = {
-  _: 'fileTypeSecretThumbnail',
-}
-
-/** The file is a thumbnail of a file from a secret chat */
-export type fileTypeSecretThumbnailOptional = {|
-  _: 'fileTypeSecretThumbnail',
 |}
 
 /** Contains the storage usage statistics for a specific file type */
@@ -9232,6 +10818,38 @@ export type textOptional = {|
   text?: string,
 |}
 
+/** Contains a value representing a number of seconds */
+export type seconds = {
+  _: 'seconds',
+  /** Number of seconds */
+  seconds: number,
+}
+
+/** Contains a value representing a number of seconds */
+export type secondsOptional = {|
+  _: 'seconds',
+  /** Number of seconds */
+  seconds?: number,
+|}
+
+/** Contains information about a tg:// deep link */
+export type deepLinkInfo = {
+  _: 'deepLinkInfo',
+  /** Text to be shown to the user */
+  text: formattedText,
+  /** True, if user should be asked to update the application */
+  need_update_application: boolean,
+}
+
+/** Contains information about a tg:// deep link */
+export type deepLinkInfoOptional = {|
+  _: 'deepLinkInfo',
+  /** Text to be shown to the user */
+  text?: formattedTextOptional,
+  /** True, if user should be asked to update the application */
+  need_update_application?: boolean,
+|}
+
 /** The text should be parsed in markdown-style */
 export type textParseModeMarkdown = {
   _: 'textParseModeMarkdown',
@@ -9252,40 +10870,112 @@ export type textParseModeHTMLOptional = {|
   _: 'textParseModeHTML',
 |}
 
-/** An empty proxy server */
-export type proxyEmpty = {
-  _: 'proxyEmpty',
-}
-
-/** An empty proxy server */
-export type proxyEmptyOptional = {|
-  _: 'proxyEmpty',
-|}
-
 /** A SOCKS5 proxy server */
-export type proxySocks5 = {
-  _: 'proxySocks5',
-  /** Proxy server IP address */
-  server: string,
-  /** Proxy server port */
-  port: number,
-  /** Username for logging in */
+export type proxyTypeSocks5 = {
+  _: 'proxyTypeSocks5',
+  /** Username for logging in; may be empty */
   username: string,
-  /** Password for logging in */
+  /** Password for logging in; may be empty */
   password: string,
 }
 
 /** A SOCKS5 proxy server */
-export type proxySocks5Optional = {|
-  _: 'proxySocks5',
+export type proxyTypeSocks5Optional = {|
+  _: 'proxyTypeSocks5',
+  /** Username for logging in; may be empty */
+  username?: string,
+  /** Password for logging in; may be empty */
+  password?: string,
+|}
+
+/** A HTTP transparent proxy server */
+export type proxyTypeHttp = {
+  _: 'proxyTypeHttp',
+  /** Username for logging in; may be empty */
+  username: string,
+  /** Password for logging in; may be empty */
+  password: string,
+  /**
+   * Pass true, if the proxy supports only HTTP requests and doesn't support transparent
+   * TCP connections via HTTP CONNECT method
+   */
+  http_only: boolean,
+}
+
+/** A HTTP transparent proxy server */
+export type proxyTypeHttpOptional = {|
+  _: 'proxyTypeHttp',
+  /** Username for logging in; may be empty */
+  username?: string,
+  /** Password for logging in; may be empty */
+  password?: string,
+  /**
+   * Pass true, if the proxy supports only HTTP requests and doesn't support transparent
+   * TCP connections via HTTP CONNECT method
+   */
+  http_only?: boolean,
+|}
+
+/** An MTProto proxy server */
+export type proxyTypeMtproto = {
+  _: 'proxyTypeMtproto',
+  /** The proxy's secret in hexadecimal encoding */
+  secret: string,
+}
+
+/** An MTProto proxy server */
+export type proxyTypeMtprotoOptional = {|
+  _: 'proxyTypeMtproto',
+  /** The proxy's secret in hexadecimal encoding */
+  secret?: string,
+|}
+
+/** Contains information about a proxy server */
+export type proxy = {
+  _: 'proxy',
+  /** Unique identifier of the proxy */
+  id: number,
+  /** Proxy server IP address */
+  server: string,
+  /** Proxy server port */
+  port: number,
+  /** Point in time (Unix timestamp) when the proxy was last used; 0 if never */
+  last_used_date: number,
+  /** True, if the proxy is enabled now */
+  is_enabled: boolean,
+  /** Type of the proxy */
+  type: ProxyType,
+}
+
+/** Contains information about a proxy server */
+export type proxyOptional = {|
+  _: 'proxy',
+  /** Unique identifier of the proxy */
+  id?: number,
   /** Proxy server IP address */
   server?: string,
   /** Proxy server port */
   port?: number,
-  /** Username for logging in */
-  username?: string,
-  /** Password for logging in */
-  password?: string,
+  /** Point in time (Unix timestamp) when the proxy was last used; 0 if never */
+  last_used_date?: number,
+  /** True, if the proxy is enabled now */
+  is_enabled?: boolean,
+  /** Type of the proxy */
+  type?: ProxyTypeOptional,
+|}
+
+/** Represents a list of proxy servers */
+export type proxies = {
+  _: 'proxies',
+  /** List of proxy servers */
+  proxies: proxy[],
+}
+
+/** Represents a list of proxy servers */
+export type proxiesOptional = {|
+  _: 'proxies',
+  /** List of proxy servers */
+  proxies?: proxyOptional[],
 |}
 
 /** Describes a sticker that should be added to a sticker set */
@@ -9680,6 +11370,70 @@ export type updateChatIsPinnedOptional = {|
   order?: (number | string),
 |}
 
+/** A chat was marked as unread or was read */
+export type updateChatIsMarkedAsUnread = {
+  _: 'updateChatIsMarkedAsUnread',
+  /** Chat identifier */
+  chat_id: number,
+  /** New value of is_marked_as_unread */
+  is_marked_as_unread: boolean,
+}
+
+/** A chat was marked as unread or was read */
+export type updateChatIsMarkedAsUnreadOptional = {|
+  _: 'updateChatIsMarkedAsUnread',
+  /** Chat identifier */
+  chat_id?: number,
+  /** New value of is_marked_as_unread */
+  is_marked_as_unread?: boolean,
+|}
+
+/** A chat's is_sponsored field has changed */
+export type updateChatIsSponsored = {
+  _: 'updateChatIsSponsored',
+  /** Chat identifier */
+  chat_id: number,
+  /** New value of is_sponsored */
+  is_sponsored: boolean,
+  /** New value of chat order */
+  order: (number | string),
+}
+
+/** A chat's is_sponsored field has changed */
+export type updateChatIsSponsoredOptional = {|
+  _: 'updateChatIsSponsored',
+  /** Chat identifier */
+  chat_id?: number,
+  /** New value of is_sponsored */
+  is_sponsored?: boolean,
+  /** New value of chat order */
+  order?: (number | string),
+|}
+
+/**
+ * The value of the default disable_notification parameter, used when a message is sent
+ * to the chat, was changed
+ */
+export type updateChatDefaultDisableNotification = {
+  _: 'updateChatDefaultDisableNotification',
+  /** Chat identifier */
+  chat_id: number,
+  /** The new default_disable_notification value */
+  default_disable_notification: boolean,
+}
+
+/**
+ * The value of the default disable_notification parameter, used when a message is sent
+ * to the chat, was changed
+ */
+export type updateChatDefaultDisableNotificationOptional = {|
+  _: 'updateChatDefaultDisableNotification',
+  /** Chat identifier */
+  chat_id?: number,
+  /** The new default_disable_notification value */
+  default_disable_notification?: boolean,
+|}
+
 /** Incoming messages were read or number of unread messages has been changed */
 export type updateChatReadInbox = {
   _: 'updateChatReadInbox',
@@ -9738,22 +11492,40 @@ export type updateChatUnreadMentionCountOptional = {|
   unread_mention_count?: number,
 |}
 
-/** Notification settings for some chats were updated */
-export type updateNotificationSettings = {
-  _: 'updateNotificationSettings',
+/** Notification settings for a chat were changed */
+export type updateChatNotificationSettings = {
+  _: 'updateChatNotificationSettings',
+  /** Chat identifier */
+  chat_id: number,
+  /** The new notification settings */
+  notification_settings: chatNotificationSettings,
+}
+
+/** Notification settings for a chat were changed */
+export type updateChatNotificationSettingsOptional = {|
+  _: 'updateChatNotificationSettings',
+  /** Chat identifier */
+  chat_id?: number,
+  /** The new notification settings */
+  notification_settings?: chatNotificationSettingsOptional,
+|}
+
+/** Notification settings for some type of chats were updated */
+export type updateScopeNotificationSettings = {
+  _: 'updateScopeNotificationSettings',
   /** Types of chats for which notification settings were updated */
   scope: NotificationSettingsScope,
   /** The new notification settings */
-  notification_settings: notificationSettings,
+  notification_settings: scopeNotificationSettings,
 }
 
-/** Notification settings for some chats were updated */
-export type updateNotificationSettingsOptional = {|
-  _: 'updateNotificationSettings',
+/** Notification settings for some type of chats were updated */
+export type updateScopeNotificationSettingsOptional = {|
+  _: 'updateScopeNotificationSettings',
   /** Types of chats for which notification settings were updated */
   scope?: NotificationSettingsScopeOptional,
   /** The new notification settings */
-  notification_settings?: notificationSettingsOptional,
+  notification_settings?: scopeNotificationSettingsOptional,
 |}
 
 /**
@@ -9787,9 +11559,9 @@ export type updateChatReplyMarkupOptional = {|
 |}
 
 /**
- * A draft has changed. Be aware that the update may come in the currently opened chat
- * but with old content of the draft. If the user has changed the content of the draft,
- * this update shouldn't be applied
+ * A chat draft has changed. Be aware that the update may come in the currently opened
+ * chat but with old content of the draft. If the user has changed the content of the
+ * draft, this update shouldn't be applied
  */
 export type updateChatDraftMessage = {
   _: 'updateChatDraftMessage',
@@ -9802,9 +11574,9 @@ export type updateChatDraftMessage = {
 }
 
 /**
- * A draft has changed. Be aware that the update may come in the currently opened chat
- * but with old content of the draft. If the user has changed the content of the draft,
- * this update shouldn't be applied
+ * A chat draft has changed. Be aware that the update may come in the currently opened
+ * chat but with old content of the draft. If the user has changed the content of the
+ * draft, this update shouldn't be applied
  */
 export type updateChatDraftMessageOptional = {|
   _: 'updateChatDraftMessage',
@@ -10034,7 +11806,11 @@ export type updateSupergroupFullInfoOptional = {|
  */
 export type updateServiceNotification = {
   _: 'updateServiceNotification',
-  /** Notification type */
+  /**
+   * Notification type. If type begins with "AUTH_KEY_DROP_", then two buttons "Cancel"
+   * and "Log out" should be shown under notification; if user presses the second, all
+   * local data should be destroyed using Destroy method
+   */
   type: string,
   /** Notification content */
   content: MessageContent,
@@ -10046,7 +11822,11 @@ export type updateServiceNotification = {
  */
 export type updateServiceNotificationOptional = {|
   _: 'updateServiceNotification',
-  /** Notification type */
+  /**
+   * Notification type. If type begins with "AUTH_KEY_DROP_", then two buttons "Cancel"
+   * and "Log out" should be shown under notification; if user presses the second, all
+   * local data should be destroyed using Destroy method
+   */
   type?: string,
   /** Notification content */
   content?: MessageContentOptional,
@@ -10071,13 +11851,13 @@ export type updateFileGenerationStart = {
   _: 'updateFileGenerationStart',
   /** Unique identifier for the generation process */
   generation_id: (number | string),
-  /** The path to a file from which a new file is generated, may be empty */
+  /** The path to a file from which a new file is generated; may be empty */
   original_path: string,
   /** The path to a file that should be created and where the new file should be generated */
   destination_path: string,
   /**
    * String specifying the conversion applied to the original file. If conversion is "#url#"
-   * than original_path contains a HTTP/HTTPS URL of a file, which should be downloaded
+   * than original_path contains an HTTP/HTTPS URL of a file, which should be downloaded
    * by the client
    */
   conversion: string,
@@ -10088,13 +11868,13 @@ export type updateFileGenerationStartOptional = {|
   _: 'updateFileGenerationStart',
   /** Unique identifier for the generation process */
   generation_id?: (number | string),
-  /** The path to a file from which a new file is generated, may be empty */
+  /** The path to a file from which a new file is generated; may be empty */
   original_path?: string,
   /** The path to a file that should be created and where the new file should be generated */
   destination_path?: string,
   /**
    * String specifying the conversion applied to the original file. If conversion is "#url#"
-   * than original_path contains a HTTP/HTTPS URL of a file, which should be downloaded
+   * than original_path contains an HTTP/HTTPS URL of a file, which should be downloaded
    * by the client
    */
   conversion?: string,
@@ -10168,6 +11948,38 @@ export type updateUnreadMessageCountOptional = {|
   unread_count?: number,
   /** Total number of unread messages in unmuted chats */
   unread_unmuted_count?: number,
+|}
+
+/**
+ * Number of unread chats, i.e. with unread messages or marked as unread, has changed.
+ * This update is sent only if a message database is used
+ */
+export type updateUnreadChatCount = {
+  _: 'updateUnreadChatCount',
+  /** Total number of unread chats */
+  unread_count: number,
+  /** Total number of unread unmuted chats */
+  unread_unmuted_count: number,
+  /** Total number of chats marked as unread */
+  marked_as_unread_count: number,
+  /** Total number of unmuted chats marked as unread */
+  marked_as_unread_unmuted_count: number,
+}
+
+/**
+ * Number of unread chats, i.e. with unread messages or marked as unread, has changed.
+ * This update is sent only if a message database is used
+ */
+export type updateUnreadChatCountOptional = {|
+  _: 'updateUnreadChatCount',
+  /** Total number of unread chats */
+  unread_count?: number,
+  /** Total number of unread unmuted chats */
+  unread_unmuted_count?: number,
+  /** Total number of chats marked as unread */
+  marked_as_unread_count?: number,
+  /** Total number of unmuted chats marked as unread */
+  marked_as_unread_unmuted_count?: number,
 |}
 
 /** An option changed its value */
@@ -10272,6 +12084,28 @@ export type updateSavedAnimationsOptional = {|
   animation_ids?: number[],
 |}
 
+/** Some language pack strings have been updated */
+export type updateLanguagePackStrings = {
+  _: 'updateLanguagePackStrings',
+  /** Localization target to which the language pack belongs */
+  localization_target: string,
+  /** Identifier of the updated language pack */
+  language_pack_id: string,
+  /** List of changed language pack strings */
+  strings: languagePackString[],
+}
+
+/** Some language pack strings have been updated */
+export type updateLanguagePackStringsOptional = {|
+  _: 'updateLanguagePackStrings',
+  /** Localization target to which the language pack belongs */
+  localization_target?: string,
+  /** Identifier of the updated language pack */
+  language_pack_id?: string,
+  /** List of changed language pack strings */
+  strings?: languagePackStringOptional[],
+|}
+
 /** The connection state has changed */
 export type updateConnectionState = {
   _: 'updateConnectionState',
@@ -10284,6 +12118,30 @@ export type updateConnectionStateOptional = {|
   _: 'updateConnectionState',
   /** The new connection state */
   state?: ConnectionStateOptional,
+|}
+
+/**
+ * New terms of service must be accepted by the user. If the terms of service are declined,
+ * then the deleteAccount method should be called with the reason "Decline ToS update"
+ */
+export type updateTermsOfService = {
+  _: 'updateTermsOfService',
+  /** Identifier of the terms of service */
+  terms_of_service_id: string,
+  /** The new terms of service */
+  terms_of_service: termsOfService,
+}
+
+/**
+ * New terms of service must be accepted by the user. If the terms of service are declined,
+ * then the deleteAccount method should be called with the reason "Decline ToS update"
+ */
+export type updateTermsOfServiceOptional = {|
+  _: 'updateTermsOfService',
+  /** Identifier of the terms of service */
+  terms_of_service_id?: string,
+  /** The new terms of service */
+  terms_of_service?: termsOfServiceOptional,
 |}
 
 /** A new incoming inline query; for bots only */
@@ -10420,7 +12278,7 @@ export type updateNewShippingQuery = {
   /** Invoice payload */
   invoice_payload: string,
   /** User shipping address */
-  shipping_address: shippingAddress,
+  shipping_address: address,
 }
 
 /** A new incoming shipping query; for bots only. Only for invoices with flexible price */
@@ -10433,7 +12291,7 @@ export type updateNewShippingQueryOptional = {|
   /** Invoice payload */
   invoice_payload?: string,
   /** User shipping address */
-  shipping_address?: shippingAddressOptional,
+  shipping_address?: addressOptional,
 |}
 
 /**
@@ -11146,7 +13004,7 @@ export type getChatHistory = {|
   chat_id?: number,
   /**
    * Identifier of the message starting from which history must be fetched; use 0 to get
-   * results from the beginning (i.e., from oldest to newest)
+   * results from the last message
    */
   from_message_id?: number,
   /**
@@ -11200,7 +13058,7 @@ export type searchChatMessages = {|
   sender_user_id?: number,
   /**
    * Identifier of the message starting from which history must be fetched; use 0 to get
-   * results from the beginning
+   * results from the last message
    */
   from_message_id?: number,
   /**
@@ -11230,7 +13088,7 @@ export type searchMessages = {|
   query?: string,
   /**
    * The date of the message starting from which the results should be fetched. Use 0
-   * or any date in the future to get results from the beginning
+   * or any date in the future to get results from the last message
    */
   offset_date?: number,
   /** The chat identifier of the last found message, or 0 for the first request */
@@ -11257,7 +13115,7 @@ export type searchSecretMessages = {|
   query?: string,
   /**
    * The identifier from the result of a previous request, use 0 to get results from the
-   * beginning
+   * last message
    */
   from_search_id?: (number | string),
   /**
@@ -11277,7 +13135,10 @@ export type searchSecretMessages = {|
  */
 export type searchCallMessages = {|
   _: 'searchCallMessages',
-  /** Identifier of the message from which to search; use 0 to get results from the beginning */
+  /**
+   * Identifier of the message from which to search; use 0 to get results from the last
+   * message
+   */
   from_message_id?: number,
   /**
    * The maximum number of messages to be returned; up to 100. Fewer messages may be returned
@@ -11316,6 +13177,20 @@ export type getChatMessageByDate = {|
   chat_id?: number,
   /** Point in time (Unix timestamp) relative to which to search for messages */
   date?: number,
+|}
+
+/** Returns approximate number of messages of the specified type in the chat */
+export type getChatMessageCount = {|
+  _: 'getChatMessageCount',
+  /** Identifier of the chat in which to count messages */
+  chat_id?: number,
+  /** Filter for message content; searchMessagesFilterEmpty is unsupported in this function */
+  filter?: SearchMessagesFilterOptional,
+  /**
+   * If true, returns count that is available locally without sending network requests,
+   * returning -1 if the number of messages is unknown
+   */
+  return_local?: boolean,
 |}
 
 /**
@@ -11453,6 +13328,27 @@ export type sendChatScreenshotTakenNotification = {|
   chat_id?: number,
 |}
 
+/**
+ * Adds a local message to a chat. The message is persistent across application restarts
+ * only if the message database is used. Returns the added message
+ */
+export type addLocalMessage = {|
+  _: 'addLocalMessage',
+  /** Target chat */
+  chat_id?: number,
+  /**
+   * Identifier of the user who will be shown as the sender of the message; may be 0 for
+   * channel posts
+   */
+  sender_user_id?: number,
+  /** Identifier of the message to reply to or 0 */
+  reply_to_message_id?: number,
+  /** Pass true to disable notification for the message */
+  disable_notification?: boolean,
+  /** The content of the message to be added */
+  input_message_content?: InputMessageContentOptional,
+|}
+
 /** Deletes messages */
 export type deleteMessages = {|
   _: 'deleteMessages',
@@ -11480,9 +13376,8 @@ export type deleteChatMessagesFromUser = {|
 |}
 
 /**
- * Edits the text of a message (or a text of a game message). Non-bot users can edit
- * messages for a limited period of time. Returns the edited message after the edit
- * is completed on the server side
+ * Edits the text of a message (or a text of a game message). Returns the edited message
+ * after the edit is completed on the server side
  */
 export type editMessageText = {|
   _: 'editMessageText',
@@ -11499,7 +13394,7 @@ export type editMessageText = {|
 /**
  * Edits the message content of a live location. Messages can be edited for a limited
  * period of time specified in the live location. Returns the edited message after the
- * edit is completed server-side
+ * edit is completed on the server side
  */
 export type editMessageLiveLocation = {|
   _: 'editMessageLiveLocation',
@@ -11507,7 +13402,7 @@ export type editMessageLiveLocation = {|
   chat_id?: number,
   /** Identifier of the message */
   message_id?: number,
-  /** Tew message reply markup; for bots only */
+  /** The new message reply markup; for bots only */
   reply_markup?: ReplyMarkupOptional,
   /**
    * New location content of the message; may be null. Pass null to stop sharing the live
@@ -11517,8 +13412,30 @@ export type editMessageLiveLocation = {|
 |}
 
 /**
- * Edits the message content caption. Non-bots can edit messages for a limited period
- * of time. Returns the edited message after the edit is completed server-side
+ * Edits the content of a message with an animation, an audio, a document, a photo or
+ * a video. The media in the message can't be replaced if the message was set to self-destruct.
+ * Media can't be replaced by self-destructing media. Media in an album can be edited
+ * only to contain a photo or a video. Returns the edited message after the edit is
+ * completed on the server side
+ */
+export type editMessageMedia = {|
+  _: 'editMessageMedia',
+  /** The chat the message belongs to */
+  chat_id?: number,
+  /** Identifier of the message */
+  message_id?: number,
+  /** The new message reply markup; for bots only */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * New content of the message. Must be one of the following types: InputMessageAnimation,
+   * InputMessageAudio, InputMessageDocument, InputMessagePhoto or InputMessageVideo
+   */
+  input_message_content?: InputMessageContentOptional,
+|}
+
+/**
+ * Edits the message content caption. Returns the edited message after the edit is completed
+ * on the server side
  */
 export type editMessageCaption = {|
   _: 'editMessageCaption',
@@ -11528,13 +13445,13 @@ export type editMessageCaption = {|
   message_id?: number,
   /** The new message reply markup; for bots only */
   reply_markup?: ReplyMarkupOptional,
-  /** New message content caption; 0-200 characters */
+  /** New message content caption; 0-GetOption("message_caption_length_max") characters */
   caption?: formattedTextOptional,
 |}
 
 /**
  * Edits the message reply markup; for bots only. Returns the edited message after the
- * edit is completed server-side
+ * edit is completed on the server side
  */
 export type editMessageReplyMarkup = {|
   _: 'editMessageReplyMarkup',
@@ -11542,7 +13459,7 @@ export type editMessageReplyMarkup = {|
   chat_id?: number,
   /** Identifier of the message */
   message_id?: number,
-  /** New message reply markup */
+  /** The new message reply markup */
   reply_markup?: ReplyMarkupOptional,
 |}
 
@@ -11551,7 +13468,7 @@ export type editInlineMessageText = {|
   _: 'editInlineMessageText',
   /** Inline message identifier */
   inline_message_id?: string,
-  /** New message reply markup */
+  /** The new message reply markup */
   reply_markup?: ReplyMarkupOptional,
   /** New text content of the message. Should be of type InputMessageText */
   input_message_content?: InputMessageContentOptional,
@@ -11565,7 +13482,7 @@ export type editInlineMessageLiveLocation = {|
   _: 'editInlineMessageLiveLocation',
   /** Inline message identifier */
   inline_message_id?: string,
-  /** New message reply markup */
+  /** The new message reply markup */
   reply_markup?: ReplyMarkupOptional,
   /**
    * New location content of the message; may be null. Pass null to stop sharing the live
@@ -11574,14 +13491,31 @@ export type editInlineMessageLiveLocation = {|
   location?: locationOptional,
 |}
 
+/**
+ * Edits the content of a message with an animation, an audio, a document, a photo or
+ * a video in an inline message sent via a bot; for bots only
+ */
+export type editInlineMessageMedia = {|
+  _: 'editInlineMessageMedia',
+  /** Inline message identifier */
+  inline_message_id?: string,
+  /** The new message reply markup; for bots only */
+  reply_markup?: ReplyMarkupOptional,
+  /**
+   * New content of the message. Must be one of the following types: InputMessageAnimation,
+   * InputMessageAudio, InputMessageDocument, InputMessagePhoto or InputMessageVideo
+   */
+  input_message_content?: InputMessageContentOptional,
+|}
+
 /** Edits the caption of an inline message sent via a bot; for bots only */
 export type editInlineMessageCaption = {|
   _: 'editInlineMessageCaption',
   /** Inline message identifier */
   inline_message_id?: string,
-  /** New message reply markup */
+  /** The new message reply markup */
   reply_markup?: ReplyMarkupOptional,
-  /** New message content caption; 0-200 characters */
+  /** New message content caption; 0-GetOption("message_caption_length_max") characters */
   caption?: formattedTextOptional,
 |}
 
@@ -11590,7 +13524,7 @@ export type editInlineMessageReplyMarkup = {|
   _: 'editInlineMessageReplyMarkup',
   /** Inline message identifier */
   inline_message_id?: string,
-  /** New message reply markup */
+  /** The new message reply markup */
   reply_markup?: ReplyMarkupOptional,
 |}
 
@@ -11637,6 +13571,34 @@ export type getFileExtension = {|
   _: 'getFileExtension',
   /** The MIME type of the file */
   mime_type?: string,
+|}
+
+/**
+ * Removes potentially dangerous characters from the name of a file. The encoding of
+ * the file name is supposed to be UTF-8. Returns an empty string on failure. This is
+ * an offline method. Can be called before authorization. Can be called synchronously
+ */
+export type cleanFileName = {|
+  _: 'cleanFileName',
+  /** File name or path to the file */
+  file_name?: string,
+|}
+
+/**
+ * Returns a string stored in the local database from the specified localization target
+ * and language pack by its key. Returns a 404 error if the string is not found. This
+ * is an offline method. Can be called before authorization. Can be called synchronously
+ */
+export type getLanguagePackString = {|
+  _: 'getLanguagePackString',
+  /** Path to the language pack database in which strings are stored */
+  language_pack_database_path?: string,
+  /** Localization target to which the language pack belongs */
+  localization_target?: string,
+  /** Language pack identifier */
+  language_pack_id?: string,
+  /** Language pack key of the string to be returned */
+  key?: string,
 |}
 
 /**
@@ -11998,6 +13960,15 @@ export type setChatDraftMessage = {|
   draft_message?: draftMessageOptional,
 |}
 
+/** Changes the notification settings of a chat */
+export type setChatNotificationSettings = {|
+  _: 'setChatNotificationSettings',
+  /** Chat identifier */
+  chat_id?: number,
+  /** New notification settings for the chat */
+  notification_settings?: chatNotificationSettingsOptional,
+|}
+
 /**
  * Changes the pinned state of a chat. You can pin up to GetOption("pinned_chat_count_max")
  * non-secret chats and the same number of secret chats
@@ -12010,6 +13981,27 @@ export type toggleChatIsPinned = {|
   is_pinned?: boolean,
 |}
 
+/** Changes the marked as unread state of a chat */
+export type toggleChatIsMarkedAsUnread = {|
+  _: 'toggleChatIsMarkedAsUnread',
+  /** Chat identifier */
+  chat_id?: number,
+  /** New value of is_marked_as_unread */
+  is_marked_as_unread?: boolean,
+|}
+
+/**
+ * Changes the value of the default disable_notification parameter, used when a message
+ * is sent to a chat
+ */
+export type toggleChatDefaultDisableNotification = {|
+  _: 'toggleChatDefaultDisableNotification',
+  /** Chat identifier */
+  chat_id?: number,
+  /** New value of default_disable_notification */
+  default_disable_notification?: boolean,
+|}
+
 /** Changes client data associated with a chat */
 export type setChatClientData = {|
   _: 'setChatClientData',
@@ -12017,6 +14009,26 @@ export type setChatClientData = {|
   chat_id?: number,
   /** New value of client_data */
   client_data?: string,
+|}
+
+/**
+ * Adds current user as a new member to a chat. Private and secret chats can't be joined
+ * using this method
+ */
+export type joinChat = {|
+  _: 'joinChat',
+  /** Chat identifier */
+  chat_id?: number,
+|}
+
+/**
+ * Removes current user from chat members. Private and secret chats can't be left using
+ * this method
+ */
+export type leaveChat = {|
+  _: 'leaveChat',
+  /** Chat identifier */
+  chat_id?: number,
 |}
 
 /**
@@ -12087,6 +14099,8 @@ export type searchChatMembers = {|
   query?: string,
   /** The maximum number of users to be returned */
   limit?: number,
+  /** The type of users to return. By default, chatMembersFilterMembers */
+  filter?: ChatMembersFilterOptional,
 |}
 
 /** Returns a list of users who are administrators of the chat */
@@ -12094,6 +14108,37 @@ export type getChatAdministrators = {|
   _: 'getChatAdministrators',
   /** Chat identifier */
   chat_id?: number,
+|}
+
+/** Clears draft messages in all chats */
+export type clearAllDraftMessages = {|
+  _: 'clearAllDraftMessages',
+  /** If true, local draft messages in secret chats will not be cleared */
+  exclude_secret_chats?: boolean,
+|}
+
+/** Returns the notification settings for chats of a given type */
+export type getScopeNotificationSettings = {|
+  _: 'getScopeNotificationSettings',
+  /** Types of chats for which to return the notification settings information */
+  scope?: NotificationSettingsScopeOptional,
+|}
+
+/** Changes notification settings for chats of a given type */
+export type setScopeNotificationSettings = {|
+  _: 'setScopeNotificationSettings',
+  /** Types of chats for which to change the notification settings */
+  scope?: NotificationSettingsScopeOptional,
+  /** The new notification settings for the given scope */
+  notification_settings?: scopeNotificationSettingsOptional,
+|}
+
+/**
+ * Resets all notification settings to their default values. By default, all chats are
+ * unmuted, the sound is set to "default" and message previews are shown
+ */
+export type resetAllNotificationSettings = {|
+  _: 'resetAllNotificationSettings',
 |}
 
 /** Changes the order of pinned chats */
@@ -12304,8 +14349,13 @@ export type getBlockedUsers = {|
 /** Adds new contacts or edits existing contacts; contacts' user identifiers are ignored */
 export type importContacts = {|
   _: 'importContacts',
-  /** The list of contacts to import or edit */
+  /** The list of contacts to import or edit, contact's vCard are ignored and are not imported */
   contacts?: contactOptional[],
+|}
+
+/** Returns all user contacts */
+export type getContacts = {|
+  _: 'getContacts',
 |}
 
 /**
@@ -12340,11 +14390,11 @@ export type getImportedContactCount = {|
  */
 export type changeImportedContacts = {|
   _: 'changeImportedContacts',
-  /** The new list of contacts */
+  /** The new list of contacts, contact's vCard are ignored and are not imported */
   contacts?: contactOptional[],
 |}
 
-/** Clears all imported contacts */
+/** Clears all imported contacts, contacts list remains unchanged */
 export type clearImportedContacts = {|
   _: 'clearImportedContacts',
 |}
@@ -12634,30 +14684,6 @@ export type getWebPageInstantView = {|
   force_full?: boolean,
 |}
 
-/** Returns the notification settings for a given scope */
-export type getNotificationSettings = {|
-  _: 'getNotificationSettings',
-  /** Scope for which to return the notification settings information */
-  scope?: NotificationSettingsScopeOptional,
-|}
-
-/** Changes notification settings for a given scope */
-export type setNotificationSettings = {|
-  _: 'setNotificationSettings',
-  /** Scope for which to change the notification settings */
-  scope?: NotificationSettingsScopeOptional,
-  /** The new notification settings for the given scope */
-  notification_settings?: notificationSettingsOptional,
-|}
-
-/**
- * Resets all notification settings to their default values. By default, the only muted
- * chats are supergroups, the sound is set to "default" and message previews are shown
- */
-export type resetAllNotificationSettings = {|
-  _: 'resetAllNotificationSettings',
-|}
-
 /**
  * Uploads a new profile photo for the current user. If something changes, updateUser
  * will be sent
@@ -12879,7 +14905,10 @@ export type unpinSupergroupMessage = {|
   supergroup_id?: number,
 |}
 
-/** Reports some messages from a user in a supergroup as spam */
+/**
+ * Reports some messages from a user in a supergroup as spam; requires administrator
+ * rights in the supergroup
+ */
 export type reportSupergroupSpam = {|
   _: 'reportSupergroupSpam',
   /** Supergroup identifier */
@@ -13031,6 +15060,72 @@ export type getWallpapers = {|
   _: 'getWallpapers',
 |}
 
+/**
+ * Returns information about the current localization target. This is an offline request
+ * if only_local is true
+ */
+export type getLocalizationTargetInfo = {|
+  _: 'getLocalizationTargetInfo',
+  /** If true, returns only locally available information without sending network requests */
+  only_local?: boolean,
+|}
+
+/**
+ * Returns strings from a language pack in the current localization target by their
+ * keys
+ */
+export type getLanguagePackStrings = {|
+  _: 'getLanguagePackStrings',
+  /** Language pack identifier of the strings to be returned */
+  language_pack_id?: string,
+  /**
+   * Language pack keys of the strings to be returned; leave empty to request all available
+   * strings
+   */
+  keys?: string[],
+|}
+
+/** Adds or changes a custom language pack to the current localization target */
+export type setCustomLanguagePack = {|
+  _: 'setCustomLanguagePack',
+  /**
+   * Information about the language pack. Language pack ID must start with 'X', consist
+   * only of English letters, digits and hyphens, and must not exceed 64 characters
+   */
+  info?: languagePackInfoOptional,
+  /** Strings of the new language pack */
+  strings?: languagePackStringOptional[],
+|}
+
+/** Edits information about a custom language pack in the current localization target */
+export type editCustomLanguagePackInfo = {|
+  _: 'editCustomLanguagePackInfo',
+  /** New information about the custom language pack */
+  info?: languagePackInfoOptional,
+|}
+
+/** Adds, edits or deletes a string in a custom language pack */
+export type setCustomLanguagePackString = {|
+  _: 'setCustomLanguagePackString',
+  /**
+   * Identifier of a previously added custom language pack in the current localization
+   * target
+   */
+  language_pack_id?: string,
+  /** New language pack string */
+  new_string?: languagePackStringOptional,
+|}
+
+/**
+ * Deletes all information about a language pack in the current localization target.
+ * The language pack that is currently in use can't be deleted
+ */
+export type deleteLanguagePack = {|
+  _: 'deleteLanguagePack',
+  /** Identifier of the language pack to delete */
+  language_pack_id?: string,
+|}
+
 /** Registers the currently used device for receiving push notifications */
 export type registerDevice = {|
   _: 'registerDevice',
@@ -13106,7 +15201,8 @@ export type getAccountTtl = {|
 /**
  * Deletes the account of the current user, deleting all information associated with
  * the user from the server. The phone number of the account can be used to create a
- * new account
+ * new account. Can be called before authorization when the current authorization state
+ * is authorizationStateWaitPassword
  */
 export type deleteAccount = {|
   _: 'deleteAccount',
@@ -13235,6 +15331,175 @@ export type resetNetworkStatistics = {|
   _: 'resetNetworkStatistics',
 |}
 
+/** Returns one of the available Telegram Passport elements */
+export type getPassportElement = {|
+  _: 'getPassportElement',
+  /** Telegram Passport element type */
+  type?: PassportElementTypeOptional,
+  /** Password of the current user */
+  password?: string,
+|}
+
+/** Returns all available Telegram Passport elements */
+export type getAllPassportElements = {|
+  _: 'getAllPassportElements',
+  /** Password of the current user */
+  password?: string,
+|}
+
+/**
+ * Adds an element to the user's Telegram Passport. May return an error with a message
+ * "PHONE_VERIFICATION_NEEDED" or "EMAIL_VERIFICATION_NEEDED" if the chosen phone number
+ * or the chosen email address must be verified first
+ */
+export type setPassportElement = {|
+  _: 'setPassportElement',
+  /** Input Telegram Passport element */
+  element?: InputPassportElementOptional,
+  /** Password of the current user */
+  password?: string,
+|}
+
+/** Deletes a Telegram Passport element */
+export type deletePassportElement = {|
+  _: 'deletePassportElement',
+  /** Element type */
+  type?: PassportElementTypeOptional,
+|}
+
+/**
+ * Informs the user that some of the elements in their Telegram Passport contain errors;
+ * for bots only. The user will not be able to resend the elements, until the errors
+ * are fixed
+ */
+export type setPassportElementErrors = {|
+  _: 'setPassportElementErrors',
+  /** User identifier */
+  user_id?: number,
+  /** The errors */
+  errors?: inputPassportElementErrorOptional[],
+|}
+
+/**
+ * Returns an IETF language tag of the language preferred in the country, which should
+ * be used to fill native fields in Telegram Passport personal details. Returns a 404
+ * error if unknown
+ */
+export type getPreferredCountryLanguage = {|
+  _: 'getPreferredCountryLanguage',
+  /** A two-letter ISO 3166-1 alpha-2 country code */
+  country_code?: string,
+|}
+
+/** Sends a code to verify a phone number to be added to a user's Telegram Passport */
+export type sendPhoneNumberVerificationCode = {|
+  _: 'sendPhoneNumberVerificationCode',
+  /** The phone number of the user, in international format */
+  phone_number?: string,
+  /**
+   * Pass true if the authentication code may be sent via flash call to the specified
+   * phone number
+   */
+  allow_flash_call?: boolean,
+  /**
+   * Pass true if the phone number is used on the current device. Ignored if allow_flash_call
+   * is false
+   */
+  is_current_phone_number?: boolean,
+|}
+
+/** Re-sends the code to verify a phone number to be added to a user's Telegram Passport */
+export type resendPhoneNumberVerificationCode = {|
+  _: 'resendPhoneNumberVerificationCode',
+|}
+
+/** Checks the phone number verification code for Telegram Passport */
+export type checkPhoneNumberVerificationCode = {|
+  _: 'checkPhoneNumberVerificationCode',
+  /** Verification code */
+  code?: string,
+|}
+
+/** Sends a code to verify an email address to be added to a user's Telegram Passport */
+export type sendEmailAddressVerificationCode = {|
+  _: 'sendEmailAddressVerificationCode',
+  /** Email address */
+  email_address?: string,
+|}
+
+/** Re-sends the code to verify an email address to be added to a user's Telegram Passport */
+export type resendEmailAddressVerificationCode = {|
+  _: 'resendEmailAddressVerificationCode',
+|}
+
+/** Checks the email address verification code for Telegram Passport */
+export type checkEmailAddressVerificationCode = {|
+  _: 'checkEmailAddressVerificationCode',
+  /** Verification code */
+  code?: string,
+|}
+
+/** Returns a Telegram Passport authorization form for sharing data with a service */
+export type getPassportAuthorizationForm = {|
+  _: 'getPassportAuthorizationForm',
+  /** User identifier of the service's bot */
+  bot_user_id?: number,
+  /** Telegram Passport element types requested by the service */
+  scope?: string,
+  /** Service's public_key */
+  public_key?: string,
+  /** Authorization form nonce provided by the service */
+  nonce?: string,
+  /** Password of the current user */
+  password?: string,
+|}
+
+/** Sends a Telegram Passport authorization form, effectively sharing data with the service */
+export type sendPassportAuthorizationForm = {|
+  _: 'sendPassportAuthorizationForm',
+  /** Authorization form identifier */
+  autorization_form_id?: number,
+  /**
+   * Types of Telegram Passport elements chosen by user to complete the authorization
+   * form
+   */
+  types?: PassportElementTypeOptional[],
+|}
+
+/**
+ * Sends phone number confirmation code. Should be called when user presses "https://t.me/confirmphone?phone=*******&hash=**********"
+ * or "tg://confirmphone?phone=*******&hash=**********" link
+ */
+export type sendPhoneNumberConfirmationCode = {|
+  _: 'sendPhoneNumberConfirmationCode',
+  /** Value of the "hash" parameter from the link */
+  hash?: string,
+  /** Value of the "phone" parameter from the link */
+  phone_number?: string,
+  /**
+   * Pass true if the authentication code may be sent via flash call to the specified
+   * phone number
+   */
+  allow_flash_call?: boolean,
+  /**
+   * Pass true if the phone number is used on the current device. Ignored if allow_flash_call
+   * is false
+   */
+  is_current_phone_number?: boolean,
+|}
+
+/** Resends phone number confirmation code */
+export type resendPhoneNumberConfirmationCode = {|
+  _: 'resendPhoneNumberConfirmationCode',
+|}
+
+/** Checks phone number confirmation code */
+export type checkPhoneNumberConfirmationCode = {|
+  _: 'checkPhoneNumberConfirmationCode',
+  /** The phone number confirmation code */
+  code?: string,
+|}
+
 /**
  * Informs the server about the number of pending bot updates if they haven't been processed
  * for a long time; for bots only
@@ -13307,6 +15572,33 @@ export type removeStickerFromSet = {|
   sticker?: InputFileOptional,
 |}
 
+/**
+ * Returns information about a file with a map thumbnail in PNG format. Only map thumbnail
+ * files with size less than 1MB can be downloaded
+ */
+export type getMapThumbnailFile = {|
+  _: 'getMapThumbnailFile',
+  /** Location of the map center */
+  location?: locationOptional,
+  /** Map zoom level; 13-20 */
+  zoom?: number,
+  /** Map width in pixels before applying scale; 16-1024 */
+  width?: number,
+  /** Map height in pixels before applying scale; 16-1024 */
+  height?: number,
+  /** Map scale; 1-3 */
+  scale?: number,
+  /** Identifier of a chat, in which the thumbnail will be shown. Use 0 if unknown */
+  chat_id?: number,
+|}
+
+/** Accepts Telegram terms of services */
+export type acceptTermsOfService = {|
+  _: 'acceptTermsOfService',
+  /** Terms of service identifier */
+  terms_of_service_id?: string,
+|}
+
 /** Sends a custom request; for bots only */
 export type sendCustomRequest = {|
   _: 'sendCustomRequest',
@@ -13325,7 +15617,10 @@ export type answerCustomQuery = {|
   data?: string,
 |}
 
-/** Succeeds after a specified amount of time has passed. Can be called before authorization */
+/**
+ * Succeeds after a specified amount of time has passed. Can be called before authorization.
+ * Can be called before initialization
+ */
 export type setAlarm = {|
   _: 'setAlarm',
   /** Number of seconds before the function returns */
@@ -13348,21 +15643,87 @@ export type getInviteText = {|
   _: 'getInviteText',
 |}
 
-/** Returns the terms of service. Can be called before authorization */
-export type getTermsOfService = {|
-  _: 'getTermsOfService',
+/**
+ * Returns information about a tg:// deep link. Use "tg://need_update_for_some_feature"
+ * or "tg:some_unsupported_feature" for testing. Returns a 404 error for unknown links.
+ * Can be called before authorization
+ */
+export type getDeepLinkInfo = {|
+  _: 'getDeepLinkInfo',
+  /** The link */
+  link?: string,
 |}
 
-/** Sets the proxy server for network requests. Can be called before authorization */
-export type setProxy = {|
-  _: 'setProxy',
-  /** Proxy server to use. Specify null to remove the proxy server */
-  proxy?: ProxyOptional,
+/** Adds a proxy server for network requests. Can be called before authorization */
+export type addProxy = {|
+  _: 'addProxy',
+  /** Proxy server IP address */
+  server?: string,
+  /** Proxy server port */
+  port?: number,
+  /** True, if the proxy should be enabled */
+  enable?: boolean,
+  /** Proxy type */
+  type?: ProxyTypeOptional,
 |}
 
-/** Returns the proxy that is currently set up. Can be called before authorization */
-export type getProxy = {|
-  _: 'getProxy',
+/** Edits an existing proxy server for network requests. Can be called before authorization */
+export type editProxy = {|
+  _: 'editProxy',
+  /** Proxy identifier */
+  proxy_id?: number,
+  /** Proxy server IP address */
+  server?: string,
+  /** Proxy server port */
+  port?: number,
+  /** True, if the proxy should be enabled */
+  enable?: boolean,
+  /** Proxy type */
+  type?: ProxyTypeOptional,
+|}
+
+/** Enables a proxy. Only one proxy can be enabled at a time. Can be called before authorization */
+export type enableProxy = {|
+  _: 'enableProxy',
+  /** Proxy identifier */
+  proxy_id?: number,
+|}
+
+/** Disables the currently enabled proxy. Can be called before authorization */
+export type disableProxy = {|
+  _: 'disableProxy',
+|}
+
+/** Removes a proxy server. Can be called before authorization */
+export type removeProxy = {|
+  _: 'removeProxy',
+  /** Proxy identifier */
+  proxy_id?: number,
+|}
+
+/** Returns list of proxies that are currently set up. Can be called before authorization */
+export type getProxies = {|
+  _: 'getProxies',
+|}
+
+/**
+ * Returns an HTTPS link, which can be used to add a proxy. Available only for SOCKS5
+ * and MTProto proxies. Can be called before authorization
+ */
+export type getProxyLink = {|
+  _: 'getProxyLink',
+  /** Proxy identifier */
+  proxy_id?: number,
+|}
+
+/**
+ * Computes time needed to receive a response from a Telegram server through a proxy.
+ * Can be called before authorization
+ */
+export type pingProxy = {|
+  _: 'pingProxy',
+  /** Proxy identifier. Use 0 to ping a Telegram server without a proxy */
+  proxy_id?: number,
 |}
 
 /** Does nothing; for testing only */
@@ -13485,6 +15846,36 @@ export type AuthenticationCodeInfo =
 export type AuthenticationCodeInfoOptional =
   | authenticationCodeInfoOptional
 
+export type EmailAddressAuthenticationCodeInfo =
+  | emailAddressAuthenticationCodeInfo
+
+export type EmailAddressAuthenticationCodeInfoOptional =
+  | emailAddressAuthenticationCodeInfoOptional
+
+export type TextEntity =
+  | textEntity
+
+export type TextEntityOptional =
+  | textEntityOptional
+
+export type TextEntities =
+  | textEntities
+
+export type TextEntitiesOptional =
+  | textEntitiesOptional
+
+export type FormattedText =
+  | formattedText
+
+export type FormattedTextOptional =
+  | formattedTextOptional
+
+export type TermsOfService =
+  | termsOfService
+
+export type TermsOfServiceOptional =
+  | termsOfServiceOptional
+
 /** Represents the current authorization state of the client */
 export type AuthorizationState =
   | authorizationStateWaitTdlibParameters
@@ -13514,12 +15905,6 @@ export type PasswordState =
 
 export type PasswordStateOptional =
   | passwordStateOptional
-
-export type PasswordRecoveryInfo =
-  | passwordRecoveryInfo
-
-export type PasswordRecoveryInfoOptional =
-  | passwordRecoveryInfoOptional
 
 export type RecoveryEmailAddress =
   | recoveryEmailAddress
@@ -13590,24 +15975,6 @@ export type MaskPosition =
 
 export type MaskPositionOptional =
   | maskPositionOptional
-
-export type TextEntity =
-  | textEntity
-
-export type TextEntityOptional =
-  | textEntityOptional
-
-export type TextEntities =
-  | textEntities
-
-export type TextEntitiesOptional =
-  | textEntitiesOptional
-
-export type FormattedText =
-  | formattedText
-
-export type FormattedTextOptional =
-  | formattedTextOptional
 
 export type Animation =
   | animation
@@ -13797,6 +16164,22 @@ export type ChatMembers =
 export type ChatMembersOptional =
   | chatMembersOptional
 
+/** Specifies the kind of chat members to return in searchChatMembers */
+export type ChatMembersFilter =
+  | chatMembersFilterAdministrators
+  | chatMembersFilterMembers
+  | chatMembersFilterRestricted
+  | chatMembersFilterBanned
+  | chatMembersFilterBots
+
+/** Specifies the kind of chat members to return in searchChatMembers */
+export type ChatMembersFilterOptional =
+  | chatMembersFilterAdministratorsOptional
+  | chatMembersFilterMembersOptional
+  | chatMembersFilterRestrictedOptional
+  | chatMembersFilterBannedOptional
+  | chatMembersFilterBotsOptional
+
 /** Specifies the kind of chat members to return in getSupergroupMembers */
 export type SupergroupMembersFilter =
   | supergroupMembersFilterRecent
@@ -13895,25 +16278,27 @@ export type FoundMessages =
 export type FoundMessagesOptional =
   | foundMessagesOptional
 
-/** Describes the types of chats for which notification settings are applied */
+/** Describes the types of chats to which notification settings are applied */
 export type NotificationSettingsScope =
-  | notificationSettingsScopeChat
   | notificationSettingsScopePrivateChats
-  | notificationSettingsScopeBasicGroupChats
-  | notificationSettingsScopeAllChats
+  | notificationSettingsScopeGroupChats
 
-/** Describes the types of chats for which notification settings are applied */
+/** Describes the types of chats to which notification settings are applied */
 export type NotificationSettingsScopeOptional =
-  | notificationSettingsScopeChatOptional
   | notificationSettingsScopePrivateChatsOptional
-  | notificationSettingsScopeBasicGroupChatsOptional
-  | notificationSettingsScopeAllChatsOptional
+  | notificationSettingsScopeGroupChatsOptional
 
-export type NotificationSettings =
-  | notificationSettings
+export type ChatNotificationSettings =
+  | chatNotificationSettings
 
-export type NotificationSettingsOptional =
-  | notificationSettingsOptional
+export type ChatNotificationSettingsOptional =
+  | chatNotificationSettingsOptional
+
+export type ScopeNotificationSettings =
+  | scopeNotificationSettings
+
+export type ScopeNotificationSettingsOptional =
+  | scopeNotificationSettingsOptional
 
 export type DraftMessage =
   | draftMessage
@@ -14107,6 +16492,12 @@ export type WebPage =
 export type WebPageOptional =
   | webPageOptional
 
+export type Address =
+  | address
+
+export type AddressOptional =
+  | addressOptional
+
 export type LabeledPricePart =
   | labeledPricePart
 
@@ -14118,12 +16509,6 @@ export type Invoice =
 
 export type InvoiceOptional =
   | invoiceOptional
-
-export type ShippingAddress =
-  | shippingAddress
-
-export type ShippingAddressOptional =
-  | shippingAddressOptional
 
 export type OrderInfo =
   | orderInfo
@@ -14187,6 +16572,240 @@ export type PaymentReceipt =
 export type PaymentReceiptOptional =
   | paymentReceiptOptional
 
+export type DatedFile =
+  | datedFile
+
+export type DatedFileOptional =
+  | datedFileOptional
+
+/** Contains the type of a Telegram Passport element */
+export type PassportElementType =
+  | passportElementTypePersonalDetails
+  | passportElementTypePassport
+  | passportElementTypeDriverLicense
+  | passportElementTypeIdentityCard
+  | passportElementTypeInternalPassport
+  | passportElementTypeAddress
+  | passportElementTypeUtilityBill
+  | passportElementTypeBankStatement
+  | passportElementTypeRentalAgreement
+  | passportElementTypePassportRegistration
+  | passportElementTypeTemporaryRegistration
+  | passportElementTypePhoneNumber
+  | passportElementTypeEmailAddress
+
+/** Contains the type of a Telegram Passport element */
+export type PassportElementTypeOptional =
+  | passportElementTypePersonalDetailsOptional
+  | passportElementTypePassportOptional
+  | passportElementTypeDriverLicenseOptional
+  | passportElementTypeIdentityCardOptional
+  | passportElementTypeInternalPassportOptional
+  | passportElementTypeAddressOptional
+  | passportElementTypeUtilityBillOptional
+  | passportElementTypeBankStatementOptional
+  | passportElementTypeRentalAgreementOptional
+  | passportElementTypePassportRegistrationOptional
+  | passportElementTypeTemporaryRegistrationOptional
+  | passportElementTypePhoneNumberOptional
+  | passportElementTypeEmailAddressOptional
+
+export type Date =
+  | date
+
+export type DateOptional =
+  | dateOptional
+
+export type PersonalDetails =
+  | personalDetails
+
+export type PersonalDetailsOptional =
+  | personalDetailsOptional
+
+export type IdentityDocument =
+  | identityDocument
+
+export type IdentityDocumentOptional =
+  | identityDocumentOptional
+
+export type InputIdentityDocument =
+  | inputIdentityDocument
+
+export type InputIdentityDocumentOptional =
+  | inputIdentityDocumentOptional
+
+export type PersonalDocument =
+  | personalDocument
+
+export type PersonalDocumentOptional =
+  | personalDocumentOptional
+
+export type InputPersonalDocument =
+  | inputPersonalDocument
+
+export type InputPersonalDocumentOptional =
+  | inputPersonalDocumentOptional
+
+/** Contains information about a Telegram Passport element */
+export type PassportElement =
+  | passportElementPersonalDetails
+  | passportElementPassport
+  | passportElementDriverLicense
+  | passportElementIdentityCard
+  | passportElementInternalPassport
+  | passportElementAddress
+  | passportElementUtilityBill
+  | passportElementBankStatement
+  | passportElementRentalAgreement
+  | passportElementPassportRegistration
+  | passportElementTemporaryRegistration
+  | passportElementPhoneNumber
+  | passportElementEmailAddress
+
+/** Contains information about a Telegram Passport element */
+export type PassportElementOptional =
+  | passportElementPersonalDetailsOptional
+  | passportElementPassportOptional
+  | passportElementDriverLicenseOptional
+  | passportElementIdentityCardOptional
+  | passportElementInternalPassportOptional
+  | passportElementAddressOptional
+  | passportElementUtilityBillOptional
+  | passportElementBankStatementOptional
+  | passportElementRentalAgreementOptional
+  | passportElementPassportRegistrationOptional
+  | passportElementTemporaryRegistrationOptional
+  | passportElementPhoneNumberOptional
+  | passportElementEmailAddressOptional
+
+/** Contains information about a Telegram Passport element to be saved */
+export type InputPassportElement =
+  | inputPassportElementPersonalDetails
+  | inputPassportElementPassport
+  | inputPassportElementDriverLicense
+  | inputPassportElementIdentityCard
+  | inputPassportElementInternalPassport
+  | inputPassportElementAddress
+  | inputPassportElementUtilityBill
+  | inputPassportElementBankStatement
+  | inputPassportElementRentalAgreement
+  | inputPassportElementPassportRegistration
+  | inputPassportElementTemporaryRegistration
+  | inputPassportElementPhoneNumber
+  | inputPassportElementEmailAddress
+
+/** Contains information about a Telegram Passport element to be saved */
+export type InputPassportElementOptional =
+  | inputPassportElementPersonalDetailsOptional
+  | inputPassportElementPassportOptional
+  | inputPassportElementDriverLicenseOptional
+  | inputPassportElementIdentityCardOptional
+  | inputPassportElementInternalPassportOptional
+  | inputPassportElementAddressOptional
+  | inputPassportElementUtilityBillOptional
+  | inputPassportElementBankStatementOptional
+  | inputPassportElementRentalAgreementOptional
+  | inputPassportElementPassportRegistrationOptional
+  | inputPassportElementTemporaryRegistrationOptional
+  | inputPassportElementPhoneNumberOptional
+  | inputPassportElementEmailAddressOptional
+
+export type PassportElements =
+  | passportElements
+
+export type PassportElementsOptional =
+  | passportElementsOptional
+
+/** Contains the description of an error in a Telegram Passport element */
+export type PassportElementErrorSource =
+  | passportElementErrorSourceUnspecified
+  | passportElementErrorSourceDataField
+  | passportElementErrorSourceFrontSide
+  | passportElementErrorSourceReverseSide
+  | passportElementErrorSourceSelfie
+  | passportElementErrorSourceTranslationFile
+  | passportElementErrorSourceTranslationFiles
+  | passportElementErrorSourceFile
+  | passportElementErrorSourceFiles
+
+/** Contains the description of an error in a Telegram Passport element */
+export type PassportElementErrorSourceOptional =
+  | passportElementErrorSourceUnspecifiedOptional
+  | passportElementErrorSourceDataFieldOptional
+  | passportElementErrorSourceFrontSideOptional
+  | passportElementErrorSourceReverseSideOptional
+  | passportElementErrorSourceSelfieOptional
+  | passportElementErrorSourceTranslationFileOptional
+  | passportElementErrorSourceTranslationFilesOptional
+  | passportElementErrorSourceFileOptional
+  | passportElementErrorSourceFilesOptional
+
+export type PassportElementError =
+  | passportElementError
+
+export type PassportElementErrorOptional =
+  | passportElementErrorOptional
+
+export type PassportSuitableElement =
+  | passportSuitableElement
+
+export type PassportSuitableElementOptional =
+  | passportSuitableElementOptional
+
+export type PassportRequiredElement =
+  | passportRequiredElement
+
+export type PassportRequiredElementOptional =
+  | passportRequiredElementOptional
+
+export type PassportAuthorizationForm =
+  | passportAuthorizationForm
+
+export type PassportAuthorizationFormOptional =
+  | passportAuthorizationFormOptional
+
+export type EncryptedCredentials =
+  | encryptedCredentials
+
+export type EncryptedCredentialsOptional =
+  | encryptedCredentialsOptional
+
+export type EncryptedPassportElement =
+  | encryptedPassportElement
+
+export type EncryptedPassportElementOptional =
+  | encryptedPassportElementOptional
+
+/** Contains the description of an error in a Telegram Passport element; for bots only */
+export type InputPassportElementErrorSource =
+  | inputPassportElementErrorSourceUnspecified
+  | inputPassportElementErrorSourceDataField
+  | inputPassportElementErrorSourceFrontSide
+  | inputPassportElementErrorSourceReverseSide
+  | inputPassportElementErrorSourceSelfie
+  | inputPassportElementErrorSourceTranslationFile
+  | inputPassportElementErrorSourceTranslationFiles
+  | inputPassportElementErrorSourceFile
+  | inputPassportElementErrorSourceFiles
+
+/** Contains the description of an error in a Telegram Passport element; for bots only */
+export type InputPassportElementErrorSourceOptional =
+  | inputPassportElementErrorSourceUnspecifiedOptional
+  | inputPassportElementErrorSourceDataFieldOptional
+  | inputPassportElementErrorSourceFrontSideOptional
+  | inputPassportElementErrorSourceReverseSideOptional
+  | inputPassportElementErrorSourceSelfieOptional
+  | inputPassportElementErrorSourceTranslationFileOptional
+  | inputPassportElementErrorSourceTranslationFilesOptional
+  | inputPassportElementErrorSourceFileOptional
+  | inputPassportElementErrorSourceFilesOptional
+
+export type InputPassportElementError =
+  | inputPassportElementError
+
+export type InputPassportElementErrorOptional =
+  | inputPassportElementErrorOptional
+
 /** Contains the content of a message */
 export type MessageContent =
   | messageText
@@ -14225,6 +16844,8 @@ export type MessageContent =
   | messagePaymentSuccessfulBot
   | messageContactRegistered
   | messageWebsiteConnected
+  | messagePassportDataSent
+  | messagePassportDataReceived
   | messageUnsupported
 
 /** Contains the content of a message */
@@ -14265,6 +16886,8 @@ export type MessageContentOptional =
   | messagePaymentSuccessfulBotOptional
   | messageContactRegisteredOptional
   | messageWebsiteConnectedOptional
+  | messagePassportDataSentOptional
+  | messagePassportDataReceivedOptional
   | messageUnsupportedOptional
 
 /** Represents a part of the text which must be formatted differently */
@@ -14691,6 +17314,42 @@ export type ChatEventLogFilters =
 export type ChatEventLogFiltersOptional =
   | chatEventLogFiltersOptional
 
+/** Represents the value of a string in a language pack */
+export type LanguagePackStringValue =
+  | languagePackStringValueOrdinary
+  | languagePackStringValuePluralized
+  | languagePackStringValueDeleted
+
+/** Represents the value of a string in a language pack */
+export type LanguagePackStringValueOptional =
+  | languagePackStringValueOrdinaryOptional
+  | languagePackStringValuePluralizedOptional
+  | languagePackStringValueDeletedOptional
+
+export type LanguagePackString =
+  | languagePackString
+
+export type LanguagePackStringOptional =
+  | languagePackStringOptional
+
+export type LanguagePackStrings =
+  | languagePackStrings
+
+export type LanguagePackStringsOptional =
+  | languagePackStringsOptional
+
+export type LanguagePackInfo =
+  | languagePackInfo
+
+export type LanguagePackInfoOptional =
+  | languagePackInfoOptional
+
+export type LocalizationTargetInfo =
+  | localizationTargetInfo
+
+export type LocalizationTargetInfoOptional =
+  | localizationTargetInfoOptional
+
 /**
  * Represents a data needed to subscribe for push notifications. To use specific push
  * notification service, you must specify the correct application platform and upload
@@ -14852,6 +17511,7 @@ export type ChatReportReason =
   | chatReportReasonSpam
   | chatReportReasonViolence
   | chatReportReasonPornography
+  | chatReportReasonCopyright
   | chatReportReasonCustom
 
 /** Describes the reason why a chat is reported */
@@ -14859,6 +17519,7 @@ export type ChatReportReasonOptional =
   | chatReportReasonSpamOptional
   | chatReportReasonViolenceOptional
   | chatReportReasonPornographyOptional
+  | chatReportReasonCopyrightOptional
   | chatReportReasonCustomOptional
 
 export type PublicMessageLink =
@@ -14876,6 +17537,8 @@ export type FileType =
   | fileTypePhoto
   | fileTypeProfilePhoto
   | fileTypeSecret
+  | fileTypeSecretThumbnail
+  | fileTypeSecure
   | fileTypeSticker
   | fileTypeThumbnail
   | fileTypeUnknown
@@ -14883,7 +17546,6 @@ export type FileType =
   | fileTypeVideoNote
   | fileTypeVoiceNote
   | fileTypeWallpaper
-  | fileTypeSecretThumbnail
 
 /** Represents the type of a file */
 export type FileTypeOptional =
@@ -14894,6 +17556,8 @@ export type FileTypeOptional =
   | fileTypePhotoOptional
   | fileTypeProfilePhotoOptional
   | fileTypeSecretOptional
+  | fileTypeSecretThumbnailOptional
+  | fileTypeSecureOptional
   | fileTypeStickerOptional
   | fileTypeThumbnailOptional
   | fileTypeUnknownOptional
@@ -14901,7 +17565,6 @@ export type FileTypeOptional =
   | fileTypeVideoNoteOptional
   | fileTypeVoiceNoteOptional
   | fileTypeWallpaperOptional
-  | fileTypeSecretThumbnailOptional
 
 export type StorageStatisticsByFileType =
   | storageStatisticsByFileType
@@ -15037,6 +17700,18 @@ export type Text =
 export type TextOptional =
   | textOptional
 
+export type Seconds =
+  | seconds
+
+export type SecondsOptional =
+  | secondsOptional
+
+export type DeepLinkInfo =
+  | deepLinkInfo
+
+export type DeepLinkInfoOptional =
+  | deepLinkInfoOptional
+
 /** Describes the way the text should be parsed for TextEntities */
 export type TextParseMode =
   | textParseModeMarkdown
@@ -15047,15 +17722,29 @@ export type TextParseModeOptional =
   | textParseModeMarkdownOptional
   | textParseModeHTMLOptional
 
-/** Contains information about a proxy server */
-export type Proxy =
-  | proxyEmpty
-  | proxySocks5
+/** Describes the type of the proxy server */
+export type ProxyType =
+  | proxyTypeSocks5
+  | proxyTypeHttp
+  | proxyTypeMtproto
 
-/** Contains information about a proxy server */
+/** Describes the type of the proxy server */
+export type ProxyTypeOptional =
+  | proxyTypeSocks5Optional
+  | proxyTypeHttpOptional
+  | proxyTypeMtprotoOptional
+
+export type Proxy =
+  | proxy
+
 export type ProxyOptional =
-  | proxyEmptyOptional
-  | proxySocks5Optional
+  | proxyOptional
+
+export type Proxies =
+  | proxies
+
+export type ProxiesOptional =
+  | proxiesOptional
 
 export type InputSticker =
   | inputSticker
@@ -15081,10 +17770,14 @@ export type Update =
   | updateChatLastMessage
   | updateChatOrder
   | updateChatIsPinned
+  | updateChatIsMarkedAsUnread
+  | updateChatIsSponsored
+  | updateChatDefaultDisableNotification
   | updateChatReadInbox
   | updateChatReadOutbox
   | updateChatUnreadMentionCount
-  | updateNotificationSettings
+  | updateChatNotificationSettings
+  | updateScopeNotificationSettings
   | updateChatReplyMarkup
   | updateChatDraftMessage
   | updateDeleteMessages
@@ -15104,13 +17797,16 @@ export type Update =
   | updateCall
   | updateUserPrivacySettingRules
   | updateUnreadMessageCount
+  | updateUnreadChatCount
   | updateOption
   | updateInstalledStickerSets
   | updateTrendingStickerSets
   | updateRecentStickers
   | updateFavoriteStickers
   | updateSavedAnimations
+  | updateLanguagePackStrings
   | updateConnectionState
+  | updateTermsOfService
   | updateNewInlineQuery
   | updateNewChosenInlineResult
   | updateNewCallbackQuery
@@ -15138,10 +17834,14 @@ export type UpdateOptional =
   | updateChatLastMessageOptional
   | updateChatOrderOptional
   | updateChatIsPinnedOptional
+  | updateChatIsMarkedAsUnreadOptional
+  | updateChatIsSponsoredOptional
+  | updateChatDefaultDisableNotificationOptional
   | updateChatReadInboxOptional
   | updateChatReadOutboxOptional
   | updateChatUnreadMentionCountOptional
-  | updateNotificationSettingsOptional
+  | updateChatNotificationSettingsOptional
+  | updateScopeNotificationSettingsOptional
   | updateChatReplyMarkupOptional
   | updateChatDraftMessageOptional
   | updateDeleteMessagesOptional
@@ -15161,13 +17861,16 @@ export type UpdateOptional =
   | updateCallOptional
   | updateUserPrivacySettingRulesOptional
   | updateUnreadMessageCountOptional
+  | updateUnreadChatCountOptional
   | updateOptionOptional
   | updateInstalledStickerSetsOptional
   | updateTrendingStickerSetsOptional
   | updateRecentStickersOptional
   | updateFavoriteStickersOptional
   | updateSavedAnimationsOptional
+  | updateLanguagePackStringsOptional
   | updateConnectionStateOptional
+  | updateTermsOfServiceOptional
   | updateNewInlineQueryOptional
   | updateNewChosenInlineResultOptional
   | updateNewCallbackQueryOptional
@@ -15280,6 +17983,7 @@ export type TDFunction =
   | searchChatRecentLocationMessages
   | getActiveLiveLocationMessages
   | getChatMessageByDate
+  | getChatMessageCount
   | getPublicMessageLink
   | sendMessage
   | sendMessageAlbum
@@ -15288,20 +17992,25 @@ export type TDFunction =
   | forwardMessages
   | sendChatSetTtlMessage
   | sendChatScreenshotTakenNotification
+  | addLocalMessage
   | deleteMessages
   | deleteChatMessagesFromUser
   | editMessageText
   | editMessageLiveLocation
+  | editMessageMedia
   | editMessageCaption
   | editMessageReplyMarkup
   | editInlineMessageText
   | editInlineMessageLiveLocation
+  | editInlineMessageMedia
   | editInlineMessageCaption
   | editInlineMessageReplyMarkup
   | getTextEntities
   | parseTextEntities
   | getFileMimeType
   | getFileExtension
+  | cleanFileName
+  | getLanguagePackString
   | getInlineQueryResults
   | answerInlineQuery
   | getCallbackQueryAnswer
@@ -15330,14 +18039,23 @@ export type TDFunction =
   | setChatTitle
   | setChatPhoto
   | setChatDraftMessage
+  | setChatNotificationSettings
   | toggleChatIsPinned
+  | toggleChatIsMarkedAsUnread
+  | toggleChatDefaultDisableNotification
   | setChatClientData
+  | joinChat
+  | leaveChat
   | addChatMember
   | addChatMembers
   | setChatMemberStatus
   | getChatMember
   | searchChatMembers
   | getChatAdministrators
+  | clearAllDraftMessages
+  | getScopeNotificationSettings
+  | setScopeNotificationSettings
+  | resetAllNotificationSettings
   | setPinnedChats
   | downloadFile
   | cancelDownloadFile
@@ -15358,6 +18076,7 @@ export type TDFunction =
   | unblockUser
   | getBlockedUsers
   | importContacts
+  | getContacts
   | searchContacts
   | removeContacts
   | getImportedContactCount
@@ -15393,9 +18112,6 @@ export type TDFunction =
   | removeRecentHashtag
   | getWebPagePreview
   | getWebPageInstantView
-  | getNotificationSettings
-  | setNotificationSettings
-  | resetAllNotificationSettings
   | setProfilePhoto
   | deleteProfilePhoto
   | setName
@@ -15433,6 +18149,12 @@ export type TDFunction =
   | deleteSavedCredentials
   | getSupportUser
   | getWallpapers
+  | getLocalizationTargetInfo
+  | getLanguagePackStrings
+  | setCustomLanguagePack
+  | editCustomLanguagePackInfo
+  | setCustomLanguagePackString
+  | deleteLanguagePack
   | registerDevice
   | getRecentlyVisitedTMeUrls
   | setUserPrivacySettingRules
@@ -15452,20 +18174,45 @@ export type TDFunction =
   | getNetworkStatistics
   | addNetworkStatistics
   | resetNetworkStatistics
+  | getPassportElement
+  | getAllPassportElements
+  | setPassportElement
+  | deletePassportElement
+  | setPassportElementErrors
+  | getPreferredCountryLanguage
+  | sendPhoneNumberVerificationCode
+  | resendPhoneNumberVerificationCode
+  | checkPhoneNumberVerificationCode
+  | sendEmailAddressVerificationCode
+  | resendEmailAddressVerificationCode
+  | checkEmailAddressVerificationCode
+  | getPassportAuthorizationForm
+  | sendPassportAuthorizationForm
+  | sendPhoneNumberConfirmationCode
+  | resendPhoneNumberConfirmationCode
+  | checkPhoneNumberConfirmationCode
   | setBotUpdatesStatus
   | uploadStickerFile
   | createNewStickerSet
   | addStickerToSet
   | setStickerPositionInSet
   | removeStickerFromSet
+  | getMapThumbnailFile
+  | acceptTermsOfService
   | sendCustomRequest
   | answerCustomQuery
   | setAlarm
   | getCountryCode
   | getInviteText
-  | getTermsOfService
-  | setProxy
-  | getProxy
+  | getDeepLinkInfo
+  | addProxy
+  | editProxy
+  | enableProxy
+  | disableProxy
+  | removeProxy
+  | getProxies
+  | getProxyLink
+  | pingProxy
   | testCallEmpty
   | testCallString
   | testCallBytes
@@ -15485,9 +18232,13 @@ export type TDObject =
   | TdlibParameters
   | AuthenticationCodeType
   | AuthenticationCodeInfo
+  | EmailAddressAuthenticationCodeInfo
+  | TextEntity
+  | TextEntities
+  | FormattedText
+  | TermsOfService
   | AuthorizationState
   | PasswordState
-  | PasswordRecoveryInfo
   | RecoveryEmailAddress
   | TemporaryPasswordState
   | LocalFile
@@ -15497,9 +18248,6 @@ export type TDObject =
   | PhotoSize
   | MaskPoint
   | MaskPosition
-  | TextEntity
-  | TextEntities
-  | FormattedText
   | Animation
   | Audio
   | Document
@@ -15525,6 +18273,7 @@ export type TDObject =
   | ChatMemberStatus
   | ChatMember
   | ChatMembers
+  | ChatMembersFilter
   | SupergroupMembersFilter
   | BasicGroup
   | BasicGroupFullInfo
@@ -15538,7 +18287,8 @@ export type TDObject =
   | Messages
   | FoundMessages
   | NotificationSettingsScope
-  | NotificationSettings
+  | ChatNotificationSettings
+  | ScopeNotificationSettings
   | DraftMessage
   | ChatType
   | Chat
@@ -15554,9 +18304,9 @@ export type TDObject =
   | PageBlock
   | WebPageInstantView
   | WebPage
+  | Address
   | LabeledPricePart
   | Invoice
-  | ShippingAddress
   | OrderInfo
   | ShippingOption
   | SavedCredentials
@@ -15566,6 +18316,26 @@ export type TDObject =
   | ValidatedOrderInfo
   | PaymentResult
   | PaymentReceipt
+  | DatedFile
+  | PassportElementType
+  | Date
+  | PersonalDetails
+  | IdentityDocument
+  | InputIdentityDocument
+  | PersonalDocument
+  | InputPersonalDocument
+  | PassportElement
+  | InputPassportElement
+  | PassportElements
+  | PassportElementErrorSource
+  | PassportElementError
+  | PassportSuitableElement
+  | PassportRequiredElement
+  | PassportAuthorizationForm
+  | EncryptedCredentials
+  | EncryptedPassportElement
+  | InputPassportElementErrorSource
+  | InputPassportElementError
   | MessageContent
   | TextEntityType
   | InputThumbnail
@@ -15598,6 +18368,11 @@ export type TDObject =
   | ChatEvent
   | ChatEvents
   | ChatEventLogFilters
+  | LanguagePackStringValue
+  | LanguagePackString
+  | LanguagePackStrings
+  | LanguagePackInfo
+  | LocalizationTargetInfo
   | DeviceToken
   | Wallpaper
   | Wallpapers
@@ -15630,8 +18405,12 @@ export type TDObject =
   | TMeUrls
   | Count
   | Text
+  | Seconds
+  | DeepLinkInfo
   | TextParseMode
+  | ProxyType
   | Proxy
+  | Proxies
   | InputSticker
   | Update
   | TestInt
@@ -15648,9 +18427,13 @@ export type TDObjectOptional =
   | TdlibParametersOptional
   | AuthenticationCodeTypeOptional
   | AuthenticationCodeInfoOptional
+  | EmailAddressAuthenticationCodeInfoOptional
+  | TextEntityOptional
+  | TextEntitiesOptional
+  | FormattedTextOptional
+  | TermsOfServiceOptional
   | AuthorizationStateOptional
   | PasswordStateOptional
-  | PasswordRecoveryInfoOptional
   | RecoveryEmailAddressOptional
   | TemporaryPasswordStateOptional
   | LocalFileOptional
@@ -15660,9 +18443,6 @@ export type TDObjectOptional =
   | PhotoSizeOptional
   | MaskPointOptional
   | MaskPositionOptional
-  | TextEntityOptional
-  | TextEntitiesOptional
-  | FormattedTextOptional
   | AnimationOptional
   | AudioOptional
   | DocumentOptional
@@ -15688,6 +18468,7 @@ export type TDObjectOptional =
   | ChatMemberStatusOptional
   | ChatMemberOptional
   | ChatMembersOptional
+  | ChatMembersFilterOptional
   | SupergroupMembersFilterOptional
   | BasicGroupOptional
   | BasicGroupFullInfoOptional
@@ -15701,7 +18482,8 @@ export type TDObjectOptional =
   | MessagesOptional
   | FoundMessagesOptional
   | NotificationSettingsScopeOptional
-  | NotificationSettingsOptional
+  | ChatNotificationSettingsOptional
+  | ScopeNotificationSettingsOptional
   | DraftMessageOptional
   | ChatTypeOptional
   | ChatOptional
@@ -15717,9 +18499,9 @@ export type TDObjectOptional =
   | PageBlockOptional
   | WebPageInstantViewOptional
   | WebPageOptional
+  | AddressOptional
   | LabeledPricePartOptional
   | InvoiceOptional
-  | ShippingAddressOptional
   | OrderInfoOptional
   | ShippingOptionOptional
   | SavedCredentialsOptional
@@ -15729,6 +18511,26 @@ export type TDObjectOptional =
   | ValidatedOrderInfoOptional
   | PaymentResultOptional
   | PaymentReceiptOptional
+  | DatedFileOptional
+  | PassportElementTypeOptional
+  | DateOptional
+  | PersonalDetailsOptional
+  | IdentityDocumentOptional
+  | InputIdentityDocumentOptional
+  | PersonalDocumentOptional
+  | InputPersonalDocumentOptional
+  | PassportElementOptional
+  | InputPassportElementOptional
+  | PassportElementsOptional
+  | PassportElementErrorSourceOptional
+  | PassportElementErrorOptional
+  | PassportSuitableElementOptional
+  | PassportRequiredElementOptional
+  | PassportAuthorizationFormOptional
+  | EncryptedCredentialsOptional
+  | EncryptedPassportElementOptional
+  | InputPassportElementErrorSourceOptional
+  | InputPassportElementErrorOptional
   | MessageContentOptional
   | TextEntityTypeOptional
   | InputThumbnailOptional
@@ -15761,6 +18563,11 @@ export type TDObjectOptional =
   | ChatEventOptional
   | ChatEventsOptional
   | ChatEventLogFiltersOptional
+  | LanguagePackStringValueOptional
+  | LanguagePackStringOptional
+  | LanguagePackStringsOptional
+  | LanguagePackInfoOptional
+  | LocalizationTargetInfoOptional
   | DeviceTokenOptional
   | WallpaperOptional
   | WallpapersOptional
@@ -15793,8 +18600,12 @@ export type TDObjectOptional =
   | TMeUrlsOptional
   | CountOptional
   | TextOptional
+  | SecondsOptional
+  | DeepLinkInfoOptional
   | TextParseModeOptional
+  | ProxyTypeOptional
   | ProxyOptional
+  | ProxiesOptional
   | InputStickerOptional
   | UpdateOptional
   | TestIntOptional
@@ -15826,7 +18637,7 @@ export type Invoke =
   & ((query: setPassword) => Promise<PasswordState>)
   & ((query: getRecoveryEmailAddress) => Promise<RecoveryEmailAddress>)
   & ((query: setRecoveryEmailAddress) => Promise<PasswordState>)
-  & ((query: requestPasswordRecovery) => Promise<PasswordRecoveryInfo>)
+  & ((query: requestPasswordRecovery) => Promise<EmailAddressAuthenticationCodeInfo>)
   & ((query: recoverPassword) => Promise<PasswordState>)
   & ((query: createTemporaryPassword) => Promise<TemporaryPasswordState>)
   & ((query: getTemporaryPasswordState) => Promise<TemporaryPasswordState>)
@@ -15868,6 +18679,7 @@ export type Invoke =
   & ((query: searchChatRecentLocationMessages) => Promise<Messages>)
   & ((query: getActiveLiveLocationMessages) => Promise<Messages>)
   & ((query: getChatMessageByDate) => Promise<Message>)
+  & ((query: getChatMessageCount) => Promise<Count>)
   & ((query: getPublicMessageLink) => Promise<PublicMessageLink>)
   & ((query: sendMessage) => Promise<Message>)
   & ((query: sendMessageAlbum) => Promise<Messages>)
@@ -15876,20 +18688,25 @@ export type Invoke =
   & ((query: forwardMessages) => Promise<Messages>)
   & ((query: sendChatSetTtlMessage) => Promise<Message>)
   & ((query: sendChatScreenshotTakenNotification) => Promise<Ok>)
+  & ((query: addLocalMessage) => Promise<Message>)
   & ((query: deleteMessages) => Promise<Ok>)
   & ((query: deleteChatMessagesFromUser) => Promise<Ok>)
   & ((query: editMessageText) => Promise<Message>)
   & ((query: editMessageLiveLocation) => Promise<Message>)
+  & ((query: editMessageMedia) => Promise<Message>)
   & ((query: editMessageCaption) => Promise<Message>)
   & ((query: editMessageReplyMarkup) => Promise<Message>)
   & ((query: editInlineMessageText) => Promise<Ok>)
   & ((query: editInlineMessageLiveLocation) => Promise<Ok>)
+  & ((query: editInlineMessageMedia) => Promise<Ok>)
   & ((query: editInlineMessageCaption) => Promise<Ok>)
   & ((query: editInlineMessageReplyMarkup) => Promise<Ok>)
   & ((query: getTextEntities) => Promise<TextEntities>)
   & ((query: parseTextEntities) => Promise<FormattedText>)
   & ((query: getFileMimeType) => Promise<Text>)
   & ((query: getFileExtension) => Promise<Text>)
+  & ((query: cleanFileName) => Promise<Text>)
+  & ((query: getLanguagePackString) => Promise<LanguagePackStringValue>)
   & ((query: getInlineQueryResults) => Promise<InlineQueryResults>)
   & ((query: answerInlineQuery) => Promise<Ok>)
   & ((query: getCallbackQueryAnswer) => Promise<CallbackQueryAnswer>)
@@ -15918,14 +18735,23 @@ export type Invoke =
   & ((query: setChatTitle) => Promise<Ok>)
   & ((query: setChatPhoto) => Promise<Ok>)
   & ((query: setChatDraftMessage) => Promise<Ok>)
+  & ((query: setChatNotificationSettings) => Promise<Ok>)
   & ((query: toggleChatIsPinned) => Promise<Ok>)
+  & ((query: toggleChatIsMarkedAsUnread) => Promise<Ok>)
+  & ((query: toggleChatDefaultDisableNotification) => Promise<Ok>)
   & ((query: setChatClientData) => Promise<Ok>)
+  & ((query: joinChat) => Promise<Ok>)
+  & ((query: leaveChat) => Promise<Ok>)
   & ((query: addChatMember) => Promise<Ok>)
   & ((query: addChatMembers) => Promise<Ok>)
   & ((query: setChatMemberStatus) => Promise<Ok>)
   & ((query: getChatMember) => Promise<ChatMember>)
   & ((query: searchChatMembers) => Promise<ChatMembers>)
   & ((query: getChatAdministrators) => Promise<Users>)
+  & ((query: clearAllDraftMessages) => Promise<Ok>)
+  & ((query: getScopeNotificationSettings) => Promise<ScopeNotificationSettings>)
+  & ((query: setScopeNotificationSettings) => Promise<Ok>)
+  & ((query: resetAllNotificationSettings) => Promise<Ok>)
   & ((query: setPinnedChats) => Promise<Ok>)
   & ((query: downloadFile) => Promise<File>)
   & ((query: cancelDownloadFile) => Promise<Ok>)
@@ -15946,6 +18772,7 @@ export type Invoke =
   & ((query: unblockUser) => Promise<Ok>)
   & ((query: getBlockedUsers) => Promise<Users>)
   & ((query: importContacts) => Promise<ImportedContacts>)
+  & ((query: getContacts) => Promise<Users>)
   & ((query: searchContacts) => Promise<Users>)
   & ((query: removeContacts) => Promise<Ok>)
   & ((query: getImportedContactCount) => Promise<Count>)
@@ -15981,9 +18808,6 @@ export type Invoke =
   & ((query: removeRecentHashtag) => Promise<Ok>)
   & ((query: getWebPagePreview) => Promise<WebPage>)
   & ((query: getWebPageInstantView) => Promise<WebPageInstantView>)
-  & ((query: getNotificationSettings) => Promise<NotificationSettings>)
-  & ((query: setNotificationSettings) => Promise<Ok>)
-  & ((query: resetAllNotificationSettings) => Promise<Ok>)
   & ((query: setProfilePhoto) => Promise<Ok>)
   & ((query: deleteProfilePhoto) => Promise<Ok>)
   & ((query: setName) => Promise<Ok>)
@@ -16021,6 +18845,12 @@ export type Invoke =
   & ((query: deleteSavedCredentials) => Promise<Ok>)
   & ((query: getSupportUser) => Promise<User>)
   & ((query: getWallpapers) => Promise<Wallpapers>)
+  & ((query: getLocalizationTargetInfo) => Promise<LocalizationTargetInfo>)
+  & ((query: getLanguagePackStrings) => Promise<LanguagePackStrings>)
+  & ((query: setCustomLanguagePack) => Promise<Ok>)
+  & ((query: editCustomLanguagePackInfo) => Promise<Ok>)
+  & ((query: setCustomLanguagePackString) => Promise<Ok>)
+  & ((query: deleteLanguagePack) => Promise<Ok>)
   & ((query: registerDevice) => Promise<Ok>)
   & ((query: getRecentlyVisitedTMeUrls) => Promise<TMeUrls>)
   & ((query: setUserPrivacySettingRules) => Promise<Ok>)
@@ -16040,20 +18870,45 @@ export type Invoke =
   & ((query: getNetworkStatistics) => Promise<NetworkStatistics>)
   & ((query: addNetworkStatistics) => Promise<Ok>)
   & ((query: resetNetworkStatistics) => Promise<Ok>)
+  & ((query: getPassportElement) => Promise<PassportElement>)
+  & ((query: getAllPassportElements) => Promise<PassportElements>)
+  & ((query: setPassportElement) => Promise<PassportElement>)
+  & ((query: deletePassportElement) => Promise<Ok>)
+  & ((query: setPassportElementErrors) => Promise<Ok>)
+  & ((query: getPreferredCountryLanguage) => Promise<Text>)
+  & ((query: sendPhoneNumberVerificationCode) => Promise<AuthenticationCodeInfo>)
+  & ((query: resendPhoneNumberVerificationCode) => Promise<AuthenticationCodeInfo>)
+  & ((query: checkPhoneNumberVerificationCode) => Promise<Ok>)
+  & ((query: sendEmailAddressVerificationCode) => Promise<EmailAddressAuthenticationCodeInfo>)
+  & ((query: resendEmailAddressVerificationCode) => Promise<EmailAddressAuthenticationCodeInfo>)
+  & ((query: checkEmailAddressVerificationCode) => Promise<Ok>)
+  & ((query: getPassportAuthorizationForm) => Promise<PassportAuthorizationForm>)
+  & ((query: sendPassportAuthorizationForm) => Promise<Ok>)
+  & ((query: sendPhoneNumberConfirmationCode) => Promise<AuthenticationCodeInfo>)
+  & ((query: resendPhoneNumberConfirmationCode) => Promise<AuthenticationCodeInfo>)
+  & ((query: checkPhoneNumberConfirmationCode) => Promise<Ok>)
   & ((query: setBotUpdatesStatus) => Promise<Ok>)
   & ((query: uploadStickerFile) => Promise<File>)
   & ((query: createNewStickerSet) => Promise<StickerSet>)
   & ((query: addStickerToSet) => Promise<StickerSet>)
   & ((query: setStickerPositionInSet) => Promise<Ok>)
   & ((query: removeStickerFromSet) => Promise<Ok>)
+  & ((query: getMapThumbnailFile) => Promise<File>)
+  & ((query: acceptTermsOfService) => Promise<Ok>)
   & ((query: sendCustomRequest) => Promise<CustomRequestResult>)
   & ((query: answerCustomQuery) => Promise<Ok>)
   & ((query: setAlarm) => Promise<Ok>)
   & ((query: getCountryCode) => Promise<Text>)
   & ((query: getInviteText) => Promise<Text>)
-  & ((query: getTermsOfService) => Promise<Text>)
-  & ((query: setProxy) => Promise<Ok>)
-  & ((query: getProxy) => Promise<Proxy>)
+  & ((query: getDeepLinkInfo) => Promise<DeepLinkInfo>)
+  & ((query: addProxy) => Promise<Proxy>)
+  & ((query: editProxy) => Promise<Proxy>)
+  & ((query: enableProxy) => Promise<Ok>)
+  & ((query: disableProxy) => Promise<Ok>)
+  & ((query: removeProxy) => Promise<Ok>)
+  & ((query: getProxies) => Promise<Proxies>)
+  & ((query: getProxyLink) => Promise<Text>)
+  & ((query: pingProxy) => Promise<Seconds>)
   & ((query: testCallEmpty) => Promise<Ok>)
   & ((query: testCallString) => Promise<TestString>)
   & ((query: testCallBytes) => Promise<TestBytes>)
@@ -16086,7 +18941,7 @@ export type Execute =
   & ((query: setPassword) => PasswordState | error | null)
   & ((query: getRecoveryEmailAddress) => RecoveryEmailAddress | error | null)
   & ((query: setRecoveryEmailAddress) => PasswordState | error | null)
-  & ((query: requestPasswordRecovery) => PasswordRecoveryInfo | error | null)
+  & ((query: requestPasswordRecovery) => EmailAddressAuthenticationCodeInfo | error | null)
   & ((query: recoverPassword) => PasswordState | error | null)
   & ((query: createTemporaryPassword) => TemporaryPasswordState | error | null)
   & ((query: getTemporaryPasswordState) => TemporaryPasswordState | error | null)
@@ -16128,6 +18983,7 @@ export type Execute =
   & ((query: searchChatRecentLocationMessages) => Messages | error | null)
   & ((query: getActiveLiveLocationMessages) => Messages | error | null)
   & ((query: getChatMessageByDate) => Message | error | null)
+  & ((query: getChatMessageCount) => Count | error | null)
   & ((query: getPublicMessageLink) => PublicMessageLink | error | null)
   & ((query: sendMessage) => Message | error | null)
   & ((query: sendMessageAlbum) => Messages | error | null)
@@ -16136,20 +18992,25 @@ export type Execute =
   & ((query: forwardMessages) => Messages | error | null)
   & ((query: sendChatSetTtlMessage) => Message | error | null)
   & ((query: sendChatScreenshotTakenNotification) => Ok | error | null)
+  & ((query: addLocalMessage) => Message | error | null)
   & ((query: deleteMessages) => Ok | error | null)
   & ((query: deleteChatMessagesFromUser) => Ok | error | null)
   & ((query: editMessageText) => Message | error | null)
   & ((query: editMessageLiveLocation) => Message | error | null)
+  & ((query: editMessageMedia) => Message | error | null)
   & ((query: editMessageCaption) => Message | error | null)
   & ((query: editMessageReplyMarkup) => Message | error | null)
   & ((query: editInlineMessageText) => Ok | error | null)
   & ((query: editInlineMessageLiveLocation) => Ok | error | null)
+  & ((query: editInlineMessageMedia) => Ok | error | null)
   & ((query: editInlineMessageCaption) => Ok | error | null)
   & ((query: editInlineMessageReplyMarkup) => Ok | error | null)
   & ((query: getTextEntities) => TextEntities | error | null)
   & ((query: parseTextEntities) => FormattedText | error | null)
   & ((query: getFileMimeType) => Text | error | null)
   & ((query: getFileExtension) => Text | error | null)
+  & ((query: cleanFileName) => Text | error | null)
+  & ((query: getLanguagePackString) => LanguagePackStringValue | error | null)
   & ((query: getInlineQueryResults) => InlineQueryResults | error | null)
   & ((query: answerInlineQuery) => Ok | error | null)
   & ((query: getCallbackQueryAnswer) => CallbackQueryAnswer | error | null)
@@ -16178,14 +19039,23 @@ export type Execute =
   & ((query: setChatTitle) => Ok | error | null)
   & ((query: setChatPhoto) => Ok | error | null)
   & ((query: setChatDraftMessage) => Ok | error | null)
+  & ((query: setChatNotificationSettings) => Ok | error | null)
   & ((query: toggleChatIsPinned) => Ok | error | null)
+  & ((query: toggleChatIsMarkedAsUnread) => Ok | error | null)
+  & ((query: toggleChatDefaultDisableNotification) => Ok | error | null)
   & ((query: setChatClientData) => Ok | error | null)
+  & ((query: joinChat) => Ok | error | null)
+  & ((query: leaveChat) => Ok | error | null)
   & ((query: addChatMember) => Ok | error | null)
   & ((query: addChatMembers) => Ok | error | null)
   & ((query: setChatMemberStatus) => Ok | error | null)
   & ((query: getChatMember) => ChatMember | error | null)
   & ((query: searchChatMembers) => ChatMembers | error | null)
   & ((query: getChatAdministrators) => Users | error | null)
+  & ((query: clearAllDraftMessages) => Ok | error | null)
+  & ((query: getScopeNotificationSettings) => ScopeNotificationSettings | error | null)
+  & ((query: setScopeNotificationSettings) => Ok | error | null)
+  & ((query: resetAllNotificationSettings) => Ok | error | null)
   & ((query: setPinnedChats) => Ok | error | null)
   & ((query: downloadFile) => File | error | null)
   & ((query: cancelDownloadFile) => Ok | error | null)
@@ -16206,6 +19076,7 @@ export type Execute =
   & ((query: unblockUser) => Ok | error | null)
   & ((query: getBlockedUsers) => Users | error | null)
   & ((query: importContacts) => ImportedContacts | error | null)
+  & ((query: getContacts) => Users | error | null)
   & ((query: searchContacts) => Users | error | null)
   & ((query: removeContacts) => Ok | error | null)
   & ((query: getImportedContactCount) => Count | error | null)
@@ -16241,9 +19112,6 @@ export type Execute =
   & ((query: removeRecentHashtag) => Ok | error | null)
   & ((query: getWebPagePreview) => WebPage | error | null)
   & ((query: getWebPageInstantView) => WebPageInstantView | error | null)
-  & ((query: getNotificationSettings) => NotificationSettings | error | null)
-  & ((query: setNotificationSettings) => Ok | error | null)
-  & ((query: resetAllNotificationSettings) => Ok | error | null)
   & ((query: setProfilePhoto) => Ok | error | null)
   & ((query: deleteProfilePhoto) => Ok | error | null)
   & ((query: setName) => Ok | error | null)
@@ -16281,6 +19149,12 @@ export type Execute =
   & ((query: deleteSavedCredentials) => Ok | error | null)
   & ((query: getSupportUser) => User | error | null)
   & ((query: getWallpapers) => Wallpapers | error | null)
+  & ((query: getLocalizationTargetInfo) => LocalizationTargetInfo | error | null)
+  & ((query: getLanguagePackStrings) => LanguagePackStrings | error | null)
+  & ((query: setCustomLanguagePack) => Ok | error | null)
+  & ((query: editCustomLanguagePackInfo) => Ok | error | null)
+  & ((query: setCustomLanguagePackString) => Ok | error | null)
+  & ((query: deleteLanguagePack) => Ok | error | null)
   & ((query: registerDevice) => Ok | error | null)
   & ((query: getRecentlyVisitedTMeUrls) => TMeUrls | error | null)
   & ((query: setUserPrivacySettingRules) => Ok | error | null)
@@ -16300,20 +19174,45 @@ export type Execute =
   & ((query: getNetworkStatistics) => NetworkStatistics | error | null)
   & ((query: addNetworkStatistics) => Ok | error | null)
   & ((query: resetNetworkStatistics) => Ok | error | null)
+  & ((query: getPassportElement) => PassportElement | error | null)
+  & ((query: getAllPassportElements) => PassportElements | error | null)
+  & ((query: setPassportElement) => PassportElement | error | null)
+  & ((query: deletePassportElement) => Ok | error | null)
+  & ((query: setPassportElementErrors) => Ok | error | null)
+  & ((query: getPreferredCountryLanguage) => Text | error | null)
+  & ((query: sendPhoneNumberVerificationCode) => AuthenticationCodeInfo | error | null)
+  & ((query: resendPhoneNumberVerificationCode) => AuthenticationCodeInfo | error | null)
+  & ((query: checkPhoneNumberVerificationCode) => Ok | error | null)
+  & ((query: sendEmailAddressVerificationCode) => EmailAddressAuthenticationCodeInfo | error | null)
+  & ((query: resendEmailAddressVerificationCode) => EmailAddressAuthenticationCodeInfo | error | null)
+  & ((query: checkEmailAddressVerificationCode) => Ok | error | null)
+  & ((query: getPassportAuthorizationForm) => PassportAuthorizationForm | error | null)
+  & ((query: sendPassportAuthorizationForm) => Ok | error | null)
+  & ((query: sendPhoneNumberConfirmationCode) => AuthenticationCodeInfo | error | null)
+  & ((query: resendPhoneNumberConfirmationCode) => AuthenticationCodeInfo | error | null)
+  & ((query: checkPhoneNumberConfirmationCode) => Ok | error | null)
   & ((query: setBotUpdatesStatus) => Ok | error | null)
   & ((query: uploadStickerFile) => File | error | null)
   & ((query: createNewStickerSet) => StickerSet | error | null)
   & ((query: addStickerToSet) => StickerSet | error | null)
   & ((query: setStickerPositionInSet) => Ok | error | null)
   & ((query: removeStickerFromSet) => Ok | error | null)
+  & ((query: getMapThumbnailFile) => File | error | null)
+  & ((query: acceptTermsOfService) => Ok | error | null)
   & ((query: sendCustomRequest) => CustomRequestResult | error | null)
   & ((query: answerCustomQuery) => Ok | error | null)
   & ((query: setAlarm) => Ok | error | null)
   & ((query: getCountryCode) => Text | error | null)
   & ((query: getInviteText) => Text | error | null)
-  & ((query: getTermsOfService) => Text | error | null)
-  & ((query: setProxy) => Ok | error | null)
-  & ((query: getProxy) => Proxy | error | null)
+  & ((query: getDeepLinkInfo) => DeepLinkInfo | error | null)
+  & ((query: addProxy) => Proxy | error | null)
+  & ((query: editProxy) => Proxy | error | null)
+  & ((query: enableProxy) => Ok | error | null)
+  & ((query: disableProxy) => Ok | error | null)
+  & ((query: removeProxy) => Ok | error | null)
+  & ((query: getProxies) => Proxies | error | null)
+  & ((query: getProxyLink) => Text | error | null)
+  & ((query: pingProxy) => Seconds | error | null)
   & ((query: testCallEmpty) => Ok | error | null)
   & ((query: testCallString) => TestString | error | null)
   & ((query: testCallBytes) => TestBytes | error | null)
@@ -16349,7 +19248,7 @@ export type InvokeFuture =
   & ((query: setPassword) => Future<error, PasswordState>)
   & ((query: getRecoveryEmailAddress) => Future<error, RecoveryEmailAddress>)
   & ((query: setRecoveryEmailAddress) => Future<error, PasswordState>)
-  & ((query: requestPasswordRecovery) => Future<error, PasswordRecoveryInfo>)
+  & ((query: requestPasswordRecovery) => Future<error, EmailAddressAuthenticationCodeInfo>)
   & ((query: recoverPassword) => Future<error, PasswordState>)
   & ((query: createTemporaryPassword) => Future<error, TemporaryPasswordState>)
   & ((query: getTemporaryPasswordState) => Future<error, TemporaryPasswordState>)
@@ -16391,6 +19290,7 @@ export type InvokeFuture =
   & ((query: searchChatRecentLocationMessages) => Future<error, Messages>)
   & ((query: getActiveLiveLocationMessages) => Future<error, Messages>)
   & ((query: getChatMessageByDate) => Future<error, Message>)
+  & ((query: getChatMessageCount) => Future<error, Count>)
   & ((query: getPublicMessageLink) => Future<error, PublicMessageLink>)
   & ((query: sendMessage) => Future<error, Message>)
   & ((query: sendMessageAlbum) => Future<error, Messages>)
@@ -16399,20 +19299,25 @@ export type InvokeFuture =
   & ((query: forwardMessages) => Future<error, Messages>)
   & ((query: sendChatSetTtlMessage) => Future<error, Message>)
   & ((query: sendChatScreenshotTakenNotification) => Future<error, Ok>)
+  & ((query: addLocalMessage) => Future<error, Message>)
   & ((query: deleteMessages) => Future<error, Ok>)
   & ((query: deleteChatMessagesFromUser) => Future<error, Ok>)
   & ((query: editMessageText) => Future<error, Message>)
   & ((query: editMessageLiveLocation) => Future<error, Message>)
+  & ((query: editMessageMedia) => Future<error, Message>)
   & ((query: editMessageCaption) => Future<error, Message>)
   & ((query: editMessageReplyMarkup) => Future<error, Message>)
   & ((query: editInlineMessageText) => Future<error, Ok>)
   & ((query: editInlineMessageLiveLocation) => Future<error, Ok>)
+  & ((query: editInlineMessageMedia) => Future<error, Ok>)
   & ((query: editInlineMessageCaption) => Future<error, Ok>)
   & ((query: editInlineMessageReplyMarkup) => Future<error, Ok>)
   & ((query: getTextEntities) => Future<error, TextEntities>)
   & ((query: parseTextEntities) => Future<error, FormattedText>)
   & ((query: getFileMimeType) => Future<error, Text>)
   & ((query: getFileExtension) => Future<error, Text>)
+  & ((query: cleanFileName) => Future<error, Text>)
+  & ((query: getLanguagePackString) => Future<error, LanguagePackStringValue>)
   & ((query: getInlineQueryResults) => Future<error, InlineQueryResults>)
   & ((query: answerInlineQuery) => Future<error, Ok>)
   & ((query: getCallbackQueryAnswer) => Future<error, CallbackQueryAnswer>)
@@ -16441,14 +19346,23 @@ export type InvokeFuture =
   & ((query: setChatTitle) => Future<error, Ok>)
   & ((query: setChatPhoto) => Future<error, Ok>)
   & ((query: setChatDraftMessage) => Future<error, Ok>)
+  & ((query: setChatNotificationSettings) => Future<error, Ok>)
   & ((query: toggleChatIsPinned) => Future<error, Ok>)
+  & ((query: toggleChatIsMarkedAsUnread) => Future<error, Ok>)
+  & ((query: toggleChatDefaultDisableNotification) => Future<error, Ok>)
   & ((query: setChatClientData) => Future<error, Ok>)
+  & ((query: joinChat) => Future<error, Ok>)
+  & ((query: leaveChat) => Future<error, Ok>)
   & ((query: addChatMember) => Future<error, Ok>)
   & ((query: addChatMembers) => Future<error, Ok>)
   & ((query: setChatMemberStatus) => Future<error, Ok>)
   & ((query: getChatMember) => Future<error, ChatMember>)
   & ((query: searchChatMembers) => Future<error, ChatMembers>)
   & ((query: getChatAdministrators) => Future<error, Users>)
+  & ((query: clearAllDraftMessages) => Future<error, Ok>)
+  & ((query: getScopeNotificationSettings) => Future<error, ScopeNotificationSettings>)
+  & ((query: setScopeNotificationSettings) => Future<error, Ok>)
+  & ((query: resetAllNotificationSettings) => Future<error, Ok>)
   & ((query: setPinnedChats) => Future<error, Ok>)
   & ((query: downloadFile) => Future<error, File>)
   & ((query: cancelDownloadFile) => Future<error, Ok>)
@@ -16469,6 +19383,7 @@ export type InvokeFuture =
   & ((query: unblockUser) => Future<error, Ok>)
   & ((query: getBlockedUsers) => Future<error, Users>)
   & ((query: importContacts) => Future<error, ImportedContacts>)
+  & ((query: getContacts) => Future<error, Users>)
   & ((query: searchContacts) => Future<error, Users>)
   & ((query: removeContacts) => Future<error, Ok>)
   & ((query: getImportedContactCount) => Future<error, Count>)
@@ -16504,9 +19419,6 @@ export type InvokeFuture =
   & ((query: removeRecentHashtag) => Future<error, Ok>)
   & ((query: getWebPagePreview) => Future<error, WebPage>)
   & ((query: getWebPageInstantView) => Future<error, WebPageInstantView>)
-  & ((query: getNotificationSettings) => Future<error, NotificationSettings>)
-  & ((query: setNotificationSettings) => Future<error, Ok>)
-  & ((query: resetAllNotificationSettings) => Future<error, Ok>)
   & ((query: setProfilePhoto) => Future<error, Ok>)
   & ((query: deleteProfilePhoto) => Future<error, Ok>)
   & ((query: setName) => Future<error, Ok>)
@@ -16544,6 +19456,12 @@ export type InvokeFuture =
   & ((query: deleteSavedCredentials) => Future<error, Ok>)
   & ((query: getSupportUser) => Future<error, User>)
   & ((query: getWallpapers) => Future<error, Wallpapers>)
+  & ((query: getLocalizationTargetInfo) => Future<error, LocalizationTargetInfo>)
+  & ((query: getLanguagePackStrings) => Future<error, LanguagePackStrings>)
+  & ((query: setCustomLanguagePack) => Future<error, Ok>)
+  & ((query: editCustomLanguagePackInfo) => Future<error, Ok>)
+  & ((query: setCustomLanguagePackString) => Future<error, Ok>)
+  & ((query: deleteLanguagePack) => Future<error, Ok>)
   & ((query: registerDevice) => Future<error, Ok>)
   & ((query: getRecentlyVisitedTMeUrls) => Future<error, TMeUrls>)
   & ((query: setUserPrivacySettingRules) => Future<error, Ok>)
@@ -16563,20 +19481,45 @@ export type InvokeFuture =
   & ((query: getNetworkStatistics) => Future<error, NetworkStatistics>)
   & ((query: addNetworkStatistics) => Future<error, Ok>)
   & ((query: resetNetworkStatistics) => Future<error, Ok>)
+  & ((query: getPassportElement) => Future<error, PassportElement>)
+  & ((query: getAllPassportElements) => Future<error, PassportElements>)
+  & ((query: setPassportElement) => Future<error, PassportElement>)
+  & ((query: deletePassportElement) => Future<error, Ok>)
+  & ((query: setPassportElementErrors) => Future<error, Ok>)
+  & ((query: getPreferredCountryLanguage) => Future<error, Text>)
+  & ((query: sendPhoneNumberVerificationCode) => Future<error, AuthenticationCodeInfo>)
+  & ((query: resendPhoneNumberVerificationCode) => Future<error, AuthenticationCodeInfo>)
+  & ((query: checkPhoneNumberVerificationCode) => Future<error, Ok>)
+  & ((query: sendEmailAddressVerificationCode) => Future<error, EmailAddressAuthenticationCodeInfo>)
+  & ((query: resendEmailAddressVerificationCode) => Future<error, EmailAddressAuthenticationCodeInfo>)
+  & ((query: checkEmailAddressVerificationCode) => Future<error, Ok>)
+  & ((query: getPassportAuthorizationForm) => Future<error, PassportAuthorizationForm>)
+  & ((query: sendPassportAuthorizationForm) => Future<error, Ok>)
+  & ((query: sendPhoneNumberConfirmationCode) => Future<error, AuthenticationCodeInfo>)
+  & ((query: resendPhoneNumberConfirmationCode) => Future<error, AuthenticationCodeInfo>)
+  & ((query: checkPhoneNumberConfirmationCode) => Future<error, Ok>)
   & ((query: setBotUpdatesStatus) => Future<error, Ok>)
   & ((query: uploadStickerFile) => Future<error, File>)
   & ((query: createNewStickerSet) => Future<error, StickerSet>)
   & ((query: addStickerToSet) => Future<error, StickerSet>)
   & ((query: setStickerPositionInSet) => Future<error, Ok>)
   & ((query: removeStickerFromSet) => Future<error, Ok>)
+  & ((query: getMapThumbnailFile) => Future<error, File>)
+  & ((query: acceptTermsOfService) => Future<error, Ok>)
   & ((query: sendCustomRequest) => Future<error, CustomRequestResult>)
   & ((query: answerCustomQuery) => Future<error, Ok>)
   & ((query: setAlarm) => Future<error, Ok>)
   & ((query: getCountryCode) => Future<error, Text>)
   & ((query: getInviteText) => Future<error, Text>)
-  & ((query: getTermsOfService) => Future<error, Text>)
-  & ((query: setProxy) => Future<error, Ok>)
-  & ((query: getProxy) => Future<error, Proxy>)
+  & ((query: getDeepLinkInfo) => Future<error, DeepLinkInfo>)
+  & ((query: addProxy) => Future<error, Proxy>)
+  & ((query: editProxy) => Future<error, Proxy>)
+  & ((query: enableProxy) => Future<error, Ok>)
+  & ((query: disableProxy) => Future<error, Ok>)
+  & ((query: removeProxy) => Future<error, Ok>)
+  & ((query: getProxies) => Future<error, Proxies>)
+  & ((query: getProxyLink) => Future<error, Text>)
+  & ((query: pingProxy) => Future<error, Seconds>)
   & ((query: testCallEmpty) => Future<error, Ok>)
   & ((query: testCallString) => Future<error, TestString>)
   & ((query: testCallBytes) => Future<error, TestBytes>)
