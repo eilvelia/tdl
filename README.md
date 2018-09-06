@@ -231,7 +231,7 @@ Any empty fields may just not be specified.
 `tdl` supports [Flow](https://flow.org/) and [TypeScript](https://www.typescriptlang.org/) out of the box.  
 Typings are generated from [td_api.tl][scheme] scheme using [tdlib-typings][].
 
-[scheme]: https://github.com/tdlib/td/blob/15856c0272fa3fc249b9a682a4db5b1ba9f780ca/td/generate/scheme/td_api.tl
+[scheme]: https://github.com/tdlib/td/blob/6129ebf39439647e277e88d9d43a2f897ffee63c/td/generate/scheme/td_api.tl
 [tdlib-typings]: https://github.com/Bannerets/tdlib-typings
 
 -----

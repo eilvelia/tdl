@@ -2491,7 +2491,7 @@ export type messageSendingStateFailedOptional = {
 /** Describes a message */
 export type message = {
   _: 'message',
-  /** Unique message identifier */
+  /** Message identifier, unique for the chat to which the message belongs */
   id: number,
   /**
    * Identifier of the user who sent the message; 0 if unknown. It is unknown for channel
@@ -2560,7 +2560,7 @@ export type message = {
 /** Describes a message */
 export type messageOptional = {
   _: 'message',
-  /** Unique message identifier */
+  /** Message identifier, unique for the chat to which the message belongs */
   id?: number,
   /**
    * Identifier of the user who sent the message; 0 if unknown. It is unknown for channel
