@@ -25,6 +25,7 @@ export type On =
   & ((event: 'destroy', listener: () => void) => Client)
   & ((event: 'auth-needed', listener: () => void) => Client)
   & ((event: 'auth-not-needed', listener: () => void) => Client)
+  & ((event: 'response', listener: (res: any) => void) => Client)
 
 export type Emit =
   & ((event: 'update', update: Update) => void)
@@ -32,6 +33,7 @@ export type Emit =
   & ((event: 'destroy') => void)
   & ((event: 'auth-needed') => void)
   & ((event: 'auth-not-needed') => void)
+  & ((event: 'response', res: any) => void)
 
 export type RemoveListener =
   & ((event: 'update', listener: Function, once?: boolean) => void)
@@ -39,6 +41,7 @@ export type RemoveListener =
   & ((event: 'destroy', listener: Function, once?: boolean) => void)
   & ((event: 'auth-needed', listener: Function, once?: boolean) => void)
   & ((event: 'auth-not-needed', listener: Function, once?: boolean) => void)
+  & ((event: 'response', listener: Function, once?: boolean) => void)
 
 export class Client {
   constructor(options?: ConfigType)

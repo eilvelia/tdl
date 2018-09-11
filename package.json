@@ -68,7 +68,8 @@
     "mtproto",
     "ffi",
     "tg",
-    "tglib"
+    "tglib",
+    "wrapper"
   ],
   "directories": {
     "example": "examples"

@@ -76,6 +76,9 @@ client.setLogFatalErrorCallback('1234')
   client
     .on('error', e => console.log('error', e))
     .on('destroy', () => console.log('destroy'))
+    .on('response', r => {})
+    .on('auth-not-needed', () => {})
+    .on('auth-needed', () => {})
 
   // $ExpectError
   client.on('abc')

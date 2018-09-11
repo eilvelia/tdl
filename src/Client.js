@@ -74,6 +74,7 @@ export type On =
   & ((event: 'destroy', listener: () => void) => Client)
   & ((event: 'auth-needed', listener: () => void) => Client)
   & ((event: 'auth-not-needed', listener: () => void) => Client)
+  & ((event: 'response', listener: (res: any) => void) => Client)
 
 export type Emit =
   & ((event: 'update', update: Update) => void)
@@ -81,6 +82,7 @@ export type Emit =
   & ((event: 'destroy') => void)
   & ((event: 'auth-needed') => void)
   & ((event: 'auth-not-needed') => void)
+  & ((event: 'response', res: any) => void)
 
 export type RemoveListener =
   & ((event: 'update', listener: Function, once?: boolean) => void)
@@ -88,6 +90,7 @@ export type RemoveListener =
   & ((event: 'destroy', listener: Function, once?: boolean) => void)
   & ((event: 'auth-needed', listener: Function, once?: boolean) => void)
   & ((event: 'auth-not-needed', listener: Function, once?: boolean) => void)
+  & ((event: 'response', listener: Function, once?: boolean) => void)
 
 const defaultBeforeAuth = () => Promise.resolve()
 
@@ -101,7 +104,7 @@ export class Client {
 
   _beforeAuth: () => Promise<mixed> = defaultBeforeAuth;
 
-  _connectResolver: (result: void) => void;
+  _connectResolver: (result: void) => void = () => undefined;
   _connectRejector: null | (error: any) => void = null;
 
   _authNeeded: boolean = false;
@@ -182,12 +185,16 @@ export class Client {
     // $FlowOff
     query['@extra'] = id
     const receiveUpdate = new Promise((resolve, reject) => {
-      this._fetching.set(id, { resolve, reject })
-      // // timeout after 10 seconds
-      // setTimeout(() => {
-      //   delete this._fetching[id]
-      //   reject('Query timed out after 10 seconds.')
-      // }, 1000 * 10)
+      try {
+        this._fetching.set(id, { resolve, reject })
+        // // timeout after 10 seconds
+        // setTimeout(() => {
+        //   delete this._fetching[id]
+        //   reject('Query timed out after 10 seconds.')
+        // }, 1000 * 10)
+      } catch (e) {
+        console.error(e)
+      }
     })
     await this._send(query)
 
@@ -265,6 +272,8 @@ export class Client {
   }
 
   async _handleResponse (res: TDObject): Promise<mixed> {
+    this.emit('response', res)
+
     if (res._ === 'error')
       return this._handleError(res)
 
@@ -319,16 +328,13 @@ export class Client {
           }
         })
 
-      case 'authorizationStateWaitEncryptionKey': {
-        await this._send({
-          _: 'checkDatabaseEncryptionKey'
-        })
+      case 'authorizationStateWaitEncryptionKey':
+        await this._send({ _: 'checkDatabaseEncryptionKey' })
 
         await this._beforeAuth()
           .catch(() => {})
 
         break
-      }
 
       case 'authorizationStateWaitPhoneNumber':
         this._authNeeded = true

@@ -30,6 +30,7 @@ cl
     console.log(e)
   })
   .on('destroy', () => {})
+  .on('response', r => {})
 
 
 cl.emit('error', { _: 'error', code: 1235, message: 'MSG', })
