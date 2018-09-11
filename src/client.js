@@ -6,7 +6,7 @@ import { mergeDeepRight } from 'ramda'
 import * as Future from 'fluture'
 import Debug from 'debug'
 import uuidv4 from '../vendor/uuidv4'
-import { TDLib } from './TDLib'
+import { TDLib } from './tdlib'
 import { deepRenameKey, deepRenameKey_ } from './util'
 import {
   getAuthCode as defaultGetAuthCode,
@@ -32,7 +32,7 @@ import type {
   Execute
 } from '../types/tdlib'
 
-import type { TDLibClient } from './TDLib'
+import type { TDLibClient } from './tdlib'
 
 const debug = Debug('tdl:client')
 
