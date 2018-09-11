@@ -8,7 +8,11 @@ import Debug from 'debug'
 import uuidv4 from '../vendor/uuidv4'
 import { TDLib } from './TDLib'
 import { deepRenameKey, deepRenameKey_ } from './util'
-import { getAuthCode, getPassword, getName } from './prompt'
+import {
+  getAuthCode as defaultGetAuthCode,
+  getPassword as defaultGetPassword,
+  getName as defaultGetName
+} from './prompt'
 
 import type {
   ConfigType,
@@ -40,9 +44,9 @@ const resolvePath = (relativePath: string): string =>
 const defaultOptions: StrictConfigType = {
   loginDetails: {
     type: 'user',
-    getAuthCode,
-    getPassword,
-    getName
+    getAuthCode: defaultGetAuthCode,
+    getPassword: defaultGetPassword,
+    getName: defaultGetName
   },
   binaryPath: process.platform === 'win32' ? 'tdjson' : 'libtdjson',
   databaseDirectory: '_td_database',
@@ -241,7 +245,7 @@ export class Client {
     this._tdlib.send(client, tdQuery)
   }
 
-  async _receive (timeout: number = 10): Promise<TDObject | null> {
+  async _receive (timeout: number = 10): Promise<Object/*TDObject*/ | null> {
     if (!this._client) return Promise.resolve(null)
     const tdResponse = await this._tdlib.receive(this._client, timeout)
     return tdResponse && (this._options.useMutableRename
