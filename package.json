@@ -27,7 +27,6 @@
     "index.d.ts",
     "dist",
     "vendor",
-    "flow-typed",
     "flow",
     "types",
     "examples",
