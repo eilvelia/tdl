@@ -1,3 +1,6 @@
+// NOTE: Multiple clients on the same process may cause
+//       `terminating with uncaught exception of type Napi::Error` error.
+
 const { Client, TDLib } = require('tdl')
 
 const API_ID = 2222 // Your api_id
