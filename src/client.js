@@ -51,7 +51,6 @@ const defaultOptions: StrictConfigType = {
   binaryPath: process.platform === 'win32' ? 'tdjson' : 'libtdjson',
   databaseDirectory: '_td_database',
   filesDirectory: '_td_files',
-  logFilePath: '',
   verbosityLevel: 2,
   skipOldUpdates: false,
   useTestDc: false,
@@ -142,9 +141,6 @@ export class Client {
   async _init (): Promise<void> {
     try {
       this.setLogVerbosityLevel(this._options.verbosityLevel)
-
-      if (this._options.logFilePath)
-        this.setLogFilePath(resolvePath(this._options.logFilePath))
 
       this._client = await this._tdlib.create()
     } catch (err) {

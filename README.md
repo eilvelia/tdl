@@ -196,7 +196,6 @@ type Options = {
   binaryPath: string, // Path to tdlib binary, relative path
   databaseDirectory: string, // Relative path
   filesDirectory: string, // Relative path
-  logFilePath: string, // Relative path
   verbosityLevel: number,
   skipOldUpdates: boolean, // Don't emit old updates
   useTestDc: boolean, // Use telegram dev server
@@ -221,7 +220,6 @@ Any empty fields may just not be specified.
   binaryPath: 'libtdjson',
   databaseDirectory: '_td_database',
   filesDirectory: '_td_files',
-  logFilePath: '', // (don't write to file)
   verbosityLevel: 2,
   skipOldUpdates: false,
   useTestDc: false,
