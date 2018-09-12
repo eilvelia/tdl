@@ -146,6 +146,12 @@ See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a0f683bd572
 
 Sets the callback that will be called when a fatal error happens. None of the TDLib methods can be called from the callback. The TDLib will crash as soon as callback returns. By default the callback is not set.
 
+```js
+client.setLogFatalErrorCallback(errorMessage =>
+  console.error('Fatal error:', errorMessage)
+)
+```
+
 See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#ab2c5a70ac5ca1f952d979f9fa4b2ba82).
 
 ##### `client.invokeFuture(query: Object) => Future`
