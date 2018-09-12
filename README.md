@@ -5,36 +5,41 @@
 [![node](https://img.shields.io/node/v/tdl.svg)](https://github.com/Bannerets/tdl)
 [![Build Status](https://travis-ci.org/Bannerets/tdl.svg?branch=master)](https://travis-ci.org/Bannerets/tdl)
 
-TDLib (Telegram Database library) bindings for Node.js
+[TDLib][tdlib-getting-started] (Telegram Database library) bindings for Node.js.
 
------
+[tdlib-getting-started]: https://core.telegram.org/tdlib/getting-started
+
+---
 
 ### Getting started
 
 1. Build the binary (https://github.com/tdlib/td#building)
 2. `npm install tdl`
 
------
+---
 
-### APIs
+### API
 
-##### `new Client(options: Object) -> Client`
+##### `new Client(options: Object) => Client`
 
 ```js
 const { Client } = require('tdl')
 
 const client = new Client({
   apiId: 2222, // Your api_id
-  apiHash: 'YOUR_API_HASH',
+  apiHash: '0123456789abcdef0123456789abcdef', // Your api_hash
   loginDetails: {
     phoneNumber: 'YOUR_PHONE_NUMBER'
   }
 })
 ```
 
-##### `client.connect(beforeAuth?: () => Promise) -> Promise<void>`
+`api_id` and `api_hash` can be obtained at https://my.telegram.org/.
 
-You can use this API to initialize and connect your client with Telegram.
+##### `client.connect(beforeAuth?: () => Promise) => Promise<void>`
+
+You can use this method to initialize and connect your client with Telegram.  
+Returns promise.
 
 ```js
 await client.connect()
@@ -48,20 +53,20 @@ client.connect(async () => {
 })
 ```
 
-##### `client.on(event: string, callback: Function) -> Client`
+##### `client.on(event: string, callback: Function) => Client`
 
-##### `client.once(event: string, callback: Function) -> Client`
+##### `client.once(event: string, callback: Function) => Client`
 
-You can use this API to attach an event listener for iterating updates.
+Attach an event listener for iterating updates.
 
 ```js
 client.on('update', console.log)
 client.on('error', console.error)
 ```
 
-##### `client.removeListener(event: string, listener: Function, once?: boolean) -> Client`
+##### `client.removeListener(event: string, listener: Function, once?: boolean) => Client`
 
-You can use this API to remove an event listener.
+Remove an event listener.
 
 ```js
 const listener = v => {
@@ -71,9 +76,9 @@ const listener = v => {
 client.on('update', listener)
 ```
 
-##### `client.invoke(query: Object) -> Promise<Object>`
+##### `client.invoke(query: Object) => Promise<Object>`
 
-You can use this API to send asynchronous message to Telegram and receive response.  
+Send asynchronous message to Telegram and receive response.  
 Resolves with response, or rejects with an error.
 
 ```js
@@ -99,9 +104,9 @@ await client.invoke({
 })
 ```
 
-##### `client.execute(query: Object) -> ?Object`
+##### `client.execute(query: Object) => (Object | null)`
 
-You can use this API to send synchronous message to Telegram and receive response.
+Send synchronous message to Telegram and receive response.
 
 ```js
 const res = client.execute({
@@ -110,58 +115,67 @@ const res = client.execute({
 })
 ```
 
-##### `client.destroy() -> void`
+##### `client.destroy() => void`
 
-You can use this API to destroy the client.
+Destroy the client.
 
 ```js
 client.destroy()
 ```
 
-##### `client.setLogFilePath(path: string) -> number`
+##### `client.setLogFilePath(path: string) => number`
 
-See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a8c8aadc9360af6e1cf2673954dcf9aea).
+Sets the path to the file to where the internal TDLib log will be written. By default TDLib writes logs to stderr or an OS specific log. Use this method to write the log to a file instead.
 
-##### `client.setLogMaxFileSize(maxFileSize: number | string) -> void`
+See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a038b57d66436f9f367f5c77360e8254b).
+
+##### `client.setLogMaxFileSize(maxFileSize: (number | string)) => void`
 
 Sets maximum size of the file to where the internal TDLib log is written before the file will be auto-rotated.   Unused if log is not written to a file. Defaults to 10 MB.
 
-See [docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#adcbe44e62e16d65eb4c7503aabe264b3).
+See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a749ea8521373bbe9f5c30f58bc591016).
 
-##### `client.setLogVerbosityLevel(verbosityLevel: number) -> void`
+##### `client.setLogVerbosityLevel(verbosityLevel: number) => void`
 
-See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a9dd71044a37db700da89001c96b978c3).
+Sets the verbosity level of the internal logging of TDLib.  
+Default is 2.
 
-##### `client.setLogFatalErrorCallback(fn: Function) -> void`
+See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a0f683bd572154f7b4c8b4f973ea3395f).
 
-See [docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#addebe91c4525817a6d2b448634c19d71).
+##### `client.setLogFatalErrorCallback(fn: Function) => void`
 
-##### `client.invokeFuture(query: Object) -> Future<Object, Object>`
+Sets the callback that will be called when a fatal error happens. None of the TDLib methods can be called from the callback. The TDLib will crash as soon as callback returns. By default the callback is not set.
 
-Same as `client.invoke`, but returns [Future](https://github.com/fluture-js/Fluture) instead of Promise.
+See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#ab2c5a70ac5ca1f952d979f9fa4b2ba82).
+
+##### `client.invokeFuture(query: Object) => Future`
+
+Same as `client.invoke`, but returns [Future][] instead of Promise.
+
+[Future]: https://github.com/fluture-js/Fluture
 
 #### Low-level TDLib APIs
 
 See [TDLib_API.md](TDLib_API.md).
 
------
+---
 
 ### Login as a bot
 
 ```js
 const client = new Client({
   apiId: 2222, // Your api_id
-  apiHash: 'YOUR_API_HASH',
+  apiHash: '0123456789abcdef0123456789abcdef', // Your api_hash
   loginDetails: {
     type: 'bot',
-    token: 'YOUR_BOT_TOKEN'
+    token: 'YOUR_BOT_TOKEN' // Token from @BotFather
   }
 })
 
 await client.connect()
 ```
 
------
+---
 
 ### Options
 
@@ -224,23 +238,26 @@ Any empty fields may just not be specified.
 }
 ```
 
------
+---
 
 ### Typings
 
-`tdl` supports [Flow](https://flow.org/) and [TypeScript](https://www.typescriptlang.org/) out of the box.  
-Typings are generated from [td_api.tl][scheme] scheme using [tdlib-typings][].
+`tdl` supports [Flow][] and [TypeScript][] out of the box.  
+Typings are generated from [td_api.tl][td-scheme] scheme using [tdlib-typings][].
 
-[scheme]: https://github.com/tdlib/td/blob/6129ebf39439647e277e88d9d43a2f897ffee63c/td/generate/scheme/td_api.tl
+[Flow]: https://flow.org/
+[TypeScript]: https://www.typescriptlang.org/
+
+[td-scheme]: https://github.com/tdlib/td/blob/6129ebf39439647e277e88d9d43a2f897ffee63c/td/generate/scheme/td_api.tl
 [tdlib-typings]: https://github.com/Bannerets/tdlib-typings
 
------
+---
 
 ### Examples
 
 See [examples/](examples) folder.
 
------
+---
 
 ### Requirements
 
@@ -248,8 +265,12 @@ See [examples/](examples) folder.
 - Node.js 10 preferred (minimum >= 8.6.0)
 > Note: If you are using Node.js 8.x-9.x, you may encounter a warning message `Warning: N-API is an experimental feature and could change at any time.`, this can be suppressed by upgrading to version 10.
 
------
+You can also you use prebuilt binaries:
 
-### Fork
+- [tdlib.native](https://github.com/ForNeVeR/tdlib.native/releases)
 
-This is a fork of [nodegin/tglib](https://github.com/nodegin/tglib).
+---
+
+#### Fork
+
+This project is a fork of [nodegin/tglib](https://github.com/nodegin/tglib).
