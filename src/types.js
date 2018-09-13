@@ -1,6 +1,6 @@
 // @flow
 
-import type { TDLib } from './tdlib'
+import type { TDLib } from './tdlib-ffi'
 
 export type TDLibParameters = {
   use_test_dc?: boolean,

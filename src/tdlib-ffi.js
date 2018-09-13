@@ -6,7 +6,7 @@ import Debug from 'debug'
 
 export opaque type TDLibClient = $ReadOnly<Object>
 
-const debug = Debug('tdl:tdlib')
+const debug = Debug('tdl:tdlib-ffi')
 
 const buildQuery = (query: Object) => {
   const buffer = Buffer.from(JSON.stringify(query) + '\0', 'utf-8')

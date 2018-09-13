@@ -1,7 +1,7 @@
 // @flow
 
 import { Client } from './client'
-import { TDLib } from './tdlib'
+import { TDLib } from './tdlib-ffi'
 
 export {
   Client,
@@ -12,7 +12,7 @@ export {
 
 export default Client
 
-export type { TDLibClient } from './tdlib'
+export type { TDLibClient } from './tdlib-ffi'
 
 export type {
   ConfigType,
