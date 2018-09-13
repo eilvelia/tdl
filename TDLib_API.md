@@ -22,7 +22,7 @@ const client = await tdlib.create()
 
 [Docs](https://core.telegram.org/tdlib/docs/td__json__client_8h.html#a45cd6979ada11b7690d9dcb1ddc841a0)
 
-##### `send: (client: TDLibClient, query: Object) => Promise<null>`
+##### `send: (client: TDLibClient, query: Object) => Promise<void>`
 
 [Docs](https://core.telegram.org/tdlib/docs/classtd_1_1_client.html#a1a6f9cbe607ce76ff869493833c1224d)
 

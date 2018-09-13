@@ -12,7 +12,7 @@ export interface TDLibInterface {
   destroy(client: _Client): void
   execute(client: _Client, query: Object): Object | null
   receive(client: _Client, timeout: number): Promise<Object | null>
-  send(client: _Client, query: Object): Promise<null>
+  send(client: _Client, query: Object): Promise<undefined>
   setLogFilePath(path: string): number
   setLogMaxFileSize(maxFileSize: number | string): void
   setLogVerbosityLevel(verbosity: number): void
@@ -80,7 +80,7 @@ export class TDLib {
   destroy(client: TDLibClient): undefined
   execute(client: TDLibClient, query: Object): Object | null
   receive(client: TDLibClient, timeout: number): Promise<Object | null>
-  send(client: TDLibClient, query: Object): Promise<null>
+  send(client: TDLibClient, query: Object): Promise<undefined>
   setLogFilePath(path: string): number
   setLogMaxFileSize(maxFileSize: number | string): undefined
   setLogVerbosityLevel(verbosity: number): undefined

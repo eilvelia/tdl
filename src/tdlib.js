@@ -48,11 +48,11 @@ export class TDLib {
     })
   }
 
-  send (client: TDLibClient, query: Object): Promise<null> {
+  send (client: TDLibClient, query: Object): Promise<void> {
     return new Promise((resolve, reject) => {
-      this._tdlib.td_json_client_send.async(client, buildQuery(query), (err, response) => {
+      this._tdlib.td_json_client_send.async(client, buildQuery(query), err => {
         if (err) return reject(err)
-        resolve(response)
+        resolve()
       })
     })
   }
