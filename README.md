@@ -36,7 +36,7 @@ const client = new Client({
 
 `api_id` and `api_hash` can be obtained at https://my.telegram.org/.
 
-##### `client.connect(beforeAuth?: () => Promise) => Promise<void>`
+##### `client.connect(beforeAuth?: () => Promise) => Promise<undefined>`
 
 You can use this method to initialize and connect your client with Telegram.  
 Returns promise.
@@ -115,7 +115,7 @@ const res = client.execute({
 })
 ```
 
-##### `client.destroy() => void`
+##### `client.destroy() => undefined`
 
 Destroy the client.
 
@@ -129,20 +129,20 @@ Sets the path to the file to where the internal TDLib log will be written. By de
 
 See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a038b57d66436f9f367f5c77360e8254b).
 
-##### `client.setLogMaxFileSize(maxFileSize: (number | string)) => void`
+##### `client.setLogMaxFileSize(maxFileSize: (number | string)) => undefined`
 
 Sets maximum size of the file to where the internal TDLib log is written before the file will be auto-rotated.   Unused if log is not written to a file. Defaults to 10 MB.
 
 See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a749ea8521373bbe9f5c30f58bc591016).
 
-##### `client.setLogVerbosityLevel(verbosityLevel: number) => void`
+##### `client.setLogVerbosityLevel(verbosityLevel: number) => undefined`
 
 Sets the verbosity level of the internal logging of TDLib.  
 Default is 2.
 
 See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a0f683bd572154f7b4c8b4f973ea3395f).
 
-##### `client.setLogFatalErrorCallback(fn: Function) => void`
+##### `client.setLogFatalErrorCallback(fn: Function) => undefined`
 
 Sets the callback that will be called when a fatal error happens. None of the TDLib methods can be called from the callback. The TDLib will crash as soon as callback returns. By default the callback is not set.
 
@@ -223,7 +223,7 @@ Any empty fields may just not be specified.
     getPassword,  // read from stdin
     getName // read from stdin
   }
-  binaryPath: 'libtdjson',
+  binaryPath: 'libtdjson', // (and 'tdjson' on Windows)
   databaseDirectory: '_td_database',
   filesDirectory: '_td_files',
   verbosityLevel: 2,
