@@ -59,18 +59,18 @@ export class TDLib {
 
   receive (client: TDLibClient, timeout: number): Promise<Object | null> {
     return new Promise((resolve, reject) => {
-      this._tdlib.td_json_client_receive.async(client, timeout, (err, response) => {
+      this._tdlib.td_json_client_receive.async(client, timeout, (err, res) => {
         if (err) return reject(err)
-        if (!response) return resolve(null)
-        resolve(JSON.parse(response))
+        if (!res) return resolve(null)
+        resolve(JSON.parse(res))
       })
     })
   }
 
   execute (client: TDLibClient, query: Object): Object | null {
-    const response = this._tdlib.td_json_client_execute(client, buildQuery(query))
-    if (!response) return null
-    return JSON.parse(response)
+    const res = this._tdlib.td_json_client_execute(client, buildQuery(query))
+    if (!res) return null
+    return JSON.parse(res)
   }
 
   destroy (client: TDLibClient): void {

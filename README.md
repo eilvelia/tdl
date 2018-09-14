@@ -202,6 +202,7 @@ type Options = {
   binaryPath: string, // Path to tdlib binary, relative path
   databaseDirectory: string, // Relative path
   filesDirectory: string, // Relative path
+  databaseEncryptionKey, // Optional key for database encryption
   verbosityLevel: number,
   skipOldUpdates: boolean, // Don't emit old updates
   useTestDc: boolean, // Use telegram dev server
@@ -248,6 +249,16 @@ Any empty fields may just not be specified.
 
 `tdl` supports [Flow][] and [TypeScript][] out of the box.  
 Typings are generated from [td_api.tl][td-scheme] scheme using [tdlib-typings][].
+
+You can import TDLib types:
+
+```js
+// TypeScript
+import { updateMessageViews, messageInvoice /* ... */ } from 'tdl/types/tdlib'
+
+// Flow
+import type { updateMessageViews, messageInvoice /* ... */ } from 'tdl/types/tdlib'
+```
 
 [Flow]: https://flow.org/
 [TypeScript]: https://www.typescriptlang.org/

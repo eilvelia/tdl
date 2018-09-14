@@ -1,9 +1,9 @@
 // @flow
 
-import path from 'path'
+import { resolve as resolvePath } from 'path'
 import EventEmitter from 'eventemitter3'
 import { mergeDeepRight } from 'ramda'
-import * as Future from 'fluture'
+import { encaseP } from 'fluture'
 import Debug from 'debug'
 import uuidv4 from '../vendor/uuidv4'
 import { TDLib } from './tdlib-ffi'
@@ -36,11 +36,6 @@ import type { TDLibClient } from './tdlib-ffi'
 
 const debug = Debug('tdl:client')
 
-const cwd = process.cwd()
-
-const resolvePath = (relativePath: string): string =>
-  path.resolve(cwd, relativePath)
-
 const defaultOptions: StrictConfigType = {
   loginDetails: {
     type: 'user',
@@ -51,6 +46,7 @@ const defaultOptions: StrictConfigType = {
   binaryPath: process.platform === 'win32' ? 'tdjson' : 'libtdjson',
   databaseDirectory: '_td_database',
   filesDirectory: '_td_files',
+  databaseEncryptionKey: '',
   verbosityLevel: 2,
   skipOldUpdates: false,
   useTestDc: false,
@@ -95,6 +91,7 @@ export type RemoveListener =
   & ((event: 'auth-not-needed', listener: Function, once?: boolean) => void)
   & ((event: 'response', listener: Function, once?: boolean) => void)
 
+const noop = () => {}
 const defaultBeforeAuth = () => Promise.resolve()
 
 export class Client {
@@ -107,7 +104,7 @@ export class Client {
 
   _beforeAuth: () => Promise<mixed> = defaultBeforeAuth;
 
-  _connectResolver: (result: void) => void = () => undefined;
+  _connectResolver: (result: void) => void = noop;
   _connectRejector: null | (error: any) => void = null;
 
   _authNeeded: boolean = false;
@@ -202,7 +199,7 @@ export class Client {
   }
 
   invokeFuture: InvokeFuture =
-    (Future.encaseP(this.invoke): $FlowOff)
+    (encaseP(this.invoke): $FlowOff)
 
   destroy = (): void => {
     if (!this._client) return
@@ -329,7 +326,10 @@ export class Client {
         })
 
       case 'authorizationStateWaitEncryptionKey':
-        await this._send({ _: 'checkDatabaseEncryptionKey' })
+        await this._send({
+          _: 'checkDatabaseEncryptionKey',
+          encryption_key: this._options.databaseEncryptionKey
+        })
 
         await this._beforeAuth()
           .catch(() => {})
