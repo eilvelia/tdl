@@ -8,17 +8,21 @@ import {
 } from '../../types/tdlib'
 
 const cl = new Client({
-  useTestDc: false,
-  loginDetails: {
-    type: 'user',
-    getAuthCode: () => Promise.resolve('str')
-  }
+  apiId: 2234,
+  apiHash: 'abcdef',
+  useTestDc: false
 })
 
 const client = cl
 
 ;(async () => {
   await cl.connect()
+
+  await cl.login(() => ({
+    type: 'user',
+    phoneNumber: '+000',
+    getAuthCode: () => Promise.resolve('str')
+  }))
 })()
 
 cl.on('update', u => {

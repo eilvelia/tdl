@@ -6,17 +6,14 @@ const { Client, TDLib } = require('tdl')
 const API_ID = 2222 // Your api_id
 const API_HASH = 'YOUR_API_HASH'
 
-const PHONE_NUMBER_1 = '+000'
-const PHONE_NUMBER_2 = '+111'
+const CLIENT1_AUTH = { phoneNumber: '+000' }
+const CLIENT2_AUTH = { phoneNumber: '+111' }
 
 const tdlib = new TDLib('libtdjson')
 
 const client1 = Client.fromTDLib(tdlib, {
   apiId: API_ID,
   apiHash: API_HASH,
-  loginDetails: {
-    phoneNumber: PHONE_NUMBER_1
-  },
   databaseDirectory: '_td_database1',
   filesDirectory: '_td_files1'
 })
@@ -24,9 +21,6 @@ const client1 = Client.fromTDLib(tdlib, {
 const client2 = Client.fromTDLib(tdlib, {
   apiId: API_ID,
   apiHash: API_HASH,
-  loginDetails: {
-    phoneNumber: PHONE_NUMBER_2
-  },
   databaseDirectory: '_td_database2',
   filesDirectory: '_td_files2'
 })
@@ -38,5 +32,9 @@ main()
 
 async function main() {
   await Promise.all([ client1.connect(), client2.connect() ])
+  await Promise.all([
+    client1.login(() => CLIENT1_AUTH),
+    client2.login(() => CLIENT2_AUTH)
+  ])
   // ...
 }

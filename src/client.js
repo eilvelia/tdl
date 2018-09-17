@@ -17,15 +17,17 @@ import {
 import type {
   ConfigType,
   StrictConfigType,
+  LoginDetails,
+  StrictLoginDetails,
   TDLibInterface
 } from './types'
 
 import type {
   TDFunction,
-  TDObject,
+  // TDObject,
   Update,
   updateAuthorizationState,
-  error as TDError,
+  error as Td$error,
   ConnectionState,
   Invoke,
   InvokeFuture,
@@ -35,14 +37,19 @@ import type {
 import type { TDLibClient } from './tdlib-ffi'
 
 const debug = Debug('tdl:client')
+const debugEmitter = Debug('tdl:client:emitter')
+const debugRes = Debug('tdl:client:response')
+const debugReq = Debug('tdl:client:request')
+
+const defaultLoginDetails: StrictLoginDetails = {
+  type: 'user',
+  phoneNumber: '',
+  getAuthCode: defaultGetAuthCode,
+  getPassword: defaultGetPassword,
+  getName: defaultGetName
+}
 
 const defaultOptions: StrictConfigType = {
-  loginDetails: {
-    type: 'user',
-    getAuthCode: defaultGetAuthCode,
-    getPassword: defaultGetPassword,
-    getName: defaultGetName
-  },
   binaryPath: process.platform === 'win32' ? 'tdjson' : 'libtdjson',
   databaseDirectory: '_td_database',
   filesDirectory: '_td_files',
@@ -64,12 +71,12 @@ const defaultOptions: StrictConfigType = {
 
 type FetchingPromiseCallback = {
   resolve: (result: Object/* TDObject */) => void,
-  reject: (error: TDError) => void
+  reject: (error: Td$error) => void
 }
 
 export type On =
   & ((event: 'update', listener: (update: Update) => void) => Client)
-  & ((event: 'error', listener: (err: TDError | Error) => void) => Client)
+  & ((event: 'error', listener: (err: Td$error | Error) => void) => Client)
   & ((event: 'destroy', listener: () => void) => Client)
   & ((event: 'auth-needed', listener: () => void) => Client)
   & ((event: 'auth-not-needed', listener: () => void) => Client)
@@ -77,7 +84,7 @@ export type On =
 
 export type Emit =
   & ((event: 'update', update: Update) => void)
-  & ((event: 'error', err: TDError | Error) => void)
+  & ((event: 'error', err: Td$error | Error) => void)
   & ((event: 'destroy') => void)
   & ((event: 'auth-needed') => void)
   & ((event: 'auth-not-needed') => void)
@@ -92,7 +99,6 @@ export type RemoveListener =
   & ((event: 'response', listener: Function, once?: boolean) => void)
 
 const noop = () => {}
-const defaultBeforeAuth = () => Promise.resolve()
 
 export class Client {
   +_options: StrictConfigType;
@@ -102,15 +108,23 @@ export class Client {
   _client: ?TDLibClient;
   _connectionState: ConnectionState = { _: 'connectionStateConnecting' };
 
-  _beforeAuth: () => Promise<mixed> = defaultBeforeAuth;
-
   _connectResolver: (result: void) => void = noop;
   _connectRejector: null | (error: any) => void = null;
 
   _authNeeded: boolean = false;
 
+  _loginDetails: StrictLoginDetails;
+
+  _loginResolver: null | (result: void) => void = null;
+
   constructor (options: ConfigType = {}) {
     this._options = (mergeDeepRight(defaultOptions, options): StrictConfigType)
+
+    if (!options.apiId)
+      throw new TypeError('Valid api_id must be provided.')
+
+    if (!options.apiHash)
+      throw new TypeError('Valid api_hash must be provided.')
 
     this._tdlib = this._options.tdlibInstance
       || new TDLib(resolvePath(this._options.binaryPath))
@@ -148,13 +162,31 @@ export class Client {
     this._loop()
   }
 
-  connect = (beforeAuth?: () => Promise<mixed>): Promise<void> => {
-    if (beforeAuth) this._beforeAuth = beforeAuth
-
+  connect = (): Promise<void> => {
     return new Promise((resolve, reject) => {
       this._connectResolver = resolve
       this._connectRejector = reject
       this._init()
+    })
+  }
+
+  login = (getLoginDetails: () => LoginDetails): Promise<void> => {
+    debug('client.login()')
+    this._emitter.once('auth-needed', () => {
+      this._loginDetails = mergeDeepRight(
+        defaultLoginDetails, getLoginDetails())
+    })
+    return new Promise(resolve => {
+      this._loginResolver = resolve
+      this._emitter.emit('_login')
+    })
+  }
+
+  _waitLogin (): Promise<void> {
+    debug('waitLogin.', this._loginResolver)
+    return new Promise(resolve => {
+      if (this._loginResolver) return resolve()
+      this._emitter.once('_login', () => resolve())
     })
   }
 
@@ -169,7 +201,7 @@ export class Client {
   }
 
   emit: Emit = (event, value) => {
-    debug('emit', event, value)
+    debugEmitter('emit', event, value)
     this._emitter.emit(event, value)
   }
 
@@ -181,7 +213,7 @@ export class Client {
     const id = uuidv4()
     // $FlowOff
     query['@extra'] = id
-    const receiveUpdate = new Promise((resolve, reject) => {
+    const receiveResponse = new Promise((resolve, reject) => {
       try {
         this._fetching.set(id, { resolve, reject })
         // // timeout after 10 seconds
@@ -190,12 +222,12 @@ export class Client {
         //   reject('Query timed out after 10 seconds.')
         // }, 1000 * 10)
       } catch (e) {
-        console.error(e)
+        this._catchError(e)
       }
     })
     await this._send(query)
 
-    return receiveUpdate
+    return receiveResponse
   }
 
   invokeFuture: InvokeFuture =
@@ -224,6 +256,7 @@ export class Client {
   }
 
   execute: Execute = query => {
+    debugReq('execute', query)
     if (!this._client) return null
     const { _client: client } = this
     const tdQuery = deepRenameKey('_', '@type', query)
@@ -232,6 +265,7 @@ export class Client {
   }
 
   async _send (query: TDFunction): Promise<void> {
+    debugReq('send', query)
     if (!this._client) return
     const { _client: client } = this
     const tdQuery = deepRenameKey('_', '@type', query)
@@ -246,6 +280,15 @@ export class Client {
       : deepRenameKey('@type', '_', tdResponse))
   }
 
+  _catchError (err: mixed): void {
+    const message = (err && typeof err === 'object' && err.message) || err
+
+    this.emit('error', new Error(message))
+
+    if (this._connectRejector)
+      this._connectRejector(err)
+  }
+
   async _loop (): Promise<void> {
     while (true) {
       try {
@@ -258,45 +301,43 @@ export class Client {
         else
           debug('Response is empty.')
       } catch (e) {
-        const err: mixed = e
-        const message = (err && typeof err === 'object' && err.message) || err
-
-        this.emit('error', new Error(message))
-        if (this._connectRejector)
-          this._connectRejector(err)
+        this._catchError(e)
       }
     }
   }
 
-  async _handleResponse (res: TDObject): Promise<mixed> {
+  async _handleResponse (res: Object/*TDObject*/): Promise<mixed> {
     this.emit('response', res)
+    debugRes(res)
 
     if (res._ === 'error')
       return this._handleError(res)
 
-    // $FlowOff
+    // $Flow//Off
     const id = res['@extra']
     const promise = this._fetching.get(id)
 
     if (promise) {
-      // $FlowOff
+      // $Flow//Off
       delete res['@extra']
       promise.resolve(res)
       this._fetching.delete(id)
-    } else if (id !== null) {
-      // $FlowOff
-      await this._handleUpdate(res)
+    } else if (id !== null && res._ !== 'ok') {
+      // $Flow//Off
+      return this._handleUpdate(res)
     }
   }
 
-  async _handleUpdate (update: Update): Promise<mixed> {
+  async _handleUpdate (update: Update): Promise<void> {
     switch (update._) {
       case 'updateAuthorizationState':
-        return this._handleAuth(update)
+        this._handleAuth(update).catch(e => this._catchError(e))
+        return
 
       case 'updateConnectionState':
-        debug('New connection state', update.state)
+        debug('New connection state:', update.state)
         this._connectionState = update.state
+        this.emit('update', update)
         return
 
       default:
@@ -307,8 +348,9 @@ export class Client {
   }
 
   async _handleAuth (update: updateAuthorizationState) {
-    const { loginDetails } = this._options
     const authorizationState = update.authorization_state
+
+    debug('New authorization state:', authorizationState._)
 
     switch (authorizationState._) {
       case 'authorizationStateWaitTdlibParameters':
@@ -331,14 +373,24 @@ export class Client {
           encryption_key: this._options.databaseEncryptionKey
         })
 
-        await this._beforeAuth()
-          .catch(() => {})
+        this._connectRejector = null
+        return this._connectResolver()
 
-        break
+      case 'authorizationStateClosed':
+        return this.destroy()
 
-      case 'authorizationStateWaitPhoneNumber':
+      case 'authorizationStateReady':
+        if (this._authNeeded === false) this.emit('auth-not-needed')
+    }
+
+    await this._waitLogin()
+    debug('waitLogin end.', authorizationState._)
+
+    switch (authorizationState._) {
+      case 'authorizationStateWaitPhoneNumber': {
         this._authNeeded = true
         this.emit('auth-needed')
+        const loginDetails = this._loginDetails
 
         return loginDetails.type === 'user'
           ? this._send({
@@ -349,8 +401,10 @@ export class Client {
             _: 'checkAuthenticationBotToken',
             token: loginDetails.token
           })
+      }
 
       case 'authorizationStateWaitCode': {
+        const loginDetails = this._loginDetails
         if (loginDetails.type !== 'user') return
         const code = await loginDetails.getAuthCode(false)
 
@@ -371,6 +425,7 @@ export class Client {
       }
 
       case 'authorizationStateWaitPassword': {
+        const loginDetails = this._loginDetails
         if (loginDetails.type !== 'user') return
         const passwordHint = authorizationState.password_hint
         const password = await loginDetails.getPassword(passwordHint, false)
@@ -381,18 +436,13 @@ export class Client {
       }
 
       case 'authorizationStateReady':
-        if (this._authNeeded === false) this.emit('auth-not-needed')
-        this._connectRejector = null
-        return this._connectResolver()
-
-      case 'authorizationStateClosed':
-        debug('authorizationStateClosed')
-        this.destroy()
+        const loginResolver = this._loginResolver || noop
+        return loginResolver()
     }
   }
 
-  async _handleError (error: TDError) {
-    const { loginDetails } = this._options
+  async _handleError (error: Td$error): Promise<mixed> {
+    const loginDetails = this._loginDetails
 
     switch (error.message) {
       case 'PHONE_CODE_EMPTY':

@@ -1,11 +1,8 @@
 const { Client } = require('tdl')
 
 const client = new Client({
-  apiId: 2222 , // Your api_id
-  apiHash: 'YOUR_API_HASH',
-  loginDetails: {
-    phoneNumber: 'YOUR_PHONE_NUMBER'
-  }
+  apiId: 2222, // Your api_id
+  apiHash: 'YOUR_API_HASH'
 })
 
 client
@@ -19,4 +16,11 @@ client
     console.log('destroy event')
   })
 
-client.connect()
+async function main () {
+  await client.connect()
+  await client.login(() => ({
+    phoneNumber: 'YOUR_PHONE_NUMBER'
+  }))
+}
+
+main()

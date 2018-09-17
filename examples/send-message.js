@@ -2,14 +2,14 @@ const { Client } = require('tdl')
 
 const client = new Client({
   apiId: 2222, // Your api_id
-  apiHash: 'YOUR_API_HASH',
-  loginDetails: {
-    phoneNumber: 'YOUR_PHONE_NUMBER'
-  }
+  apiHash: 'YOUR_API_HASH'
 })
 
 async function main() {
   await client.connect()
+  await client.login(() => ({
+    phoneNumber: 'YOUR_PHONE_NUMBER'
+  }))
 
   await client.invoke({
     _: 'sendMessage',

@@ -7,19 +7,22 @@ const client = new Client({
 
 async function main() {
   await client.connect()
+
+  const proxy = await client.invoke({
+    _: 'addProxy',
+    server: '127.0.0.1',
+    port: '443',
+    enable: true,
+    type: { _: 'proxyTypeMtproto', secret: '15abcdef1234567890deadbeef123456' }
+  })
+
+  console.log('Proxy:', proxy)
+
   await client.login(() => ({
     phoneNumber: 'YOUR_PHONE_NUMBER'
   }))
 
-  const result = await client.invoke({
-    _: 'getChats',
-    offset_order: '9223372036854775807',
-    offset_chat_id: 0,
-    limit: 100
-  })
-
-  // latest 100 chats will be returned
-  console.log(result)
+  // ...
 }
 
 main()

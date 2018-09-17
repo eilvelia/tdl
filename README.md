@@ -5,20 +5,30 @@
 [![node](https://img.shields.io/node/v/tdl.svg)](https://github.com/Bannerets/tdl)
 [![Build Status](https://travis-ci.org/Bannerets/tdl.svg?branch=master)](https://travis-ci.org/Bannerets/tdl)
 
-[TDLib][tdlib-getting-started] (Telegram Database library) bindings for Node.js.
+Node.js wrapper for [TDLib][tdlib-getting-started] (Telegram Database library).
 
 [tdlib-getting-started]: https://core.telegram.org/tdlib/getting-started
 
+### Table of Contents
+
+- [Getting started](#getting-started)
+- [API](#api)
+- [Login as a bot](#login-as-a-bot)
+- [Options](#options)
+- [Typings](#typings)
+- [Examples](#examples)
+- [Requirements](#requirements)
+
 ---
 
-### Getting started
+### Getting started <a name="getting-started"></a>
 
 1. Build the binary (https://github.com/tdlib/td#building)
 2. `npm install tdl`
 
 ---
 
-### API
+### API <a name="api"></a>
 
 ##### `new Client(options: Object) => Client`
 
@@ -28,15 +38,12 @@ const { Client } = require('tdl')
 const client = new Client({
   apiId: 2222, // Your api_id
   apiHash: '0123456789abcdef0123456789abcdef', // Your api_hash
-  loginDetails: {
-    phoneNumber: 'YOUR_PHONE_NUMBER'
-  }
 })
 ```
 
 `api_id` and `api_hash` can be obtained at https://my.telegram.org/.
 
-##### `client.connect(beforeAuth?: () => Promise) => Promise<undefined>`
+##### `client.connect() => Promise<undefined>`
 
 You can use this method to initialize and connect your client with Telegram.  
 Returns promise.
@@ -45,12 +52,12 @@ Returns promise.
 await client.connect()
 ```
 
-`beforeAuth` function is called before auth begins.
+##### `client.login(fn: () => LoginDetails) => Promise<undefined>`
 
 ```js
-client.connect(async () => {
-  // ...
-})
+await client.login(() => ({
+  phoneNumber: 'YOUR_PHONE_NUMBER'
+}))
 ```
 
 ##### `client.on(event: string, callback: Function) => Client`
@@ -160,55 +167,56 @@ Same as `client.invoke`, but returns [Future][] instead of Promise.
 
 [Future]: https://github.com/fluture-js/Fluture
 
-#### Low-level TDLib APIs
+#### Low-level TDLib API
 
 See [TDLib_API.md](TDLib_API.md).
 
 ---
 
-### Login as a bot
+### Login as a bot <a name="login-as-a-bot"></a>
 
 ```js
 const client = new Client({
   apiId: 2222, // Your api_id
-  apiHash: '0123456789abcdef0123456789abcdef', // Your api_hash
-  loginDetails: {
-    type: 'bot',
-    token: 'YOUR_BOT_TOKEN' // Token from @BotFather
-  }
+  apiHash: '0123456789abcdef0123456789abcdef' // Your api_hash
 })
 
 await client.connect()
+await client.login(() => ({
+  type: 'bot',
+  token: 'YOUR_BOT_TOKEN' // Token from @BotFather
+}))
 ```
 
 ---
 
-### Options
+### Options <a name="options"></a>
 
 ```typescript
 type Options = {
   apiId: number, // Can be obtained at https://my.telegram.org
   apiHash: string, // Can be obtained at https://my.telegram.org
-  loginDetails: {
-    type: 'user',
-    phoneNumber: string,
-    getAuthCode: (retry?: boolean) => Promise<string>,
-    getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
-    getName: () => Promise<{ firstName: string, lastName?: string }>
-  } | {
-    type: 'bot',
-    token: string
-  },
   binaryPath: string, // Path to tdlib binary, relative path
   databaseDirectory: string, // Relative path
   filesDirectory: string, // Relative path
-  databaseEncryptionKey, // Optional key for database encryption
+  databaseEncryptionKey: string, // Optional key for database encryption
   verbosityLevel: number,
   skipOldUpdates: boolean, // Don't emit old updates
   useTestDc: boolean, // Use telegram dev server
-  useMutableRename: boolean, // Enable in production
+  useMutableRename: boolean, // May increase performance
   tdlibParameters: Object, // See https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html
   tdlibInstance: TDLib
+}
+
+type LoginDetails = {
+  type: 'user',
+  phoneNumber: string,
+  getAuthCode: (retry?: boolean) => Promise<string>,
+  getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
+  getName: () => Promise<{ firstName: string, lastName?: string }>
+} | {
+  type: 'bot',
+  token: string
 }
 ```
 
@@ -217,13 +225,7 @@ Any empty fields may just not be specified.
 ##### Defaults
 
 ```javascript
-{
-  loginDetails: {
-    type: 'user',
-    getAuthCode, // read from stdin
-    getPassword,  // read from stdin
-    getName // read from stdin
-  }
+options = {
   binaryPath: 'libtdjson', // (and 'tdjson' on Windows)
   databaseDirectory: '_td_database',
   filesDirectory: '_td_files',
@@ -241,13 +243,20 @@ Any empty fields may just not be specified.
     enable_storage_optimizer: true
   }
 }
+
+loginDetails = {
+  type: 'user',
+  getAuthCode, // read from stdin
+  getPassword,  // read from stdin
+  getName // read from stdin
+}
 ```
 
 ---
 
-### Typings
+### Typings <a name="typings"></a>
 
-`tdl` supports [Flow][] and [TypeScript][] out of the box.  
+`tdl` supports [Flow][] and [TypeScript][] out of the box.
 Typings are generated from [td_api.tl][td-scheme] scheme using [tdlib-typings][].
 
 You can import TDLib types:
@@ -268,15 +277,15 @@ import type { updateMessageViews, messageInvoice /* ... */ } from 'tdl/types/tdl
 
 ---
 
-### Examples
+### Examples <a name="examples"></a>
 
 See [examples/](examples) folder.
 
 ---
 
-### Requirements
+### Requirements <a name="requirements"></a>
 
-- TDLib binary
+- TDLib binary (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
 - Node.js 10 preferred (minimum >= 8.6.0)
 > Note: If you are using Node.js 8.x-9.x, you may encounter a warning message `Warning: N-API is an experimental feature and could change at any time.`, this can be suppressed by upgrading to version 10.
 
@@ -285,7 +294,3 @@ You can also you use prebuilt binaries:
 - [tdlib.native](https://github.com/ForNeVeR/tdlib.native/releases)
 
 ---
-
-#### Fork
-
-This project is a fork of [nodegin/tglib](https://github.com/nodegin/tglib).

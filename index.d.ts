@@ -1,6 +1,6 @@
 import {
   Update,
-  error as TDError,
+  error as Td$error,
   Invoke,
   InvokeFuture,
   Execute
@@ -21,7 +21,7 @@ export interface TDLibInterface {
 
 export type On =
   & ((event: 'update', listener: (update: Update) => void) => Client)
-  & ((event: 'error', listener: (err: TDError | Error) => void) => Client)
+  & ((event: 'error', listener: (err: Td$error | Error) => void) => Client)
   & ((event: 'destroy', listener: () => void) => Client)
   & ((event: 'auth-needed', listener: () => void) => Client)
   & ((event: 'auth-not-needed', listener: () => void) => Client)
@@ -29,7 +29,7 @@ export type On =
 
 export type Emit =
   & ((event: 'update', update: Update) => void)
-  & ((event: 'error', err: TDError | Error) => void)
+  & ((event: 'error', err: Td$error | Error) => void)
   & ((event: 'destroy') => void)
   & ((event: 'auth-needed') => void)
   & ((event: 'auth-not-needed') => void)
@@ -48,7 +48,8 @@ export class Client {
   static create(options?: ConfigType): Client
   static fromTDLib(tdlibInstance: TDLib, options?: ConfigType): Client
   static fromAbstractTd(tdlibInstance: TDLibInterface, options?: ConfigType): Client
-  connect: (beforeAuth?: () => Promise<any>) => Promise<undefined>
+  connect: () => Promise<undefined>
+  login: (getLoginDetails: () => LoginDetails) => Promise<undefined>
   on: On
   once: On
   emit: Emit
@@ -109,7 +110,7 @@ export type TDLibParameters = {
 
 export type LoginUser = {
   type: 'user',
-  phoneNumber?: string,
+  phoneNumber: string,
   getAuthCode: (retry?: boolean) => Promise<string>,
   getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
   getName: () => Promise<{ firstName: string, lastName?: string }>
@@ -126,7 +127,6 @@ export type StrictLoginDetails = LoginUser | LoginBot
 export type ConfigType = {
   apiId?: number,
   apiHash?: string,
-  loginDetails?: LoginDetails,
   binaryPath?: string,
   databaseDirectory?: string,
   filesDirectory?: string,
@@ -142,7 +142,6 @@ export type ConfigType = {
 export type StrictConfigType = {
   apiId?: number,
   apiHash?: string,
-  loginDetails: StrictLoginDetails,
   binaryPath: string,
   databaseDirectory: string,
   filesDirectory: string,

@@ -1,6 +1,6 @@
 ## TDLib API
 
-Low-level TDLib APIs
+Low-level TDLib API.
 
 ```js
 const { TDLib } = require('tdl')

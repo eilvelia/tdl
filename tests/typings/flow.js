@@ -14,7 +14,23 @@ import { Tdl } from '../../index'
 
   new Tdl()
   const tdl = new Tdl({ tdlibInstance: t, loginDetails: { type: 'user' } })
-  tdl.connect()
+  await tdl.connect()
+
+  tdl.login(() => ({
+    type: 'bot',
+    token: 'token'
+  }))
+
+  await tdl.login(() => ({
+    type: 'user',
+    phoneNumber: '+00',
+    getAuthCode: () => Promise.resolve('123')
+  }))
+
+  // $ExpectError
+  tdl.login(123)
+  // $ExpectError
+  tdl.login(() => 2)
 })
 
 
@@ -31,11 +47,6 @@ import type {
 const client = new Client({
   apiId: 222,
   apiHash: 'abc',
-  loginDetails: {
-    //phoneNumber: PHONE_NUMBER
-    type: 'bot',
-    token: 'token'
-  },
   useTestDc: true
 })
 
@@ -127,6 +138,13 @@ client.setLogFatalErrorCallback('1234')
         text: 'Hi',
       }
     }
+  })
+
+  await client.invoke({
+    _: 'getChats',
+    offset_order: '9223372036854775807',
+    offset_chat_id: 0,
+    limit: 100
   })
 
   client.invokeFuture({

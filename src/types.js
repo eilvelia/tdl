@@ -22,7 +22,7 @@ export type TDLibParameters = {
 
 export type LoginUser = {
   type: 'user',
-  phoneNumber?: string,
+  phoneNumber: string,
   getAuthCode: (retry?: boolean) => Promise<string>,
   getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
   getName: () => Promise<{ firstName: string, lastName?: string }>
@@ -39,7 +39,6 @@ export type StrictLoginDetails = LoginUser | LoginBot
 export type ConfigType = {
   apiId?: number,
   apiHash?: string,
-  loginDetails?: LoginDetails,
   binaryPath?: string,
   databaseDirectory?: string,
   filesDirectory?: string,
@@ -55,7 +54,6 @@ export type ConfigType = {
 export type StrictConfigType = {
   apiId?: number,
   apiHash?: string,
-  loginDetails: StrictLoginDetails,
   binaryPath: string,
   databaseDirectory: string,
   filesDirectory: string,
