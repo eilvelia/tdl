@@ -21,14 +21,16 @@ Node.js wrapper for [TDLib][tdlib-getting-started] (Telegram Database library).
 
 ---
 
-### Getting started <a name="getting-started"></a>
+<a name="getting-started"></a>
+### Getting started
 
 1. Build the binary (https://github.com/tdlib/td#building)
 2. `npm install tdl`
 
 ---
 
-### API <a name="api"></a>
+<a name="api"></a>
+### API
 
 ##### `new Client(options: Object) => Client`
 
@@ -173,7 +175,8 @@ See [TDLib_API.md](TDLib_API.md).
 
 ---
 
-### Login as a bot <a name="login-as-a-bot"></a>
+<a name="login-as-a-bot"></a>
+### Login as a bot
 
 ```js
 const client = new Client({
@@ -190,7 +193,8 @@ await client.login(() => ({
 
 ---
 
-### Options <a name="options"></a>
+<a name="options"></a>
+### Options
 
 ```typescript
 type Options = {
@@ -254,7 +258,8 @@ loginDetails = {
 
 ---
 
-### Typings <a name="typings"></a>
+<a name="typings"></a>
+### Typings
 
 `tdl` supports [Flow][] and [TypeScript][] out of the box.
 Typings are generated from [td_api.tl][td-scheme] scheme using [tdlib-typings][].
@@ -277,13 +282,15 @@ import type { updateMessageViews, messageInvoice /* ... */ } from 'tdl/types/tdl
 
 ---
 
-### Examples <a name="examples"></a>
+<a name="examples"></a>
+### Examples
 
 See [examples/](examples) folder.
 
 ---
 
-### Requirements <a name="requirements"></a>
+<a name="requirements"></a>
+### Requirements
 
 - TDLib binary (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
 - Node.js 10 preferred (minimum >= 8.6.0)
