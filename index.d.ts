@@ -3,8 +3,7 @@ import {
   error as Td$error,
   Invoke,
   InvokeFuture,
-  Execute,
-  tdlibParameters
+  Execute
 } from './types/tdlib'
 
 import { TDLibClient, ITDLibJSON } from 'tdl-shared'
