@@ -8,7 +8,7 @@ import {
 
 type _Client = any
 export interface TDLibInterface {
-  create(): Promise<_Client>
+  create(libraryFile?: string): Promise<_Client>
   destroy(client: _Client): void
   execute(client: _Client, query: Object): Object | null
   receive(client: _Client, timeout: number): Promise<Object | null>
@@ -76,7 +76,7 @@ export default Client
 export interface TDLibClient { readonly _TDLibClientBrand: void }
 
 export class TDLib {
-  constructor(libraryFile: string)
+  constructor(libraryFile?: string)
   create(): Promise<TDLibClient>
   destroy(client: TDLibClient): undefined
   execute(client: TDLibClient, query: Object): Object | null

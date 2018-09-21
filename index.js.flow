@@ -10,7 +10,7 @@ import type {
 
 type _Client = any
 export type TDLibInterface = {
-  create(): Promise<_Client>;
+  create(libraryFile?: string): Promise<_Client>;
   destroy(client: _Client): void;
   execute(client: _Client, query: Object): Object | null;
   receive(client: _Client, timeout: number): Promise<Object | null>;
@@ -78,7 +78,7 @@ declare export default Client
 export opaque type TDLibClient = $ReadOnly<Object>
 
 declare export class TDLib {
-  constructor(libraryFile: string): this;
+  constructor(libraryFile?: string): this;
   create(): Promise<TDLibClient>;
   destroy(client: TDLibClient): void;
   execute(client: TDLibClient, query: Object): Object | null;

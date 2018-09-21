@@ -3,6 +3,7 @@
 import ffi from 'ffi-napi'
 import ref from 'ref-napi'
 import Debug from 'debug'
+import { resolve as resolvePath } from 'path'
 
 export opaque type TDLibClient = $ReadOnly<Object>
 
@@ -17,14 +18,16 @@ const buildQuery = (query: Object) => {
 
 /* eslint-disable no-multi-spaces, key-spacing, comma-spacing */
 
+const defaultLibraryName = process.platform === 'win32' ? 'tdjson' : 'libtdjson'
+
 export class TDLib {
   +_tdlib: Object
 
-  constructor (libraryFile: string) {
-    debug('binaryPath', libraryFile)
+  constructor (libraryFile: string = defaultLibraryName) {
+    debug('constructor', libraryFile)
 
     this._tdlib = ffi.Library(
-      libraryFile,
+      resolvePath(libraryFile),
       {
         'td_json_client_create'          : ['pointer', []],
         'td_json_client_send'            : ['void'   , ['pointer', 'string']],

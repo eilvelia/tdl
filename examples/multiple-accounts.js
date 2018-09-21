@@ -9,7 +9,7 @@ const API_HASH = 'YOUR_API_HASH'
 const CLIENT1_AUTH = { phoneNumber: '+000' }
 const CLIENT2_AUTH = { phoneNumber: '+111' }
 
-const tdlib = new TDLib('libtdjson')
+const tdlib = new TDLib()
 
 const client1 = Client.fromTDLib(tdlib, {
   apiId: API_ID,

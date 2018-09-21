@@ -66,14 +66,14 @@ export type StrictConfigType = {
   tdlibInstance?: TDLib
 }
 
-type TDLibClient = any
+type _Client = any
 
 export type TDLibInterface = {
-  create(): Promise<TDLibClient>;
-  destroy(client: TDLibClient): void;
-  execute(client: TDLibClient, query: Object): Object | null;
-  receive(client: TDLibClient, timeout: number): Promise<Object | null>;
-  send(client: TDLibClient, query: Object): Promise<null>;
+  create(libraryFile?: string): Promise<_Client>;
+  destroy(client: _Client): void;
+  execute(client: _Client, query: Object): Object | null;
+  receive(client: _Client, timeout: number): Promise<Object | null>;
+  send(client: _Client, query: Object): Promise<void>;
   setLogFilePath(path: string): number;
   setLogMaxFileSize(maxFileSize: number | string): void;
   setLogVerbosityLevel(verbosity: number): void;

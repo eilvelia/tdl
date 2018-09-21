@@ -50,7 +50,7 @@ const defaultLoginDetails: StrictLoginDetails = {
 }
 
 const defaultOptions: StrictConfigType = {
-  binaryPath: process.platform === 'win32' ? 'tdjson' : 'libtdjson',
+  binaryPath: '',
   databaseDirectory: '_td_database',
   filesDirectory: '_td_files',
   databaseEncryptionKey: '',
@@ -127,7 +127,7 @@ export class Client {
       throw new TypeError('Valid api_hash must be provided.')
 
     this._tdlib = this._options.tdlibInstance
-      || new TDLib(resolvePath(this._options.binaryPath))
+      || new TDLib(this._options.binaryPath || undefined)
   }
 
   static create (options: ConfigType = {}): Client {
