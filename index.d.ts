@@ -3,21 +3,13 @@ import {
   error as Td$error,
   Invoke,
   InvokeFuture,
-  Execute
+  Execute,
+  tdlibParameters
 } from './types/tdlib'
 
-type _Client = any
-export interface TDLibInterface {
-  create(libraryFile?: string): Promise<_Client>
-  destroy(client: _Client): void
-  execute(client: _Client, query: Object): Object | null
-  receive(client: _Client, timeout: number): Promise<Object | null>
-  send(client: _Client, query: Object): Promise<undefined>
-  setLogFilePath(path: string): number
-  setLogMaxFileSize(maxFileSize: number | string): void
-  setLogVerbosityLevel(verbosity: number): void
-  setLogFatalErrorCallback(fn: (errorMessage: string) => void): void
-}
+import { TDLibClient, ITDLibJSON } from 'tdl-shared'
+
+export { TDLibClient, ITDLibJSON }
 
 export type On =
   & ((event: 'update', listener: (update: Update) => void) => Client)
@@ -46,8 +38,7 @@ export type RemoveListener =
 export class Client {
   constructor(options?: ConfigType)
   static create(options?: ConfigType): Client
-  static fromTDLib(tdlibInstance: TDLib, options?: ConfigType): Client
-  static fromAbstractTd(tdlibInstance: TDLibInterface, options?: ConfigType): Client
+  static fromTDLib(tdlibInstance: ITDLibJSON, options?: ConfigType): Client
   connect: () => Promise<undefined>
   login: (getLoginDetails: () => LoginDetails) => Promise<undefined>
   on: On
@@ -73,9 +64,7 @@ export default Client
 
 // ---
 
-export interface TDLibClient { readonly _TDLibClientBrand: void }
-
-export class TDLib {
+export class TDLib implements ITDLibJSON {
   constructor(libraryFile?: string)
   create(): Promise<TDLibClient>
   destroy(client: TDLibClient): undefined

@@ -1,6 +1,6 @@
 // @flow
 
-import type { TDLib } from './tdlib-ffi'
+import type { ITDLibJSON } from 'tdl-shared'
 
 export type TDLibParameters = {
   use_test_dc?: boolean,
@@ -48,7 +48,7 @@ export type ConfigType = {
   useTestDc?: boolean,
   useMutableRename?: boolean,
   tdlibParameters?: TDLibParameters,
-  tdlibInstance?: TDLib
+  tdlibInstance?: ITDLibJSON
 }
 
 export type StrictConfigType = {
@@ -63,19 +63,5 @@ export type StrictConfigType = {
   useTestDc: boolean,
   useMutableRename: boolean,
   tdlibParameters: TDLibParameters,
-  tdlibInstance?: TDLib
-}
-
-type _Client = any
-
-export type TDLibInterface = {
-  create(libraryFile?: string): Promise<_Client>;
-  destroy(client: _Client): void;
-  execute(client: _Client, query: Object): Object | null;
-  receive(client: _Client, timeout: number): Promise<Object | null>;
-  send(client: _Client, query: Object): Promise<void>;
-  setLogFilePath(path: string): number;
-  setLogMaxFileSize(maxFileSize: number | string): void;
-  setLogVerbosityLevel(verbosity: number): void;
-  setLogFatalErrorCallback(fn: (errorMessage: string) => void): void;
+  tdlibInstance?: ITDLibJSON
 }

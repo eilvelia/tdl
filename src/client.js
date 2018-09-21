@@ -14,12 +14,13 @@ import {
   getName as defaultGetName
 } from './prompt'
 
+import type { TDLibClient, ITDLibJSON } from 'tdl-shared'
+
 import type {
   ConfigType,
   StrictConfigType,
   LoginDetails,
-  StrictLoginDetails,
-  TDLibInterface
+  StrictLoginDetails
 } from './types'
 
 import type {
@@ -33,8 +34,6 @@ import type {
   InvokeFuture,
   Execute
 } from '../types/tdlib'
-
-import type { TDLibClient } from './tdlib-ffi'
 
 const debug = Debug('tdl:client')
 const debugEmitter = Debug('tdl:client:emitter')
@@ -104,7 +103,7 @@ export class Client {
   +_options: StrictConfigType;
   +_emitter = new EventEmitter();
   +_fetching: Map<string, FetchingPromiseCallback> = new Map();
-  +_tdlib: TDLib;
+  +_tdlib: ITDLibJSON;
   _client: ?TDLibClient;
   _connectionState: ConnectionState = { _: 'connectionStateConnecting' };
 
@@ -134,18 +133,10 @@ export class Client {
     return new Client(options)
   }
 
-  static fromTDLib (tdlibInstance: TDLib, options: ConfigType = {}): Client {
+  static fromTDLib (tdlibInstance: ITDLibJSON, options: ConfigType = {}): Client {
     return new Client({
       ...options,
       tdlibInstance
-    })
-  }
-
-  // experimental
-  static fromAbstractTd (tdlibInstance: TDLibInterface, options: ConfigType = {}): Client {
-    return new Client({
-      ...options,
-      tdlibInstance: ((tdlibInstance: $FlowTodo): TDLib)
     })
   }
 

@@ -8,18 +8,9 @@ import type {
   Execute
 } from './types/tdlib'
 
-type _Client = any
-export type TDLibInterface = {
-  create(libraryFile?: string): Promise<_Client>;
-  destroy(client: _Client): void;
-  execute(client: _Client, query: Object): Object | null;
-  receive(client: _Client, timeout: number): Promise<Object | null>;
-  send(client: _Client, query: Object): Promise<void>;
-  setLogFilePath(path: string): number;
-  setLogMaxFileSize(maxFileSize: number | string): void;
-  setLogVerbosityLevel(verbosity: number): void;
-  setLogFatalErrorCallback(fn: (errorMessage: string) => void): void;
-}
+import type { TDLibClient, ITDLibJSON } from 'tdl-shared'
+
+export type { TDLibClient, ITDLibJSON }
 
 export type On =
   & ((event: 'update', listener: (update: Update) => void) => Client)
@@ -48,8 +39,7 @@ export type RemoveListener =
 declare export class Client {
   constructor(options?: ConfigType): this;
   static create(options?: ConfigType): Client;
-  static fromTDLib(tdlibInstance: TDLib, options?: ConfigType): Client;
-  static fromAbstractTd(tdlibInstance: TDLibInterface, options?: ConfigType): Client;
+  static fromTDLib(tdlibInstance: ITDLibJSON, options?: ConfigType): Client;
   connect: () => Promise<void>;
   login: (getLoginDetails: () => LoginDetails) => Promise<void>;
   on: On;
@@ -75,9 +65,7 @@ declare export default Client
 
 // ---
 
-export opaque type TDLibClient = $ReadOnly<Object>
-
-declare export class TDLib {
+declare export class TDLib implements ITDLibJSON {
   constructor(libraryFile?: string): this;
   create(): Promise<TDLibClient>;
   destroy(client: TDLibClient): void;

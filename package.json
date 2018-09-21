@@ -40,7 +40,8 @@
     "fluture": "^8.0.2",
     "promptly": "^3.0.3",
     "ramda": "^0.25.0",
-    "ref-napi": "^1.4.0"
+    "ref-napi": "^1.4.0",
+    "tdl-shared": "^0.2.0"
   },
   "devDependencies": {
     "@bannerets/eslint-config-flow": "^0.5.0",

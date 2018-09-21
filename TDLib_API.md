@@ -8,7 +8,7 @@ const { TDLib } = require('tdl')
 
 ---
 
-##### `constructor: (libraryFile: string) => TDLib`
+##### `constructor: (libraryFile?: string) => TDLib`
 
 ```js
 const tdlib = new TDLib('/Users/user/testproject/libtdjson')

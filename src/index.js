@@ -7,25 +7,9 @@ export {
   Client,
   Client as TDL,
   Client as Tdl,
-  TDLib
+  TDLib,
+  TDLib as TDLibFFI,
+  TDLib as TDLibJSON
 }
 
 export default Client
-
-export type { TDLibClient } from './tdlib-ffi'
-
-export type {
-  ConfigType,
-  StrictConfigType,
-  LoginDetails,
-  StrictLoginDetails,
-  TDLibParameters,
-  LoginUser,
-  LoginBot,
-  TDLibInterface
-} from './types'
-
-export type {
-  On,
-  Emit
-} from './client'

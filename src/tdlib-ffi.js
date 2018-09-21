@@ -5,7 +5,7 @@ import ref from 'ref-napi'
 import Debug from 'debug'
 import { resolve as resolvePath } from 'path'
 
-export opaque type TDLibClient = $ReadOnly<Object>
+import type { TDLibClient, ITDLibJSON } from 'tdl-shared'
 
 const debug = Debug('tdl:tdlib-ffi')
 
@@ -20,7 +20,7 @@ const buildQuery = (query: Object) => {
 
 const defaultLibraryName = process.platform === 'win32' ? 'tdjson' : 'libtdjson'
 
-export class TDLib {
+export class TDLib implements ITDLibJSON {
   +_tdlib: Object
 
   constructor (libraryFile: string = defaultLibraryName) {
