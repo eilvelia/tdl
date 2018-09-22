@@ -11,7 +11,8 @@ const { TDLib } = require('tdl')
 ##### `constructor: (libraryFile?: string) => TDLib`
 
 ```js
-const tdlib = new TDLib('/Users/user/testproject/libtdjson')
+const tdlib = new TDLib()
+const tdlib = new TDLib('libtdjson')
 ```
 
 ##### `create: () => Promise<TDLibClient>`
@@ -24,15 +25,40 @@ const client = await tdlib.create()
 
 ##### `send: (client: TDLibClient, query: Object) => Promise<void>`
 
-[Docs](https://core.telegram.org/tdlib/docs/classtd_1_1_client.html#a1a6f9cbe607ce76ff869493833c1224d)
+```js
+await tdlib.send(client, {
+  '@type': 'sendMessage',
+  chat_id: 123456789,
+  input_message_content: {
+    '@type': 'inputMessageText',
+    text: {
+      '@type': 'formattedText',
+      text: '👻'
+    }
+  }
+})
+```
+
+[Docs](https://core.telegram.org/tdlib/docs/td__json__client_8h.html#a1fea1f986bf950d19eee3032c24cce83)
 
 ##### `receive: (client: TDLibClient, timeout: number) => Promise<Object | null>`
 
-[Docs](https://core.telegram.org/tdlib/docs/classtd_1_1_client.html#a128bb17ada87f4a1522f56428706cfd6)
+```js
+const response = await tdlib.receive(client, 10)
+```
+
+[Docs](https://core.telegram.org/tdlib/docs/td__json__client_8h.html#a9e0cb36bfa2bc2249905aebd7d07a4ac)
 
 ##### `execute: (client: TDLibClient, query: Object) => Object | null`
 
-[Docs](https://core.telegram.org/tdlib/docs/classtd_1_1_client.html#a6500da45fe520151a774fbd69f30ec30)
+```js
+const res = await tdlib.execute(client, {
+  '@type': 'getTextEntities',
+  text: '@telegram /test_command https://telegram.org telegram.me'
+})
+```
+
+[Docs](https://core.telegram.org/tdlib/docs/td__json__client_8h.html#a6d6c76380793072d4a9ce3c71ba0f1cf)
 
 ##### `destroy: (client: TDLibClient) => void`
 
@@ -44,16 +70,37 @@ tdlib.destroy(client)
 
 ##### `setLogFilePath: (path: string) => number`
 
+```js
+client.setLogFilePath('log.txt')
+```
+
 [Docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#a4b098540dd3957b60a67600cba3ebd7f)
 
 ##### `setLogMaxFileSize: (maxFileSize: number | string) => void`
+
+```js
+tdlib.setLogMaxFileSize(50000)
+tdlib.setLogMaxFileSize('9007199254748991')
+```
 
 [Docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#adcbe44e62e16d65eb4c7503aabe264b3)
 
 ##### `setLogVerbosityLevel: (verbosity: number) => void`
 
+```js
+tdlib.setLogVerbosityLevel(2)
+```
+
 [Docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#a8cd6fada30eb227c667fc9a10464ae50)
 
-##### `setLogFatalErrorCallback: (fn: (errorMessage: string) => void) => void`
+##### `setLogFatalErrorCallback: (fn: null | (errorMessage: string) => void) => void`
+
+```js
+tdlib.setLogFatalErrorCallback(
+  errorMessage => console.error('Fatal error:', errorMessage)
+)
+
+tdlib.setLogFatalErrorCallback(null)
+```
 
 [Docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#addebe91c4525817a6d2b448634c19d71)

@@ -136,32 +136,44 @@ client.destroy()
 
 Sets the path to the file to where the internal TDLib log will be written. By default TDLib writes logs to stderr or an OS specific log. Use this method to write the log to a file instead.
 
-See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a038b57d66436f9f367f5c77360e8254b).
+```js
+client.setLogFilePath('log.txt')
+```
+
+See [docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#a4b098540dd3957b60a67600cba3ebd7f).
 
 ##### `client.setLogMaxFileSize(maxFileSize: (number | string)) => undefined`
 
 Sets maximum size of the file to where the internal TDLib log is written before the file will be auto-rotated.   Unused if log is not written to a file. Defaults to 10 MB.
 
-See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a749ea8521373bbe9f5c30f58bc591016).
+```js
+client.setLogMaxFileSize(50000)
+```
+
+See [docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#adcbe44e62e16d65eb4c7503aabe264b3).
 
 ##### `client.setLogVerbosityLevel(verbosityLevel: number) => undefined`
 
 Sets the verbosity level of the internal logging of TDLib.  
 Default is 2.
 
-See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#a0f683bd572154f7b4c8b4f973ea3395f).
+```js
+client.setLogVerbosityLevel(2)
+```
 
-##### `client.setLogFatalErrorCallback(fn: Function) => undefined`
+See [docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#a8cd6fada30eb227c667fc9a10464ae50).
+
+##### `client.setLogFatalErrorCallback(fn: (null | Function)) => undefined`
 
 Sets the callback that will be called when a fatal error happens. None of the TDLib methods can be called from the callback. The TDLib will crash as soon as callback returns. By default the callback is not set.
 
 ```js
-client.setLogFatalErrorCallback(errorMessage =>
-  console.error('Fatal error:', errorMessage)
+client.setLogFatalErrorCallback(
+  errorMessage => console.error('Fatal error:', errorMessage)
 )
 ```
 
-See [docs](https://core.telegram.org/tdlib/docs/classtd_1_1_log.html#ab2c5a70ac5ca1f952d979f9fa4b2ba82).
+See [docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#addebe91c4525817a6d2b448634c19d71).
 
 ##### `client.invokeFuture(query: Object) => Future`
 
