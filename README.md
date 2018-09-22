@@ -296,7 +296,7 @@ See [examples/](examples) folder.
 - Node.js 10 preferred (minimum >= 8.6.0)
 > Note: If you are using Node.js 8.x-9.x, you may encounter a warning message `Warning: N-API is an experimental feature and could change at any time.`, this can be suppressed by upgrading to version 10.
 
-You can also you use prebuilt binaries:
+You can also use prebuilt binaries:
 
 - [tdlib.native](https://github.com/ForNeVeR/tdlib.native/releases)
 
