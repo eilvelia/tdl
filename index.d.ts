@@ -112,21 +112,7 @@ export type LoginBot = {
 export type LoginDetails = Partial<LoginUser> | Partial<LoginBot>
 export type StrictLoginDetails = LoginUser | LoginBot
 
-export type ConfigType = {
-  apiId?: number,
-  apiHash?: string,
-  binaryPath?: string,
-  databaseDirectory?: string,
-  filesDirectory?: string,
-  databaseEncryptionKey?: string,
-  verbosityLevel?: number,
-  skipOldUpdates?: boolean,
-  useTestDc?: boolean,
-  useMutableRename?: boolean,
-  useDefaultVerbosityLevel?: boolean,
-  tdlibParameters?: TDLibParameters,
-  tdlibInstance?: TDLib
-}
+export type ConfigType = Partial<StrictConfigType>
 
 export type StrictConfigType = {
   apiId?: number,
@@ -141,5 +127,5 @@ export type StrictConfigType = {
   useMutableRename: boolean,
   useDefaultVerbosityLevel: boolean,
   tdlibParameters: TDLibParameters,
-  tdlibInstance?: TDLib
+  tdlibInstance?: ITDLibJSON
 }

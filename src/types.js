@@ -36,21 +36,7 @@ export type LoginBot = {
 export type LoginDetails = $Shape<LoginUser> | $Shape<LoginBot>
 export type StrictLoginDetails = LoginUser | LoginBot
 
-export type ConfigType = {
-  apiId?: number,
-  apiHash?: string,
-  binaryPath?: string,
-  databaseDirectory?: string,
-  filesDirectory?: string,
-  databaseEncryptionKey?: string,
-  verbosityLevel?: number,
-  skipOldUpdates?: boolean,
-  useTestDc?: boolean,
-  useMutableRename?: boolean,
-  useDefaultVerbosityLevel?: boolean,
-  tdlibParameters?: TDLibParameters,
-  tdlibInstance?: ITDLibJSON
-}
+export type ConfigType = $Rest<StrictConfigType, {}>
 
 export type StrictConfigType = {
   apiId?: number,
