@@ -96,8 +96,12 @@ export class TDLib implements ITDLibJSON {
     this._tdlib.td_set_log_verbosity_level(verbosity)
   }
 
-  setLogFatalErrorCallback (fn: (errorMessage: string) => void): void {
-    this._tdlib.td_set_log_fatal_error_callback(
-      ffi.Callback('void', ['string'], fn))
+  setLogFatalErrorCallback (fn: null | (errorMessage: string) => void): void {
+    if (fn == null) {
+      this._tdlib.td_set_log_fatal_error_callback(null)
+    } else {
+      this._tdlib.td_set_log_fatal_error_callback(
+        ffi.Callback('void', ['string'], fn))
+    }
   }
 }

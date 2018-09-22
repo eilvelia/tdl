@@ -76,6 +76,7 @@ client.setLogMaxFileSize('235')
 client.setLogMaxFileSize({})
 
 client.setLogFatalErrorCallback(a => console.log(a))
+client.setLogFatalErrorCallback(null)
 // $ExpectError
 client.setLogFatalErrorCallback('1234')
 

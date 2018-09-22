@@ -244,7 +244,7 @@ export class Client {
     this._tdlib.setLogVerbosityLevel(verbosity)
   }
 
-  setLogFatalErrorCallback = (fn: (errorMessage: string) => void): void => {
+  setLogFatalErrorCallback = (fn: null | (errorMessage: string) => void): void => {
     this._tdlib.setLogFatalErrorCallback(fn)
   }
 

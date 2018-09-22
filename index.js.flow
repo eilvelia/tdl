@@ -52,7 +52,7 @@ declare export class Client {
   setLogFilePath: (path: string) => number;
   setLogMaxFileSize: (maxFileSize: number | string) => void;
   setLogVerbosityLevel: (verbosity: number) => void;
-  setLogFatalErrorCallback: (fn: (errorMessage: string) => void) => void;
+  setLogFatalErrorCallback: (fn: null | (errorMessage: string) => void) => void;
   execute: Execute;
 }
 
@@ -75,7 +75,7 @@ declare export class TDLib implements ITDLibJSON {
   setLogFilePath(path: string): number;
   setLogMaxFileSize(maxFileSize: number | string): void;
   setLogVerbosityLevel(verbosity: number): void;
-  setLogFatalErrorCallback(fn: (errorMessage: string) => void): void;
+  setLogFatalErrorCallback(fn: null | (errorMessage: string) => void): void;
 }
 
 // ---
