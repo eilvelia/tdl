@@ -8,5 +8,6 @@ types/tdlib.js linguist-generated=true
 types/tdlib.ts linguist-generated=true
 
 index.d.ts linguist-detectable=false
+tests/**/*.ts linguist-detectable=false
 
 *.sh linguist-detectable=false

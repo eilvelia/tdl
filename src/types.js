@@ -1,6 +1,6 @@
 // @flow
 
-import type { TDLib } from './TDLib'
+import type { ITDLibJSON } from 'tdl-shared'
 
 export type TDLibParameters = {
   use_test_dc?: boolean,
@@ -22,7 +22,7 @@ export type TDLibParameters = {
 
 export type LoginUser = {
   type: 'user',
-  phoneNumber?: string,
+  phoneNumber: string,
   getAuthCode: (retry?: boolean) => Promise<string>,
   getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
   getName: () => Promise<{ firstName: string, lastName?: string }>
@@ -36,34 +36,20 @@ export type LoginBot = {
 export type LoginDetails = $Shape<LoginUser> | $Shape<LoginBot>
 export type StrictLoginDetails = LoginUser | LoginBot
 
-export type ConfigType = {
-  apiId?: number,
-  apiHash?: string,
-  loginDetails?: LoginDetails,
-  binaryPath?: string,
-  databaseDirectory?: string,
-  filesDirectory?: string,
-  logFilePath?: string,
-  verbosityLevel?: number,
-  skipOldUpdates?: boolean,
-  useTestDc?: boolean,
-  useMutableRename?: boolean,
-  tdlibParameters?: TDLibParameters,
-  tdlibInstance?: TDLib
-}
+export type ConfigType = $Rest<StrictConfigType, {}>
 
 export type StrictConfigType = {
   apiId?: number,
   apiHash?: string,
-  loginDetails: StrictLoginDetails,
   binaryPath: string,
   databaseDirectory: string,
   filesDirectory: string,
-  logFilePath: string,
+  databaseEncryptionKey: string,
   verbosityLevel: number,
   skipOldUpdates: boolean,
   useTestDc: boolean,
   useMutableRename: boolean,
+  useDefaultVerbosityLevel: boolean,
   tdlibParameters: TDLibParameters,
-  tdlibInstance?: TDLib
+  tdlibInstance?: ITDLibJSON
 }

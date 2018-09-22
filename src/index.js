@@ -1,30 +1,15 @@
 // @flow
 
-import { Client } from './Client'
-import { TDLib } from './TDLib'
+import { Client } from './client'
+import { TDLib } from './tdlib-ffi'
 
 export {
   Client,
   Client as TDL,
   Client as Tdl,
-  TDLib
+  TDLib,
+  TDLib as TDLibFFI,
+  TDLib as TDLibJSON
 }
 
 export default Client
-
-export type { TDLibClient } from './TDLib'
-
-export type {
-  ConfigType,
-  StrictConfigType,
-  LoginDetails,
-  StrictLoginDetails,
-  TDLibParameters,
-  LoginUser,
-  LoginBot
-} from './types'
-
-export type {
-  On,
-  Emit
-} from './Client'

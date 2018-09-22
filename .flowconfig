@@ -316,5 +316,7 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowOff
 suppress_comment=\\(.\\|\n\\)*\\$FlowTodo
 suppress_comment=\\(.\\|\n\\)*\\$ExpectError
 suppress_type=$FlowOff
+suppress_type=$FlowFixMe
+suppress_type=$FlowTodo
 
 [strict]

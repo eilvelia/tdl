@@ -1,24 +1,30 @@
 import {
   Update,
-  error as TDError,
+  error as Td$error,
   Invoke,
   InvokeFuture,
   Execute
 } from './types/tdlib'
 
+import { TDLibClient, ITDLibJSON } from 'tdl-shared'
+
+export { TDLibClient, ITDLibJSON }
+
 export type On =
   & ((event: 'update', listener: (update: Update) => void) => Client)
-  & ((event: 'error', listener: (err: TDError | Error) => void) => Client)
+  & ((event: 'error', listener: (err: Td$error | Error) => void) => Client)
   & ((event: 'destroy', listener: () => void) => Client)
   & ((event: 'auth-needed', listener: () => void) => Client)
   & ((event: 'auth-not-needed', listener: () => void) => Client)
+  & ((event: 'response', listener: (res: any) => void) => Client)
 
 export type Emit =
   & ((event: 'update', update: Update) => void)
-  & ((event: 'error', err: TDError | Error) => void)
+  & ((event: 'error', err: Td$error | Error) => void)
   & ((event: 'destroy') => void)
   & ((event: 'auth-needed') => void)
   & ((event: 'auth-not-needed') => void)
+  & ((event: 'response', res: any) => void)
 
 export type RemoveListener =
   & ((event: 'update', listener: Function, once?: boolean) => void)
@@ -26,12 +32,14 @@ export type RemoveListener =
   & ((event: 'destroy', listener: Function, once?: boolean) => void)
   & ((event: 'auth-needed', listener: Function, once?: boolean) => void)
   & ((event: 'auth-not-needed', listener: Function, once?: boolean) => void)
+  & ((event: 'response', listener: Function, once?: boolean) => void)
 
-export declare class Client {
+export class Client {
   constructor(options?: ConfigType)
   static create(options?: ConfigType): Client
-  static fromTDLib(tdlibInstance: TDLib, options?: ConfigType): Client
-  connect: (beforeAuth?: () => Promise<any>) => Promise<undefined>
+  static fromTDLib(tdlibInstance: ITDLibJSON, options?: ConfigType): Client
+  connect: () => Promise<undefined>
+  login: (getLoginDetails: () => LoginDetails) => Promise<undefined>
   on: On
   once: On
   emit: Emit
@@ -42,7 +50,7 @@ export declare class Client {
   setLogFilePath: (path: string) => number
   setLogMaxFileSize: (maxFileSize: number | string) => undefined
   setLogVerbosityLevel: (verbosity: number) => undefined
-  setLogFatalErrorCallback: (fn: (errorMessage: string) => void) => undefined
+  setLogFatalErrorCallback: (fn: null | ((errorMessage: string) => void)) => undefined
   execute: Execute
 }
 
@@ -55,19 +63,17 @@ export default Client
 
 // ---
 
-export interface TDLibClient { readonly _TDLibClientBrand: void }
-
-export declare class TDLib {
-  constructor(libraryFile: string)
+export class TDLib implements ITDLibJSON {
+  constructor(libraryFile?: string)
   create(): Promise<TDLibClient>
   destroy(client: TDLibClient): undefined
   execute(client: TDLibClient, query: Object): Object | null
   receive(client: TDLibClient, timeout: number): Promise<Object | null>
-  send(client: TDLibClient, query: Object): Promise<null>
+  send(client: TDLibClient, query: Object): Promise<undefined>
   setLogFilePath(path: string): number
   setLogMaxFileSize(maxFileSize: number | string): undefined
   setLogVerbosityLevel(verbosity: number): undefined
-  setLogFatalErrorCallback(fn: (errorMessage: string) => void): undefined
+  setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): undefined
 }
 
 // ---
@@ -92,7 +98,7 @@ export type TDLibParameters = {
 
 export type LoginUser = {
   type: 'user',
-  phoneNumber?: string,
+  phoneNumber: string,
   getAuthCode: (retry?: boolean) => Promise<string>,
   getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
   getName: () => Promise<{ firstName: string, lastName?: string }>
@@ -106,34 +112,20 @@ export type LoginBot = {
 export type LoginDetails = Partial<LoginUser> | Partial<LoginBot>
 export type StrictLoginDetails = LoginUser | LoginBot
 
-export type ConfigType = {
-  apiId?: number,
-  apiHash?: string,
-  loginDetails?: LoginDetails,
-  binaryPath?: string,
-  databaseDirectory?: string,
-  filesDirectory?: string,
-  logFilePath?: string,
-  verbosityLevel?: number,
-  skipOldUpdates?: boolean,
-  useTestDc?: boolean,
-  useMutableRename?: boolean,
-  tdlibParameters?: TDLibParameters,
-  tdlibInstance?: TDLib
-}
+export type ConfigType = Partial<StrictConfigType>
 
 export type StrictConfigType = {
   apiId?: number,
   apiHash?: string,
-  loginDetails: StrictLoginDetails,
   binaryPath: string,
   databaseDirectory: string,
   filesDirectory: string,
-  logFilePath: string,
+  databaseEncryptionKey: string,
   verbosityLevel: number,
   skipOldUpdates: boolean,
   useTestDc: boolean,
   useMutableRename: boolean,
+  useDefaultVerbosityLevel: boolean,
   tdlibParameters: TDLibParameters,
-  tdlibInstance?: TDLib
+  tdlibInstance?: ITDLibJSON
 }

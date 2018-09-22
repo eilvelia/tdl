@@ -14,26 +14,39 @@ import { Tdl } from '../../index'
 
   new Tdl()
   const tdl = new Tdl({ tdlibInstance: t, loginDetails: { type: 'user' } })
-  tdl.connect()
+  await tdl.connect()
+
+  tdl.login(() => ({
+    type: 'bot',
+    token: 'token'
+  }))
+
+  await tdl.login(() => ({
+    type: 'user',
+    phoneNumber: '+00',
+    getAuthCode: () => Promise.resolve('123')
+  }))
+
+  // $ExpectError
+  tdl.login(123)
+  // $ExpectError
+  tdl.login(() => 2)
 })
 
 
 import { Client, TDLib } from '../../index'
+
 // import type { formattedText, inputMessageText } from '../../types/tdlib'
+
 import type {
-  error as Td$Error,
-  searchPublicChatReturnType as Td$searchPublicChatReturnType,
+  error as Td$error,
+  Chat as Td$Chat,
   Update as Td$Update
 } from '../../types/tdlib'
 
 const client = new Client({
   apiId: 222,
   apiHash: 'abc',
-  loginDetails: {
-    //phoneNumber: PHONE_NUMBER
-    type: 'bot',
-    token: 'token'
-  },
   useTestDc: true
 })
 
@@ -63,6 +76,7 @@ client.setLogMaxFileSize('235')
 client.setLogMaxFileSize({})
 
 client.setLogFatalErrorCallback(a => console.log(a))
+client.setLogFatalErrorCallback(null)
 // $ExpectError
 client.setLogFatalErrorCallback('1234')
 
@@ -74,6 +88,9 @@ client.setLogFatalErrorCallback('1234')
   client
     .on('error', e => console.log('error', e))
     .on('destroy', () => console.log('destroy'))
+    .on('response', r => {})
+    .on('auth-not-needed', () => {})
+    .on('auth-needed', () => {})
 
   // $ExpectError
   client.on('abc')
@@ -124,12 +141,19 @@ client.setLogFatalErrorCallback('1234')
     }
   })
 
+  await client.invoke({
+    _: 'getChats',
+    offset_order: '9223372036854775807',
+    offset_chat_id: 0,
+    limit: 100
+  })
+
   client.invokeFuture({
     _: 'searchPublicChat',
     username: 'username'
   })
-    .map((e: Td$searchPublicChatReturnType) => e.title)
-    .mapRej((e: Td$Error) => e)
+    .map((e: Td$Chat) => e.title)
+    .mapRej((e: Td$error) => e)
     .fork(console.error, (e: string) => console.log(e))
 
   client.invokeFuture({
