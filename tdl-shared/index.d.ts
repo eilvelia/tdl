@@ -11,7 +11,7 @@ export interface ITDLibJSON {
   setLogFilePath(path: string): number;
   setLogMaxFileSize(maxFileSize: number | string): void;
   setLogVerbosityLevel(verbosity: number): void;
-  setLogFatalErrorCallback(fn: null | (errorMessage: string) => void): void;
+  setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): void;
 }
 
 export interface IAsyncTDLibJSON {
@@ -23,5 +23,5 @@ export interface IAsyncTDLibJSON {
   setLogFilePath(path: string): Promise<number>;
   setLogMaxFileSize(maxFileSize: number | string): Promise<void>;
   setLogVerbosityLevel(verbosity: number): Promise<void>;
-  setLogFatalErrorCallback(fn: null | (errorMessage: string) => void): Promise<void>;
+  setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): Promise<void>;
 }
