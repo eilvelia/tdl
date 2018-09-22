@@ -48,7 +48,7 @@ const defaultLoginDetails: StrictLoginDetails = {
   getName: defaultGetName
 }
 
-const defaultOptions: StrictConfigType = {
+const defaultOptions: $Exact<StrictConfigType> = {
   binaryPath: '',
   databaseDirectory: '_td_database',
   filesDirectory: '_td_files',
@@ -57,6 +57,7 @@ const defaultOptions: StrictConfigType = {
   skipOldUpdates: false,
   useTestDc: false,
   useMutableRename: false,
+  useDefaultVerbosityLevel: false,
   tdlibParameters: {
     use_message_database: true,
     use_secret_chats: false,
@@ -142,7 +143,8 @@ export class Client {
 
   async _init (): Promise<void> {
     try {
-      this.setLogVerbosityLevel(this._options.verbosityLevel)
+      if (!this._options.useDefaultVerbosityLevel)
+        this.setLogVerbosityLevel(this._options.verbosityLevel)
 
       this._client = await this._tdlib.create()
     } catch (err) {
@@ -297,7 +299,7 @@ export class Client {
     }
   }
 
-  async _handleResponse (res: Object/*TDObject*/): Promise<mixed> {
+  async _handleResponse (res: Object/*TDObject*/): Promise<void> {
     this.emit('response', res)
     debugRes(res)
 
@@ -432,7 +434,7 @@ export class Client {
     }
   }
 
-  async _handleError (error: Td$error): Promise<mixed> {
+  async _handleError (error: Td$error): Promise<void> {
     const loginDetails = this._loginDetails
 
     switch (error.message) {

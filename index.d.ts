@@ -123,6 +123,7 @@ export type ConfigType = {
   skipOldUpdates?: boolean,
   useTestDc?: boolean,
   useMutableRename?: boolean,
+  useDefaultVerbosityLevel?: boolean,
   tdlibParameters?: TDLibParameters,
   tdlibInstance?: TDLib
 }
@@ -138,6 +139,7 @@ export type StrictConfigType = {
   skipOldUpdates: boolean,
   useTestDc: boolean,
   useMutableRename: boolean,
+  useDefaultVerbosityLevel: boolean,
   tdlibParameters: TDLibParameters,
   tdlibInstance?: TDLib
 }
