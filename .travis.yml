@@ -28,6 +28,4 @@ before_install:
   - cmake --build . -- -j 4
 install: npm install
 script: npm test
-cache:
-  directories:
-    - $HOME/.ccache
+cache: ccache

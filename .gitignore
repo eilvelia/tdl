@@ -7,6 +7,7 @@ flow-typed/npm/
 *.bak
 /*.txt
 /td/
+_td*/
 
 *.dylib
 *.so
