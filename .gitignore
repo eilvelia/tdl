@@ -6,6 +6,7 @@ flow-typed/npm/
 /test.js
 *.bak
 /*.txt
+/td/
 
 *.dylib
 *.so
