@@ -1,4 +1,33 @@
 language: node_js
 node_js:
-  - v9
+  - v10
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-precise-3.8
+    packages:
+      - g++-5
+      - clang-3.8
+      - libc++-dev
+      - libc++abi-dev
+      - gperf
+env:
+  global:
+    - TD_PATH=./td/build/libtdjson
+  matrix:
+    - CXX=clang++-3.8 CC=clang-3.8
+before_install:
+  - set -e
+  - git clone https://github.com/tdlib/td td
+  - cd td
+  - git checkout v1.3.0
+  - mkdir -p build
+  - cd build
+  - cmake -DCMAKE_BUILD_TYPE=Release ..
+  - cmake --build . -- -j 4
+install: npm install
 script: npm test
+cache:
+  directories:
+    - $HOME/.ccache
