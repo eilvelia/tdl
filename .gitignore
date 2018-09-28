@@ -8,6 +8,7 @@ flow-typed/npm/
 /*.txt
 /td/
 _td*/
+/test.sh
 
 *.dylib
 *.so
