@@ -274,12 +274,20 @@ export class Client {
   }
 
   _catchError (err: mixed): void {
+    debug('catchError', err)
+
     const message = (err && typeof err === 'object' && err.message) || err
 
     this.emit('error', new Error(message))
 
     if (this._connectRejector)
       this._connectRejector(err)
+  }
+
+  _authRequired (): StrictLoginDetails {
+    this._authNeeded = true
+    this.emit('auth-needed')
+    return this._loginDetails
   }
 
   async _loop (): Promise<void> {
@@ -381,9 +389,7 @@ export class Client {
 
     switch (authorizationState._) {
       case 'authorizationStateWaitPhoneNumber': {
-        this._authNeeded = true
-        this.emit('auth-needed')
-        const loginDetails = this._loginDetails
+        const loginDetails = this._authRequired()
 
         return loginDetails.type === 'user'
           ? this._send({
@@ -397,8 +403,9 @@ export class Client {
       }
 
       case 'authorizationStateWaitCode': {
-        const loginDetails = this._loginDetails
+        const loginDetails = this._authRequired()
         if (loginDetails.type !== 'user') return
+
         const code = await loginDetails.getAuthCode(false)
 
         if (authorizationState.is_registered === false) {
@@ -418,8 +425,9 @@ export class Client {
       }
 
       case 'authorizationStateWaitPassword': {
-        const loginDetails = this._loginDetails
+        const loginDetails = this._authRequired()
         if (loginDetails.type !== 'user') return
+
         const passwordHint = authorizationState.password_hint
         const password = await loginDetails.getPassword(passwordHint, false)
         return this._send({
