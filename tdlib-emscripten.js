@@ -11,7 +11,7 @@ type Pointer = number
 export opaque type TDLibClient = Pointer
 
 type Module = {
-  _malloc: Pointer => Pointer;
+  _malloc: number => Pointer;
   _free: Pointer => void;
 
   HEAPU8: Uint8Array;
