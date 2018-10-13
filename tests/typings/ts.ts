@@ -23,6 +23,9 @@ const client = cl
     phoneNumber: '+000',
     getAuthCode: () => Promise.resolve('str')
   }))
+
+  cl.pause()
+  cl.resume()
 })()
 
 cl.on('update', u => {

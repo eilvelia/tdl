@@ -42,6 +42,8 @@ declare export class Client {
   static fromTDLib(tdlibInstance: ITDLibJSON, options?: ConfigType): Client;
   connect: () => Promise<void>;
   login: (getLoginDetails: () => LoginDetails) => Promise<void>;
+  pause: () => void;
+  resume: () => void;
   on: On;
   once: On;
   emit: Emit;

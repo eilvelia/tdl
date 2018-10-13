@@ -16,6 +16,11 @@ import { Tdl } from '../../index'
   const tdl = new Tdl({ tdlibInstance: t, loginDetails: { type: 'user' } })
   await tdl.connect()
 
+  tdl.pause()
+  tdl.resume()
+  // $ExpectError
+  tdl.resume(2)
+
   tdl.login(() => ({
     type: 'bot',
     token: 'token'
