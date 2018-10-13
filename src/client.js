@@ -117,6 +117,8 @@ export class Client {
 
   _loginResolver: null | (result: void) => void = null;
 
+  _paused = false;
+
   constructor (options: ConfigType = {}) {
     this._options = (mergeDeepRight(defaultOptions, options): StrictConfigType)
 
@@ -180,6 +182,27 @@ export class Client {
     return new Promise(resolve => {
       if (this._loginResolver) return resolve()
       this._emitter.once('_login', () => resolve())
+    })
+  }
+
+  pause = (): void => {
+    debug('pause')
+    if (this._paused === false)
+      this._paused = true
+  }
+
+  resume = (): void => {
+    debug('resume')
+    if (this._paused === true) {
+      this._emitter.emit('_resume')
+      this._paused = false
+    }
+  }
+
+  _waitResume (): Promise<void> {
+    return new Promise(resolve => {
+      if (this._paused === false) resolve()
+      this._emitter.once('_resume', () => resolve())
     })
   }
 
@@ -297,6 +320,9 @@ export class Client {
 
         if (!this._client) return
 
+        if (this._paused === true)
+          await this._waitResume()
+
         if (response)
           await this._handleResponse(response)
         else
@@ -305,6 +331,7 @@ export class Client {
         this._catchError(e)
       }
     }
+    debug('_loop end')
   }
 
   async _handleResponse (res: Object/*TDObject*/): Promise<void> {
