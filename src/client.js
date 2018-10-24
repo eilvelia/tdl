@@ -185,6 +185,11 @@ export class Client {
     })
   }
 
+  connectAndLogin = async (fn: () => LoginDetails): Promise<void> => {
+    await this.connect()
+    return this.login(fn)
+  }
+
   pause = (): void => {
     debug('pause')
     if (this._paused === false)
