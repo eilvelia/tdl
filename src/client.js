@@ -427,11 +427,11 @@ export class Client {
         return loginDetails.type === 'user'
           ? this._send({
             _: 'setAuthenticationPhoneNumber',
-            phone_number: loginDetails.phoneNumber
+            phone_number: await loginDetails.getPhoneNumber()
           })
           : this._send({
             _: 'checkAuthenticationBotToken',
-            token: loginDetails.token
+            token: await loginDetails.getToken()
           })
       }
 
