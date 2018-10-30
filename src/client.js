@@ -9,6 +9,7 @@ import uuidv4 from '../vendor/uuidv4'
 import { TDLib } from './tdlib-ffi'
 import { deepRenameKey, deepRenameKey_ } from './util'
 import {
+  getPhoneNumber as defaultGetPhoneNumber,
   getAuthCode as defaultGetAuthCode,
   getPassword as defaultGetPassword,
   getName as defaultGetName
@@ -42,7 +43,7 @@ const debugReq = Debug('tdl:client:request')
 
 const defaultLoginDetails: StrictLoginDetails = {
   type: 'user',
-  phoneNumber: '',
+  getPhoneNumber: defaultGetPhoneNumber,
   getAuthCode: defaultGetAuthCode,
   getPassword: defaultGetPassword,
   getName: defaultGetName
@@ -486,6 +487,18 @@ export class Client {
           _: 'checkAuthenticationCode',
           code
         })
+      }
+      
+      case 'PHONE_NUMBER_INVALID': {
+        return loginDetails.type === 'user'
+          ? this._send({
+            _: 'setAuthenticationPhoneNumber',
+            phone_number: await loginDetails.getPhoneNumber(true)
+          })
+          : this._send({
+            _: 'checkAuthenticationBotToken',
+            token: await loginDetails.getToken(true)
+          })
       }
 
       case 'PASSWORD_HASH_INVALID': {
