@@ -488,7 +488,7 @@ export class Client {
           code
         })
       }
-      
+
       case 'PHONE_NUMBER_INVALID': {
         return loginDetails.type === 'user'
           ? this._send({
