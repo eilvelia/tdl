@@ -2,6 +2,11 @@
 
 import * as promptly from 'promptly'
 
+export const getPhoneNumber = (retry?: boolean): Promise<string> =>
+  promptly.prompt(retry
+    ? 'Invalid phone number, please re-enter: '
+    : 'Please enter phone number: ')
+
 export const getAuthCode = (retry?: boolean): Promise<string> =>
   promptly.prompt(retry
     ? 'Wrong auth code, please re-enter: '
