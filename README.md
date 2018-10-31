@@ -54,13 +54,39 @@ Returns promise.
 await client.connect()
 ```
 
-##### `client.login(fn: () => LoginDetails) => Promise<undefined>`
+##### `client.login(fn?: () => LoginDetails) => Promise<undefined>`
 
 ```js
+await client.login()
+```
+
+By default, `tdl` asks user for phone number, auth code, and password (if specified) in console.  
+You can pass your functions:
+
+```js
+// Example
 await client.login(() => ({
-  phoneNumber: 'YOUR_PHONE_NUMBER'
+  getPhoneNumber: retry => retry
+    ? Promise.reject('Invalid phone number')
+    : Promise.resolve('+9996620001'),
+  getAuthCode: retry => retry
+    ? Promise.reject('Invalid auth code')
+    : Promise.resolve('22222'),
+  getPassword: (passwordHint, retry) => retry
+    ? Promise.reject('Invalid password')
+    : Promise.resolve('abcdef'),
+  getName: () =>
+    Promise.resolve({ firstName: 'John', lastName: 'Doe' })
 }))
 ```
+
+`getName` function is called if user is not registered.
+
+Also see `LoginDetails` interface in [Options](#options) section.
+
+##### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<undefined>`
+
+Same as `client.connect().then(() => client.login(fn))`.
 
 ##### `client.on(event: string, callback: Function) => Client`
 
@@ -72,6 +98,8 @@ Attach an event listener for iterating updates.
 client.on('update', console.log)
 client.on('error', console.error)
 ```
+
+Ideally you should always have a listener on `client.on('error')`.
 
 ##### `client.removeListener(event: string, listener: Function, once?: boolean) => Client`
 
@@ -196,10 +224,11 @@ const client = new Client({
   apiHash: '0123456789abcdef0123456789abcdef' // Your api_hash
 })
 
-await client.connect()
-await client.login(() => ({
+await client.connectAndLogin(() => ({
   type: 'bot',
-  token: 'YOUR_BOT_TOKEN' // Token from @BotFather
+  getToken: retry => retry
+    ? Promise.reject('Token is not valid')
+    : Promise.resolve('YOUR_BOT_TOKEN') // Token from @BotFather
 }))
 ```
 
@@ -217,26 +246,31 @@ type Options = {
   filesDirectory: string, // Relative path
   databaseEncryptionKey: string, // Optional key for database encryption
   verbosityLevel: number,
-  skipOldUpdates: boolean, // Don't emit old updates
   useTestDc: boolean, // Use telegram dev server
+  // Advanced options:
+  skipOldUpdates: boolean, // Don't emit old updates
   useMutableRename: boolean, // May increase performance
-  tdlibParameters: Object, // See https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html
+  useDefaultVerbosityLevel: boolean,
+  tdlibParameters: Object,
   tdlibInstance: TDLib
 }
 
 type LoginDetails = {
   type: 'user',
-  phoneNumber: string,
+  getPhoneNumber: (retry?: boolean) => Promise<string>,
   getAuthCode: (retry?: boolean) => Promise<string>,
   getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
   getName: () => Promise<{ firstName: string, lastName?: string }>
 } | {
   type: 'bot',
-  token: string
+  token: (retry?: boolean) => Promise<string>
 }
 ```
 
-Any empty fields may just not be specified.
+Only `apiId` and `apiHash` are required fields.  
+Any other fields can just be not specified.
+
+`tdlibParameters` option: See https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html.
 
 ##### Defaults
 
@@ -258,13 +292,6 @@ options = {
     system_version: 'node',
     enable_storage_optimizer: true
   }
-}
-
-loginDetails = {
-  type: 'user',
-  getAuthCode, // read from stdin
-  getPassword,  // read from stdin
-  getName // read from stdin
 }
 ```
 
