@@ -263,7 +263,7 @@ type LoginDetails = {
   getName: () => Promise<{ firstName: string, lastName?: string }>
 } | {
   type: 'bot',
-  token: (retry?: boolean) => Promise<string>
+  getToken: (retry?: boolean) => Promise<string>
 }
 ```
 
