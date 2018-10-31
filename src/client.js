@@ -365,6 +365,8 @@ export class Client {
   async _handleUpdate (update: Update): Promise<void> {
     switch (update._) {
       case 'updateAuthorizationState':
+        debug('New authorization state:', update.authorization_state._)
+        this.emit('update', update)
         this._handleAuth(update).catch(e => this._catchError(e))
         return
 
@@ -383,8 +385,6 @@ export class Client {
 
   async _handleAuth (update: updateAuthorizationState) {
     const authorizationState = update.authorization_state
-
-    debug('New authorization state:', authorizationState._)
 
     switch (authorizationState._) {
       case 'authorizationStateWaitTdlibParameters':
@@ -427,11 +427,11 @@ export class Client {
         return loginDetails.type === 'user'
           ? this._send({
             _: 'setAuthenticationPhoneNumber',
-            phone_number: await loginDetails.getPhoneNumber()
+            phone_number: await loginDetails.getPhoneNumber(false)
           })
           : this._send({
             _: 'checkAuthenticationBotToken',
-            token: await loginDetails.getToken()
+            token: await loginDetails.getToken(false)
           })
       }
 
