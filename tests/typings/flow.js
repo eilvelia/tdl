@@ -184,4 +184,25 @@ client.setLogFatalErrorCallback('1234')
   })
     // $ExpectError
     .map((e: number) => e)
+
+  await client.login(() => ({
+    getPhoneNumber: retry => retry
+      ? Promise.reject('Invalid phone number')
+      : Promise.resolve('+9996620001'),
+    getAuthCode: retry => retry
+      ? Promise.reject('Invalid auth code')
+      : Promise.resolve('22222'),
+    getPassword: (passwordHint, retry) => retry
+      ? Promise.reject('Invalid password')
+      : Promise.resolve('abcdef'),
+    getName: () =>
+      Promise.resolve({ firstName: 'John', lastName: 'Doe' })
+  }))
+
+  await client.connectAndLogin(() => ({
+    type: 'bot',
+    getToken: retry => retry
+      ? Promise.reject('Token is not valid')
+      : Promise.resolve('YOUR_BOT_TOKEN') // Token from @BotFather
+  }))
 })()
