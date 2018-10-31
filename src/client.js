@@ -9,6 +9,7 @@ import uuidv4 from '../vendor/uuidv4'
 import { TDLib } from './tdlib-ffi'
 import { deepRenameKey, deepRenameKey_ } from './util'
 import {
+  getPhoneNumber as defaultGetPhoneNumber,
   getAuthCode as defaultGetAuthCode,
   getPassword as defaultGetPassword,
   getName as defaultGetName
@@ -42,7 +43,7 @@ const debugReq = Debug('tdl:client:request')
 
 const defaultLoginDetails: StrictLoginDetails = {
   type: 'user',
-  phoneNumber: '',
+  getPhoneNumber: defaultGetPhoneNumber,
   getAuthCode: defaultGetAuthCode,
   getPassword: defaultGetPassword,
   getName: defaultGetName
@@ -426,11 +427,11 @@ export class Client {
         return loginDetails.type === 'user'
           ? this._send({
             _: 'setAuthenticationPhoneNumber',
-            phone_number: loginDetails.phoneNumber
+            phone_number: await loginDetails.getPhoneNumber()
           })
           : this._send({
             _: 'checkAuthenticationBotToken',
-            token: loginDetails.token
+            token: await loginDetails.getToken()
           })
       }
 
@@ -485,6 +486,22 @@ export class Client {
         return this._send({
           _: 'checkAuthenticationCode',
           code
+        })
+      }
+
+      case 'PHONE_NUMBER_INVALID': {
+        if (loginDetails.type !== 'user') return
+        return this._send({
+          _: 'setAuthenticationPhoneNumber',
+          phone_number: await loginDetails.getPhoneNumber(true)
+        })
+      }
+
+      case 'ACCESS_TOKEN_INVALID': {
+        if (loginDetails.type !== 'bot') return
+        return this._send({
+          _: 'checkAuthenticationBotToken',
+          token: await loginDetails.getToken(true)
         })
       }
 
