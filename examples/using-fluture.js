@@ -17,8 +17,6 @@ const login = Future.encaseP(client.login)
 
 Future
   .tryP(client.connect)
-  .chain(() => login(() => ({
-    phoneNumber: 'YOUR_PHONE_NUMBER'
-  })))
+  .chain(() => login())
   .chain(() => searchChat('username'))
   .fork(console.error, console.log)

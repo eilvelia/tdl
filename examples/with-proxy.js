@@ -18,9 +18,7 @@ async function main() {
 
   console.log('Proxy:', proxy)
 
-  await client.login(() => ({
-    phoneNumber: 'YOUR_PHONE_NUMBER'
-  }))
+  await client.login()
 
   // ...
 }

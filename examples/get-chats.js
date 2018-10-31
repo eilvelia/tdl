@@ -6,10 +6,7 @@ const client = new Client({
 })
 
 async function main() {
-  await client.connect()
-  await client.login(() => ({
-    phoneNumber: 'YOUR_PHONE_NUMBER'
-  }))
+  await client.connectAndLogin()
 
   const result = await client.invoke({
     _: 'getChats',

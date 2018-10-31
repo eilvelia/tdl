@@ -6,9 +6,6 @@ const { Client, TDLib } = require('tdl')
 const API_ID = 2222 // Your api_id
 const API_HASH = 'YOUR_API_HASH'
 
-const CLIENT1_AUTH = { phoneNumber: '+000' }
-const CLIENT2_AUTH = { phoneNumber: '+111' }
-
 const tdlib = new TDLib()
 
 const client1 = Client.fromTDLib(tdlib, {
@@ -32,9 +29,9 @@ main()
 
 async function main() {
   await Promise.all([ client1.connect(), client2.connect() ])
-  await Promise.all([
-    client1.login(() => CLIENT1_AUTH),
-    client2.login(() => CLIENT2_AUTH)
-  ])
+
+  await client1.login()
+  await client2.login()
+
   // ...
 }

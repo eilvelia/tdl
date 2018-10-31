@@ -18,9 +18,8 @@ client
 
 async function main () {
   await client.connect()
-  await client.login(() => ({
-    phoneNumber: 'YOUR_PHONE_NUMBER'
-  }))
+  await client.login()
+  // ...
 }
 
 main()
