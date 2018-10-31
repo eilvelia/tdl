@@ -20,8 +20,13 @@ const client = cl
 
   await cl.login(() => ({
     type: 'user',
-    phoneNumber: '+000',
+    getPhoneNumber: () => Promise.resolve('+1234'),
     getAuthCode: () => Promise.resolve('str')
+  }))
+
+  await cl.login(() => ({
+    type: 'bot',
+    getToken: () => Promise.resolve('abcdef')
   }))
 
   cl.pause()

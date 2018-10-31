@@ -21,15 +21,15 @@ import { Tdl } from '../../index'
   // $ExpectError
   tdl.resume(2)
 
-  tdl.login(() => ({
-    type: 'bot',
-    token: 'token'
+  await tdl.login(() => ({
+    type: 'user',
+    getPhoneNumber: () => Promise.resolve('+1234'),
+    getAuthCode: () => Promise.resolve('123')
   }))
 
   await tdl.login(() => ({
-    type: 'user',
-    phoneNumber: '+00',
-    getAuthCode: () => Promise.resolve('123')
+    type: 'bot',
+    getToken: () => Promise.resolve('token')
   }))
 
   // $ExpectError

@@ -101,7 +101,7 @@ export type TDLibParameters = {
 
 export type LoginUser = {
   type: 'user',
-  phoneNumber: string,
+  getPhoneNumber: (retry?: boolean) => Promise<string>,
   getAuthCode: (retry?: boolean) => Promise<string>,
   getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
   getName: () => Promise<{ firstName: string, lastName?: string }>
@@ -109,7 +109,7 @@ export type LoginUser = {
 
 export type LoginBot = {
   type: 'bot',
-  token: string
+  getToken: (retry?: boolean) => Promise<string>
 }
 
 export type LoginDetails = Partial<LoginUser> | Partial<LoginBot>
