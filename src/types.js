@@ -20,20 +20,20 @@ export type TDLibParameters = {
   ignore_file_names?: boolean
 }
 
-export type LoginUser = {
+export type LoginUser = {|
   type: 'user',
   getPhoneNumber: (retry?: boolean) => Promise<string>,
   getAuthCode: (retry?: boolean) => Promise<string>,
   getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
   getName: () => Promise<{ firstName: string, lastName?: string }>
-}
+|}
 
-export type LoginBot = {
+export type LoginBot = {|
   type: 'bot',
   getToken: (retry?: boolean) => Promise<string>,
-}
+|}
 
-export type LoginDetails = $Shape<LoginUser> | $Shape<LoginBot>
+export type LoginDetails = $Rest<LoginUser, {}> | $Rest<LoginBot, {}>
 export type StrictLoginDetails = LoginUser | LoginBot
 
 export type ConfigType = $Rest<StrictConfigType, {}>

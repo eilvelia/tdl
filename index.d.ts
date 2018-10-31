@@ -39,8 +39,8 @@ export class Client {
   static create(options?: ConfigType): Client
   static fromTDLib(tdlibInstance: ITDLibJSON, options?: ConfigType): Client
   connect: () => Promise<undefined>
-  login: (getLoginDetails: () => LoginDetails) => Promise<undefined>
-  connectAndLogin: (getLoginDetails: () => LoginDetails) => Promise<undefined>
+  login: (getLoginDetails?: () => LoginDetails) => Promise<undefined>
+  connectAndLogin: (getLoginDetails?: () => LoginDetails) => Promise<undefined>
   pause: () => undefined
   resume: () => undefined
   on: On

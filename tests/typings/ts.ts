@@ -29,6 +29,16 @@ const client = cl
     getToken: () => Promise.resolve('abcdef')
   }))
 
+  await cl.connectAndLogin(() => ({
+    type: 'bot',
+    getToken: () => Promise.resolve('abcdef')
+  }))
+
+  await cl.login()
+  await cl.connectAndLogin()
+
+  await cl.login(() => ({}))
+
   cl.pause()
   cl.resume()
 })()

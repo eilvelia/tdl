@@ -100,6 +100,7 @@ export type RemoveListener =
   & ((event: 'response', listener: Function, once?: boolean) => void)
 
 const noop = () => {}
+const empty = () => ({})
 
 export class Client {
   +_options: StrictConfigType;
@@ -166,7 +167,7 @@ export class Client {
     })
   }
 
-  login = (getLoginDetails: () => LoginDetails): Promise<void> => {
+  login = (getLoginDetails: () => LoginDetails = empty): Promise<void> => {
     debug('client.login()')
     this._emitter.once('auth-needed', () => {
       this._loginDetails = mergeDeepRight(
@@ -186,7 +187,7 @@ export class Client {
     })
   }
 
-  connectAndLogin = async (fn: () => LoginDetails): Promise<void> => {
+  connectAndLogin = async (fn: () => LoginDetails = empty): Promise<void> => {
     await this.connect()
     return this.login(fn)
   }

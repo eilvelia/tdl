@@ -32,6 +32,23 @@ import { Tdl } from '../../index'
     getToken: () => Promise.resolve('token')
   }))
 
+  await tdl.connectAndLogin(() => ({
+    type: 'bot',
+    getToken: () => Promise.resolve('token')
+  }))
+
+  await tdl.login()
+  await tdl.connectAndLogin()
+
+  await tdl.login(() => ({}))
+
+  // $ExpectError
+  await tdl.login(() => {})
+  // $ExpectError
+  await tdl.login(() => ({ a: 2 }))
+  // $ExpectError
+  await tdl.login(() => ({ type: 'abc' }))
+
   // $ExpectError
   tdl.login(123)
   // $ExpectError
