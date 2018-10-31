@@ -490,15 +490,19 @@ export class Client {
       }
 
       case 'PHONE_NUMBER_INVALID': {
-        return loginDetails.type === 'user'
-          ? this._send({
-            _: 'setAuthenticationPhoneNumber',
-            phone_number: await loginDetails.getPhoneNumber(true)
-          })
-          : this._send({
-            _: 'checkAuthenticationBotToken',
-            token: await loginDetails.getToken(true)
-          })
+        if (loginDetails.type !== 'user') return
+        return this._send({
+          _: 'setAuthenticationPhoneNumber',
+          phone_number: await loginDetails.getPhoneNumber(true)
+        })
+      }
+
+      case 'ACCESS_TOKEN_INVALID': {
+        if (loginDetails.type !== 'bot') return
+        return this._send({
+          _: 'checkAuthenticationBotToken',
+          token: await loginDetails.getToken(true)
+        })
       }
 
       case 'PASSWORD_HASH_INVALID': {
