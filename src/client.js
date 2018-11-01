@@ -21,7 +21,9 @@ import type {
   ConfigType,
   StrictConfigType,
   LoginDetails,
-  StrictLoginDetails
+  StrictLoginDetails,
+  LoginUser,
+  LoginBot
 } from './types'
 
 import type {
@@ -70,7 +72,7 @@ const defaultOptions: $Exact<StrictConfigType> = {
   }
 }
 
-type FetchingPromiseCallback = {
+type DeferredPromise = {
   resolve: (result: Object/* TDObject */) => void,
   reject: (error: Td$error) => void
 }
@@ -102,10 +104,12 @@ export type RemoveListener =
 const noop = () => {}
 const empty = () => ({})
 
+const TDL_MAGIC = '6c47e6b71ea'
+
 export class Client {
   +_options: StrictConfigType;
   +_emitter = new EventEmitter();
-  +_fetching: Map<string, FetchingPromiseCallback> = new Map();
+  +_fetching: Map<string, DeferredPromise> = new Map();
   +_tdlib: ITDLibJSON;
   _client: ?TDLibClient;
   _connectionState: ConnectionState = { _: 'connectionStateConnecting' };
@@ -118,6 +122,7 @@ export class Client {
   _loginDetails: StrictLoginDetails;
 
   _loginResolver: null | (result: void) => void = null;
+  _loginRejector: null | (error: any) => void = null;
 
   _paused = false;
 
@@ -173,8 +178,9 @@ export class Client {
       this._loginDetails = mergeDeepRight(
         defaultLoginDetails, getLoginDetails())
     })
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       this._loginResolver = resolve
+      this._loginRejector = reject
       this._emitter.emit('_login')
     })
   }
@@ -238,10 +244,11 @@ export class Client {
     query['@extra'] = id
     const receiveResponse = new Promise((resolve, reject) => {
       try {
-        this._fetching.set(id, { resolve, reject })
+        const defer = { resolve, reject }
+        this._fetching.set(id, defer)
         // // timeout after 10 seconds
         // setTimeout(() => {
-        //   delete this._fetching[id]
+        //   delete this._fetching.delete(id)
         //   reject('Query timed out after 10 seconds.')
         // }, 1000 * 10)
       } catch (e) {
@@ -295,6 +302,11 @@ export class Client {
     this._tdlib.send(client, tdQuery)
   }
 
+  _sendTdl (query: TDFunction): Promise<void> {
+    // $FlowOff
+    return this._send({ ...query, '@extra': TDL_MAGIC })
+  }
+
   async _receive (timeout: number = 10): Promise<Object/*TDObject*/ | null> {
     if (!this._client) return Promise.resolve(null)
     const tdResponse = await this._tdlib.receive(this._client, timeout)
@@ -312,6 +324,9 @@ export class Client {
 
     if (this._connectRejector)
       this._connectRejector(err)
+
+    if (this._loginRejector)
+      this._loginRejector(err)
   }
 
   _authRequired (): StrictLoginDetails {
@@ -348,17 +363,14 @@ export class Client {
     if (res._ === 'error')
       return this._handleError(res)
 
-    // $Flow//Off
     const id = res['@extra']
-    const promise = this._fetching.get(id)
+    const defer = this._fetching.get(id)
 
-    if (promise) {
-      // $Flow//Off
+    if (defer) {
       delete res['@extra']
-      promise.resolve(res)
+      defer.resolve(res)
       this._fetching.delete(id)
-    } else if (id !== null && res._ !== 'ok') {
-      // $Flow//Off
+    } else if (id !== TDL_MAGIC) {
       return this._handleUpdate(res)
     }
   }
@@ -384,12 +396,12 @@ export class Client {
     }
   }
 
-  async _handleAuth (update: updateAuthorizationState) {
+  async _handleAuth (update: updateAuthorizationState): Promise<void> {
     const authorizationState = update.authorization_state
 
     switch (authorizationState._) {
       case 'authorizationStateWaitTdlibParameters':
-        return this._send({
+        return this._sendTdl({
           _: 'setTdlibParameters',
           'parameters': {
             ...this._options.tdlibParameters,
@@ -403,7 +415,7 @@ export class Client {
         })
 
       case 'authorizationStateWaitEncryptionKey':
-        await this._send({
+        await this._sendTdl({
           _: 'checkDatabaseEncryptionKey',
           encryption_key: this._options.databaseEncryptionKey
         })
@@ -426,11 +438,11 @@ export class Client {
         const loginDetails = this._authRequired()
 
         return loginDetails.type === 'user'
-          ? this._send({
+          ? this._sendTdl({
             _: 'setAuthenticationPhoneNumber',
             phone_number: await loginDetails.getPhoneNumber(false)
           })
-          : this._send({
+          : this._sendTdl({
             _: 'checkAuthenticationBotToken',
             token: await loginDetails.getToken(false)
           })
@@ -444,7 +456,7 @@ export class Client {
 
         if (authorizationState.is_registered === false) {
           const { firstName, lastName = '' } = await loginDetails.getName()
-          return this._send({
+          return this._sendTdl({
             _: 'checkAuthenticationCode',
             code,
             first_name: firstName,
@@ -452,7 +464,7 @@ export class Client {
           })
         }
 
-        return this._send({
+        return this._sendTdl({
           _: 'checkAuthenticationCode',
           code
         })
@@ -464,7 +476,7 @@ export class Client {
 
         const passwordHint = authorizationState.password_hint
         const password = await loginDetails.getPassword(passwordHint, false)
-        return this._send({
+        return this._sendTdl({
           _: 'checkAuthenticationPassword',
           password
         })
@@ -472,63 +484,65 @@ export class Client {
 
       case 'authorizationStateReady':
         const loginResolver = this._loginResolver || noop
+        this._loginRejector = null
         return loginResolver()
     }
   }
 
   async _handleError (error: Td$error): Promise<void> {
+    // $FlowOff
+    const id = error['@extra']
+    const defer = this._fetching.get(id)
+
+    if (defer) {
+      // $FlowOff
+      delete error['@extra']
+      defer.reject(error)
+      this._fetching.delete(id)
+    } else if (id !== TDL_MAGIC) {
+      this.emit('error', error)
+    }
+
     const loginDetails = this._loginDetails
 
+    if (!loginDetails) return
+
+    switch (loginDetails.type) {
+      case 'user': return this._handleUserError(error, loginDetails)
+      case 'bot': return this._handleBotError(error, loginDetails)
+    }
+  }
+
+  async _handleUserError (error: Td$error, loginDetails: LoginUser): Promise<void> {
     switch (error.message) {
       case 'PHONE_CODE_EMPTY':
-      case 'PHONE_CODE_INVALID': {
-        if (loginDetails.type !== 'user') return
-        const code = await loginDetails.getAuthCode(true)
-        return this._send({
+      case 'PHONE_CODE_INVALID':
+        return this._sendTdl({
           _: 'checkAuthenticationCode',
-          code
+          code: await loginDetails.getAuthCode(true)
         })
-      }
 
-      case 'PHONE_NUMBER_INVALID': {
-        if (loginDetails.type !== 'user') return
-        return this._send({
+      case 'PHONE_NUMBER_INVALID':
+        return this._sendTdl({
           _: 'setAuthenticationPhoneNumber',
           phone_number: await loginDetails.getPhoneNumber(true)
         })
-      }
 
-      case 'ACCESS_TOKEN_INVALID': {
-        if (loginDetails.type !== 'bot') return
-        return this._send({
+      case 'PASSWORD_HASH_INVALID':
+        return this._sendTdl({
+          _: 'checkAuthenticationPassword',
+          password: await loginDetails.getPassword('', true)
+        })
+    }
+  }
+
+  async _handleBotError (error: Td$error, loginDetails: LoginBot): Promise<void> {
+    switch (error.message) {
+      case 'ACCESS_TOKEN_INVALID':
+        return this._sendTdl({
           _: 'checkAuthenticationBotToken',
           token: await loginDetails.getToken(true)
         })
-      }
-
-      case 'PASSWORD_HASH_INVALID': {
-        if (loginDetails.type !== 'user') return
-        const password = await loginDetails.getPassword('', true)
-        return this._send({
-          _: 'checkAuthenticationPassword',
-          password
-        })
-      }
-
-      default: {
-        // $FlowOff
-        const id = error['@extra']
-        const promise = this._fetching.get(id)
-
-        if (promise) {
-          // $FlowOff
-          delete error['@extra']
-          promise.reject(error)
-          this._fetching.delete(id)
-        } else {
-          this.emit('error', error)
-        }
-      }
     }
   }
 }
