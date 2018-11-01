@@ -18,6 +18,7 @@ Node.js wrapper for [TDLib][tdlib-getting-started] (Telegram Database library).
 - [Typings](#typings)
 - [Examples](#examples)
 - [Requirements](#requirements)
+- [Contributing](#contributing)
 
 ---
 
@@ -338,5 +339,12 @@ See [examples/](examples) folder.
 You can also use prebuilt binaries:
 
 - [tdlib.native](https://github.com/ForNeVeR/tdlib.native/releases)
+
+---
+
+<a name="contributing"></a>
+### Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
