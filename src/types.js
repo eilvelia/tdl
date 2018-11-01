@@ -33,7 +33,7 @@ export type LoginBot = {|
   getToken: (retry?: boolean) => Promise<string>,
 |}
 
-export type LoginDetails = $Rest<LoginUser, {}> | $Rest<LoginBot, {}>
+export type LoginDetails = $Rest<LoginUser, {}> | LoginBot
 export type StrictLoginDetails = LoginUser | LoginBot
 
 export type ConfigType = $Rest<StrictConfigType, {}>

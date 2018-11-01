@@ -43,6 +43,8 @@ import { Tdl } from '../../index'
   await tdl.login(() => ({}))
 
   // $ExpectError
+  await tdl.login(() => ({ getToken: () => Promise.resolve('token') }))
+  // $ExpectError
   await tdl.login(() => {})
   // $ExpectError
   await tdl.login(() => ({ a: 2 }))

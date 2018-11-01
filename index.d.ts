@@ -112,7 +112,7 @@ export type LoginBot = {
   getToken: (retry?: boolean) => Promise<string>
 }
 
-export type LoginDetails = Partial<LoginUser> | Partial<LoginBot>
+export type LoginDetails = Partial<LoginUser> | LoginBot
 export type StrictLoginDetails = LoginUser | LoginBot
 
 export type ConfigType = Partial<StrictConfigType>
