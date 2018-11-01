@@ -314,6 +314,8 @@ import { updateMessageViews, messageInvoice /* ... */ } from 'tdl/types/tdlib'
 import type { updateMessageViews, messageInvoice /* ... */ } from 'tdl/types/tdlib'
 ```
 
+**Warning**: TDLib typings does not follow SemVer.
+
 [Flow]: https://flow.org/
 [TypeScript]: https://www.typescriptlang.org/
 
