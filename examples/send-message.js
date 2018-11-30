@@ -1,6 +1,7 @@
 const { Client } = require('tdl')
+const { TDLib } = require('tdl-tdlib-ffi')
 
-const client = new Client({
+const client = new Client(new TDLib(), {
   apiId: 2222, // Your api_id
   apiHash: 'YOUR_API_HASH'
 })

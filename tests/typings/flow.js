@@ -1,7 +1,9 @@
 // @flow
 
-import { TDLib as Td } from '../../index'
+import { TDLib as Td } from '../../tdl-tdlib-ffi'
 import { Tdl, TdlError } from '../../index'
+
+var tdlib = new Td()
 
 ;(async () => {
   var t = new Td('abc')
@@ -12,8 +14,8 @@ import { Tdl, TdlError } from '../../index'
 
   t.setLogMaxFileSize(235)
 
-  new Tdl()
-  const tdl = new Tdl({ tdlibInstance: t, loginDetails: { type: 'user' } })
+  new Tdl(t)
+  const tdl = new Tdl(t, { loginDetails: { type: 'user' } })
   await tdl.connect()
 
   tdl.pause()
@@ -58,7 +60,7 @@ import { Tdl, TdlError } from '../../index'
 })
 
 
-import { Client, TDLib } from '../../index'
+import { Client } from '../../index'
 
 // import type { formattedText, inputMessageText } from '../../types/tdlib'
 
@@ -68,30 +70,21 @@ import type {
   Update as Td$Update
 } from '../../types/tdlib'
 
-const client = new Client({
+const client = new Client(tdlib, {
   apiId: 222,
   apiHash: 'abc',
   useTestDc: true
-})
-
-new Client({
-  tdlibInstance: new TDLib('path')
 })
 
 // $ExpectError
 new Client({ useTestDc: {} })
 
 
-Client.create().on('error', console.error)
-Client.create({})
-Client.create({ apiId: 222 })
+Client.create(tdlib).on('error', console.error)
+Client.create(tdlib, {})
+Client.create(tdlib, { apiId: 222 })
 // $ExpectError
 Client.create({ apiId: {} })
-
-Client.fromTDLib(new TDLib('abc'), {})
-Client.fromTDLib(new TDLib('abc'))
-// $ExpectError
-Client.fromTDLib({})
 
 
 client.setLogMaxFileSize(1234)

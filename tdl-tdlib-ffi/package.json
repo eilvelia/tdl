@@ -1,17 +1,26 @@
 {
-  "name": "tdl-shared",
-  "version": "0.5.0",
+  "name": "tdl-tdlib-ffi",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {},
-  "author": "Bannerets <save14@protonmail.com>",
-  "license": "MIT",
+  "dependencies": {
+    "debug": "^3.1.0",
+    "ffi-napi": "^2.4.4",
+    "ref-napi": "^1.4.0",
+    "tdl-shared": "^0.5.0"
+  },
+  "peerDependencies": {
+    "tdl": ">= 6.0.0-rc.0"
+  },
+  "engines": {
+    "node": ">= 8.6.0"
+  },
   "files": [
-    ".flowconfig",
+    "dist",
     "index.js",
     "index.js.flow",
-    "newtype.js.flow",
     "index.d.ts",
     "LICENSE"
   ],
@@ -19,6 +28,8 @@
     "telegram",
     "tdlib"
   ],
+  "author": "Bannerets <save14@protonmail.com>",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Bannerets/tdl.git"

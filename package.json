@@ -6,7 +6,9 @@
   "types": "index.d.ts",
   "scripts": {
     "clean": "rimraf dist/",
-    "build": "babel src/ -d dist/",
+    "build:tdl": "babel src/ -d dist/",
+    "build:tdlib-ffi": "babel tdl-tdlib-ffi/src/ -d tdl-tdlib-ffi/dist/",
+    "build": "npm run build:tdl && npm run build:tdlib-ffi",
     "lint": "eslint . --max-warnings 0",
     "test": "npm run flow:check && npm run ts && npm run lint",
     "prepare": "npm run clean && npm run build",
@@ -35,11 +37,9 @@
   "dependencies": {
     "debug": "^3.1.0",
     "eventemitter3": "^3.0.1",
-    "ffi-napi": "^2.4.4",
     "promptly": "^3.0.3",
     "ramda": "^0.25.0",
-    "ref-napi": "^1.4.0",
-    "tdl-shared": "^0.4.0"
+    "tdl-shared": "^0.5.0"
   },
   "optionalDependencies": {
     "fluture": "^8.0.2"
@@ -58,9 +58,6 @@
     "flow-bin": "^0.76.0",
     "rimraf": "^2.6.2",
     "typescript": "^3.0.1"
-  },
-  "engines": {
-    "node": ">= 8.6.0"
   },
   "author": "Bannerets <save14@protonmail.com>",
   "license": "MIT",

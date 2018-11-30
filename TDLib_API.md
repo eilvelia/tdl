@@ -3,7 +3,7 @@
 Low-level TDLib API.
 
 ```js
-const { TDLib } = require('tdl')
+const { TDLib } = require('tdl-tdlib-ffi')
 ```
 
 ---

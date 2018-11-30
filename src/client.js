@@ -6,7 +6,6 @@ import { mergeDeepRight } from 'ramda'
 import { tryP } from './fluture'
 import Debug from 'debug'
 import uuidv4 from '../vendor/uuidv4'
-import { TDLib } from './tdlib-ffi'
 import { deepRenameKey, deepRenameKey_ } from './util'
 import {
   getPhoneNumber as defaultGetPhoneNumber,
@@ -134,7 +133,7 @@ export class Client {
 
   _paused = false;
 
-  constructor (options: ConfigType = {}) {
+  constructor (tdlibInstance: ITDLibJSON, options: ConfigType = {}) {
     this._options = (mergeDeepRight(defaultOptions, options): StrictConfigType)
 
     if (!options.apiId)
@@ -143,19 +142,11 @@ export class Client {
     if (!options.apiHash)
       throw new TypeError('Valid api_hash must be provided.')
 
-    this._tdlib = this._options.tdlibInstance
-      || new TDLib(this._options.binaryPath || undefined)
+    this._tdlib = tdlibInstance
   }
 
-  static create (options: ConfigType = {}): Client {
-    return new Client(options)
-  }
-
-  static fromTDLib (tdlibInstance: ITDLibJSON, options: ConfigType = {}): Client {
-    return new Client({
-      ...options,
-      tdlibInstance
-    })
+  static create (tdlibInstance: ITDLibJSON, options: ConfigType = {}): Client {
+    return new Client(tdlibInstance, options)
   }
 
   async _init (): Promise<void> {

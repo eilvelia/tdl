@@ -1,0 +1,3 @@
+// @flow
+export opaque type TDLibClient = mixed
+declare export function makeTDLibClient (x: any): TDLibClient

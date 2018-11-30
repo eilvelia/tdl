@@ -26,19 +26,20 @@ Node.js wrapper for [TDLib][tdlib-getting-started] (Telegram Database library).
 ### Getting started
 
 1. Build the binary (https://github.com/tdlib/td#building)
-2. `npm install tdl`
+2. `npm install tdl tdl-tdlib-ffi`
 
 ---
 
 <a name="api"></a>
 ### API
 
-##### `new Client(options: Object) => Client`
+##### `new Client(tdlibInstance, options) => Client`
 
 ```js
 const { Client } = require('tdl')
+const { TDLib } = require('tdl-tdlib-ffi')
 
-const client = new Client({
+const client = new Client(new TDLib(), {
   apiId: 2222, // Your api_id
   apiHash: '0123456789abcdef0123456789abcdef', // Your api_hash
 })
@@ -222,7 +223,7 @@ See [TDLib_API.md](TDLib_API.md).
 ### Login as a bot
 
 ```js
-const client = new Client({
+const client = new Client(new TDLib(), {
   apiId: 2222, // Your api_id
   apiHash: '0123456789abcdef0123456789abcdef' // Your api_hash
 })
@@ -254,8 +255,7 @@ type Options = {
   skipOldUpdates: boolean, // Don't emit old updates
   useMutableRename: boolean, // May increase performance
   useDefaultVerbosityLevel: boolean,
-  tdlibParameters: Object,
-  tdlibInstance: TDLib
+  tdlibParameters: Object
 }
 
 type LoginDetails = {

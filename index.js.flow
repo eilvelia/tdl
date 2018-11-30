@@ -41,9 +41,8 @@ export type RemoveListener =
   & ((event: 'response', listener: Function, once?: boolean) => void)
 
 declare export class Client {
-  constructor(options?: ConfigType): this;
-  static create(options?: ConfigType): Client;
-  static fromTDLib(tdlibInstance: ITDLibJSON, options?: ConfigType): Client;
+  constructor(tdlibInstance: ITDLibJSON, options?: ConfigType): this;
+  static create(tdlibInstance: ITDLibJSON, options?: ConfigType): Client;
   connect: () => Promise<void>;
   login: (getLoginDetails?: () => LoginDetails) => Promise<void>;
   connectAndLogin: (getLoginDetails?: () => LoginDetails) => Promise<void>;
@@ -69,21 +68,6 @@ declare export {
 }
 
 declare export default Client
-
-// ---
-
-declare export class TDLib implements ITDLibJSON {
-  constructor(libraryFile?: string): this;
-  create(): Promise<TDLibClient>;
-  destroy(client: TDLibClient): void;
-  execute(client: TDLibClient, query: Object): Object | null;
-  receive(client: TDLibClient, timeout: number): Promise<Object | null>;
-  send(client: TDLibClient, query: Object): Promise<void>;
-  setLogFilePath(path: string): number;
-  setLogMaxFileSize(maxFileSize: number | string): void;
-  setLogVerbosityLevel(verbosity: number): void;
-  setLogFatalErrorCallback(fn: null | (errorMessage: string) => void): void;
-}
 
 // ---
 
@@ -135,6 +119,5 @@ export type StrictConfigType = {
   useTestDc: boolean,
   useMutableRename: boolean,
   useDefaultVerbosityLevel: boolean,
-  tdlibParameters: TDLibParameters,
-  tdlibInstance?: ITDLibJSON
+  tdlibParameters: TDLibParameters
 }

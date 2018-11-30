@@ -1,6 +1,7 @@
 // @flow
-export opaque type TDLibClient = mixed
-declare export function makeTDLibClient (x: any): TDLibClient
+import { type TDLibClient, makeTDLibClient } from './newtype'
+export type { TDLibClient }
+export { makeTDLibClient }
 
 export interface ITDLibJSON {
   create(): Promise<TDLibClient>;

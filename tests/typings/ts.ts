@@ -1,4 +1,7 @@
-import { Client, TDLib, TdlError } from '../../index'
+import { TDLib } from '../../tdl-tdlib-ffi'
+import { Client, TdlError } from '../../index'
+
+const tdlib = new TDLib('str')
 
 import {
   error as Td$error,
@@ -7,11 +10,16 @@ import {
   Update as Td$Update
 } from '../../types/tdlib'
 
-const cl = new Client({
+const cl = new Client(tdlib, {
   apiId: 2234,
   apiHash: 'abcdef',
   useTestDc: false
 })
+
+new Client(tdlib)
+
+Client.create(tdlib)
+Client.create(tdlib, {})
 
 const client = cl
 
@@ -72,7 +80,7 @@ const { on } = cl
 
 on('destroy', () => {})
 
-const tdlib = new TDLib('str')
+new TDLib()
 
 ;(async () => {
   const tdclient = await tdlib.create()
