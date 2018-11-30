@@ -3,7 +3,6 @@
 import ffi from 'ffi-napi'
 import ref from 'ref-napi'
 import Debug from 'debug'
-import { resolve as resolvePath } from 'path'
 
 import type { TDLibClient, ITDLibJSON } from 'tdl-shared'
 
@@ -27,7 +26,7 @@ export class TDLib implements ITDLibJSON {
     debug('constructor', libraryFile)
 
     this._tdlib = ffi.Library(
-      resolvePath(libraryFile),
+      libraryFile,
       {
         'td_json_client_create'          : ['pointer', []],
         'td_json_client_send'            : ['void'   , ['pointer', 'string']],
