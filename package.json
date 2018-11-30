@@ -42,7 +42,7 @@
     "tdl-shared": "^0.4.0"
   },
   "optionalDependencies": {
-    "fluture": ">= 8.0.0 < 11.0.0"
+    "fluture": "^8.0.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",
