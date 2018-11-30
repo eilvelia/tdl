@@ -3,7 +3,7 @@
 import { resolve as resolvePath } from 'path'
 import EventEmitter from 'eventemitter3'
 import { mergeDeepRight } from 'ramda'
-import { encaseP } from 'fluture'
+import { tryP } from './fluture'
 import Debug from 'debug'
 import uuidv4 from '../vendor/uuidv4'
 import { TDLib } from './tdlib-ffi'
@@ -269,7 +269,7 @@ export class Client {
   }
 
   invokeFuture: InvokeFuture =
-    (encaseP(this.invoke): $FlowOff)
+    (query => tryP(() => this.invoke(query)): $FlowOff)
 
   destroy = (): void => {
     if (!this._client) return

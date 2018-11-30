@@ -208,6 +208,8 @@ See [docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#addebe91c4525817
 
 Same as `client.invoke`, but returns [Future][] instead of Promise.
 
+Note: You need to install `fluture` (`npm install fluture`) to use `invokeFuture`.
+
 [Future]: https://github.com/fluture-js/Fluture
 
 #### Low-level TDLib API

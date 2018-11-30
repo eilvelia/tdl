@@ -36,11 +36,13 @@
     "debug": "^3.1.0",
     "eventemitter3": "^3.0.1",
     "ffi-napi": "^2.4.3",
-    "fluture": "^8.0.2",
     "promptly": "^3.0.3",
     "ramda": "^0.25.0",
     "ref-napi": "^1.4.0",
     "tdl-shared": "^0.4.0"
+  },
+  "optionalDependencies": {
+    "fluture": ">= 8.0.0 < 11.0.0"
   },
   "devDependencies": {
     "@bannerets/eslint-config-flow": "^0.5.0",
