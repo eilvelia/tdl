@@ -35,7 +35,7 @@
   "dependencies": {
     "debug": "^3.1.0",
     "eventemitter3": "^3.0.1",
-    "ffi-napi": "^2.4.3",
+    "ffi-napi": "^2.4.4",
     "promptly": "^3.0.3",
     "ramda": "^0.25.0",
     "ref-napi": "^1.4.0",
