@@ -1,4 +1,4 @@
-
+[![npm](https://img.shields.io/npm/v/tdl-tdlib-wasm.svg)](https://www.npmjs.com/package/tdl-tdlib-wasm)
 
 Experimental wrapper. Tested with TDLib v1.3.0.
 
