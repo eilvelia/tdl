@@ -85,5 +85,8 @@
   "bugs": {
     "url": "https://github.com/Bannerets/tdl/issues"
   },
-  "homepage": "https://github.com/Bannerets/tdl#readme"
+  "homepage": "https://github.com/Bannerets/tdl#readme",
+  "browser": {
+    "./dist/prompt.js": "./dist/prompt-stubs.js"
+  }
 }

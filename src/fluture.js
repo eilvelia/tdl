@@ -1,9 +1,5 @@
 // @flow
 
-
-
-
-
 export const tryP = (() => {
   try {
     const fluture = require('fluture')
