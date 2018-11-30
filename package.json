@@ -5,10 +5,11 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "clean": "rimraf dist/",
+    "clean": "rimraf dist/ tdl-tdlib*/dist/",
     "build:tdl": "babel src/ -d dist/",
     "build:tdlib-ffi": "babel tdl-tdlib-ffi/src/ -d tdl-tdlib-ffi/dist/",
-    "build": "npm run build:tdl && npm run build:tdlib-ffi",
+    "build:tdlib-wasm": "babel tdl-tdlib-wasm/src/ -d tdl-tdlib-wasm/dist/",
+    "build": "npm run build:tdl && npm run build:tdlib-ffi && npm run build:tdlib-wasm",
     "lint": "eslint . --max-warnings 0",
     "test": "npm run flow:check && npm run ts && npm run lint",
     "prepare": "npm run clean && npm run build",

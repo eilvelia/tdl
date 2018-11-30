@@ -1,0 +1,39 @@
+{
+  "name": "tdl-tdlib-wasm",
+  "version": "0.1.0",
+  "description": "WebAssembly bindings for TDLib.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {},
+  "dependencies": {
+    "debug": "^3.1.0",
+    "tdl-shared": "^0.5.0"
+  },
+  "peerDependencies": {
+    "tdl": ">= 6.0.0-rc.0"
+  },
+  "files": [
+    "dist",
+    "index.js",
+    "index.js.flow",
+    "index.d.ts",
+    "LICENSE"
+  ],
+  "keywords": [
+    "telegram",
+    "tdlib",
+    "tdl",
+    "webassembly",
+    "emscripten"
+  ],
+  "author": "Bannerets <save14@protonmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bannerets/tdl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Bannerets/tdl/issues"
+  },
+  "homepage": "https://github.com/Bannerets/tdl#readme"
+}
