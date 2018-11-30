@@ -1,7 +1,5 @@
 // @flow
 
-import type { ITDLibJSON } from 'tdl-shared'
-
 export type TDLibParameters = {
   use_test_dc?: boolean,
   database_directory?: string,
