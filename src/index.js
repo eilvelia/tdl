@@ -12,4 +12,6 @@ export {
   TDLib as TDLibJSON
 }
 
+export { TdlError } from './client'
+
 export default Client

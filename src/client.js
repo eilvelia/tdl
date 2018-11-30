@@ -77,9 +77,17 @@ type DeferredPromise = {
   reject: (error: Td$error) => void
 }
 
+export class TdlError extends Error {
+  +err: any
+  constructor (err: any) {
+    super()
+    this.err = err
+  }
+}
+
 export type On =
   & ((event: 'update', listener: (update: Update) => void) => Client)
-  & ((event: 'error', listener: (err: Td$error | Error) => void) => Client)
+  & ((event: 'error', listener: (err: Td$error | TdlError) => void) => Client)
   & ((event: 'destroy', listener: () => void) => Client)
   & ((event: 'auth-needed', listener: () => void) => Client)
   & ((event: 'auth-not-needed', listener: () => void) => Client)
@@ -318,9 +326,7 @@ export class Client {
   _catchError (err: mixed): void {
     debug('catchError', err)
 
-    const message = (err && typeof err === 'object' && err.message) || err
-
-    this.emit('error', new Error(message))
+    this.emit('error', new TdlError(err))
 
     if (this._connectRejector)
       this._connectRejector(err)

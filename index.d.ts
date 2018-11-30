@@ -10,9 +10,13 @@ import { TDLibClient, ITDLibJSON } from 'tdl-shared'
 
 export { TDLibClient, ITDLibJSON }
 
+export class TdlError extends Error {
+  readonly err: any
+}
+
 export type On =
   & ((event: 'update', listener: (update: Update) => void) => Client)
-  & ((event: 'error', listener: (err: Td$error | Error) => void) => Client)
+  & ((event: 'error', listener: (err: Td$error | TdlError) => void) => Client)
   & ((event: 'destroy', listener: () => void) => Client)
   & ((event: 'auth-needed', listener: () => void) => Client)
   & ((event: 'auth-not-needed', listener: () => void) => Client)

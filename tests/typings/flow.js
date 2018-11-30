@@ -1,7 +1,7 @@
 // @flow
 
 import { TDLib as Td } from '../../index'
-import { Tdl } from '../../index'
+import { Tdl, TdlError } from '../../index'
 
 ;(async () => {
   var t = new Td('abc')
@@ -123,8 +123,21 @@ client.setLogFatalErrorCallback('1234')
 
   client.once('update', e => {
     ;(e: Td$Update)
-    // $FlowFixMe
+    // $ExpectError
     ;(e: number)
+  })
+
+  client.on('error', e => {
+    if (e instanceof TdlError) {
+      console.log((e: TdlError))
+      console.log(e.err)
+      // $ExpectError
+      console.log(e.ab)
+      return
+    }
+    console.log(e.message)
+    // $ExpectError
+    console.log(e.abc)
   })
 
   client.removeListener('update', () => {})

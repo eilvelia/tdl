@@ -1,4 +1,4 @@
-import { Client, TDLib } from '../../index'
+import { Client, TDLib, TdlError } from '../../index'
 
 import {
   error as Td$error,
@@ -41,6 +41,15 @@ const client = cl
 
   cl.pause()
   cl.resume()
+
+  client.on('error', e => {
+    if (e instanceof TdlError) {
+      const a: TdlError = e
+      console.log(e.err)
+      return
+    }
+    console.log(e.message)
+  })
 })()
 
 cl.on('update', u => {
