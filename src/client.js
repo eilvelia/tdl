@@ -65,8 +65,8 @@ const defaultOptions: $Exact<StrictConfigType> = {
     use_secret_chats: false,
     system_language_code: 'en',
     application_version: '1.0',
-    device_model: 'tdlib',
-    system_version: 'node',
+    device_model: 'Unknown device',
+    system_version: 'Unknown',
     enable_storage_optimizer: true
   }
 }
