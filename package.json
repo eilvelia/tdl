@@ -1,7 +1,7 @@
 {
   "name": "tdl",
   "version": "6.0.0-rc.1",
-  "description": "TDLib (Telegram Database library) bindings for Node.js",
+  "description": "TDLib (Telegram Database library) wrapper.",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {

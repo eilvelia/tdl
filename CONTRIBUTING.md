@@ -21,7 +21,7 @@ Namespaces:
 - `tdl:client:emitter`
 - `tdl:client:response`
 - `tdl:client:request`
-- `tdl:tdlib-ffi`
+- `tdl-tdlib-ffi`
 
 Command example:
 

@@ -1,7 +1,7 @@
 {
   "name": "tdl-tdlib-ffi",
   "version": "0.1.0",
-  "description": "",
+  "description": "TDLib FFI bindings for Node.js.",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {},
@@ -26,7 +26,8 @@
   ],
   "keywords": [
     "telegram",
-    "tdlib"
+    "tdlib",
+    "tdl"
   ],
   "author": "Bannerets <save14@protonmail.com>",
   "license": "MIT",

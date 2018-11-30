@@ -6,7 +6,7 @@ import Debug from 'debug'
 
 import type { TDLibClient, ITDLibJSON } from 'tdl-shared'
 
-const debug = Debug('tdl:tdlib-ffi')
+const debug = Debug('tdl-tdlib-ffi')
 
 const buildQuery = (query: Object) => {
   const buffer = Buffer.from(JSON.stringify(query) + '\0', 'utf-8')

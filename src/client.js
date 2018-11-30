@@ -3,8 +3,8 @@
 import { resolve as resolvePath } from 'path'
 import EventEmitter from 'eventemitter3'
 import { mergeDeepRight } from 'ramda'
-import { tryP } from './fluture'
 import Debug from 'debug'
+import { tryP } from './fluture'
 import uuidv4 from '../vendor/uuidv4'
 import { deepRenameKey, deepRenameKey_ } from './util'
 import {
