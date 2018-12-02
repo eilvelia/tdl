@@ -44,6 +44,7 @@ export type StrictConfigType = {
   filesDirectory: string,
   databaseEncryptionKey: string,
   verbosityLevel: number,
+  receiveTimeout: number,
   skipOldUpdates: boolean,
   useTestDc: boolean,
   useMutableRename: boolean,

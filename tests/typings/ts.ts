@@ -16,6 +16,8 @@ const cl = new Client(tdlib, {
   useTestDc: false
 })
 
+new Client(tdlib, { receiveTimeout: 10 })
+
 new Client(tdlib)
 
 Client.create(tdlib)

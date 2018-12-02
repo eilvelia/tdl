@@ -252,6 +252,7 @@ type Options = {
   verbosityLevel: number,
   useTestDc: boolean, // Use telegram dev server
   // Advanced options:
+  receiveTimeout: number,
   skipOldUpdates: boolean, // Don't emit old updates
   useMutableRename: boolean, // May increase performance
   useDefaultVerbosityLevel: boolean,
@@ -283,6 +284,7 @@ options = {
   databaseDirectory: '_td_database',
   filesDirectory: '_td_files',
   verbosityLevel: 2,
+  receiveTimeout: 10,
   skipOldUpdates: false,
   useTestDc: false,
   useMutableRename: false,

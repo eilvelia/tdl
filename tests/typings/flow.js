@@ -76,6 +76,8 @@ const client = new Client(tdlib, {
   useTestDc: true
 })
 
+new Client(tdlib, { receiveTimeout: 10 })
+
 // $ExpectError
 new Client({ useTestDc: {} })
 

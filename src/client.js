@@ -56,6 +56,7 @@ const defaultOptions: $Exact<StrictConfigType> = {
   filesDirectory: '_td_files',
   databaseEncryptionKey: '',
   verbosityLevel: 2,
+  receiveTimeout: 10,
   skipOldUpdates: false,
   useTestDc: false,
   useMutableRename: false,
@@ -306,7 +307,7 @@ export class Client {
     return this._send({ ...query, '@extra': TDL_MAGIC })
   }
 
-  async _receive (timeout: number = 10): Promise<Object/*TDObject*/ | null> {
+  async _receive (timeout: number = this._options.receiveTimeout): Promise<Object/*TDObject*/ | null> {
     if (!this._client) return Promise.resolve(null)
     const tdResponse = await this._tdlib.receive(this._client, timeout)
     return tdResponse && (this._options.useMutableRename
