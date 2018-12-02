@@ -40,23 +40,19 @@ export class TDLib implements ITDLibJSON {
       })
   }
 
-  create (): Promise<TDLibClient> {
+  async create (): Promise<TDLibClient> {
     debug('create')
-    return new Promise((resolve, reject) => {
-      this._tdlib.td_json_client_create.async((err, client) => {
-        if (err) return reject(err)
-        resolve(client)
-      })
-    })
+    return this._tdlib.td_json_client_create()
   }
 
-  send (client: TDLibClient, query: Object): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this._tdlib.td_json_client_send.async(client, buildQuery(query), err => {
-        if (err) return reject(err)
-        resolve()
-      })
-    })
+  async send (client: TDLibClient, query: Object): Promise<void> {
+    return this._tdlib.td_json_client_send(client, buildQuery(query))
+    // return new Promise((resolve, reject) => {
+    //   this._tdlib.td_json_client_send.async(client, buildQuery(query), err => {
+    //     if (err) return reject(err)
+    //     resolve()
+    //   })
+    // })
   }
 
   receive (client: TDLibClient, timeout: number): Promise<Object | null> {
