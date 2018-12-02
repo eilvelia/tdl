@@ -22,6 +22,7 @@ Namespaces:
 - `tdl:client:response`
 - `tdl:client:request`
 - `tdl-tdlib-ffi`
+- `tdl-tdlib-addon`
 - `tdl-tdlib-wasm`
 
 Command example:
