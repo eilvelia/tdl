@@ -5,10 +5,16 @@
 ## v6.0.0
 
 - **Important**: Allowed recovery from invalid phone numbers (see [#33][]). `loginDetails.phoneNumber`/`loginDetails.token` field replaced with `loginDetails.getPhoneNumber`/`loginDetails.getToken` function.
+- **Important**: `new Client(options)` -> `new Client(tdlibInstance, options)`
+- Splitted `tdl` into two packages: `tdl` and `tdl-tdlib-ffi`. Users should manually install both.
+- Now `tdl` can work in browser.
+- Added `tdl-tdlib-wasm` package.
+- Removed static method `Client.fromTDLib`.
 - Changed behaviour of `client.on('update')` and `client.on('error')`.
 - `client.login()` (and `client.connectAndLogin()`) argument now optional.
 - Many documentation improvements.
 - Added basic contributing guidelines.
+- Other minor improvements.
 
 [#33]: https://github.com/Bannerets/tdl/issues/33
 
