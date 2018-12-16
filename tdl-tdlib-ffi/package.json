@@ -1,6 +1,6 @@
 {
   "name": "tdl-tdlib-ffi",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "TDLib FFI bindings for Node.js.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -12,7 +12,7 @@
     "tdl-shared": "^0.5.0"
   },
   "peerDependencies": {
-    "tdl": ">= 6.0.0-rc.0"
+    "tdl": ">= 6.0.0"
   },
   "engines": {
     "node": ">= 8.6.0"
