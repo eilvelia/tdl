@@ -43,12 +43,13 @@ public:
 
 protected:
   void Execute() override {
-    res = td_json_client_receive(client, timeout);
+    const char* tdres = td_json_client_receive(client, timeout);
+    res = std::string(tdres == NULL ? "" : tdres); // copy string
   }
 
   void OnOK() override {
     Napi::Env env = Env();
-    auto str = Napi::String::New(env, res == NULL ? "" : res);
+    auto str = Napi::String::New(env, res);
     Callback().MakeCallback(Receiver().Value(), { env.Null(), str });
   }
 
@@ -60,7 +61,7 @@ protected:
 private:
   void* client;
   double timeout;
-  const char* res;
+  std::string res;
 };
 
 void td_client_receive(const Napi::CallbackInfo& info) {
