@@ -10,7 +10,7 @@
     "build:tdlib-ffi": "babel tdl-tdlib-ffi/src/ -d tdl-tdlib-ffi/dist/",
     "build:tdlib-addon": "babel tdl-tdlib-addon/src/ -d tdl-tdlib-addon/dist/",
     "build:tdlib-wasm": "babel tdl-tdlib-wasm/src/ -d tdl-tdlib-wasm/dist/",
-    "ii": "npm i --prefix tdl-tdlib-ffi && npm i --prefix tdl-tdlib-addon && npm i --prefix tdl-tdlib-wasm",
+    "ii": "npm i --prefix tdl-tdlib-ffi && npm i --prefix tdl-tdlib-wasm",
     "build": "npm run build:tdl && npm run build:tdlib-ffi && npm run build:tdlib-wasm",
     "lint": "eslint . --max-warnings 0",
     "test": "npm run flow:check && npm run ts && npm run lint",
