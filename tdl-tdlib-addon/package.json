@@ -1,6 +1,6 @@
 {
   "name": "tdl-tdlib-addon",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "TDLib N-API addon for Node.js.",
   "main": "index.js",
   "types": "index.d.ts",
