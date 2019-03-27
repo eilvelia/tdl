@@ -1,7 +1,6 @@
 // @flow
-import { type TDLibClient, makeTDLibClient } from './newtype'
-export type { TDLibClient }
-export { makeTDLibClient }
+export type TDLibClient = { +_TDLibClientBrand: void } // Structural typing is needed here
+declare export function makeTDLibClient (x: any): TDLibClient
 
 export interface ITDLibJSON {
   create(): Promise<TDLibClient>;
