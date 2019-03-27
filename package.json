@@ -42,7 +42,7 @@
     "eventemitter3": "^3.0.1",
     "promptly": "^3.0.3",
     "ramda": "^0.25.0",
-    "tdl-shared": "^0.5.0"
+    "tdl-shared": "^0.6.0"
   },
   "optionalDependencies": {
     "fluture": "^8.0.2"
