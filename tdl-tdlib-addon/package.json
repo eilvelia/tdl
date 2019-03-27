@@ -1,6 +1,6 @@
 {
   "name": "tdl-tdlib-addon",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "TDLib N-API addon for Node.js.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -11,7 +11,7 @@
   "dependencies": {
     "debug": "^3.1.0",
     "node-addon-api": "^1.6.2",
-    "tdl-shared": "^0.5.0"
+    "tdl-shared": "^0.6.0"
   },
   "devDependencies": {
     "node-gyp": "^3.8.0"
@@ -36,7 +36,7 @@
     "tdlib",
     "tdl"
   ],
-  "author": "Bannerets <save14@protonmail.com>",
+  "author": "Bannerets <comonoid@protonmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
