@@ -4,7 +4,7 @@
 [![GitHub repo size in bytes](https://img.shields.io/github/repo-size/Bannerets/tdl.svg)](https://github.com/Bannerets/tdl)
 [![Build Status](https://travis-ci.org/Bannerets/tdl.svg?branch=master)](https://travis-ci.org/Bannerets/tdl)
 
-Node.js wrapper for [TDLib][tdlib-getting-started] (Telegram Database library).
+JavaScript wrapper for [TDLib][tdlib-getting-started] (Telegram Database library).
 
 [tdlib-getting-started]: https://core.telegram.org/tdlib/getting-started
 
@@ -15,8 +15,10 @@ Node.js wrapper for [TDLib][tdlib-getting-started] (Telegram Database library).
 - [Login as a bot](#login-as-a-bot)
 - [Options](#options)
 - [Typings](#typings)
-- [Examples](#examples)
 - [Requirements](#requirements)
+- [WebAssembly](#webassembly)
+- [Architecture notes](#architecture-notes)
+- [Examples](#examples)
 - [Contributing](#contributing)
 
 ---
@@ -25,7 +27,7 @@ Node.js wrapper for [TDLib][tdlib-getting-started] (Telegram Database library).
 ### Getting started
 
 1. Build the binary (https://github.com/tdlib/td#building)
-2. `npm install tdl tdl-tdlib-ffi`
+2. `npm install tdl tdl-tdlib-ffi` (install both)
 
 ---
 
@@ -35,6 +37,7 @@ Node.js wrapper for [TDLib][tdlib-getting-started] (Telegram Database library).
 ##### `new Client(tdlibInstance, options) => Client`
 
 ```js
+// Example in Node.js:
 const { Client } = require('tdl')
 const { TDLib } = require('tdl-tdlib-ffi')
 
@@ -49,7 +52,7 @@ const client = new Client(new TDLib(), {
 ##### `client.connect() => Promise<undefined>`
 
 You can use this method to initialize and connect your client with Telegram.  
-Returns promise.
+Returns a promise.
 
 ```js
 await client.connect()
@@ -61,7 +64,7 @@ await client.connect()
 await client.login()
 ```
 
-By default, `tdl` asks user for phone number, auth code, and password (if specified) in console.  
+By default, `tdl` asks user for phone number, auth code, and password (if specified) in the console.  
 You can pass your functions:
 
 ```js
@@ -84,6 +87,8 @@ await client.login(() => ({
 `getName` function is called if user is not registered.
 
 Also see `LoginDetails` interface in [Options](#options) section.
+
+It is possible to not use `client.login` helper and implement login process manually.
 
 ##### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<undefined>`
 
@@ -113,6 +118,10 @@ const listener = v => {
 }
 client.on('update', listener)
 ```
+
+You can consider using reactive libraries like [most][] for convenient event processing.
+
+[most]: https://github.com/cujojs/most
 
 ##### `client.invoke(query: Object) => Promise<Object>`
 
@@ -279,7 +288,6 @@ Any other fields can just be not specified.
 
 ```javascript
 options = {
-  binaryPath: 'libtdjson', // (and 'tdjson' on Windows)
   databaseDirectory: '_td_database',
   filesDirectory: '_td_files',
   verbosityLevel: 2,
@@ -304,7 +312,7 @@ options = {
 <a name="typings"></a>
 ### Typings
 
-`tdl` supports [Flow][] and [TypeScript][] out of the box.
+`tdl` fully supports [Flow][] and [TypeScript][] out of the box.
 Typings are generated from [td_api.tl][td-scheme] scheme using [tdlib-typings][].
 
 You can import TDLib types:
@@ -327,13 +335,6 @@ import type { updateMessageViews, messageInvoice /* ... */ } from 'tdl/types/tdl
 
 ---
 
-<a name="examples"></a>
-### Examples
-
-See [examples/](examples) folder.
-
----
-
 <a name="requirements"></a>
 ### Requirements
 
@@ -344,6 +345,38 @@ See [examples/](examples) folder.
 You can also use prebuilt binaries:
 
 - [tdlib.native](https://github.com/ForNeVeR/tdlib.native/releases)
+
+---
+
+<a name="webassembly"></a>
+### WebAssembly
+
+`tdl` also has experimental wrapper for tdlib in wasm, see [tdl-tdlib-wasm/](tdl-tdlib-wasm/).
+
+---
+
+<a name="architecture-notes"></a>
+### Architecture notes
+
+The library is designed to work with different "backends",
+their interface is described in [TDLib_API.md](TDLib_API.md) file.
+By this the same main wrapper can be used with node ffi, with node addons,
+and in browser with WebAssembly.
+
+Available packages in the `tdl` repository:
+
+- [tdl-tdlib-ffi/](tdl-tdlib-ffi/) (mainly used)
+- [tdl-tdlib-addon/](tdl-tdlib-addon/) (very unstable)
+- [tdl-tdlib-wasm/](tdl-tdlib-wasm/)
+
+You can easily substitute one with another.
+
+---
+
+<a name="examples"></a>
+### Examples
+
+See [examples/](examples) folder.
 
 ---
 

@@ -9,6 +9,8 @@ const client = new Client(new TDLib(), {
   apiHash: 'YOUR_API_HASH'
 })
 
+client.on('error', console.error)
+
 const searchChat = username =>
   client.invokeFuture({ _: 'searchPublicChat', username })
     .map(chat => `Chat: ${chat.title}, id: ${chat.id}`)

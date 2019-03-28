@@ -6,6 +6,8 @@ const client = new Client(new TDLib('libtdjson'), {
   apiHash: 'YOUR_API_HASH'
 })
 
+client.on('error', console.error)
+
 async function main() {
   await client.connectAndLogin()
 

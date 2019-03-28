@@ -6,6 +6,10 @@ const client = new Client(new TDLib(), {
   apiHash: 'YOUR_API_HASH'
 })
 
+client.on('error', console.error)
+
+// Works at least in TDLib v1.3.0
+
 async function main() {
   await client.connect()
 
