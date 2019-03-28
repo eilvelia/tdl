@@ -292,7 +292,7 @@ export class Client {
     return tdResponse && deepRenameKey('@type', '_', tdResponse)
   }
 
-  async _send (query: TDFunction): Promise<void> {
+  _send (query: TDFunction): void {
     debugReq('send', query)
     if (!this._client) return
     const { _client: client } = this
@@ -300,9 +300,9 @@ export class Client {
     this._tdlib.send(client, tdQuery)
   }
 
-  _sendTdl (query: TDFunction): Promise<void> {
+  _sendTdl (query: TDFunction): void {
     // $FlowOff
-    return this._send({ ...query, '@extra': TDL_MAGIC })
+    this._send({ ...query, '@extra': TDL_MAGIC })
   }
 
   async _receive (timeout: number = this._options.receiveTimeout): Promise<Object/*TDObject*/ | null> {

@@ -18,10 +18,10 @@ const client = await tdlib.create()
 
 [Docs](https://core.telegram.org/tdlib/docs/td__json__client_8h.html#a45cd6979ada11b7690d9dcb1ddc841a0)
 
-##### `send: (client: TDLibClient, query: Object) => Promise<void>`
+##### `send: (client: TDLibClient, query: Object) => void`
 
 ```js
-await tdlib.send(client, {
+tdlib.send(client, {
   '@type': 'sendMessage',
   chat_id: 123456789,
   input_message_content: {

@@ -21,7 +21,7 @@ export class TDLib implements ITDLibJSON {
     return this._addon.td_client_create()
   }
 
-  async send (client: TDLibClient, query: Object): Promise<void> {
+  send (client: TDLibClient, query: Object): void {
     this._addon.td_client_send(client, JSON.stringify(query))
   }
 

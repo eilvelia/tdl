@@ -44,8 +44,8 @@ export class TDLib implements ITDLibJSON {
     return /*:: makeTDLibClient */ (this._tdlib.td_create())
   }
 
-  async send (client: TDLibClient, query: Object): Promise<void> {
-    return this._tdlib.td_send(client, JSON.stringify(query))
+  send (client: TDLibClient, query: Object): void {
+    this._tdlib.td_send(client, JSON.stringify(query))
   }
 
   async receive (client: TDLibClient): Promise<Object | null> {
