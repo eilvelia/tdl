@@ -2,11 +2,10 @@
 
 import { resolve as resolvePath } from 'path'
 import EventEmitter from 'eventemitter3'
-import { mergeDeepRight } from 'ramda'
 import Debug from 'debug'
 import { tryP } from './fluture'
 import uuidv4 from '../vendor/uuidv4'
-import { deepRenameKey, deepRenameKey_ } from './util'
+import { deepRenameKey, deepRenameKey_, mergeDeepRight } from './util'
 import {
   getPhoneNumber as defaultGetPhoneNumber,
   getAuthCode as defaultGetAuthCode,
@@ -175,8 +174,8 @@ export class Client {
   login = (getLoginDetails: () => LoginDetails = empty): Promise<void> => {
     debug('client.login()')
     this._emitter.once('auth-needed', () => {
-      this._loginDetails = mergeDeepRight(
-        defaultLoginDetails, getLoginDetails())
+      this._loginDetails = (mergeDeepRight(
+        defaultLoginDetails, getLoginDetails()): $FlowOff)
     })
     return new Promise((resolve, reject) => {
       this._loginResolver = resolve
