@@ -50,7 +50,6 @@ const defaultLoginDetails: StrictLoginDetails = {
 }
 
 const defaultOptions: $Exact<StrictConfigType> = {
-  binaryPath: '',
   databaseDirectory: '_td_database',
   filesDirectory: '_td_files',
   databaseEncryptionKey: '',

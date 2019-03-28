@@ -108,7 +108,6 @@ export type ConfigType = Partial<StrictConfigType>
 export type StrictConfigType = {
   apiId?: number,
   apiHash?: string,
-  binaryPath: string,
   databaseDirectory: string,
   filesDirectory: string,
   databaseEncryptionKey: string,
