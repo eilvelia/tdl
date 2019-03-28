@@ -253,7 +253,6 @@ await client.connectAndLogin(() => ({
 type Options = {
   apiId: number, // Can be obtained at https://my.telegram.org
   apiHash: string, // Can be obtained at https://my.telegram.org
-  binaryPath: string, // Path to tdlib binary, relative path
   databaseDirectory: string, // Relative path
   filesDirectory: string, // Relative path
   databaseEncryptionKey: string, // Optional key for database encryption
