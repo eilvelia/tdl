@@ -1,6 +1,6 @@
 {
   "name": "tdl-tdlib-wasm",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "WebAssembly bindings for TDLib.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "debug": "^3.1.0",
-    "tdl-shared": "^0.7.0"
+    "tdl-shared": "^0.8.0"
   },
   "peerDependencies": {
     "tdl": ">= 6.0.0-rc.0"
