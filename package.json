@@ -1,51 +1,30 @@
 {
-  "name": "tdl",
-  "version": "6.0.0-rc.2",
-  "description": "TDLib (Telegram Database library) wrapper for Node.js / WASM.",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "name": "tdl-dev",
+  "version": "0.0.0",
+  "private": true,
+  "description": "JavaScript TDLib wrapper.",
   "scripts": {
-    "clean": "rimraf dist/ tdl-tdlib*/dist/",
-    "build:tdl": "babel src/ -d dist/",
-    "build:tdlib-ffi": "babel tdl-tdlib-ffi/src/ -d tdl-tdlib-ffi/dist/",
-    "build:tdlib-addon": "babel tdl-tdlib-addon/src/ -d tdl-tdlib-addon/dist/",
-    "build:tdlib-wasm": "babel tdl-tdlib-wasm/src/ -d tdl-tdlib-wasm/dist/",
-    "ii": "npm i --prefix tdl-tdlib-ffi && npm i --prefix tdl-tdlib-wasm",
-    "build": "npm run build:tdl && npm run build:tdlib-ffi && npm run build:tdlib-wasm",
+    "clean": "rimraf packages/*/dist/",
+    "build": "lerna run build",
     "lint": "eslint . --max-warnings 0",
-    "test": "npm run flow:check && npm run ts && npm run lint",
-    "prepare": "npm run ii && npm run clean && npm run build",
+    "test": "npm run flow:check && npm run ts:check && npm run lint",
+    "postinstall": "lerna bootstrap",
+    "publish": "lerna publish",
+    "prepare": "npm run clean && npm run build",
     "prepack": "npm test",
-    "ts": "tsc --noEmit",
+    "ts:check": "tsc --noEmit",
     "flow:check": "flow check --include-warnings --max-warnings 0",
     "flow:start": "pm2 start tdl-flow.sh",
     "flow:stop": "pm2 stop tdl-flow",
     "flow:restart": "npm run flow:stop && npm run flow:start",
     "flow:status": "flow status",
-    "start": "node dist"
+    "build:addon:babel": "babel tdl-tdlib-addon/src/ -d tdl-tdlib-addon/dist/",
+    "build:addon": "npm run build:addon:babel && npm run build:gyp --prefix tdl-tdlib-addon",
+    "clean:addon": "rimraf tdl-tdlib-addon/dist && npm run clean --prefix tdl-tdlib-addon"
   },
-  "files": [
-    ".flowconfig",
-    "index.js",
-    "index.js.flow",
-    "index.d.ts",
-    "dist",
-    "vendor",
-    "flow",
-    "types",
-    "examples",
-    "README.md",
-    "TDLib_API.md"
+  "workspaces": [
+    "packages/*"
   ],
-  "dependencies": {
-    "debug": "^3.1.0",
-    "eventemitter3": "^3.0.1",
-    "promptly": "^3.0.3",
-    "tdl-shared": "^0.7.0"
-  },
-  "optionalDependencies": {
-    "fluture": "^8.0.2"
-  },
   "devDependencies": {
     "@babel/cli": "^7.1.5",
     "@babel/core": "^7.1.6",
@@ -58,21 +37,23 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.9.0",
     "flow-bin": "^0.76.0",
+    "lerna": "^3.13.1",
     "rimraf": "^2.6.2",
     "typescript": "^3.0.1"
   },
+  "files": [
+    "flow",
+    "examples",
+    "README.md",
+    "TDLib_API.md"
+  ],
   "author": "Bannerets <comonoid@protonmail.com>",
   "license": "MIT",
   "keywords": [
     "telegram",
     "telegram-api",
     "tdlib",
-    "bindings",
-    "mtproto",
-    "ffi",
-    "tg",
-    "tglib",
-    "wrapper"
+    "tdl"
   ],
   "directories": {
     "example": "examples"
@@ -84,8 +65,5 @@
   "bugs": {
     "url": "https://github.com/Bannerets/tdl/issues"
   },
-  "homepage": "https://github.com/Bannerets/tdl#readme",
-  "browser": {
-    "./dist/prompt.js": "./dist/prompt-stubs.js"
-  }
+  "homepage": "https://github.com/Bannerets/tdl#readme"
 }

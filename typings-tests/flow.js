@@ -1,7 +1,7 @@
 // @flow
 
-import { TDLib as Td } from '../../tdl-tdlib-ffi'
-import { Tdl, TdlError } from '../../index'
+import { TDLib as Td } from '../packages/tdl-tdlib-ffi'
+import { Tdl, TdlError, Client } from '../packages/tdl'
 
 var tdlib = new Td()
 
@@ -60,15 +60,13 @@ var tdlib = new Td()
 })
 
 
-import { Client } from '../../index'
-
 import type {
   error as Td$error,
   Chat as Td$Chat,
   Update as Td$Update,
   formattedText as Td$formattedText,
   formattedText$Input as Td$formattedText$Input
-} from '../../types/tdlib'
+} from '../packages/tdl/types/tdlib'
 
 const client = new Client(tdlib, {
   apiId: 222,

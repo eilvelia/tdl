@@ -4,7 +4,9 @@
   "description": "WebAssembly bindings for TDLib.",
   "main": "index.js",
   "types": "index.d.ts",
-  "scripts": {},
+  "scripts": {
+    "build": "babel src/ -d dist/ --root-mode upward"
+  },
   "dependencies": {
     "debug": "^3.1.0",
     "tdl-shared": "^0.7.0"
@@ -21,6 +23,7 @@
   ],
   "keywords": [
     "telegram",
+    "telegram-api",
     "tdlib",
     "tdl",
     "webassembly",

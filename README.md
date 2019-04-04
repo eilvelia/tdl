@@ -364,9 +364,9 @@ and in browser with WebAssembly.
 
 Available packages in the `tdl` repository:
 
-- [tdl-tdlib-ffi/](tdl-tdlib-ffi/) (mainly used)
-- [tdl-tdlib-addon/](tdl-tdlib-addon/) (very unstable)
-- [tdl-tdlib-wasm/](tdl-tdlib-wasm/)
+- [tdl-tdlib-ffi](packages/tdl-tdlib-ffi/) (mainly used)
+- [tdl-tdlib-addon](tdl-tdlib-addon/) (very unstable)
+- [tdl-tdlib-wasm](packages/tdl-tdlib-wasm/)
 
 You can easily substitute one with another.
 
@@ -375,7 +375,7 @@ You can easily substitute one with another.
 <a name="examples"></a>
 ### Examples
 
-See [examples/](examples) folder.
+See [examples/](examples/) folder.
 
 ---
 

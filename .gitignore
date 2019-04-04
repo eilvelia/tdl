@@ -1,10 +1,9 @@
 .DS_Store
 .vscode/
 node_modules/
-package-lock.json
-!/package-lock.json
 dist/
 flow-typed/npm/
+*.lerna_backup
 /test.js
 *.bak
 /*.txt

@@ -1,0 +1,53 @@
+{
+  "name": "tdl",
+  "version": "6.0.0-rc.2",
+  "description": "TDLib (Telegram Database library) wrapper for Node.js / WASM.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "babel src/ -d dist/ --root-mode upward && node copy-readme.js"
+  },
+  "files": [
+    "index.js",
+    "index.js.flow",
+    "index.d.ts",
+    "dist",
+    "vendor",
+    "types",
+    "README.md"
+  ],
+  "dependencies": {
+    "debug": "^3.1.0",
+    "eventemitter3": "^3.0.1",
+    "promptly": "^3.0.3",
+    "tdl-shared": "^0.7.0"
+  },
+  "optionalDependencies": {
+    "fluture": "^8.0.2"
+  },
+  "devDependencies": {},
+  "author": "Bannerets <comonoid@protonmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "telegram",
+    "telegram-api",
+    "tdlib",
+    "bindings",
+    "mtproto",
+    "ffi",
+    "tg",
+    "tglib",
+    "wrapper"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bannerets/tdl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Bannerets/tdl/issues"
+  },
+  "homepage": "https://github.com/Bannerets/tdl#readme",
+  "browser": {
+    "./dist/prompt.js": "./dist/prompt-stubs.js"
+  }
+}

@@ -8,16 +8,16 @@
   "author": "Bannerets <comonoid@protonmail.com>",
   "license": "MIT",
   "files": [
-    ".flowconfig",
     "index.js",
     "index.js.flow",
-    "newtype.js.flow",
     "index.d.ts",
     "LICENSE"
   ],
   "keywords": [
     "telegram",
-    "tdlib"
+    "telegram-api",
+    "tdlib",
+    "tdl"
   ],
   "repository": {
     "type": "git",

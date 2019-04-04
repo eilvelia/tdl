@@ -6,7 +6,7 @@
   "types": "index.d.ts",
   "scripts": {
     "clean": "node-gyp clean",
-    "build": "node-gyp rebuild"
+    "build:gyp": "node-gyp rebuild"
   },
   "dependencies": {
     "debug": "^3.1.0",
@@ -33,6 +33,7 @@
   ],
   "keywords": [
     "telegram",
+    "telegram-api",
     "tdlib",
     "tdl"
   ],

@@ -4,7 +4,9 @@
   "description": "TDLib FFI bindings for Node.js.",
   "main": "index.js",
   "types": "index.d.ts",
-  "scripts": {},
+  "scripts": {
+    "build": "babel src/ -d dist/ --root-mode upward"
+  },
   "dependencies": {
     "debug": "^3.1.0",
     "ffi-napi": "^2.4.4",
@@ -26,8 +28,10 @@
   ],
   "keywords": [
     "telegram",
+    "telegram-api",
     "tdlib",
-    "tdl"
+    "tdl",
+    "ffi"
   ],
   "author": "Bannerets <comonoid@protonmail.com>",
   "license": "MIT",

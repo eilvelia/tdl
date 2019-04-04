@@ -1,5 +1,5 @@
-import { TDLib } from '../../tdl-tdlib-ffi'
-import { Client, TdlError } from '../../index'
+import { TDLib } from '../packages/tdl-tdlib-ffi'
+import { Client, TdlError } from '../packages/tdl'
 
 const tdlib = new TDLib('str')
 
@@ -10,7 +10,7 @@ import {
   Update as Td$Update,
   formattedText as Td$formattedText,
   formattedText$Input as Td$formattedText$Input
-} from '../../types/tdlib'
+} from '../packages/tdl/types/tdlib'
 
 const cl = new Client(tdlib, {
   apiId: 2234,
