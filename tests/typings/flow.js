@@ -62,12 +62,12 @@ var tdlib = new Td()
 
 import { Client } from '../../index'
 
-// import type { formattedText, inputMessageText } from '../../types/tdlib'
-
 import type {
   error as Td$error,
   Chat as Td$Chat,
-  Update as Td$Update
+  Update as Td$Update,
+  formattedText as Td$formattedText,
+  formattedText$Input as Td$formattedText$Input
 } from '../../types/tdlib'
 
 const client = new Client(tdlib, {
@@ -215,4 +215,8 @@ client.setLogFatalErrorCallback('1234')
       ? Promise.reject('Token is not valid')
       : Promise.resolve('YOUR_BOT_TOKEN') // Token from @BotFather
   }))
+
+  // Td$formattedText <: Td$formattedText$Input
+  declare var fmt: Td$formattedText
+  const fmtOpt: Td$formattedText$Input = fmt
 })()

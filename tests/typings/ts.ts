@@ -7,7 +7,9 @@ import {
   error as Td$error,
   Chat as Td$Chat,
   User as Td$User,
-  Update as Td$Update
+  Update as Td$Update,
+  formattedText as Td$formattedText,
+  formattedText$Input as Td$formattedText$Input
 } from '../../types/tdlib'
 
 const cl = new Client(tdlib, {
@@ -111,3 +113,7 @@ client.invokeFuture({
   .map((e: Td$Chat) => e.title)
   .mapRej((e: Td$error) => e)
   .fork(console.error, (e: string) => console.log(e))
+
+// Td$formattedText <: Td$formattedText$Input
+declare var fmt: Td$formattedText
+const fmtOpt: Td$formattedText$Input = fmt
