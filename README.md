@@ -350,7 +350,7 @@ You can also use prebuilt binaries:
 <a name="webassembly"></a>
 ### WebAssembly
 
-`tdl` also has experimental wrapper for tdlib in wasm, see [tdl-tdlib-wasm/](tdl-tdlib-wasm/).
+`tdl` also has experimental wrapper for tdlib in wasm, see [tdl-tdlib-wasm/](packages/tdl-tdlib-wasm/).
 
 ---
 

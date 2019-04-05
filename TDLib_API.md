@@ -6,7 +6,7 @@ Low-level TDLib API.
 const { TDLib } = require('tdl-tdlib-ffi')
 ```
 
-See interface declarations in [tdl-shared/index.js.flow](tdl-shared/index.js.flow).
+See interface declarations in [tdl-shared/index.js.flow](packages/tdl-shared/index.js.flow).
 
 ---
 
