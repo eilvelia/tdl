@@ -13,6 +13,7 @@
 - Removed static method `Client.fromTDLib`.
 - Changed behaviour of `client.on('update')` and `client.on('error')`.
 - `client.login()` (and `client.connectAndLogin()`) argument is optional now.
+- Added `client.off` (alias of `client.removeListener`) and `client.addListener` (alias of `client.on`). `Rx.fromEvent` from RxJS 6 can now work with `tdl` out of the box. Example: `Rx.fromEvent(client, 'update')`.
 - Many documentation improvements.
 - Added basic contributing guidelines.
 - Other minor improvements.

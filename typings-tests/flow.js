@@ -143,6 +143,10 @@ client.setLogFatalErrorCallback('1234')
   // $ExpectError
   client.removeListener('update', 'abc')
 
+  ;(client.off: typeof client.removeListener)
+  ;(client.addListener: typeof client.on)
+  ;(client.once: typeof client.on)
+
   // $ExpectError
   client.setLogFilePath(1234, 'abc', 123423)
 

@@ -99,7 +99,7 @@ export type Emit =
   & ((event: 'auth-not-needed') => void)
   & ((event: 'response', res: any) => void)
 
-export type RemoveListener =
+export type Off =
   & ((event: 'update', listener: Function, once?: boolean) => void)
   & ((event: 'error', listener: Function, once?: boolean) => void)
   & ((event: 'destroy', listener: Function, once?: boolean) => void)
@@ -227,13 +227,17 @@ export class Client {
     return this
   }
 
+  off: Off = (event, listener, once = false) => {
+    this._emitter.removeListener(event, listener, undefined, once)
+  }
+
+  addListener: On = this.on
+
+  removeListener: Off = this.off
+
   emit: Emit = (event, value) => {
     debugEmitter('emit', event, value)
     this._emitter.emit(event, value)
-  }
-
-  removeListener: RemoveListener = (event, listener, once = false) => {
-    this._emitter.removeListener(event, listener, undefined, once)
   }
 
   invoke: Invoke = async query => {

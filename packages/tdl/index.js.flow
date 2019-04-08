@@ -32,7 +32,7 @@ export type Emit =
   & ((event: 'auth-not-needed') => void)
   & ((event: 'response', res: any) => void)
 
-export type RemoveListener =
+export type Off =
   & ((event: 'update', listener: Function, once?: boolean) => void)
   & ((event: 'error', listener: Function, once?: boolean) => void)
   & ((event: 'destroy', listener: Function, once?: boolean) => void)
@@ -50,8 +50,10 @@ declare export class Client {
   resume: () => void;
   on: On;
   once: On;
+  off: Off;
+  addListener: On;
+  removeListener: Off;
   emit: Emit;
-  removeListener: RemoveListener;
   invoke: Invoke;
   invokeFuture: InvokeFuture;
   destroy: () => void;

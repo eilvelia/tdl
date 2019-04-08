@@ -62,6 +62,10 @@ const client = cl
     }
     console.log(e.message)
   })
+
+  ;(client.off: typeof client.removeListener)
+  ;(client.addListener: typeof client.on)
+  ;(client.once: typeof client.on)
 })()
 
 cl.on('update', u => {

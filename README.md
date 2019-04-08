@@ -96,7 +96,7 @@ Same as `client.connect().then(() => client.login(fn))`.
 
 ##### `client.on(event: string, callback: Function) => Client`
 
-##### `client.once(event: string, callback: Function) => Client`
+##### `client.addListener(event: string, callback: Function) => Client`
 
 Attach an event listener for iterating updates.
 
@@ -107,6 +107,12 @@ client.on('error', console.error)
 
 Ideally you should always have a listener on `client.on('error')`.
 
+##### `client.once(event: string, callback: Function) => Client`
+
+Add a one-time listener.
+
+##### `client.off(event: string, listener: Function, once?: boolean) => Client`
+
 ##### `client.removeListener(event: string, listener: Function, once?: boolean) => Client`
 
 Remove an event listener.
@@ -114,12 +120,12 @@ Remove an event listener.
 ```js
 const listener = v => {
   console.log('New update.', v)
-  client.removeListener('update', listener)
+  client.off('update', listener)
 }
 client.on('update', listener)
 ```
 
-You can consider using reactive libraries like [most][] for convenient event processing.
+You can consider using reactive libraries like [most][] or RxJS for convenient event processing.
 
 [most]: https://github.com/cujojs/most
 
