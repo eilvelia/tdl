@@ -93,7 +93,7 @@ export type On =
 
 export type Emit =
   & ((event: 'update', update: Update) => void)
-  & ((event: 'error', err: Td$error | Error) => void)
+  & ((event: 'error', err: Td$error | TdlError) => void)
   & ((event: 'destroy') => void)
   & ((event: 'auth-needed') => void)
   & ((event: 'auth-not-needed') => void)
