@@ -221,6 +221,11 @@ export class Client {
     return this
   }
 
+  off: On = (event, listener) => {
+    this._emitter.off(event, listener)
+    return this
+  }
+
   emit: Emit = (event, value) => {
     debugEmitter('emit', event, value)
     this._emitter.emit(event, value)
