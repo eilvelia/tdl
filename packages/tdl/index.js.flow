@@ -58,7 +58,7 @@ declare export class Client {
   setLogFilePath: (path: string) => number;
   setLogMaxFileSize: (maxFileSize: number | string) => void;
   setLogVerbosityLevel: (verbosity: number) => void;
-  setLogFatalErrorCallback: (fn: null | (errorMessage: string) => void) => void;
+  setLogFatalErrorCallback: (fn: null | ((errorMessage: string) => void)) => void;
   execute: Execute;
 }
 

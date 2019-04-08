@@ -8,6 +8,7 @@
     "build": "lerna run build",
     "lint": "eslint . --max-warnings 0",
     "test": "npm run flow:check && npm run ts:check && npm run lint",
+    "build-test": "npm run build && npm run test",
     "postinstall": "lerna bootstrap && npm install --prefix tdl-tdlib-addon",
     "publish": "lerna publish",
     "prepare": "npm run clean && npm run build",
