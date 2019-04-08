@@ -51,7 +51,7 @@ const client = new Client(new TDLib(), {
 
 ##### `client.connect() => Promise<undefined>`
 
-You can use this method to initialize and connect your client with Telegram.  
+You can use this method to initialize and connect your client with Telegram.
 Returns a promise.
 
 ```js
@@ -64,7 +64,7 @@ await client.connect()
 await client.login()
 ```
 
-By default, `tdl` asks user for phone number, auth code, and password (if specified) in the console.  
+By default, `tdl` asks user for phone number, auth code, and password (if specified) in the console.
 You can pass your functions:
 
 ```js
@@ -88,7 +88,7 @@ await client.login(() => ({
 
 Also see `LoginDetails` interface in [Options](#options) section.
 
-It is possible to not use `client.login` helper and implement login process manually.
+It is possible to not use the `client.login` helper and implement login process manually.
 
 ##### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<undefined>`
 
@@ -131,7 +131,7 @@ You can consider using reactive libraries like [most][] or RxJS for convenient e
 
 ##### `client.invoke(query: Object) => Promise<Object>`
 
-Send asynchronous message to Telegram and receive response.  
+Send an asynchronous message to Telegram and receive a response.
 Resolves with response, or rejects with an error.
 
 ```js
@@ -159,7 +159,7 @@ await client.invoke({
 
 ##### `client.execute(query: Object) => (Object | null)`
 
-Send synchronous message to Telegram and receive response.
+Send a synchronous message to Telegram and receive response.
 
 ```js
 const res = client.execute({
@@ -198,7 +198,8 @@ See [docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#adcbe44e62e16d65
 
 ##### `client.setLogVerbosityLevel(verbosityLevel: number) => undefined`
 
-Sets the verbosity level of the internal logging of TDLib.  
+Sets the verbosity level of the internal logging of TDLib.
+
 Default is 2.
 
 ```js
@@ -284,8 +285,7 @@ type LoginDetails = {
 }
 ```
 
-Only `apiId` and `apiHash` are required fields.  
-Any other fields can just be not specified.
+Only `apiId` and `apiHash` are required fields. Any other field can just be not specified.
 
 `tdlibParameters` option: See https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html.
 

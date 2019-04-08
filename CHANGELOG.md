@@ -34,7 +34,7 @@
 
 ## v5.1.0
 
-- Added `client.pause()` and `client.resume()` functions that allows to pause update receiving.
+- Added `client.pause()` and `client.resume()` functions, which allow you to pause update receiving.
 
 ## v5.0.1
 
@@ -44,7 +44,7 @@
 
 ## v5.0.0
 
-- **Important**: `client.connect` function is now splitted into two functions: `client.connect` and `client.login`. Removed `beforeAuth` argument from `client.connect` function. Removed `loginDetails` option from `Client` constructor; now `client.login` accepts a function that returns `LoginDetails`.
+- **Important**: The `client.connect` function is now splitted into two functions: `client.connect` and `client.login`. Removed `beforeAuth` argument from `client.connect` function. Removed `loginDetails` option from `Client` constructor; now `client.login` accepts a function that returns `LoginDetails`.
 - Added OS detection. Now `tdl` searches for `tdjson` on Windows and for `libtdjson` on other OSes.
 - Added `response` event that allows reading pure updates (i.e. "events" or "responses") that come from tdlib `client_receive()`.
 - Removed `logFilePath` option. `client.setLogFilePath()` method can be used instead.
@@ -74,7 +74,7 @@
 - Added `auth-not-needed` event.
 - Changed `client.on('error')` signature: `(event: 'error', listener: (err: TDError) => void) => Client` to `(event: 'error', listener: (err: TDError | Error) => void) => Client`.
 - Internal:
-- - Now private fields starts with `_`.
+- - Now names of private fields start with `_`.
 - - Added tests for Flow typings.
 
 ## v3.8.2
@@ -160,4 +160,3 @@
 - Fixes in TDLib flow typings.
 - Internal:
 - - Flow updated to v0.69.0.
-- - Some refactoring.
