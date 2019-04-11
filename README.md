@@ -18,6 +18,7 @@ Node.js wrapper for [TDLib][tdlib-getting-started] (Telegram Database library).
 - [Typings](#typings)
 - [Examples](#examples)
 - [Requirements](#requirements)
+- [tdl v6](#tdl-6)
 
 ---
 
@@ -313,3 +314,9 @@ You can also use prebuilt binaries:
 - [tdlib.native](https://github.com/ForNeVeR/tdlib.native/releases)
 
 ---
+
+<a name="tdl-6"></a>
+### tdl v6
+
+Check out beta v6 on the [develop branch](https://github.com/Bannerets/tdl/tree/develop), it has a lot of changes.
+You can install it via `npm install tdl@next`.
