@@ -5,7 +5,7 @@
   "description": "JavaScript TDLib wrapper.",
   "scripts": {
     "clean": "rimraf packages/*/dist/",
-    "build": "lerna run build",
+    "build": "node copy.js && lerna run build",
     "lint": "eslint . --max-warnings 0",
     "test": "npm run flow:check && npm run ts:check && npm run lint",
     "build-test": "npm run build && npm run test",
