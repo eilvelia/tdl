@@ -150,8 +150,13 @@ export class Client {
 
   async _init (): Promise<void> {
     try {
-      if (!this._options.useDefaultVerbosityLevel)
-        this.setLogVerbosityLevel(this._options.verbosityLevel)
+      if (!this._options.useDefaultVerbosityLevel) {
+        debug('setLogVerbosityLevel', this._options.verbosityLevel)
+        this._tdlib.execute(null, {
+          '@type': 'setLogVerbosityLevel',
+          new_verbosity_level: this._options.verbosityLevel
+        })
+      }
 
       this._client = await this._tdlib.create()
     } catch (err) {
