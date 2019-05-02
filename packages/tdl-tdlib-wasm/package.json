@@ -12,7 +12,7 @@
     "tdl-shared": "^0.8.0"
   },
   "peerDependencies": {
-    "tdl": ">= 6.0.0-rc.0"
+    "tdl": ">= 6.0.0"
   },
   "files": [
     "dist",
