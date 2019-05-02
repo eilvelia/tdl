@@ -48,5 +48,6 @@ export type StrictConfigType = {
   useTestDc: boolean,
   useMutableRename: boolean,
   useDefaultVerbosityLevel: boolean,
+  disableAuth: boolean,
   tdlibParameters: TDLibParameters
 }

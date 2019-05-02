@@ -59,6 +59,7 @@ const defaultOptions: $Exact<StrictConfigType> = {
   useTestDc: false,
   useMutableRename: false,
   useDefaultVerbosityLevel: false,
+  disableAuth: false,
   tdlibParameters: {
     use_message_database: true,
     use_secret_chats: false,
@@ -374,7 +375,8 @@ export class Client {
       case 'updateAuthorizationState':
         debug('New authorization state:', update.authorization_state._)
         this.emit('update', update)
-        this._handleAuth(update).catch(e => this._catchError(e))
+        if (!this._options.disableAuth)
+          this._handleAuth(update).catch(e => this._catchError(e))
         return
 
       case 'updateConnectionState':
