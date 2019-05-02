@@ -18,7 +18,7 @@ type TDFunctions = {
   td_create: () => TDLibClient,
   td_destroy: (TDLibClient) => void,
   td_send: (TDLibClient, string) => void,
-  td_execute: (TDLibClient, string) => string,
+  td_execute: (null | TDLibClient, string) => string,
   td_receive: (TDLibClient) => string,
   td_set_verbosity: (number) => void
 }
@@ -57,7 +57,7 @@ export class TDLib implements ITDLibJSON {
     return JSON.parse(response)
   }
 
-  execute (client: TDLibClient, query: Object): Object | null {
+  execute (client: null | TDLibClient, query: Object): Object | null {
     const response = this._tdlib.td_execute(client, JSON.stringify(query))
     if (!response) return null
     return JSON.parse(response)

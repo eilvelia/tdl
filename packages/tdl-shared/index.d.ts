@@ -5,7 +5,7 @@ export declare function makeTDLibClient (x: any): TDLibClient
 export interface ITDLibJSON {
   create(): Promise<TDLibClient>;
   destroy(client: TDLibClient): void;
-  execute(client: TDLibClient, query: Object): Object | null;
+  execute(client: null | TDLibClient, query: Object): Object | null;
   receive(client: TDLibClient, timeout: number): Promise<Object | null>;
   send(client: TDLibClient, query: Object): void;
   setLogFilePath(path: string): number;
@@ -17,7 +17,7 @@ export interface ITDLibJSON {
 export interface IAsyncTDLibJSON {
   create(): Promise<TDLibClient>;
   destroy(client: TDLibClient): Promise<void>;
-  execute(client: TDLibClient, query: Object): Promise<Object | null>;
+  execute(client: null | TDLibClient, query: Object): Promise<Object | null>;
   receive(client: TDLibClient, timeout: number): Promise<Object | null>;
   send(client: TDLibClient, query: Object): Promise<void>;
   setLogFilePath(path: string): Promise<number>;

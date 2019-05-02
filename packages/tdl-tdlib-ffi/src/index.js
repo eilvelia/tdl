@@ -59,7 +59,7 @@ export class TDLib implements ITDLibJSON {
     })
   }
 
-  execute (client: TDLibClient, query: Object): Object | null {
+  execute (client: null | TDLibClient, query: Object): Object | null {
     const res = this._tdlib.td_json_client_execute(client, buildQuery(query))
     if (!res) return null
     return JSON.parse(res)

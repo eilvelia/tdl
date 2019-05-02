@@ -44,7 +44,7 @@ const response = await tdlib.receive(client, 10)
 
 [Docs](https://core.telegram.org/tdlib/docs/td__json__client_8h.html#a9e0cb36bfa2bc2249905aebd7d07a4ac)
 
-##### `execute: (client: TDLibClient, query: Object) => Object | null`
+##### `execute: (client: null | TDLibClient, query: Object) => Object | null`
 
 ```js
 const res = await tdlib.execute(client, {

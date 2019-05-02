@@ -6,7 +6,7 @@ declare export class TDLib implements ITDLibJSON {
   constructor(path?: string): this;
   create(): Promise<TDLibClient>;
   destroy(client: TDLibClient): void;
-  execute(client: TDLibClient, query: Object): Object | null;
+  execute(client: null | TDLibClient, query: Object): Object | null;
   receive(client: TDLibClient, timeout: number): Promise<Object | null>;
   send(client: TDLibClient, query: Object): void;
   setLogFilePath(path: string): number;
