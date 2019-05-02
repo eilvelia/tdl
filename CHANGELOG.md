@@ -18,6 +18,7 @@
 - Added basic contributing guidelines.
 - Other minor improvements.
 - TDLib typings for TS/Flow:
+- - Updated to tdlib v1.4.0.
 - - Changed names of "input" kind of types: `xxxOptional` -> `xxx$Input`
 - - Properties of input types are read-only now.
 - - Flow: Now all types are exact. Previously, only input types were exact.
