@@ -277,17 +277,6 @@ export class Client {
     this.emit('destroy')
   }
 
-  setLogMaxFileSize = (maxFileSize: number | string): void => {
-    this._tdlib.setLogMaxFileSize(maxFileSize)
-  }
-
-  setLogFilePath = (path: string): number =>
-    this._tdlib.setLogFilePath(path)
-
-  setLogVerbosityLevel = (verbosity: number): void => {
-    this._tdlib.setLogVerbosityLevel(verbosity)
-  }
-
   setLogFatalErrorCallback = (fn: null | (errorMessage: string) => void): void => {
     this._tdlib.setLogFatalErrorCallback(fn)
   }

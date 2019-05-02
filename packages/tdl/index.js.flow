@@ -57,9 +57,6 @@ declare export class Client {
   invoke: Invoke;
   invokeFuture: InvokeFuture;
   destroy: () => void;
-  setLogFilePath: (path: string) => number;
-  setLogMaxFileSize: (maxFileSize: number | string) => void;
-  setLogVerbosityLevel: (verbosity: number) => void;
   setLogFatalErrorCallback: (fn: null | ((errorMessage: string) => void)) => void;
   execute: Execute;
 }

@@ -86,12 +86,6 @@ Client.create(tdlib, { apiId: 222 })
 // $ExpectError
 Client.create({ apiId: {} })
 
-
-client.setLogMaxFileSize(1234)
-client.setLogMaxFileSize('235')
-// $ExpectError
-client.setLogMaxFileSize({})
-
 client.setLogFatalErrorCallback(a => console.log(a))
 client.setLogFatalErrorCallback(null)
 // $ExpectError
