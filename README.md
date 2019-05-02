@@ -131,8 +131,10 @@ You can consider using reactive libraries like [most][] or RxJS for convenient e
 
 ##### `client.invoke(query: Object) => Promise<Object>`
 
-Send an asynchronous message to Telegram and receive a response.
+Send an asynchronous message to Telegram and receive a response.\
 Resolves with response, or rejects with an error.
+
+API list is available on https://core.telegram.org/tdlib/docs/annotated.html.
 
 ```js
 const chats = await client.invoke({
@@ -175,38 +177,6 @@ Destroy the client.
 ```js
 client.destroy()
 ```
-
-##### `client.setLogFilePath(path: string) => number`
-
-Sets the path to the file to where the internal TDLib log will be written. By default TDLib writes logs to stderr or an OS specific log. Use this method to write the log to a file instead.
-
-```js
-client.setLogFilePath('log.txt')
-```
-
-See [docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#a4b098540dd3957b60a67600cba3ebd7f).
-
-##### `client.setLogMaxFileSize(maxFileSize: (number | string)) => undefined`
-
-Sets maximum size of the file to where the internal TDLib log is written before the file will be auto-rotated.   Unused if log is not written to a file. Defaults to 10 MB.
-
-```js
-client.setLogMaxFileSize(50000)
-```
-
-See [docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#adcbe44e62e16d65eb4c7503aabe264b3).
-
-##### `client.setLogVerbosityLevel(verbosityLevel: number) => undefined`
-
-Sets the verbosity level of the internal logging of TDLib.
-
-Default is 2.
-
-```js
-client.setLogVerbosityLevel(2)
-```
-
-See [docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#a8cd6fada30eb227c667fc9a10464ae50).
 
 ##### `client.setLogFatalErrorCallback(fn: (null | Function)) => undefined`
 
@@ -268,8 +238,9 @@ type Options = {
   // Advanced options:
   receiveTimeout: number,
   skipOldUpdates: boolean, // Don't emit old updates
-  useMutableRename: boolean, // May increase performance
+  useMutableRename: boolean,
   useDefaultVerbosityLevel: boolean,
+  disableAuth: boolean,
   tdlibParameters: Object
 }
 
@@ -300,6 +271,7 @@ options = {
   skipOldUpdates: false,
   useTestDc: false,
   useMutableRename: false,
+  disableAuth: false,
   tdlibParameters: {
     use_message_database: true,
     use_secret_chats: false,
@@ -317,7 +289,7 @@ options = {
 <a name="typings"></a>
 ### Typings
 
-`tdl` fully supports [Flow][] and [TypeScript][] out of the box.
+`tdl` fully supports [Flow][] and [TypeScript][] out of the box.\
 Typings are generated from [td_api.tl][td-scheme] scheme using [tdlib-typings][].
 
 You can import TDLib types:
@@ -343,9 +315,9 @@ import type { updateMessageViews, messageInvoice /* ... */ } from 'tdl/types/tdl
 <a name="requirements"></a>
 ### Requirements
 
-- TDLib binary (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
+- TDLib binary (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows), v1.4.0 and newer.
 - Node.js 10 preferred (minimum >= 8.6.0)
-> Note: If you are using Node.js 8.x-9.x, you may encounter a warning message `Warning: N-API is an experimental feature and could change at any time.`, this can be suppressed by upgrading to version 10.
+> Note: If you are using Node.js 8.x-9.x, you may encounter a warning message `Warning: N-API is an experimental feature and could change at any time.`, this can be suppressed by upgrading to version 10 and newer.
 
 You can also use prebuilt binaries:
 
@@ -371,7 +343,7 @@ and in browser with WebAssembly.
 Available packages in the `tdl` repository:
 
 - [tdl-tdlib-ffi](packages/tdl-tdlib-ffi/) (mainly used)
-- [tdl-tdlib-addon](tdl-tdlib-addon/) (very unstable)
+- [tdl-tdlib-addon](tdl-tdlib-addon/) (unstable)
 - [tdl-tdlib-wasm](packages/tdl-tdlib-wasm/)
 
 You can easily substitute one with another.

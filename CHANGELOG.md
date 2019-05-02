@@ -8,21 +8,23 @@
 - **Important**: `new Client(options)` -> `new Client(tdlibInstance, options)`
 - Splitted `tdl` into two packages: `tdl` and `tdl-tdlib-ffi`. Users should manually install both.
 - Now the `tdl` core package can work in browser.
-- Added `tdl-tdlib-wasm` package.
-- (very unstable) Added `tdl-tdlib-addon` package.
+- Added the `tdl-tdlib-wasm` package.
+- (very unstable) Added the `tdl-tdlib-addon` package.
 - Removed static method `Client.fromTDLib`.
 - Changed behaviour of `client.on('update')` and `client.on('error')`.
 - `client.login()` (and `client.connectAndLogin()`) argument is optional now.
 - Added `client.off` (alias of `client.removeListener`) and `client.addListener` (alias of `client.on`). `Rx.fromEvent` from RxJS 6 can now work with `tdl` out of the box. Example: `Rx.fromEvent(client, 'update')`.
+- Removed `client.setLogFilePath`, `client.setLogMaxFileSize`, `client.setLogVerbosityLevel` methods, which are deprecated in TDLib.
+- Added the `disableAuth` advanced option.
 - Many documentation improvements.
 - Added basic contributing guidelines.
-- Other minor improvements.
 - TDLib typings for TS/Flow:
 - - Updated to tdlib v1.4.0.
 - - Changed names of "input" kind of types: `xxxOptional` -> `xxx$Input`
 - - Properties of input types are read-only now.
 - - Flow: Now all types are exact. Previously, only input types were exact.
 - - Flow: Now non-input types are subtypes of input.
+- Other minor improvements.
 
 [#33]: https://github.com/Bannerets/tdl/issues/33
 

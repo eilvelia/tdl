@@ -65,28 +65,28 @@ tdlib.destroy(client)
 
 ##### `setLogFilePath: (path: string) => number`
 
+Deprecated.
+
 ```js
 client.setLogFilePath('log.txt')
 ```
 
-[Docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#a4b098540dd3957b60a67600cba3ebd7f)
-
 ##### `setLogMaxFileSize: (maxFileSize: number | string) => void`
+
+Deprecated.
 
 ```js
 tdlib.setLogMaxFileSize(50000)
 tdlib.setLogMaxFileSize('9007199254748991')
 ```
 
-[Docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#adcbe44e62e16d65eb4c7503aabe264b3)
-
 ##### `setLogVerbosityLevel: (verbosity: number) => void`
+
+Deprecated.
 
 ```js
 tdlib.setLogVerbosityLevel(2)
 ```
-
-[Docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#a8cd6fada30eb227c667fc9a10464ae50)
 
 ##### `setLogFatalErrorCallback: (fn: null | (errorMessage: string) => void) => void`
 
