@@ -1,10 +1,11 @@
+node_modules/
 dist/
 flow-typed/
 flow/
 scripts/
 vendor/
 examples/
-/types/tdlib.js
+/packages/tdl/types/tdlib.js
 /test.js
 *.ts
-tests/typings/
+typings-tests/

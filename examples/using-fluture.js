@@ -1,12 +1,15 @@
 // Fluture: https://github.com/fluture-js/Fluture
 
 const { Client } = require('tdl')
+const { TDLib } = require('tdl-tdlib-ffi')
 const Future = require('fluture')
 
-const client = new Client({
+const client = new Client(new TDLib(), {
   apiId: 2222, // Your api_id
   apiHash: 'YOUR_API_HASH'
 })
+
+client.on('error', console.error)
 
 const searchChat = username =>
   client.invokeFuture({ _: 'searchPublicChat', username })
@@ -17,8 +20,6 @@ const login = Future.encaseP(client.login)
 
 Future
   .tryP(client.connect)
-  .chain(() => login(() => ({
-    phoneNumber: 'YOUR_PHONE_NUMBER'
-  })))
+  .chain(() => login())
   .chain(() => searchChat('username'))
   .fork(console.error, console.log)

@@ -1,11 +1,14 @@
 .DS_Store
+.vscode/
 node_modules/
-package-lock.json
 dist/
 flow-typed/npm/
+*.lerna_backup
 /test.js
 *.bak
 /*.txt
+_td_database/
+_td_files/
 
 *.dylib
 *.so

@@ -1,77 +1,60 @@
 {
-  "name": "tdl",
-  "version": "5.2.0",
-  "description": "TDLib (Telegram Database library) bindings for Node.js",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "name": "tdl-dev",
+  "version": "0.0.0",
+  "private": true,
+  "description": "JavaScript TDLib wrapper.",
   "scripts": {
-    "clean": "rimraf dist/",
-    "types": "flow-copy-source src dist",
-    "build": "babel src/ -d dist/",
+    "clean": "rimraf packages/*/dist/",
+    "build": "node copy.js && lerna run build",
     "lint": "eslint . --max-warnings 0",
-    "test": "npm run flow:check && npm run ts && npm run lint",
+    "test": "npm run flow:check && npm run ts:check && npm run lint",
+    "build-test": "npm run build && npm run test",
+    "postinstall": "lerna bootstrap && npm install --prefix tdl-tdlib-addon",
+    "publish": "lerna publish",
     "prepare": "npm run clean && npm run build",
     "prepack": "npm test",
-    "ts": "tsc --noEmit",
+    "ts:check": "tsc --noEmit",
     "flow:check": "flow check --include-warnings --max-warnings 0",
     "flow:start": "pm2 start tdl-flow.sh",
     "flow:stop": "pm2 stop tdl-flow",
     "flow:restart": "npm run flow:stop && npm run flow:start",
     "flow:status": "flow status",
-    "start": "node dist"
+    "build:addon:babel": "babel tdl-tdlib-addon/src/ -d tdl-tdlib-addon/dist/",
+    "build:addon": "npm run build:addon:babel && npm run build:gyp --prefix tdl-tdlib-addon",
+    "clean:addon": "rimraf tdl-tdlib-addon/dist && npm run clean --prefix tdl-tdlib-addon"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-flow": "^7.0.0",
+    "@bannerets/eslint-config-flow": "^0.5.0",
+    "@types/node": "^10.5.7",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.9.0",
+    "flow-bin": "^0.76.0",
+    "lerna": "^3.13.1",
+    "rimraf": "^2.6.2",
+    "typescript": "^3.0.1"
   },
   "files": [
-    ".flowconfig",
-    "index.js",
-    "index.js.flow",
-    "index.d.ts",
-    "dist",
-    "vendor",
     "flow",
-    "types",
     "examples",
     "README.md",
     "TDLib_API.md"
   ],
-  "dependencies": {
-    "debug": "^3.1.0",
-    "eventemitter3": "^3.0.1",
-    "ffi-napi": "^2.4.3",
-    "fluture": "^8.0.2",
-    "promptly": "^3.0.3",
-    "ramda": "^0.25.0",
-    "ref-napi": "^1.4.0",
-    "tdl-shared": "^0.4.0"
-  },
-  "devDependencies": {
-    "@bannerets/eslint-config-flow": "^0.5.0",
-    "@types/node": "^10.5.7",
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^9.0.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-flow": "^6.23.0",
-    "eslint": "^5.6.0",
-    "flow-bin": "^0.76.0",
-    "flow-copy-source": "^1.3.0",
-    "rimraf": "^2.6.2",
-    "typescript": "^3.0.1"
-  },
-  "engines": {
-    "node": ">= 8.6.0"
-  },
-  "author": "Bannerets <save14@protonmail.com>",
+  "author": "Bannerets <comonoid@protonmail.com>",
   "license": "MIT",
   "keywords": [
     "telegram",
+    "telegram-api",
     "tdlib",
-    "bindings",
-    "mtproto",
-    "ffi",
-    "tg",
-    "tglib",
-    "wrapper"
+    "tdl"
   ],
   "directories": {
     "example": "examples"

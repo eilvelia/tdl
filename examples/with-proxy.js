@@ -1,9 +1,14 @@
 const { Client } = require('tdl')
+const { TDLib } = require('tdl-tdlib-ffi')
 
-const client = new Client({
+const client = new Client(new TDLib(), {
   apiId: 2222, // Your api_id
   apiHash: 'YOUR_API_HASH'
 })
+
+client.on('error', console.error)
+
+// Works at least in TDLib v1.3.0
 
 async function main() {
   await client.connect()
@@ -18,9 +23,7 @@ async function main() {
 
   console.log('Proxy:', proxy)
 
-  await client.login(() => ({
-    phoneNumber: 'YOUR_PHONE_NUMBER'
-  }))
+  await client.login()
 
   // ...
 }

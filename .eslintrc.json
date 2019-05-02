@@ -7,5 +7,8 @@
   },
   "extends": [
     "@bannerets/eslint-config-flow"
-  ]
+  ],
+  "rules": {
+    "no-redeclare": 0
+  }
 }

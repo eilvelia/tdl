@@ -1,15 +1,16 @@
 const { Client } = require('tdl')
+const { TDLib } = require('tdl-tdlib-ffi')
 
-const client = new Client({
+const client = new Client(new TDLib(), {
   apiId: 2222, // Your api_id
   apiHash: 'YOUR_API_HASH'
 })
 
+client.on('error', console.error)
+
 async function main() {
   await client.connect()
-  await client.login(() => ({
-    phoneNumber: 'YOUR_PHONE_NUMBER'
-  }))
+  await client.login()
 
   await client.invoke({
     _: 'sendMessage',
