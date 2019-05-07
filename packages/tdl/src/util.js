@@ -22,11 +22,17 @@ export function mergeDeepRight (obj1, obj2) {
   return obj2
 }
 
-declare function objectMap<T, R>(
-  fn: (x: T) => R,
-  xs: { [key: string]: T }
+declare function map<T, R>(
+  xs: Array<T>,
+  fn: (x: T) => R
+): Array<R>
+declare function map<T, R>(
+  xs: { [key: string]: T },
+  fn: (x: T) => R
 ): { [key: string]: R }
-function objectMap (obj, f) {
+function map (obj, f) {
+  if (Array.isArray(obj))
+    return obj.map(f)
   const result = {}
   for (const [k, v] of Object.entries(obj))
     result[k] = f(v)
@@ -68,7 +74,7 @@ export const deepRenameKey = (
     ? deepRenameKey(oldKey, newKey, e)
     : e
 
-  return objectMap(newObj, fn)
+  return map(newObj, fn)
 }
 
 // mutable
@@ -79,10 +85,10 @@ export const deepRenameKey_ = (
 ): Object => {
   if (obj[oldKey]) renameKey_(oldKey, newKey, obj)
 
-  Object.values(obj).forEach(e => {
+  for (const e of Object.values(obj)) {
     if (e && typeof e === 'object')
       deepRenameKey_(oldKey, newKey, e)
-  })
+  }
 
   return obj
 }
