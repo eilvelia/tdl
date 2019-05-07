@@ -135,6 +135,7 @@ Send an asynchronous message to Telegram and receive a response.\
 Resolves with response, or rejects with an error.
 
 API list is available on https://core.telegram.org/tdlib/docs/annotated.html.
+Note that tdl renames `@type` to `_`.
 
 ```js
 const chats = await client.invoke({

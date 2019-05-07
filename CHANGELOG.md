@@ -2,6 +2,12 @@
 
 <!-- Hi. -->
 
+## v6.0.1
+
+- Fixed renaming of objects in an array (see [#48][]).
+
+[#48]: https://github.com/Bannerets/tdl/issues/48
+
 ## v6.0.0
 
 - **Important**: Allowed recovery from invalid phone numbers (see [#33][]). `loginDetails.phoneNumber`/`loginDetails.token` field replaced with `loginDetails.getPhoneNumber`/`loginDetails.getToken` function.
