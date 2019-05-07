@@ -10,7 +10,7 @@
     "test": "npm run flow:check && npm run ts:check && npm run lint",
     "build-test": "npm run build && npm run test",
     "postinstall": "lerna bootstrap && npm install --prefix tdl-tdlib-addon",
-    "publish": "lerna publish",
+    "publish": "lerna publish --ignore-changes 'package-lock.json'",
     "prepare": "npm run clean && npm run build",
     "prepack": "npm test",
     "ts:check": "tsc --noEmit",
