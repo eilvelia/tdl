@@ -1,6 +1,6 @@
 {
   "name": "tdl",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "TDLib (Telegram Database library) wrapper for Node.js / WASM.",
   "main": "index.js",
   "types": "index.d.ts",
