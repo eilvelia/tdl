@@ -335,7 +335,7 @@ export class Client {
       try {
         const response = await this._receive()
 
-        if (!this._client) return
+        if (!this._client) break
 
         if (this._paused === true)
           await this._waitResume()
