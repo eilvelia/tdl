@@ -449,20 +449,21 @@ export class Client {
         if (loginDetails.type !== 'user') return
 
         const code = await loginDetails.getAuthCode(false)
-
-        if (authorizationState.is_registered === false) {
-          const { firstName, lastName = '' } = await loginDetails.getName()
-          return this._sendTdl({
-            _: 'checkAuthenticationCode',
-            code,
-            first_name: firstName,
-            last_name: lastName
-          })
-        }
-
         return this._sendTdl({
           _: 'checkAuthenticationCode',
           code
+        })
+      }
+
+      case 'authorizationStateWaitRegistration': {
+        const loginDetails = this._authRequired()
+        if (loginDetails.type !== 'user') return
+
+        const { firstName, lastName = '' } = await loginDetails.getName()
+        return this._sendTdl({
+          _: 'registerUser',
+          first_name: firstName,
+          last_name: lastName
         })
       }
 
