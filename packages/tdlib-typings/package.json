@@ -1,0 +1,16 @@
+{
+  "name": "tdlib-typings",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel src/ -d dist/ --root-mode upward",
+    "start": "npm run build && node dist"
+  },
+  "private": true,
+  "dependencies": {
+    "tldoc": "^0.2.0"
+  },
+  "author": "Bannerets <comonoid@protonmail.com>",
+  "license": "MIT"
+}
