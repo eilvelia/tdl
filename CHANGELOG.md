@@ -2,6 +2,17 @@
 
 <!-- Hi. -->
 
+## v6.1.0
+
+- Adds full support for TDLib v1.6.0:
+- - TDLib typings are updated to TDLib v1.6.0.
+- - Registration in the `login` function now works with TDLib v1.5.0+ (and doesn't support tdlib <1.5.0). PR: [#71][].
+- Several improvements to the documentation.
+- Internal:
+- - Moved the `tdlib-typings` project into this repository.
+
+[#71]: https://github.com/Bannerets/tdl/pull/71
+
 ## v6.0.1
 
 - Fixed renaming of objects in an array (see [#48][]).

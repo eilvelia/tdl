@@ -101,12 +101,12 @@ export type Emit =
   & ((event: 'response', res: any) => void)
 
 export type Off =
-  & ((event: 'update', listener: Function, once?: boolean) => void)
-  & ((event: 'error', listener: Function, once?: boolean) => void)
-  & ((event: 'destroy', listener: Function, once?: boolean) => void)
-  & ((event: 'auth-needed', listener: Function, once?: boolean) => void)
-  & ((event: 'auth-not-needed', listener: Function, once?: boolean) => void)
-  & ((event: 'response', listener: Function, once?: boolean) => void)
+  & ((event: 'update', listener: (...args: any[]) => any, once?: boolean) => void)
+  & ((event: 'error', listener: (...args: any[]) => any, once?: boolean) => void)
+  & ((event: 'destroy', listener: (...args: any[]) => any, once?: boolean) => void)
+  & ((event: 'auth-needed', listener: (...args: any[]) => any, once?: boolean) => void)
+  & ((event: 'auth-not-needed', listener: (...args: any[]) => any, once?: boolean) => void)
+  & ((event: 'response', listener: (...args: any[]) => any, once?: boolean) => void)
 
 const noop = () => {}
 const empty = () => ({})
@@ -449,20 +449,21 @@ export class Client {
         if (loginDetails.type !== 'user') return
 
         const code = await loginDetails.getAuthCode(false)
-
-        if (authorizationState.is_registered === false) {
-          const { firstName, lastName = '' } = await loginDetails.getName()
-          return this._sendTdl({
-            _: 'checkAuthenticationCode',
-            code,
-            first_name: firstName,
-            last_name: lastName
-          })
-        }
-
         return this._sendTdl({
           _: 'checkAuthenticationCode',
           code
+        })
+      }
+
+      case 'authorizationStateWaitRegistration': {
+        const loginDetails = this._authRequired()
+        if (loginDetails.type !== 'user') return
+
+        const { firstName, lastName = '' } = await loginDetails.getName()
+        return this._sendTdl({
+          _: 'registerUser',
+          first_name: firstName,
+          last_name: lastName
         })
       }
 

@@ -4,18 +4,18 @@
 [![GitHub repo size in bytes](https://img.shields.io/github/repo-size/Bannerets/tdl.svg)](https://github.com/Bannerets/tdl)
 [![Build Status](https://travis-ci.org/Bannerets/tdl.svg?branch=master)](https://travis-ci.org/Bannerets/tdl)
 
-JavaScript wrapper for [TDLib][tdlib-getting-started] (Telegram Database library).
+A JavaScript wrapper for [TDLib][tdlib-getting-started] (Telegram Database library), version 1.4.0 or newer.
 
 [tdlib-getting-started]: https://core.telegram.org/tdlib/getting-started
 
 ### Table of Contents
 
 - [Getting started](#getting-started)
+- [Requirements](#requirements)
 - [API](#api)
 - [Login as a bot](#login-as-a-bot)
 - [Options](#options)
 - [Typings](#typings)
-- [Requirements](#requirements)
 - [WebAssembly](#webassembly)
 - [Architecture notes](#architecture-notes)
 - [Examples](#examples)
@@ -28,6 +28,20 @@ JavaScript wrapper for [TDLib][tdlib-getting-started] (Telegram Database library
 
 1. Build the binary (https://github.com/tdlib/td#building)
 2. `npm install tdl tdl-tdlib-ffi` (install both)
+
+---
+
+<a name="requirements"></a>
+### Requirements
+
+- The libtdjson library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
+- Node.js v10+ is preferred (minimum >= 8.6.0)
+
+> Note: If you are using Node.js 8.x-9.x, you may encounter a warning message `Warning: N-API is an experimental feature and could change at any time.`, this can be suppressed by upgrading to version 10 and newer.
+
+You can also use third-party prebuilt binaries:
+
+- [tdlib.native](https://github.com/ForNeVeR/tdlib.native/releases)
 
 ---
 
@@ -49,6 +63,8 @@ const client = new Client(new TDLib(), {
 
 `api_id` and `api_hash` can be obtained at https://my.telegram.org/.
 
+You can specify the path to `libtdjson` in the `TDLib` constructor's argument. It is (almost) directly passed to `dlopen`.
+
 ##### `client.connect() => Promise<undefined>`
 
 You can use this method to initialize and connect your client with Telegram.
@@ -64,7 +80,7 @@ await client.connect()
 await client.login()
 ```
 
-By default, `tdl` asks user for phone number, auth code, and password (if specified) in the console.
+By default, `tdl` asks the user for the phone number, auth code, and password (if specified) in the console.
 You can pass your functions:
 
 ```js
@@ -84,11 +100,15 @@ await client.login(() => ({
 }))
 ```
 
-`getName` function is called if user is not registered.
+The `getName` function is called if user is not registered.
 
 Also see `LoginDetails` interface in [Options](#options) section.
 
 It is possible to not use the `client.login` helper and implement login process manually.
+
+This function requires TDLib v1.5.0+ to work.
+
+**Warning**: The `login` function may not fully follow SemVer, just as TDLib itself doesn't follow SemVer.
 
 ##### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<undefined>`
 
@@ -125,7 +145,7 @@ const listener = v => {
 client.on('update', listener)
 ```
 
-You can consider using reactive libraries like [most][] or RxJS for convenient event processing.
+You can consider using reactive libraries like RxJS or [most][] for convenient event processing.
 
 [most]: https://github.com/cujojs/most
 
@@ -134,7 +154,7 @@ You can consider using reactive libraries like [most][] or RxJS for convenient e
 Send an asynchronous message to Telegram and receive a response.\
 Resolves with response, or rejects with an error.
 
-API list is available on https://core.telegram.org/tdlib/docs/annotated.html.
+The API list can be found on https://core.telegram.org/tdlib/docs/annotated.html.
 Note that tdl renames `@type` to `_`.
 
 ```js
@@ -291,7 +311,7 @@ options = {
 ### Typings
 
 `tdl` fully supports [Flow][] and [TypeScript][] out of the box.\
-Typings are generated from [td_api.tl][td-scheme] scheme using [tdlib-typings][].
+Typings are generated from [td_api.tl][td-scheme] scheme.
 
 You can import TDLib types:
 
@@ -303,26 +323,16 @@ import { updateMessageViews, messageInvoice /* ... */ } from 'tdl/types/tdlib'
 import type { updateMessageViews, messageInvoice /* ... */ } from 'tdl/types/tdlib'
 ```
 
-**Warning**: TDLib typings do not follow SemVer.
+Current built-in typings are for TDLib v1.6.0.
+
+**Warning**: TDLib typings do not follow SemVer, just as TDLib itself doesn't. You can consider using `~` instead of `^` in your `package.json` dependencies.
+
+The typings can be generated for the appropriate TDLib version using `tdlib-typings` in [packages/tdlib-typings/](packages/tdlib-typings/)
 
 [Flow]: https://flow.org/
 [TypeScript]: https://www.typescriptlang.org/
 
 [td-scheme]: https://github.com/tdlib/td/blob/6129ebf39439647e277e88d9d43a2f897ffee63c/td/generate/scheme/td_api.tl
-[tdlib-typings]: https://github.com/Bannerets/tdlib-typings
-
----
-
-<a name="requirements"></a>
-### Requirements
-
-- TDLib binary (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows), v1.4.0 and newer.
-- Node.js 10 preferred (minimum >= 8.6.0)
-> Note: If you are using Node.js 8.x-9.x, you may encounter a warning message `Warning: N-API is an experimental feature and could change at any time.`, this can be suppressed by upgrading to version 10 and newer.
-
-You can also use prebuilt binaries:
-
-- [tdlib.native](https://github.com/ForNeVeR/tdlib.native/releases)
 
 ---
 
@@ -343,7 +353,7 @@ and in browser with WebAssembly.
 
 Available packages in the `tdl` repository:
 
-- [tdl-tdlib-ffi](packages/tdl-tdlib-ffi/) (mainly used)
+- [tdl-tdlib-ffi](packages/tdl-tdlib-ffi/) (mostly used)
 - [tdl-tdlib-addon](tdl-tdlib-addon/) (unstable)
 - [tdl-tdlib-wasm](packages/tdl-tdlib-wasm/)
 
@@ -354,7 +364,7 @@ You can easily substitute one with another.
 <a name="examples"></a>
 ### Examples
 
-See [examples/](examples/) folder.
+See the [examples/](examples/) directory.
 
 ---
 
