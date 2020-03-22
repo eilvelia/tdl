@@ -261,9 +261,9 @@ export type emailAddressAuthenticationCodeInfo$Input = {
 /** Represents a part of the text that needs to be formatted in some unusual way */
 export type textEntity = {
   _: 'textEntity',
-  /** Offset of the entity in UTF-16 code points */
+  /** Offset of the entity in UTF-16 code units */
   offset: number,
-  /** Length of the entity, in UTF-16 code points */
+  /** Length of the entity, in UTF-16 code units */
   length: number,
   /** Type of the entity */
   type: TextEntityType,
@@ -272,9 +272,9 @@ export type textEntity = {
 /** Represents a part of the text that needs to be formatted in some unusual way */
 export type textEntity$Input = {
   readonly _: 'textEntity',
-  /** Offset of the entity in UTF-16 code points */
+  /** Offset of the entity in UTF-16 code units */
   readonly offset?: number,
-  /** Length of the entity, in UTF-16 code points */
+  /** Length of the entity, in UTF-16 code units */
   readonly length?: number,
   /** Type of the entity */
   readonly type?: TextEntityType$Input,
@@ -299,7 +299,12 @@ export type formattedText = {
   _: 'formattedText',
   /** The text */
   text: string,
-  /** Entities contained in the text */
+  /**
+   * Entities contained in the text. Entities can be nested, but must not mutually intersect
+   * with each other. Pre, Code and PreCode entities can't contain other entities. Bold,
+   * Italic, Underline and Strikethrough entities can contain and to be contained in all
+   * other entities. All other entities can't contain each other
+   */
   entities: Array<textEntity>,
 }
 
@@ -308,7 +313,12 @@ export type formattedText$Input = {
   readonly _: 'formattedText',
   /** The text */
   readonly text?: string,
-  /** Entities contained in the text */
+  /**
+   * Entities contained in the text. Entities can be nested, but must not mutually intersect
+   * with each other. Pre, Code and PreCode entities can't contain other entities. Bold,
+   * Italic, Underline and Strikethrough entities can contain and to be contained in all
+   * other entities. All other entities can't contain each other
+   */
   readonly entities?: ReadonlyArray<textEntity$Input>,
 }
 
@@ -317,7 +327,7 @@ export type termsOfService = {
   _: 'termsOfService',
   /** Text of the terms of service */
   text: formattedText,
-  /** Mininum age of a user to be able to accept the terms; 0 if any */
+  /** The minimum age of a user to be able to accept the terms; 0 if any */
   min_user_age: number,
   /** True, if a blocking popup with terms of service must be shown to the user */
   show_popup: boolean,
@@ -328,7 +338,7 @@ export type termsOfService$Input = {
   readonly _: 'termsOfService',
   /** Text of the terms of service */
   readonly text?: formattedText$Input,
-  /** Mininum age of a user to be able to accept the terms; 0 if any */
+  /** The minimum age of a user to be able to accept the terms; 0 if any */
   readonly min_user_age?: number,
   /** True, if a blocking popup with terms of service must be shown to the user */
   readonly show_popup?: boolean,
@@ -358,42 +368,76 @@ export type authorizationStateWaitEncryptionKey$Input = {
   readonly is_encrypted?: boolean,
 }
 
-/** TDLib needs the user's phone number to authorize */
+/**
+ * TDLib needs the user's phone number to authorize. Call `setAuthenticationPhoneNumber`
+ * to provide the phone number, or use `requestQrCodeAuthentication`, or `checkAuthenticationBotToken`
+ * for other authentication options
+ */
 export type authorizationStateWaitPhoneNumber = {
   _: 'authorizationStateWaitPhoneNumber',
 }
 
-/** TDLib needs the user's phone number to authorize */
+/**
+ * TDLib needs the user's phone number to authorize. Call `setAuthenticationPhoneNumber`
+ * to provide the phone number, or use `requestQrCodeAuthentication`, or `checkAuthenticationBotToken`
+ * for other authentication options
+ */
 export type authorizationStateWaitPhoneNumber$Input = {
   readonly _: 'authorizationStateWaitPhoneNumber',
 }
 
-/** TDLib needs the user's authentication code to finalize authorization */
+/** TDLib needs the user's authentication code to authorize */
 export type authorizationStateWaitCode = {
   _: 'authorizationStateWaitCode',
-  /** True, if the user is already registered */
-  is_registered: boolean,
-  /**
-   * Telegram terms of service, which should be accepted before user can continue registration;
-   * may be null
-   */
-  terms_of_service: termsOfService,
   /** Information about the authorization code that was sent */
   code_info: authenticationCodeInfo,
 }
 
-/** TDLib needs the user's authentication code to finalize authorization */
+/** TDLib needs the user's authentication code to authorize */
 export type authorizationStateWaitCode$Input = {
   readonly _: 'authorizationStateWaitCode',
-  /** True, if the user is already registered */
-  readonly is_registered?: boolean,
-  /**
-   * Telegram terms of service, which should be accepted before user can continue registration;
-   * may be null
-   */
-  readonly terms_of_service?: termsOfService$Input,
   /** Information about the authorization code that was sent */
   readonly code_info?: authenticationCodeInfo$Input,
+}
+
+/**
+ * The user needs to confirm authorization on another logged in device by scanning a
+ * QR code with the provided link
+ */
+export type authorizationStateWaitOtherDeviceConfirmation = {
+  _: 'authorizationStateWaitOtherDeviceConfirmation',
+  /** A tg:// URL for the QR code. The link will be updated frequently */
+  link: string,
+}
+
+/**
+ * The user needs to confirm authorization on another logged in device by scanning a
+ * QR code with the provided link
+ */
+export type authorizationStateWaitOtherDeviceConfirmation$Input = {
+  readonly _: 'authorizationStateWaitOtherDeviceConfirmation',
+  /** A tg:// URL for the QR code. The link will be updated frequently */
+  readonly link?: string,
+}
+
+/**
+ * The user is unregistered and need to accept terms of service and enter their first
+ * name and last name to finish registration
+ */
+export type authorizationStateWaitRegistration = {
+  _: 'authorizationStateWaitRegistration',
+  /** Telegram terms of service */
+  terms_of_service: termsOfService,
+}
+
+/**
+ * The user is unregistered and need to accept terms of service and enter their first
+ * name and last name to finish registration
+ */
+export type authorizationStateWaitRegistration$Input = {
+  readonly _: 'authorizationStateWaitRegistration',
+  /** Telegram terms of service */
+  readonly terms_of_service?: termsOfService$Input,
 }
 
 /** The user has been authorized, but needs to enter a password to start using the application */
@@ -401,7 +445,7 @@ export type authorizationStateWaitPassword = {
   _: 'authorizationStateWaitPassword',
   /** Hint for the password; may be empty */
   password_hint: string,
-  /** True if a recovery email address has been set up */
+  /** True, if a recovery email address has been set up */
   has_recovery_email_address: boolean,
   /**
    * Pattern of the email address to which the recovery email was sent; empty until a
@@ -415,7 +459,7 @@ export type authorizationStateWaitPassword$Input = {
   readonly _: 'authorizationStateWaitPassword',
   /** Hint for the password; may be empty */
   readonly password_hint?: string,
-  /** True if a recovery email address has been set up */
+  /** True, if a recovery email address has been set up */
   readonly has_recovery_email_address?: boolean,
   /**
    * Pattern of the email address to which the recovery email was sent; empty until a
@@ -629,7 +673,8 @@ export type remoteFile = {
   _: 'remoteFile',
   /**
    * Remote file identifier; may be empty. Can be used across application restarts or
-   * even from other devices for the current user. If the ID starts with "http://" or
+   * even from other devices for the current user. Uniquely identifies a file, but a file
+   * can have a lot of different valid identifiers. If the ID starts with "http://" or
    * "https://", it represents the HTTP URL of the file. TDLib is currently unable to
    * download files if only their URL is known. If downloadFile is called on such a file
    * or if it is sent to a secret chat, TDLib starts a file generation process by sending
@@ -638,6 +683,11 @@ export type remoteFile = {
    * it to the specified location
    */
   id: string,
+  /**
+   * Unique file identifier; may be empty if unknown. The unique file identifier which
+   * is the same for the same file even for different users and is persistent over time
+   */
+  unique_id: string,
   /**
    * True, if the file is currently being uploaded (or a remote copy is being generated
    * by some other means)
@@ -654,7 +704,8 @@ export type remoteFile$Input = {
   readonly _: 'remoteFile',
   /**
    * Remote file identifier; may be empty. Can be used across application restarts or
-   * even from other devices for the current user. If the ID starts with "http://" or
+   * even from other devices for the current user. Uniquely identifies a file, but a file
+   * can have a lot of different valid identifiers. If the ID starts with "http://" or
    * "https://", it represents the HTTP URL of the file. TDLib is currently unable to
    * download files if only their URL is known. If downloadFile is called on such a file
    * or if it is sent to a secret chat, TDLib starts a file generation process by sending
@@ -663,6 +714,11 @@ export type remoteFile$Input = {
    * it to the specified location
    */
   readonly id?: string,
+  /**
+   * Unique file identifier; may be empty if unknown. The unique file identifier which
+   * is the same for the same file even for different users and is persistent over time
+   */
+  readonly unique_id?: string,
   /**
    * True, if the file is currently being uploaded (or a remote copy is being generated
    * by some other means)
@@ -724,14 +780,26 @@ export type inputFileId$Input = {
   readonly id?: number,
 }
 
-/** A file defined by its remote ID */
+/**
+ * A file defined by its remote ID. The remote ID is guaranteed to be usable only if
+ * the corresponding file is still accessible to the user and known to TDLib. For example,
+ * if the file is from a message, then the message must be not deleted and accessible
+ * to the user. If the file database is disabled, then the corresponding object with
+ * the file must be preloaded by the client
+ */
 export type inputFileRemote = {
   _: 'inputFileRemote',
   /** Remote file identifier */
   id: string,
 }
 
-/** A file defined by its remote ID */
+/**
+ * A file defined by its remote ID. The remote ID is guaranteed to be usable only if
+ * the corresponding file is still accessible to the user and known to TDLib. For example,
+ * if the file is from a message, then the message must be not deleted and accessible
+ * to the user. If the file database is disabled, then the corresponding object with
+ * the file must be preloaded by the client
+ */
 export type inputFileRemote$Input = {
   readonly _: 'inputFileRemote',
   /** Remote file identifier */
@@ -812,6 +880,28 @@ export type photoSize$Input = {
   readonly width?: number,
   /** Photo height */
   readonly height?: number,
+}
+
+/** Thumbnail image of a very poor quality and low resolution */
+export type minithumbnail = {
+  _: 'minithumbnail',
+  /** Thumbnail width, usually doesn't exceed 40 */
+  width: number,
+  /** Thumbnail height, usually doesn't exceed 40 */
+  height: number,
+  /** The thumbnail in JPEG format */
+  data: string,
+}
+
+/** Thumbnail image of a very poor quality and low resolution */
+export type minithumbnail$Input = {
+  readonly _: 'minithumbnail',
+  /** Thumbnail width, usually doesn't exceed 40 */
+  readonly width?: number,
+  /** Thumbnail height, usually doesn't exceed 40 */
+  readonly height?: number,
+  /** The thumbnail in JPEG format */
+  readonly data?: string,
 }
 
 /** A mask should be placed relatively to the forehead */
@@ -924,6 +1014,40 @@ export type pollOption$Input = {
   readonly is_being_chosen?: boolean,
 }
 
+/** A regular poll */
+export type pollTypeRegular = {
+  _: 'pollTypeRegular',
+  /** True, if multiple answer options can be chosen simultaneously */
+  allow_multiple_answers: boolean,
+}
+
+/** A regular poll */
+export type pollTypeRegular$Input = {
+  readonly _: 'pollTypeRegular',
+  /** True, if multiple answer options can be chosen simultaneously */
+  readonly allow_multiple_answers?: boolean,
+}
+
+/**
+ * A poll in quiz mode, which has exactly one correct answer option and can be answered
+ * only once
+ */
+export type pollTypeQuiz = {
+  _: 'pollTypeQuiz',
+  /** 0-based identifier of the correct answer option; -1 for a yet unanswered poll */
+  correct_option_id: number,
+}
+
+/**
+ * A poll in quiz mode, which has exactly one correct answer option and can be answered
+ * only once
+ */
+export type pollTypeQuiz$Input = {
+  readonly _: 'pollTypeQuiz',
+  /** 0-based identifier of the correct answer option; -1 for a yet unanswered poll */
+  readonly correct_option_id?: number,
+}
+
 /** Describes an animation file. The animation must be encoded in GIF or MPEG4 format */
 export type animation = {
   _: 'animation',
@@ -937,6 +1061,8 @@ export type animation = {
   file_name: string,
   /** MIME type of the file, usually "image/gif" or "video/mp4" */
   mime_type: string,
+  /** Animation minithumbnail; may be null */
+  minithumbnail: minithumbnail,
   /** Animation thumbnail; may be null */
   thumbnail: photoSize,
   /** File containing the animation */
@@ -956,13 +1082,15 @@ export type animation$Input = {
   readonly file_name?: string,
   /** MIME type of the file, usually "image/gif" or "video/mp4" */
   readonly mime_type?: string,
+  /** Animation minithumbnail; may be null */
+  readonly minithumbnail?: minithumbnail$Input,
   /** Animation thumbnail; may be null */
   readonly thumbnail?: photoSize$Input,
   /** File containing the animation */
   readonly animation?: file$Input,
 }
 
-/** Describes an audio file. Audio is usually in MP3 format */
+/** Describes an audio file. Audio is usually in MP3 or M4A format */
 export type audio = {
   _: 'audio',
   /** Duration of the audio, in seconds; as defined by the sender */
@@ -975,6 +1103,8 @@ export type audio = {
   file_name: string,
   /** The MIME type of the file; as defined by the sender */
   mime_type: string,
+  /** The minithumbnail of the album cover; may be null */
+  album_cover_minithumbnail: minithumbnail,
   /**
    * The thumbnail of the album cover; as defined by the sender. The full size thumbnail
    * should be extracted from the downloaded file; may be null
@@ -984,7 +1114,7 @@ export type audio = {
   audio: file,
 }
 
-/** Describes an audio file. Audio is usually in MP3 format */
+/** Describes an audio file. Audio is usually in MP3 or M4A format */
 export type audio$Input = {
   readonly _: 'audio',
   /** Duration of the audio, in seconds; as defined by the sender */
@@ -997,6 +1127,8 @@ export type audio$Input = {
   readonly file_name?: string,
   /** The MIME type of the file; as defined by the sender */
   readonly mime_type?: string,
+  /** The minithumbnail of the album cover; may be null */
+  readonly album_cover_minithumbnail?: minithumbnail$Input,
   /**
    * The thumbnail of the album cover; as defined by the sender. The full size thumbnail
    * should be extracted from the downloaded file; may be null
@@ -1013,7 +1145,12 @@ export type document = {
   file_name: string,
   /** MIME type of the file; as defined by the sender */
   mime_type: string,
-  /** Document thumbnail; as defined by the sender; may be null */
+  /** Document minithumbnail; may be null */
+  minithumbnail: minithumbnail,
+  /**
+   * Document thumbnail in JPEG or PNG format (PNG will be used only for background patterns);
+   * as defined by the sender; may be null
+   */
   thumbnail: photoSize,
   /** File containing the document */
   document: file,
@@ -1026,7 +1163,12 @@ export type document$Input = {
   readonly file_name?: string,
   /** MIME type of the file; as defined by the sender */
   readonly mime_type?: string,
-  /** Document thumbnail; as defined by the sender; may be null */
+  /** Document minithumbnail; may be null */
+  readonly minithumbnail?: minithumbnail$Input,
+  /**
+   * Document thumbnail in JPEG or PNG format (PNG will be used only for background patterns);
+   * as defined by the sender; may be null
+   */
   readonly thumbnail?: photoSize$Input,
   /** File containing the document */
   readonly document?: file$Input,
@@ -1037,6 +1179,8 @@ export type photo = {
   _: 'photo',
   /** True, if stickers were added to the photo */
   has_stickers: boolean,
+  /** Photo minithumbnail; may be null */
+  minithumbnail: minithumbnail,
   /** Available variants of the photo, in different sizes */
   sizes: Array<photoSize>,
 }
@@ -1046,6 +1190,8 @@ export type photo$Input = {
   readonly _: 'photo',
   /** True, if stickers were added to the photo */
   readonly has_stickers?: boolean,
+  /** Photo minithumbnail; may be null */
+  readonly minithumbnail?: minithumbnail$Input,
   /** Available variants of the photo, in different sizes */
   readonly sizes?: ReadonlyArray<photoSize$Input>,
 }
@@ -1061,6 +1207,8 @@ export type sticker = {
   height: number,
   /** Emoji corresponding to the sticker */
   emoji: string,
+  /** True, if the sticker is an animated sticker in TGS format */
+  is_animated: boolean,
   /** True, if the sticker is a mask */
   is_mask: boolean,
   /** Position where the mask should be placed; may be null */
@@ -1082,6 +1230,8 @@ export type sticker$Input = {
   readonly height?: number,
   /** Emoji corresponding to the sticker */
   readonly emoji?: string,
+  /** True, if the sticker is an animated sticker in TGS format */
+  readonly is_animated?: boolean,
   /** True, if the sticker is a mask */
   readonly is_mask?: boolean,
   /** Position where the mask should be placed; may be null */
@@ -1105,10 +1255,12 @@ export type video = {
   file_name: string,
   /** MIME type of the file; as defined by the sender */
   mime_type: string,
-  /** True, if stickers were added to the photo */
+  /** True, if stickers were added to the video */
   has_stickers: boolean,
   /** True, if the video should be tried to be streamed */
   supports_streaming: boolean,
+  /** Video minithumbnail; may be null */
+  minithumbnail: minithumbnail,
   /** Video thumbnail; as defined by the sender; may be null */
   thumbnail: photoSize,
   /** File containing the video */
@@ -1128,10 +1280,12 @@ export type video$Input = {
   readonly file_name?: string,
   /** MIME type of the file; as defined by the sender */
   readonly mime_type?: string,
-  /** True, if stickers were added to the photo */
+  /** True, if stickers were added to the video */
   readonly has_stickers?: boolean,
   /** True, if the video should be tried to be streamed */
   readonly supports_streaming?: boolean,
+  /** Video minithumbnail; may be null */
+  readonly minithumbnail?: minithumbnail$Input,
   /** Video thumbnail; as defined by the sender; may be null */
   readonly thumbnail?: photoSize$Input,
   /** File containing the video */
@@ -1148,6 +1302,8 @@ export type videoNote = {
   duration: number,
   /** Video width and height; as defined by the sender */
   length: number,
+  /** Video minithumbnail; may be null */
+  minithumbnail: minithumbnail,
   /** Video thumbnail; as defined by the sender; may be null */
   thumbnail: photoSize,
   /** File containing the video */
@@ -1164,6 +1320,8 @@ export type videoNote$Input = {
   readonly duration?: number,
   /** Video width and height; as defined by the sender */
   readonly length?: number,
+  /** Video minithumbnail; may be null */
+  readonly minithumbnail?: minithumbnail$Input,
   /** Video thumbnail; as defined by the sender; may be null */
   readonly thumbnail?: photoSize$Input,
   /** File containing the video */
@@ -1339,6 +1497,12 @@ export type poll = {
   options: Array<pollOption>,
   /** Total number of voters, participating in the poll */
   total_voter_count: number,
+  /** User identifiers of recent voters, if the poll is non-anonymous */
+  recent_voter_user_ids: Array<number>,
+  /** True, if the poll is anonymous */
+  is_anonymous: boolean,
+  /** Type of the poll */
+  type: PollType,
   /** True, if the poll is closed */
   is_closed: boolean,
 }
@@ -1354,6 +1518,12 @@ export type poll$Input = {
   readonly options?: ReadonlyArray<pollOption$Input>,
   /** Total number of voters, participating in the poll */
   readonly total_voter_count?: number,
+  /** User identifiers of recent voters, if the poll is non-anonymous */
+  readonly recent_voter_user_ids?: ReadonlyArray<number>,
+  /** True, if the poll is anonymous */
+  readonly is_anonymous?: boolean,
+  /** Type of the poll */
+  readonly type?: PollType$Input,
   /** True, if the poll is closed */
   readonly is_closed?: boolean,
 }
@@ -1366,9 +1536,15 @@ export type profilePhoto = {
    * userProfilePhotos
    */
   id: number | string,
-  /** A small (160x160) user profile photo */
+  /**
+   * A small (160x160) user profile photo. The file can be downloaded only before the
+   * photo is changed
+   */
   small: file,
-  /** A big (640x640) user profile photo */
+  /**
+   * A big (640x640) user profile photo. The file can be downloaded only before the photo
+   * is changed
+   */
   big: file,
 }
 
@@ -1380,64 +1556,40 @@ export type profilePhoto$Input = {
    * userProfilePhotos
    */
   readonly id?: number | string,
-  /** A small (160x160) user profile photo */
+  /**
+   * A small (160x160) user profile photo. The file can be downloaded only before the
+   * photo is changed
+   */
   readonly small?: file$Input,
-  /** A big (640x640) user profile photo */
+  /**
+   * A big (640x640) user profile photo. The file can be downloaded only before the photo
+   * is changed
+   */
   readonly big?: file$Input,
 }
 
 /** Describes the photo of a chat */
 export type chatPhoto = {
   _: 'chatPhoto',
-  /** A small (160x160) chat photo */
+  /**
+   * A small (160x160) chat photo. The file can be downloaded only before the photo is
+   * changed
+   */
   small: file,
-  /** A big (640x640) chat photo */
+  /** A big (640x640) chat photo. The file can be downloaded only before the photo is changed */
   big: file,
 }
 
 /** Describes the photo of a chat */
 export type chatPhoto$Input = {
   readonly _: 'chatPhoto',
-  /** A small (160x160) chat photo */
+  /**
+   * A small (160x160) chat photo. The file can be downloaded only before the photo is
+   * changed
+   */
   readonly small?: file$Input,
-  /** A big (640x640) chat photo */
+  /** A big (640x640) chat photo. The file can be downloaded only before the photo is changed */
   readonly big?: file$Input,
-}
-
-/** The phone number of user A is not known to user B */
-export type linkStateNone = {
-  _: 'linkStateNone',
-}
-
-/** The phone number of user A is not known to user B */
-export type linkStateNone$Input = {
-  readonly _: 'linkStateNone',
-}
-
-/**
- * The phone number of user A is known but that number has not been saved to the contact
- * list of user B
- */
-export type linkStateKnowsPhoneNumber = {
-  _: 'linkStateKnowsPhoneNumber',
-}
-
-/**
- * The phone number of user A is known but that number has not been saved to the contact
- * list of user B
- */
-export type linkStateKnowsPhoneNumber$Input = {
-  readonly _: 'linkStateKnowsPhoneNumber',
-}
-
-/** The phone number of user A has been saved to the contact list of user B */
-export type linkStateIsContact = {
-  _: 'linkStateIsContact',
-}
-
-/** The phone number of user A has been saved to the contact list of user B */
-export type linkStateIsContact$Input = {
-  readonly _: 'linkStateIsContact',
 }
 
 /** A regular user */
@@ -1451,16 +1603,16 @@ export type userTypeRegular$Input = {
 }
 
 /**
- * A deleted user or deleted bot. No information on the user besides the user_id is
- * available. It is not possible to perform any active actions on this type of user
+ * A deleted user or deleted bot. No information on the user besides the user identifier
+ * is available. It is not possible to perform any active actions on this type of user
  */
 export type userTypeDeleted = {
   _: 'userTypeDeleted',
 }
 
 /**
- * A deleted user or deleted bot. No information on the user besides the user_id is
- * available. It is not possible to perform any active actions on this type of user
+ * A deleted user or deleted bot. No information on the user besides the user identifier
+ * is available. It is not possible to perform any active actions on this type of user
  */
 export type userTypeDeleted$Input = {
   readonly _: 'userTypeDeleted',
@@ -1511,18 +1663,18 @@ export type userTypeBot$Input = {
 }
 
 /**
- * No information on the user besides the user_id is available, yet this user has not
- * been deleted. This object is extremely rare and must be handled like a deleted user.
- * It is not possible to perform any actions on users of this type
+ * No information on the user besides the user identifier is available, yet this user
+ * has not been deleted. This object is extremely rare and must be handled like a deleted
+ * user. It is not possible to perform any actions on users of this type
  */
 export type userTypeUnknown = {
   _: 'userTypeUnknown',
 }
 
 /**
- * No information on the user besides the user_id is available, yet this user has not
- * been deleted. This object is extremely rare and must be handled like a deleted user.
- * It is not possible to perform any actions on users of this type
+ * No information on the user besides the user identifier is available, yet this user
+ * has not been deleted. This object is extremely rare and must be handled like a deleted
+ * user. It is not possible to perform any actions on users of this type
  */
 export type userTypeUnknown$Input = {
   readonly _: 'userTypeUnknown',
@@ -1564,6 +1716,24 @@ export type botInfo$Input = {
   readonly commands?: ReadonlyArray<botCommand$Input>,
 }
 
+/** Represents a location to which a chat is connected */
+export type chatLocation = {
+  _: 'chatLocation',
+  /** The location */
+  location: location,
+  /** Location address; 1-64 characters, as defined by the chat owner */
+  address: string,
+}
+
+/** Represents a location to which a chat is connected */
+export type chatLocation$Input = {
+  readonly _: 'chatLocation',
+  /** The location */
+  readonly location?: location$Input,
+  /** Location address; 1-64 characters, as defined by the chat owner */
+  readonly address?: string,
+}
+
 /** Represents a user */
 export type user = {
   _: 'user',
@@ -1581,23 +1751,24 @@ export type user = {
   status: UserStatus,
   /** Profile photo of the user; may be null */
   profile_photo: profilePhoto,
-  /** Relationship from the current user to the other user */
-  outgoing_link: LinkState,
-  /** Relationship from the other user to the current user */
-  incoming_link: LinkState,
+  /** The user is a contact of the current user */
+  is_contact: boolean,
+  /**
+   * The user is a contact of the current user and the current user is a contact of the
+   * user
+   */
+  is_mutual_contact: boolean,
   /** True, if the user is verified */
   is_verified: boolean,
   /** True, if the user is Telegram support account */
   is_support: boolean,
   /**
-   * If non-empty, it contains the reason why access to this user must be restricted.
-   * The format of the string is "{type}: {description}". {type} contains the type of
-   * the restriction and at least one of the suffixes "-all", "-ios", "-android", or "-wp",
-   * which describe the platforms on which access should be restricted. (For example,
-   * "terms-ios-android". {description} contains a human-readable description of the restriction,
-   * which can be shown to the user)
+   * If non-empty, it contains a human-readable description of the reason why access to
+   * this user must be restricted
    */
   restriction_reason: string,
+  /** True, if many users reported this user as a scam */
+  is_scam: boolean,
   /**
    * If false, the user is inaccessible, and the only information known about the user
    * is inside this class. It can't be passed to any method except GetUser
@@ -1626,23 +1797,24 @@ export type user$Input = {
   readonly status?: UserStatus$Input,
   /** Profile photo of the user; may be null */
   readonly profile_photo?: profilePhoto$Input,
-  /** Relationship from the current user to the other user */
-  readonly outgoing_link?: LinkState$Input,
-  /** Relationship from the other user to the current user */
-  readonly incoming_link?: LinkState$Input,
+  /** The user is a contact of the current user */
+  readonly is_contact?: boolean,
+  /**
+   * The user is a contact of the current user and the current user is a contact of the
+   * user
+   */
+  readonly is_mutual_contact?: boolean,
   /** True, if the user is verified */
   readonly is_verified?: boolean,
   /** True, if the user is Telegram support account */
   readonly is_support?: boolean,
   /**
-   * If non-empty, it contains the reason why access to this user must be restricted.
-   * The format of the string is "{type}: {description}". {type} contains the type of
-   * the restriction and at least one of the suffixes "-all", "-ios", "-android", or "-wp",
-   * which describe the platforms on which access should be restricted. (For example,
-   * "terms-ios-android". {description} contains a human-readable description of the restriction,
-   * which can be shown to the user)
+   * If non-empty, it contains a human-readable description of the reason why access to
+   * this user must be restricted
    */
   readonly restriction_reason?: string,
+  /** True, if many users reported this user as a scam */
+  readonly is_scam?: boolean,
   /**
    * If false, the user is inaccessible, and the only information known about the user
    * is inside this class. It can't be passed to any method except GetUser
@@ -1663,6 +1835,11 @@ export type userFullInfo = {
   can_be_called: boolean,
   /** True, if the user can't be called due to their privacy settings */
   has_private_calls: boolean,
+  /**
+   * True, if the current user needs to explicitly allow to share their phone number with
+   * the user when the method addContact is used
+   */
+  need_phone_number_privacy_exception: boolean,
   /** A short user bio */
   bio: string,
   /** For bots, the text that is included with the link when users share the bot */
@@ -1685,6 +1862,11 @@ export type userFullInfo$Input = {
   readonly can_be_called?: boolean,
   /** True, if the user can't be called due to their privacy settings */
   readonly has_private_calls?: boolean,
+  /**
+   * True, if the current user needs to explicitly allow to share their phone number with
+   * the user when the method addContact is used
+   */
+  readonly need_phone_number_privacy_exception?: boolean,
   /** A short user bio */
   readonly bio?: string,
   /** For bots, the text that is included with the link when users share the bot */
@@ -1756,16 +1938,122 @@ export type users$Input = {
   readonly user_ids?: ReadonlyArray<number>,
 }
 
-/** The user is the creator of a chat and has all the administrator privileges */
+/** Contains information about a chat administrator */
+export type chatAdministrator = {
+  _: 'chatAdministrator',
+  /** User identifier of the administrator */
+  user_id: number,
+  /** Custom title of the administrator */
+  custom_title: string,
+  /** True, if the user is the owner of the chat */
+  is_owner: boolean,
+}
+
+/** Contains information about a chat administrator */
+export type chatAdministrator$Input = {
+  readonly _: 'chatAdministrator',
+  /** User identifier of the administrator */
+  readonly user_id?: number,
+  /** Custom title of the administrator */
+  readonly custom_title?: string,
+  /** True, if the user is the owner of the chat */
+  readonly is_owner?: boolean,
+}
+
+/** Represents a list of chat administrators */
+export type chatAdministrators = {
+  _: 'chatAdministrators',
+  /** A list of chat administrators */
+  administrators: Array<chatAdministrator>,
+}
+
+/** Represents a list of chat administrators */
+export type chatAdministrators$Input = {
+  readonly _: 'chatAdministrators',
+  /** A list of chat administrators */
+  readonly administrators?: ReadonlyArray<chatAdministrator$Input>,
+}
+
+/** Describes actions that a user is allowed to take in a chat */
+export type chatPermissions = {
+  _: 'chatPermissions',
+  /** True, if the user can send text messages, contacts, locations, and venues */
+  can_send_messages: boolean,
+  /**
+   * True, if the user can send audio files, documents, photos, videos, video notes, and
+   * voice notes. Implies can_send_messages permissions
+   */
+  can_send_media_messages: boolean,
+  /** True, if the user can send polls. Implies can_send_messages permissions */
+  can_send_polls: boolean,
+  /**
+   * True, if the user can send animations, games, and stickers and use inline bots. Implies
+   * can_send_messages permissions
+   */
+  can_send_other_messages: boolean,
+  /**
+   * True, if the user may add a web page preview to their messages. Implies can_send_messages
+   * permissions
+   */
+  can_add_web_page_previews: boolean,
+  /** True, if the user can change the chat title, photo, and other settings */
+  can_change_info: boolean,
+  /** True, if the user can invite new users to the chat */
+  can_invite_users: boolean,
+  /** True, if the user can pin messages */
+  can_pin_messages: boolean,
+}
+
+/** Describes actions that a user is allowed to take in a chat */
+export type chatPermissions$Input = {
+  readonly _: 'chatPermissions',
+  /** True, if the user can send text messages, contacts, locations, and venues */
+  readonly can_send_messages?: boolean,
+  /**
+   * True, if the user can send audio files, documents, photos, videos, video notes, and
+   * voice notes. Implies can_send_messages permissions
+   */
+  readonly can_send_media_messages?: boolean,
+  /** True, if the user can send polls. Implies can_send_messages permissions */
+  readonly can_send_polls?: boolean,
+  /**
+   * True, if the user can send animations, games, and stickers and use inline bots. Implies
+   * can_send_messages permissions
+   */
+  readonly can_send_other_messages?: boolean,
+  /**
+   * True, if the user may add a web page preview to their messages. Implies can_send_messages
+   * permissions
+   */
+  readonly can_add_web_page_previews?: boolean,
+  /** True, if the user can change the chat title, photo, and other settings */
+  readonly can_change_info?: boolean,
+  /** True, if the user can invite new users to the chat */
+  readonly can_invite_users?: boolean,
+  /** True, if the user can pin messages */
+  readonly can_pin_messages?: boolean,
+}
+
+/** The user is the owner of a chat and has all the administrator privileges */
 export type chatMemberStatusCreator = {
   _: 'chatMemberStatusCreator',
+  /**
+   * A custom title of the owner; 0-16 characters without emojis; applicable to supergroups
+   * only
+   */
+  custom_title: string,
   /** True, if the user is a member of the chat */
   is_member: boolean,
 }
 
-/** The user is the creator of a chat and has all the administrator privileges */
+/** The user is the owner of a chat and has all the administrator privileges */
 export type chatMemberStatusCreator$Input = {
   readonly _: 'chatMemberStatusCreator',
+  /**
+   * A custom title of the owner; 0-16 characters without emojis; applicable to supergroups
+   * only
+   */
+  readonly custom_title?: string,
   /** True, if the user is a member of the chat */
   readonly is_member?: boolean,
 }
@@ -1778,6 +2066,11 @@ export type chatMemberStatusCreator$Input = {
  */
 export type chatMemberStatusAdministrator = {
   _: 'chatMemberStatusAdministrator',
+  /**
+   * A custom title of the administrator; 0-16 characters without emojis; applicable to
+   * supergroups only
+   */
+  custom_title: string,
   /** True, if the current user can edit the administrator privileges for the called user */
   can_be_edited: boolean,
   /** True, if the administrator can change the chat title, photo, and other settings */
@@ -1798,8 +2091,9 @@ export type chatMemberStatusAdministrator = {
   /** True, if the administrator can pin messages; applicable to groups only */
   can_pin_messages: boolean,
   /**
-   * True, if the administrator can add new administrators with a subset of his own privileges
-   * or demote administrators that were directly or indirectly promoted by him
+   * True, if the administrator can add new administrators with a subset of their own
+   * privileges or demote administrators that were directly or indirectly promoted by
+   * them
    */
   can_promote_members: boolean,
 }
@@ -1812,6 +2106,11 @@ export type chatMemberStatusAdministrator = {
  */
 export type chatMemberStatusAdministrator$Input = {
   readonly _: 'chatMemberStatusAdministrator',
+  /**
+   * A custom title of the administrator; 0-16 characters without emojis; applicable to
+   * supergroups only
+   */
+  readonly custom_title?: string,
   /** True, if the current user can edit the administrator privileges for the called user */
   readonly can_be_edited?: boolean,
   /** True, if the administrator can change the chat title, photo, and other settings */
@@ -1832,8 +2131,9 @@ export type chatMemberStatusAdministrator$Input = {
   /** True, if the administrator can pin messages; applicable to groups only */
   readonly can_pin_messages?: boolean,
   /**
-   * True, if the administrator can add new administrators with a subset of his own privileges
-   * or demote administrators that were directly or indirectly promoted by him
+   * True, if the administrator can add new administrators with a subset of their own
+   * privileges or demote administrators that were directly or indirectly promoted by
+   * them
    */
   readonly can_promote_members?: boolean,
 }
@@ -1862,23 +2162,8 @@ export type chatMemberStatusRestricted = {
    * from the current time, the user is considered to be restricted forever
    */
   restricted_until_date: number,
-  /** True, if the user can send text messages, contacts, locations, and venues */
-  can_send_messages: boolean,
-  /**
-   * True, if the user can send audio files, documents, photos, videos, video notes, and
-   * voice notes. Implies can_send_messages permissions
-   */
-  can_send_media_messages: boolean,
-  /**
-   * True, if the user can send animations, games, and stickers and use inline bots. Implies
-   * can_send_media_messages permissions
-   */
-  can_send_other_messages: boolean,
-  /**
-   * True, if the user may add a web page preview to his messages. Implies can_send_messages
-   * permissions
-   */
-  can_add_web_page_previews: boolean,
+  /** User permissions in the chat */
+  permissions: chatPermissions,
 }
 
 /**
@@ -1895,23 +2180,8 @@ export type chatMemberStatusRestricted$Input = {
    * from the current time, the user is considered to be restricted forever
    */
   readonly restricted_until_date?: number,
-  /** True, if the user can send text messages, contacts, locations, and venues */
-  readonly can_send_messages?: boolean,
-  /**
-   * True, if the user can send audio files, documents, photos, videos, video notes, and
-   * voice notes. Implies can_send_messages permissions
-   */
-  readonly can_send_media_messages?: boolean,
-  /**
-   * True, if the user can send animations, games, and stickers and use inline bots. Implies
-   * can_send_media_messages permissions
-   */
-  readonly can_send_other_messages?: boolean,
-  /**
-   * True, if the user may add a web page preview to his messages. Implies can_send_messages
-   * permissions
-   */
-  readonly can_add_web_page_previews?: boolean,
+  /** User permissions in the chat */
+  readonly permissions?: chatPermissions$Input,
 }
 
 /** The user is not a chat member */
@@ -2006,12 +2276,22 @@ export type chatMembers$Input = {
   readonly members?: ReadonlyArray<chatMember$Input>,
 }
 
-/** Returns the creator and administrators */
+/** Returns contacts of the user */
+export type chatMembersFilterContacts = {
+  _: 'chatMembersFilterContacts',
+}
+
+/** Returns contacts of the user */
+export type chatMembersFilterContacts$Input = {
+  readonly _: 'chatMembersFilterContacts',
+}
+
+/** Returns the owner and administrators */
 export type chatMembersFilterAdministrators = {
   _: 'chatMembersFilterAdministrators',
 }
 
-/** Returns the creator and administrators */
+/** Returns the owner and administrators */
 export type chatMembersFilterAdministrators$Input = {
   readonly _: 'chatMembersFilterAdministrators',
 }
@@ -2078,12 +2358,26 @@ export type supergroupMembersFilterRecent$Input = {
   readonly _: 'supergroupMembersFilterRecent',
 }
 
-/** Returns the creator and administrators */
+/** Returns contacts of the user, which are members of the supergroup or channel */
+export type supergroupMembersFilterContacts = {
+  _: 'supergroupMembersFilterContacts',
+  /** Query to search for */
+  query: string,
+}
+
+/** Returns contacts of the user, which are members of the supergroup or channel */
+export type supergroupMembersFilterContacts$Input = {
+  readonly _: 'supergroupMembersFilterContacts',
+  /** Query to search for */
+  readonly query?: string,
+}
+
+/** Returns the owner and administrators */
 export type supergroupMembersFilterAdministrators = {
   _: 'supergroupMembersFilterAdministrators',
 }
 
-/** Returns the creator and administrators */
+/** Returns the owner and administrators */
 export type supergroupMembersFilterAdministrators$Input = {
   readonly _: 'supergroupMembersFilterAdministrators',
 }
@@ -2152,8 +2446,6 @@ export type basicGroup = {
   member_count: number,
   /** Status of the current user in the group */
   status: ChatMemberStatus,
-  /** True, if all members have been granted administrator rights in the group */
-  everyone_is_administrator: boolean,
   /** True, if the group is active */
   is_active: boolean,
   /** Identifier of the supergroup to which this group was upgraded; 0 if none */
@@ -2172,8 +2464,6 @@ export type basicGroup$Input = {
   readonly member_count?: number,
   /** Status of the current user in the group */
   readonly status?: ChatMemberStatus$Input,
-  /** True, if all members have been granted administrator rights in the group */
-  readonly everyone_is_administrator?: boolean,
   /** True, if the group is active */
   readonly is_active?: boolean,
   /** Identifier of the supergroup to which this group was upgraded; 0 if none */
@@ -2183,13 +2473,15 @@ export type basicGroup$Input = {
 /** Contains full information about a basic group */
 export type basicGroupFullInfo = {
   _: 'basicGroupFullInfo',
+  /** Group description */
+  description: string,
   /** User identifier of the creator of the group; 0 if unknown */
   creator_user_id: number,
   /** Group members */
   members: Array<chatMember>,
   /**
-   * Invite link for this group; available only for the group creator and only after it
-   * has been generated at least once
+   * Invite link for this group; available only after it has been generated at least once
+   * and only for the group creator
    */
   invite_link: string,
 }
@@ -2197,13 +2489,15 @@ export type basicGroupFullInfo = {
 /** Contains full information about a basic group */
 export type basicGroupFullInfo$Input = {
   readonly _: 'basicGroupFullInfo',
+  /** Group description */
+  readonly description?: string,
   /** User identifier of the creator of the group; 0 if unknown */
   readonly creator_user_id?: number,
   /** Group members */
   readonly members?: ReadonlyArray<chatMember$Input>,
   /**
-   * Invite link for this group; available only for the group creator and only after it
-   * has been generated at least once
+   * Invite link for this group; available only after it has been generated at least once
+   * and only for the group creator
    */
   readonly invite_link?: string,
 }
@@ -2227,7 +2521,10 @@ export type supergroup = {
    * when the supergroup or channel was created, in case the user is not a member
    */
   date: number,
-  /** Status of the current user in the supergroup or channel */
+  /**
+   * Status of the current user in the supergroup or channel; custom title will be always
+   * empty
+   */
   status: ChatMemberStatus,
   /**
    * Member count; 0 if unknown. Currently it is guaranteed to be known only if the supergroup
@@ -2235,28 +2532,33 @@ export type supergroup = {
    */
   member_count: number,
   /**
-   * True, if any member of the supergroup can invite other members. This field has no
-   * meaning for channels
+   * True, if the channel has a discussion group, or the supergroup is the designated
+   * discussion group for a channel
    */
-  anyone_can_invite: boolean,
+  has_linked_chat: boolean,
+  /**
+   * True, if the supergroup is connected to a location, i.e. the supergroup is a location-based
+   * supergroup
+   */
+  has_location: boolean,
   /**
    * True, if messages sent to the channel should contain information about the sender.
    * This field is only applicable to channels
    */
   sign_messages: boolean,
+  /** True, if the slow mode is enabled in the supergroup */
+  is_slow_mode_enabled: boolean,
   /** True, if the supergroup is a channel */
   is_channel: boolean,
   /** True, if the supergroup or channel is verified */
   is_verified: boolean,
   /**
-   * If non-empty, contains the reason why access to this supergroup or channel must be
-   * restricted. Format of the string is "{type}: {description}". {type} Contains the
-   * type of the restriction and at least one of the suffixes "-all", "-ios", "-android",
-   * or "-wp", which describe the platforms on which access should be restricted. (For
-   * example, "terms-ios-android". {description} contains a human-readable description
-   * of the restriction, which can be shown to the user)
+   * If non-empty, contains a human-readable description of the reason why access to this
+   * supergroup or channel must be restricted
    */
   restriction_reason: string,
+  /** True, if many users reported this supergroup as a scam */
+  is_scam: boolean,
 }
 
 /**
@@ -2278,7 +2580,10 @@ export type supergroup$Input = {
    * when the supergroup or channel was created, in case the user is not a member
    */
   readonly date?: number,
-  /** Status of the current user in the supergroup or channel */
+  /**
+   * Status of the current user in the supergroup or channel; custom title will be always
+   * empty
+   */
   readonly status?: ChatMemberStatus$Input,
   /**
    * Member count; 0 if unknown. Currently it is guaranteed to be known only if the supergroup
@@ -2286,28 +2591,33 @@ export type supergroup$Input = {
    */
   readonly member_count?: number,
   /**
-   * True, if any member of the supergroup can invite other members. This field has no
-   * meaning for channels
+   * True, if the channel has a discussion group, or the supergroup is the designated
+   * discussion group for a channel
    */
-  readonly anyone_can_invite?: boolean,
+  readonly has_linked_chat?: boolean,
+  /**
+   * True, if the supergroup is connected to a location, i.e. the supergroup is a location-based
+   * supergroup
+   */
+  readonly has_location?: boolean,
   /**
    * True, if messages sent to the channel should contain information about the sender.
    * This field is only applicable to channels
    */
   readonly sign_messages?: boolean,
+  /** True, if the slow mode is enabled in the supergroup */
+  readonly is_slow_mode_enabled?: boolean,
   /** True, if the supergroup is a channel */
   readonly is_channel?: boolean,
   /** True, if the supergroup or channel is verified */
   readonly is_verified?: boolean,
   /**
-   * If non-empty, contains the reason why access to this supergroup or channel must be
-   * restricted. Format of the string is "{type}: {description}". {type} Contains the
-   * type of the restriction and at least one of the suffixes "-all", "-ios", "-android",
-   * or "-wp", which describe the platforms on which access should be restricted. (For
-   * example, "terms-ios-android". {description} contains a human-readable description
-   * of the restriction, which can be shown to the user)
+   * If non-empty, contains a human-readable description of the reason why access to this
+   * supergroup or channel must be restricted
    */
   readonly restriction_reason?: string,
+  /** True, if many users reported this supergroup as a scam */
+  readonly is_scam?: boolean,
 }
 
 /** Contains full information about a supergroup or channel */
@@ -2323,23 +2633,43 @@ export type supergroupFullInfo = {
   restricted_count: number,
   /** Number of users banned from chat; 0 if unknown */
   banned_count: number,
+  /**
+   * Chat identifier of a discussion group for the channel, or a channel, for which the
+   * supergroup is the designated discussion group; 0 if none or unknown
+   */
+  linked_chat_id: number,
+  /**
+   * Delay between consecutive sent messages for non-administrator supergroup members,
+   * in seconds
+   */
+  slow_mode_delay: number,
+  /**
+   * Time left before next message can be sent in the supergroup, in seconds. An updateSupergroupFullInfo
+   * update is not triggered when value of this field changes, but both new and old values
+   * are non-zero
+   */
+  slow_mode_delay_expires_in: number,
   /** True, if members of the chat can be retrieved */
   can_get_members: boolean,
-  /** True, if the chat can be made public */
+  /** True, if the chat username can be changed */
   can_set_username: boolean,
   /** True, if the supergroup sticker set can be changed */
   can_set_sticker_set: boolean,
+  /** True, if the supergroup location can be changed */
+  can_set_location: boolean,
   /** True, if the channel statistics is available through getChatStatisticsUrl */
   can_view_statistics: boolean,
   /**
-   * True, if new chat members will have access to old messages. In public supergroups
-   * and both public and private channels, old messages are always available, so this
-   * option affects only private supergroups. The value of this field is only available
-   * for chat administrators
+   * True, if new chat members will have access to old messages. In public or discussion
+   * groups and both public and private channels, old messages are always available, so
+   * this option affects only private supergroups without a linked chat. The value of
+   * this field is only available for chat administrators
    */
   is_all_history_available: boolean,
   /** Identifier of the supergroup sticker set; 0 if none */
   sticker_set_id: number | string,
+  /** Location to which the supergroup is connected; may be null */
+  location: chatLocation,
   /** Invite link for this chat */
   invite_link: string,
   /** Identifier of the basic group from which supergroup was upgraded; 0 if none */
@@ -2364,23 +2694,43 @@ export type supergroupFullInfo$Input = {
   readonly restricted_count?: number,
   /** Number of users banned from chat; 0 if unknown */
   readonly banned_count?: number,
+  /**
+   * Chat identifier of a discussion group for the channel, or a channel, for which the
+   * supergroup is the designated discussion group; 0 if none or unknown
+   */
+  readonly linked_chat_id?: number,
+  /**
+   * Delay between consecutive sent messages for non-administrator supergroup members,
+   * in seconds
+   */
+  readonly slow_mode_delay?: number,
+  /**
+   * Time left before next message can be sent in the supergroup, in seconds. An updateSupergroupFullInfo
+   * update is not triggered when value of this field changes, but both new and old values
+   * are non-zero
+   */
+  readonly slow_mode_delay_expires_in?: number,
   /** True, if members of the chat can be retrieved */
   readonly can_get_members?: boolean,
-  /** True, if the chat can be made public */
+  /** True, if the chat username can be changed */
   readonly can_set_username?: boolean,
   /** True, if the supergroup sticker set can be changed */
   readonly can_set_sticker_set?: boolean,
+  /** True, if the supergroup location can be changed */
+  readonly can_set_location?: boolean,
   /** True, if the channel statistics is available through getChatStatisticsUrl */
   readonly can_view_statistics?: boolean,
   /**
-   * True, if new chat members will have access to old messages. In public supergroups
-   * and both public and private channels, old messages are always available, so this
-   * option affects only private supergroups. The value of this field is only available
-   * for chat administrators
+   * True, if new chat members will have access to old messages. In public or discussion
+   * groups and both public and private channels, old messages are always available, so
+   * this option affects only private supergroups without a linked chat. The value of
+   * this field is only available for chat administrators
    */
   readonly is_all_history_available?: boolean,
   /** Identifier of the supergroup sticker set; 0 if none */
   readonly sticker_set_id?: number | string,
+  /** Location to which the supergroup is connected; may be null */
+  readonly location?: chatLocation$Input,
   /** Invite link for this chat */
   readonly invite_link?: string,
   /** Identifier of the basic group from which supergroup was upgraded; 0 if none */
@@ -2437,16 +2787,17 @@ export type secretChat = {
   ttl: number,
   /**
    * Hash of the currently used key for comparison with the hash of the chat partner's
-   * key. This is a string of 36 bytes, which must be used to make a 12x12 square image
-   * with a color depth of 4. The first 16 bytes should be used to make a central 8x8
-   * square, while the remaining 20 bytes should be used to construct a 2-pixel-wide border
-   * around that square. Alternatively, the first 32 bytes of the hash can be converted
-   * to the hexadecimal format and printed as 32 2-digit hex numbers
+   * key. This is a string of 36 little-endian bytes, which must be split into groups
+   * of 2 bits, each denoting a pixel of one of 4 colors FFFFFF, D5E6F3, 2D5775, and 2F99C9.
+   * The pixels must be used to make a 12x12 square image filled from left to right, top
+   * to bottom. Alternatively, the first 32 bytes of the hash can be converted to the
+   * hexadecimal format and printed as 32 2-digit hex numbers
    */
   key_hash: string,
   /**
    * Secret chat layer; determines features supported by the other client. Video notes
-   * are supported if the layer >= 66
+   * are supported if the layer >= 66; nested text entities and underline and strikethrough
+   * entities are supported if the layer >= 101
    */
   layer: number,
 }
@@ -2466,16 +2817,17 @@ export type secretChat$Input = {
   readonly ttl?: number,
   /**
    * Hash of the currently used key for comparison with the hash of the chat partner's
-   * key. This is a string of 36 bytes, which must be used to make a 12x12 square image
-   * with a color depth of 4. The first 16 bytes should be used to make a central 8x8
-   * square, while the remaining 20 bytes should be used to construct a 2-pixel-wide border
-   * around that square. Alternatively, the first 32 bytes of the hash can be converted
-   * to the hexadecimal format and printed as 32 2-digit hex numbers
+   * key. This is a string of 36 little-endian bytes, which must be split into groups
+   * of 2 bits, each denoting a pixel of one of 4 colors FFFFFF, D5E6F3, 2D5775, and 2F99C9.
+   * The pixels must be used to make a 12x12 square image filled from left to right, top
+   * to bottom. Alternatively, the first 32 bytes of the hash can be converted to the
+   * hexadecimal format and printed as 32 2-digit hex numbers
    */
   readonly key_hash?: string,
   /**
    * Secret chat layer; determines features supported by the other client. Video notes
-   * are supported if the layer >= 66
+   * are supported if the layer >= 66; nested text entities and underline and strikethrough
+   * entities are supported if the layer >= 101
    */
   readonly layer?: number,
 }
@@ -2494,14 +2846,14 @@ export type messageForwardOriginUser$Input = {
   readonly sender_user_id?: number,
 }
 
-/** The message was originally written by a user, which is hidden by his privacy settings */
+/** The message was originally written by a user, which is hidden by their privacy settings */
 export type messageForwardOriginHiddenUser = {
   _: 'messageForwardOriginHiddenUser',
   /** Name of the sender */
   sender_name: string,
 }
 
-/** The message was originally written by a user, which is hidden by his privacy settings */
+/** The message was originally written by a user, which is hidden by their privacy settings */
 export type messageForwardOriginHiddenUser$Input = {
   readonly _: 'messageForwardOriginHiddenUser',
   /** Name of the sender */
@@ -2538,14 +2890,15 @@ export type messageForwardInfo = {
   /** Point in time (Unix timestamp) when the message was originally sent */
   date: number,
   /**
-   * For messages forwarded to the chat with the current user (saved messages), the identifier
-   * of the chat from which the message was forwarded last time; 0 if unknown
+   * For messages forwarded to the chat with the current user (Saved Messages) or to the
+   * channel's discussion group, the identifier of the chat from which the message was
+   * forwarded last time; 0 if unknown
    */
   from_chat_id: number,
   /**
-   * For messages forwarded to the chat with the current user (saved messages), the identifier
-   * of the original message from which the new message was forwarded last time; 0 if
-   * unknown
+   * For messages forwarded to the chat with the current user (Saved Messages) or to the
+   * channel's discussion group, the identifier of the original message from which the
+   * new message was forwarded last time; 0 if unknown
    */
   from_message_id: number,
 }
@@ -2558,14 +2911,15 @@ export type messageForwardInfo$Input = {
   /** Point in time (Unix timestamp) when the message was originally sent */
   readonly date?: number,
   /**
-   * For messages forwarded to the chat with the current user (saved messages), the identifier
-   * of the chat from which the message was forwarded last time; 0 if unknown
+   * For messages forwarded to the chat with the current user (Saved Messages) or to the
+   * channel's discussion group, the identifier of the chat from which the message was
+   * forwarded last time; 0 if unknown
    */
   readonly from_chat_id?: number,
   /**
-   * For messages forwarded to the chat with the current user (saved messages), the identifier
-   * of the original message from which the new message was forwarded last time; 0 if
-   * unknown
+   * For messages forwarded to the chat with the current user (Saved Messages) or to the
+   * channel's discussion group, the identifier of the original message from which the
+   * new message was forwarded last time; 0 if unknown
    */
   readonly from_message_id?: number,
 }
@@ -2583,11 +2937,33 @@ export type messageSendingStatePending$Input = {
 /** The message failed to be sent */
 export type messageSendingStateFailed = {
   _: 'messageSendingStateFailed',
+  /** An error code; 0 if unknown */
+  error_code: number,
+  /** Error message */
+  error_message: string,
+  /** True, if the message can be re-sent */
+  can_retry: boolean,
+  /**
+   * Time left before the message can be re-sent, in seconds. No update is sent when this
+   * field changes
+   */
+  retry_after: number,
 }
 
 /** The message failed to be sent */
 export type messageSendingStateFailed$Input = {
   readonly _: 'messageSendingStateFailed',
+  /** An error code; 0 if unknown */
+  readonly error_code?: number,
+  /** Error message */
+  readonly error_message?: string,
+  /** True, if the message can be re-sent */
+  readonly can_retry?: boolean,
+  /**
+   * Time left before the message can be re-sent, in seconds. No update is sent when this
+   * field changes
+   */
+  readonly retry_after?: number,
 }
 
 /** Describes a message */
@@ -2596,20 +2972,22 @@ export type message = {
   /** Message identifier, unique for the chat to which the message belongs */
   id: number,
   /**
-   * Identifier of the user who sent the message; 0 if unknown. It is unknown for channel
-   * posts
+   * Identifier of the user who sent the message; 0 if unknown. Currently, it is unknown
+   * for channel posts and for channel posts automatically forwarded to discussion group
    */
   sender_user_id: number,
   /** Chat identifier */
   chat_id: number,
   /** Information about the sending state of the message; may be null */
   sending_state: MessageSendingState,
+  /** Information about the scheduling state of the message; may be null */
+  scheduling_state: MessageSchedulingState,
   /** True, if the message is outgoing */
   is_outgoing: boolean,
   /**
    * True, if the message can be edited. For live location and poll messages this fields
-   * shows, whether editMessageLiveLocation or stopPoll can be used with this message
-   * by the client
+   * shows whether editMessageLiveLocation or stopPoll can be used with this message by
+   * the client
    */
   can_be_edited: boolean,
   /** True, if the message can be forwarded */
@@ -2657,6 +3035,11 @@ export type message = {
    * be grouped together in albums
    */
   media_album_id: number | string,
+  /**
+   * If non-empty, contains a human-readable description of the reason why access to this
+   * message must be restricted
+   */
+  restriction_reason: string,
   /** Content of the message */
   content: MessageContent,
   /** Reply markup for the message; may be null */
@@ -2669,20 +3052,22 @@ export type message$Input = {
   /** Message identifier, unique for the chat to which the message belongs */
   readonly id?: number,
   /**
-   * Identifier of the user who sent the message; 0 if unknown. It is unknown for channel
-   * posts
+   * Identifier of the user who sent the message; 0 if unknown. Currently, it is unknown
+   * for channel posts and for channel posts automatically forwarded to discussion group
    */
   readonly sender_user_id?: number,
   /** Chat identifier */
   readonly chat_id?: number,
   /** Information about the sending state of the message; may be null */
   readonly sending_state?: MessageSendingState$Input,
+  /** Information about the scheduling state of the message; may be null */
+  readonly scheduling_state?: MessageSchedulingState$Input,
   /** True, if the message is outgoing */
   readonly is_outgoing?: boolean,
   /**
    * True, if the message can be edited. For live location and poll messages this fields
-   * shows, whether editMessageLiveLocation or stopPoll can be used with this message
-   * by the client
+   * shows whether editMessageLiveLocation or stopPoll can be used with this message by
+   * the client
    */
   readonly can_be_edited?: boolean,
   /** True, if the message can be forwarded */
@@ -2730,6 +3115,11 @@ export type message$Input = {
    * be grouped together in albums
    */
   readonly media_album_id?: number | string,
+  /**
+   * If non-empty, contains a human-readable description of the reason why access to this
+   * message must be restricted
+   */
+  readonly restriction_reason?: string,
   /** Content of the message */
   readonly content?: MessageContent$Input,
   /** Reply markup for the message; may be null */
@@ -3048,6 +3438,32 @@ export type chatTypeSecret$Input = {
   readonly user_id?: number,
 }
 
+/** A main list of chats */
+export type chatListMain = {
+  _: 'chatListMain',
+}
+
+/** A main list of chats */
+export type chatListMain$Input = {
+  readonly _: 'chatListMain',
+}
+
+/**
+ * A list of chats usually located at the top of the main chat list. Unmuted chats are
+ * automatically moved from the Archive to the Main chat list when a new message arrives
+ */
+export type chatListArchive = {
+  _: 'chatListArchive',
+}
+
+/**
+ * A list of chats usually located at the top of the main chat list. Unmuted chats are
+ * automatically moved from the Archive to the Main chat list when a new message arrives
+ */
+export type chatListArchive$Input = {
+  readonly _: 'chatListArchive',
+}
+
 /** A chat. (Can be a private chat, basic group, supergroup, or secret chat) */
 export type chat = {
   _: 'chat',
@@ -3055,10 +3471,14 @@ export type chat = {
   id: number,
   /** Type of the chat */
   type: ChatType,
+  /** A chat list to which the chat belongs; may be null */
+  chat_list: ChatList,
   /** Chat title */
   title: string,
   /** Chat photo; may be null */
   photo: chatPhoto,
+  /** Actions that non-administrator chat members are allowed to take in the chat */
+  permissions: chatPermissions,
   /** Last message in the chat; may be null */
   last_message: message,
   /**
@@ -3073,6 +3493,8 @@ export type chat = {
   is_marked_as_unread: boolean,
   /** True, if the chat is sponsored by the user's MTProxy server */
   is_sponsored: boolean,
+  /** True, if the chat has scheduled messages */
+  has_scheduled_messages: boolean,
   /**
    * True, if the chat messages can be deleted only for the current user while other users
    * will continue to see the messages
@@ -3097,6 +3519,11 @@ export type chat = {
   unread_mention_count: number,
   /** Notification settings for this chat */
   notification_settings: chatNotificationSettings,
+  /**
+   * Describes actions which should be possible to do through a chat action bar; may be
+   * null
+   */
+  action_bar: ChatActionBar,
   /** Identifier of the pinned message in the chat; 0 if none */
   pinned_message_id: number,
   /**
@@ -3108,7 +3535,7 @@ export type chat = {
   draft_message: draftMessage,
   /**
    * Contains client-specific data associated with the chat. (For example, the chat position
-   * or local chat notification settings can be stored here.) Persistent if a message
+   * or local chat notification settings can be stored here.) Persistent if the message
    * database is used
    */
   client_data: string,
@@ -3121,10 +3548,14 @@ export type chat$Input = {
   readonly id?: number,
   /** Type of the chat */
   readonly type?: ChatType$Input,
+  /** A chat list to which the chat belongs; may be null */
+  readonly chat_list?: ChatList$Input,
   /** Chat title */
   readonly title?: string,
   /** Chat photo; may be null */
   readonly photo?: chatPhoto$Input,
+  /** Actions that non-administrator chat members are allowed to take in the chat */
+  readonly permissions?: chatPermissions$Input,
   /** Last message in the chat; may be null */
   readonly last_message?: message$Input,
   /**
@@ -3139,6 +3570,8 @@ export type chat$Input = {
   readonly is_marked_as_unread?: boolean,
   /** True, if the chat is sponsored by the user's MTProxy server */
   readonly is_sponsored?: boolean,
+  /** True, if the chat has scheduled messages */
+  readonly has_scheduled_messages?: boolean,
   /**
    * True, if the chat messages can be deleted only for the current user while other users
    * will continue to see the messages
@@ -3163,6 +3596,11 @@ export type chat$Input = {
   readonly unread_mention_count?: number,
   /** Notification settings for this chat */
   readonly notification_settings?: chatNotificationSettings$Input,
+  /**
+   * Describes actions which should be possible to do through a chat action bar; may be
+   * null
+   */
+  readonly action_bar?: ChatActionBar$Input,
   /** Identifier of the pinned message in the chat; 0 if none */
   readonly pinned_message_id?: number,
   /**
@@ -3174,7 +3612,7 @@ export type chat$Input = {
   readonly draft_message?: draftMessage$Input,
   /**
    * Contains client-specific data associated with the chat. (For example, the chat position
-   * or local chat notification settings can be stored here.) Persistent if a message
+   * or local chat notification settings can be stored here.) Persistent if the message
    * database is used
    */
   readonly client_data?: string,
@@ -3192,6 +3630,42 @@ export type chats$Input = {
   readonly _: 'chats',
   /** List of chat identifiers */
   readonly chat_ids?: ReadonlyArray<number>,
+}
+
+/** Describes a chat located nearby */
+export type chatNearby = {
+  _: 'chatNearby',
+  /** Chat identifier */
+  chat_id: number,
+  /** Distance to the chat location in meters */
+  distance: number,
+}
+
+/** Describes a chat located nearby */
+export type chatNearby$Input = {
+  readonly _: 'chatNearby',
+  /** Chat identifier */
+  readonly chat_id?: number,
+  /** Distance to the chat location in meters */
+  readonly distance?: number,
+}
+
+/** Represents a list of chats located nearby */
+export type chatsNearby = {
+  _: 'chatsNearby',
+  /** List of users nearby */
+  users_nearby: Array<chatNearby>,
+  /** List of location-based supergroups nearby */
+  supergroups_nearby: Array<chatNearby>,
+}
+
+/** Represents a list of chats located nearby */
+export type chatsNearby$Input = {
+  readonly _: 'chatsNearby',
+  /** List of users nearby */
+  readonly users_nearby?: ReadonlyArray<chatNearby$Input>,
+  /** List of location-based supergroups nearby */
+  readonly supergroups_nearby?: ReadonlyArray<chatNearby$Input>,
 }
 
 /** Contains a chat invite link */
@@ -3223,7 +3697,10 @@ export type chatInviteLinkInfo = {
   member_count: number,
   /** User identifiers of some chat members that may be known to the current user */
   member_user_ids: Array<number>,
-  /** True, if the chat is a public supergroup or channel with a username */
+  /**
+   * True, if the chat is a public supergroup or channel, i.e. it has a username or it
+   * is a location-based supergroup
+   */
   is_public: boolean,
 }
 
@@ -3242,8 +3719,107 @@ export type chatInviteLinkInfo$Input = {
   readonly member_count?: number,
   /** User identifiers of some chat members that may be known to the current user */
   readonly member_user_ids?: ReadonlyArray<number>,
-  /** True, if the chat is a public supergroup or channel with a username */
+  /**
+   * True, if the chat is a public supergroup or channel, i.e. it has a username or it
+   * is a location-based supergroup
+   */
   readonly is_public?: boolean,
+}
+
+/** The chat is public, because it has username */
+export type publicChatTypeHasUsername = {
+  _: 'publicChatTypeHasUsername',
+}
+
+/** The chat is public, because it has username */
+export type publicChatTypeHasUsername$Input = {
+  readonly _: 'publicChatTypeHasUsername',
+}
+
+/** The chat is public, because it is a location-based supergroup */
+export type publicChatTypeIsLocationBased = {
+  _: 'publicChatTypeIsLocationBased',
+}
+
+/** The chat is public, because it is a location-based supergroup */
+export type publicChatTypeIsLocationBased$Input = {
+  readonly _: 'publicChatTypeIsLocationBased',
+}
+
+/** The chat can be reported as spam using the method reportChat with the reason chatReportReasonSpam */
+export type chatActionBarReportSpam = {
+  _: 'chatActionBarReportSpam',
+}
+
+/** The chat can be reported as spam using the method reportChat with the reason chatReportReasonSpam */
+export type chatActionBarReportSpam$Input = {
+  readonly _: 'chatActionBarReportSpam',
+}
+
+/**
+ * The chat is a location-based supergroup, which can be reported as having unrelated
+ * location using the method reportChat with the reason chatReportReasonUnrelatedLocation
+ */
+export type chatActionBarReportUnrelatedLocation = {
+  _: 'chatActionBarReportUnrelatedLocation',
+}
+
+/**
+ * The chat is a location-based supergroup, which can be reported as having unrelated
+ * location using the method reportChat with the reason chatReportReasonUnrelatedLocation
+ */
+export type chatActionBarReportUnrelatedLocation$Input = {
+  readonly _: 'chatActionBarReportUnrelatedLocation',
+}
+
+/**
+ * The chat is a private or secret chat, which can be reported using the method reportChat,
+ * or the other user can be added to the contact list using the method addContact, or
+ * the other user can be blocked using the method blockUser
+ */
+export type chatActionBarReportAddBlock = {
+  _: 'chatActionBarReportAddBlock',
+}
+
+/**
+ * The chat is a private or secret chat, which can be reported using the method reportChat,
+ * or the other user can be added to the contact list using the method addContact, or
+ * the other user can be blocked using the method blockUser
+ */
+export type chatActionBarReportAddBlock$Input = {
+  readonly _: 'chatActionBarReportAddBlock',
+}
+
+/**
+ * The chat is a private or secret chat and the other user can be added to the contact
+ * list using the method addContact
+ */
+export type chatActionBarAddContact = {
+  _: 'chatActionBarAddContact',
+}
+
+/**
+ * The chat is a private or secret chat and the other user can be added to the contact
+ * list using the method addContact
+ */
+export type chatActionBarAddContact$Input = {
+  readonly _: 'chatActionBarAddContact',
+}
+
+/**
+ * The chat is a private or secret chat with a mutual contact and the user's phone number
+ * can be shared with the other user using the method sharePhoneNumber
+ */
+export type chatActionBarSharePhoneNumber = {
+  _: 'chatActionBarSharePhoneNumber',
+}
+
+/**
+ * The chat is a private or secret chat with a mutual contact and the user's phone number
+ * can be shared with the other user using the method sharePhoneNumber
+ */
+export type chatActionBarSharePhoneNumber$Input = {
+  readonly _: 'chatActionBarSharePhoneNumber',
 }
 
 /** A simple button, with text that should be sent when the button is pressed */
@@ -3282,6 +3858,30 @@ export type keyboardButtonTypeRequestLocation$Input = {
   readonly _: 'keyboardButtonTypeRequestLocation',
 }
 
+/**
+ * A button that allows the user to create and send a poll when pressed; available only
+ * in private chats
+ */
+export type keyboardButtonTypeRequestPoll = {
+  _: 'keyboardButtonTypeRequestPoll',
+  /** If true, only regular polls must be allowed to create */
+  force_regular: boolean,
+  /** If true, only polls in quiz mode must be allowed to create */
+  force_quiz: boolean,
+}
+
+/**
+ * A button that allows the user to create and send a poll when pressed; available only
+ * in private chats
+ */
+export type keyboardButtonTypeRequestPoll$Input = {
+  readonly _: 'keyboardButtonTypeRequestPoll',
+  /** If true, only regular polls must be allowed to create */
+  readonly force_regular?: boolean,
+  /** If true, only polls in quiz mode must be allowed to create */
+  readonly force_quiz?: boolean,
+}
+
 /** Represents a single button in a bot keyboard */
 export type keyboardButton = {
   _: 'keyboardButton',
@@ -3312,6 +3912,34 @@ export type inlineKeyboardButtonTypeUrl$Input = {
   readonly _: 'inlineKeyboardButtonTypeUrl',
   /** HTTP or tg:// URL to open */
   readonly url?: string,
+}
+
+/**
+ * A button that opens a specified URL and automatically logs in in current user if
+ * they allowed to do that
+ */
+export type inlineKeyboardButtonTypeLoginUrl = {
+  _: 'inlineKeyboardButtonTypeLoginUrl',
+  /** An HTTP URL to open */
+  url: string,
+  /** Unique button identifier */
+  id: number,
+  /** If non-empty, new text of the button in forwarded messages */
+  forward_text: string,
+}
+
+/**
+ * A button that opens a specified URL and automatically logs in in current user if
+ * they allowed to do that
+ */
+export type inlineKeyboardButtonTypeLoginUrl$Input = {
+  readonly _: 'inlineKeyboardButtonTypeLoginUrl',
+  /** An HTTP URL to open */
+  readonly url?: string,
+  /** Unique button identifier */
+  readonly id?: number,
+  /** If non-empty, new text of the button in forwarded messages */
+  readonly forward_text?: string,
 }
 
 /** A button that sends a special callback query to a bot */
@@ -3496,6 +4124,56 @@ export type replyMarkupInlineKeyboard$Input = {
   readonly rows?: ReadonlyArray<ReadonlyArray<inlineKeyboardButton$Input>>,
 }
 
+/** An HTTP url needs to be open */
+export type loginUrlInfoOpen = {
+  _: 'loginUrlInfoOpen',
+  /** The URL to open */
+  url: string,
+  /** True, if there is no need to show an ordinary open URL confirm */
+  skip_confirm: boolean,
+}
+
+/** An HTTP url needs to be open */
+export type loginUrlInfoOpen$Input = {
+  readonly _: 'loginUrlInfoOpen',
+  /** The URL to open */
+  readonly url?: string,
+  /** True, if there is no need to show an ordinary open URL confirm */
+  readonly skip_confirm?: boolean,
+}
+
+/** An authorization confirmation dialog needs to be shown to the user */
+export type loginUrlInfoRequestConfirmation = {
+  _: 'loginUrlInfoRequestConfirmation',
+  /** An HTTP URL to be opened */
+  url: string,
+  /** A domain of the URL */
+  domain: string,
+  /** User identifier of a bot linked with the website */
+  bot_user_id: number,
+  /**
+   * True, if the user needs to be requested to give the permission to the bot to send
+   * them messages
+   */
+  request_write_access: boolean,
+}
+
+/** An authorization confirmation dialog needs to be shown to the user */
+export type loginUrlInfoRequestConfirmation$Input = {
+  readonly _: 'loginUrlInfoRequestConfirmation',
+  /** An HTTP URL to be opened */
+  readonly url?: string,
+  /** A domain of the URL */
+  readonly domain?: string,
+  /** User identifier of a bot linked with the website */
+  readonly bot_user_id?: number,
+  /**
+   * True, if the user needs to be requested to give the permission to the bot to send
+   * them messages
+   */
+  readonly request_write_access?: boolean,
+}
+
 /** A plain text */
 export type richTextPlain = {
   _: 'richTextPlain',
@@ -3552,14 +4230,14 @@ export type richTextUnderline$Input = {
   readonly text?: RichText$Input,
 }
 
-/** A strike-through rich text */
+/** A strikethrough rich text */
 export type richTextStrikethrough = {
   _: 'richTextStrikethrough',
   /** Text */
   text: RichText,
 }
 
-/** A strike-through rich text */
+/** A strikethrough rich text */
 export type richTextStrikethrough$Input = {
   readonly _: 'richTextStrikethrough',
   /** Text */
@@ -3587,6 +4265,8 @@ export type richTextUrl = {
   text: RichText,
   /** URL */
   url: string,
+  /** True, if the URL has cached instant view server-side */
+  is_cached: boolean,
 }
 
 /** A rich text URL link */
@@ -3596,6 +4276,8 @@ export type richTextUrl$Input = {
   readonly text?: RichText$Input,
   /** URL */
   readonly url?: string,
+  /** True, if the URL has cached instant view server-side */
+  readonly is_cached?: boolean,
 }
 
 /** A rich text email link */
@@ -3681,9 +4363,9 @@ export type richTextIcon = {
   _: 'richTextIcon',
   /** The image represented as a document. The image can be in GIF, JPEG or PNG format */
   document: document,
-  /** Width of a bounding box in which the image should be shown, 0 if unknown */
+  /** Width of a bounding box in which the image should be shown; 0 if unknown */
   width: number,
-  /** Height of a bounding box in which the image should be shown, 0 if unknown */
+  /** Height of a bounding box in which the image should be shown; 0 if unknown */
   height: number,
 }
 
@@ -3692,9 +4374,9 @@ export type richTextIcon$Input = {
   readonly _: 'richTextIcon',
   /** The image represented as a document. The image can be in GIF, JPEG or PNG format */
   readonly document?: document$Input,
-  /** Width of a bounding box in which the image should be shown, 0 if unknown */
+  /** Width of a bounding box in which the image should be shown; 0 if unknown */
   readonly width?: number,
-  /** Height of a bounding box in which the image should be shown, 0 if unknown */
+  /** Height of a bounding box in which the image should be shown; 0 if unknown */
   readonly height?: number,
 }
 
@@ -3835,7 +4517,7 @@ export type pageBlockVerticalAlignmentBottom$Input = {
 /** Represents a cell of a table */
 export type pageBlockTableCell = {
   _: 'pageBlockTableCell',
-  /** Cell text */
+  /** Cell text; may be null. If the text is null, then the cell should be invisible */
   text: RichText,
   /** True, if it is a header cell */
   is_header: boolean,
@@ -3852,7 +4534,7 @@ export type pageBlockTableCell = {
 /** Represents a cell of a table */
 export type pageBlockTableCell$Input = {
   readonly _: 'pageBlockTableCell',
-  /** Cell text */
+  /** Cell text; may be null. If the text is null, then the cell should be invisible */
   readonly text?: RichText$Input,
   /** True, if it is a header cell */
   readonly is_header?: boolean,
@@ -4202,6 +4884,24 @@ export type pageBlockVideo$Input = {
   readonly is_looped?: boolean,
 }
 
+/** A voice note */
+export type pageBlockVoiceNote = {
+  _: 'pageBlockVoiceNote',
+  /** Voice note; may be null */
+  voice_note: voiceNote,
+  /** Voice note caption */
+  caption: pageBlockCaption,
+}
+
+/** A voice note */
+export type pageBlockVoiceNote$Input = {
+  readonly _: 'pageBlockVoiceNote',
+  /** Voice note; may be null */
+  readonly voice_note?: voiceNote$Input,
+  /** Voice note caption */
+  readonly caption?: pageBlockCaption$Input,
+}
+
 /** A page cover */
 export type pageBlockCover = {
   _: 'pageBlockCover',
@@ -4225,9 +4925,9 @@ export type pageBlockEmbedded = {
   html: string,
   /** Poster photo, if available; may be null */
   poster_photo: photo,
-  /** Block width, 0 if unknown */
+  /** Block width; 0 if unknown */
   width: number,
-  /** Block height, 0 if unknown */
+  /** Block height; 0 if unknown */
   height: number,
   /** Block caption */
   caption: pageBlockCaption,
@@ -4246,9 +4946,9 @@ export type pageBlockEmbedded$Input = {
   readonly html?: string,
   /** Poster photo, if available; may be null */
   readonly poster_photo?: photo$Input,
-  /** Block width, 0 if unknown */
+  /** Block width; 0 if unknown */
   readonly width?: number,
-  /** Block height, 0 if unknown */
+  /** Block height; 0 if unknown */
   readonly height?: number,
   /** Block caption */
   readonly caption?: pageBlockCaption$Input,
@@ -4265,7 +4965,7 @@ export type pageBlockEmbeddedPost = {
   url: string,
   /** Post author */
   author: string,
-  /** Post author photo */
+  /** Post author photo; may be null */
   author_photo: photo,
   /** Point in time (Unix timestamp) when the post was created; 0 if unknown */
   date: number,
@@ -4282,7 +4982,7 @@ export type pageBlockEmbeddedPost$Input = {
   readonly url?: string,
   /** Post author */
   readonly author?: string,
-  /** Post author photo */
+  /** Post author photo; may be null */
   readonly author_photo?: photo$Input,
   /** Point in time (Unix timestamp) when the post was created; 0 if unknown */
   readonly date?: number,
@@ -6253,7 +6953,7 @@ export type messageText$Input = {
 /** An animation message (GIF-style). */
 export type messageAnimation = {
   _: 'messageAnimation',
-  /** Message content */
+  /** The animation description */
   animation: animation,
   /** Animation caption */
   caption: formattedText,
@@ -6267,7 +6967,7 @@ export type messageAnimation = {
 /** An animation message (GIF-style). */
 export type messageAnimation$Input = {
   readonly _: 'messageAnimation',
-  /** Message content */
+  /** The animation description */
   readonly animation?: animation$Input,
   /** Animation caption */
   readonly caption?: formattedText$Input,
@@ -6281,7 +6981,7 @@ export type messageAnimation$Input = {
 /** An audio message */
 export type messageAudio = {
   _: 'messageAudio',
-  /** Message content */
+  /** The audio description */
   audio: audio,
   /** Audio caption */
   caption: formattedText,
@@ -6290,7 +6990,7 @@ export type messageAudio = {
 /** An audio message */
 export type messageAudio$Input = {
   readonly _: 'messageAudio',
-  /** Message content */
+  /** The audio description */
   readonly audio?: audio$Input,
   /** Audio caption */
   readonly caption?: formattedText$Input,
@@ -6299,7 +6999,7 @@ export type messageAudio$Input = {
 /** A document message (general file) */
 export type messageDocument = {
   _: 'messageDocument',
-  /** Message content */
+  /** The document description */
   document: document,
   /** Document caption */
   caption: formattedText,
@@ -6308,7 +7008,7 @@ export type messageDocument = {
 /** A document message (general file) */
 export type messageDocument$Input = {
   readonly _: 'messageDocument',
-  /** Message content */
+  /** The document description */
   readonly document?: document$Input,
   /** Document caption */
   readonly caption?: formattedText$Input,
@@ -6317,7 +7017,7 @@ export type messageDocument$Input = {
 /** A photo message */
 export type messagePhoto = {
   _: 'messagePhoto',
-  /** Message content */
+  /** The photo description */
   photo: photo,
   /** Photo caption */
   caption: formattedText,
@@ -6328,7 +7028,7 @@ export type messagePhoto = {
 /** A photo message */
 export type messagePhoto$Input = {
   readonly _: 'messagePhoto',
-  /** Message content */
+  /** The photo description */
   readonly photo?: photo$Input,
   /** Photo caption */
   readonly caption?: formattedText$Input,
@@ -6349,21 +7049,21 @@ export type messageExpiredPhoto$Input = {
 /** A sticker message */
 export type messageSticker = {
   _: 'messageSticker',
-  /** Message content */
+  /** The sticker description */
   sticker: sticker,
 }
 
 /** A sticker message */
 export type messageSticker$Input = {
   readonly _: 'messageSticker',
-  /** Message content */
+  /** The sticker description */
   readonly sticker?: sticker$Input,
 }
 
 /** A video message */
 export type messageVideo = {
   _: 'messageVideo',
-  /** Message content */
+  /** The video description */
   video: video,
   /** Video caption */
   caption: formattedText,
@@ -6377,7 +7077,7 @@ export type messageVideo = {
 /** A video message */
 export type messageVideo$Input = {
   readonly _: 'messageVideo',
-  /** Message content */
+  /** The video description */
   readonly video?: video$Input,
   /** Video caption */
   readonly caption?: formattedText$Input,
@@ -6401,7 +7101,7 @@ export type messageExpiredVideo$Input = {
 /** A video note message */
 export type messageVideoNote = {
   _: 'messageVideoNote',
-  /** Message content */
+  /** The video note description */
   video_note: videoNote,
   /** True, if at least one of the recipients has viewed the video note */
   is_viewed: boolean,
@@ -6415,7 +7115,7 @@ export type messageVideoNote = {
 /** A video note message */
 export type messageVideoNote$Input = {
   readonly _: 'messageVideoNote',
-  /** Message content */
+  /** The video note description */
   readonly video_note?: videoNote$Input,
   /** True, if at least one of the recipients has viewed the video note */
   readonly is_viewed?: boolean,
@@ -6429,7 +7129,7 @@ export type messageVideoNote$Input = {
 /** A voice note message */
 export type messageVoiceNote = {
   _: 'messageVoiceNote',
-  /** Message content */
+  /** The voice note description */
   voice_note: voiceNote,
   /** Voice note caption */
   caption: formattedText,
@@ -6440,7 +7140,7 @@ export type messageVoiceNote = {
 /** A voice note message */
 export type messageVoiceNote$Input = {
   readonly _: 'messageVoiceNote',
-  /** Message content */
+  /** The voice note description */
   readonly voice_note?: voiceNote$Input,
   /** Voice note caption */
   readonly caption?: formattedText$Input,
@@ -6451,7 +7151,7 @@ export type messageVoiceNote$Input = {
 /** A message with a location */
 export type messageLocation = {
   _: 'messageLocation',
-  /** Message content */
+  /** The location description */
   location: location,
   /**
    * Time relative to the message sent date until which the location can be updated, in
@@ -6468,7 +7168,7 @@ export type messageLocation = {
 /** A message with a location */
 export type messageLocation$Input = {
   readonly _: 'messageLocation',
-  /** Message content */
+  /** The location description */
   readonly location?: location$Input,
   /**
    * Time relative to the message sent date until which the location can be updated, in
@@ -6485,56 +7185,56 @@ export type messageLocation$Input = {
 /** A message with information about a venue */
 export type messageVenue = {
   _: 'messageVenue',
-  /** Message content */
+  /** The venue description */
   venue: venue,
 }
 
 /** A message with information about a venue */
 export type messageVenue$Input = {
   readonly _: 'messageVenue',
-  /** Message content */
+  /** The venue description */
   readonly venue?: venue$Input,
 }
 
 /** A message with a user contact */
 export type messageContact = {
   _: 'messageContact',
-  /** Message content */
+  /** The contact description */
   contact: contact,
 }
 
 /** A message with a user contact */
 export type messageContact$Input = {
   readonly _: 'messageContact',
-  /** Message content */
+  /** The contact description */
   readonly contact?: contact$Input,
 }
 
 /** A message with a game */
 export type messageGame = {
   _: 'messageGame',
-  /** Game */
+  /** The game description */
   game: game,
 }
 
 /** A message with a game */
 export type messageGame$Input = {
   readonly _: 'messageGame',
-  /** Game */
+  /** The game description */
   readonly game?: game$Input,
 }
 
 /** A message with a poll */
 export type messagePoll = {
   _: 'messagePoll',
-  /** Poll */
+  /** The poll description */
   poll: poll,
 }
 
 /** A message with a poll */
 export type messagePoll$Input = {
   readonly _: 'messagePoll',
-  /** Poll */
+  /** The poll description */
   readonly poll?: poll$Input,
 }
 
@@ -7042,6 +7742,16 @@ export type textEntityTypeEmailAddress$Input = {
   readonly _: 'textEntityTypeEmailAddress',
 }
 
+/** A phone number */
+export type textEntityTypePhoneNumber = {
+  _: 'textEntityTypePhoneNumber',
+}
+
+/** A phone number */
+export type textEntityTypePhoneNumber$Input = {
+  readonly _: 'textEntityTypePhoneNumber',
+}
+
 /** A bold text */
 export type textEntityTypeBold = {
   _: 'textEntityTypeBold',
@@ -7060,6 +7770,26 @@ export type textEntityTypeItalic = {
 /** An italic text */
 export type textEntityTypeItalic$Input = {
   readonly _: 'textEntityTypeItalic',
+}
+
+/** An underlined text */
+export type textEntityTypeUnderline = {
+  _: 'textEntityTypeUnderline',
+}
+
+/** An underlined text */
+export type textEntityTypeUnderline$Input = {
+  readonly _: 'textEntityTypeUnderline',
+}
+
+/** A strikethrough text */
+export type textEntityTypeStrikethrough = {
+  _: 'textEntityTypeStrikethrough',
+}
+
+/** A strikethrough text */
+export type textEntityTypeStrikethrough$Input = {
+  readonly _: 'textEntityTypeStrikethrough',
 }
 
 /** Text that must be formatted as if inside a code HTML tag */
@@ -7124,16 +7854,6 @@ export type textEntityTypeMentionName$Input = {
   readonly user_id?: number,
 }
 
-/** A phone number */
-export type textEntityTypePhoneNumber = {
-  _: 'textEntityTypePhoneNumber',
-}
-
-/** A phone number */
-export type textEntityTypePhoneNumber$Input = {
-  readonly _: 'textEntityTypePhoneNumber',
-}
-
 /**
  * A thumbnail to be sent along with a file; should be in JPEG or WEBP format for stickers,
  * and less than 200 kB in size
@@ -7162,13 +7882,77 @@ export type inputThumbnail$Input = {
   readonly height?: number,
 }
 
+/** The message will be sent at the specified date */
+export type messageSchedulingStateSendAtDate = {
+  _: 'messageSchedulingStateSendAtDate',
+  /** Date the message will be sent. The date must be within 367 days in the future */
+  send_date: number,
+}
+
+/** The message will be sent at the specified date */
+export type messageSchedulingStateSendAtDate$Input = {
+  readonly _: 'messageSchedulingStateSendAtDate',
+  /** Date the message will be sent. The date must be within 367 days in the future */
+  readonly send_date?: number,
+}
+
+/**
+ * The message will be sent when the peer will be online. Applicable to private chats
+ * only and when the exact online status of the peer is known
+ */
+export type messageSchedulingStateSendWhenOnline = {
+  _: 'messageSchedulingStateSendWhenOnline',
+}
+
+/**
+ * The message will be sent when the peer will be online. Applicable to private chats
+ * only and when the exact online status of the peer is known
+ */
+export type messageSchedulingStateSendWhenOnline$Input = {
+  readonly _: 'messageSchedulingStateSendWhenOnline',
+}
+
+/** Options to be used when a message is send */
+export type sendMessageOptions = {
+  _: 'sendMessageOptions',
+  /**
+   * Pass true to disable notification for the message. Must be false if the message is
+   * sent to a secret chat
+   */
+  disable_notification: boolean,
+  /** Pass true if the message is sent from the background */
+  from_background: boolean,
+  /**
+   * Message scheduling state. Messages sent to a secret chat, live location messages
+   * and self-destructing messages can't be scheduled
+   */
+  scheduling_state: MessageSchedulingState,
+}
+
+/** Options to be used when a message is send */
+export type sendMessageOptions$Input = {
+  readonly _: 'sendMessageOptions',
+  /**
+   * Pass true to disable notification for the message. Must be false if the message is
+   * sent to a secret chat
+   */
+  readonly disable_notification?: boolean,
+  /** Pass true if the message is sent from the background */
+  readonly from_background?: boolean,
+  /**
+   * Message scheduling state. Messages sent to a secret chat, live location messages
+   * and self-destructing messages can't be scheduled
+   */
+  readonly scheduling_state?: MessageSchedulingState$Input,
+}
+
 /** A text message */
 export type inputMessageText = {
   _: 'inputMessageText',
   /**
    * Formatted text to be sent; 1-GetOption("message_text_length_max") characters. Only
-   * Bold, Italic, Code, Pre, PreCode and TextUrl entities are allowed to be specified
-   * manually
+   * Bold, Italic, Underline, Strikethrough, Code, Pre, PreCode, TextUrl and MentionName
+   * entities are allowed to be specified manually
    */
   text: formattedText,
   /** True, if rich web page previews for URLs in the message text should be disabled */
@@ -7182,8 +7966,8 @@ export type inputMessageText$Input = {
   readonly _: 'inputMessageText',
   /**
    * Formatted text to be sent; 1-GetOption("message_text_length_max") characters. Only
-   * Bold, Italic, Code, Pre, PreCode and TextUrl entities are allowed to be specified
-   * manually
+   * Bold, Italic, Underline, Strikethrough, Code, Pre, PreCode, TextUrl and MentionName
+   * entities are allowed to be specified manually
    */
   readonly text?: formattedText$Input,
   /** True, if rich web page previews for URLs in the message text should be disabled */
@@ -7462,7 +8246,7 @@ export type inputMessageLocation = {
   /** Location to be sent */
   location: location,
   /**
-   * Period for which the location can be updated, in seconds; should bebetween 60 and
+   * Period for which the location can be updated, in seconds; should be between 60 and
    * 86400 for a live location and 0 otherwise
    */
   live_period: number,
@@ -7474,7 +8258,7 @@ export type inputMessageLocation$Input = {
   /** Location to be sent */
   readonly location?: location$Input,
   /**
-   * Period for which the location can be updated, in seconds; should bebetween 60 and
+   * Period for which the location can be updated, in seconds; should be between 60 and
    * 86400 for a live location and 0 otherwise
    */
   readonly live_period?: number,
@@ -7580,22 +8364,46 @@ export type inputMessageInvoice$Input = {
   readonly start_parameter?: string,
 }
 
-/** A message with a poll. Polls can't be sent to private or secret chats */
+/**
+ * A message with a poll. Polls can't be sent to secret chats. Polls can be sent only
+ * to a private chat with a bot
+ */
 export type inputMessagePoll = {
   _: 'inputMessagePoll',
   /** Poll question, 1-255 characters */
   question: string,
   /** List of poll answer options, 2-10 strings 1-100 characters each */
   options: Array<string>,
+  /**
+   * True, if the poll voters are anonymous. Non-anonymous polls can't be sent or forwarded
+   * to channels
+   */
+  is_anonymous: boolean,
+  /** Type of the poll */
+  type: PollType,
+  /** True, if the poll needs to be sent already closed; for bots only */
+  is_closed: boolean,
 }
 
-/** A message with a poll. Polls can't be sent to private or secret chats */
+/**
+ * A message with a poll. Polls can't be sent to secret chats. Polls can be sent only
+ * to a private chat with a bot
+ */
 export type inputMessagePoll$Input = {
   readonly _: 'inputMessagePoll',
   /** Poll question, 1-255 characters */
   readonly question?: string,
   /** List of poll answer options, 2-10 strings 1-100 characters each */
   readonly options?: ReadonlyArray<string>,
+  /**
+   * True, if the poll voters are anonymous. Non-anonymous polls can't be sent or forwarded
+   * to channels
+   */
+  readonly is_anonymous?: boolean,
+  /** Type of the poll */
+  readonly type?: PollType$Input,
+  /** True, if the poll needs to be sent already closed; for bots only */
+  readonly is_closed?: boolean,
 }
 
 /** A forwarded message */
@@ -7610,6 +8418,16 @@ export type inputMessageForwarded = {
    * game messages
    */
   in_game_share: boolean,
+  /**
+   * True, if content of the message needs to be copied without a link to the original
+   * message. Always true if the message is forwarded to a secret chat
+   */
+  send_copy: boolean,
+  /**
+   * True, if media caption of the message copy needs to be removed. Ignored if send_copy
+   * is false
+   */
+  remove_caption: boolean,
 }
 
 /** A forwarded message */
@@ -7624,6 +8442,16 @@ export type inputMessageForwarded$Input = {
    * game messages
    */
   readonly in_game_share?: boolean,
+  /**
+   * True, if content of the message needs to be copied without a link to the original
+   * message. Always true if the message is forwarded to a secret chat
+   */
+  readonly send_copy?: boolean,
+  /**
+   * True, if media caption of the message copy needs to be removed. Ignored if send_copy
+   * is false
+   */
+  readonly remove_caption?: boolean,
 }
 
 /** Returns all found messages, no filter is applied */
@@ -8032,24 +8860,16 @@ export type stickers$Input = {
   readonly stickers?: ReadonlyArray<sticker$Input>,
 }
 
-/**
- * Represents a list of all emoji corresponding to a sticker in a sticker set. The list
- * is only for informational purposes, because a sticker is always sent with a fixed
- * emoji from the corresponding Sticker object
- */
-export type stickerEmojis = {
-  _: 'stickerEmojis',
+/** Represents a list of emoji */
+export type emojis = {
+  _: 'emojis',
   /** List of emojis */
   emojis: Array<string>,
 }
 
-/**
- * Represents a list of all emoji corresponding to a sticker in a sticker set. The list
- * is only for informational purposes, because a sticker is always sent with a fixed
- * emoji from the corresponding Sticker object
- */
-export type stickerEmojis$Input = {
-  readonly _: 'stickerEmojis',
+/** Represents a list of emoji */
+export type emojis$Input = {
+  readonly _: 'emojis',
   /** List of emojis */
   readonly emojis?: ReadonlyArray<string>,
 }
@@ -8063,6 +8883,11 @@ export type stickerSet = {
   title: string,
   /** Name of the sticker set */
   name: string,
+  /**
+   * Sticker set thumbnail in WEBP format with width and height 100; may be null. The
+   * file can be downloaded only before the thumbnail is changed
+   */
+  thumbnail: photoSize,
   /** True, if the sticker set has been installed by the current user */
   is_installed: boolean,
   /**
@@ -8072,14 +8897,20 @@ export type stickerSet = {
   is_archived: boolean,
   /** True, if the sticker set is official */
   is_official: boolean,
+  /** True, is the stickers in the set are animated */
+  is_animated: boolean,
   /** True, if the stickers in the set are masks */
   is_masks: boolean,
   /** True for already viewed trending sticker sets */
   is_viewed: boolean,
   /** List of stickers in this set */
   stickers: Array<sticker>,
-  /** A list of emoji corresponding to the stickers in the same order */
-  emojis: Array<stickerEmojis>,
+  /**
+   * A list of emoji corresponding to the stickers in the same order. The list is only
+   * for informational purposes, because a sticker is always sent with a fixed emoji from
+   * the corresponding Sticker object
+   */
+  emojis: Array<emojis>,
 }
 
 /** Represents a sticker set */
@@ -8091,6 +8922,11 @@ export type stickerSet$Input = {
   readonly title?: string,
   /** Name of the sticker set */
   readonly name?: string,
+  /**
+   * Sticker set thumbnail in WEBP format with width and height 100; may be null. The
+   * file can be downloaded only before the thumbnail is changed
+   */
+  readonly thumbnail?: photoSize$Input,
   /** True, if the sticker set has been installed by the current user */
   readonly is_installed?: boolean,
   /**
@@ -8100,14 +8936,20 @@ export type stickerSet$Input = {
   readonly is_archived?: boolean,
   /** True, if the sticker set is official */
   readonly is_official?: boolean,
+  /** True, is the stickers in the set are animated */
+  readonly is_animated?: boolean,
   /** True, if the stickers in the set are masks */
   readonly is_masks?: boolean,
   /** True for already viewed trending sticker sets */
   readonly is_viewed?: boolean,
   /** List of stickers in this set */
   readonly stickers?: ReadonlyArray<sticker$Input>,
-  /** A list of emoji corresponding to the stickers in the same order */
-  readonly emojis?: ReadonlyArray<stickerEmojis$Input>,
+  /**
+   * A list of emoji corresponding to the stickers in the same order. The list is only
+   * for informational purposes, because a sticker is always sent with a fixed emoji from
+   * the corresponding Sticker object
+   */
+  readonly emojis?: ReadonlyArray<emojis$Input>,
 }
 
 /** Represents short information about a sticker set */
@@ -8119,6 +8961,8 @@ export type stickerSetInfo = {
   title: string,
   /** Name of the sticker set */
   name: string,
+  /** Sticker set thumbnail in WEBP format with width and height 100; may be null */
+  thumbnail: photoSize,
   /** True, if the sticker set has been installed by current user */
   is_installed: boolean,
   /**
@@ -8128,6 +8972,8 @@ export type stickerSetInfo = {
   is_archived: boolean,
   /** True, if the sticker set is official */
   is_official: boolean,
+  /** True, is the stickers in the set are animated */
+  is_animated: boolean,
   /** True, if the stickers in the set are masks */
   is_masks: boolean,
   /** True for already viewed trending sticker sets */
@@ -8150,6 +8996,8 @@ export type stickerSetInfo$Input = {
   readonly title?: string,
   /** Name of the sticker set */
   readonly name?: string,
+  /** Sticker set thumbnail in WEBP format with width and height 100; may be null */
+  readonly thumbnail?: photoSize$Input,
   /** True, if the sticker set has been installed by current user */
   readonly is_installed?: boolean,
   /**
@@ -8159,6 +9007,8 @@ export type stickerSetInfo$Input = {
   readonly is_archived?: boolean,
   /** True, if the sticker set is official */
   readonly is_official?: boolean,
+  /** True, is the stickers in the set are animated */
+  readonly is_animated?: boolean,
   /** True, if the stickers in the set are masks */
   readonly is_masks?: boolean,
   /** True for already viewed trending sticker sets */
@@ -8259,9 +9109,9 @@ export type callProtocol = {
   udp_p2p: boolean,
   /** True, if connection through UDP reflectors is supported */
   udp_reflector: boolean,
-  /** Minimum supported API layer; use 65 */
+  /** The minimum supported API layer; use 65 */
   min_layer: number,
-  /** Maximum supported API layer; use 65 */
+  /** The maximum supported API layer; use 65 */
   max_layer: number,
 }
 
@@ -8272,9 +9122,9 @@ export type callProtocol$Input = {
   readonly udp_p2p?: boolean,
   /** True, if connection through UDP reflectors is supported */
   readonly udp_reflector?: boolean,
-  /** Minimum supported API layer; use 65 */
+  /** The minimum supported API layer; use 65 */
   readonly min_layer?: number,
-  /** Maximum supported API layer; use 65 */
+  /** The maximum supported API layer; use 65 */
   readonly max_layer?: number,
 }
 
@@ -8436,6 +9286,76 @@ export type callStateError$Input = {
   readonly error?: error$Input,
 }
 
+/** The user heard their own voice */
+export type callProblemEcho = {
+  _: 'callProblemEcho',
+}
+
+/** The user heard their own voice */
+export type callProblemEcho$Input = {
+  readonly _: 'callProblemEcho',
+}
+
+/** The user heard background noise */
+export type callProblemNoise = {
+  _: 'callProblemNoise',
+}
+
+/** The user heard background noise */
+export type callProblemNoise$Input = {
+  readonly _: 'callProblemNoise',
+}
+
+/** The other side kept disappearing */
+export type callProblemInterruptions = {
+  _: 'callProblemInterruptions',
+}
+
+/** The other side kept disappearing */
+export type callProblemInterruptions$Input = {
+  readonly _: 'callProblemInterruptions',
+}
+
+/** The speech was distorted */
+export type callProblemDistortedSpeech = {
+  _: 'callProblemDistortedSpeech',
+}
+
+/** The speech was distorted */
+export type callProblemDistortedSpeech$Input = {
+  readonly _: 'callProblemDistortedSpeech',
+}
+
+/** The user couldn't hear the other side */
+export type callProblemSilentLocal = {
+  _: 'callProblemSilentLocal',
+}
+
+/** The user couldn't hear the other side */
+export type callProblemSilentLocal$Input = {
+  readonly _: 'callProblemSilentLocal',
+}
+
+/** The other side couldn't hear the user */
+export type callProblemSilentRemote = {
+  _: 'callProblemSilentRemote',
+}
+
+/** The other side couldn't hear the user */
+export type callProblemSilentRemote$Input = {
+  readonly _: 'callProblemSilentRemote',
+}
+
+/** The call ended unexpectedly */
+export type callProblemDropped = {
+  _: 'callProblemDropped',
+}
+
+/** The call ended unexpectedly */
+export type callProblemDropped$Input = {
+  readonly _: 'callProblemDropped',
+}
+
 /** Describes a call */
 export type call = {
   _: 'call',
@@ -8460,6 +9380,44 @@ export type call$Input = {
   readonly is_outgoing?: boolean,
   /** Call state */
   readonly state?: CallState$Input,
+}
+
+/** Contains settings for the authentication of the user's phone number */
+export type phoneNumberAuthenticationSettings = {
+  _: 'phoneNumberAuthenticationSettings',
+  /**
+   * Pass true if the authentication code may be sent via flash call to the specified
+   * phone number
+   */
+  allow_flash_call: boolean,
+  /** Pass true if the authenticated phone number is used on the current device */
+  is_current_phone_number: boolean,
+  /**
+   * For official applications only. True, if the app can use Android SMS Retriever API
+   * (requires Google Play Services >= 10.2) to automatically receive the authentication
+   * code from the SMS. See https://developers.google.com/identity/sms-retriever/ for
+   * more details
+   */
+  allow_sms_retriever_api: boolean,
+}
+
+/** Contains settings for the authentication of the user's phone number */
+export type phoneNumberAuthenticationSettings$Input = {
+  readonly _: 'phoneNumberAuthenticationSettings',
+  /**
+   * Pass true if the authentication code may be sent via flash call to the specified
+   * phone number
+   */
+  readonly allow_flash_call?: boolean,
+  /** Pass true if the authenticated phone number is used on the current device */
+  readonly is_current_phone_number?: boolean,
+  /**
+   * For official applications only. True, if the app can use Android SMS Retriever API
+   * (requires Google Play Services >= 10.2) to automatically receive the authentication
+   * code from the SMS. See https://developers.google.com/identity/sms-retriever/ for
+   * more details
+   */
+  readonly allow_sms_retriever_api?: boolean,
 }
 
 /** Represents a list of animations */
@@ -8962,14 +9920,14 @@ export type inputInlineQueryResultPhoto$Input = {
   readonly input_message_content?: InputMessageContent$Input,
 }
 
-/** Represents a link to a WEBP sticker */
+/** Represents a link to a WEBP or TGS sticker */
 export type inputInlineQueryResultSticker = {
   _: 'inputInlineQueryResultSticker',
   /** Unique identifier of the query result */
   id: string,
   /** URL of the sticker thumbnail, if it exists */
   thumbnail_url: string,
-  /** The URL of the WEBP sticker (sticker file size must not exceed 5MB) */
+  /** The URL of the WEBP or TGS sticker (sticker file size must not exceed 5MB) */
   sticker_url: string,
   /** Width of the sticker */
   sticker_width: number,
@@ -8984,14 +9942,14 @@ export type inputInlineQueryResultSticker = {
   input_message_content: InputMessageContent,
 }
 
-/** Represents a link to a WEBP sticker */
+/** Represents a link to a WEBP or TGS sticker */
 export type inputInlineQueryResultSticker$Input = {
   readonly _: 'inputInlineQueryResultSticker',
   /** Unique identifier of the query result */
   readonly id?: string,
   /** URL of the sticker thumbnail, if it exists */
   readonly thumbnail_url?: string,
-  /** The URL of the WEBP sticker (sticker file size must not exceed 5MB) */
+  /** The URL of the WEBP or TGS sticker (sticker file size must not exceed 5MB) */
   readonly sticker_url?: string,
   /** Width of the sticker */
   readonly sticker_width?: number,
@@ -9616,6 +10574,20 @@ export type chatEventMessageDeleted$Input = {
   readonly message?: message$Input,
 }
 
+/** A poll in a message was stopped */
+export type chatEventPollStopped = {
+  _: 'chatEventPollStopped',
+  /** The message with the poll */
+  message: message,
+}
+
+/** A poll in a message was stopped */
+export type chatEventPollStopped$Input = {
+  readonly _: 'chatEventPollStopped',
+  /** The message with the poll */
+  readonly message?: message$Input,
+}
+
 /** A message was pinned */
 export type chatEventMessagePinned = {
   _: 'chatEventMessagePinned',
@@ -9752,6 +10724,24 @@ export type chatEventTitleChanged$Input = {
   readonly new_title?: string,
 }
 
+/** The chat permissions was changed */
+export type chatEventPermissionsChanged = {
+  _: 'chatEventPermissionsChanged',
+  /** Previous chat permissions */
+  old_permissions: chatPermissions,
+  /** New chat permissions */
+  new_permissions: chatPermissions,
+}
+
+/** The chat permissions was changed */
+export type chatEventPermissionsChanged$Input = {
+  readonly _: 'chatEventPermissionsChanged',
+  /** Previous chat permissions */
+  readonly old_permissions?: chatPermissions$Input,
+  /** New chat permissions */
+  readonly new_permissions?: chatPermissions$Input,
+}
+
 /** The chat description was changed */
 export type chatEventDescriptionChanged = {
   _: 'chatEventDescriptionChanged',
@@ -9792,32 +10782,68 @@ export type chatEventUsernameChanged$Input = {
 export type chatEventPhotoChanged = {
   _: 'chatEventPhotoChanged',
   /** Previous chat photo value; may be null */
-  old_photo: chatPhoto,
+  old_photo: photo,
   /** New chat photo value; may be null */
-  new_photo: chatPhoto,
+  new_photo: photo,
 }
 
 /** The chat photo was changed */
 export type chatEventPhotoChanged$Input = {
   readonly _: 'chatEventPhotoChanged',
   /** Previous chat photo value; may be null */
-  readonly old_photo?: chatPhoto$Input,
+  readonly old_photo?: photo$Input,
   /** New chat photo value; may be null */
-  readonly new_photo?: chatPhoto$Input,
+  readonly new_photo?: photo$Input,
 }
 
-/** The anyone_can_invite setting of a supergroup chat was toggled */
+/** The can_invite_users permission of a supergroup chat was toggled */
 export type chatEventInvitesToggled = {
   _: 'chatEventInvitesToggled',
-  /** New value of anyone_can_invite */
-  anyone_can_invite: boolean,
+  /** New value of can_invite_users permission */
+  can_invite_users: boolean,
 }
 
-/** The anyone_can_invite setting of a supergroup chat was toggled */
+/** The can_invite_users permission of a supergroup chat was toggled */
 export type chatEventInvitesToggled$Input = {
   readonly _: 'chatEventInvitesToggled',
-  /** New value of anyone_can_invite */
-  readonly anyone_can_invite?: boolean,
+  /** New value of can_invite_users permission */
+  readonly can_invite_users?: boolean,
+}
+
+/** The linked chat of a supergroup was changed */
+export type chatEventLinkedChatChanged = {
+  _: 'chatEventLinkedChatChanged',
+  /** Previous supergroup linked chat identifier */
+  old_linked_chat_id: number,
+  /** New supergroup linked chat identifier */
+  new_linked_chat_id: number,
+}
+
+/** The linked chat of a supergroup was changed */
+export type chatEventLinkedChatChanged$Input = {
+  readonly _: 'chatEventLinkedChatChanged',
+  /** Previous supergroup linked chat identifier */
+  readonly old_linked_chat_id?: number,
+  /** New supergroup linked chat identifier */
+  readonly new_linked_chat_id?: number,
+}
+
+/** The slow_mode_delay setting of a supergroup was changed */
+export type chatEventSlowModeDelayChanged = {
+  _: 'chatEventSlowModeDelayChanged',
+  /** Previous value of slow_mode_delay */
+  old_slow_mode_delay: number,
+  /** New value of slow_mode_delay */
+  new_slow_mode_delay: number,
+}
+
+/** The slow_mode_delay setting of a supergroup was changed */
+export type chatEventSlowModeDelayChanged$Input = {
+  readonly _: 'chatEventSlowModeDelayChanged',
+  /** Previous value of slow_mode_delay */
+  readonly old_slow_mode_delay?: number,
+  /** New value of slow_mode_delay */
+  readonly new_slow_mode_delay?: number,
 }
 
 /** The sign_messages setting of a channel was toggled */
@@ -9850,6 +10876,24 @@ export type chatEventStickerSetChanged$Input = {
   readonly old_sticker_set_id?: number | string,
   /** New identifier of the chat sticker set; 0 if none */
   readonly new_sticker_set_id?: number | string,
+}
+
+/** The supergroup location was changed */
+export type chatEventLocationChanged = {
+  _: 'chatEventLocationChanged',
+  /** Previous location; may be null */
+  old_location: chatLocation,
+  /** New location; may be null */
+  new_location: chatLocation,
+}
+
+/** The supergroup location was changed */
+export type chatEventLocationChanged$Input = {
+  readonly _: 'chatEventLocationChanged',
+  /** Previous location; may be null */
+  readonly old_location?: chatLocation$Input,
+  /** New location; may be null */
+  readonly new_location?: chatLocation$Input,
 }
 
 /** The is_all_history_available setting of a supergroup was toggled */
@@ -10366,52 +11410,194 @@ export type pushReceiverId$Input = {
   readonly id?: number | string,
 }
 
-/** Contains information about a wallpaper */
-export type wallpaper = {
-  _: 'wallpaper',
-  /** Unique persistent wallpaper identifier */
-  id: number,
-  /**
-   * Available variants of the wallpaper in different sizes. These photos can only be
-   * downloaded; they can't be sent in a message
-   */
-  sizes: Array<photoSize>,
-  /**
-   * Main color of the wallpaper in RGB24 format; should be treated as background color
-   * if no photos are specified
-   */
+/** Describes a solid fill of a background */
+export type backgroundFillSolid = {
+  _: 'backgroundFillSolid',
+  /** A color of the background in the RGB24 format */
   color: number,
 }
 
-/** Contains information about a wallpaper */
-export type wallpaper$Input = {
-  readonly _: 'wallpaper',
-  /** Unique persistent wallpaper identifier */
-  readonly id?: number,
-  /**
-   * Available variants of the wallpaper in different sizes. These photos can only be
-   * downloaded; they can't be sent in a message
-   */
-  readonly sizes?: ReadonlyArray<photoSize$Input>,
-  /**
-   * Main color of the wallpaper in RGB24 format; should be treated as background color
-   * if no photos are specified
-   */
+/** Describes a solid fill of a background */
+export type backgroundFillSolid$Input = {
+  readonly _: 'backgroundFillSolid',
+  /** A color of the background in the RGB24 format */
   readonly color?: number,
 }
 
-/** Contains a list of wallpapers */
-export type wallpapers = {
-  _: 'wallpapers',
-  /** A list of wallpapers */
-  wallpapers: Array<wallpaper>,
+/** Describes a gradient fill of a background */
+export type backgroundFillGradient = {
+  _: 'backgroundFillGradient',
+  /** A top color of the background in the RGB24 format */
+  top_color: number,
+  /** A bottom color of the background in the RGB24 format */
+  bottom_color: number,
+  /**
+   * Clockwise rotation angle of the gradient, in degrees; 0-359. Should be always divisible
+   * by 45
+   */
+  rotation_angle: number,
 }
 
-/** Contains a list of wallpapers */
-export type wallpapers$Input = {
-  readonly _: 'wallpapers',
-  /** A list of wallpapers */
-  readonly wallpapers?: ReadonlyArray<wallpaper$Input>,
+/** Describes a gradient fill of a background */
+export type backgroundFillGradient$Input = {
+  readonly _: 'backgroundFillGradient',
+  /** A top color of the background in the RGB24 format */
+  readonly top_color?: number,
+  /** A bottom color of the background in the RGB24 format */
+  readonly bottom_color?: number,
+  /**
+   * Clockwise rotation angle of the gradient, in degrees; 0-359. Should be always divisible
+   * by 45
+   */
+  readonly rotation_angle?: number,
+}
+
+/** A wallpaper in JPEG format */
+export type backgroundTypeWallpaper = {
+  _: 'backgroundTypeWallpaper',
+  /**
+   * True, if the wallpaper must be downscaled to fit in 450x450 square and then box-blurred
+   * with radius 12
+   */
+  is_blurred: boolean,
+  /** True, if the background needs to be slightly moved when device is tilted */
+  is_moving: boolean,
+}
+
+/** A wallpaper in JPEG format */
+export type backgroundTypeWallpaper$Input = {
+  readonly _: 'backgroundTypeWallpaper',
+  /**
+   * True, if the wallpaper must be downscaled to fit in 450x450 square and then box-blurred
+   * with radius 12
+   */
+  readonly is_blurred?: boolean,
+  /** True, if the background needs to be slightly moved when device is tilted */
+  readonly is_moving?: boolean,
+}
+
+/**
+ * A PNG or TGV (gzipped subset of SVG with MIME type "application/x-tgwallpattern")
+ * pattern to be combined with the background fill chosen by the user
+ */
+export type backgroundTypePattern = {
+  _: 'backgroundTypePattern',
+  /** Description of the background fill */
+  fill: BackgroundFill,
+  /** Intensity of the pattern when it is shown above the filled background, 0-100 */
+  intensity: number,
+  /** True, if the background needs to be slightly moved when device is tilted */
+  is_moving: boolean,
+}
+
+/**
+ * A PNG or TGV (gzipped subset of SVG with MIME type "application/x-tgwallpattern")
+ * pattern to be combined with the background fill chosen by the user
+ */
+export type backgroundTypePattern$Input = {
+  readonly _: 'backgroundTypePattern',
+  /** Description of the background fill */
+  readonly fill?: BackgroundFill$Input,
+  /** Intensity of the pattern when it is shown above the filled background, 0-100 */
+  readonly intensity?: number,
+  /** True, if the background needs to be slightly moved when device is tilted */
+  readonly is_moving?: boolean,
+}
+
+/** A filled background */
+export type backgroundTypeFill = {
+  _: 'backgroundTypeFill',
+  /** Description of the background fill */
+  fill: BackgroundFill,
+}
+
+/** A filled background */
+export type backgroundTypeFill$Input = {
+  readonly _: 'backgroundTypeFill',
+  /** Description of the background fill */
+  readonly fill?: BackgroundFill$Input,
+}
+
+/** Describes a chat background */
+export type background = {
+  _: 'background',
+  /** Unique background identifier */
+  id: number | string,
+  /** True, if this is one of default backgrounds */
+  is_default: boolean,
+  /** True, if the background is dark and is recommended to be used with dark theme */
+  is_dark: boolean,
+  /** Unique background name */
+  name: string,
+  /** Document with the background; may be null. Null only for filled backgrounds */
+  document: document,
+  /** Type of the background */
+  type: BackgroundType,
+}
+
+/** Describes a chat background */
+export type background$Input = {
+  readonly _: 'background',
+  /** Unique background identifier */
+  readonly id?: number | string,
+  /** True, if this is one of default backgrounds */
+  readonly is_default?: boolean,
+  /** True, if the background is dark and is recommended to be used with dark theme */
+  readonly is_dark?: boolean,
+  /** Unique background name */
+  readonly name?: string,
+  /** Document with the background; may be null. Null only for filled backgrounds */
+  readonly document?: document$Input,
+  /** Type of the background */
+  readonly type?: BackgroundType$Input,
+}
+
+/** Contains a list of backgrounds */
+export type backgrounds = {
+  _: 'backgrounds',
+  /** A list of backgrounds */
+  backgrounds: Array<background>,
+}
+
+/** Contains a list of backgrounds */
+export type backgrounds$Input = {
+  readonly _: 'backgrounds',
+  /** A list of backgrounds */
+  readonly backgrounds?: ReadonlyArray<background$Input>,
+}
+
+/** A background from a local file */
+export type inputBackgroundLocal = {
+  _: 'inputBackgroundLocal',
+  /**
+   * Background file to use. Only inputFileLocal and inputFileGenerated are supported.
+   * The file must be in JPEG format for wallpapers and in PNG format for patterns
+   */
+  background: InputFile,
+}
+
+/** A background from a local file */
+export type inputBackgroundLocal$Input = {
+  readonly _: 'inputBackgroundLocal',
+  /**
+   * Background file to use. Only inputFileLocal and inputFileGenerated are supported.
+   * The file must be in JPEG format for wallpapers and in PNG format for patterns
+   */
+  readonly background?: InputFile$Input,
+}
+
+/** A background from the server */
+export type inputBackgroundRemote = {
+  _: 'inputBackgroundRemote',
+  /** The background identifier */
+  background_id: number | string,
+}
+
+/** A background from the server */
+export type inputBackgroundRemote$Input = {
+  readonly _: 'inputBackgroundRemote',
+  /** The background identifier */
+  readonly background_id?: number | string,
 }
 
 /** Contains a list of hashtags */
@@ -10426,6 +11612,54 @@ export type hashtags$Input = {
   readonly _: 'hashtags',
   /** A list of hashtags */
   readonly hashtags?: ReadonlyArray<string>,
+}
+
+/** The session can be used */
+export type canTransferOwnershipResultOk = {
+  _: 'canTransferOwnershipResultOk',
+}
+
+/** The session can be used */
+export type canTransferOwnershipResultOk$Input = {
+  readonly _: 'canTransferOwnershipResultOk',
+}
+
+/** The 2-step verification needs to be enabled first */
+export type canTransferOwnershipResultPasswordNeeded = {
+  _: 'canTransferOwnershipResultPasswordNeeded',
+}
+
+/** The 2-step verification needs to be enabled first */
+export type canTransferOwnershipResultPasswordNeeded$Input = {
+  readonly _: 'canTransferOwnershipResultPasswordNeeded',
+}
+
+/** The 2-step verification was enabled recently, user needs to wait */
+export type canTransferOwnershipResultPasswordTooFresh = {
+  _: 'canTransferOwnershipResultPasswordTooFresh',
+  /** Time left before the session can be used to transfer ownership of a chat, in seconds */
+  retry_after: number,
+}
+
+/** The 2-step verification was enabled recently, user needs to wait */
+export type canTransferOwnershipResultPasswordTooFresh$Input = {
+  readonly _: 'canTransferOwnershipResultPasswordTooFresh',
+  /** Time left before the session can be used to transfer ownership of a chat, in seconds */
+  readonly retry_after?: number,
+}
+
+/** The session was created recently, user needs to wait */
+export type canTransferOwnershipResultSessionTooFresh = {
+  _: 'canTransferOwnershipResultSessionTooFresh',
+  /** Time left before the session can be used to transfer ownership of a chat, in seconds */
+  retry_after: number,
+}
+
+/** The session was created recently, user needs to wait */
+export type canTransferOwnershipResultSessionTooFresh$Input = {
+  readonly _: 'canTransferOwnershipResultSessionTooFresh',
+  /** Time left before the session can be used to transfer ownership of a chat, in seconds */
+  readonly retry_after?: number,
 }
 
 /** The username can be set */
@@ -10458,12 +11692,12 @@ export type checkChatUsernameResultUsernameOccupied$Input = {
   readonly _: 'checkChatUsernameResultUsernameOccupied',
 }
 
-/** The user has too much public chats, one of them should be made private first */
+/** The user has too much chats with username, one of them should be made private first */
 export type checkChatUsernameResultPublicChatsTooMuch = {
   _: 'checkChatUsernameResultPublicChatsTooMuch',
 }
 
-/** The user has too much public chats, one of them should be made private first */
+/** The user has too much chats with username, one of them should be made private first */
 export type checkChatUsernameResultPublicChatsTooMuch$Input = {
   readonly _: 'checkChatUsernameResultPublicChatsTooMuch',
 }
@@ -10492,7 +11726,7 @@ export type pushMessageContentHidden$Input = {
   readonly is_pinned?: boolean,
 }
 
-/** An animation message (GIF-style) */
+/** An animation message (GIF-style). */
 export type pushMessageContentAnimation = {
   _: 'pushMessageContentAnimation',
   /** Message content; may be null */
@@ -10503,7 +11737,7 @@ export type pushMessageContentAnimation = {
   is_pinned: boolean,
 }
 
-/** An animation message (GIF-style) */
+/** An animation message (GIF-style). */
 export type pushMessageContentAnimation$Input = {
   readonly _: 'pushMessageContentAnimation',
   /** Message content; may be null */
@@ -10685,6 +11919,8 @@ export type pushMessageContentPoll = {
   _: 'pushMessageContentPoll',
   /** Poll question */
   question: string,
+  /** True, if the poll is regular and not in quiz mode */
+  is_regular: boolean,
   /** True, if the message is a pinned message with the specified content */
   is_pinned: boolean,
 }
@@ -10694,6 +11930,8 @@ export type pushMessageContentPoll$Input = {
   readonly _: 'pushMessageContentPoll',
   /** Poll question */
   readonly question?: string,
+  /** True, if the poll is regular and not in quiz mode */
+  readonly is_regular?: boolean,
   /** True, if the message is a pinned message with the specified content */
   readonly is_pinned?: boolean,
 }
@@ -10827,7 +12065,7 @@ export type pushMessageContentChatAddMembers = {
   member_name: string,
   /** True, if the current user was added to the group */
   is_current_user: boolean,
-  /** True, if the user has returned to the group himself */
+  /** True, if the user has returned to the group themself */
   is_returned: boolean,
 }
 
@@ -10838,7 +12076,7 @@ export type pushMessageContentChatAddMembers$Input = {
   readonly member_name?: string,
   /** True, if the current user was added to the group */
   readonly is_current_user?: boolean,
-  /** True, if the user has returned to the group himself */
+  /** True, if the user has returned to the group themself */
   readonly is_returned?: boolean,
 }
 
@@ -10873,7 +12111,7 @@ export type pushMessageContentChatDeleteMember = {
   member_name: string,
   /** True, if the current user was deleted from the group */
   is_current_user: boolean,
-  /** True, if the user has left the group himself */
+  /** True, if the user has left the group themself */
   is_left: boolean,
 }
 
@@ -10884,7 +12122,7 @@ export type pushMessageContentChatDeleteMember$Input = {
   readonly member_name?: string,
   /** True, if the current user was deleted from the group */
   readonly is_current_user?: boolean,
-  /** True, if the user has left the group himself */
+  /** True, if the user has left the group themself */
   readonly is_left?: boolean,
 }
 
@@ -11061,6 +12299,8 @@ export type notification = {
   id: number,
   /** Notification date */
   date: number,
+  /** True, if the notification was initially silent */
+  is_silent: boolean,
   /** Notification type */
   type: NotificationType,
 }
@@ -11072,6 +12312,8 @@ export type notification$Input = {
   readonly id?: number,
   /** Notification date */
   readonly date?: number,
+  /** True, if the notification was initially silent */
+  readonly is_silent?: boolean,
   /** Notification type */
   readonly type?: NotificationType$Input,
 }
@@ -11279,15 +12521,35 @@ export type userPrivacySettingRuleAllowContacts$Input = {
 /** A rule to allow certain specified users to do something */
 export type userPrivacySettingRuleAllowUsers = {
   _: 'userPrivacySettingRuleAllowUsers',
-  /** The user identifiers */
+  /** The user identifiers, total number of users in all rules must not exceed 1000 */
   user_ids: Array<number>,
 }
 
 /** A rule to allow certain specified users to do something */
 export type userPrivacySettingRuleAllowUsers$Input = {
   readonly _: 'userPrivacySettingRuleAllowUsers',
-  /** The user identifiers */
+  /** The user identifiers, total number of users in all rules must not exceed 1000 */
   readonly user_ids?: ReadonlyArray<number>,
+}
+
+/**
+ * A rule to allow all members of certain specified basic groups and supergroups to
+ * doing something
+ */
+export type userPrivacySettingRuleAllowChatMembers = {
+  _: 'userPrivacySettingRuleAllowChatMembers',
+  /** The chat identifiers, total number of chats in all rules must not exceed 20 */
+  chat_ids: Array<number>,
+}
+
+/**
+ * A rule to allow all members of certain specified basic groups and supergroups to
+ * doing something
+ */
+export type userPrivacySettingRuleAllowChatMembers$Input = {
+  readonly _: 'userPrivacySettingRuleAllowChatMembers',
+  /** The chat identifiers, total number of chats in all rules must not exceed 20 */
+  readonly chat_ids?: ReadonlyArray<number>,
 }
 
 /** A rule to restrict all users from doing something */
@@ -11313,15 +12575,35 @@ export type userPrivacySettingRuleRestrictContacts$Input = {
 /** A rule to restrict all specified users from doing something */
 export type userPrivacySettingRuleRestrictUsers = {
   _: 'userPrivacySettingRuleRestrictUsers',
-  /** The user identifiers */
+  /** The user identifiers, total number of users in all rules must not exceed 1000 */
   user_ids: Array<number>,
 }
 
 /** A rule to restrict all specified users from doing something */
 export type userPrivacySettingRuleRestrictUsers$Input = {
   readonly _: 'userPrivacySettingRuleRestrictUsers',
-  /** The user identifiers */
+  /** The user identifiers, total number of users in all rules must not exceed 1000 */
   readonly user_ids?: ReadonlyArray<number>,
+}
+
+/**
+ * A rule to restrict all members of specified basic groups and supergroups from doing
+ * something
+ */
+export type userPrivacySettingRuleRestrictChatMembers = {
+  _: 'userPrivacySettingRuleRestrictChatMembers',
+  /** The chat identifiers, total number of chats in all rules must not exceed 20 */
+  chat_ids: Array<number>,
+}
+
+/**
+ * A rule to restrict all members of specified basic groups and supergroups from doing
+ * something
+ */
+export type userPrivacySettingRuleRestrictChatMembers$Input = {
+  readonly _: 'userPrivacySettingRuleRestrictChatMembers',
+  /** The chat identifiers, total number of chats in all rules must not exceed 20 */
+  readonly chat_ids?: ReadonlyArray<number>,
 }
 
 /**
@@ -11356,6 +12638,42 @@ export type userPrivacySettingShowStatus$Input = {
   readonly _: 'userPrivacySettingShowStatus',
 }
 
+/** A privacy setting for managing whether the user's profile photo is visible */
+export type userPrivacySettingShowProfilePhoto = {
+  _: 'userPrivacySettingShowProfilePhoto',
+}
+
+/** A privacy setting for managing whether the user's profile photo is visible */
+export type userPrivacySettingShowProfilePhoto$Input = {
+  readonly _: 'userPrivacySettingShowProfilePhoto',
+}
+
+/**
+ * A privacy setting for managing whether a link to the user's account is included in
+ * forwarded messages
+ */
+export type userPrivacySettingShowLinkInForwardedMessages = {
+  _: 'userPrivacySettingShowLinkInForwardedMessages',
+}
+
+/**
+ * A privacy setting for managing whether a link to the user's account is included in
+ * forwarded messages
+ */
+export type userPrivacySettingShowLinkInForwardedMessages$Input = {
+  readonly _: 'userPrivacySettingShowLinkInForwardedMessages',
+}
+
+/** A privacy setting for managing whether the user's phone number is visible */
+export type userPrivacySettingShowPhoneNumber = {
+  _: 'userPrivacySettingShowPhoneNumber',
+}
+
+/** A privacy setting for managing whether the user's phone number is visible */
+export type userPrivacySettingShowPhoneNumber$Input = {
+  readonly _: 'userPrivacySettingShowPhoneNumber',
+}
+
 /** A privacy setting for managing whether the user can be invited to chats */
 export type userPrivacySettingAllowChatInvites = {
   _: 'userPrivacySettingAllowChatInvites',
@@ -11384,6 +12702,24 @@ export type userPrivacySettingAllowPeerToPeerCalls = {
 /** A privacy setting for managing whether peer-to-peer connections can be used for calls */
 export type userPrivacySettingAllowPeerToPeerCalls$Input = {
   readonly _: 'userPrivacySettingAllowPeerToPeerCalls',
+}
+
+/**
+ * A privacy setting for managing whether the user can be found by their phone number.
+ * Checked only if the phone number is not known to the other user. Can be set only
+ * to "Allow contacts" or "Allow all"
+ */
+export type userPrivacySettingAllowFindingByPhoneNumber = {
+  _: 'userPrivacySettingAllowFindingByPhoneNumber',
+}
+
+/**
+ * A privacy setting for managing whether the user can be found by their phone number.
+ * Checked only if the phone number is not known to the other user. Can be set only
+ * to "Allow contacts" or "Allow all"
+ */
+export type userPrivacySettingAllowFindingByPhoneNumber$Input = {
+  readonly _: 'userPrivacySettingAllowFindingByPhoneNumber',
 }
 
 /**
@@ -11598,20 +12934,6 @@ export type connectedWebsites$Input = {
   readonly websites?: ReadonlyArray<connectedWebsite$Input>,
 }
 
-/** Contains information about the availability of the "Report spam" action for a chat */
-export type chatReportSpamState = {
-  _: 'chatReportSpamState',
-  /** True, if a prompt with the "Report spam" action should be shown to the user */
-  can_report_spam: boolean,
-}
-
-/** Contains information about the availability of the "Report spam" action for a chat */
-export type chatReportSpamState$Input = {
-  readonly _: 'chatReportSpamState',
-  /** True, if a prompt with the "Report spam" action should be shown to the user */
-  readonly can_report_spam?: boolean,
-}
-
 /** The chat contains spam messages */
 export type chatReportReasonSpam = {
   _: 'chatReportReasonSpam',
@@ -11662,6 +12984,16 @@ export type chatReportReasonCopyright$Input = {
   readonly _: 'chatReportReasonCopyright',
 }
 
+/** The location-based chat is unrelated to its stated location */
+export type chatReportReasonUnrelatedLocation = {
+  _: 'chatReportReasonUnrelatedLocation',
+}
+
+/** The location-based chat is unrelated to its stated location */
+export type chatReportReasonUnrelatedLocation$Input = {
+  readonly _: 'chatReportReasonUnrelatedLocation',
+}
+
 /** A custom reason provided by the user */
 export type chatReportReasonCustom = {
   _: 'chatReportReasonCustom',
@@ -11676,7 +13008,7 @@ export type chatReportReasonCustom$Input = {
   readonly text?: string,
 }
 
-/** Contains a public HTTPS link to a message in a public supergroup or channel */
+/** Contains a public HTTPS link to a message in a supergroup or channel with a username */
 export type publicMessageLink = {
   _: 'publicMessageLink',
   /** Message link */
@@ -11685,13 +13017,39 @@ export type publicMessageLink = {
   html: string,
 }
 
-/** Contains a public HTTPS link to a message in a public supergroup or channel */
+/** Contains a public HTTPS link to a message in a supergroup or channel with a username */
 export type publicMessageLink$Input = {
   readonly _: 'publicMessageLink',
   /** Message link */
   readonly link?: string,
   /** HTML-code for embedding the message */
   readonly html?: string,
+}
+
+/** Contains information about a link to a message in a chat */
+export type messageLinkInfo = {
+  _: 'messageLinkInfo',
+  /** True, if the link is a public link for a message in a chat */
+  is_public: boolean,
+  /** If found, identifier of the chat to which the message belongs, 0 otherwise */
+  chat_id: number,
+  /** If found, the linked message; may be null */
+  message: message,
+  /** True, if the whole media album to which the message belongs is linked */
+  for_album: boolean,
+}
+
+/** Contains information about a link to a message in a chat */
+export type messageLinkInfo$Input = {
+  readonly _: 'messageLinkInfo',
+  /** True, if the link is a public link for a message in a chat */
+  readonly is_public?: boolean,
+  /** If found, identifier of the chat to which the message belongs, 0 otherwise */
+  readonly chat_id?: number,
+  /** If found, the linked message; may be null */
+  readonly message?: message$Input,
+  /** True, if the whole media album to which the message belongs is linked */
+  readonly for_album?: boolean,
 }
 
 /** Contains a part of a file */
@@ -11858,12 +13216,12 @@ export type fileTypeVoiceNote$Input = {
   readonly _: 'fileTypeVoiceNote',
 }
 
-/** The file is a wallpaper */
+/** The file is a wallpaper or a background pattern */
 export type fileTypeWallpaper = {
   _: 'fileTypeWallpaper',
 }
 
-/** The file is a wallpaper */
+/** The file is a wallpaper or a background pattern */
 export type fileTypeWallpaper$Input = {
   readonly _: 'fileTypeWallpaper',
 }
@@ -12120,8 +13478,78 @@ export type networkStatistics$Input = {
   readonly entries?: ReadonlyArray<NetworkStatisticsEntry$Input>,
 }
 
+/** Contains auto-download settings */
+export type autoDownloadSettings = {
+  _: 'autoDownloadSettings',
+  /** True, if the auto-download is enabled */
+  is_auto_download_enabled: boolean,
+  /** The maximum size of a photo file to be auto-downloaded */
+  max_photo_file_size: number,
+  /** The maximum size of a video file to be auto-downloaded */
+  max_video_file_size: number,
+  /** The maximum size of other file types to be auto-downloaded */
+  max_other_file_size: number,
+  /** The maximum suggested bitrate for uploaded videos */
+  video_upload_bitrate: number,
+  /** True, if the beginning of videos needs to be preloaded for instant playback */
+  preload_large_videos: boolean,
+  /**
+   * True, if the next audio track needs to be preloaded while the user is listening to
+   * an audio file
+   */
+  preload_next_audio: boolean,
+  /** True, if "use less data for calls" option needs to be enabled */
+  use_less_data_for_calls: boolean,
+}
+
+/** Contains auto-download settings */
+export type autoDownloadSettings$Input = {
+  readonly _: 'autoDownloadSettings',
+  /** True, if the auto-download is enabled */
+  readonly is_auto_download_enabled?: boolean,
+  /** The maximum size of a photo file to be auto-downloaded */
+  readonly max_photo_file_size?: number,
+  /** The maximum size of a video file to be auto-downloaded */
+  readonly max_video_file_size?: number,
+  /** The maximum size of other file types to be auto-downloaded */
+  readonly max_other_file_size?: number,
+  /** The maximum suggested bitrate for uploaded videos */
+  readonly video_upload_bitrate?: number,
+  /** True, if the beginning of videos needs to be preloaded for instant playback */
+  readonly preload_large_videos?: boolean,
+  /**
+   * True, if the next audio track needs to be preloaded while the user is listening to
+   * an audio file
+   */
+  readonly preload_next_audio?: boolean,
+  /** True, if "use less data for calls" option needs to be enabled */
+  readonly use_less_data_for_calls?: boolean,
+}
+
+/** Contains auto-download settings presets for the user */
+export type autoDownloadSettingsPresets = {
+  _: 'autoDownloadSettingsPresets',
+  /** Preset with lowest settings; supposed to be used by default when roaming */
+  low: autoDownloadSettings,
+  /** Preset with medium settings; supposed to be used by default when using mobile data */
+  medium: autoDownloadSettings,
+  /** Preset with highest settings; supposed to be used by default when connected on Wi-Fi */
+  high: autoDownloadSettings,
+}
+
+/** Contains auto-download settings presets for the user */
+export type autoDownloadSettingsPresets$Input = {
+  readonly _: 'autoDownloadSettingsPresets',
+  /** Preset with lowest settings; supposed to be used by default when roaming */
+  readonly low?: autoDownloadSettings$Input,
+  /** Preset with medium settings; supposed to be used by default when using mobile data */
+  readonly medium?: autoDownloadSettings$Input,
+  /** Preset with highest settings; supposed to be used by default when connected on Wi-Fi */
+  readonly high?: autoDownloadSettings$Input,
+}
+
 /**
- * Currently waiting for the network to become available. Use SetNetworkType to change
+ * Currently waiting for the network to become available. Use setNetworkType to change
  * the available network type
  */
 export type connectionStateWaitingForNetwork = {
@@ -12129,7 +13557,7 @@ export type connectionStateWaitingForNetwork = {
 }
 
 /**
- * Currently waiting for the network to become available. Use SetNetworkType to change
+ * Currently waiting for the network to become available. Use setNetworkType to change
  * the available network type
  */
 export type connectionStateWaitingForNetwork$Input = {
@@ -12240,6 +13668,16 @@ export type topChatCategoryCalls = {
 /** A category containing frequently used chats used for calls */
 export type topChatCategoryCalls$Input = {
   readonly _: 'topChatCategoryCalls',
+}
+
+/** A category containing frequently used chats used to forward messages */
+export type topChatCategoryForwardChats = {
+  _: 'topChatCategoryForwardChats',
+}
+
+/** A category containing frequently used chats used to forward messages */
+export type topChatCategoryForwardChats$Input = {
+  readonly _: 'topChatCategoryForwardChats',
 }
 
 /** A URL linking to a user */
@@ -12393,11 +13831,21 @@ export type deepLinkInfo$Input = {
 /** The text should be parsed in markdown-style */
 export type textParseModeMarkdown = {
   _: 'textParseModeMarkdown',
+  /**
+   * Version of the parser: 0 or 1 - Bot API Markdown parse mode, 2 - Bot API MarkdownV2
+   * parse mode
+   */
+  version: number,
 }
 
 /** The text should be parsed in markdown-style */
 export type textParseModeMarkdown$Input = {
   readonly _: 'textParseModeMarkdown',
+  /**
+   * Version of the parser: 0 or 1 - Bot API Markdown parse mode, 2 - Bot API MarkdownV2
+   * parse mode
+   */
+  readonly version?: number,
 }
 
 /** The text should be parsed in HTML-style */
@@ -12626,7 +14074,7 @@ export type updateMessageSendSucceeded$Input = {
  */
 export type updateMessageSendFailed = {
   _: 'updateMessageSendFailed',
-  /** Contains information about the message that failed to send */
+  /** Contains information about the message which failed to send */
   message: message,
   /** The previous temporary message identifier */
   old_message_id: number,
@@ -12642,7 +14090,7 @@ export type updateMessageSendFailed = {
  */
 export type updateMessageSendFailed$Input = {
   readonly _: 'updateMessageSendFailed',
-  /** Contains information about the message that failed to send */
+  /** Contains information about the message which failed to send */
   readonly message?: message$Input,
   /** The previous temporary message identifier */
   readonly old_message_id?: number,
@@ -12769,6 +14217,30 @@ export type updateMessageMentionRead$Input = {
 }
 
 /**
+ * A message with a live location was viewed. When the update is received, the client
+ * is supposed to update the live location
+ */
+export type updateMessageLiveLocationViewed = {
+  _: 'updateMessageLiveLocationViewed',
+  /** Identifier of the chat with the live location message */
+  chat_id: number,
+  /** Identifier of the message with live location */
+  message_id: number,
+}
+
+/**
+ * A message with a live location was viewed. When the update is received, the client
+ * is supposed to update the live location
+ */
+export type updateMessageLiveLocationViewed$Input = {
+  readonly _: 'updateMessageLiveLocationViewed',
+  /** Identifier of the chat with the live location message */
+  readonly chat_id?: number,
+  /** Identifier of the message with live location */
+  readonly message_id?: number,
+}
+
+/**
  * A new chat has been loaded/created. This update is guaranteed to come before the
  * chat identifier is returned to the client. The chat field changes will be reported
  * through separate updates
@@ -12788,6 +14260,30 @@ export type updateNewChat$Input = {
   readonly _: 'updateNewChat',
   /** The chat */
   readonly chat?: chat$Input,
+}
+
+/**
+ * The list to which the chat belongs was changed. This update is guaranteed to be sent
+ * only when chat.order == 0 and the current or the new chat list is null
+ */
+export type updateChatChatList = {
+  _: 'updateChatChatList',
+  /** Chat identifier */
+  chat_id: number,
+  /** The new chat's chat list; may be null */
+  chat_list: ChatList,
+}
+
+/**
+ * The list to which the chat belongs was changed. This update is guaranteed to be sent
+ * only when chat.order == 0 and the current or the new chat list is null
+ */
+export type updateChatChatList$Input = {
+  readonly _: 'updateChatChatList',
+  /** Chat identifier */
+  readonly chat_id?: number,
+  /** The new chat's chat list; may be null */
+  readonly chat_list?: ChatList$Input,
 }
 
 /** The title of a chat was changed */
@@ -12826,8 +14322,26 @@ export type updateChatPhoto$Input = {
   readonly photo?: chatPhoto$Input,
 }
 
+/** Chat permissions was changed */
+export type updateChatPermissions = {
+  _: 'updateChatPermissions',
+  /** Chat identifier */
+  chat_id: number,
+  /** The new chat permissions */
+  permissions: chatPermissions,
+}
+
+/** Chat permissions was changed */
+export type updateChatPermissions$Input = {
+  readonly _: 'updateChatPermissions',
+  /** Chat identifier */
+  readonly chat_id?: number,
+  /** The new chat permissions */
+  readonly permissions?: chatPermissions$Input,
+}
+
 /**
- * The last message of a chat was changed. If last_message is null then the last message
+ * The last message of a chat was changed. If last_message is null, then the last message
  * in the chat became unknown. Some new unknown messages might be added to the chat
  * in this case
  */
@@ -12842,7 +14356,7 @@ export type updateChatLastMessage = {
 }
 
 /**
- * The last message of a chat was changed. If last_message is null then the last message
+ * The last message of a chat was changed. If last_message is null, then the last message
  * in the chat became unknown. Some new unknown messages might be added to the chat
  * in this case
  */
@@ -12858,7 +14372,7 @@ export type updateChatLastMessage$Input = {
 
 /**
  * The order of the chat in the chat list has changed. Instead of this update updateChatLastMessage,
- * updateChatIsPinned or updateChatDraftMessage might be sent
+ * updateChatIsPinned, updateChatDraftMessage, or updateChatIsSponsored might be sent
  */
 export type updateChatOrder = {
   _: 'updateChatOrder',
@@ -12870,7 +14384,7 @@ export type updateChatOrder = {
 
 /**
  * The order of the chat in the chat list has changed. Instead of this update updateChatLastMessage,
- * updateChatIsPinned or updateChatDraftMessage might be sent
+ * updateChatIsPinned, updateChatDraftMessage, or updateChatIsSponsored might be sent
  */
 export type updateChatOrder$Input = {
   readonly _: 'updateChatOrder',
@@ -12940,6 +14454,24 @@ export type updateChatIsSponsored$Input = {
   readonly is_sponsored?: boolean,
   /** New value of chat order */
   readonly order?: number | string,
+}
+
+/** A chat's has_scheduled_messages field has changed */
+export type updateChatHasScheduledMessages = {
+  _: 'updateChatHasScheduledMessages',
+  /** Chat identifier */
+  chat_id: number,
+  /** New value of has_scheduled_messages */
+  has_scheduled_messages: boolean,
+}
+
+/** A chat's has_scheduled_messages field has changed */
+export type updateChatHasScheduledMessages$Input = {
+  readonly _: 'updateChatHasScheduledMessages',
+  /** Chat identifier */
+  readonly chat_id?: number,
+  /** New value of has_scheduled_messages */
+  readonly has_scheduled_messages?: boolean,
 }
 
 /**
@@ -13058,6 +14590,24 @@ export type updateScopeNotificationSettings$Input = {
   readonly scope?: NotificationSettingsScope$Input,
   /** The new notification settings */
   readonly notification_settings?: scopeNotificationSettings$Input,
+}
+
+/** The chat action bar was changed */
+export type updateChatActionBar = {
+  _: 'updateChatActionBar',
+  /** Chat identifier */
+  chat_id: number,
+  /** The new value of the action bar; may be null */
+  action_bar: ChatActionBar,
+}
+
+/** The chat action bar was changed */
+export type updateChatActionBar$Input = {
+  readonly _: 'updateChatActionBar',
+  /** Chat identifier */
+  readonly chat_id?: number,
+  /** The new value of the action bar; may be null */
+  readonly action_bar?: ChatActionBar$Input,
 }
 
 /** The chat pinned message was changed */
@@ -13238,7 +14788,7 @@ export type updateNotificationGroup$Input = {
 
 /**
  * Contains active notifications that was shown on previous application launches. This
- * update is sent only if a message database is used. In that case it comes once before
+ * update is sent only if the message database is used. In that case it comes once before
  * any updateNotification and updateNotificationGroup update
  */
 export type updateActiveNotifications = {
@@ -13249,7 +14799,7 @@ export type updateActiveNotifications = {
 
 /**
  * Contains active notifications that was shown on previous application launches. This
- * update is sent only if a message database is used. In that case it comes once before
+ * update is sent only if the message database is used. In that case it comes once before
  * any updateNotification and updateNotificationGroup update
  */
 export type updateActiveNotifications$Input = {
@@ -13259,7 +14809,7 @@ export type updateActiveNotifications$Input = {
 }
 
 /**
- * Describes, whether there are some pending notification updates. Can be used to prevent
+ * Describes whether there are some pending notification updates. Can be used to prevent
  * application from killing, while there are some pending notifications
  */
 export type updateHavePendingNotifications = {
@@ -13274,7 +14824,7 @@ export type updateHavePendingNotifications = {
 }
 
 /**
- * Describes, whether there are some pending notification updates. Can be used to prevent
+ * Describes whether there are some pending notification updates. Can be used to prevent
  * application from killing, while there are some pending notifications
  */
 export type updateHavePendingNotifications$Input = {
@@ -13627,11 +15177,13 @@ export type updateUserPrivacySettingRules$Input = {
 }
 
 /**
- * Number of unread messages has changed. This update is sent only if a message database
- * is used
+ * Number of unread messages in a chat list has changed. This update is sent only if
+ * the message database is used
  */
 export type updateUnreadMessageCount = {
   _: 'updateUnreadMessageCount',
+  /** The chat list with changed number of unread messages */
+  chat_list: ChatList,
   /** Total number of unread messages */
   unread_count: number,
   /** Total number of unread messages in unmuted chats */
@@ -13639,11 +15191,13 @@ export type updateUnreadMessageCount = {
 }
 
 /**
- * Number of unread messages has changed. This update is sent only if a message database
- * is used
+ * Number of unread messages in a chat list has changed. This update is sent only if
+ * the message database is used
  */
 export type updateUnreadMessageCount$Input = {
   readonly _: 'updateUnreadMessageCount',
+  /** The chat list with changed number of unread messages */
+  readonly chat_list?: ChatList$Input,
   /** Total number of unread messages */
   readonly unread_count?: number,
   /** Total number of unread messages in unmuted chats */
@@ -13652,10 +15206,14 @@ export type updateUnreadMessageCount$Input = {
 
 /**
  * Number of unread chats, i.e. with unread messages or marked as unread, has changed.
- * This update is sent only if a message database is used
+ * This update is sent only if the message database is used
  */
 export type updateUnreadChatCount = {
   _: 'updateUnreadChatCount',
+  /** The chat list with changed number of unread messages */
+  chat_list: ChatList,
+  /** Approximate total number of chats in the chat list */
+  total_count: number,
   /** Total number of unread chats */
   unread_count: number,
   /** Total number of unread unmuted chats */
@@ -13668,10 +15226,14 @@ export type updateUnreadChatCount = {
 
 /**
  * Number of unread chats, i.e. with unread messages or marked as unread, has changed.
- * This update is sent only if a message database is used
+ * This update is sent only if the message database is used
  */
 export type updateUnreadChatCount$Input = {
   readonly _: 'updateUnreadChatCount',
+  /** The chat list with changed number of unread messages */
+  readonly chat_list?: ChatList$Input,
+  /** Approximate total number of chats in the chat list */
+  readonly total_count?: number,
   /** Total number of unread chats */
   readonly unread_count?: number,
   /** Total number of unread unmuted chats */
@@ -13784,6 +15346,24 @@ export type updateSavedAnimations$Input = {
   readonly animation_ids?: ReadonlyArray<number>,
 }
 
+/** The selected background has changed */
+export type updateSelectedBackground = {
+  _: 'updateSelectedBackground',
+  /** True, if background for dark theme has changed */
+  for_dark_theme: boolean,
+  /** The new selected background; may be null */
+  background: background,
+}
+
+/** The selected background has changed */
+export type updateSelectedBackground$Input = {
+  readonly _: 'updateSelectedBackground',
+  /** True, if background for dark theme has changed */
+  readonly for_dark_theme?: boolean,
+  /** The new selected background; may be null */
+  readonly background?: background$Input,
+}
+
 /** Some language pack strings have been updated */
 export type updateLanguagePackStrings = {
   _: 'updateLanguagePackStrings',
@@ -13842,6 +15422,26 @@ export type updateTermsOfService$Input = {
   readonly terms_of_service_id?: string,
   /** The new terms of service */
   readonly terms_of_service?: termsOfService$Input,
+}
+
+/**
+ * List of users nearby has changed. The update is sent only 60 seconds after a successful
+ * searchChatsNearby request
+ */
+export type updateUsersNearby = {
+  _: 'updateUsersNearby',
+  /** The new list of users nearby */
+  users_nearby: Array<chatNearby>,
+}
+
+/**
+ * List of users nearby has changed. The update is sent only 60 seconds after a successful
+ * searchChatsNearby request
+ */
+export type updateUsersNearby$Input = {
+  readonly _: 'updateUsersNearby',
+  /** The new list of users nearby */
+  readonly users_nearby?: ReadonlyArray<chatNearby$Input>,
 }
 
 /** A new incoming inline query; for bots only */
@@ -13911,7 +15511,7 @@ export type updateNewCallbackQuery = {
   id: number | string,
   /** Identifier of the user who sent the query */
   sender_user_id: number,
-  /** Identifier of the chat, in which the query was sent */
+  /** Identifier of the chat where the query was sent */
   chat_id: number,
   /** Identifier of the message, from which the query originated */
   message_id: number,
@@ -13928,7 +15528,7 @@ export type updateNewCallbackQuery$Input = {
   readonly id?: number | string,
   /** Identifier of the user who sent the query */
   readonly sender_user_id?: number,
-  /** Identifier of the chat, in which the query was sent */
+  /** Identifier of the chat where the query was sent */
   readonly chat_id?: number,
   /** Identifier of the message, from which the query originated */
   readonly message_id?: number,
@@ -14074,18 +15674,40 @@ export type updateNewCustomQuery$Input = {
   readonly timeout?: number,
 }
 
-/** Information about a poll was updated; for bots only */
+/** A poll was updated; for bots only */
 export type updatePoll = {
   _: 'updatePoll',
   /** New data about the poll */
   poll: poll,
 }
 
-/** Information about a poll was updated; for bots only */
+/** A poll was updated; for bots only */
 export type updatePoll$Input = {
   readonly _: 'updatePoll',
   /** New data about the poll */
   readonly poll?: poll$Input,
+}
+
+/** A user changed the answer to a poll; for bots only */
+export type updatePollAnswer = {
+  _: 'updatePollAnswer',
+  /** Unique poll identifier */
+  poll_id: number | string,
+  /** The user, who changed the answer to the poll */
+  user_id: number,
+  /** 0-based identifiers of answer options, chosen by the user */
+  option_ids: Array<number>,
+}
+
+/** A user changed the answer to a poll; for bots only */
+export type updatePollAnswer$Input = {
+  readonly _: 'updatePollAnswer',
+  /** Unique poll identifier */
+  readonly poll_id?: number | string,
+  /** The user, who changed the answer to the poll */
+  readonly user_id?: number,
+  /** 0-based identifiers of answer options, chosen by the user */
+  readonly option_ids?: ReadonlyArray<number>,
 }
 
 /** Contains a list of updates */
@@ -14118,8 +15740,8 @@ export type logStreamFile = {
   /** Path to the file to where the internal TDLib log will be written */
   path: string,
   /**
-   * Maximum size of the file to where the internal TDLib log is written before the file
-   * will be auto-rotated
+   * The maximum size of the file to where the internal TDLib log is written before the
+   * file will be auto-rotated
    */
   max_file_size: number,
 }
@@ -14130,8 +15752,8 @@ export type logStreamFile$Input = {
   /** Path to the file to where the internal TDLib log will be written */
   readonly path?: string,
   /**
-   * Maximum size of the file to where the internal TDLib log is written before the file
-   * will be auto-rotated
+   * The maximum size of the file to where the internal TDLib log is written before the
+   * file will be auto-rotated
    */
   readonly max_file_size?: number,
 }
@@ -14303,22 +15925,16 @@ export type checkDatabaseEncryptionKey = {
 
 /**
  * Sets the phone number of the user and sends an authentication code to the user. Works
- * only when the current authorization state is authorizationStateWaitPhoneNumber
+ * only when the current authorization state is authorizationStateWaitPhoneNumber, or
+ * if there is no pending authentication query and the current authorization state is
+ * authorizationStateWaitCode, authorizationStateWaitRegistration, or authorizationStateWaitPassword
  */
 export type setAuthenticationPhoneNumber = {
   readonly _: 'setAuthenticationPhoneNumber',
   /** The phone number of the user, in international format */
   readonly phone_number?: string,
-  /**
-   * Pass true if the authentication code may be sent via flash call to the specified
-   * phone number
-   */
-  readonly allow_flash_call?: boolean,
-  /**
-   * Pass true if the phone number is used on the current device. Ignored if allow_flash_call
-   * is false
-   */
-  readonly is_current_phone_number?: boolean,
+  /** Settings for the authentication of the user's phone number */
+  readonly settings?: phoneNumberAuthenticationSettings$Input,
 }
 
 /**
@@ -14337,14 +15953,24 @@ export type checkAuthenticationCode = {
   readonly _: 'checkAuthenticationCode',
   /** The verification code received via SMS, Telegram message, phone call, or flash call */
   readonly code?: string,
-  /**
-   * If the user is not yet registered, the first name of the user; 1-64 characters. You
-   * can also pass an empty string for unregistered user there to check verification code
-   * validness. In the latter case PHONE_NUMBER_UNOCCUPIED error will be returned for
-   * a valid code
-   */
+}
+
+/**
+ * Requests QR code authentication by scanning a QR code on another logged in device.
+ * Works only when the current authorization state is authorizationStateWaitPhoneNumber
+ */
+export type requestQrCodeAuthentication = {
+  readonly _: 'requestQrCodeAuthentication',
+  /** List of user identifiers of other users currently using the client */
+  readonly other_user_ids?: ReadonlyArray<number>,
+}
+
+/** Finishes user registration. Works only when the current authorization state is authorizationStateWaitRegistration */
+export type registerUser = {
+  readonly _: 'registerUser',
+  /** The first name of the user; 1-64 characters */
   readonly first_name?: string,
-  /** If the user is not yet registered; the last name of the user; optional; 0-64 characters */
+  /** The last name of the user; 0-64 characters */
   readonly last_name?: string,
 }
 
@@ -14415,9 +16041,16 @@ export type destroy = {
   readonly _: 'destroy',
 }
 
+/** Confirms QR code authentication on another device. Returns created session on success */
+export type confirmQrCodeAuthentication = {
+  readonly _: 'confirmQrCodeAuthentication',
+  /** A link from a QR code. The link must be scanned by the in-app camera */
+  readonly link?: string,
+}
+
 /**
  * Returns all updates needed to restore current TDLib state, i.e. all actual UpdateAuthorizationState/UpdateUser/UpdateNewChat
- * and others. This is especially usefull if TDLib is run in a separate process. This
+ * and others. This is especially useful if TDLib is run in a separate process. This
  * is an offline method. Can be called before authorization
  */
 export type getCurrentState = {
@@ -14470,7 +16103,7 @@ export type getRecoveryEmailAddress = {
 /**
  * Changes the 2-step verification recovery email address of the user. If a new recovery
  * email address is specified, then the change will not be applied until the new recovery
- * email address is confirmed If new_recovery_email_address is the same as the email
+ * email address is confirmed. If new_recovery_email_address is the same as the email
  * address that is currently set up, this call succeeds immediately and aborts all other
  * requests waiting for an email confirmation
  */
@@ -14569,8 +16202,8 @@ export type getBasicGroupFullInfo = {
 }
 
 /**
- * Returns information about a supergroup or channel by its identifier. This is an offline
- * request if the current user is not a bot
+ * Returns information about a supergroup or a channel by its identifier. This is an
+ * offline request if the current user is not a bot
  */
 export type getSupergroup = {
   readonly _: 'getSupergroup',
@@ -14579,7 +16212,7 @@ export type getSupergroup = {
 }
 
 /**
- * Returns full information about a supergroup or channel by its identifier, cached
+ * Returns full information about a supergroup or a channel by its identifier, cached
  * for up to 1 minute
  */
 export type getSupergroupFullInfo = {
@@ -14663,7 +16296,11 @@ export type getFile = {
 
 /**
  * Returns information about a file by its remote ID; this is an offline request. Can
- * be used to register a URL as a file for further uploading, or sending as a message
+ * be used to register a URL as a file for further uploading, or sending as a message.
+ * Even the request succeeds, the file can be used only if it is still accessible to
+ * the user. For example, if the file is from a message, then the message must be not
+ * deleted and accessible to the user. If the file database is disabled, then the corresponding
+ * object with the file must be preloaded by the client
  */
 export type getRemoteFile = {
   readonly _: 'getRemoteFile',
@@ -14674,13 +16311,16 @@ export type getRemoteFile = {
 }
 
 /**
- * Returns an ordered list of chats. Chats are sorted by the pair (order, chat_id) in
- * decreasing order. (For example, to get a list of chats from the beginning, the offset_order
- * should be equal to a biggest signed 64-bit number 9223372036854775807 == 2^63 - 1).
- * For optimal performance the number of returned chats is chosen by the library.
+ * Returns an ordered list of chats in a chat list. Chats are sorted by the pair (order,
+ * chat_id) in decreasing order. (For example, to get a list of chats from the beginning,
+ * the offset_order should be equal to a biggest signed 64-bit number 9223372036854775807
+ * == 2^63 - 1). For optimal performance the number of returned chats is chosen by the
+ * library
  */
 export type getChats = {
   readonly _: 'getChats',
+  /** The chat list in which to return chats */
+  readonly chat_list?: ChatList$Input,
   /** Chat order to return chats from */
   readonly offset_order?: number | string,
   /** Chat identifier to return chats from */
@@ -14723,7 +16363,7 @@ export type searchChats = {
   readonly _: 'searchChats',
   /** Query to search for. If the query is empty, returns up to 20 recently found chats */
   readonly query?: string,
-  /** Maximum number of chats to be returned */
+  /** The maximum number of chats to be returned */
   readonly limit?: number,
 }
 
@@ -14735,8 +16375,20 @@ export type searchChatsOnServer = {
   readonly _: 'searchChatsOnServer',
   /** Query to search for */
   readonly query?: string,
-  /** Maximum number of chats to be returned */
+  /** The maximum number of chats to be returned */
   readonly limit?: number,
+}
+
+/**
+ * Returns a list of users and location-based supergroups nearby. The list of users
+ * nearby will be updated for 60 seconds after the request by the updates updateUsersNearby.
+ * The request should be sent again every 25 seconds with adjusted location to not miss
+ * new chats
+ */
+export type searchChatsNearby = {
+  readonly _: 'searchChatsNearby',
+  /** Current user location */
+  readonly location?: location$Input,
 }
 
 /**
@@ -14747,7 +16399,7 @@ export type getTopChats = {
   readonly _: 'getTopChats',
   /** Category of chats to be returned */
   readonly category?: TopChatCategory$Input,
-  /** Maximum number of chats to be returned; up to 30 */
+  /** The maximum number of chats to be returned; up to 30 */
   readonly limit?: number,
 }
 
@@ -14798,9 +16450,39 @@ export type checkChatUsername = {
   readonly username?: string,
 }
 
-/** Returns a list of public chats created by the user */
+/** Returns a list of public chats of the specified type, owned by the user */
 export type getCreatedPublicChats = {
   readonly _: 'getCreatedPublicChats',
+  /** Type of the public chats to return */
+  readonly type?: PublicChatType$Input,
+}
+
+/**
+ * Checks whether the maximum number of owned public chats has been reached. Returns
+ * corresponding error if the limit was reached
+ */
+export type checkCreatedPublicChatsLimit = {
+  readonly _: 'checkCreatedPublicChatsLimit',
+  /** Type of the public chats, for which to check the limit */
+  readonly type?: PublicChatType$Input,
+}
+
+/**
+ * Returns a list of basic group and supergroup chats, which can be used as a discussion
+ * group for a channel. Basic group chats need to be first upgraded to supergroups before
+ * they can be set as a discussion group
+ */
+export type getSuitableDiscussionChats = {
+  readonly _: 'getSuitableDiscussionChats',
+}
+
+/**
+ * Returns a list of recently inactive supergroups and channels. Can be used when user
+ * reaches limit on the number of joined supergroups and channels and receives CHANNELS_TOO_MUCH
+ * error
+ */
+export type getInactiveSupergroupChats = {
+  readonly _: 'getInactiveSupergroupChats',
 }
 
 /**
@@ -14813,7 +16495,7 @@ export type getGroupsInCommon = {
   readonly user_id?: number,
   /** Chat identifier starting from which to return chats; use 0 for the first request */
   readonly offset_chat_id?: number,
-  /** Maximum number of chats to be returned; up to 100 */
+  /** The maximum number of chats to be returned; up to 100 */
   readonly limit?: number,
 }
 
@@ -14911,6 +16593,11 @@ export type searchChatMessages = {
  */
 export type searchMessages = {
   readonly _: 'searchMessages',
+  /**
+   * Chat list in which to search messages; pass null to search in all chats regardless
+   * of their chat list
+   */
+  readonly chat_list?: ChatList$Input,
   /** Query to search for */
   readonly query?: string,
   /**
@@ -14946,7 +16633,7 @@ export type searchSecretMessages = {
    */
   readonly from_search_id?: number | string,
   /**
-   * Maximum number of messages to be returned; up to 100. Fewer messages may be returned
+   * The maximum number of messages to be returned; up to 100. Fewer messages may be returned
    * than specified by the limit, even if the end of the message history has not been
    * reached
    */
@@ -14985,7 +16672,7 @@ export type searchChatRecentLocationMessages = {
   readonly _: 'searchChatRecentLocationMessages',
   /** Chat identifier */
   readonly chat_id?: number,
-  /** Maximum number of messages to be returned */
+  /** The maximum number of messages to be returned */
   readonly limit?: number,
 }
 
@@ -15021,6 +16708,16 @@ export type getChatMessageCount = {
 }
 
 /**
+ * Returns all scheduled messages in a chat. The messages are returned in a reverse
+ * chronological order (i.e., in order of decreasing message_id)
+ */
+export type getChatScheduledMessages = {
+  readonly _: 'getChatScheduledMessages',
+  /** Chat identifier */
+  readonly chat_id?: number,
+}
+
+/**
  * Removes an active notification from notification list. Needs to be called only if
  * the notification is removed by the current user
  */
@@ -15040,13 +16737,13 @@ export type removeNotificationGroup = {
   readonly _: 'removeNotificationGroup',
   /** Notification group identifier */
   readonly notification_group_id?: number,
-  /** Maximum identifier of removed notifications */
+  /** The maximum identifier of removed notifications */
   readonly max_notification_id?: number,
 }
 
 /**
- * Returns a public HTTPS link to a message. Available only for messages in public supergroups
- * and channels
+ * Returns a public HTTPS link to a message. Available only for messages in supergroups
+ * and channels with a username
  */
 export type getPublicMessageLink = {
   readonly _: 'getPublicMessageLink',
@@ -15071,6 +16768,16 @@ export type getMessageLink = {
   readonly message_id?: number,
 }
 
+/** Returns information about a public or private message link */
+export type getMessageLinkInfo = {
+  readonly _: 'getMessageLinkInfo',
+  /**
+   * The message link in the format "https://t.me/c/...", or "tg://privatepost?...", or
+   * "https://t.me/username/...", or "tg://resolve?..."
+   */
+  readonly url?: string,
+}
+
 /** Sends a message. Returns the sent message */
 export type sendMessage = {
   readonly _: 'sendMessage',
@@ -15078,10 +16785,8 @@ export type sendMessage = {
   readonly chat_id?: number,
   /** Identifier of the message to reply to or 0 */
   readonly reply_to_message_id?: number,
-  /** Pass true to disable notification for the message. Not supported in secret chats */
-  readonly disable_notification?: boolean,
-  /** Pass true if the message is sent from the background */
-  readonly from_background?: boolean,
+  /** Options to be used to send the message */
+  readonly options?: sendMessageOptions$Input,
   /** Markup for replying to the message; for bots only */
   readonly reply_markup?: ReplyMarkup$Input,
   /** The content of the message to be sent */
@@ -15098,10 +16803,8 @@ export type sendMessageAlbum = {
   readonly chat_id?: number,
   /** Identifier of a message to reply to or 0 */
   readonly reply_to_message_id?: number,
-  /** Pass true to disable notification for the messages. Not supported in secret chats */
-  readonly disable_notification?: boolean,
-  /** Pass true if the messages are sent from the background */
-  readonly from_background?: boolean,
+  /** Options to be used to send the messages */
+  readonly options?: sendMessageOptions$Input,
   /** Contents of messages to be sent */
   readonly input_message_contents?: ReadonlyArray<InputMessageContent$Input>,
 }
@@ -15118,7 +16821,7 @@ export type sendBotStartMessage = {
   readonly bot_user_id?: number,
   /** Identifier of the target chat */
   readonly chat_id?: number,
-  /** A hidden parameter sent to the bot for deep linking purposes (https://api.telegram.org/bots#deep-linking) */
+  /** A hidden parameter sent to the bot for deep linking purposes (https://core.telegram.org/bots#deep-linking) */
   readonly parameter?: string,
 }
 
@@ -15132,10 +16835,8 @@ export type sendInlineQueryResultMessage = {
   readonly chat_id?: number,
   /** Identifier of a message to reply to or 0 */
   readonly reply_to_message_id?: number,
-  /** Pass true to disable notification for the message. Not supported in secret chats */
-  readonly disable_notification?: boolean,
-  /** Pass true if the message is sent from background */
-  readonly from_background?: boolean,
+  /** Options to be used to send the message */
+  readonly options?: sendMessageOptions$Input,
   /** Identifier of the inline query */
   readonly query_id?: number | string,
   /** Identifier of the inline result */
@@ -15161,19 +16862,43 @@ export type forwardMessages = {
   readonly from_chat_id?: number,
   /** Identifiers of the messages to forward */
   readonly message_ids?: ReadonlyArray<number>,
-  /**
-   * Pass true to disable notification for the message, doesn't work if messages are forwarded
-   * to a secret chat
-   */
-  readonly disable_notification?: boolean,
-  /** Pass true if the message is sent from the background */
-  readonly from_background?: boolean,
+  /** Options to be used to send the messages */
+  readonly options?: sendMessageOptions$Input,
   /**
    * True, if the messages should be grouped into an album after forwarding. For this
    * to work, no more than 10 messages may be forwarded, and all of them must be photo
    * or video messages
    */
   readonly as_album?: boolean,
+  /**
+   * True, if content of the messages needs to be copied without links to the original
+   * messages. Always true if the messages are forwarded to a secret chat
+   */
+  readonly send_copy?: boolean,
+  /**
+   * True, if media captions of message copies needs to be removed. Ignored if send_copy
+   * is false
+   */
+  readonly remove_caption?: boolean,
+}
+
+/**
+ * Resends messages which failed to send. Can be called only for messages for which
+ * messageSendingStateFailed.can_retry is true and after specified in messageSendingStateFailed.retry_after
+ * time passed. If a message is re-sent, the corresponding failed to send message is
+ * deleted. Returns the sent messages in the same order as the message identifiers passed
+ * in message_ids. If a message can't be re-sent, null will be returned instead of the
+ * message
+ */
+export type resendMessages = {
+  readonly _: 'resendMessages',
+  /** Identifier of the chat to send messages */
+  readonly chat_id?: number,
+  /**
+   * Identifiers of the messages to resend. Message identifiers must be in a strictly
+   * increasing order
+   */
+  readonly message_ids?: ReadonlyArray<number>,
 }
 
 /**
@@ -15234,7 +16959,7 @@ export type deleteMessages = {
 }
 
 /**
- * Deletes all messages sent by the specified user to a chat. Supported only in supergroups;
+ * Deletes all messages sent by the specified user to a chat. Supported only for supergroups;
  * requires can_delete_messages administrator privileges
  */
 export type deleteChatMessagesFromUser = {
@@ -15399,6 +17124,20 @@ export type editInlineMessageReplyMarkup = {
 }
 
 /**
+ * Edits the time when a scheduled message will be sent. Scheduling state of all messages
+ * in the same album or forwarded together with the message will be also changed
+ */
+export type editMessageSchedulingState = {
+  readonly _: 'editMessageSchedulingState',
+  /** The chat the message belongs to */
+  readonly chat_id?: number,
+  /** Identifier of the message */
+  readonly message_id?: number,
+  /** The new message scheduling state. Pass null to send the message immediately */
+  readonly scheduling_state?: MessageSchedulingState$Input,
+}
+
+/**
  * Returns all entities (mentions, hashtags, cashtags, bot commands, URLs, and email
  * addresses) contained in the text. This is an offline method. Can be called before
  * authorization. Can be called synchronously
@@ -15410,8 +17149,9 @@ export type getTextEntities = {
 }
 
 /**
- * Parses Bold, Italic, Code, Pre, PreCode and TextUrl entities contained in the text.
- * This is an offline method. Can be called before authorization. Can be called synchronously
+ * Parses Bold, Italic, Underline, Strikethrough, Code, Pre, PreCode, TextUrl and MentionName
+ * entities contained in the text. This is an offline method. Can be called before authorization.
+ * Can be called synchronously
  */
 export type parseTextEntities = {
   readonly _: 'parseTextEntities',
@@ -15491,7 +17231,7 @@ export type getJsonString = {
   readonly json_value?: JsonValue$Input,
 }
 
-/** Changes user answer to a poll */
+/** Changes the user answer to a poll. A poll in quiz mode can be answered only once */
 export type setPollAnswer = {
   readonly _: 'setPollAnswer',
   /** Identifier of the chat to which the poll belongs */
@@ -15499,10 +17239,32 @@ export type setPollAnswer = {
   /** Identifier of the message containing the poll */
   readonly message_id?: number,
   /**
-   * 0-based identifiers of options, chosen by the user. Currently user can't choose more
-   * than 1 option
+   * 0-based identifiers of answer options, chosen by the user. User can choose more than
+   * 1 answer option only is the poll allows multiple answers
    */
   readonly option_ids?: ReadonlyArray<number>,
+}
+
+/**
+ * Returns users voted for the specified option in a non-anonymous polls. For the optimal
+ * performance the number of returned users is chosen by the library
+ */
+export type getPollVoters = {
+  readonly _: 'getPollVoters',
+  /** Identifier of the chat to which the poll belongs */
+  readonly chat_id?: number,
+  /** Identifier of the message containing the poll */
+  readonly message_id?: number,
+  /** 0-based identifier of the answer option */
+  readonly option_id?: number,
+  /** Number of users to skip in the result; must be non-negative */
+  readonly offset?: number,
+  /**
+   * The maximum number of users to be returned; must be positive and can't be greater
+   * than 50. Fewer users may be returned than specified by the limit, even if the end
+   * of the voter list has not been reached
+   */
+  readonly limit?: number,
 }
 
 /**
@@ -15520,6 +17282,38 @@ export type stopPoll = {
 }
 
 /**
+ * Returns information about a button of type inlineKeyboardButtonTypeLoginUrl. The
+ * method needs to be called when the user presses the button
+ */
+export type getLoginUrlInfo = {
+  readonly _: 'getLoginUrlInfo',
+  /** Chat identifier of the message with the button */
+  readonly chat_id?: number,
+  /** Message identifier of the message with the button */
+  readonly message_id?: number,
+  /** Button identifier */
+  readonly button_id?: number,
+}
+
+/**
+ * Returns an HTTP URL which can be used to automatically authorize the user on a website
+ * after clicking an inline button of type inlineKeyboardButtonTypeLoginUrl. Use the
+ * method getLoginUrlInfo to find whether a prior user confirmation is needed. If an
+ * error is returned, then the button must be handled as an ordinary URL button
+ */
+export type getLoginUrl = {
+  readonly _: 'getLoginUrl',
+  /** Chat identifier of the message with the button */
+  readonly chat_id?: number,
+  /** Message identifier of the message with the button */
+  readonly message_id?: number,
+  /** Button identifier */
+  readonly button_id?: number,
+  /** True, if the user allowed the bot to send them messages */
+  readonly allow_write_access?: boolean,
+}
+
+/**
  * Sends an inline query to a bot and returns its results. Returns an error with code
  * 502 if the bot fails to answer the query before the query timeout expires
  */
@@ -15527,7 +17321,7 @@ export type getInlineQueryResults = {
   readonly _: 'getInlineQueryResults',
   /** The identifier of the target bot */
   readonly bot_user_id?: number,
-  /** Identifier of the chat, where the query was sent */
+  /** Identifier of the chat where the query was sent */
   readonly chat_id?: number,
   /** Location of the user, only if needed */
   readonly user_location?: location$Input,
@@ -15819,6 +17613,8 @@ export type createNewSupergroupChat = {
   readonly is_channel?: boolean,
   /** Chat description; 0-255 characters */
   readonly description?: string,
+  /** Chat location if a location-based supergroup is being created */
+  readonly location?: chatLocation$Input,
 }
 
 /** Creates a new secret chat. Returns the newly created chat */
@@ -15830,7 +17626,8 @@ export type createNewSecretChat = {
 
 /**
  * Creates a new supergroup from an existing basic group and sends a corresponding messageChatUpgradeTo
- * and messageChatUpgradeFrom. Deactivates the original basic group
+ * and messageChatUpgradeFrom; requires creator privileges. Deactivates the original
+ * basic group
  */
 export type upgradeBasicGroupChatToSupergroupChat = {
   readonly _: 'upgradeBasicGroupChatToSupergroupChat',
@@ -15838,11 +17635,19 @@ export type upgradeBasicGroupChatToSupergroupChat = {
   readonly chat_id?: number,
 }
 
+/** Moves a chat to a different chat list. Current chat list of the chat must ne non-null */
+export type setChatChatList = {
+  readonly _: 'setChatChatList',
+  /** Chat identifier */
+  readonly chat_id?: number,
+  /** New chat list of the chat */
+  readonly chat_list?: ChatList$Input,
+}
+
 /**
  * Changes the chat title. Supported only for basic groups, supergroups and channels.
- * Requires administrator rights in basic groups and the appropriate administrator rights
- * in supergroups and channels. The title will not be changed until the request to the
- * server has been completed
+ * Requires can_change_info rights. The title will not be changed until the request
+ * to the server has been completed
  */
 export type setChatTitle = {
   readonly _: 'setChatTitle',
@@ -15854,9 +17659,8 @@ export type setChatTitle = {
 
 /**
  * Changes the photo of a chat. Supported only for basic groups, supergroups and channels.
- * Requires administrator rights in basic groups and the appropriate administrator rights
- * in supergroups and channels. The photo will not be changed before request to the
- * server has been completed
+ * Requires can_change_info rights. The photo will not be changed before request to
+ * the server has been completed
  */
 export type setChatPhoto = {
   readonly _: 'setChatPhoto',
@@ -15869,6 +17673,18 @@ export type setChatPhoto = {
   readonly photo?: InputFile$Input,
 }
 
+/**
+ * Changes the chat members permissions. Supported only for basic groups and supergroups.
+ * Requires can_restrict_members administrator right
+ */
+export type setChatPermissions = {
+  readonly _: 'setChatPermissions',
+  /** Chat identifier */
+  readonly chat_id?: number,
+  /** New non-administrator members permissions in the chat */
+  readonly permissions?: chatPermissions$Input,
+}
+
 /** Changes the draft message in a chat */
 export type setChatDraftMessage = {
   readonly _: 'setChatDraftMessage',
@@ -15878,18 +17694,24 @@ export type setChatDraftMessage = {
   readonly draft_message?: draftMessage$Input,
 }
 
-/** Changes the notification settings of a chat */
+/**
+ * Changes the notification settings of a chat. Notification settings of a chat with
+ * the current user (Saved Messages) can't be changed
+ */
 export type setChatNotificationSettings = {
   readonly _: 'setChatNotificationSettings',
   /** Chat identifier */
   readonly chat_id?: number,
-  /** New notification settings for the chat */
+  /**
+   * New notification settings for the chat. If the chat is muted for more than 1 week,
+   * it is considered to be muted forever
+   */
   readonly notification_settings?: chatNotificationSettings$Input,
 }
 
 /**
- * Changes the pinned state of a chat. You can pin up to GetOption("pinned_chat_count_max")
- * non-secret chats and the same number of secret chats
+ * Changes the pinned state of a chat. You can pin up to GetOption("pinned_chat_count_max")/GetOption("pinned_archived_chat_count_max")
+ * non-secret chats and the same number of secret chats in the main/archive chat list
  */
 export type toggleChatIsPinned = {
   readonly _: 'toggleChatIsPinned',
@@ -15930,9 +17752,65 @@ export type setChatClientData = {
 }
 
 /**
- * Pins a message in a chat; requires appropriate administrator rights in the group
- * or channel
+ * Changes information about a chat. Available for basic groups, supergroups, and channels.
+ * Requires can_change_info rights
  */
+export type setChatDescription = {
+  readonly _: 'setChatDescription',
+  /** Identifier of the chat */
+  readonly chat_id?: number,
+  /** New chat description; 0-255 characters */
+  readonly description?: string,
+}
+
+/**
+ * Changes the discussion group of a channel chat; requires can_change_info rights in
+ * the channel if it is specified
+ */
+export type setChatDiscussionGroup = {
+  readonly _: 'setChatDiscussionGroup',
+  /**
+   * Identifier of the channel chat. Pass 0 to remove a link from the supergroup passed
+   * in the second argument to a linked channel chat (requires can_pin_messages rights
+   * in the supergroup)
+   */
+  readonly chat_id?: number,
+  /**
+   * Identifier of a new channel's discussion group. Use 0 to remove the discussion group.
+   * Use the method getSuitableDiscussionChats to find all suitable groups. Basic group
+   * chats needs to be first upgraded to supergroup chats. If new chat members don't have
+   * access to old messages in the supergroup, then toggleSupergroupIsAllHistoryAvailable
+   * needs to be used first to change that
+   */
+  readonly discussion_chat_id?: number,
+}
+
+/**
+ * Changes the location of a chat. Available only for some location-based supergroups,
+ * use supergroupFullInfo.can_set_location to check whether the method is allowed to
+ * use
+ */
+export type setChatLocation = {
+  readonly _: 'setChatLocation',
+  /** Chat identifier */
+  readonly chat_id?: number,
+  /** New location for the chat; must be valid and not null */
+  readonly location?: chatLocation$Input,
+}
+
+/**
+ * Changes the slow mode delay of a chat. Available only for supergroups; requires can_restrict_members
+ * rights
+ */
+export type setChatSlowModeDelay = {
+  readonly _: 'setChatSlowModeDelay',
+  /** Chat identifier */
+  readonly chat_id?: number,
+  /** New slow mode delay for the chat; must be one of 0, 10, 30, 60, 300, 900, 3600 */
+  readonly slow_mode_delay?: number,
+}
+
+/** Pins a message in a chat; requires can_pin_messages rights */
 export type pinChatMessage = {
   readonly _: 'pinChatMessage',
   /** Identifier of the chat */
@@ -15944,8 +17822,8 @@ export type pinChatMessage = {
 }
 
 /**
- * Removes the pinned message from a chat; requires appropriate administrator rights
- * in the group or channel
+ * Removes the pinned message from a chat; requires can_pin_messages rights in the group
+ * or channel
  */
 export type unpinChatMessage = {
   readonly _: 'unpinChatMessage',
@@ -16006,9 +17884,9 @@ export type addChatMembers = {
 
 /**
  * Changes the status of a chat member, needs appropriate privileges. This function
- * is currently not suitable for adding new members to the chat; instead, use addChatMember.
- * The chat member status will not be changed until it has been synchronized with the
- * server
+ * is currently not suitable for adding new members to the chat and transferring chat
+ * ownership; instead, use addChatMember or transferChatOwnership. The chat member status
+ * will not be changed until it has been synchronized with the server
  */
 export type setChatMemberStatus = {
   readonly _: 'setChatMemberStatus',
@@ -16018,6 +17896,32 @@ export type setChatMemberStatus = {
   readonly user_id?: number,
   /** The new status of the member in the chat */
   readonly status?: ChatMemberStatus$Input,
+}
+
+/**
+ * Checks whether the current session can be used to transfer a chat ownership to another
+ * user
+ */
+export type canTransferOwnership = {
+  readonly _: 'canTransferOwnership',
+}
+
+/**
+ * Changes the owner of a chat. The current user must be a current owner of the chat.
+ * Use the method canTransferOwnership to check whether the ownership can be transferred
+ * from the current session. Available only for supergroups and channel chats
+ */
+export type transferChatOwnership = {
+  readonly _: 'transferChatOwnership',
+  /** Chat identifier */
+  readonly chat_id?: number,
+  /**
+   * Identifier of the user to which transfer the ownership. The ownership can't be transferred
+   * to a bot or to a deleted user
+   */
+  readonly user_id?: number,
+  /** The password of the current user */
+  readonly password?: string,
 }
 
 /** Returns information about a single member of a chat */
@@ -16045,7 +17949,7 @@ export type searchChatMembers = {
   readonly filter?: ChatMembersFilter$Input,
 }
 
-/** Returns a list of users who are administrators of the chat */
+/** Returns a list of administrators of the chat with their custom titles */
 export type getChatAdministrators = {
   readonly _: 'getChatAdministrators',
   /** Chat identifier */
@@ -16095,6 +17999,8 @@ export type resetAllNotificationSettings = {
 /** Changes the order of pinned chats */
 export type setPinnedChats = {
   readonly _: 'setPinnedChats',
+  /** Chat list in which to change the order of pinned chats */
+  readonly chat_list?: ChatList$Input,
   /** The new list of pinned chats */
   readonly chat_ids?: ReadonlyArray<number>,
 }
@@ -16195,7 +18101,7 @@ export type writeGeneratedFilePart = {
   readonly data?: string,
 }
 
-/** Informs TDLib on a file generation prograss */
+/** Informs TDLib on a file generation progress */
 export type setFileGenerationProgress = {
   readonly _: 'setFileGenerationProgress',
   /** The identifier of the generation process */
@@ -16243,9 +18149,8 @@ export type deleteFile = {
 
 /**
  * Generates a new invite link for a chat; the previously generated link is revoked.
- * Available for basic groups, supergroups, and channels. In basic groups this can be
- * called only by the group's creator; in supergroups and channels this requires appropriate
- * administrator rights
+ * Available for basic groups, supergroups, and channels. Requires administrator privileges
+ * and can_invite_users right
  */
 export type generateChatInviteLink = {
   readonly _: 'generateChatInviteLink',
@@ -16319,6 +18224,8 @@ export type sendCallRating = {
   readonly rating?: number,
   /** An optional user comment if the rating is less than 5 */
   readonly comment?: string,
+  /** List of the exact types of problems with the call, specified by the user */
+  readonly problems?: ReadonlyArray<CallProblem$Input>,
 }
 
 /** Sends debug information for a call */
@@ -16349,14 +18256,34 @@ export type getBlockedUsers = {
   readonly _: 'getBlockedUsers',
   /** Number of users to skip in the result; must be non-negative */
   readonly offset?: number,
-  /** Maximum number of users to return; up to 100 */
+  /** The maximum number of users to return; up to 100 */
   readonly limit?: number,
 }
 
-/** Adds new contacts or edits existing contacts; contacts' user identifiers are ignored */
+/** Adds a user to the contact list or edits an existing contact by their user identifier */
+export type addContact = {
+  readonly _: 'addContact',
+  /**
+   * The contact to add or edit; phone number can be empty and needs to be specified only
+   * if known, vCard is ignored
+   */
+  readonly contact?: contact$Input,
+  /**
+   * True, if the new contact needs to be allowed to see current user's phone number.
+   * A corresponding rule to userPrivacySettingShowPhoneNumber will be added if needed.
+   * Use the field UserFullInfo.need_phone_number_privacy_exception to check whether the
+   * current user needs to be asked to share their phone number
+   */
+  readonly share_phone_number?: boolean,
+}
+
+/**
+ * Adds new contacts or edits existing contacts by their phone numbers; contacts' user
+ * identifiers are ignored
+ */
 export type importContacts = {
   readonly _: 'importContacts',
-  /** The list of contacts to import or edit, contact's vCard are ignored and are not imported */
+  /** The list of contacts to import or edit; contacts' vCard are ignored and are not imported */
   readonly contacts?: ReadonlyArray<contact$Input>,
 }
 
@@ -16373,7 +18300,7 @@ export type searchContacts = {
   readonly _: 'searchContacts',
   /** Query to search for; may be empty to return all contacts */
   readonly query?: string,
-  /** Maximum number of users to be returned */
+  /** The maximum number of users to be returned */
   readonly limit?: number,
 }
 
@@ -16407,6 +18334,19 @@ export type clearImportedContacts = {
 }
 
 /**
+ * Shares the phone number of the current user with a mutual contact. Supposed to be
+ * called when the user clicks on chatActionBarSharePhoneNumber
+ */
+export type sharePhoneNumber = {
+  readonly _: 'sharePhoneNumber',
+  /**
+   * Identifier of the user with whom to share the phone number. The user must be a mutual
+   * contact
+   */
+  readonly user_id?: number,
+}
+
+/**
  * Returns the profile photos of a user. The result of this query may be outdated: some
  * photos might have been deleted already
  */
@@ -16416,7 +18356,7 @@ export type getUserProfilePhotos = {
   readonly user_id?: number,
   /** The number of photos to skip; must be non-negative */
   readonly offset?: number,
-  /** Maximum number of photos to be returned; up to 100 */
+  /** The maximum number of photos to be returned; up to 100 */
   readonly limit?: number,
 }
 
@@ -16428,7 +18368,7 @@ export type getStickers = {
   readonly _: 'getStickers',
   /** String representation of emoji. If empty, returns all known installed stickers */
   readonly emoji?: string,
-  /** Maximum number of stickers to be returned */
+  /** The maximum number of stickers to be returned */
   readonly limit?: number,
 }
 
@@ -16437,7 +18377,7 @@ export type searchStickers = {
   readonly _: 'searchStickers',
   /** String representation of emoji; must be non-empty */
   readonly emoji?: string,
-  /** Maximum number of stickers to be returned */
+  /** The maximum number of stickers to be returned */
   readonly limit?: number,
 }
 
@@ -16455,7 +18395,7 @@ export type getArchivedStickerSets = {
   readonly is_masks?: boolean,
   /** Identifier of the sticker set from which to return the result */
   readonly offset_sticker_set_id?: number | string,
-  /** Maximum number of sticker sets to return */
+  /** The maximum number of sticker sets to return */
   readonly limit?: number,
 }
 
@@ -16498,7 +18438,7 @@ export type searchInstalledStickerSets = {
   readonly is_masks?: boolean,
   /** Query to search for */
   readonly query?: string,
-  /** Maximum number of sticker sets to return */
+  /** The maximum number of sticker sets to return */
   readonly limit?: number,
 }
 
@@ -16614,11 +18554,37 @@ export type removeFavoriteSticker = {
   readonly sticker?: InputFile$Input,
 }
 
-/** Returns emoji corresponding to a sticker */
+/**
+ * Returns emoji corresponding to a sticker. The list is only for informational purposes,
+ * because a sticker is always sent with a fixed emoji from the corresponding Sticker
+ * object
+ */
 export type getStickerEmojis = {
   readonly _: 'getStickerEmojis',
   /** Sticker file identifier */
   readonly sticker?: InputFile$Input,
+}
+
+/** Searches for emojis by keywords. Supported only if the file database is enabled */
+export type searchEmojis = {
+  readonly _: 'searchEmojis',
+  /** Text to search for */
+  readonly text?: string,
+  /** True, if only emojis, which exactly match text needs to be returned */
+  readonly exact_match?: boolean,
+  /** IETF language tag of the user's input language; may be empty if unknown */
+  readonly input_language_code?: string,
+}
+
+/**
+ * Returns an HTTP URL which can be used to automatically log in to the translation
+ * platform and suggest new emoji replacements. The URL will be valid for 30 seconds
+ * after generation
+ */
+export type getEmojiSuggestionsUrl = {
+  readonly _: 'getEmojiSuggestionsUrl',
+  /** Language code for which the emoji replacements will be suggested */
+  readonly language_code?: string,
 }
 
 /** Returns saved animations */
@@ -16658,7 +18624,7 @@ export type searchHashtags = {
   readonly _: 'searchHashtags',
   /** Hashtag prefix to search for */
   readonly prefix?: string,
-  /** Maximum number of hashtags to be returned */
+  /** The maximum number of hashtags to be returned */
   readonly limit?: number,
 }
 
@@ -16745,13 +18711,8 @@ export type changePhoneNumber = {
   readonly _: 'changePhoneNumber',
   /** The new phone number of the user in international format */
   readonly phone_number?: string,
-  /** Pass true if the code can be sent via flash call to the specified phone number */
-  readonly allow_flash_call?: boolean,
-  /**
-   * Pass true if the phone number is used on the current device. Ignored if allow_flash_call
-   * is false
-   */
-  readonly is_current_phone_number?: boolean,
+  /** Settings for the authentication of the user's phone number */
+  readonly settings?: phoneNumberAuthenticationSettings$Input,
 }
 
 /**
@@ -16805,19 +18766,7 @@ export type disconnectAllWebsites = {
 }
 
 /**
- * Toggles the "All members are admins" setting in basic groups; requires creator privileges
- * in the group
- */
-export type toggleBasicGroupAdministrators = {
-  readonly _: 'toggleBasicGroupAdministrators',
-  /** Identifier of the basic group */
-  readonly basic_group_id?: number,
-  /** New value of everyone_is_administrator */
-  readonly everyone_is_administrator?: boolean,
-}
-
-/**
- * Changes the username of a supergroup or channel, requires creator privileges in the
+ * Changes the username of a supergroup or channel, requires owner privileges in the
  * supergroup or channel
  */
 export type setSupergroupUsername = {
@@ -16828,7 +18777,7 @@ export type setSupergroupUsername = {
   readonly username?: string,
 }
 
-/** Changes the sticker set of a supergroup; requires appropriate rights in the supergroup */
+/** Changes the sticker set of a supergroup; requires can_change_info rights */
 export type setSupergroupStickerSet = {
   readonly _: 'setSupergroupStickerSet',
   /** Identifier of the supergroup */
@@ -16840,22 +18789,7 @@ export type setSupergroupStickerSet = {
   readonly sticker_set_id?: number | string,
 }
 
-/**
- * Toggles whether all members of a supergroup can add new members; requires appropriate
- * administrator rights in the supergroup.
- */
-export type toggleSupergroupInvites = {
-  readonly _: 'toggleSupergroupInvites',
-  /** Identifier of the supergroup */
-  readonly supergroup_id?: number,
-  /** New value of anyone_can_invite */
-  readonly anyone_can_invite?: boolean,
-}
-
-/**
- * Toggles sender signatures messages sent in a channel; requires appropriate administrator
- * rights in the channel.
- */
+/** Toggles sender signatures messages sent in a channel; requires can_change_info rights */
 export type toggleSupergroupSignMessages = {
   readonly _: 'toggleSupergroupSignMessages',
   /** Identifier of the channel */
@@ -16866,7 +18800,7 @@ export type toggleSupergroupSignMessages = {
 
 /**
  * Toggles whether the message history of a supergroup is available to new members;
- * requires appropriate administrator rights in the supergroup.
+ * requires can_change_info rights
  */
 export type toggleSupergroupIsAllHistoryAvailable = {
   readonly _: 'toggleSupergroupIsAllHistoryAvailable',
@@ -16874,18 +18808,6 @@ export type toggleSupergroupIsAllHistoryAvailable = {
   readonly supergroup_id?: number,
   /** The new value of is_all_history_available */
   readonly is_all_history_available?: boolean,
-}
-
-/**
- * Changes information about a supergroup or channel; requires appropriate administrator
- * rights
- */
-export type setSupergroupDescription = {
-  readonly _: 'setSupergroupDescription',
-  /** Identifier of the supergroup or channel */
-  readonly supergroup_id?: number,
-  /** New supergroup or channel description; 0-255 characters */
-  readonly description?: string,
 }
 
 /**
@@ -16922,7 +18844,7 @@ export type getSupergroupMembers = {
 /**
  * Deletes a supergroup or channel along with all messages in the corresponding chat.
  * This will release the supergroup or channel username and remove all members; requires
- * creator privileges in the supergroup or channel. Chats with more than 1000 members
+ * owner privileges in the supergroup or channel. Chats with more than 1000 members
  * can't be deleted using this method
  */
 export type deleteSupergroup = {
@@ -16931,7 +18853,7 @@ export type deleteSupergroup = {
   readonly supergroup_id?: number,
 }
 
-/** Closes a secret chat, effectively transfering its state to secretChatStateClosed */
+/** Closes a secret chat, effectively transferring its state to secretChatStateClosed */
 export type closeSecretChat = {
   readonly _: 'closeSecretChat',
   /** Secret chat identifier */
@@ -16940,7 +18862,7 @@ export type closeSecretChat = {
 
 /**
  * Returns a list of service actions taken by chat members and administrators in the
- * last 48 hours. Available only in supergroups and channels. Requires administrator
+ * last 48 hours. Available only for supergroups and channels. Requires administrator
  * rights. Returns results in reverse chronological order (i. e., in order of decreasing
  * event_id)
  */
@@ -16955,7 +18877,7 @@ export type getChatEventLog = {
    * latest events
    */
   readonly from_event_id?: number | string,
-  /** Maximum number of events to return; up to 100 */
+  /** The maximum number of events to return; up to 100 */
   readonly limit?: number,
   /** The types of events to return. By default, all types will be returned */
   readonly filters?: chatEventLogFilters$Input,
@@ -17038,9 +18960,56 @@ export type getSupportUser = {
   readonly _: 'getSupportUser',
 }
 
-/** Returns background wallpapers */
-export type getWallpapers = {
-  readonly _: 'getWallpapers',
+/** Returns backgrounds installed by the user */
+export type getBackgrounds = {
+  readonly _: 'getBackgrounds',
+  /** True, if the backgrounds needs to be ordered for dark theme */
+  readonly for_dark_theme?: boolean,
+}
+
+/** Constructs a persistent HTTP URL for a background */
+export type getBackgroundUrl = {
+  readonly _: 'getBackgroundUrl',
+  /** Background name */
+  readonly name?: string,
+  /** Background type */
+  readonly type?: BackgroundType$Input,
+}
+
+/** Searches for a background by its name */
+export type searchBackground = {
+  readonly _: 'searchBackground',
+  /** The name of the background */
+  readonly name?: string,
+}
+
+/**
+ * Changes the background selected by the user; adds background to the list of installed
+ * backgrounds
+ */
+export type setBackground = {
+  readonly _: 'setBackground',
+  /** The input background to use, null for filled backgrounds */
+  readonly background?: InputBackground$Input,
+  /**
+   * Background type; null for default background. The method will return error 404 if
+   * type is null
+   */
+  readonly type?: BackgroundType$Input,
+  /** True, if the background is chosen for dark theme */
+  readonly for_dark_theme?: boolean,
+}
+
+/** Removes background from the list of installed backgrounds */
+export type removeBackground = {
+  readonly _: 'removeBackground',
+  /** The background identifier */
+  readonly background_id?: number | string,
+}
+
+/** Resets list of installed backgrounds to its default value */
+export type resetBackgrounds = {
+  readonly _: 'resetBackgrounds',
 }
 
 /**
@@ -17263,28 +19232,17 @@ export type deleteAccount = {
   readonly reason?: string,
 }
 
-/** Returns information on whether the current chat can be reported as spam */
-export type getChatReportSpamState = {
-  readonly _: 'getChatReportSpamState',
+/** Removes a chat action bar without any other action */
+export type removeChatActionBar = {
+  readonly _: 'removeChatActionBar',
   /** Chat identifier */
   readonly chat_id?: number,
-}
-
-/**
- * Reports to the server whether a chat is a spam chat or not. Can be used only if ChatReportSpamState.can_report_spam
- * is true. After this request, ChatReportSpamState.can_report_spam becomes false forever
- */
-export type changeChatReportSpamState = {
-  readonly _: 'changeChatReportSpamState',
-  /** Chat identifier */
-  readonly chat_id?: number,
-  /** If true, the chat will be reported as spam; otherwise it will be marked as not spam */
-  readonly is_spam_chat?: boolean,
 }
 
 /**
  * Reports a chat to the Telegram moderators. Supported only for supergroups, channels,
- * or private chats with bots, since other chats can't be checked by moderators
+ * or private chats with bots, since other chats can't be checked by moderators, or
+ * when the report is done from the chat action bar
  */
 export type reportChat = {
   readonly _: 'reportChat',
@@ -17297,8 +19255,8 @@ export type reportChat = {
 }
 
 /**
- * Returns URL with the chat statistics. Currently this method can be used only for
- * channels
+ * Returns an HTTP URL with the chat statistics. Currently this method can be used only
+ * for channels. Can be used only if SupergroupFullInfo.can_view_statistics == true
  */
 export type getChatStatisticsUrl = {
   readonly _: 'getChatStatisticsUrl',
@@ -17314,7 +19272,7 @@ export type getChatStatisticsUrl = {
 export type getStorageStatistics = {
   readonly _: 'getStorageStatistics',
   /**
-   * Maximum number of chats with the largest storage usage for which separate statistics
+   * The maximum number of chats with the largest storage usage for which separate statistics
    * should be returned. All other chats will be grouped in entries with chat_id == 0.
    * If the chat info database is not used, the chat_limit is ignored and is always set
    * to 0
@@ -17403,6 +19361,20 @@ export type resetNetworkStatistics = {
   readonly _: 'resetNetworkStatistics',
 }
 
+/** Returns auto-download settings presets for the currently logged in user */
+export type getAutoDownloadSettingsPresets = {
+  readonly _: 'getAutoDownloadSettingsPresets',
+}
+
+/** Sets auto-download settings */
+export type setAutoDownloadSettings = {
+  readonly _: 'setAutoDownloadSettings',
+  /** New user auto-download settings */
+  readonly settings?: autoDownloadSettings$Input,
+  /** Type of the network for which the new settings are applied */
+  readonly type?: NetworkType$Input,
+}
+
 /** Returns one of the available Telegram Passport elements */
 export type getPassportElement = {
   readonly _: 'getPassportElement',
@@ -17468,16 +19440,8 @@ export type sendPhoneNumberVerificationCode = {
   readonly _: 'sendPhoneNumberVerificationCode',
   /** The phone number of the user, in international format */
   readonly phone_number?: string,
-  /**
-   * Pass true if the authentication code may be sent via flash call to the specified
-   * phone number
-   */
-  readonly allow_flash_call?: boolean,
-  /**
-   * Pass true if the phone number is used on the current device. Ignored if allow_flash_call
-   * is false
-   */
-  readonly is_current_phone_number?: boolean,
+  /** Settings for the authentication of the user's phone number */
+  readonly settings?: phoneNumberAuthenticationSettings$Input,
 }
 
 /** Re-sends the code to verify a phone number to be added to a user's Telegram Passport */
@@ -17563,16 +19527,8 @@ export type sendPhoneNumberConfirmationCode = {
   readonly hash?: string,
   /** Value of the "phone" parameter from the link */
   readonly phone_number?: string,
-  /**
-   * Pass true if the authentication code may be sent via flash call to the specified
-   * phone number
-   */
-  readonly allow_flash_call?: boolean,
-  /**
-   * Pass true if the phone number is used on the current device. Ignored if allow_flash_call
-   * is false
-   */
-  readonly is_current_phone_number?: boolean,
+  /** Settings for the authentication of the user's phone number */
+  readonly settings?: phoneNumberAuthenticationSettings$Input,
 }
 
 /** Resends phone number confirmation code */
@@ -17715,7 +19671,7 @@ export type setAlarm = {
 }
 
 /**
- * Uses current user IP to found his country. Returns two-letter ISO 3166-1 alpha-2
+ * Uses current user IP to found their country. Returns two-letter ISO 3166-1 alpha-2
  * country code. Can be called before authorization
  */
 export type getCountryCode = {
@@ -17908,7 +19864,7 @@ export type getLogTagVerbosityLevel = {
  */
 export type addLogMessage = {
   readonly _: 'addLogMessage',
-  /** Minimum verbosity level needed for the message to be logged, 0-1023 */
+  /** The minimum verbosity level needed for the message to be logged, 0-1023 */
   readonly verbosity_level?: number,
   /** Text of a message to log */
   readonly text?: string,
@@ -17997,6 +19953,24 @@ export type testNetwork = {
   readonly _: 'testNetwork',
 }
 
+/**
+ * Sends a simple network request to the Telegram servers via proxy; for testing only.
+ * Can be called before authorization
+ */
+export type testProxy = {
+  readonly _: 'testProxy',
+  /** Proxy server IP address */
+  readonly server?: string,
+  /** Proxy server port */
+  readonly port?: number,
+  /** Proxy type */
+  readonly type?: ProxyType$Input,
+  /** Identifier of a datacenter, with which to test connection */
+  readonly dc_id?: number,
+  /** The maximum overall timeout for the request */
+  readonly timeout?: number,
+}
+
 /** Forces an updates.getDifference call to the Telegram servers; for testing only */
 export type testGetDifference = {
   readonly _: 'testGetDifference',
@@ -18011,11 +19985,14 @@ export type testUseUpdate = {
 }
 
 /**
- * Does nothing and ensures that the Error object is used; for testing only. This is
- * an offline method. Can be called before authorization
+ * Returns the specified error and ensures that the Error object is used; for testing
+ * only. This is an offline method. Can be called before authorization. Can be called
+ * synchronously
  */
-export type testUseError = {
-  readonly _: 'testUseError',
+export type testReturnError = {
+  readonly _: 'testReturnError',
+  /** The error to be returned */
+  readonly error?: error$Input,
 }
 
 // ----
@@ -18100,6 +20077,8 @@ export type AuthorizationState =
   | authorizationStateWaitEncryptionKey
   | authorizationStateWaitPhoneNumber
   | authorizationStateWaitCode
+  | authorizationStateWaitOtherDeviceConfirmation
+  | authorizationStateWaitRegistration
   | authorizationStateWaitPassword
   | authorizationStateReady
   | authorizationStateLoggingOut
@@ -18112,6 +20091,8 @@ export type AuthorizationState$Input =
   | authorizationStateWaitEncryptionKey$Input
   | authorizationStateWaitPhoneNumber$Input
   | authorizationStateWaitCode$Input
+  | authorizationStateWaitOtherDeviceConfirmation$Input
+  | authorizationStateWaitRegistration$Input
   | authorizationStateWaitPassword$Input
   | authorizationStateReady$Input
   | authorizationStateLoggingOut$Input
@@ -18174,6 +20155,12 @@ export type PhotoSize =
 export type PhotoSize$Input =
   | photoSize$Input
 
+export type Minithumbnail =
+  | minithumbnail
+
+export type Minithumbnail$Input =
+  | minithumbnail$Input
+
 /** Part of the face, relative to which a mask should be placed */
 export type MaskPoint =
   | maskPointForehead
@@ -18199,6 +20186,16 @@ export type PollOption =
 
 export type PollOption$Input =
   | pollOption$Input
+
+/** Describes the type of a poll */
+export type PollType =
+  | pollTypeRegular
+  | pollTypeQuiz
+
+/** Describes the type of a poll */
+export type PollType$Input =
+  | pollTypeRegular$Input
+  | pollTypeQuiz$Input
 
 export type Animation =
   | animation
@@ -18291,26 +20288,8 @@ export type ChatPhoto$Input =
   | chatPhoto$Input
 
 /**
- * Represents the relationship between user A and user B. For incoming_link, user A
- * is the current user; for outgoing_link, user B is the current user
- */
-export type LinkState =
-  | linkStateNone
-  | linkStateKnowsPhoneNumber
-  | linkStateIsContact
-
-/**
- * Represents the relationship between user A and user B. For incoming_link, user A
- * is the current user; for outgoing_link, user B is the current user
- */
-export type LinkState$Input =
-  | linkStateNone$Input
-  | linkStateKnowsPhoneNumber$Input
-  | linkStateIsContact$Input
-
-/**
- * Represents the type of the user. The following types are possible: regular users,
- * deleted users and bots
+ * Represents the type of a user. The following types are possible: regular users, deleted
+ * users and bots
  */
 export type UserType =
   | userTypeRegular
@@ -18319,8 +20298,8 @@ export type UserType =
   | userTypeUnknown
 
 /**
- * Represents the type of the user. The following types are possible: regular users,
- * deleted users and bots
+ * Represents the type of a user. The following types are possible: regular users, deleted
+ * users and bots
  */
 export type UserType$Input =
   | userTypeRegular$Input
@@ -18339,6 +20318,12 @@ export type BotInfo =
 
 export type BotInfo$Input =
   | botInfo$Input
+
+export type ChatLocation =
+  | chatLocation
+
+export type ChatLocation$Input =
+  | chatLocation$Input
 
 export type User =
   | user
@@ -18369,6 +20354,24 @@ export type Users =
 
 export type Users$Input =
   | users$Input
+
+export type ChatAdministrator =
+  | chatAdministrator
+
+export type ChatAdministrator$Input =
+  | chatAdministrator$Input
+
+export type ChatAdministrators =
+  | chatAdministrators
+
+export type ChatAdministrators$Input =
+  | chatAdministrators$Input
+
+export type ChatPermissions =
+  | chatPermissions
+
+export type ChatPermissions$Input =
+  | chatPermissions$Input
 
 /** Provides information about the status of a member in a chat */
 export type ChatMemberStatus =
@@ -18402,6 +20405,7 @@ export type ChatMembers$Input =
 
 /** Specifies the kind of chat members to return in searchChatMembers */
 export type ChatMembersFilter =
+  | chatMembersFilterContacts
   | chatMembersFilterAdministrators
   | chatMembersFilterMembers
   | chatMembersFilterRestricted
@@ -18410,6 +20414,7 @@ export type ChatMembersFilter =
 
 /** Specifies the kind of chat members to return in searchChatMembers */
 export type ChatMembersFilter$Input =
+  | chatMembersFilterContacts$Input
   | chatMembersFilterAdministrators$Input
   | chatMembersFilterMembers$Input
   | chatMembersFilterRestricted$Input
@@ -18419,6 +20424,7 @@ export type ChatMembersFilter$Input =
 /** Specifies the kind of chat members to return in getSupergroupMembers */
 export type SupergroupMembersFilter =
   | supergroupMembersFilterRecent
+  | supergroupMembersFilterContacts
   | supergroupMembersFilterAdministrators
   | supergroupMembersFilterSearch
   | supergroupMembersFilterRestricted
@@ -18428,6 +20434,7 @@ export type SupergroupMembersFilter =
 /** Specifies the kind of chat members to return in getSupergroupMembers */
 export type SupergroupMembersFilter$Input =
   | supergroupMembersFilterRecent$Input
+  | supergroupMembersFilterContacts$Input
   | supergroupMembersFilterAdministrators$Input
   | supergroupMembersFilterSearch$Input
   | supergroupMembersFilterRestricted$Input
@@ -18566,6 +20573,16 @@ export type ChatType$Input =
   | chatTypeSupergroup$Input
   | chatTypeSecret$Input
 
+/** Describes a list of chats */
+export type ChatList =
+  | chatListMain
+  | chatListArchive
+
+/** Describes a list of chats */
+export type ChatList$Input =
+  | chatListMain$Input
+  | chatListArchive$Input
+
 export type Chat =
   | chat
 
@@ -18577,6 +20594,18 @@ export type Chats =
 
 export type Chats$Input =
   | chats$Input
+
+export type ChatNearby =
+  | chatNearby
+
+export type ChatNearby$Input =
+  | chatNearby$Input
+
+export type ChatsNearby =
+  | chatsNearby
+
+export type ChatsNearby$Input =
+  | chatsNearby$Input
 
 export type ChatInviteLink =
   | chatInviteLink
@@ -18590,17 +20619,45 @@ export type ChatInviteLinkInfo =
 export type ChatInviteLinkInfo$Input =
   | chatInviteLinkInfo$Input
 
+/** Describes a type of public chats */
+export type PublicChatType =
+  | publicChatTypeHasUsername
+  | publicChatTypeIsLocationBased
+
+/** Describes a type of public chats */
+export type PublicChatType$Input =
+  | publicChatTypeHasUsername$Input
+  | publicChatTypeIsLocationBased$Input
+
+/** Describes actions which should be possible to do through a chat action bar */
+export type ChatActionBar =
+  | chatActionBarReportSpam
+  | chatActionBarReportUnrelatedLocation
+  | chatActionBarReportAddBlock
+  | chatActionBarAddContact
+  | chatActionBarSharePhoneNumber
+
+/** Describes actions which should be possible to do through a chat action bar */
+export type ChatActionBar$Input =
+  | chatActionBarReportSpam$Input
+  | chatActionBarReportUnrelatedLocation$Input
+  | chatActionBarReportAddBlock$Input
+  | chatActionBarAddContact$Input
+  | chatActionBarSharePhoneNumber$Input
+
 /** Describes a keyboard button type */
 export type KeyboardButtonType =
   | keyboardButtonTypeText
   | keyboardButtonTypeRequestPhoneNumber
   | keyboardButtonTypeRequestLocation
+  | keyboardButtonTypeRequestPoll
 
 /** Describes a keyboard button type */
 export type KeyboardButtonType$Input =
   | keyboardButtonTypeText$Input
   | keyboardButtonTypeRequestPhoneNumber$Input
   | keyboardButtonTypeRequestLocation$Input
+  | keyboardButtonTypeRequestPoll$Input
 
 export type KeyboardButton =
   | keyboardButton
@@ -18611,6 +20668,7 @@ export type KeyboardButton$Input =
 /** Describes the type of an inline keyboard button */
 export type InlineKeyboardButtonType =
   | inlineKeyboardButtonTypeUrl
+  | inlineKeyboardButtonTypeLoginUrl
   | inlineKeyboardButtonTypeCallback
   | inlineKeyboardButtonTypeCallbackGame
   | inlineKeyboardButtonTypeSwitchInline
@@ -18619,6 +20677,7 @@ export type InlineKeyboardButtonType =
 /** Describes the type of an inline keyboard button */
 export type InlineKeyboardButtonType$Input =
   | inlineKeyboardButtonTypeUrl$Input
+  | inlineKeyboardButtonTypeLoginUrl$Input
   | inlineKeyboardButtonTypeCallback$Input
   | inlineKeyboardButtonTypeCallbackGame$Input
   | inlineKeyboardButtonTypeSwitchInline$Input
@@ -18649,6 +20708,16 @@ export type ReplyMarkup$Input =
   | replyMarkupForceReply$Input
   | replyMarkupShowKeyboard$Input
   | replyMarkupInlineKeyboard$Input
+
+/** Contains information about an inline button of type inlineKeyboardButtonTypeLoginUrl */
+export type LoginUrlInfo =
+  | loginUrlInfoOpen
+  | loginUrlInfoRequestConfirmation
+
+/** Contains information about an inline button of type inlineKeyboardButtonTypeLoginUrl */
+export type LoginUrlInfo$Input =
+  | loginUrlInfoOpen$Input
+  | loginUrlInfoRequestConfirmation$Input
 
 /** Describes a text object inside an instant-view web page */
 export type RichText =
@@ -18754,6 +20823,7 @@ export type PageBlock =
   | pageBlockAudio
   | pageBlockPhoto
   | pageBlockVideo
+  | pageBlockVoiceNote
   | pageBlockCover
   | pageBlockEmbedded
   | pageBlockEmbeddedPost
@@ -18785,6 +20855,7 @@ export type PageBlock$Input =
   | pageBlockAudio$Input
   | pageBlockPhoto$Input
   | pageBlockVideo$Input
+  | pageBlockVoiceNote$Input
   | pageBlockCover$Input
   | pageBlockEmbedded$Input
   | pageBlockEmbeddedPost$Input
@@ -19222,14 +21293,16 @@ export type TextEntityType =
   | textEntityTypeBotCommand
   | textEntityTypeUrl
   | textEntityTypeEmailAddress
+  | textEntityTypePhoneNumber
   | textEntityTypeBold
   | textEntityTypeItalic
+  | textEntityTypeUnderline
+  | textEntityTypeStrikethrough
   | textEntityTypeCode
   | textEntityTypePre
   | textEntityTypePreCode
   | textEntityTypeTextUrl
   | textEntityTypeMentionName
-  | textEntityTypePhoneNumber
 
 /** Represents a part of the text which must be formatted differently */
 export type TextEntityType$Input =
@@ -19239,20 +21312,38 @@ export type TextEntityType$Input =
   | textEntityTypeBotCommand$Input
   | textEntityTypeUrl$Input
   | textEntityTypeEmailAddress$Input
+  | textEntityTypePhoneNumber$Input
   | textEntityTypeBold$Input
   | textEntityTypeItalic$Input
+  | textEntityTypeUnderline$Input
+  | textEntityTypeStrikethrough$Input
   | textEntityTypeCode$Input
   | textEntityTypePre$Input
   | textEntityTypePreCode$Input
   | textEntityTypeTextUrl$Input
   | textEntityTypeMentionName$Input
-  | textEntityTypePhoneNumber$Input
 
 export type InputThumbnail =
   | inputThumbnail
 
 export type InputThumbnail$Input =
   | inputThumbnail$Input
+
+/** Contains information about the time when a scheduled message will be sent */
+export type MessageSchedulingState =
+  | messageSchedulingStateSendAtDate
+  | messageSchedulingStateSendWhenOnline
+
+/** Contains information about the time when a scheduled message will be sent */
+export type MessageSchedulingState$Input =
+  | messageSchedulingStateSendAtDate$Input
+  | messageSchedulingStateSendWhenOnline$Input
+
+export type SendMessageOptions =
+  | sendMessageOptions
+
+export type SendMessageOptions$Input =
+  | sendMessageOptions$Input
 
 /** The content of a message to send */
 export type InputMessageContent =
@@ -19386,11 +21477,11 @@ export type Stickers =
 export type Stickers$Input =
   | stickers$Input
 
-export type StickerEmojis =
-  | stickerEmojis
+export type Emojis =
+  | emojis
 
-export type StickerEmojis$Input =
-  | stickerEmojis$Input
+export type Emojis$Input =
+  | emojis$Input
 
 export type StickerSet =
   | stickerSet
@@ -19462,11 +21553,37 @@ export type CallState$Input =
   | callStateDiscarded$Input
   | callStateError$Input
 
+/** Describes the exact type of a problem with a call */
+export type CallProblem =
+  | callProblemEcho
+  | callProblemNoise
+  | callProblemInterruptions
+  | callProblemDistortedSpeech
+  | callProblemSilentLocal
+  | callProblemSilentRemote
+  | callProblemDropped
+
+/** Describes the exact type of a problem with a call */
+export type CallProblem$Input =
+  | callProblemEcho$Input
+  | callProblemNoise$Input
+  | callProblemInterruptions$Input
+  | callProblemDistortedSpeech$Input
+  | callProblemSilentLocal$Input
+  | callProblemSilentRemote$Input
+  | callProblemDropped$Input
+
 export type Call =
   | call
 
 export type Call$Input =
   | call$Input
+
+export type PhoneNumberAuthenticationSettings =
+  | phoneNumberAuthenticationSettings
+
+export type PhoneNumberAuthenticationSettings$Input =
+  | phoneNumberAuthenticationSettings$Input
 
 export type Animations =
   | animations
@@ -19592,6 +21709,7 @@ export type GameHighScores$Input =
 export type ChatEventAction =
   | chatEventMessageEdited
   | chatEventMessageDeleted
+  | chatEventPollStopped
   | chatEventMessagePinned
   | chatEventMessageUnpinned
   | chatEventMemberJoined
@@ -19600,18 +21718,23 @@ export type ChatEventAction =
   | chatEventMemberPromoted
   | chatEventMemberRestricted
   | chatEventTitleChanged
+  | chatEventPermissionsChanged
   | chatEventDescriptionChanged
   | chatEventUsernameChanged
   | chatEventPhotoChanged
   | chatEventInvitesToggled
+  | chatEventLinkedChatChanged
+  | chatEventSlowModeDelayChanged
   | chatEventSignMessagesToggled
   | chatEventStickerSetChanged
+  | chatEventLocationChanged
   | chatEventIsAllHistoryAvailableToggled
 
 /** Represents a chat event */
 export type ChatEventAction$Input =
   | chatEventMessageEdited$Input
   | chatEventMessageDeleted$Input
+  | chatEventPollStopped$Input
   | chatEventMessagePinned$Input
   | chatEventMessageUnpinned$Input
   | chatEventMemberJoined$Input
@@ -19620,12 +21743,16 @@ export type ChatEventAction$Input =
   | chatEventMemberPromoted$Input
   | chatEventMemberRestricted$Input
   | chatEventTitleChanged$Input
+  | chatEventPermissionsChanged$Input
   | chatEventDescriptionChanged$Input
   | chatEventUsernameChanged$Input
   | chatEventPhotoChanged$Input
   | chatEventInvitesToggled$Input
+  | chatEventLinkedChatChanged$Input
+  | chatEventSlowModeDelayChanged$Input
   | chatEventSignMessagesToggled$Input
   | chatEventStickerSetChanged$Input
+  | chatEventLocationChanged$Input
   | chatEventIsAllHistoryAvailableToggled$Input
 
 export type ChatEvent =
@@ -19724,23 +21851,75 @@ export type PushReceiverId =
 export type PushReceiverId$Input =
   | pushReceiverId$Input
 
-export type Wallpaper =
-  | wallpaper
+/** Describes a fill of a background */
+export type BackgroundFill =
+  | backgroundFillSolid
+  | backgroundFillGradient
 
-export type Wallpaper$Input =
-  | wallpaper$Input
+/** Describes a fill of a background */
+export type BackgroundFill$Input =
+  | backgroundFillSolid$Input
+  | backgroundFillGradient$Input
 
-export type Wallpapers =
-  | wallpapers
+/** Describes the type of a background */
+export type BackgroundType =
+  | backgroundTypeWallpaper
+  | backgroundTypePattern
+  | backgroundTypeFill
 
-export type Wallpapers$Input =
-  | wallpapers$Input
+/** Describes the type of a background */
+export type BackgroundType$Input =
+  | backgroundTypeWallpaper$Input
+  | backgroundTypePattern$Input
+  | backgroundTypeFill$Input
+
+export type Background =
+  | background
+
+export type Background$Input =
+  | background$Input
+
+export type Backgrounds =
+  | backgrounds
+
+export type Backgrounds$Input =
+  | backgrounds$Input
+
+/** Contains information about background to set */
+export type InputBackground =
+  | inputBackgroundLocal
+  | inputBackgroundRemote
+
+/** Contains information about background to set */
+export type InputBackground$Input =
+  | inputBackgroundLocal$Input
+  | inputBackgroundRemote$Input
 
 export type Hashtags =
   | hashtags
 
 export type Hashtags$Input =
   | hashtags$Input
+
+/**
+ * Represents result of checking whether the current session can be used to transfer
+ * a chat ownership to another user
+ */
+export type CanTransferOwnershipResult =
+  | canTransferOwnershipResultOk
+  | canTransferOwnershipResultPasswordNeeded
+  | canTransferOwnershipResultPasswordTooFresh
+  | canTransferOwnershipResultSessionTooFresh
+
+/**
+ * Represents result of checking whether the current session can be used to transfer
+ * a chat ownership to another user
+ */
+export type CanTransferOwnershipResult$Input =
+  | canTransferOwnershipResultOk$Input
+  | canTransferOwnershipResultPasswordNeeded$Input
+  | canTransferOwnershipResultPasswordTooFresh$Input
+  | canTransferOwnershipResultSessionTooFresh$Input
 
 /** Represents result of checking whether a username can be set for a chat */
 export type CheckChatUsernameResult =
@@ -19830,14 +22009,14 @@ export type NotificationType$Input =
   | notificationTypeNewCall$Input
   | notificationTypeNewPushMessage$Input
 
-/** Describes type of notifications in the group */
+/** Describes the type of notifications in a notification group */
 export type NotificationGroupType =
   | notificationGroupTypeMessages
   | notificationGroupTypeMentions
   | notificationGroupTypeSecretChat
   | notificationGroupTypeCalls
 
-/** Describes type of notifications in the group */
+/** Describes the type of notifications in a notification group */
 export type NotificationGroupType$Input =
   | notificationGroupTypeMessages$Input
   | notificationGroupTypeMentions$Input
@@ -19899,18 +22078,22 @@ export type UserPrivacySettingRule =
   | userPrivacySettingRuleAllowAll
   | userPrivacySettingRuleAllowContacts
   | userPrivacySettingRuleAllowUsers
+  | userPrivacySettingRuleAllowChatMembers
   | userPrivacySettingRuleRestrictAll
   | userPrivacySettingRuleRestrictContacts
   | userPrivacySettingRuleRestrictUsers
+  | userPrivacySettingRuleRestrictChatMembers
 
 /** Represents a single rule for managing privacy settings */
 export type UserPrivacySettingRule$Input =
   | userPrivacySettingRuleAllowAll$Input
   | userPrivacySettingRuleAllowContacts$Input
   | userPrivacySettingRuleAllowUsers$Input
+  | userPrivacySettingRuleAllowChatMembers$Input
   | userPrivacySettingRuleRestrictAll$Input
   | userPrivacySettingRuleRestrictContacts$Input
   | userPrivacySettingRuleRestrictUsers$Input
+  | userPrivacySettingRuleRestrictChatMembers$Input
 
 export type UserPrivacySettingRules =
   | userPrivacySettingRules
@@ -19921,16 +22104,24 @@ export type UserPrivacySettingRules$Input =
 /** Describes available user privacy settings */
 export type UserPrivacySetting =
   | userPrivacySettingShowStatus
+  | userPrivacySettingShowProfilePhoto
+  | userPrivacySettingShowLinkInForwardedMessages
+  | userPrivacySettingShowPhoneNumber
   | userPrivacySettingAllowChatInvites
   | userPrivacySettingAllowCalls
   | userPrivacySettingAllowPeerToPeerCalls
+  | userPrivacySettingAllowFindingByPhoneNumber
 
 /** Describes available user privacy settings */
 export type UserPrivacySetting$Input =
   | userPrivacySettingShowStatus$Input
+  | userPrivacySettingShowProfilePhoto$Input
+  | userPrivacySettingShowLinkInForwardedMessages$Input
+  | userPrivacySettingShowPhoneNumber$Input
   | userPrivacySettingAllowChatInvites$Input
   | userPrivacySettingAllowCalls$Input
   | userPrivacySettingAllowPeerToPeerCalls$Input
+  | userPrivacySettingAllowFindingByPhoneNumber$Input
 
 export type AccountTtl =
   | accountTtl
@@ -19962,12 +22153,6 @@ export type ConnectedWebsites =
 export type ConnectedWebsites$Input =
   | connectedWebsites$Input
 
-export type ChatReportSpamState =
-  | chatReportSpamState
-
-export type ChatReportSpamState$Input =
-  | chatReportSpamState$Input
-
 /** Describes the reason why a chat is reported */
 export type ChatReportReason =
   | chatReportReasonSpam
@@ -19975,6 +22160,7 @@ export type ChatReportReason =
   | chatReportReasonPornography
   | chatReportReasonChildAbuse
   | chatReportReasonCopyright
+  | chatReportReasonUnrelatedLocation
   | chatReportReasonCustom
 
 /** Describes the reason why a chat is reported */
@@ -19984,6 +22170,7 @@ export type ChatReportReason$Input =
   | chatReportReasonPornography$Input
   | chatReportReasonChildAbuse$Input
   | chatReportReasonCopyright$Input
+  | chatReportReasonUnrelatedLocation$Input
   | chatReportReasonCustom$Input
 
 export type PublicMessageLink =
@@ -19991,6 +22178,12 @@ export type PublicMessageLink =
 
 export type PublicMessageLink$Input =
   | publicMessageLink$Input
+
+export type MessageLinkInfo =
+  | messageLinkInfo
+
+export type MessageLinkInfo$Input =
+  | messageLinkInfo$Input
 
 export type FilePart =
   | filePart
@@ -20098,6 +22291,18 @@ export type NetworkStatistics =
 export type NetworkStatistics$Input =
   | networkStatistics$Input
 
+export type AutoDownloadSettings =
+  | autoDownloadSettings
+
+export type AutoDownloadSettings$Input =
+  | autoDownloadSettings$Input
+
+export type AutoDownloadSettingsPresets =
+  | autoDownloadSettingsPresets
+
+export type AutoDownloadSettingsPresets$Input =
+  | autoDownloadSettingsPresets$Input
+
 /** Describes the current state of the connection to Telegram servers */
 export type ConnectionState =
   | connectionStateWaitingForNetwork
@@ -20125,6 +22330,7 @@ export type TopChatCategory =
   | topChatCategoryChannels
   | topChatCategoryInlineBots
   | topChatCategoryCalls
+  | topChatCategoryForwardChats
 
 /**
  * Represents the categories of chats for which a list of frequently used chats can
@@ -20137,6 +22343,7 @@ export type TopChatCategory$Input =
   | topChatCategoryChannels$Input
   | topChatCategoryInlineBots$Input
   | topChatCategoryCalls$Input
+  | topChatCategoryForwardChats$Input
 
 /** Describes the type of a URL linking to an internal Telegram entity */
 export type TMeUrlType =
@@ -20198,13 +22405,13 @@ export type TextParseMode$Input =
   | textParseModeMarkdown$Input
   | textParseModeHTML$Input
 
-/** Describes the type of the proxy server */
+/** Describes the type of a proxy server */
 export type ProxyType =
   | proxyTypeSocks5
   | proxyTypeHttp
   | proxyTypeMtproto
 
-/** Describes the type of the proxy server */
+/** Describes the type of a proxy server */
 export type ProxyType$Input =
   | proxyTypeSocks5$Input
   | proxyTypeHttp$Input
@@ -20240,20 +22447,25 @@ export type Update =
   | updateMessageViews
   | updateMessageContentOpened
   | updateMessageMentionRead
+  | updateMessageLiveLocationViewed
   | updateNewChat
+  | updateChatChatList
   | updateChatTitle
   | updateChatPhoto
+  | updateChatPermissions
   | updateChatLastMessage
   | updateChatOrder
   | updateChatIsPinned
   | updateChatIsMarkedAsUnread
   | updateChatIsSponsored
+  | updateChatHasScheduledMessages
   | updateChatDefaultDisableNotification
   | updateChatReadInbox
   | updateChatReadOutbox
   | updateChatUnreadMentionCount
   | updateChatNotificationSettings
   | updateScopeNotificationSettings
+  | updateChatActionBar
   | updateChatPinnedMessage
   | updateChatReplyMarkup
   | updateChatDraftMessage
@@ -20286,9 +22498,11 @@ export type Update =
   | updateRecentStickers
   | updateFavoriteStickers
   | updateSavedAnimations
+  | updateSelectedBackground
   | updateLanguagePackStrings
   | updateConnectionState
   | updateTermsOfService
+  | updateUsersNearby
   | updateNewInlineQuery
   | updateNewChosenInlineResult
   | updateNewCallbackQuery
@@ -20298,6 +22512,7 @@ export type Update =
   | updateNewCustomEvent
   | updateNewCustomQuery
   | updatePoll
+  | updatePollAnswer
 
 /** Contains notifications about data changes */
 export type Update$Input =
@@ -20311,20 +22526,25 @@ export type Update$Input =
   | updateMessageViews$Input
   | updateMessageContentOpened$Input
   | updateMessageMentionRead$Input
+  | updateMessageLiveLocationViewed$Input
   | updateNewChat$Input
+  | updateChatChatList$Input
   | updateChatTitle$Input
   | updateChatPhoto$Input
+  | updateChatPermissions$Input
   | updateChatLastMessage$Input
   | updateChatOrder$Input
   | updateChatIsPinned$Input
   | updateChatIsMarkedAsUnread$Input
   | updateChatIsSponsored$Input
+  | updateChatHasScheduledMessages$Input
   | updateChatDefaultDisableNotification$Input
   | updateChatReadInbox$Input
   | updateChatReadOutbox$Input
   | updateChatUnreadMentionCount$Input
   | updateChatNotificationSettings$Input
   | updateScopeNotificationSettings$Input
+  | updateChatActionBar$Input
   | updateChatPinnedMessage$Input
   | updateChatReplyMarkup$Input
   | updateChatDraftMessage$Input
@@ -20357,9 +22577,11 @@ export type Update$Input =
   | updateRecentStickers$Input
   | updateFavoriteStickers$Input
   | updateSavedAnimations$Input
+  | updateSelectedBackground$Input
   | updateLanguagePackStrings$Input
   | updateConnectionState$Input
   | updateTermsOfService$Input
+  | updateUsersNearby$Input
   | updateNewInlineQuery$Input
   | updateNewChosenInlineResult$Input
   | updateNewCallbackQuery$Input
@@ -20369,6 +22591,7 @@ export type Update$Input =
   | updateNewCustomEvent$Input
   | updateNewCustomQuery$Input
   | updatePoll$Input
+  | updatePollAnswer$Input
 
 export type Updates =
   | updates
@@ -20449,6 +22672,8 @@ export type TDFunction =
   | setAuthenticationPhoneNumber
   | resendAuthenticationCode
   | checkAuthenticationCode
+  | requestQrCodeAuthentication
+  | registerUser
   | checkAuthenticationPassword
   | requestAuthenticationPasswordRecovery
   | recoverAuthenticationPassword
@@ -20456,6 +22681,7 @@ export type TDFunction =
   | logOut
   | close
   | destroy
+  | confirmQrCodeAuthentication
   | getCurrentState
   | setDatabaseEncryptionKey
   | getPasswordState
@@ -20489,6 +22715,7 @@ export type TDFunction =
   | searchPublicChats
   | searchChats
   | searchChatsOnServer
+  | searchChatsNearby
   | getTopChats
   | removeTopChat
   | addRecentlyFoundChat
@@ -20496,6 +22723,9 @@ export type TDFunction =
   | clearRecentlyFoundChats
   | checkChatUsername
   | getCreatedPublicChats
+  | checkCreatedPublicChatsLimit
+  | getSuitableDiscussionChats
+  | getInactiveSupergroupChats
   | getGroupsInCommon
   | getChatHistory
   | deleteChatHistory
@@ -20507,15 +22737,18 @@ export type TDFunction =
   | getActiveLiveLocationMessages
   | getChatMessageByDate
   | getChatMessageCount
+  | getChatScheduledMessages
   | removeNotification
   | removeNotificationGroup
   | getPublicMessageLink
   | getMessageLink
+  | getMessageLinkInfo
   | sendMessage
   | sendMessageAlbum
   | sendBotStartMessage
   | sendInlineQueryResultMessage
   | forwardMessages
+  | resendMessages
   | sendChatSetTtlMessage
   | sendChatScreenshotTakenNotification
   | addLocalMessage
@@ -20531,6 +22764,7 @@ export type TDFunction =
   | editInlineMessageMedia
   | editInlineMessageCaption
   | editInlineMessageReplyMarkup
+  | editMessageSchedulingState
   | getTextEntities
   | parseTextEntities
   | getFileMimeType
@@ -20540,7 +22774,10 @@ export type TDFunction =
   | getJsonValue
   | getJsonString
   | setPollAnswer
+  | getPollVoters
   | stopPoll
+  | getLoginUrlInfo
+  | getLoginUrl
   | getInlineQueryResults
   | answerInlineQuery
   | getCallbackQueryAnswer
@@ -20566,14 +22803,20 @@ export type TDFunction =
   | createNewSupergroupChat
   | createNewSecretChat
   | upgradeBasicGroupChatToSupergroupChat
+  | setChatChatList
   | setChatTitle
   | setChatPhoto
+  | setChatPermissions
   | setChatDraftMessage
   | setChatNotificationSettings
   | toggleChatIsPinned
   | toggleChatIsMarkedAsUnread
   | toggleChatDefaultDisableNotification
   | setChatClientData
+  | setChatDescription
+  | setChatDiscussionGroup
+  | setChatLocation
+  | setChatSlowModeDelay
   | pinChatMessage
   | unpinChatMessage
   | joinChat
@@ -20581,6 +22824,8 @@ export type TDFunction =
   | addChatMember
   | addChatMembers
   | setChatMemberStatus
+  | canTransferOwnership
+  | transferChatOwnership
   | getChatMember
   | searchChatMembers
   | getChatAdministrators
@@ -20611,6 +22856,7 @@ export type TDFunction =
   | blockUser
   | unblockUser
   | getBlockedUsers
+  | addContact
   | importContacts
   | getContacts
   | searchContacts
@@ -20618,6 +22864,7 @@ export type TDFunction =
   | getImportedContactCount
   | changeImportedContacts
   | clearImportedContacts
+  | sharePhoneNumber
   | getUserProfilePhotos
   | getStickers
   | searchStickers
@@ -20640,6 +22887,8 @@ export type TDFunction =
   | addFavoriteSticker
   | removeFavoriteSticker
   | getStickerEmojis
+  | searchEmojis
+  | getEmojiSuggestionsUrl
   | getSavedAnimations
   | addSavedAnimation
   | removeSavedAnimation
@@ -20662,13 +22911,10 @@ export type TDFunction =
   | getConnectedWebsites
   | disconnectWebsite
   | disconnectAllWebsites
-  | toggleBasicGroupAdministrators
   | setSupergroupUsername
   | setSupergroupStickerSet
-  | toggleSupergroupInvites
   | toggleSupergroupSignMessages
   | toggleSupergroupIsAllHistoryAvailable
-  | setSupergroupDescription
   | reportSupergroupSpam
   | getSupergroupMembers
   | deleteSupergroup
@@ -20682,7 +22928,12 @@ export type TDFunction =
   | deleteSavedOrderInfo
   | deleteSavedCredentials
   | getSupportUser
-  | getWallpapers
+  | getBackgrounds
+  | getBackgroundUrl
+  | searchBackground
+  | setBackground
+  | removeBackground
+  | resetBackgrounds
   | getLocalizationTargetInfo
   | getLanguagePackInfo
   | getLanguagePackStrings
@@ -20703,8 +22954,7 @@ export type TDFunction =
   | setAccountTtl
   | getAccountTtl
   | deleteAccount
-  | getChatReportSpamState
-  | changeChatReportSpamState
+  | removeChatActionBar
   | reportChat
   | getChatStatisticsUrl
   | getStorageStatistics
@@ -20715,6 +22965,8 @@ export type TDFunction =
   | getNetworkStatistics
   | addNetworkStatistics
   | resetNetworkStatistics
+  | getAutoDownloadSettingsPresets
+  | setAutoDownloadSettings
   | getPassportElement
   | getAllPassportElements
   | setPassportElement
@@ -20774,9 +23026,10 @@ export type TDFunction =
   | testCallVectorStringObject
   | testSquareInt
   | testNetwork
+  | testProxy
   | testGetDifference
   | testUseUpdate
-  | testUseError
+  | testReturnError
 
 export type TDObject =
   | Error
@@ -20798,9 +23051,11 @@ export type TDObject =
   | File
   | InputFile
   | PhotoSize
+  | Minithumbnail
   | MaskPoint
   | MaskPosition
   | PollOption
+  | PollType
   | Animation
   | Audio
   | Document
@@ -20816,15 +23071,18 @@ export type TDObject =
   | Poll
   | ProfilePhoto
   | ChatPhoto
-  | LinkState
   | UserType
   | BotCommand
   | BotInfo
+  | ChatLocation
   | User
   | UserFullInfo
   | UserProfilePhoto
   | UserProfilePhotos
   | Users
+  | ChatAdministrator
+  | ChatAdministrators
+  | ChatPermissions
   | ChatMemberStatus
   | ChatMember
   | ChatMembers
@@ -20847,15 +23105,21 @@ export type TDObject =
   | ScopeNotificationSettings
   | DraftMessage
   | ChatType
+  | ChatList
   | Chat
   | Chats
+  | ChatNearby
+  | ChatsNearby
   | ChatInviteLink
   | ChatInviteLinkInfo
+  | PublicChatType
+  | ChatActionBar
   | KeyboardButtonType
   | KeyboardButton
   | InlineKeyboardButtonType
   | InlineKeyboardButton
   | ReplyMarkup
+  | LoginUrlInfo
   | RichText
   | PageBlockCaption
   | PageBlockListItem
@@ -20902,12 +23166,14 @@ export type TDObject =
   | MessageContent
   | TextEntityType
   | InputThumbnail
+  | MessageSchedulingState
+  | SendMessageOptions
   | InputMessageContent
   | SearchMessagesFilter
   | ChatAction
   | UserStatus
   | Stickers
-  | StickerEmojis
+  | Emojis
   | StickerSet
   | StickerSetInfo
   | StickerSets
@@ -20916,7 +23182,9 @@ export type TDObject =
   | CallConnection
   | CallId
   | CallState
+  | CallProblem
   | Call
+  | PhoneNumberAuthenticationSettings
   | Animations
   | ImportedContacts
   | HttpUrl
@@ -20939,9 +23207,13 @@ export type TDObject =
   | LocalizationTargetInfo
   | DeviceToken
   | PushReceiverId
-  | Wallpaper
-  | Wallpapers
+  | BackgroundFill
+  | BackgroundType
+  | Background
+  | Backgrounds
+  | InputBackground
   | Hashtags
+  | CanTransferOwnershipResult
   | CheckChatUsernameResult
   | PushMessageContent
   | NotificationType
@@ -20959,9 +23231,9 @@ export type TDObject =
   | Sessions
   | ConnectedWebsite
   | ConnectedWebsites
-  | ChatReportSpamState
   | ChatReportReason
   | PublicMessageLink
+  | MessageLinkInfo
   | FilePart
   | FileType
   | StorageStatisticsByFileType
@@ -20972,6 +23244,8 @@ export type TDObject =
   | NetworkType
   | NetworkStatisticsEntry
   | NetworkStatistics
+  | AutoDownloadSettings
+  | AutoDownloadSettingsPresets
   | ConnectionState
   | TopChatCategory
   | TMeUrlType
@@ -21019,9 +23293,11 @@ export type TDObject$Input =
   | File$Input
   | InputFile$Input
   | PhotoSize$Input
+  | Minithumbnail$Input
   | MaskPoint$Input
   | MaskPosition$Input
   | PollOption$Input
+  | PollType$Input
   | Animation$Input
   | Audio$Input
   | Document$Input
@@ -21037,15 +23313,18 @@ export type TDObject$Input =
   | Poll$Input
   | ProfilePhoto$Input
   | ChatPhoto$Input
-  | LinkState$Input
   | UserType$Input
   | BotCommand$Input
   | BotInfo$Input
+  | ChatLocation$Input
   | User$Input
   | UserFullInfo$Input
   | UserProfilePhoto$Input
   | UserProfilePhotos$Input
   | Users$Input
+  | ChatAdministrator$Input
+  | ChatAdministrators$Input
+  | ChatPermissions$Input
   | ChatMemberStatus$Input
   | ChatMember$Input
   | ChatMembers$Input
@@ -21068,15 +23347,21 @@ export type TDObject$Input =
   | ScopeNotificationSettings$Input
   | DraftMessage$Input
   | ChatType$Input
+  | ChatList$Input
   | Chat$Input
   | Chats$Input
+  | ChatNearby$Input
+  | ChatsNearby$Input
   | ChatInviteLink$Input
   | ChatInviteLinkInfo$Input
+  | PublicChatType$Input
+  | ChatActionBar$Input
   | KeyboardButtonType$Input
   | KeyboardButton$Input
   | InlineKeyboardButtonType$Input
   | InlineKeyboardButton$Input
   | ReplyMarkup$Input
+  | LoginUrlInfo$Input
   | RichText$Input
   | PageBlockCaption$Input
   | PageBlockListItem$Input
@@ -21123,12 +23408,14 @@ export type TDObject$Input =
   | MessageContent$Input
   | TextEntityType$Input
   | InputThumbnail$Input
+  | MessageSchedulingState$Input
+  | SendMessageOptions$Input
   | InputMessageContent$Input
   | SearchMessagesFilter$Input
   | ChatAction$Input
   | UserStatus$Input
   | Stickers$Input
-  | StickerEmojis$Input
+  | Emojis$Input
   | StickerSet$Input
   | StickerSetInfo$Input
   | StickerSets$Input
@@ -21137,7 +23424,9 @@ export type TDObject$Input =
   | CallConnection$Input
   | CallId$Input
   | CallState$Input
+  | CallProblem$Input
   | Call$Input
+  | PhoneNumberAuthenticationSettings$Input
   | Animations$Input
   | ImportedContacts$Input
   | HttpUrl$Input
@@ -21160,9 +23449,13 @@ export type TDObject$Input =
   | LocalizationTargetInfo$Input
   | DeviceToken$Input
   | PushReceiverId$Input
-  | Wallpaper$Input
-  | Wallpapers$Input
+  | BackgroundFill$Input
+  | BackgroundType$Input
+  | Background$Input
+  | Backgrounds$Input
+  | InputBackground$Input
   | Hashtags$Input
+  | CanTransferOwnershipResult$Input
   | CheckChatUsernameResult$Input
   | PushMessageContent$Input
   | NotificationType$Input
@@ -21180,9 +23473,9 @@ export type TDObject$Input =
   | Sessions$Input
   | ConnectedWebsite$Input
   | ConnectedWebsites$Input
-  | ChatReportSpamState$Input
   | ChatReportReason$Input
   | PublicMessageLink$Input
+  | MessageLinkInfo$Input
   | FilePart$Input
   | FileType$Input
   | StorageStatisticsByFileType$Input
@@ -21193,6 +23486,8 @@ export type TDObject$Input =
   | NetworkType$Input
   | NetworkStatisticsEntry$Input
   | NetworkStatistics$Input
+  | AutoDownloadSettings$Input
+  | AutoDownloadSettingsPresets$Input
   | ConnectionState$Input
   | TopChatCategory$Input
   | TMeUrlType$Input
@@ -21229,6 +23524,8 @@ export type Invoke =
   & ((query: setAuthenticationPhoneNumber) => Promise<Ok>)
   & ((query: resendAuthenticationCode) => Promise<Ok>)
   & ((query: checkAuthenticationCode) => Promise<Ok>)
+  & ((query: requestQrCodeAuthentication) => Promise<Ok>)
+  & ((query: registerUser) => Promise<Ok>)
   & ((query: checkAuthenticationPassword) => Promise<Ok>)
   & ((query: requestAuthenticationPasswordRecovery) => Promise<Ok>)
   & ((query: recoverAuthenticationPassword) => Promise<Ok>)
@@ -21236,6 +23533,7 @@ export type Invoke =
   & ((query: logOut) => Promise<Ok>)
   & ((query: close) => Promise<Ok>)
   & ((query: destroy) => Promise<Ok>)
+  & ((query: confirmQrCodeAuthentication) => Promise<Session>)
   & ((query: getCurrentState) => Promise<Updates>)
   & ((query: setDatabaseEncryptionKey) => Promise<Ok>)
   & ((query: getPasswordState) => Promise<PasswordState>)
@@ -21269,6 +23567,7 @@ export type Invoke =
   & ((query: searchPublicChats) => Promise<Chats>)
   & ((query: searchChats) => Promise<Chats>)
   & ((query: searchChatsOnServer) => Promise<Chats>)
+  & ((query: searchChatsNearby) => Promise<ChatsNearby>)
   & ((query: getTopChats) => Promise<Chats>)
   & ((query: removeTopChat) => Promise<Ok>)
   & ((query: addRecentlyFoundChat) => Promise<Ok>)
@@ -21276,6 +23575,9 @@ export type Invoke =
   & ((query: clearRecentlyFoundChats) => Promise<Ok>)
   & ((query: checkChatUsername) => Promise<CheckChatUsernameResult>)
   & ((query: getCreatedPublicChats) => Promise<Chats>)
+  & ((query: checkCreatedPublicChatsLimit) => Promise<Ok>)
+  & ((query: getSuitableDiscussionChats) => Promise<Chats>)
+  & ((query: getInactiveSupergroupChats) => Promise<Chats>)
   & ((query: getGroupsInCommon) => Promise<Chats>)
   & ((query: getChatHistory) => Promise<Messages>)
   & ((query: deleteChatHistory) => Promise<Ok>)
@@ -21287,15 +23589,18 @@ export type Invoke =
   & ((query: getActiveLiveLocationMessages) => Promise<Messages>)
   & ((query: getChatMessageByDate) => Promise<Message>)
   & ((query: getChatMessageCount) => Promise<Count>)
+  & ((query: getChatScheduledMessages) => Promise<Messages>)
   & ((query: removeNotification) => Promise<Ok>)
   & ((query: removeNotificationGroup) => Promise<Ok>)
   & ((query: getPublicMessageLink) => Promise<PublicMessageLink>)
   & ((query: getMessageLink) => Promise<HttpUrl>)
+  & ((query: getMessageLinkInfo) => Promise<MessageLinkInfo>)
   & ((query: sendMessage) => Promise<Message>)
   & ((query: sendMessageAlbum) => Promise<Messages>)
   & ((query: sendBotStartMessage) => Promise<Message>)
   & ((query: sendInlineQueryResultMessage) => Promise<Message>)
   & ((query: forwardMessages) => Promise<Messages>)
+  & ((query: resendMessages) => Promise<Messages>)
   & ((query: sendChatSetTtlMessage) => Promise<Message>)
   & ((query: sendChatScreenshotTakenNotification) => Promise<Ok>)
   & ((query: addLocalMessage) => Promise<Message>)
@@ -21311,6 +23616,7 @@ export type Invoke =
   & ((query: editInlineMessageMedia) => Promise<Ok>)
   & ((query: editInlineMessageCaption) => Promise<Ok>)
   & ((query: editInlineMessageReplyMarkup) => Promise<Ok>)
+  & ((query: editMessageSchedulingState) => Promise<Ok>)
   & ((query: getTextEntities) => Promise<TextEntities>)
   & ((query: parseTextEntities) => Promise<FormattedText>)
   & ((query: getFileMimeType) => Promise<Text>)
@@ -21320,7 +23626,10 @@ export type Invoke =
   & ((query: getJsonValue) => Promise<JsonValue>)
   & ((query: getJsonString) => Promise<Text>)
   & ((query: setPollAnswer) => Promise<Ok>)
+  & ((query: getPollVoters) => Promise<Users>)
   & ((query: stopPoll) => Promise<Ok>)
+  & ((query: getLoginUrlInfo) => Promise<LoginUrlInfo>)
+  & ((query: getLoginUrl) => Promise<HttpUrl>)
   & ((query: getInlineQueryResults) => Promise<InlineQueryResults>)
   & ((query: answerInlineQuery) => Promise<Ok>)
   & ((query: getCallbackQueryAnswer) => Promise<CallbackQueryAnswer>)
@@ -21346,14 +23655,20 @@ export type Invoke =
   & ((query: createNewSupergroupChat) => Promise<Chat>)
   & ((query: createNewSecretChat) => Promise<Chat>)
   & ((query: upgradeBasicGroupChatToSupergroupChat) => Promise<Chat>)
+  & ((query: setChatChatList) => Promise<Ok>)
   & ((query: setChatTitle) => Promise<Ok>)
   & ((query: setChatPhoto) => Promise<Ok>)
+  & ((query: setChatPermissions) => Promise<Ok>)
   & ((query: setChatDraftMessage) => Promise<Ok>)
   & ((query: setChatNotificationSettings) => Promise<Ok>)
   & ((query: toggleChatIsPinned) => Promise<Ok>)
   & ((query: toggleChatIsMarkedAsUnread) => Promise<Ok>)
   & ((query: toggleChatDefaultDisableNotification) => Promise<Ok>)
   & ((query: setChatClientData) => Promise<Ok>)
+  & ((query: setChatDescription) => Promise<Ok>)
+  & ((query: setChatDiscussionGroup) => Promise<Ok>)
+  & ((query: setChatLocation) => Promise<Ok>)
+  & ((query: setChatSlowModeDelay) => Promise<Ok>)
   & ((query: pinChatMessage) => Promise<Ok>)
   & ((query: unpinChatMessage) => Promise<Ok>)
   & ((query: joinChat) => Promise<Ok>)
@@ -21361,9 +23676,11 @@ export type Invoke =
   & ((query: addChatMember) => Promise<Ok>)
   & ((query: addChatMembers) => Promise<Ok>)
   & ((query: setChatMemberStatus) => Promise<Ok>)
+  & ((query: canTransferOwnership) => Promise<CanTransferOwnershipResult>)
+  & ((query: transferChatOwnership) => Promise<Ok>)
   & ((query: getChatMember) => Promise<ChatMember>)
   & ((query: searchChatMembers) => Promise<ChatMembers>)
-  & ((query: getChatAdministrators) => Promise<Users>)
+  & ((query: getChatAdministrators) => Promise<ChatAdministrators>)
   & ((query: clearAllDraftMessages) => Promise<Ok>)
   & ((query: getChatNotificationSettingsExceptions) => Promise<Chats>)
   & ((query: getScopeNotificationSettings) => Promise<ScopeNotificationSettings>)
@@ -21391,6 +23708,7 @@ export type Invoke =
   & ((query: blockUser) => Promise<Ok>)
   & ((query: unblockUser) => Promise<Ok>)
   & ((query: getBlockedUsers) => Promise<Users>)
+  & ((query: addContact) => Promise<Ok>)
   & ((query: importContacts) => Promise<ImportedContacts>)
   & ((query: getContacts) => Promise<Users>)
   & ((query: searchContacts) => Promise<Users>)
@@ -21398,6 +23716,7 @@ export type Invoke =
   & ((query: getImportedContactCount) => Promise<Count>)
   & ((query: changeImportedContacts) => Promise<ImportedContacts>)
   & ((query: clearImportedContacts) => Promise<Ok>)
+  & ((query: sharePhoneNumber) => Promise<Ok>)
   & ((query: getUserProfilePhotos) => Promise<UserProfilePhotos>)
   & ((query: getStickers) => Promise<Stickers>)
   & ((query: searchStickers) => Promise<Stickers>)
@@ -21419,7 +23738,9 @@ export type Invoke =
   & ((query: getFavoriteStickers) => Promise<Stickers>)
   & ((query: addFavoriteSticker) => Promise<Ok>)
   & ((query: removeFavoriteSticker) => Promise<Ok>)
-  & ((query: getStickerEmojis) => Promise<StickerEmojis>)
+  & ((query: getStickerEmojis) => Promise<Emojis>)
+  & ((query: searchEmojis) => Promise<Emojis>)
+  & ((query: getEmojiSuggestionsUrl) => Promise<HttpUrl>)
   & ((query: getSavedAnimations) => Promise<Animations>)
   & ((query: addSavedAnimation) => Promise<Ok>)
   & ((query: removeSavedAnimation) => Promise<Ok>)
@@ -21442,13 +23763,10 @@ export type Invoke =
   & ((query: getConnectedWebsites) => Promise<ConnectedWebsites>)
   & ((query: disconnectWebsite) => Promise<Ok>)
   & ((query: disconnectAllWebsites) => Promise<Ok>)
-  & ((query: toggleBasicGroupAdministrators) => Promise<Ok>)
   & ((query: setSupergroupUsername) => Promise<Ok>)
   & ((query: setSupergroupStickerSet) => Promise<Ok>)
-  & ((query: toggleSupergroupInvites) => Promise<Ok>)
   & ((query: toggleSupergroupSignMessages) => Promise<Ok>)
   & ((query: toggleSupergroupIsAllHistoryAvailable) => Promise<Ok>)
-  & ((query: setSupergroupDescription) => Promise<Ok>)
   & ((query: reportSupergroupSpam) => Promise<Ok>)
   & ((query: getSupergroupMembers) => Promise<ChatMembers>)
   & ((query: deleteSupergroup) => Promise<Ok>)
@@ -21462,7 +23780,12 @@ export type Invoke =
   & ((query: deleteSavedOrderInfo) => Promise<Ok>)
   & ((query: deleteSavedCredentials) => Promise<Ok>)
   & ((query: getSupportUser) => Promise<User>)
-  & ((query: getWallpapers) => Promise<Wallpapers>)
+  & ((query: getBackgrounds) => Promise<Backgrounds>)
+  & ((query: getBackgroundUrl) => Promise<HttpUrl>)
+  & ((query: searchBackground) => Promise<Background>)
+  & ((query: setBackground) => Promise<Background>)
+  & ((query: removeBackground) => Promise<Ok>)
+  & ((query: resetBackgrounds) => Promise<Ok>)
   & ((query: getLocalizationTargetInfo) => Promise<LocalizationTargetInfo>)
   & ((query: getLanguagePackInfo) => Promise<LanguagePackInfo>)
   & ((query: getLanguagePackStrings) => Promise<LanguagePackStrings>)
@@ -21483,8 +23806,7 @@ export type Invoke =
   & ((query: setAccountTtl) => Promise<Ok>)
   & ((query: getAccountTtl) => Promise<AccountTtl>)
   & ((query: deleteAccount) => Promise<Ok>)
-  & ((query: getChatReportSpamState) => Promise<ChatReportSpamState>)
-  & ((query: changeChatReportSpamState) => Promise<Ok>)
+  & ((query: removeChatActionBar) => Promise<Ok>)
   & ((query: reportChat) => Promise<Ok>)
   & ((query: getChatStatisticsUrl) => Promise<HttpUrl>)
   & ((query: getStorageStatistics) => Promise<StorageStatistics>)
@@ -21495,6 +23817,8 @@ export type Invoke =
   & ((query: getNetworkStatistics) => Promise<NetworkStatistics>)
   & ((query: addNetworkStatistics) => Promise<Ok>)
   & ((query: resetNetworkStatistics) => Promise<Ok>)
+  & ((query: getAutoDownloadSettingsPresets) => Promise<AutoDownloadSettingsPresets>)
+  & ((query: setAutoDownloadSettings) => Promise<Ok>)
   & ((query: getPassportElement) => Promise<PassportElement>)
   & ((query: getAllPassportElements) => Promise<PassportElements>)
   & ((query: setPassportElement) => Promise<PassportElement>)
@@ -21554,9 +23878,10 @@ export type Invoke =
   & ((query: testCallVectorStringObject) => Promise<TestVectorStringObject>)
   & ((query: testSquareInt) => Promise<TestInt>)
   & ((query: testNetwork) => Promise<Ok>)
+  & ((query: testProxy) => Promise<Ok>)
   & ((query: testGetDifference) => Promise<Ok>)
   & ((query: testUseUpdate) => Promise<Update>)
-  & ((query: testUseError) => Promise<Error>)
+  & ((query: testReturnError) => Promise<Error>)
 
 export type Execute =
   & ((query: getAuthorizationState) => AuthorizationState | error | null)
@@ -21565,6 +23890,8 @@ export type Execute =
   & ((query: setAuthenticationPhoneNumber) => Ok | error | null)
   & ((query: resendAuthenticationCode) => Ok | error | null)
   & ((query: checkAuthenticationCode) => Ok | error | null)
+  & ((query: requestQrCodeAuthentication) => Ok | error | null)
+  & ((query: registerUser) => Ok | error | null)
   & ((query: checkAuthenticationPassword) => Ok | error | null)
   & ((query: requestAuthenticationPasswordRecovery) => Ok | error | null)
   & ((query: recoverAuthenticationPassword) => Ok | error | null)
@@ -21572,6 +23899,7 @@ export type Execute =
   & ((query: logOut) => Ok | error | null)
   & ((query: close) => Ok | error | null)
   & ((query: destroy) => Ok | error | null)
+  & ((query: confirmQrCodeAuthentication) => Session | error | null)
   & ((query: getCurrentState) => Updates | error | null)
   & ((query: setDatabaseEncryptionKey) => Ok | error | null)
   & ((query: getPasswordState) => PasswordState | error | null)
@@ -21605,6 +23933,7 @@ export type Execute =
   & ((query: searchPublicChats) => Chats | error | null)
   & ((query: searchChats) => Chats | error | null)
   & ((query: searchChatsOnServer) => Chats | error | null)
+  & ((query: searchChatsNearby) => ChatsNearby | error | null)
   & ((query: getTopChats) => Chats | error | null)
   & ((query: removeTopChat) => Ok | error | null)
   & ((query: addRecentlyFoundChat) => Ok | error | null)
@@ -21612,6 +23941,9 @@ export type Execute =
   & ((query: clearRecentlyFoundChats) => Ok | error | null)
   & ((query: checkChatUsername) => CheckChatUsernameResult | error | null)
   & ((query: getCreatedPublicChats) => Chats | error | null)
+  & ((query: checkCreatedPublicChatsLimit) => Ok | error | null)
+  & ((query: getSuitableDiscussionChats) => Chats | error | null)
+  & ((query: getInactiveSupergroupChats) => Chats | error | null)
   & ((query: getGroupsInCommon) => Chats | error | null)
   & ((query: getChatHistory) => Messages | error | null)
   & ((query: deleteChatHistory) => Ok | error | null)
@@ -21623,15 +23955,18 @@ export type Execute =
   & ((query: getActiveLiveLocationMessages) => Messages | error | null)
   & ((query: getChatMessageByDate) => Message | error | null)
   & ((query: getChatMessageCount) => Count | error | null)
+  & ((query: getChatScheduledMessages) => Messages | error | null)
   & ((query: removeNotification) => Ok | error | null)
   & ((query: removeNotificationGroup) => Ok | error | null)
   & ((query: getPublicMessageLink) => PublicMessageLink | error | null)
   & ((query: getMessageLink) => HttpUrl | error | null)
+  & ((query: getMessageLinkInfo) => MessageLinkInfo | error | null)
   & ((query: sendMessage) => Message | error | null)
   & ((query: sendMessageAlbum) => Messages | error | null)
   & ((query: sendBotStartMessage) => Message | error | null)
   & ((query: sendInlineQueryResultMessage) => Message | error | null)
   & ((query: forwardMessages) => Messages | error | null)
+  & ((query: resendMessages) => Messages | error | null)
   & ((query: sendChatSetTtlMessage) => Message | error | null)
   & ((query: sendChatScreenshotTakenNotification) => Ok | error | null)
   & ((query: addLocalMessage) => Message | error | null)
@@ -21647,6 +23982,7 @@ export type Execute =
   & ((query: editInlineMessageMedia) => Ok | error | null)
   & ((query: editInlineMessageCaption) => Ok | error | null)
   & ((query: editInlineMessageReplyMarkup) => Ok | error | null)
+  & ((query: editMessageSchedulingState) => Ok | error | null)
   & ((query: getTextEntities) => TextEntities | error | null)
   & ((query: parseTextEntities) => FormattedText | error | null)
   & ((query: getFileMimeType) => Text | error | null)
@@ -21656,7 +23992,10 @@ export type Execute =
   & ((query: getJsonValue) => JsonValue | error | null)
   & ((query: getJsonString) => Text | error | null)
   & ((query: setPollAnswer) => Ok | error | null)
+  & ((query: getPollVoters) => Users | error | null)
   & ((query: stopPoll) => Ok | error | null)
+  & ((query: getLoginUrlInfo) => LoginUrlInfo | error | null)
+  & ((query: getLoginUrl) => HttpUrl | error | null)
   & ((query: getInlineQueryResults) => InlineQueryResults | error | null)
   & ((query: answerInlineQuery) => Ok | error | null)
   & ((query: getCallbackQueryAnswer) => CallbackQueryAnswer | error | null)
@@ -21682,14 +24021,20 @@ export type Execute =
   & ((query: createNewSupergroupChat) => Chat | error | null)
   & ((query: createNewSecretChat) => Chat | error | null)
   & ((query: upgradeBasicGroupChatToSupergroupChat) => Chat | error | null)
+  & ((query: setChatChatList) => Ok | error | null)
   & ((query: setChatTitle) => Ok | error | null)
   & ((query: setChatPhoto) => Ok | error | null)
+  & ((query: setChatPermissions) => Ok | error | null)
   & ((query: setChatDraftMessage) => Ok | error | null)
   & ((query: setChatNotificationSettings) => Ok | error | null)
   & ((query: toggleChatIsPinned) => Ok | error | null)
   & ((query: toggleChatIsMarkedAsUnread) => Ok | error | null)
   & ((query: toggleChatDefaultDisableNotification) => Ok | error | null)
   & ((query: setChatClientData) => Ok | error | null)
+  & ((query: setChatDescription) => Ok | error | null)
+  & ((query: setChatDiscussionGroup) => Ok | error | null)
+  & ((query: setChatLocation) => Ok | error | null)
+  & ((query: setChatSlowModeDelay) => Ok | error | null)
   & ((query: pinChatMessage) => Ok | error | null)
   & ((query: unpinChatMessage) => Ok | error | null)
   & ((query: joinChat) => Ok | error | null)
@@ -21697,9 +24042,11 @@ export type Execute =
   & ((query: addChatMember) => Ok | error | null)
   & ((query: addChatMembers) => Ok | error | null)
   & ((query: setChatMemberStatus) => Ok | error | null)
+  & ((query: canTransferOwnership) => CanTransferOwnershipResult | error | null)
+  & ((query: transferChatOwnership) => Ok | error | null)
   & ((query: getChatMember) => ChatMember | error | null)
   & ((query: searchChatMembers) => ChatMembers | error | null)
-  & ((query: getChatAdministrators) => Users | error | null)
+  & ((query: getChatAdministrators) => ChatAdministrators | error | null)
   & ((query: clearAllDraftMessages) => Ok | error | null)
   & ((query: getChatNotificationSettingsExceptions) => Chats | error | null)
   & ((query: getScopeNotificationSettings) => ScopeNotificationSettings | error | null)
@@ -21727,6 +24074,7 @@ export type Execute =
   & ((query: blockUser) => Ok | error | null)
   & ((query: unblockUser) => Ok | error | null)
   & ((query: getBlockedUsers) => Users | error | null)
+  & ((query: addContact) => Ok | error | null)
   & ((query: importContacts) => ImportedContacts | error | null)
   & ((query: getContacts) => Users | error | null)
   & ((query: searchContacts) => Users | error | null)
@@ -21734,6 +24082,7 @@ export type Execute =
   & ((query: getImportedContactCount) => Count | error | null)
   & ((query: changeImportedContacts) => ImportedContacts | error | null)
   & ((query: clearImportedContacts) => Ok | error | null)
+  & ((query: sharePhoneNumber) => Ok | error | null)
   & ((query: getUserProfilePhotos) => UserProfilePhotos | error | null)
   & ((query: getStickers) => Stickers | error | null)
   & ((query: searchStickers) => Stickers | error | null)
@@ -21755,7 +24104,9 @@ export type Execute =
   & ((query: getFavoriteStickers) => Stickers | error | null)
   & ((query: addFavoriteSticker) => Ok | error | null)
   & ((query: removeFavoriteSticker) => Ok | error | null)
-  & ((query: getStickerEmojis) => StickerEmojis | error | null)
+  & ((query: getStickerEmojis) => Emojis | error | null)
+  & ((query: searchEmojis) => Emojis | error | null)
+  & ((query: getEmojiSuggestionsUrl) => HttpUrl | error | null)
   & ((query: getSavedAnimations) => Animations | error | null)
   & ((query: addSavedAnimation) => Ok | error | null)
   & ((query: removeSavedAnimation) => Ok | error | null)
@@ -21778,13 +24129,10 @@ export type Execute =
   & ((query: getConnectedWebsites) => ConnectedWebsites | error | null)
   & ((query: disconnectWebsite) => Ok | error | null)
   & ((query: disconnectAllWebsites) => Ok | error | null)
-  & ((query: toggleBasicGroupAdministrators) => Ok | error | null)
   & ((query: setSupergroupUsername) => Ok | error | null)
   & ((query: setSupergroupStickerSet) => Ok | error | null)
-  & ((query: toggleSupergroupInvites) => Ok | error | null)
   & ((query: toggleSupergroupSignMessages) => Ok | error | null)
   & ((query: toggleSupergroupIsAllHistoryAvailable) => Ok | error | null)
-  & ((query: setSupergroupDescription) => Ok | error | null)
   & ((query: reportSupergroupSpam) => Ok | error | null)
   & ((query: getSupergroupMembers) => ChatMembers | error | null)
   & ((query: deleteSupergroup) => Ok | error | null)
@@ -21798,7 +24146,12 @@ export type Execute =
   & ((query: deleteSavedOrderInfo) => Ok | error | null)
   & ((query: deleteSavedCredentials) => Ok | error | null)
   & ((query: getSupportUser) => User | error | null)
-  & ((query: getWallpapers) => Wallpapers | error | null)
+  & ((query: getBackgrounds) => Backgrounds | error | null)
+  & ((query: getBackgroundUrl) => HttpUrl | error | null)
+  & ((query: searchBackground) => Background | error | null)
+  & ((query: setBackground) => Background | error | null)
+  & ((query: removeBackground) => Ok | error | null)
+  & ((query: resetBackgrounds) => Ok | error | null)
   & ((query: getLocalizationTargetInfo) => LocalizationTargetInfo | error | null)
   & ((query: getLanguagePackInfo) => LanguagePackInfo | error | null)
   & ((query: getLanguagePackStrings) => LanguagePackStrings | error | null)
@@ -21819,8 +24172,7 @@ export type Execute =
   & ((query: setAccountTtl) => Ok | error | null)
   & ((query: getAccountTtl) => AccountTtl | error | null)
   & ((query: deleteAccount) => Ok | error | null)
-  & ((query: getChatReportSpamState) => ChatReportSpamState | error | null)
-  & ((query: changeChatReportSpamState) => Ok | error | null)
+  & ((query: removeChatActionBar) => Ok | error | null)
   & ((query: reportChat) => Ok | error | null)
   & ((query: getChatStatisticsUrl) => HttpUrl | error | null)
   & ((query: getStorageStatistics) => StorageStatistics | error | null)
@@ -21831,6 +24183,8 @@ export type Execute =
   & ((query: getNetworkStatistics) => NetworkStatistics | error | null)
   & ((query: addNetworkStatistics) => Ok | error | null)
   & ((query: resetNetworkStatistics) => Ok | error | null)
+  & ((query: getAutoDownloadSettingsPresets) => AutoDownloadSettingsPresets | error | null)
+  & ((query: setAutoDownloadSettings) => Ok | error | null)
   & ((query: getPassportElement) => PassportElement | error | null)
   & ((query: getAllPassportElements) => PassportElements | error | null)
   & ((query: setPassportElement) => PassportElement | error | null)
@@ -21890,9 +24244,10 @@ export type Execute =
   & ((query: testCallVectorStringObject) => TestVectorStringObject | error | null)
   & ((query: testSquareInt) => TestInt | error | null)
   & ((query: testNetwork) => Ok | error | null)
+  & ((query: testProxy) => Ok | error | null)
   & ((query: testGetDifference) => Ok | error | null)
   & ((query: testUseUpdate) => Update | error | null)
-  & ((query: testUseError) => Error | error | null)
+  & ((query: testReturnError) => Error | error | null)
 
 // Future<Left, Right>
 import { Future } from 'fluture'
@@ -21904,6 +24259,8 @@ export type InvokeFuture =
   & ((query: setAuthenticationPhoneNumber) => Future<error, Ok>)
   & ((query: resendAuthenticationCode) => Future<error, Ok>)
   & ((query: checkAuthenticationCode) => Future<error, Ok>)
+  & ((query: requestQrCodeAuthentication) => Future<error, Ok>)
+  & ((query: registerUser) => Future<error, Ok>)
   & ((query: checkAuthenticationPassword) => Future<error, Ok>)
   & ((query: requestAuthenticationPasswordRecovery) => Future<error, Ok>)
   & ((query: recoverAuthenticationPassword) => Future<error, Ok>)
@@ -21911,6 +24268,7 @@ export type InvokeFuture =
   & ((query: logOut) => Future<error, Ok>)
   & ((query: close) => Future<error, Ok>)
   & ((query: destroy) => Future<error, Ok>)
+  & ((query: confirmQrCodeAuthentication) => Future<error, Session>)
   & ((query: getCurrentState) => Future<error, Updates>)
   & ((query: setDatabaseEncryptionKey) => Future<error, Ok>)
   & ((query: getPasswordState) => Future<error, PasswordState>)
@@ -21944,6 +24302,7 @@ export type InvokeFuture =
   & ((query: searchPublicChats) => Future<error, Chats>)
   & ((query: searchChats) => Future<error, Chats>)
   & ((query: searchChatsOnServer) => Future<error, Chats>)
+  & ((query: searchChatsNearby) => Future<error, ChatsNearby>)
   & ((query: getTopChats) => Future<error, Chats>)
   & ((query: removeTopChat) => Future<error, Ok>)
   & ((query: addRecentlyFoundChat) => Future<error, Ok>)
@@ -21951,6 +24310,9 @@ export type InvokeFuture =
   & ((query: clearRecentlyFoundChats) => Future<error, Ok>)
   & ((query: checkChatUsername) => Future<error, CheckChatUsernameResult>)
   & ((query: getCreatedPublicChats) => Future<error, Chats>)
+  & ((query: checkCreatedPublicChatsLimit) => Future<error, Ok>)
+  & ((query: getSuitableDiscussionChats) => Future<error, Chats>)
+  & ((query: getInactiveSupergroupChats) => Future<error, Chats>)
   & ((query: getGroupsInCommon) => Future<error, Chats>)
   & ((query: getChatHistory) => Future<error, Messages>)
   & ((query: deleteChatHistory) => Future<error, Ok>)
@@ -21962,15 +24324,18 @@ export type InvokeFuture =
   & ((query: getActiveLiveLocationMessages) => Future<error, Messages>)
   & ((query: getChatMessageByDate) => Future<error, Message>)
   & ((query: getChatMessageCount) => Future<error, Count>)
+  & ((query: getChatScheduledMessages) => Future<error, Messages>)
   & ((query: removeNotification) => Future<error, Ok>)
   & ((query: removeNotificationGroup) => Future<error, Ok>)
   & ((query: getPublicMessageLink) => Future<error, PublicMessageLink>)
   & ((query: getMessageLink) => Future<error, HttpUrl>)
+  & ((query: getMessageLinkInfo) => Future<error, MessageLinkInfo>)
   & ((query: sendMessage) => Future<error, Message>)
   & ((query: sendMessageAlbum) => Future<error, Messages>)
   & ((query: sendBotStartMessage) => Future<error, Message>)
   & ((query: sendInlineQueryResultMessage) => Future<error, Message>)
   & ((query: forwardMessages) => Future<error, Messages>)
+  & ((query: resendMessages) => Future<error, Messages>)
   & ((query: sendChatSetTtlMessage) => Future<error, Message>)
   & ((query: sendChatScreenshotTakenNotification) => Future<error, Ok>)
   & ((query: addLocalMessage) => Future<error, Message>)
@@ -21986,6 +24351,7 @@ export type InvokeFuture =
   & ((query: editInlineMessageMedia) => Future<error, Ok>)
   & ((query: editInlineMessageCaption) => Future<error, Ok>)
   & ((query: editInlineMessageReplyMarkup) => Future<error, Ok>)
+  & ((query: editMessageSchedulingState) => Future<error, Ok>)
   & ((query: getTextEntities) => Future<error, TextEntities>)
   & ((query: parseTextEntities) => Future<error, FormattedText>)
   & ((query: getFileMimeType) => Future<error, Text>)
@@ -21995,7 +24361,10 @@ export type InvokeFuture =
   & ((query: getJsonValue) => Future<error, JsonValue>)
   & ((query: getJsonString) => Future<error, Text>)
   & ((query: setPollAnswer) => Future<error, Ok>)
+  & ((query: getPollVoters) => Future<error, Users>)
   & ((query: stopPoll) => Future<error, Ok>)
+  & ((query: getLoginUrlInfo) => Future<error, LoginUrlInfo>)
+  & ((query: getLoginUrl) => Future<error, HttpUrl>)
   & ((query: getInlineQueryResults) => Future<error, InlineQueryResults>)
   & ((query: answerInlineQuery) => Future<error, Ok>)
   & ((query: getCallbackQueryAnswer) => Future<error, CallbackQueryAnswer>)
@@ -22021,14 +24390,20 @@ export type InvokeFuture =
   & ((query: createNewSupergroupChat) => Future<error, Chat>)
   & ((query: createNewSecretChat) => Future<error, Chat>)
   & ((query: upgradeBasicGroupChatToSupergroupChat) => Future<error, Chat>)
+  & ((query: setChatChatList) => Future<error, Ok>)
   & ((query: setChatTitle) => Future<error, Ok>)
   & ((query: setChatPhoto) => Future<error, Ok>)
+  & ((query: setChatPermissions) => Future<error, Ok>)
   & ((query: setChatDraftMessage) => Future<error, Ok>)
   & ((query: setChatNotificationSettings) => Future<error, Ok>)
   & ((query: toggleChatIsPinned) => Future<error, Ok>)
   & ((query: toggleChatIsMarkedAsUnread) => Future<error, Ok>)
   & ((query: toggleChatDefaultDisableNotification) => Future<error, Ok>)
   & ((query: setChatClientData) => Future<error, Ok>)
+  & ((query: setChatDescription) => Future<error, Ok>)
+  & ((query: setChatDiscussionGroup) => Future<error, Ok>)
+  & ((query: setChatLocation) => Future<error, Ok>)
+  & ((query: setChatSlowModeDelay) => Future<error, Ok>)
   & ((query: pinChatMessage) => Future<error, Ok>)
   & ((query: unpinChatMessage) => Future<error, Ok>)
   & ((query: joinChat) => Future<error, Ok>)
@@ -22036,9 +24411,11 @@ export type InvokeFuture =
   & ((query: addChatMember) => Future<error, Ok>)
   & ((query: addChatMembers) => Future<error, Ok>)
   & ((query: setChatMemberStatus) => Future<error, Ok>)
+  & ((query: canTransferOwnership) => Future<error, CanTransferOwnershipResult>)
+  & ((query: transferChatOwnership) => Future<error, Ok>)
   & ((query: getChatMember) => Future<error, ChatMember>)
   & ((query: searchChatMembers) => Future<error, ChatMembers>)
-  & ((query: getChatAdministrators) => Future<error, Users>)
+  & ((query: getChatAdministrators) => Future<error, ChatAdministrators>)
   & ((query: clearAllDraftMessages) => Future<error, Ok>)
   & ((query: getChatNotificationSettingsExceptions) => Future<error, Chats>)
   & ((query: getScopeNotificationSettings) => Future<error, ScopeNotificationSettings>)
@@ -22066,6 +24443,7 @@ export type InvokeFuture =
   & ((query: blockUser) => Future<error, Ok>)
   & ((query: unblockUser) => Future<error, Ok>)
   & ((query: getBlockedUsers) => Future<error, Users>)
+  & ((query: addContact) => Future<error, Ok>)
   & ((query: importContacts) => Future<error, ImportedContacts>)
   & ((query: getContacts) => Future<error, Users>)
   & ((query: searchContacts) => Future<error, Users>)
@@ -22073,6 +24451,7 @@ export type InvokeFuture =
   & ((query: getImportedContactCount) => Future<error, Count>)
   & ((query: changeImportedContacts) => Future<error, ImportedContacts>)
   & ((query: clearImportedContacts) => Future<error, Ok>)
+  & ((query: sharePhoneNumber) => Future<error, Ok>)
   & ((query: getUserProfilePhotos) => Future<error, UserProfilePhotos>)
   & ((query: getStickers) => Future<error, Stickers>)
   & ((query: searchStickers) => Future<error, Stickers>)
@@ -22094,7 +24473,9 @@ export type InvokeFuture =
   & ((query: getFavoriteStickers) => Future<error, Stickers>)
   & ((query: addFavoriteSticker) => Future<error, Ok>)
   & ((query: removeFavoriteSticker) => Future<error, Ok>)
-  & ((query: getStickerEmojis) => Future<error, StickerEmojis>)
+  & ((query: getStickerEmojis) => Future<error, Emojis>)
+  & ((query: searchEmojis) => Future<error, Emojis>)
+  & ((query: getEmojiSuggestionsUrl) => Future<error, HttpUrl>)
   & ((query: getSavedAnimations) => Future<error, Animations>)
   & ((query: addSavedAnimation) => Future<error, Ok>)
   & ((query: removeSavedAnimation) => Future<error, Ok>)
@@ -22117,13 +24498,10 @@ export type InvokeFuture =
   & ((query: getConnectedWebsites) => Future<error, ConnectedWebsites>)
   & ((query: disconnectWebsite) => Future<error, Ok>)
   & ((query: disconnectAllWebsites) => Future<error, Ok>)
-  & ((query: toggleBasicGroupAdministrators) => Future<error, Ok>)
   & ((query: setSupergroupUsername) => Future<error, Ok>)
   & ((query: setSupergroupStickerSet) => Future<error, Ok>)
-  & ((query: toggleSupergroupInvites) => Future<error, Ok>)
   & ((query: toggleSupergroupSignMessages) => Future<error, Ok>)
   & ((query: toggleSupergroupIsAllHistoryAvailable) => Future<error, Ok>)
-  & ((query: setSupergroupDescription) => Future<error, Ok>)
   & ((query: reportSupergroupSpam) => Future<error, Ok>)
   & ((query: getSupergroupMembers) => Future<error, ChatMembers>)
   & ((query: deleteSupergroup) => Future<error, Ok>)
@@ -22137,7 +24515,12 @@ export type InvokeFuture =
   & ((query: deleteSavedOrderInfo) => Future<error, Ok>)
   & ((query: deleteSavedCredentials) => Future<error, Ok>)
   & ((query: getSupportUser) => Future<error, User>)
-  & ((query: getWallpapers) => Future<error, Wallpapers>)
+  & ((query: getBackgrounds) => Future<error, Backgrounds>)
+  & ((query: getBackgroundUrl) => Future<error, HttpUrl>)
+  & ((query: searchBackground) => Future<error, Background>)
+  & ((query: setBackground) => Future<error, Background>)
+  & ((query: removeBackground) => Future<error, Ok>)
+  & ((query: resetBackgrounds) => Future<error, Ok>)
   & ((query: getLocalizationTargetInfo) => Future<error, LocalizationTargetInfo>)
   & ((query: getLanguagePackInfo) => Future<error, LanguagePackInfo>)
   & ((query: getLanguagePackStrings) => Future<error, LanguagePackStrings>)
@@ -22158,8 +24541,7 @@ export type InvokeFuture =
   & ((query: setAccountTtl) => Future<error, Ok>)
   & ((query: getAccountTtl) => Future<error, AccountTtl>)
   & ((query: deleteAccount) => Future<error, Ok>)
-  & ((query: getChatReportSpamState) => Future<error, ChatReportSpamState>)
-  & ((query: changeChatReportSpamState) => Future<error, Ok>)
+  & ((query: removeChatActionBar) => Future<error, Ok>)
   & ((query: reportChat) => Future<error, Ok>)
   & ((query: getChatStatisticsUrl) => Future<error, HttpUrl>)
   & ((query: getStorageStatistics) => Future<error, StorageStatistics>)
@@ -22170,6 +24552,8 @@ export type InvokeFuture =
   & ((query: getNetworkStatistics) => Future<error, NetworkStatistics>)
   & ((query: addNetworkStatistics) => Future<error, Ok>)
   & ((query: resetNetworkStatistics) => Future<error, Ok>)
+  & ((query: getAutoDownloadSettingsPresets) => Future<error, AutoDownloadSettingsPresets>)
+  & ((query: setAutoDownloadSettings) => Future<error, Ok>)
   & ((query: getPassportElement) => Future<error, PassportElement>)
   & ((query: getAllPassportElements) => Future<error, PassportElements>)
   & ((query: setPassportElement) => Future<error, PassportElement>)
@@ -22229,6 +24613,7 @@ export type InvokeFuture =
   & ((query: testCallVectorStringObject) => Future<error, TestVectorStringObject>)
   & ((query: testSquareInt) => Future<error, TestInt>)
   & ((query: testNetwork) => Future<error, Ok>)
+  & ((query: testProxy) => Future<error, Ok>)
   & ((query: testGetDifference) => Future<error, Ok>)
   & ((query: testUseUpdate) => Future<error, Update>)
-  & ((query: testUseError) => Future<error, Error>)
+  & ((query: testReturnError) => Future<error, Error>)
