@@ -12,7 +12,7 @@ const usage = process.argv.includes('--usage')
 const help = process.argv.includes('--help')
 
 if (usage || help) {
-  console.log(`$ ./bin [filename] [--ts] [--no-fl]`)
+  console.log('$ ./bin [filename] [--ts] [--no-fl]')
   console.log('Options:')
   console.log('  --ts: Emit TypeScript instead of Flow')
   console.log('  --no-fl: Comment \'InvokeFuture\' function type')
@@ -118,19 +118,21 @@ const parameterToJS = (param: Parameter): JSParameter => ({
 })
 
 const last = arr => arr[arr.length - 1]
-const concatLast = (el, arr) => { arr[arr.length - 1] = last(arr) + el; return arr }
+const concatLast = (el, arr) => {
+  arr[arr.length - 1] = last(arr) + el; return arr
+}
 
 function formatDesc (desc: string): string {
   let length = 0
 
   const strings = desc
     .split('')
-    .reduce((acc, e, i) => {
+    .reduce((acc, e) => {
       length++
-      if (length > 80 && e === ' ')
-        { acc.push(e); length = 0; return acc }
-      else
-        { concatLast(e, acc); return acc }
+      if (length > 80 && e === ' ') {
+        acc.push(e); length = 0; return acc
+      }
+      concatLast(e, acc); return acc
     }, [''])
 
   if (strings.length > 1) {
@@ -162,8 +164,8 @@ const createObjectType = ({ name, description, params }: JSObject) =>
       .join(EOL),
     exact + '}'
   ]
-  .filter(Boolean)
-  .join(EOL)
+    .filter(Boolean)
+    .join(EOL)
 
 const createInputObjectType = ({ name, description, params }, inpName = false) =>
   [
@@ -177,8 +179,8 @@ const createInputObjectType = ({ name, description, params }, inpName = false) =
       .join(EOL),
     exact + '}'
   ]
-  .filter(Boolean)
-  .join(EOL)
+    .filter(Boolean)
+    .join(EOL)
 
 const createUnion = (
   typename: string,
@@ -193,16 +195,16 @@ const createUnion = (
       .map(name => `  | ${name}${o(input)}`)
       .join(EOL)
   ]
-  .filter(Boolean)
-  .join(EOL)
+    .filter(Boolean)
+    .join(EOL)
 
 const createFunctionType = (
   name: string,
   getReturnType: (typestr: string) => string,
   classes: TdClass[]
 ): string =>
-  `export type ${name} =\n` +
-  classes
+  `export type ${name} =\n`
+  + classes
     .map(({ name, result }) =>
       `  & ((query: ${name}) => ${getReturnType(result)})`)
     .join(EOL)
@@ -212,8 +214,10 @@ const createUnions = classes => {
     .filter(e => e.kind === 'constructor')
     .reduce((acc, { name, result }) => {
       const arr = acc.get(result)
-      if (arr) { arr.push(name); return acc }
-      else { return acc.set(result, [name]) }
+      if (arr) {
+        arr.push(name); return acc
+      }
+      return acc.set(result, [name])
     }, (new Map(): Map<string, string[]>))
 
   const strings = Array.from(map.entries())
@@ -223,7 +227,7 @@ const createUnions = classes => {
         '',
         createUnion(key, value, baseClassesDesc.get(key), true)
       ]
-      .join(EOL))
+        .join(EOL))
 
   return strings
     .join(EOL + EOL)
