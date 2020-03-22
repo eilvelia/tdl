@@ -1,7 +1,5 @@
 # Contributing
 
-
-
 ## Getting started
 
 1. Fork the repository and create your branch from `develop` (not `master`).
@@ -9,7 +7,7 @@
 3. Make your changes.
 4. Build the code (`npm run build`).
 5. Run tests and ensure your code passes lint (`npm test`).
-6. Create a pull request to `develop` branch.
+6. Create a pull request to the `develop` branch.
 
 ## Debugging
 
