@@ -15,10 +15,6 @@
     "prepack": "npm test",
     "ts:check": "tsc --noEmit",
     "flow:check": "flow check --include-warnings --max-warnings 0",
-    "flow:start": "pm2 start tdl-flow.sh",
-    "flow:stop": "pm2 stop tdl-flow",
-    "flow:restart": "npm run flow:stop && npm run flow:start",
-    "flow:status": "flow status",
     "build:addon:babel": "babel tdl-tdlib-addon/src/ -d tdl-tdlib-addon/dist/",
     "build:addon": "npm run build:addon:babel && npm run build:gyp --prefix tdl-tdlib-addon",
     "clean:addon": "rimraf tdl-tdlib-addon/dist && npm run clean --prefix tdl-tdlib-addon"
