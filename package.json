@@ -23,20 +23,20 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@babel/cli": "^7.1.5",
-    "@babel/core": "^7.1.6",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/preset-env": "^7.1.6",
-    "@babel/preset-flow": "^7.0.0",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-flow": "^7.9.0",
     "@bannerets/eslint-config-flow": "^0.5.0",
-    "@types/node": "^10.5.7",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.9.0",
+    "@types/node": "^13.9.2",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^5.16.0",
     "flow-bin": "^0.110.1",
-    "lerna": "^3.13.4",
-    "rimraf": "^2.6.2",
-    "typescript": "^3.0.1"
+    "lerna": "^3.20.2",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.8.3"
   },
   "files": [
     "flow",
