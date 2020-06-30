@@ -35,9 +35,7 @@ A JavaScript wrapper for [TDLib][tdlib-getting-started] (Telegram Database libra
 ### Requirements
 
 - The libtdjson library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
-- Node.js v10+ is preferred (minimum >= 8.6.0)
-
-> Note: If you are using Node.js 8.x-9.x, you may encounter a warning message `Warning: N-API is an experimental feature and could change at any time.`, this can be suppressed by upgrading to version 10 and newer.
+- Node.js v10+
 
 You can also use third-party prebuilt binaries:
 
