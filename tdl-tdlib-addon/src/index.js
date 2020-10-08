@@ -68,9 +68,6 @@ export class TDLib implements ITDLibJSON {
   }
 
   setLogFatalErrorCallback (fn: null | (errorMessage: string) => void): void {
-    if (fn == null)
-      this._addon.remove_fatal_callback(null)
-    else
-      throw new Error('setLogFatalErrorCallback is not supported')
+    this._addon.td_set_fatal_error_callback(fn)
   }
 }

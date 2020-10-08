@@ -16,18 +16,16 @@ extern "C" {
 
 // #include <iostream>
 
-Napi::Number td_client_create(const Napi::CallbackInfo& info) {
+Napi::ArrayBuffer td_client_create(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   void* client = td_json_client_create();
-  // std::cout << "Client 1: " << client << std::endl;
-  return Napi::Number::New(env, (uintptr_t)client);
+  return Napi::ArrayBuffer::New(env, client, 0);
 }
 
 void td_client_send(const Napi::CallbackInfo& info) {
-  auto client = (void*) info[0].As<Napi::Number>().Int64Value();
+  void* client = info[0].As<Napi::ArrayBuffer>().Data();
   std::string request_str = info[1].As<Napi::String>().Utf8Value();
   const char* request = request_str.c_str();
-  // std::cout << request << std::endl;
   td_json_client_send(client, request);
 }
 
@@ -44,13 +42,14 @@ public:
 protected:
   void Execute() override {
     const char* tdres = td_json_client_receive(client, timeout);
-    res = std::string(tdres == NULL ? "" : tdres); // copy string
+    // It's also important to copy the string
+    res = std::string(tdres == NULL ? "" : tdres);
   }
 
   void OnOK() override {
     Napi::Env env = Env();
-    auto str = Napi::String::New(env, res);
-    Callback().MakeCallback(Receiver().Value(), { env.Null(), str });
+    auto val = res == "" ? env.Null() : Napi::String::New(env, res);
+    Callback().MakeCallback(Receiver().Value(), { env.Null(), val });
   }
 
   void OnError(const Napi::Error& e) override {
@@ -66,36 +65,26 @@ private:
 
 void td_client_receive(const Napi::CallbackInfo& info) {
   // Napi::Env env = info.Env();
-  auto client = (void*) info[0].As<Napi::Number>().Int64Value();
+  void* client = info[0].As<Napi::ArrayBuffer>().Data();
   double timeout = info[1].As<Napi::Number>().DoubleValue();
   Napi::Function cb = info[2].As<Napi::Function>();
   (new ReceiverAsyncWorker(cb, client, timeout))->Queue();
 }
 
-// Napi::String td_client_receive(const Napi::CallbackInfo& info) {
-//   Napi::Env env = info.Env();
-//   auto client = (void*) info[0].As<Napi::Number>().Int64Value();
-//   double timeout = info[1].As<Napi::Number>().DoubleValue();
-//   const char* response = td_json_client_receive(client, timeout);
-//   auto str = Napi::String::New(env, response == NULL ? "" : response);
-//   return str;
-// }
-
-Napi::String td_client_execute(const Napi::CallbackInfo& info) {
+Napi::Value td_client_execute(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  auto client = (void*) info[0].As<Napi::Number>().Int64Value();
+  void* client = info[0].IsNull() ? NULL : info[0].As<Napi::ArrayBuffer>().Data();
   std::string request_str = info[1].As<Napi::String>().Utf8Value();
   const char* request = request_str.c_str();
   // std::cout << request << std::endl;
   const char* response = td_json_client_execute(client, request);
-  if (response == NULL) return Napi::String::New(env, "");
+  if (response == NULL) return env.Null();
   // std::cout << response << std::endl;
   return Napi::String::New(env, response);
 }
 
 void td_client_destroy(const Napi::CallbackInfo& info) {
-  auto client = (void*) info[0].As<Napi::Number>().Int64Value();
-  // std::cout << "Client 2: " << client << std::endl;
+  void* client = info[0].As<Napi::ArrayBuffer>().Data();
   td_json_client_destroy(client);
 }
 
@@ -113,35 +102,47 @@ void td_set_max_file_size(const Napi::CallbackInfo& info) {
 }
 
 void td_set_verbosity_level(const Napi::CallbackInfo& info) {
-  int level = (int) info[0].As<Napi::Number>().Int32Value();
+  auto level = (int) info[0].As<Napi::Number>().Int32Value();
   td_set_log_verbosity_level(level);
 }
 
-void set_fatal_callback(const Napi::CallbackInfo& info) {
-  // TODO:
+Napi::FunctionReference js_fatal_cb;
 
-  // Napi::Env env = info.Env();
-  // Napi::Function cb = info[0].As<Napi::Function>();
-  // // ...
-  // cb.MakeCallback(env.Global(), { Napi::String::New(env, error_message) });
-  // // td_set_log_fatal_error_callback(...);
+// This should work, but I haven't tested it
+extern "C" void fatal_cb (const char *error_message) {
+  // if (js_fatal_cb == NULL) return;
+  js_fatal_cb.Call({ Napi::String::New(js_fatal_cb.Env(), error_message) });
 }
 
-void remove_fatal_callback(const Napi::CallbackInfo& info) {
-  td_set_log_fatal_error_callback(NULL);
+void td_set_fatal_error_callback(const Napi::CallbackInfo& info) {
+  // Not thread safe
+  if (info[0].IsNull() || info[0].IsUndefined()) {
+    td_set_log_fatal_error_callback(NULL);
+  } else {
+    js_fatal_cb = Napi::Persistent(info[0].As<Napi::Function>());
+    td_set_log_fatal_error_callback(&fatal_cb);
+  }
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
-  exports.Set("td_client_create", Napi::Function::New(env, td_client_create));
-  exports.Set("td_client_send", Napi::Function::New(env, td_client_send));
-  exports.Set("td_client_receive", Napi::Function::New(env, td_client_receive));
-  exports.Set("td_client_execute", Napi::Function::New(env, td_client_execute));
-  exports.Set("td_client_destroy", Napi::Function::New(env, td_client_destroy));
-  exports.Set("td_set_file_path", Napi::Function::New(env, td_set_file_path));
-  exports.Set("td_set_max_file_size", Napi::Function::New(env, td_set_max_file_size));
-  exports.Set("td_set_verbosity_level", Napi::Function::New(env, td_set_verbosity_level));
-  exports.Set("set_fatal_callback", Napi::Function::New(env, set_fatal_callback));
-  exports.Set("remove_fatal_callback", Napi::Function::New(env, remove_fatal_callback));
+  exports.Set(
+    "td_client_create", Napi::Function::New(env, td_client_create));
+  exports.Set(
+    "td_client_send", Napi::Function::New(env, td_client_send));
+  exports.Set(
+    "td_client_receive", Napi::Function::New(env, td_client_receive));
+  exports.Set(
+    "td_client_execute", Napi::Function::New(env, td_client_execute));
+  exports.Set(
+    "td_client_destroy", Napi::Function::New(env, td_client_destroy));
+  exports.Set(
+    "td_set_file_path", Napi::Function::New(env, td_set_file_path));
+  exports.Set(
+    "td_set_max_file_size", Napi::Function::New(env, td_set_max_file_size));
+  exports.Set(
+    "td_set_verbosity_level", Napi::Function::New(env, td_set_verbosity_level));
+  exports.Set(
+    "td_set_fatal_error_callback", Napi::Function::New(env, td_set_fatal_error_callback));
   return exports;
 }
 
