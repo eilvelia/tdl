@@ -486,6 +486,12 @@ export class Client {
     }
   }
 
+  _emitErrWithoutExtra (error: Td$error): void {
+    // $FlowOff
+    delete error['@extra']
+    this.emit('error', error)
+  }
+
   async _handleError (error: Td$error): Promise<void> {
     // $FlowOff
     const id = error['@extra']
@@ -496,17 +502,17 @@ export class Client {
       delete error['@extra']
       defer.reject(error)
       this._fetching.delete(id)
-    } else if (id !== TDL_MAGIC) {
+    } else if (id === TDL_MAGIC) {
+      const loginDetails = this._loginDetails
+
+      if (!loginDetails) return this._emitErrWithoutExtra(error)
+
+      switch (loginDetails.type) {
+        case 'user': return this._handleUserError(error, loginDetails)
+        case 'bot': return this._handleBotError(error, loginDetails)
+      }
+    } else {
       this.emit('error', error)
-    }
-
-    const loginDetails = this._loginDetails
-
-    if (!loginDetails) return
-
-    switch (loginDetails.type) {
-      case 'user': return this._handleUserError(error, loginDetails)
-      case 'bot': return this._handleBotError(error, loginDetails)
     }
   }
 
@@ -530,6 +536,8 @@ export class Client {
           _: 'checkAuthenticationPassword',
           password: await loginDetails.getPassword('', true)
         })
+
+      default: this._emitErrWithoutExtra(error)
     }
   }
 
@@ -540,6 +548,8 @@ export class Client {
           _: 'checkAuthenticationBotToken',
           token: await loginDetails.getToken(true)
         })
+
+      default: this._emitErrWithoutExtra(error)
     }
   }
 }
