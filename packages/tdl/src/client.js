@@ -436,7 +436,7 @@ export class Client {
 
       default:
         const shouldSkip = this._options.skipOldUpdates
-          && this._connectionState._ !== 'connectionStateReady'
+          && this._connectionState._ === 'connectionStateUpdating'
         if (shouldSkip) return
         this.emit('update', update)
     }
