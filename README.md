@@ -191,7 +191,7 @@ const res = client.execute({
 
 ##### `client.destroy() => undefined`
 
-Destroy the client.
+Low-level TDLib function to destroy the client. You should use `await client.invoke({ _: 'close' })` instead of this method in most cases.
 
 ```js
 client.destroy()
