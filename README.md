@@ -1,32 +1,33 @@
 ## tdl
 
 [![npm](https://img.shields.io/npm/v/tdl.svg)](https://www.npmjs.com/package/tdl)
-[![GitHub repo size in bytes](https://img.shields.io/github/repo-size/Bannerets/tdl.svg)](https://github.com/Bannerets/tdl)
 [![Build Status](https://travis-ci.org/Bannerets/tdl.svg?branch=master)](https://travis-ci.org/Bannerets/tdl)
 
-A JavaScript wrapper for [TDLib][tdlib-getting-started] (Telegram Database library), version 1.4.0 or newer.
+A JavaScript wrapper for [TDLib][] (Telegram Database library), version 1.4.0 or newer.
 
-[tdlib-getting-started]: https://core.telegram.org/tdlib/getting-started
+[TDLib]: https://github.com/tdlib/td
 
 ### Table of Contents
 
-- [Getting started](#getting-started)
+- [Installation](#installation)
 - [Requirements](#requirements)
 - [API](#api)
-- [Login as a bot](#login-as-a-bot)
+- [Log in as a bot](#log-in-as-a-bot)
 - [Options](#options)
 - [Typings](#typings)
 - [WebAssembly](#webassembly)
 - [Architecture notes](#architecture-notes)
+- [Can I create multiple clients?](#can-i-create-multiple-clients)
 - [Examples](#examples)
 - [Contributing](#contributing)
+- [Windows](#windows)
 
 ---
 
-<a name="getting-started"></a>
-### Getting started
+<a name="installation"></a>
+### Installation
 
-1. Build the binary (https://github.com/tdlib/td#building)
+1. Build TDLib (https://github.com/tdlib/td#building)
 2. `npm install tdl tdl-tdlib-ffi` (install both)
 
 ---
@@ -37,7 +38,7 @@ A JavaScript wrapper for [TDLib][tdlib-getting-started] (Telegram Database libra
 - The libtdjson library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
 - Node.js v10+
 
-You can also use third-party prebuilt binaries:
+You can also use third-party pre-built binaries:
 
 - [tdlib.native](https://github.com/ForNeVeR/tdlib.native/releases)
 
@@ -65,7 +66,7 @@ You can specify the path to `libtdjson` in the `TDLib` constructor's argument. I
 
 ##### `client.connect() => Promise<undefined>`
 
-You can use this method to initialize and connect your client with Telegram.
+You can use the `connect` method to initialize and connect your client with Telegram.
 Returns a promise.
 
 ```js
@@ -98,15 +99,15 @@ await client.login(() => ({
 }))
 ```
 
-The `getName` function is called if user is not registered.
+The `getName` function is called if the user is not registered.
 
-Also see `LoginDetails` interface in [Options](#options) section.
+Also see the `LoginDetails` interface in the [Options](#options) section.
 
 It is possible to not use the `client.login` helper and implement login process manually.
 
 This function requires TDLib v1.5.0+ to work.
 
-**Warning**: The `login` function may not fully follow SemVer, just as TDLib itself doesn't follow SemVer.
+**Note**: The `login` function may not fully follow SemVer, just as TDLib itself doesn't follow SemVer.
 
 ##### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<undefined>`
 
@@ -116,7 +117,7 @@ Same as `client.connect().then(() => client.login(fn))`.
 
 ##### `client.addListener(event: string, callback: Function) => Client`
 
-Attach an event listener for iterating updates.
+Attach an event listener to receive the updates.
 
 ```js
 client.on('update', console.log)
@@ -149,10 +150,10 @@ You can consider using reactive libraries like RxJS or [most][] for convenient e
 
 ##### `client.invoke(query: Object) => Promise<Object>`
 
-Send an asynchronous message to Telegram and receive a response.\
-Resolves with response, or rejects with an error.
+Asynchronously send a message to Telegram and receive a response.<br>
+Returns a promise, which resolves with the response, or rejects with an error.
 
-The API list can be found on https://core.telegram.org/tdlib/docs/annotated.html.
+The API list can be found at https://core.telegram.org/tdlib/docs/annotated.html (more convenient one: https://hexdocs.pm/tdlib/TDLib.Method.html).<br>
 Note that tdl renames `@type` to `_`.
 
 ```js
@@ -180,7 +181,7 @@ await client.invoke({
 
 ##### `client.execute(query: Object) => (Object | null)`
 
-Send a synchronous message to Telegram and receive response.
+Synchronously send a message to Telegram and receive a response. Only a few methods can be called using this function.
 
 ```js
 const res = client.execute({
@@ -199,7 +200,9 @@ client.destroy()
 
 ##### `client.setLogFatalErrorCallback(fn: (null | Function)) => undefined`
 
-Sets the callback that will be called when a fatal error happens. None of the TDLib methods can be called from the callback. The TDLib will crash as soon as callback returns. By default the callback is not set.
+Set the callback that will be called when a TDLib fatal error happens.
+
+See the [TDLib doc](https://core.telegram.org/tdlib/docs/td__log_8h.html#addebe91c4525817a6d2b448634c19d71).
 
 ```js
 client.setLogFatalErrorCallback(
@@ -207,11 +210,9 @@ client.setLogFatalErrorCallback(
 )
 ```
 
-See [docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#addebe91c4525817a6d2b448634c19d71).
-
 ##### `client.invokeFuture(query: Object) => Future`
 
-Same as `client.invoke`, but returns [Future][] instead of Promise.
+Same as `client.invoke`, but returns a [Future][] instead of a Promise.
 
 Note: You need to install `fluture` (`npm install fluture`) to use `invokeFuture`.
 
@@ -223,8 +224,8 @@ See [TDLib_API.md](TDLib_API.md).
 
 ---
 
-<a name="login-as-a-bot"></a>
-### Login as a bot
+<a name="log-in-as-a-bot"></a>
+### Log in as a bot
 
 ```js
 const client = new Client(new TDLib(), {
@@ -246,23 +247,25 @@ await client.connectAndLogin(() => ({
 ### Options
 
 ```typescript
+// The interface of the options you can pass to the Client constructor:
 type Options = {
   apiId: number, // Can be obtained at https://my.telegram.org
   apiHash: string, // Can be obtained at https://my.telegram.org
-  databaseDirectory: string, // Relative path
-  filesDirectory: string, // Relative path
+  databaseDirectory: string, // Relative path (default is '_td_database')
+  filesDirectory: string, // Relative path (default is '_td_files')
   databaseEncryptionKey: string, // Optional key for database encryption
-  verbosityLevel: number,
-  useTestDc: boolean, // Use telegram dev server
+  verbosityLevel: number, // Verbosity level (default is 2)
+  useTestDc: boolean, // Use telegram dev server (default is false)
   // Advanced options:
+  skipOldUpdates: boolean, // Don't emit old updates on launch
   receiveTimeout: number,
-  skipOldUpdates: boolean, // Don't emit old updates
   useMutableRename: boolean,
   useDefaultVerbosityLevel: boolean,
   disableAuth: boolean,
-  tdlibParameters: Object
+  tdlibParameters: Object // Raw TDLib parameters
 }
 
+// The `login` function accepts one of these two objects:
 type LoginDetails = {
   type: 'user',
   getPhoneNumber: (retry?: boolean) => Promise<string>,
@@ -275,31 +278,21 @@ type LoginDetails = {
 }
 ```
 
-Only `apiId` and `apiHash` are required fields. Any other field can just be not specified.
+Only `apiId` and `apiHash` are required fields. Any other field can be omitted.
 
-`tdlibParameters` option: See https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html.
+About `tdlibParameters` option: see https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html.
 
-##### Defaults
+Default `tdlibParameters`:
 
 ```javascript
-options = {
-  databaseDirectory: '_td_database',
-  filesDirectory: '_td_files',
-  verbosityLevel: 2,
-  receiveTimeout: 10,
-  skipOldUpdates: false,
-  useTestDc: false,
-  useMutableRename: false,
-  disableAuth: false,
-  tdlibParameters: {
-    use_message_database: true,
-    use_secret_chats: false,
-    system_language_code: 'en',
-    application_version: '1.0',
-    device_model: 'Unknown device',
-    system_version: 'Unknown',
-    enable_storage_optimizer: true
-  }
+tdlibParameters: {
+  use_message_database: true,
+  use_secret_chats: false,
+  system_language_code: 'en',
+  application_version: '1.0',
+  device_model: 'Unknown device',
+  system_version: 'Unknown',
+  enable_storage_optimizer: true
 }
 ```
 
@@ -309,35 +302,31 @@ options = {
 ### Typings
 
 `tdl` fully supports [Flow][] and [TypeScript][] out of the box.\
-Typings are generated from [td_api.tl][td-scheme] scheme.
+Typings are generated from the [td_api.tl][td-scheme] scheme in the TDLib repository.
 
-You can import TDLib types:
+You can import the TDLib types:
 
-```js
-// TypeScript
-import { updateMessageViews, messageInvoice /* ... */ } from 'tdl/types/tdlib'
-
-// Flow
+```typescript
 import type { updateMessageViews, messageInvoice /* ... */ } from 'tdl/types/tdlib'
 ```
 
 Current built-in typings are for TDLib v1.6.0.
 
-**Warning**: TDLib typings do not follow SemVer, just as TDLib itself doesn't. You can consider using `~` instead of `^` in your `package.json` dependencies.
-
 The typings can be generated for the appropriate TDLib version using `tdlib-typings` in [packages/tdlib-typings/](packages/tdlib-typings/)
+
+**Warning**: TDLib typings do not follow SemVer, just as TDLib itself doesn't. You can consider using `~` instead of `^` in your `package.json` dependencies.
 
 [Flow]: https://flow.org/
 [TypeScript]: https://www.typescriptlang.org/
 
-[td-scheme]: https://github.com/tdlib/td/blob/6129ebf39439647e277e88d9d43a2f897ffee63c/td/generate/scheme/td_api.tl
+[td-scheme]: https://github.com/tdlib/td/blob/f3480b94d7d86c0e02ad5cc3418eace3d6b09857/td/generate/scheme/td_api.tl
 
 ---
 
 <a name="webassembly"></a>
 ### WebAssembly
 
-`tdl` also has experimental wrapper for tdlib in wasm, see [tdl-tdlib-wasm/](packages/tdl-tdlib-wasm/).
+`tdl` also has an experimental wrapper for tdlib in wasm, see [tdl-tdlib-wasm/](packages/tdl-tdlib-wasm/).
 
 ---
 
@@ -346,16 +335,28 @@ The typings can be generated for the appropriate TDLib version using `tdlib-typi
 
 The library is designed to work with different "backends",
 their interface is described in [TDLib_API.md](TDLib_API.md) file.
-By this the same main wrapper can be used with node ffi, with node addons,
-and in browser with WebAssembly.
+So the same main wrapper can be used with node ffi, with node addons,
+and in the browser with webassembly.
 
-Available packages in the `tdl` repository:
+Available "backends" in the `tdl` repository:
 
-- [tdl-tdlib-ffi](packages/tdl-tdlib-ffi/) (mostly used)
-- [tdl-tdlib-addon](tdl-tdlib-addon/) (unstable)
-- [tdl-tdlib-wasm](packages/tdl-tdlib-wasm/)
+- [tdl-tdlib-ffi](packages/tdl-tdlib-ffi/) (recommended)
+- [tdl-tdlib-addon](packages/tdl-tdlib-addon/)
+- [tdl-tdlib-wasm](packages/tdl-tdlib-wasm/) (experimental)
 
-You can easily substitute one with another.
+You can easily substitute one with another, since they follow the same interface.
+
+---
+
+<a name="can-i-create-multiple-clients"></a>
+### Can I create multiple clients?
+
+With `tdl-tdlib-ffi` it's not possible to use multiple clients simultaneously in one process, see [#18][]. If you try, it will result in use after free. You can create multiple processes using [child_process.fork][]. You also can "pause" clients that you don't currently need via `client.pause()` and `client.resume()` functions.
+
+[#18]: https://github.com/Bannerets/tdl/issues/18
+[child_process.fork]: https://nodejs.org/dist/latest-v14.x/docs/api/child_process.html#child_process_child_process_fork_modulepath_args_options
+
+You can use multiple clients with `tdl-tdlib-addon` if the number of clients < [UV_THREADPOOL_SIZE](http://docs.libuv.org/en/v1.x/threadpool.html).
 
 ---
 
@@ -372,3 +373,8 @@ See the [examples/](examples/) directory.
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
+
+<a name="windows"></a>
+### Windows
+
+`tdl-tdlib-ffi` and `tdl-tdlib-addon` depend on node-gyp, which may be difficult to install on Windows. You should install Visual Studio (or just Build Tools) and Python first. E.g. see https://gist.github.com/jtrefry/fd0ea70a89e2c3b7779c, https://github.com/Microsoft/nodejs-guidelines/blob/dd5074c/windows-environment.md#compiling-native-addon-modules. npm also has [`windows-build-tools` package](https://github.com/felixrieseberg/windows-build-tools).
