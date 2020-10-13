@@ -1,4 +1,5 @@
 #include <napi.h>
+#include <dlfcn.h>
 
 extern "C" {
   void *td_json_client_create();
@@ -13,8 +14,6 @@ extern "C" {
   typedef void (*td_log_fatal_error_callback_ptr)(const char *error_message);
   void td_set_log_fatal_error_callback(td_log_fatal_error_callback_ptr callback);
 }
-
-// #include <iostream>
 
 Napi::ArrayBuffer td_client_create(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
@@ -76,10 +75,8 @@ Napi::Value td_client_execute(const Napi::CallbackInfo& info) {
   void* client = info[0].IsNull() ? NULL : info[0].As<Napi::ArrayBuffer>().Data();
   std::string request_str = info[1].As<Napi::String>().Utf8Value();
   const char* request = request_str.c_str();
-  // std::cout << request << std::endl;
   const char* response = td_json_client_execute(client, request);
   if (response == NULL) return env.Null();
-  // std::cout << response << std::endl;
   return Napi::String::New(env, response);
 }
 
@@ -124,6 +121,20 @@ void td_set_fatal_error_callback(const Napi::CallbackInfo& info) {
   }
 }
 
+void load_tdjson(const Napi::CallbackInfo& info) {
+  Napi::Env env = info.Env();
+  std::string library_file_str = info[0].As<Napi::String>().Utf8Value();
+  const char* library_file = library_file_str.c_str();
+  void* handle = dlopen(library_file, RTLD_NOW);
+  if (handle == NULL) {
+    char* dlerror_message = dlerror();
+    std::string err_message(dlerror_message == NULL ? "NULL" : dlerror_message);
+    std::string js_err_message = "Dynamic Loading Error: " + err_message;
+    auto err = Napi::Error::New(env, js_err_message);
+    err.ThrowAsJavaScriptException();
+  }
+}
+
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
   exports.Set(
     "td_client_create", Napi::Function::New(env, td_client_create));
@@ -143,6 +154,8 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
     "td_set_verbosity_level", Napi::Function::New(env, td_set_verbosity_level));
   exports.Set(
     "td_set_fatal_error_callback", Napi::Function::New(env, td_set_fatal_error_callback));
+  exports.Set(
+    "load_tdjson", Napi::Function::New(env, load_tdjson));
   return exports;
 }
 
