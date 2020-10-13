@@ -1,7 +1,7 @@
 // @flow
 
 import type {
-  Update,
+  Update as Td$Update,
   error as Td$error,
   Invoke,
   InvokeFuture,
@@ -17,7 +17,7 @@ declare export class TdlError extends Error {
 }
 
 export type On =
-  & ((event: 'update', listener: (update: Update) => void) => Client)
+  & ((event: 'update', listener: (update: Td$Update) => void) => Client)
   & ((event: 'error', listener: (err: Td$error | TdlError) => void) => Client)
   & ((event: 'destroy', listener: () => void) => Client)
   & ((event: 'auth-needed', listener: () => void) => Client)
@@ -25,7 +25,7 @@ export type On =
   & ((event: 'response', listener: (res: any) => void) => Client)
 
 export type Emit =
-  & ((event: 'update', update: Update) => void)
+  & ((event: 'update', update: Td$Update) => void)
   & ((event: 'error', err: Td$error | TdlError) => void)
   & ((event: 'destroy') => void)
   & ((event: 'auth-needed') => void)
