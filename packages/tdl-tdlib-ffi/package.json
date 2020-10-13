@@ -1,7 +1,7 @@
 {
   "name": "tdl-tdlib-ffi",
   "version": "2.0.0",
-  "description": "TDLib FFI bindings for Node.js.",
+  "description": "Node.js FFI bindings to TDLib",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {

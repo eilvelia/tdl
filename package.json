@@ -2,7 +2,7 @@
   "name": "tdl-dev",
   "version": "0.0.0",
   "private": true,
-  "description": "JavaScript TDLib wrapper.",
+  "description": "A JavaScript wrapper for TDLib",
   "scripts": {
     "clean": "rimraf packages/*/dist/ && lerna run clean",
     "build": "node copy.js && lerna run build",
