@@ -7,7 +7,8 @@
   "scripts": {
     "install": "node-gyp rebuild || exit 0",
     "clean": "node-gyp clean",
-    "build:gyp": "node-gyp rebuild"
+    "build:gyp": "node-gyp rebuild",
+    "build": "babel src/ -d dist/ --root-mode upward && node-gyp rebuild"
   },
   "dependencies": {
     "debug": "^3.1.0",
