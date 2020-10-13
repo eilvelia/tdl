@@ -9,7 +9,7 @@
     "lint": "eslint . --max-warnings 0",
     "test": "npm run flow:check && npm run ts:check && npm run lint",
     "build-and-test": "npm run build && npm run test",
-    "postinstall": "lerna bootstrap && npm install --prefix tdl-tdlib-addon",
+    "postinstall": "lerna bootstrap",
     "publish": "node scripts/publish.js",
     "prepare": "npm run clean && npm run build",
     "prepack": "npm test",
