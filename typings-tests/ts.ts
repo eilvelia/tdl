@@ -66,6 +66,8 @@ const client = cl
   const remove1: typeof client.removeListener = client.off
   const add1: typeof client.on = client.addListener
   const add2: typeof client.on = client.once
+
+  await cl.close()
 })()
 
 cl.on('update', u => {

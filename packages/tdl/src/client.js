@@ -353,6 +353,19 @@ export class Client {
     this.emit('destroy')
   }
 
+  // Sends { _: 'close' } and waits until the client gets destroyed
+  close = (): Promise<void> => {
+    debug('close')
+    return new Promise(resolve => {
+      if (!this._client) return resolve()
+      // TODO: call this.resume() here?
+      // If the client is paused, we can't receive authorizationStateClosed
+      // and destroy won't be called
+      this._sendTdl({ _: 'close' })
+      this._emitter.once('destroy', () => resolve())
+    })
+  }
+
   setLogFatalErrorCallback = (fn: null | (errorMessage: string) => void): void => {
     this._tdlib.setLogFatalErrorCallback(fn)
   }

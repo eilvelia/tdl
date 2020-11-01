@@ -57,6 +57,8 @@ var tdlib = new Td()
   tdl.login(123)
   // $ExpectError
   tdl.login(() => 2)
+
+  await tdl.close()
 })
 
 

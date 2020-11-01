@@ -57,6 +57,7 @@ declare export class Client {
   invoke: Invoke;
   invokeFuture: InvokeFuture;
   destroy: () => void;
+  close: () => Promise<void>;
   setLogFatalErrorCallback: (fn: null | ((errorMessage: string) => void)) => void;
   execute: Execute;
 }
