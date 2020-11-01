@@ -197,6 +197,11 @@ export class Client {
       deferred.reject(err)
   }
 
+  _rejectConnectAndLogin (err: Error): void {
+    this._connectDefer.reject(err)
+    this._loginDefer.reject(err)
+  }
+
   async _init (): Promise<void> {
     try {
       if (!this._options.useDefaultVerbosityLevel) {
@@ -468,6 +473,7 @@ export class Client {
         return this._connectDefer.resolve()
 
       case 'authorizationStateClosed':
+        this._rejectConnectAndLogin(Error('Received authorizationStateClosed'))
         return this.destroy()
 
       case 'authorizationStateReady':
@@ -476,6 +482,8 @@ export class Client {
 
     await this._waitLogin()
     debug('waitLogin end', authorizationState._)
+
+    // TODO: Handle authorizationStateWaitOtherDeviceConfirmation?
 
     switch (authorizationState._) {
       case 'authorizationStateWaitPhoneNumber': {
