@@ -42,6 +42,12 @@ You can also use third-party pre-built binaries:
 
 - [tdlib.native](https://github.com/ForNeVeR/tdlib.native/releases)
 
+Note that Node.js exports OpenSSL symbols.
+If libtdjson is linked dynamically against openssl, it will use openssl symbols from the Node.js binary, not from your system.
+Therefore libtdjson's openssl version should be compatible with the openssl version Node.js statically linked against (`process.versions.openssl`).
+
+<!-- Node.js contains openssl headers, so you can add an option like `-DOPENSSL_INCLUDE_DIR=<path-to-node>/include/node/` to the TDLib build. -->
+
 ---
 
 <a name="api"></a>
