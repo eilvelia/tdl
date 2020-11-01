@@ -165,6 +165,7 @@ export class Client {
   _loginDetails: ?StrictLoginDetails
   _loginDefer: TdlDeferred<void, any> = new TdlDeferred()
   _paused = false
+  _initialized = false
 
   constructor (tdlibInstance: ITDLibJSON, options: ConfigType = {}) {
     this._options = (mergeDeepRight(defaultOptions, options): StrictConfigType)
@@ -205,7 +206,7 @@ export class Client {
   async _init (): Promise<void> {
     try {
       if (!this._options.useDefaultVerbosityLevel) {
-        debug('setLogVerbosityLevel', this._options.verbosityLevel)
+        debug('_init: setLogVerbosityLevel', this._options.verbosityLevel)
         this._tdlib.execute(null, {
           '@type': 'setLogVerbosityLevel',
           new_verbosity_level: this._options.verbosityLevel
@@ -215,13 +216,21 @@ export class Client {
       this._client = await this._tdlib.create()
     } catch (e) {
       this._catchError(new TdlError(e, 'Error while creating client'))
+      return
     }
 
+    this._initialized = true
     this._loop()
   }
 
   connect = (): Promise<void> => {
     return new Promise((resolve, reject) => {
+      if (this._initialized) {
+        const err = this._client
+          ? Error('The client is already initialized')
+          : Error('Cannot re-initialize a destroyed client')
+        return reject(err)
+      }
       this._connectDefer.setDefer({ resolve, reject })
       this._init()
     })
@@ -268,16 +277,21 @@ export class Client {
   }
 
   pause = (): void => {
-    debug('pause')
-    if (!this._paused)
+    if (!this._paused) {
+      debug('pause')
       this._paused = true
+    } else {
+      debug('pause (no-op)')
+    }
   }
 
   resume = (): void => {
-    debug('resume')
     if (this._paused) {
+      debug('resume')
       this._paused = false
       this._emitter.emit('_resume')
+    } else {
+      debug('resume (no-op)')
     }
   }
 
@@ -335,6 +349,7 @@ export class Client {
     if (!this._client) return
     this._tdlib.destroy(this._client)
     this._client = null
+    this.resume()
     this.emit('destroy')
   }
 
@@ -375,15 +390,18 @@ export class Client {
   async _loop (): Promise<void> {
     while (true) {
       try {
-        const response = await this._receive()
+        if (this._paused) {
+          debug('receive loop: waiting for resume')
+          await this._waitResume()
+          debug('receive loop: resumed')
+        }
 
         if (!this._client) {
           debug('receive loop: no client')
           break
         }
 
-        if (this._paused)
-          await this._waitResume()
+        const response = await this._receive()
 
         if (response)
           await this._handleResponse(response)
@@ -422,7 +440,7 @@ export class Client {
     // are always emitted, even with skipOldUpdates set to true
     switch (update._) {
       case 'updateOption':
-        debug('updateOption', update)
+        debug('Option:', update)
         this.emit('update', update)
         return
 
@@ -477,7 +495,7 @@ export class Client {
         return this.destroy()
 
       case 'authorizationStateReady':
-        if (this._authNeeded === false) this.emit('auth-not-needed')
+        if (!this._authNeeded) this.emit('auth-not-needed')
     }
 
     await this._waitLogin()
@@ -489,15 +507,18 @@ export class Client {
       case 'authorizationStateWaitPhoneNumber': {
         const loginDetails = this._authHasNeeded()
 
-        return loginDetails.type === 'user'
-          ? this._sendTdl({
-            _: 'setAuthenticationPhoneNumber',
-            phone_number: await loginDetails.getPhoneNumber(false)
-          })
-          : this._sendTdl({
-            _: 'checkAuthenticationBotToken',
-            token: await loginDetails.getToken(false)
-          })
+        switch (loginDetails.type) {
+          case 'user':
+            return this._sendTdl({
+              _: 'setAuthenticationPhoneNumber',
+              phone_number: await loginDetails.getPhoneNumber(false)
+            })
+          case 'bot':
+            return this._sendTdl({
+              _: 'checkAuthenticationBotToken',
+              token: await loginDetails.getToken(false)
+            })
+        }
       }
 
       case 'authorizationStateWaitCode': {
