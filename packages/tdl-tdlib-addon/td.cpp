@@ -1,5 +1,10 @@
 #include <napi.h>
+
+#ifdef WIN32
+#include "win32-dlfcn.h"
+#else
 #include <dlfcn.h>
+#endif
 
 typedef void * (*td_json_client_create_t)();
 typedef void (*td_json_client_send_t)(void *client, const char *request);
