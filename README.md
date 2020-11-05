@@ -35,8 +35,9 @@ A JavaScript wrapper for [TDLib][] (Telegram Database library), version 1.4.0 or
 <a name="requirements"></a>
 ### Requirements
 
-- The libtdjson library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
 - Node.js v10+
+- A C++ compiler and Python installed
+- The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
 
 You can also use third-party pre-built binaries:
 
@@ -112,8 +113,6 @@ Also see the `LoginDetails` interface in the [Options](#options) section.
 It is possible to not use the `client.login` helper and implement login process manually.
 
 This function requires TDLib v1.5.0+ to work.
-
-**Note**: The `login` function may not fully follow SemVer, just as TDLib itself doesn't follow SemVer.
 
 ##### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<undefined>`
 
