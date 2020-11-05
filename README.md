@@ -56,7 +56,7 @@ Therefore libtdjson's openssl version should be compatible with the openssl vers
 
 ##### `new Client(tdlibInstance, options) => Client`
 
-```js
+```javascript
 // Example in Node.js:
 const { Client } = require('tdl')
 const { TDLib } = require('tdl-tdlib-ffi')
@@ -76,20 +76,20 @@ You can specify the path to `libtdjson` in the `TDLib` constructor's argument. I
 You can use the `connect` method to initialize and connect your client with Telegram.
 Returns a promise.
 
-```js
+```javascript
 await client.connect()
 ```
 
 ##### `client.login(fn?: () => LoginDetails) => Promise<undefined>`
 
-```js
+```javascript
 await client.login()
 ```
 
 By default, `tdl` asks the user for the phone number, auth code, and password (if specified) in the console.
 You can pass your functions:
 
-```js
+```javascript
 // Example
 await client.login(() => ({
   getPhoneNumber: retry => retry
@@ -124,7 +124,7 @@ Same as `client.connect().then(() => client.login(fn))`.
 
 Attach an event listener to receive the updates.
 
-```js
+```javascript
 client.on('update', console.log)
 client.on('error', console.error)
 ```
@@ -141,7 +141,7 @@ Add a one-time listener.
 
 Remove an event listener.
 
-```js
+```javascript
 const listener = v => {
   console.log('New update.', v)
   client.off('update', listener)
@@ -161,7 +161,7 @@ Returns a promise, which resolves with the response, or rejects with an error.
 The API list can be found at https://core.telegram.org/tdlib/docs/annotated.html (more convenient one: https://hexdocs.pm/tdlib/TDLib.Method.html).<br>
 Note that tdl renames `@type` to `_`.
 
-```js
+```javascript
 const chats = await client.invoke({
   _: 'getChats',
   offset_order: '9223372036854775807',
@@ -170,7 +170,7 @@ const chats = await client.invoke({
 })
 ```
 
-```js
+```javascript
 await client.invoke({
   _: 'sendMessage',
   chat_id: 123456789,
@@ -188,7 +188,7 @@ await client.invoke({
 
 Synchronously send a message to Telegram and receive a response. Only a few methods can be called using this function.
 
-```js
+```javascript
 const res = client.execute({
   _: 'getTextEntities',
   text: '@telegram /test_command https://telegram.org telegram.me'
@@ -201,7 +201,7 @@ Close the TDLib instance.
 
 This method sends `{ _: 'close' }` and waits until the client gets destroyed.
 
-```js
+```javascript
 await client.close()
 ```
 
@@ -211,7 +211,7 @@ Set the callback that will be called when a TDLib fatal error happens.
 
 See the [TDLib doc](https://core.telegram.org/tdlib/docs/td__log_8h.html#addebe91c4525817a6d2b448634c19d71).
 
-```js
+```javascript
 client.setLogFatalErrorCallback(
   errorMessage => console.error('Fatal error:', errorMessage)
 )
@@ -226,7 +226,7 @@ See [TDLib_API.md](TDLib_API.md).
 <a name="log-in-as-a-bot"></a>
 ### Log in as a bot
 
-```js
+```javascript
 const client = new Client(new TDLib(), {
   apiId: 2222, // Your api_id
   apiHash: '0123456789abcdef0123456789abcdef' // Your api_hash
