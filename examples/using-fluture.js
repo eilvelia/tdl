@@ -1,5 +1,7 @@
 // Fluture: https://github.com/fluture-js/Fluture
 
+// This was written for fluture v8.0
+
 const { Client } = require('tdl')
 const { TDLib } = require('tdl-tdlib-ffi')
 const Future = require('fluture')
@@ -11,8 +13,12 @@ const client = new Client(new TDLib(), {
 
 client.on('error', console.error)
 
+// You can import TypeScript/Flow type `InvokeFuture` for this function
+// using `import type { InvokeFuture } from 'tdl/types/tdlib'`
+const invokeFuture = Future.encaseP(client.invoke)
+
 const searchChat = username =>
-  client.invokeFuture({ _: 'searchPublicChat', username })
+  invokeFuture({ _: 'searchPublicChat', username })
     .map(chat => `Chat: ${chat.title}, id: ${chat.id}`)
     .mapRej(err => `Error: ${err.message}`)
 

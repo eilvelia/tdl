@@ -217,14 +217,6 @@ client.setLogFatalErrorCallback(
 )
 ```
 
-##### `client.invokeFuture(query: Object) => Future`
-
-Same as `client.invoke`, but returns a [Future][] instead of a Promise.
-
-Note: You need to install `fluture` (`npm install fluture`) to use `invokeFuture`.
-
-[Future]: https://github.com/fluture-js/Fluture
-
 #### Low-level TDLib API
 
 See [TDLib_API.md](TDLib_API.md).

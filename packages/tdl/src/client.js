@@ -331,6 +331,8 @@ export class Client {
     // $FlowOff
     request['@extra'] = id
     const receiveResponse = new Promise((resolve, reject) => {
+      // This promise must not be rejected with values other than Td$error
+      // for Fluture types to be correct
       try {
         const defer = { resolve, reject }
         this._fetching.set(id, defer)
@@ -342,6 +344,10 @@ export class Client {
     return receiveResponse
   }
 
+  // Deprecated message descriptions are specified in the
+  // index.js.flow/index.d.ts files
+
+  /** @deprecated */
   invokeFuture: InvokeFuture =
     (request => tryP(() => this.invoke(request)): $FlowOff)
 
