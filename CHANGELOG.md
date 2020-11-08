@@ -2,7 +2,31 @@
 
 <!-- Hi. -->
 
-## v6.1.0
+## tdl@6.2.0 (2020-11-08)
+
+- New method: `client.close()`, returns a promise.
+- `client.invokeFuture` is deprecated.
+- `tdl-tdlib-addon` is now recommended instead of `tdl-tdlib-ffi`.
+Note that the libraryFile extension in tdl-tdlib-addon is mandatory (ffi-napi automatically appends the extension).
+- Documentation improvements.
+- Other improvements.
+
+## tdl-tdlib-addon@0.8.0 (2020-11-08)
+
+- Uses dlopen instead of rpath.
+- Added support for `td_set_log_fatal_error_callback`.
+- Major improvements.
+
+## tdl-tdlib-ffi@2.0.1 (2020-11-08)
+
+- Minor improvements.
+
+## tdl-tdlib-ffi@2.0.0 (2020-06-30)
+
+- ffi-napi updated to v3.
+This adds support for Node.js v14 and drops support for Node.js older than v10.
+
+## tdl@6.1.0 (2020-03-22)
 
 - Adds full support for TDLib v1.6.0:
 - - TDLib typings are updated to TDLib v1.6.0.
@@ -13,13 +37,13 @@
 
 [#71]: https://github.com/Bannerets/tdl/pull/71
 
-## v6.0.1
+## tdl@6.0.1 (2020-05-07)
 
 - Fixed renaming of objects in an array (see [#48][]).
 
 [#48]: https://github.com/Bannerets/tdl/issues/48
 
-## v6.0.0
+## v6.0.0 (2019-05-02)
 
 - **Important**: Allowed recovery from invalid phone numbers (see [#33][]). `loginDetails.phoneNumber`/`loginDetails.token` field replaced with `loginDetails.getPhoneNumber`/`loginDetails.getToken` function.
 - **Important**: `new Client(options)` -> `new Client(tdlibInstance, options)`
@@ -45,7 +69,7 @@
 
 [#33]: https://github.com/Bannerets/tdl/issues/33
 
-## v5.2.0
+## v5.2.0 (2018-10-24)
 
 - Added `client.connectAndLogin` method.
 - File `types/tdlib.ts` renamed to `types/tdlib.d.ts` (see [#31][]).
