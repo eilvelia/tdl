@@ -37,7 +37,7 @@ function createCommit (pkgs) {
 
 function createTag ([name, v]) {
   return new Promise((resolve, reject) => {
-    const child = spawn('git', ['tag', `${name}@${v}`])
+    const child = spawn('git', ['tag', '-a', '-m', '', `${name}@${v}`])
     child.stdout.pipe(process.stdout)
     child.stderr.pipe(process.stderr)
     child.on('close', code => {
