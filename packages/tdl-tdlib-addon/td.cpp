@@ -1,19 +1,29 @@
 #include <napi.h>
 #include <dlfcn.h>
 
-extern "C" {
-  void *td_json_client_create();
-  void td_json_client_send(void *client, const char *request);
-  const char *td_json_client_receive(void *client, double timeout);
-  const char *td_json_client_execute(void *client, const char *request);
-  void td_json_client_destroy(void *client);
+typedef void * (*td_json_client_create_t)();
+typedef void (*td_json_client_send_t)(void *client, const char *request);
+typedef const char * (*td_json_client_receive_t)(void *client, double timeout);
+typedef const char * (*td_json_client_execute_t)(void *client, const char *request);
+typedef void (*td_json_client_destroy_t)(void *client);
 
-  int td_set_log_file_path(const char *file_path);
-  void td_set_log_max_file_size(long long max_file_size);
-  void td_set_log_verbosity_level(int new_verbosity_level);
-  typedef void (*td_log_fatal_error_callback_ptr)(const char *error_message);
-  void td_set_log_fatal_error_callback(td_log_fatal_error_callback_ptr callback);
-}
+typedef int (*td_set_log_file_path_t)(const char *file_path);
+typedef void (*td_set_log_max_file_size_t)(long long max_file_size);
+typedef void (*td_set_log_verbosity_level_t)(int new_verbosity_level);
+
+typedef void (*td_log_fatal_error_callback_ptr)(const char *error_message);
+typedef void (*td_set_log_fatal_error_callback_t)(td_log_fatal_error_callback_ptr callback);
+
+td_json_client_create_t td_json_client_create;
+td_json_client_send_t td_json_client_send;
+td_json_client_receive_t td_json_client_receive;
+td_json_client_execute_t td_json_client_execute;
+td_json_client_destroy_t td_json_client_destroy;
+
+td_set_log_file_path_t td_set_log_file_path;
+td_set_log_max_file_size_t td_set_log_max_file_size;
+td_set_log_verbosity_level_t td_set_log_verbosity_level;
+td_set_log_fatal_error_callback_t td_set_log_fatal_error_callback;
 
 Napi::ArrayBuffer td_client_create(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
@@ -121,18 +131,38 @@ void td_set_fatal_error_callback(const Napi::CallbackInfo& info) {
   }
 }
 
+#define FINDFUNC(F) \
+  F = (F##_t) dlsym(handle, #F); \
+  if ((dlsym_err_cstr = dlerror()) != NULL) { \
+    std::string dlsym_err(dlsym_err_cstr == NULL ? "" : dlsym_err_cstr); \
+    std::string js_dlsym_err = "Failed to load '" #F "': " + dlsym_err; \
+    Napi::Error::New(env, js_dlsym_err).ThrowAsJavaScriptException(); \
+    return; \
+  }
+
 void load_tdjson(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   std::string library_file_str = info[0].As<Napi::String>().Utf8Value();
   const char* library_file = library_file_str.c_str();
-  void* handle = dlopen(library_file, RTLD_NOW | RTLD_GLOBAL);
+  void* handle = dlopen(library_file, RTLD_LAZY | RTLD_LOCAL);
   if (handle == NULL) {
     char* dlerror_message = dlerror();
     std::string err_message(dlerror_message == NULL ? "NULL" : dlerror_message);
     std::string js_err_message = "Dynamic Loading Error: " + err_message;
     auto err = Napi::Error::New(env, js_err_message);
     err.ThrowAsJavaScriptException();
+    return;
   }
+  char* dlsym_err_cstr;
+  FINDFUNC(td_json_client_create);
+  FINDFUNC(td_json_client_send);
+  FINDFUNC(td_json_client_receive);
+  FINDFUNC(td_json_client_execute);
+  FINDFUNC(td_json_client_destroy);
+  FINDFUNC(td_set_log_file_path);
+  FINDFUNC(td_set_log_max_file_size);
+  FINDFUNC(td_set_log_verbosity_level);
+  FINDFUNC(td_set_log_fatal_error_callback);
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
