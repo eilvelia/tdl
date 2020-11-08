@@ -1,21 +1,22 @@
 {
   "name": "tdl-tdlib-addon",
-  "version": "0.7.0",
-  "description": "TDLib N-API addon for Node.js.",
+  "version": "0.8.0",
+  "description": "Node.js N-API addon that provides bindings to TDLib",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
     "install": "node-gyp rebuild || exit 0",
     "clean": "node-gyp clean",
-    "build:gyp": "node-gyp rebuild"
+    "build:gyp": "node-gyp rebuild",
+    "build": "babel src/ -d dist/ --root-mode upward && node-gyp rebuild"
   },
   "dependencies": {
     "debug": "^3.1.0",
-    "node-addon-api": "^1.6.2",
+    "node-addon-api": "^3.0.2",
     "tdl-shared": "^0.9.0"
   },
   "devDependencies": {
-    "node-gyp": "^4.0.0"
+    "node-gyp": "^7.1.0"
   },
   "peerDependencies": {
     "tdl": ">= 6.0.0"

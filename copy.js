@@ -12,4 +12,3 @@ const copy = p => {
 
 copy(['packages', 'tdl-tdlib-ffi'])
 copy(['packages', 'tdl-tdlib-wasm'])
-copy(['tdl-tdlib-addon'])

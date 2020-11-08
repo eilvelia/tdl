@@ -27,4 +27,4 @@ $ node dist td_api.tl --ts > filename.ts
 ---
 
 You can get the td_api.tl from the TDLib repository.
-Also you can use the `download-tl-api-tl.js` script to download it automatically.
+Also you can use the `download-td-api-tl.js` script to download it automatically.

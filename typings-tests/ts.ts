@@ -1,7 +1,10 @@
 import { TDLib } from '../packages/tdl-tdlib-ffi'
+import { TDLib as TDLibAddon } from '../packages/tdl-tdlib-addon'
 import { Client, TdlError } from '../packages/tdl'
 
 const tdlib = new TDLib('str')
+
+const tdlibAddon = new TDLib('tdjson')
 
 import {
   error as Td$error,
@@ -21,6 +24,8 @@ const cl = new Client(tdlib, {
 new Client(tdlib, { receiveTimeout: 10 })
 
 new Client(tdlib)
+
+new Client(tdlibAddon)
 
 Client.create(tdlib)
 Client.create(tdlib, {})
@@ -66,6 +71,8 @@ const client = cl
   const remove1: typeof client.removeListener = client.off
   const add1: typeof client.on = client.addListener
   const add2: typeof client.on = client.once
+
+  await cl.close()
 })()
 
 cl.on('update', u => {

@@ -9,6 +9,7 @@
     "@bannerets/eslint-config-flow"
   ],
   "rules": {
-    "no-redeclare": 0
+    "no-redeclare": 0,
+    "valid-jsdoc": 0
   }
 }

@@ -6,14 +6,29 @@ import type { TDLibClient, ITDLibJSON } from 'tdl-shared'
 
 const debug = Debug('tdl-tdlib-addon')
 
+const defaultLibraryFile = (() => {
+  switch (process.platform) {
+    case 'win32':
+      return 'tdjson.dll'
+    case 'darwin':
+      return 'libtdjson.dylib'
+    default:
+      return 'libtdjson.so'
+  }
+})()
+
 export class TDLib implements ITDLibJSON {
   +_addon: Object
 
-  constructor (path: string = '../build/Release/td.node') {
+  constructor (
+    libraryFile: string = defaultLibraryFile,
+    addonPath: string = '../build/Release/td.node'
+  ) {
     debug('constructor')
     // $FlowOff
-    this._addon = require(path)
+    this._addon = require(addonPath)
     // console.log(this._addon)
+    this._addon.load_tdjson(libraryFile)
   }
 
   async create (): Promise<TDLibClient> {
@@ -68,9 +83,6 @@ export class TDLib implements ITDLibJSON {
   }
 
   setLogFatalErrorCallback (fn: null | (errorMessage: string) => void): void {
-    if (fn == null)
-      this._addon.remove_fatal_callback(null)
-    else
-      throw new Error('setLogFatalErrorCallback is not supported')
+    this._addon.td_set_fatal_error_callback(fn)
   }
 }

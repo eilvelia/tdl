@@ -2,22 +2,19 @@
   "name": "tdl-dev",
   "version": "0.0.0",
   "private": true,
-  "description": "JavaScript TDLib wrapper.",
+  "description": "A JavaScript wrapper for TDLib",
   "scripts": {
-    "clean": "rimraf packages/*/dist/",
+    "clean": "rimraf packages/*/dist/ && lerna run clean",
     "build": "node copy.js && lerna run build",
     "lint": "eslint . --max-warnings 0",
     "test": "npm run flow:check && npm run ts:check && npm run lint",
     "build-and-test": "npm run build && npm run test",
-    "postinstall": "lerna bootstrap && npm install --prefix tdl-tdlib-addon",
+    "postinstall": "lerna bootstrap",
     "publish": "node scripts/publish.js",
     "prepare": "npm run clean && npm run build",
     "prepack": "npm test",
     "ts:check": "tsc --noEmit",
-    "flow:check": "flow check --include-warnings --max-warnings 0",
-    "build:addon:babel": "babel tdl-tdlib-addon/src/ -d tdl-tdlib-addon/dist/",
-    "build:addon": "npm run build:addon:babel && npm run build:gyp --prefix tdl-tdlib-addon",
-    "clean:addon": "rimraf tdl-tdlib-addon/dist && npm run clean --prefix tdl-tdlib-addon"
+    "flow:check": "flow check --include-warnings --max-warnings 0"
   },
   "workspaces": [
     "packages/*"
