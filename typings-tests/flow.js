@@ -1,9 +1,11 @@
 // @flow
 
 import { TDLib as Td } from '../packages/tdl-tdlib-ffi'
+import { TDLib as TdAddon } from '../packages/tdl-tdlib-addon'
 import { Tdl, TdlError, Client } from '../packages/tdl'
 
 var tdlib = new Td()
+var tdlibAddon = new TdAddon()
 
 ;(async () => {
   var t = new Td('abc')
@@ -75,6 +77,8 @@ const client = new Client(tdlib, {
   apiHash: 'abc',
   useTestDc: true
 })
+
+new Client(tdlibAddon)
 
 new Client(tdlib, { receiveTimeout: 10 })
 

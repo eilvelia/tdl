@@ -1,9 +1,9 @@
-## TDLib API
+## TDLib JSON API
 
 Low-level TDLib API.
 
 ```js
-const { TDLib } = require('tdl-tdlib-ffi')
+const { TDLib } = require('tdl-tdlib-addon')
 ```
 
 See interface declarations in [tdl-shared/index.js.flow](packages/tdl-shared/index.js.flow).

@@ -3,7 +3,7 @@
 // This was written for fluture v8.0
 
 const { Client } = require('tdl')
-const { TDLib } = require('tdl-tdlib-ffi')
+const { TDLib } = require('tdl-tdlib-addon')
 const Future = require('fluture')
 
 const client = new Client(new TDLib(), {

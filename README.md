@@ -28,7 +28,7 @@ A JavaScript wrapper for [TDLib][] (Telegram Database library), version 1.4.0 or
 ### Installation
 
 1. Build TDLib (https://github.com/tdlib/td#building)
-2. `npm install tdl tdl-tdlib-ffi` (install both)
+2. `npm install tdl tdl-tdlib-addon` (install both)
 
 You can also use third-party pre-built binaries:
 
@@ -59,7 +59,7 @@ Therefore libtdjson's openssl version should be compatible with the openssl vers
 ```javascript
 // Example in Node.js:
 const { Client } = require('tdl')
-const { TDLib } = require('tdl-tdlib-ffi')
+const { TDLib } = require('tdl-tdlib-addon')
 
 const client = new Client(new TDLib(), {
   apiId: 2222, // Your api_id
@@ -70,7 +70,7 @@ const client = new Client(new TDLib(), {
 `api_id` and `api_hash` can be obtained at https://my.telegram.org/.
 
 You can specify the path to `libtdjson` in the `TDLib` constructor's argument.
-It is (almost) directly passed to [`dlopen`][dlopen] / [`LoadLibrary`][ll].
+It is directly passed to [`dlopen`][dlopen] / [`LoadLibrary`][ll].
 Check your OS documentation to see where it searches for the library.
 
 [dlopen]: https://www.man7.org/linux/man-pages/man3/dlopen.3.html
@@ -78,7 +78,7 @@ Check your OS documentation to see where it searches for the library.
 
 ##### `client.connect() => Promise<undefined>`
 
-You can use the `connect` method to initialize and connect your client with Telegram.
+Initialize and connect your client with Telegram.
 Returns a promise.
 
 ```javascript
@@ -191,7 +191,8 @@ await client.invoke({
 
 ##### `client.execute(query: Object) => (Object | null)`
 
-Synchronously send a message to Telegram and receive a response. Only a few methods can be called using this function.
+Synchronously send a message to Telegram and receive a response.
+Only a few methods can be called using this function.
 
 ```javascript
 const res = client.execute({
@@ -355,12 +356,12 @@ You can easily substitute one with another, since they follow the same interface
 <a name="can-i-create-multiple-clients"></a>
 ### Can I create multiple clients?
 
+You can use multiple clients with `tdl-tdlib-addon` if the number of clients < [UV_THREADPOOL_SIZE](http://docs.libuv.org/en/v1.x/threadpool.html).
+
 With `tdl-tdlib-ffi` it's not possible to use multiple clients simultaneously in one process, see [#18][]. If you try, it will result in use after free. You can create multiple processes using [child_process.fork][]. You also can "pause" clients that you don't currently need via `client.pause()` and `client.resume()` functions.
 
 [#18]: https://github.com/Bannerets/tdl/issues/18
 [child_process.fork]: https://nodejs.org/dist/latest-v14.x/docs/api/child_process.html#child_process_child_process_fork_modulepath_args_options
-
-You can use multiple clients with `tdl-tdlib-addon` if the number of clients < [UV_THREADPOOL_SIZE](http://docs.libuv.org/en/v1.x/threadpool.html).
 
 ---
 
