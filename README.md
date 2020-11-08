@@ -30,6 +30,10 @@ A JavaScript wrapper for [TDLib][] (Telegram Database library), version 1.4.0 or
 1. Build TDLib (https://github.com/tdlib/td#building)
 2. `npm install tdl tdl-tdlib-ffi` (install both)
 
+You can also use third-party pre-built binaries:
+
+- [tdlib.native](https://github.com/ForNeVeR/tdlib.native/releases)
+
 ---
 
 <a name="requirements"></a>
@@ -38,10 +42,6 @@ A JavaScript wrapper for [TDLib][] (Telegram Database library), version 1.4.0 or
 - Node.js v10+
 - A C++ compiler and Python installed
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
-
-You can also use third-party pre-built binaries:
-
-- [tdlib.native](https://github.com/ForNeVeR/tdlib.native/releases)
 
 Note that Node.js exports OpenSSL symbols.
 If libtdjson is linked dynamically against openssl, it will use openssl symbols from the Node.js binary, not from your system.
@@ -69,7 +69,12 @@ const client = new Client(new TDLib(), {
 
 `api_id` and `api_hash` can be obtained at https://my.telegram.org/.
 
-You can specify the path to `libtdjson` in the `TDLib` constructor's argument. It is (almost) directly passed to `dlopen`.
+You can specify the path to `libtdjson` in the `TDLib` constructor's argument.
+It is (almost) directly passed to [`dlopen`][dlopen] / [`LoadLibrary`][ll].
+Check your OS documentation to see where it searches for the library.
+
+[dlopen]: https://www.man7.org/linux/man-pages/man3/dlopen.3.html
+[ll]: https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryw
 
 ##### `client.connect() => Promise<undefined>`
 
@@ -339,7 +344,7 @@ and in the browser with webassembly.
 
 Available "backends" in the `tdl` repository:
 
-- [tdl-tdlib-ffi](packages/tdl-tdlib-ffi/) (recommended)
+- [tdl-tdlib-ffi](packages/tdl-tdlib-ffi/)
 - [tdl-tdlib-addon](packages/tdl-tdlib-addon/)
 - [tdl-tdlib-wasm](packages/tdl-tdlib-wasm/) (experimental)
 

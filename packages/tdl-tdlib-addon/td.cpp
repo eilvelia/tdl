@@ -43,6 +43,8 @@ void td_client_send(const Napi::CallbackInfo& info) {
   td_json_client_send(client, request);
 }
 
+// TODO: Use a dedicated thread per client instead of libuv's threadpool
+
 class ReceiverAsyncWorker : public Napi::AsyncWorker
 {
 public:

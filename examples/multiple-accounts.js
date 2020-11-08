@@ -1,12 +1,10 @@
-// NOTE: Multiple clients on the same process may cause
-//       `terminating with uncaught exception of type Napi::Error` error
-//       if you use FFI. See issue #18.
+// NOTE: The number of clients you created shouldn't be higher than UV_THREADPOOL_SIZE
 
 const { Client } = require('tdl')
-const { TDLib } = require('tdl-tdlib-ffi')
+const { TDLib } = require('tdl-tdlib-addon')
 
 const API_ID = 2222 // Your api_id
-const API_HASH = 'YOUR_API_HASH'
+const API_HASH = '0123456789abcdef0123456789abcdef' // Your api_hash
 
 const tdlib = new TDLib()
 

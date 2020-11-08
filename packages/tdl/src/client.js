@@ -376,6 +376,13 @@ export class Client {
     this._tdlib.setLogFatalErrorCallback(fn)
   }
 
+  // tdl renames '@type' to '_'.
+  // Initially it was because Flow didn't support disjoint unions
+  // if the tag is referenced via square brackets.
+  // (https://flow.org/en/docs/lang/refinements/)
+  // It was fixed, but I kept the renaming, since it's more convenient
+  // to write if (o._ === '...') instead of if (o['@type'] === '...')
+
   execute: Execute = request => {
     debugReq('execute', request)
     if (!this._client) return null
