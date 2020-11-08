@@ -1,7 +1,7 @@
 ## tdl
 
 [![npm](https://img.shields.io/npm/v/tdl.svg)](https://www.npmjs.com/package/tdl)
-[![Build Status](https://travis-ci.org/Bannerets/tdl.svg?branch=master)](https://travis-ci.org/Bannerets/tdl)
+[![CI](https://github.com/Bannerets/tdl/workflows/Build%20and%20test/badge.svg)](https://github.com/Bannerets/tdl/actions?query=workflow%3A%22Build+and+test%22)
 
 A JavaScript wrapper for [TDLib][] (Telegram Database library), version 1.4.0 or newer.
 
