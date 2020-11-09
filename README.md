@@ -45,9 +45,23 @@ You can also use third-party pre-built binaries:
 
 Note that Node.js exports OpenSSL symbols.
 If libtdjson is linked dynamically against openssl, it will use openssl symbols from the Node.js binary, not from your system.
-Therefore libtdjson's openssl version should be compatible with the openssl version Node.js statically linked against (`process.versions.openssl`).
+Therefore libtdjson's openssl version should be compatible with the openssl version Node.js statically linked against (`process.versions.openssl`).<br>
+If you get segmentation faults, it's most likely due to openssl incompatibility.
 
 <!-- Node.js contains openssl headers, so you can add an option like `-DOPENSSL_INCLUDE_DIR=<path-to-node>/include/node/` to the TDLib build. -->
+
+If you linked TDLib against system OpenSSL, you may consider rebuilding Node.js with the system openssl.<br>
+For example, you can install Node.js v12 from source via [nvm][] on GNU/Linux this way:
+
+```console
+$ nvm install -s 12 --shared-openssl --shared-openssl-includes=/usr/include/ --shared-openssl-libpath=/usr/lib/x86_64-linux-gnu/
+```
+
+[nvm]: https://github.com/nvm-sh/nvm
+
+Or you can build TDLib with the same openssl version that Node.js linked against.
+
+This doesn't apply to Electron, since it doesn't export openssl symbols.
 
 ---
 
