@@ -220,6 +220,10 @@ export class Client {
     }
 
     this._initialized = true
+
+    if (this._options.disableAuth)
+      this._connectDefer.resolve()
+
     this._loop()
   }
 
