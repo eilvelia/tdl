@@ -12,13 +12,13 @@ A JavaScript wrapper for [TDLib][] (Telegram Database library), version 1.4.0 or
 - [Installation](#installation)
 - [Requirements](#requirements)
 - [API](#api)
+- [Examples](#examples)
 - [Log in as a bot](#log-in-as-a-bot)
 - [Options](#options)
 - [Typings](#typings)
 - [WebAssembly](#webassembly)
 - [Architecture notes](#architecture-notes)
 - [Can I create multiple clients?](#can-i-create-multiple-clients)
-- [Examples](#examples)
 - [Contributing](#contributing)
 - [Windows](#windows)
 
@@ -243,6 +243,36 @@ See [TDLib_API.md](TDLib_API.md).
 
 ---
 
+<a name="examples"></a>
+### Examples
+
+```javascript
+const { Client } = require('tdl')
+const { TDLib } = require('tdl-tdlib-addon')
+
+const client = new Client(new TDLib(), {
+  apiId: 2222, // Your api_id, get it at http://my.telegram.org/
+  apiHash: '0123456789abcdef0123456789abcdef' // Your api_hash
+})
+
+client.on('error', console.error)
+client.on('update', update => {
+  console.log('Received update:', update)
+})
+
+async function main () {
+  await client.connectAndLogin()
+
+  console.log(await client.invoke({ _: 'getMe' }))
+}
+
+main()
+```
+
+See the [examples/](examples/) directory.
+
+---
+
 <a name="log-in-as-a-bot"></a>
 ### Log in as a bot
 
@@ -320,7 +350,7 @@ tdlibParameters: {
 <a name="typings"></a>
 ### Typings
 
-`tdl` fully supports [Flow][] and [TypeScript][] out of the box.\
+`tdl` fully supports [Flow][] and [TypeScript][] out of the box.<br>
 Typings are generated from the [td_api.tl][td-scheme] scheme in the TDLib repository.
 
 You can import the TDLib types:
@@ -376,13 +406,6 @@ With `tdl-tdlib-ffi` it's not possible to use multiple clients simultaneously in
 
 [#18]: https://github.com/Bannerets/tdl/issues/18
 [child_process.fork]: https://nodejs.org/dist/latest-v14.x/docs/api/child_process.html#child_process_child_process_fork_modulepath_args_options
-
----
-
-<a name="examples"></a>
-### Examples
-
-See the [examples/](examples/) directory.
 
 ---
 
