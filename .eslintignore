@@ -9,3 +9,4 @@ examples/
 /test.js
 *.ts
 typings-tests/
+/jest.config.js

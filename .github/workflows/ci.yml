@@ -1,9 +1,9 @@
 name: Build and test
 on: [push, pull_request]
 jobs:
-  run:
+  main:
+    name: Node v${{ matrix.node }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
-    name: Node ${{ matrix.node }} on ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
@@ -23,5 +23,54 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
+      - name: ~/.npm cache
+        uses: actions/cache@v2
+        # TODO: .npm cache doesn't work on Windows
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
       - run: npm install # also runs the `prepare` npm script, which runs `build`
       - run: npm test
+  integration-tests:
+    name: 'Integration tests: TDLib ${{ matrix.tdlib }}'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-18.04
+        tdlib:
+          - v1.6.0
+          - v1.5.0
+        node:
+          - 12
+    env:
+      LIBTDJSON_PATH: tdlib/build/libtdjson.so
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: ~/.npm cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+      - run: npm install
+      - name: TDLib build cache
+        id: tdlib-cache
+        uses: actions/cache@v2
+        with:
+          path: tdlib/build/*.so*
+          key: ${{ matrix.os }}-tdlib-${{ matrix.tdlib }}
+      - name: Build TDLib
+        if: steps.tdlib-cache.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get install -y -q gperf
+          git clone https://github.com/tdlib/td.git tdlib
+          cd tdlib
+          git checkout ${{ matrix.tdlib }}
+          mkdir -p build && cd build
+          cmake -DCMAKE_BUILD_TYPE=Debug ..
+          cmake --build . -- -j 2
+      - run: npm run integration-tests
