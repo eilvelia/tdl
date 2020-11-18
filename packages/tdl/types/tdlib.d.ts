@@ -1,4 +1,4 @@
-// TDLib 1.4.0
+// TDLib 1.6.0
 
 /** An object of this type can be returned on every function call, in case of an error */
 export type error = {

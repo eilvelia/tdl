@@ -4,8 +4,8 @@ import fs from 'fs'
 import { EOL } from 'os'
 import { tldoc, type Parameter, type TdClass } from 'tldoc'
 
-const arg = process.argv[2]
-const filepath = (arg !== '--ts' && arg !== '--no-fl' && arg) || 'td_api.tl'
+const arg: ?string = process.argv[2]
+const filepath = (!arg || /^--/.test(arg)) ? 'td_api.tl' : arg
 const TS = process.argv.includes('--ts')
 const commentFluture = process.argv.includes('--no-fl')
 const usage = process.argv.includes('--usage')
@@ -19,7 +19,7 @@ if (usage || help) {
   process.exit()
 }
 
-const VERSION = '1.4.0'
+const VERSION = '1.6.0'
 
 const INPUT_SUFFIX = '$Input'
 const ARRAY_TYPE = 'Array'
@@ -85,7 +85,7 @@ function parameterTypeToJS ({ vector, type }: Parameter): JSType {
     case 'int53': return f('number')
     case 'int64': return fu(['number', 'string'])
     case 'Bool': return f('boolean')
-    case 'bytes': return f('string')
+    case 'bytes': return f('string') // base64 string
     default: return f(type)
   }
 }
@@ -145,7 +145,7 @@ function formatDesc (desc: string): string {
   return `/** ${strings.join(EOL)} */`
 }
 
-const addIdent = (n: number, str: string) => str
+const addIndent = (n: number, str: string) => str
   .split(EOL)
   .map(e => ' '.repeat(n) + e)
   .join(EOL)
@@ -159,7 +159,7 @@ const createObjectType = ({ name, description, params }: JSObject) =>
     `  _: '${name}',`,
     params
       .map(({ description, name, type }) =>
-        addIdent(2, formatDesc(description)) + EOL
+        addIndent(2, formatDesc(description)) + EOL
         + `  ${name}: ${showType(type)},`)
       .join(EOL),
     exact + '}'
@@ -174,7 +174,7 @@ const createInputObjectType = ({ name, description, params }, inpName = false) =
     `  ${readOnly}_: '${name}',`,
     params
       .map(({ description, name, type }) =>
-        addIdent(2, formatDesc(description)) + EOL
+        addIndent(2, formatDesc(description)) + EOL
         + `  ${readOnly}${name}?: ${showType(outputToInputType(type))},`)
       .join(EOL),
     exact + '}'
@@ -203,7 +203,7 @@ const createFunctionType = (
   getReturnType: (typestr: string) => string,
   classes: TdClass[]
 ): string =>
-  `export type ${name} =\n`
+  `export type ${name} =${EOL}`
   + classes
     .map(({ name, result }) =>
       `  & ((query: ${name}) => ${getReturnType(result)})`)
