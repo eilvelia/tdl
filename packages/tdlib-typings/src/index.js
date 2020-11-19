@@ -72,25 +72,33 @@ type JSObject = {
   description: string
 }
 
-function parameterTypeToJS ({ vector, type }: Parameter): JSType {
+function parameterTypeToJS ({ vector, type, description }: Parameter): JSType {
   const aux = (jstype, n) => n <= 0
     ? jstype
     : aux(UnaryConstr(ARRAY_TYPE, jstype), n - 1)
-  const f = str => aux(PlainType(str), vector)
-  const fu = strs => aux(UnionType(strs.map(PlainType)), vector)
+  const f = strs_ => {
+    // Ad-hoc parsing of 'may be null'
+    // https://github.com/tdlib/td/issues/1087
+    const strs = description.includes('may be null')
+      ? [...strs_, TS ? 'undefined' : 'void']
+      : strs_
+    return strs.length === 1
+      ? aux(PlainType(strs[0]), vector)
+      : aux(UnionType(strs.map(PlainType)), vector)
+  }
   switch (type) {
-    case 'double': return f('number')
-    case 'string': return f('string')
-    case 'int32': return f('number')
-    case 'int53': return f('number')
-    case 'int64': return fu(['number', 'string'])
-    case 'Bool': return f('boolean')
-    case 'bytes': return f('string') // base64 string
-    default: return f(type)
+    case 'double': return f(['number'])
+    case 'string': return f(['string'])
+    case 'int32': return f(['number'])
+    case 'int53': return f(['number'])
+    case 'int64': return f(['number', 'string'])
+    case 'Bool': return f(['boolean'])
+    case 'bytes': return f(['string']) // base64 string
+    default: return f([type])
   }
 }
 
-const primitiveTypes = ['string', 'number', 'boolean']
+const primitiveTypes = ['string', 'number', 'boolean', 'null', 'undefined', 'void']
 
 const outputToInputType = (jstype: JSType): JSType => {
   switch (jstype.type) {

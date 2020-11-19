@@ -4,7 +4,7 @@ import { Client, TdlError } from '../packages/tdl'
 
 const tdlib = new TDLib('str')
 
-const tdlibAddon = new TDLib('tdjson')
+const tdlibAddon = new TDLibAddon('tdjson')
 
 import {
   error as Td$error,

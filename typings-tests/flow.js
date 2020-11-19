@@ -1,14 +1,16 @@
 // @flow
 
-import { TDLib as Td } from '../packages/tdl-tdlib-ffi'
+import { TDLib as TdFFI } from '../packages/tdl-tdlib-ffi'
 import { TDLib as TdAddon } from '../packages/tdl-tdlib-addon'
 import { Tdl, TdlError, Client } from '../packages/tdl'
 
-var tdlib = new Td()
+import * as Td from '../packages/tdl/types/tdlib'
+
+var tdlib = new TdFFI()
 var tdlibAddon = new TdAddon()
 
 ;(async () => {
-  var t = new Td('abc')
+  var t = new TdFFI('abc')
   var cl = await t.create()
   t.destroy(cl)
   // $ExpectError
@@ -63,15 +65,6 @@ var tdlibAddon = new TdAddon()
   await tdl.close()
 })
 
-
-import type {
-  error as Td$error,
-  Chat as Td$Chat,
-  Update as Td$Update,
-  formattedText as Td$formattedText,
-  formattedText$Input as Td$formattedText$Input
-} from '../packages/tdl/types/tdlib'
-
 const client = new Client(tdlib, {
   apiId: 222,
   apiHash: 'abc',
@@ -115,7 +108,7 @@ client.setLogFatalErrorCallback('1234')
   client.on('error')
 
   client.once('update', e => {
-    ;(e: Td$Update)
+    ;(e: Td.Update)
     // $ExpectError
     ;(e: number)
   })
@@ -186,8 +179,8 @@ client.setLogFatalErrorCallback('1234')
     _: 'searchPublicChat',
     username: 'username'
   })
-    .map((e: Td$Chat) => e.title)
-    .mapRej((e: Td$error) => e)
+    .map((e: Td.Chat) => e.title)
+    .mapRej((e: Td.error) => e)
     .fork(console.error, (e: string) => console.log(e))
 
   client.invokeFuture({
@@ -218,7 +211,11 @@ client.setLogFatalErrorCallback('1234')
       : Promise.resolve('YOUR_BOT_TOKEN') // Token from @BotFather
   }))
 
-  // Td$formattedText <: Td$formattedText$Input
-  declare var fmt: Td$formattedText
-  const fmtOpt: Td$formattedText$Input = fmt
+  // Td.formattedText <: Td.formattedText$Input
+  declare var fmt: Td.formattedText
+  const fmtInp: Td.formattedText$Input = fmt
+
+  // subtyping also should work correctly with 'may be null' fields
+  declare var authCode: Td.authenticationCodeInfo
+  const authCodeInp: Td.authenticationCodeInfo$Input = authCode
 })()

@@ -222,7 +222,7 @@ export type authenticationCodeInfo = {
   /** Describes the way the code was sent to the user */
   type: AuthenticationCodeType,
   /** Describes the way the next code will be sent to the user; may be null */
-  next_type: AuthenticationCodeType,
+  next_type: AuthenticationCodeType | undefined,
   /** Timeout before the code should be re-sent, in seconds */
   timeout: number,
 }
@@ -235,7 +235,7 @@ export type authenticationCodeInfo$Input = {
   /** Describes the way the code was sent to the user */
   readonly type?: AuthenticationCodeType$Input,
   /** Describes the way the next code will be sent to the user; may be null */
-  readonly next_type?: AuthenticationCodeType$Input,
+  readonly next_type?: AuthenticationCodeType$Input | undefined,
   /** Timeout before the code should be re-sent, in seconds */
   readonly timeout?: number,
 }
@@ -541,7 +541,7 @@ export type passwordState = {
    * Information about the recovery email address to which the confirmation email was
    * sent; may be null
    */
-  recovery_email_address_code_info: emailAddressAuthenticationCodeInfo,
+  recovery_email_address_code_info: emailAddressAuthenticationCodeInfo | undefined,
 }
 
 /** Represents the current state of 2-step verification */
@@ -559,7 +559,7 @@ export type passwordState$Input = {
    * Information about the recovery email address to which the confirmation email was
    * sent; may be null
    */
-  readonly recovery_email_address_code_info?: emailAddressAuthenticationCodeInfo$Input,
+  readonly recovery_email_address_code_info?: emailAddressAuthenticationCodeInfo$Input | undefined,
 }
 
 /** Contains information about the current recovery email address */
@@ -1062,9 +1062,9 @@ export type animation = {
   /** MIME type of the file, usually "image/gif" or "video/mp4" */
   mime_type: string,
   /** Animation minithumbnail; may be null */
-  minithumbnail: minithumbnail,
+  minithumbnail: minithumbnail | undefined,
   /** Animation thumbnail; may be null */
-  thumbnail: photoSize,
+  thumbnail: photoSize | undefined,
   /** File containing the animation */
   animation: file,
 }
@@ -1083,9 +1083,9 @@ export type animation$Input = {
   /** MIME type of the file, usually "image/gif" or "video/mp4" */
   readonly mime_type?: string,
   /** Animation minithumbnail; may be null */
-  readonly minithumbnail?: minithumbnail$Input,
+  readonly minithumbnail?: minithumbnail$Input | undefined,
   /** Animation thumbnail; may be null */
-  readonly thumbnail?: photoSize$Input,
+  readonly thumbnail?: photoSize$Input | undefined,
   /** File containing the animation */
   readonly animation?: file$Input,
 }
@@ -1104,12 +1104,12 @@ export type audio = {
   /** The MIME type of the file; as defined by the sender */
   mime_type: string,
   /** The minithumbnail of the album cover; may be null */
-  album_cover_minithumbnail: minithumbnail,
+  album_cover_minithumbnail: minithumbnail | undefined,
   /**
    * The thumbnail of the album cover; as defined by the sender. The full size thumbnail
    * should be extracted from the downloaded file; may be null
    */
-  album_cover_thumbnail: photoSize,
+  album_cover_thumbnail: photoSize | undefined,
   /** File containing the audio */
   audio: file,
 }
@@ -1128,12 +1128,12 @@ export type audio$Input = {
   /** The MIME type of the file; as defined by the sender */
   readonly mime_type?: string,
   /** The minithumbnail of the album cover; may be null */
-  readonly album_cover_minithumbnail?: minithumbnail$Input,
+  readonly album_cover_minithumbnail?: minithumbnail$Input | undefined,
   /**
    * The thumbnail of the album cover; as defined by the sender. The full size thumbnail
    * should be extracted from the downloaded file; may be null
    */
-  readonly album_cover_thumbnail?: photoSize$Input,
+  readonly album_cover_thumbnail?: photoSize$Input | undefined,
   /** File containing the audio */
   readonly audio?: file$Input,
 }
@@ -1146,12 +1146,12 @@ export type document = {
   /** MIME type of the file; as defined by the sender */
   mime_type: string,
   /** Document minithumbnail; may be null */
-  minithumbnail: minithumbnail,
+  minithumbnail: minithumbnail | undefined,
   /**
    * Document thumbnail in JPEG or PNG format (PNG will be used only for background patterns);
    * as defined by the sender; may be null
    */
-  thumbnail: photoSize,
+  thumbnail: photoSize | undefined,
   /** File containing the document */
   document: file,
 }
@@ -1164,12 +1164,12 @@ export type document$Input = {
   /** MIME type of the file; as defined by the sender */
   readonly mime_type?: string,
   /** Document minithumbnail; may be null */
-  readonly minithumbnail?: minithumbnail$Input,
+  readonly minithumbnail?: minithumbnail$Input | undefined,
   /**
    * Document thumbnail in JPEG or PNG format (PNG will be used only for background patterns);
    * as defined by the sender; may be null
    */
-  readonly thumbnail?: photoSize$Input,
+  readonly thumbnail?: photoSize$Input | undefined,
   /** File containing the document */
   readonly document?: file$Input,
 }
@@ -1180,7 +1180,7 @@ export type photo = {
   /** True, if stickers were added to the photo */
   has_stickers: boolean,
   /** Photo minithumbnail; may be null */
-  minithumbnail: minithumbnail,
+  minithumbnail: minithumbnail | undefined,
   /** Available variants of the photo, in different sizes */
   sizes: Array<photoSize>,
 }
@@ -1191,7 +1191,7 @@ export type photo$Input = {
   /** True, if stickers were added to the photo */
   readonly has_stickers?: boolean,
   /** Photo minithumbnail; may be null */
-  readonly minithumbnail?: minithumbnail$Input,
+  readonly minithumbnail?: minithumbnail$Input | undefined,
   /** Available variants of the photo, in different sizes */
   readonly sizes?: ReadonlyArray<photoSize$Input>,
 }
@@ -1212,9 +1212,9 @@ export type sticker = {
   /** True, if the sticker is a mask */
   is_mask: boolean,
   /** Position where the mask should be placed; may be null */
-  mask_position: maskPosition,
+  mask_position: maskPosition | undefined,
   /** Sticker thumbnail in WEBP or JPEG format; may be null */
-  thumbnail: photoSize,
+  thumbnail: photoSize | undefined,
   /** File containing the sticker */
   sticker: file,
 }
@@ -1235,9 +1235,9 @@ export type sticker$Input = {
   /** True, if the sticker is a mask */
   readonly is_mask?: boolean,
   /** Position where the mask should be placed; may be null */
-  readonly mask_position?: maskPosition$Input,
+  readonly mask_position?: maskPosition$Input | undefined,
   /** Sticker thumbnail in WEBP or JPEG format; may be null */
-  readonly thumbnail?: photoSize$Input,
+  readonly thumbnail?: photoSize$Input | undefined,
   /** File containing the sticker */
   readonly sticker?: file$Input,
 }
@@ -1260,9 +1260,9 @@ export type video = {
   /** True, if the video should be tried to be streamed */
   supports_streaming: boolean,
   /** Video minithumbnail; may be null */
-  minithumbnail: minithumbnail,
+  minithumbnail: minithumbnail | undefined,
   /** Video thumbnail; as defined by the sender; may be null */
-  thumbnail: photoSize,
+  thumbnail: photoSize | undefined,
   /** File containing the video */
   video: file,
 }
@@ -1285,9 +1285,9 @@ export type video$Input = {
   /** True, if the video should be tried to be streamed */
   readonly supports_streaming?: boolean,
   /** Video minithumbnail; may be null */
-  readonly minithumbnail?: minithumbnail$Input,
+  readonly minithumbnail?: minithumbnail$Input | undefined,
   /** Video thumbnail; as defined by the sender; may be null */
-  readonly thumbnail?: photoSize$Input,
+  readonly thumbnail?: photoSize$Input | undefined,
   /** File containing the video */
   readonly video?: file$Input,
 }
@@ -1303,9 +1303,9 @@ export type videoNote = {
   /** Video width and height; as defined by the sender */
   length: number,
   /** Video minithumbnail; may be null */
-  minithumbnail: minithumbnail,
+  minithumbnail: minithumbnail | undefined,
   /** Video thumbnail; as defined by the sender; may be null */
-  thumbnail: photoSize,
+  thumbnail: photoSize | undefined,
   /** File containing the video */
   video: file,
 }
@@ -1321,9 +1321,9 @@ export type videoNote$Input = {
   /** Video width and height; as defined by the sender */
   readonly length?: number,
   /** Video minithumbnail; may be null */
-  readonly minithumbnail?: minithumbnail$Input,
+  readonly minithumbnail?: minithumbnail$Input | undefined,
   /** Video thumbnail; as defined by the sender; may be null */
-  readonly thumbnail?: photoSize$Input,
+  readonly thumbnail?: photoSize$Input | undefined,
   /** File containing the video */
   readonly video?: file$Input,
 }
@@ -1464,7 +1464,7 @@ export type game = {
   /** Game photo */
   photo: photo,
   /** Game animation; may be null */
-  animation: animation,
+  animation: animation | undefined,
 }
 
 /** Describes a game */
@@ -1483,7 +1483,7 @@ export type game$Input = {
   /** Game photo */
   readonly photo?: photo$Input,
   /** Game animation; may be null */
-  readonly animation?: animation$Input,
+  readonly animation?: animation$Input | undefined,
 }
 
 /** Describes a poll */
@@ -1750,7 +1750,7 @@ export type user = {
   /** Current online status of the user */
   status: UserStatus,
   /** Profile photo of the user; may be null */
-  profile_photo: profilePhoto,
+  profile_photo: profilePhoto | undefined,
   /** The user is a contact of the current user */
   is_contact: boolean,
   /**
@@ -1796,7 +1796,7 @@ export type user$Input = {
   /** Current online status of the user */
   readonly status?: UserStatus$Input,
   /** Profile photo of the user; may be null */
-  readonly profile_photo?: profilePhoto$Input,
+  readonly profile_photo?: profilePhoto$Input | undefined,
   /** The user is a contact of the current user */
   readonly is_contact?: boolean,
   /**
@@ -1850,7 +1850,7 @@ export type userFullInfo = {
    */
   group_in_common_count: number,
   /** If the user is a bot, information about the bot; may be null */
-  bot_info: botInfo,
+  bot_info: botInfo | undefined,
 }
 
 /** Contains full information about a user (except the full list of profile photos) */
@@ -1877,7 +1877,7 @@ export type userFullInfo$Input = {
    */
   readonly group_in_common_count?: number,
   /** If the user is a bot, information about the bot; may be null */
-  readonly bot_info?: botInfo$Input,
+  readonly bot_info?: botInfo$Input | undefined,
 }
 
 /** Contains full information about a user profile photo */
@@ -2237,7 +2237,7 @@ export type chatMember = {
    * If the user is a bot, information about the bot; may be null. Can be null even for
    * a bot if the bot is not a chat member
    */
-  bot_info: botInfo,
+  bot_info: botInfo | undefined,
 }
 
 /** A user with information about joining/leaving a chat */
@@ -2255,7 +2255,7 @@ export type chatMember$Input = {
    * If the user is a bot, information about the bot; may be null. Can be null even for
    * a bot if the bot is not a chat member
    */
-  readonly bot_info?: botInfo$Input,
+  readonly bot_info?: botInfo$Input | undefined,
 }
 
 /** Contains a list of chat members */
@@ -2669,7 +2669,7 @@ export type supergroupFullInfo = {
   /** Identifier of the supergroup sticker set; 0 if none */
   sticker_set_id: number | string,
   /** Location to which the supergroup is connected; may be null */
-  location: chatLocation,
+  location: chatLocation | undefined,
   /** Invite link for this chat */
   invite_link: string,
   /** Identifier of the basic group from which supergroup was upgraded; 0 if none */
@@ -2730,7 +2730,7 @@ export type supergroupFullInfo$Input = {
   /** Identifier of the supergroup sticker set; 0 if none */
   readonly sticker_set_id?: number | string,
   /** Location to which the supergroup is connected; may be null */
-  readonly location?: chatLocation$Input,
+  readonly location?: chatLocation$Input | undefined,
   /** Invite link for this chat */
   readonly invite_link?: string,
   /** Identifier of the basic group from which supergroup was upgraded; 0 if none */
@@ -2979,9 +2979,9 @@ export type message = {
   /** Chat identifier */
   chat_id: number,
   /** Information about the sending state of the message; may be null */
-  sending_state: MessageSendingState,
+  sending_state: MessageSendingState | undefined,
   /** Information about the scheduling state of the message; may be null */
-  scheduling_state: MessageSchedulingState,
+  scheduling_state: MessageSchedulingState | undefined,
   /** True, if the message is outgoing */
   is_outgoing: boolean,
   /**
@@ -3011,7 +3011,7 @@ export type message = {
   /** Point in time (Unix timestamp) when the message was last edited */
   edit_date: number,
   /** Information about the initial message sender; may be null */
-  forward_info: messageForwardInfo,
+  forward_info: messageForwardInfo | undefined,
   /**
    * If non-zero, the identifier of the message this message is replying to; can be the
    * identifier of a deleted message
@@ -3043,7 +3043,7 @@ export type message = {
   /** Content of the message */
   content: MessageContent,
   /** Reply markup for the message; may be null */
-  reply_markup: ReplyMarkup,
+  reply_markup: ReplyMarkup | undefined,
 }
 
 /** Describes a message */
@@ -3059,9 +3059,9 @@ export type message$Input = {
   /** Chat identifier */
   readonly chat_id?: number,
   /** Information about the sending state of the message; may be null */
-  readonly sending_state?: MessageSendingState$Input,
+  readonly sending_state?: MessageSendingState$Input | undefined,
   /** Information about the scheduling state of the message; may be null */
-  readonly scheduling_state?: MessageSchedulingState$Input,
+  readonly scheduling_state?: MessageSchedulingState$Input | undefined,
   /** True, if the message is outgoing */
   readonly is_outgoing?: boolean,
   /**
@@ -3091,7 +3091,7 @@ export type message$Input = {
   /** Point in time (Unix timestamp) when the message was last edited */
   readonly edit_date?: number,
   /** Information about the initial message sender; may be null */
-  readonly forward_info?: messageForwardInfo$Input,
+  readonly forward_info?: messageForwardInfo$Input | undefined,
   /**
    * If non-zero, the identifier of the message this message is replying to; can be the
    * identifier of a deleted message
@@ -3123,7 +3123,7 @@ export type message$Input = {
   /** Content of the message */
   readonly content?: MessageContent$Input,
   /** Reply markup for the message; may be null */
-  readonly reply_markup?: ReplyMarkup$Input,
+  readonly reply_markup?: ReplyMarkup$Input | undefined,
 }
 
 /** Contains a list of messages */
@@ -3132,7 +3132,7 @@ export type messages = {
   /** Approximate total count of messages found */
   total_count: number,
   /** List of messages; messages may be null */
-  messages: Array<message>,
+  messages: Array<message | undefined>,
 }
 
 /** Contains a list of messages */
@@ -3141,7 +3141,7 @@ export type messages$Input = {
   /** Approximate total count of messages found */
   readonly total_count?: number,
   /** List of messages; messages may be null */
-  readonly messages?: ReadonlyArray<message$Input>,
+  readonly messages?: ReadonlyArray<message$Input | undefined>,
 }
 
 /** Contains a list of messages found by a search */
@@ -3472,15 +3472,15 @@ export type chat = {
   /** Type of the chat */
   type: ChatType,
   /** A chat list to which the chat belongs; may be null */
-  chat_list: ChatList,
+  chat_list: ChatList | undefined,
   /** Chat title */
   title: string,
   /** Chat photo; may be null */
-  photo: chatPhoto,
+  photo: chatPhoto | undefined,
   /** Actions that non-administrator chat members are allowed to take in the chat */
   permissions: chatPermissions,
   /** Last message in the chat; may be null */
-  last_message: message,
+  last_message: message | undefined,
   /**
    * Descending parameter by which chats are sorted in the main chat list. If the order
    * number of two chats is the same, they must be sorted in descending order by ID. If
@@ -3523,7 +3523,7 @@ export type chat = {
    * Describes actions which should be possible to do through a chat action bar; may be
    * null
    */
-  action_bar: ChatActionBar,
+  action_bar: ChatActionBar | undefined,
   /** Identifier of the pinned message in the chat; 0 if none */
   pinned_message_id: number,
   /**
@@ -3532,7 +3532,7 @@ export type chat = {
    */
   reply_markup_message_id: number,
   /** A draft of a message in the chat; may be null */
-  draft_message: draftMessage,
+  draft_message: draftMessage | undefined,
   /**
    * Contains client-specific data associated with the chat. (For example, the chat position
    * or local chat notification settings can be stored here.) Persistent if the message
@@ -3549,15 +3549,15 @@ export type chat$Input = {
   /** Type of the chat */
   readonly type?: ChatType$Input,
   /** A chat list to which the chat belongs; may be null */
-  readonly chat_list?: ChatList$Input,
+  readonly chat_list?: ChatList$Input | undefined,
   /** Chat title */
   readonly title?: string,
   /** Chat photo; may be null */
-  readonly photo?: chatPhoto$Input,
+  readonly photo?: chatPhoto$Input | undefined,
   /** Actions that non-administrator chat members are allowed to take in the chat */
   readonly permissions?: chatPermissions$Input,
   /** Last message in the chat; may be null */
-  readonly last_message?: message$Input,
+  readonly last_message?: message$Input | undefined,
   /**
    * Descending parameter by which chats are sorted in the main chat list. If the order
    * number of two chats is the same, they must be sorted in descending order by ID. If
@@ -3600,7 +3600,7 @@ export type chat$Input = {
    * Describes actions which should be possible to do through a chat action bar; may be
    * null
    */
-  readonly action_bar?: ChatActionBar$Input,
+  readonly action_bar?: ChatActionBar$Input | undefined,
   /** Identifier of the pinned message in the chat; 0 if none */
   readonly pinned_message_id?: number,
   /**
@@ -3609,7 +3609,7 @@ export type chat$Input = {
    */
   readonly reply_markup_message_id?: number,
   /** A draft of a message in the chat; may be null */
-  readonly draft_message?: draftMessage$Input,
+  readonly draft_message?: draftMessage$Input | undefined,
   /**
    * Contains client-specific data associated with the chat. (For example, the chat position
    * or local chat notification settings can be stored here.) Persistent if the message
@@ -3692,7 +3692,7 @@ export type chatInviteLinkInfo = {
   /** Title of the chat */
   title: string,
   /** Chat photo; may be null */
-  photo: chatPhoto,
+  photo: chatPhoto | undefined,
   /** Number of members */
   member_count: number,
   /** User identifiers of some chat members that may be known to the current user */
@@ -3714,7 +3714,7 @@ export type chatInviteLinkInfo$Input = {
   /** Title of the chat */
   readonly title?: string,
   /** Chat photo; may be null */
-  readonly photo?: chatPhoto$Input,
+  readonly photo?: chatPhoto$Input | undefined,
   /** Number of members */
   readonly member_count?: number,
   /** User identifiers of some chat members that may be known to the current user */
@@ -4518,7 +4518,7 @@ export type pageBlockVerticalAlignmentBottom$Input = {
 export type pageBlockTableCell = {
   _: 'pageBlockTableCell',
   /** Cell text; may be null. If the text is null, then the cell should be invisible */
-  text: RichText,
+  text: RichText | undefined,
   /** True, if it is a header cell */
   is_header: boolean,
   /** The number of columns the cell should span */
@@ -4535,7 +4535,7 @@ export type pageBlockTableCell = {
 export type pageBlockTableCell$Input = {
   readonly _: 'pageBlockTableCell',
   /** Cell text; may be null. If the text is null, then the cell should be invisible */
-  readonly text?: RichText$Input,
+  readonly text?: RichText$Input | undefined,
   /** True, if it is a header cell */
   readonly is_header?: boolean,
   /** The number of columns the cell should span */
@@ -4558,7 +4558,7 @@ export type pageBlockRelatedArticle = {
   /** Article description; may be empty */
   description: string,
   /** Article photo; may be null */
-  photo: photo,
+  photo: photo | undefined,
   /** Article author; may be empty */
   author: string,
   /** Point in time (Unix timestamp) when the article was published; 0 if unknown */
@@ -4575,7 +4575,7 @@ export type pageBlockRelatedArticle$Input = {
   /** Article description; may be empty */
   readonly description?: string,
   /** Article photo; may be null */
-  readonly photo?: photo$Input,
+  readonly photo?: photo$Input | undefined,
   /** Article author; may be empty */
   readonly author?: string,
   /** Point in time (Unix timestamp) when the article was published; 0 if unknown */
@@ -4800,7 +4800,7 @@ export type pageBlockPullQuote$Input = {
 export type pageBlockAnimation = {
   _: 'pageBlockAnimation',
   /** Animation file; may be null */
-  animation: animation,
+  animation: animation | undefined,
   /** Animation caption */
   caption: pageBlockCaption,
   /** True, if the animation should be played automatically */
@@ -4811,7 +4811,7 @@ export type pageBlockAnimation = {
 export type pageBlockAnimation$Input = {
   readonly _: 'pageBlockAnimation',
   /** Animation file; may be null */
-  readonly animation?: animation$Input,
+  readonly animation?: animation$Input | undefined,
   /** Animation caption */
   readonly caption?: pageBlockCaption$Input,
   /** True, if the animation should be played automatically */
@@ -4822,7 +4822,7 @@ export type pageBlockAnimation$Input = {
 export type pageBlockAudio = {
   _: 'pageBlockAudio',
   /** Audio file; may be null */
-  audio: audio,
+  audio: audio | undefined,
   /** Audio file caption */
   caption: pageBlockCaption,
 }
@@ -4831,7 +4831,7 @@ export type pageBlockAudio = {
 export type pageBlockAudio$Input = {
   readonly _: 'pageBlockAudio',
   /** Audio file; may be null */
-  readonly audio?: audio$Input,
+  readonly audio?: audio$Input | undefined,
   /** Audio file caption */
   readonly caption?: pageBlockCaption$Input,
 }
@@ -4840,7 +4840,7 @@ export type pageBlockAudio$Input = {
 export type pageBlockPhoto = {
   _: 'pageBlockPhoto',
   /** Photo file; may be null */
-  photo: photo,
+  photo: photo | undefined,
   /** Photo caption */
   caption: pageBlockCaption,
   /** URL that needs to be opened when the photo is clicked */
@@ -4851,7 +4851,7 @@ export type pageBlockPhoto = {
 export type pageBlockPhoto$Input = {
   readonly _: 'pageBlockPhoto',
   /** Photo file; may be null */
-  readonly photo?: photo$Input,
+  readonly photo?: photo$Input | undefined,
   /** Photo caption */
   readonly caption?: pageBlockCaption$Input,
   /** URL that needs to be opened when the photo is clicked */
@@ -4862,7 +4862,7 @@ export type pageBlockPhoto$Input = {
 export type pageBlockVideo = {
   _: 'pageBlockVideo',
   /** Video file; may be null */
-  video: video,
+  video: video | undefined,
   /** Video caption */
   caption: pageBlockCaption,
   /** True, if the video should be played automatically */
@@ -4875,7 +4875,7 @@ export type pageBlockVideo = {
 export type pageBlockVideo$Input = {
   readonly _: 'pageBlockVideo',
   /** Video file; may be null */
-  readonly video?: video$Input,
+  readonly video?: video$Input | undefined,
   /** Video caption */
   readonly caption?: pageBlockCaption$Input,
   /** True, if the video should be played automatically */
@@ -4888,7 +4888,7 @@ export type pageBlockVideo$Input = {
 export type pageBlockVoiceNote = {
   _: 'pageBlockVoiceNote',
   /** Voice note; may be null */
-  voice_note: voiceNote,
+  voice_note: voiceNote | undefined,
   /** Voice note caption */
   caption: pageBlockCaption,
 }
@@ -4897,7 +4897,7 @@ export type pageBlockVoiceNote = {
 export type pageBlockVoiceNote$Input = {
   readonly _: 'pageBlockVoiceNote',
   /** Voice note; may be null */
-  readonly voice_note?: voiceNote$Input,
+  readonly voice_note?: voiceNote$Input | undefined,
   /** Voice note caption */
   readonly caption?: pageBlockCaption$Input,
 }
@@ -4924,7 +4924,7 @@ export type pageBlockEmbedded = {
   /** HTML-markup of the embedded page */
   html: string,
   /** Poster photo, if available; may be null */
-  poster_photo: photo,
+  poster_photo: photo | undefined,
   /** Block width; 0 if unknown */
   width: number,
   /** Block height; 0 if unknown */
@@ -4945,7 +4945,7 @@ export type pageBlockEmbedded$Input = {
   /** HTML-markup of the embedded page */
   readonly html?: string,
   /** Poster photo, if available; may be null */
-  readonly poster_photo?: photo$Input,
+  readonly poster_photo?: photo$Input | undefined,
   /** Block width; 0 if unknown */
   readonly width?: number,
   /** Block height; 0 if unknown */
@@ -4966,7 +4966,7 @@ export type pageBlockEmbeddedPost = {
   /** Post author */
   author: string,
   /** Post author photo; may be null */
-  author_photo: photo,
+  author_photo: photo | undefined,
   /** Point in time (Unix timestamp) when the post was created; 0 if unknown */
   date: number,
   /** Post content */
@@ -4983,7 +4983,7 @@ export type pageBlockEmbeddedPost$Input = {
   /** Post author */
   readonly author?: string,
   /** Post author photo; may be null */
-  readonly author_photo?: photo$Input,
+  readonly author_photo?: photo$Input | undefined,
   /** Point in time (Unix timestamp) when the post was created; 0 if unknown */
   readonly date?: number,
   /** Post content */
@@ -5034,7 +5034,7 @@ export type pageBlockChatLink = {
   /** Chat title */
   title: string,
   /** Chat photo; may be null */
-  photo: chatPhoto,
+  photo: chatPhoto | undefined,
   /** Chat username, by which all other information about the chat should be resolved */
   username: string,
 }
@@ -5045,7 +5045,7 @@ export type pageBlockChatLink$Input = {
   /** Chat title */
   readonly title?: string,
   /** Chat photo; may be null */
-  readonly photo?: chatPhoto$Input,
+  readonly photo?: chatPhoto$Input | undefined,
   /** Chat username, by which all other information about the chat should be resolved */
   readonly username?: string,
 }
@@ -5207,7 +5207,7 @@ export type webPage = {
   /** Description of the content */
   description: string,
   /** Image representing the content; may be null */
-  photo: photo,
+  photo: photo | undefined,
   /** URL to show in the embedded preview */
   embed_url: string,
   /** MIME type of the embedded preview, (e.g., text/html or video/mp4) */
@@ -5221,22 +5221,22 @@ export type webPage = {
   /** Author of the content */
   author: string,
   /** Preview of the content as an animation, if available; may be null */
-  animation: animation,
+  animation: animation | undefined,
   /** Preview of the content as an audio file, if available; may be null */
-  audio: audio,
+  audio: audio | undefined,
   /**
    * Preview of the content as a document, if available (currently only available for
    * small PDF files and ZIP archives); may be null
    */
-  document: document,
+  document: document | undefined,
   /** Preview of the content as a sticker for small WEBP files, if available; may be null */
-  sticker: sticker,
+  sticker: sticker | undefined,
   /** Preview of the content as a video, if available; may be null */
-  video: video,
+  video: video | undefined,
   /** Preview of the content as a video note, if available; may be null */
-  video_note: videoNote,
+  video_note: videoNote | undefined,
   /** Preview of the content as a voice note, if available; may be null */
-  voice_note: voiceNote,
+  voice_note: voiceNote | undefined,
   /**
    * Version of instant view, available for the web page (currently can be 1 or 2), 0
    * if none
@@ -5263,7 +5263,7 @@ export type webPage$Input = {
   /** Description of the content */
   readonly description?: string,
   /** Image representing the content; may be null */
-  readonly photo?: photo$Input,
+  readonly photo?: photo$Input | undefined,
   /** URL to show in the embedded preview */
   readonly embed_url?: string,
   /** MIME type of the embedded preview, (e.g., text/html or video/mp4) */
@@ -5277,22 +5277,22 @@ export type webPage$Input = {
   /** Author of the content */
   readonly author?: string,
   /** Preview of the content as an animation, if available; may be null */
-  readonly animation?: animation$Input,
+  readonly animation?: animation$Input | undefined,
   /** Preview of the content as an audio file, if available; may be null */
-  readonly audio?: audio$Input,
+  readonly audio?: audio$Input | undefined,
   /**
    * Preview of the content as a document, if available (currently only available for
    * small PDF files and ZIP archives); may be null
    */
-  readonly document?: document$Input,
+  readonly document?: document$Input | undefined,
   /** Preview of the content as a sticker for small WEBP files, if available; may be null */
-  readonly sticker?: sticker$Input,
+  readonly sticker?: sticker$Input | undefined,
   /** Preview of the content as a video, if available; may be null */
-  readonly video?: video$Input,
+  readonly video?: video$Input | undefined,
   /** Preview of the content as a video note, if available; may be null */
-  readonly video_note?: videoNote$Input,
+  readonly video_note?: videoNote$Input | undefined,
   /** Preview of the content as a voice note, if available; may be null */
-  readonly voice_note?: voiceNote$Input,
+  readonly voice_note?: voiceNote$Input | undefined,
   /**
    * Version of instant view, available for the web page (currently can be 1 or 2), 0
    * if none
@@ -5412,7 +5412,7 @@ export type orderInfo = {
   /** Email address of the user */
   email_address: string,
   /** Shipping address for this order; may be null */
-  shipping_address: address,
+  shipping_address: address | undefined,
 }
 
 /** Order information */
@@ -5425,7 +5425,7 @@ export type orderInfo$Input = {
   /** Email address of the user */
   readonly email_address?: string,
   /** Shipping address for this order; may be null */
-  readonly shipping_address?: address$Input,
+  readonly shipping_address?: address$Input | undefined,
 }
 
 /** One shipping option */
@@ -5571,11 +5571,11 @@ export type paymentForm = {
    * Contains information about the payment provider, if available, to support it natively
    * without the need for opening the URL; may be null
    */
-  payments_provider: paymentsProviderStripe,
+  payments_provider: paymentsProviderStripe | undefined,
   /** Saved server-side order information; may be null */
-  saved_order_info: orderInfo,
+  saved_order_info: orderInfo | undefined,
   /** Contains information about saved card credentials; may be null */
-  saved_credentials: savedCredentials,
+  saved_credentials: savedCredentials | undefined,
   /** True, if the user can choose to save credentials */
   can_save_credentials: boolean,
   /**
@@ -5596,11 +5596,11 @@ export type paymentForm$Input = {
    * Contains information about the payment provider, if available, to support it natively
    * without the need for opening the URL; may be null
    */
-  readonly payments_provider?: paymentsProviderStripe$Input,
+  readonly payments_provider?: paymentsProviderStripe$Input | undefined,
   /** Saved server-side order information; may be null */
-  readonly saved_order_info?: orderInfo$Input,
+  readonly saved_order_info?: orderInfo$Input | undefined,
   /** Contains information about saved card credentials; may be null */
-  readonly saved_credentials?: savedCredentials$Input,
+  readonly saved_credentials?: savedCredentials$Input | undefined,
   /** True, if the user can choose to save credentials */
   readonly can_save_credentials?: boolean,
   /**
@@ -5668,9 +5668,9 @@ export type paymentReceipt = {
   /** Contains information about the invoice */
   invoice: invoice,
   /** Contains order information; may be null */
-  order_info: orderInfo,
+  order_info: orderInfo | undefined,
   /** Chosen shipping option; may be null */
-  shipping_option: shippingOption,
+  shipping_option: shippingOption | undefined,
   /** Title of the saved credentials */
   credentials_title: string,
 }
@@ -5685,9 +5685,9 @@ export type paymentReceipt$Input = {
   /** Contains information about the invoice */
   readonly invoice?: invoice$Input,
   /** Contains order information; may be null */
-  readonly order_info?: orderInfo$Input,
+  readonly order_info?: orderInfo$Input | undefined,
   /** Chosen shipping option; may be null */
-  readonly shipping_option?: shippingOption$Input,
+  readonly shipping_option?: shippingOption$Input | undefined,
   /** Title of the saved credentials */
   readonly credentials_title?: string,
 }
@@ -5918,13 +5918,13 @@ export type identityDocument = {
   /** Document number; 1-24 characters */
   number: string,
   /** Document expiry date; may be null */
-  expiry_date: date,
+  expiry_date: date | undefined,
   /** Front side of the document */
   front_side: datedFile,
   /** Reverse side of the document; only for driver license and identity card */
   reverse_side: datedFile,
   /** Selfie with the document; may be null */
-  selfie: datedFile,
+  selfie: datedFile | undefined,
   /** List of files containing a certified English translation of the document */
   translation: Array<datedFile>,
 }
@@ -5935,13 +5935,13 @@ export type identityDocument$Input = {
   /** Document number; 1-24 characters */
   readonly number?: string,
   /** Document expiry date; may be null */
-  readonly expiry_date?: date$Input,
+  readonly expiry_date?: date$Input | undefined,
   /** Front side of the document */
   readonly front_side?: datedFile$Input,
   /** Reverse side of the document; only for driver license and identity card */
   readonly reverse_side?: datedFile$Input,
   /** Selfie with the document; may be null */
-  readonly selfie?: datedFile$Input,
+  readonly selfie?: datedFile$Input | undefined,
   /** List of files containing a certified English translation of the document */
   readonly translation?: ReadonlyArray<datedFile$Input>,
 }
@@ -6696,9 +6696,9 @@ export type encryptedPassportElement = {
   /** The front side of an identity document */
   front_side: datedFile,
   /** The reverse side of an identity document; may be null */
-  reverse_side: datedFile,
+  reverse_side: datedFile | undefined,
   /** Selfie with the document; may be null */
-  selfie: datedFile,
+  selfie: datedFile | undefined,
   /** List of files containing a certified English translation of the document */
   translation: Array<datedFile>,
   /** List of attached files */
@@ -6719,9 +6719,9 @@ export type encryptedPassportElement$Input = {
   /** The front side of an identity document */
   readonly front_side?: datedFile$Input,
   /** The reverse side of an identity document; may be null */
-  readonly reverse_side?: datedFile$Input,
+  readonly reverse_side?: datedFile$Input | undefined,
   /** Selfie with the document; may be null */
-  readonly selfie?: datedFile$Input,
+  readonly selfie?: datedFile$Input | undefined,
   /** List of files containing a certified English translation of the document */
   readonly translation?: ReadonlyArray<datedFile$Input>,
   /** List of attached files */
@@ -6938,7 +6938,7 @@ export type messageText = {
   /** Text of the message */
   text: formattedText,
   /** A preview of the web page that's mentioned in the text; may be null */
-  web_page: webPage,
+  web_page: webPage | undefined,
 }
 
 /** A text message */
@@ -6947,7 +6947,7 @@ export type messageText$Input = {
   /** Text of the message */
   readonly text?: formattedText$Input,
   /** A preview of the web page that's mentioned in the text; may be null */
-  readonly web_page?: webPage$Input,
+  readonly web_page?: webPage$Input | undefined,
 }
 
 /** An animation message (GIF-style). */
@@ -7246,7 +7246,7 @@ export type messageInvoice = {
   /** Product description */
   description: string,
   /** Product photo; may be null */
-  photo: photo,
+  photo: photo | undefined,
   /** Currency for the product price */
   currency: string,
   /** Product total price in the minimal quantity of the currency */
@@ -7269,7 +7269,7 @@ export type messageInvoice$Input = {
   /** Product description */
   readonly description?: string,
   /** Product photo; may be null */
-  readonly photo?: photo$Input,
+  readonly photo?: photo$Input | undefined,
   /** Currency for the product price */
   readonly currency?: string,
   /** Product total price in the minimal quantity of the currency */
@@ -7567,7 +7567,7 @@ export type messagePaymentSuccessfulBot = {
   /** Identifier of the shipping option chosen by the user; may be empty if not applicable */
   shipping_option_id: string,
   /** Information about the order; may be null */
-  order_info: orderInfo,
+  order_info: orderInfo | undefined,
   /** Telegram payment identifier */
   telegram_payment_charge_id: string,
   /** Provider payment identifier */
@@ -7591,7 +7591,7 @@ export type messagePaymentSuccessfulBot$Input = {
   /** Identifier of the shipping option chosen by the user; may be empty if not applicable */
   readonly shipping_option_id?: string,
   /** Information about the order; may be null */
-  readonly order_info?: orderInfo$Input,
+  readonly order_info?: orderInfo$Input | undefined,
   /** Telegram payment identifier */
   readonly telegram_payment_charge_id?: string,
   /** Provider payment identifier */
@@ -8887,7 +8887,7 @@ export type stickerSet = {
    * Sticker set thumbnail in WEBP format with width and height 100; may be null. The
    * file can be downloaded only before the thumbnail is changed
    */
-  thumbnail: photoSize,
+  thumbnail: photoSize | undefined,
   /** True, if the sticker set has been installed by the current user */
   is_installed: boolean,
   /**
@@ -8926,7 +8926,7 @@ export type stickerSet$Input = {
    * Sticker set thumbnail in WEBP format with width and height 100; may be null. The
    * file can be downloaded only before the thumbnail is changed
    */
-  readonly thumbnail?: photoSize$Input,
+  readonly thumbnail?: photoSize$Input | undefined,
   /** True, if the sticker set has been installed by the current user */
   readonly is_installed?: boolean,
   /**
@@ -8962,7 +8962,7 @@ export type stickerSetInfo = {
   /** Name of the sticker set */
   name: string,
   /** Sticker set thumbnail in WEBP format with width and height 100; may be null */
-  thumbnail: photoSize,
+  thumbnail: photoSize | undefined,
   /** True, if the sticker set has been installed by current user */
   is_installed: boolean,
   /**
@@ -8997,7 +8997,7 @@ export type stickerSetInfo$Input = {
   /** Name of the sticker set */
   readonly name?: string,
   /** Sticker set thumbnail in WEBP format with width and height 100; may be null */
-  readonly thumbnail?: photoSize$Input,
+  readonly thumbnail?: photoSize$Input | undefined,
   /** True, if the sticker set has been installed by current user */
   readonly is_installed?: boolean,
   /**
@@ -10134,7 +10134,7 @@ export type inlineQueryResultArticle = {
   /** A short description of the result */
   description: string,
   /** Result thumbnail; may be null */
-  thumbnail: photoSize,
+  thumbnail: photoSize | undefined,
 }
 
 /** Represents a link to an article or web page */
@@ -10151,7 +10151,7 @@ export type inlineQueryResultArticle$Input = {
   /** A short description of the result */
   readonly description?: string,
   /** Result thumbnail; may be null */
-  readonly thumbnail?: photoSize$Input,
+  readonly thumbnail?: photoSize$Input | undefined,
 }
 
 /** Represents a user contact */
@@ -10162,7 +10162,7 @@ export type inlineQueryResultContact = {
   /** A user contact */
   contact: contact,
   /** Result thumbnail; may be null */
-  thumbnail: photoSize,
+  thumbnail: photoSize | undefined,
 }
 
 /** Represents a user contact */
@@ -10173,7 +10173,7 @@ export type inlineQueryResultContact$Input = {
   /** A user contact */
   readonly contact?: contact$Input,
   /** Result thumbnail; may be null */
-  readonly thumbnail?: photoSize$Input,
+  readonly thumbnail?: photoSize$Input | undefined,
 }
 
 /** Represents a point on the map */
@@ -10186,7 +10186,7 @@ export type inlineQueryResultLocation = {
   /** Title of the result */
   title: string,
   /** Result thumbnail; may be null */
-  thumbnail: photoSize,
+  thumbnail: photoSize | undefined,
 }
 
 /** Represents a point on the map */
@@ -10199,7 +10199,7 @@ export type inlineQueryResultLocation$Input = {
   /** Title of the result */
   readonly title?: string,
   /** Result thumbnail; may be null */
-  readonly thumbnail?: photoSize$Input,
+  readonly thumbnail?: photoSize$Input | undefined,
 }
 
 /** Represents information about a venue */
@@ -10210,7 +10210,7 @@ export type inlineQueryResultVenue = {
   /** Venue result */
   venue: venue,
   /** Result thumbnail; may be null */
-  thumbnail: photoSize,
+  thumbnail: photoSize | undefined,
 }
 
 /** Represents information about a venue */
@@ -10221,7 +10221,7 @@ export type inlineQueryResultVenue$Input = {
   /** Venue result */
   readonly venue?: venue$Input,
   /** Result thumbnail; may be null */
-  readonly thumbnail?: photoSize$Input,
+  readonly thumbnail?: photoSize$Input | undefined,
 }
 
 /** Represents information about a game */
@@ -10782,18 +10782,18 @@ export type chatEventUsernameChanged$Input = {
 export type chatEventPhotoChanged = {
   _: 'chatEventPhotoChanged',
   /** Previous chat photo value; may be null */
-  old_photo: photo,
+  old_photo: photo | undefined,
   /** New chat photo value; may be null */
-  new_photo: photo,
+  new_photo: photo | undefined,
 }
 
 /** The chat photo was changed */
 export type chatEventPhotoChanged$Input = {
   readonly _: 'chatEventPhotoChanged',
   /** Previous chat photo value; may be null */
-  readonly old_photo?: photo$Input,
+  readonly old_photo?: photo$Input | undefined,
   /** New chat photo value; may be null */
-  readonly new_photo?: photo$Input,
+  readonly new_photo?: photo$Input | undefined,
 }
 
 /** The can_invite_users permission of a supergroup chat was toggled */
@@ -10882,18 +10882,18 @@ export type chatEventStickerSetChanged$Input = {
 export type chatEventLocationChanged = {
   _: 'chatEventLocationChanged',
   /** Previous location; may be null */
-  old_location: chatLocation,
+  old_location: chatLocation | undefined,
   /** New location; may be null */
-  new_location: chatLocation,
+  new_location: chatLocation | undefined,
 }
 
 /** The supergroup location was changed */
 export type chatEventLocationChanged$Input = {
   readonly _: 'chatEventLocationChanged',
   /** Previous location; may be null */
-  readonly old_location?: chatLocation$Input,
+  readonly old_location?: chatLocation$Input | undefined,
   /** New location; may be null */
-  readonly new_location?: chatLocation$Input,
+  readonly new_location?: chatLocation$Input | undefined,
 }
 
 /** The is_all_history_available setting of a supergroup was toggled */
@@ -11530,7 +11530,7 @@ export type background = {
   /** Unique background name */
   name: string,
   /** Document with the background; may be null. Null only for filled backgrounds */
-  document: document,
+  document: document | undefined,
   /** Type of the background */
   type: BackgroundType,
 }
@@ -11547,7 +11547,7 @@ export type background$Input = {
   /** Unique background name */
   readonly name?: string,
   /** Document with the background; may be null. Null only for filled backgrounds */
-  readonly document?: document$Input,
+  readonly document?: document$Input | undefined,
   /** Type of the background */
   readonly type?: BackgroundType$Input,
 }
@@ -11730,7 +11730,7 @@ export type pushMessageContentHidden$Input = {
 export type pushMessageContentAnimation = {
   _: 'pushMessageContentAnimation',
   /** Message content; may be null */
-  animation: animation,
+  animation: animation | undefined,
   /** Animation caption */
   caption: string,
   /** True, if the message is a pinned message with the specified content */
@@ -11741,7 +11741,7 @@ export type pushMessageContentAnimation = {
 export type pushMessageContentAnimation$Input = {
   readonly _: 'pushMessageContentAnimation',
   /** Message content; may be null */
-  readonly animation?: animation$Input,
+  readonly animation?: animation$Input | undefined,
   /** Animation caption */
   readonly caption?: string,
   /** True, if the message is a pinned message with the specified content */
@@ -11752,7 +11752,7 @@ export type pushMessageContentAnimation$Input = {
 export type pushMessageContentAudio = {
   _: 'pushMessageContentAudio',
   /** Message content; may be null */
-  audio: audio,
+  audio: audio | undefined,
   /** True, if the message is a pinned message with the specified content */
   is_pinned: boolean,
 }
@@ -11761,7 +11761,7 @@ export type pushMessageContentAudio = {
 export type pushMessageContentAudio$Input = {
   readonly _: 'pushMessageContentAudio',
   /** Message content; may be null */
-  readonly audio?: audio$Input,
+  readonly audio?: audio$Input | undefined,
   /** True, if the message is a pinned message with the specified content */
   readonly is_pinned?: boolean,
 }
@@ -11798,7 +11798,7 @@ export type pushMessageContentContactRegistered$Input = {
 export type pushMessageContentDocument = {
   _: 'pushMessageContentDocument',
   /** Message content; may be null */
-  document: document,
+  document: document | undefined,
   /** True, if the message is a pinned message with the specified content */
   is_pinned: boolean,
 }
@@ -11807,7 +11807,7 @@ export type pushMessageContentDocument = {
 export type pushMessageContentDocument$Input = {
   readonly _: 'pushMessageContentDocument',
   /** Message content; may be null */
-  readonly document?: document$Input,
+  readonly document?: document$Input | undefined,
   /** True, if the message is a pinned message with the specified content */
   readonly is_pinned?: boolean,
 }
@@ -11892,7 +11892,7 @@ export type pushMessageContentLocation$Input = {
 export type pushMessageContentPhoto = {
   _: 'pushMessageContentPhoto',
   /** Message content; may be null */
-  photo: photo,
+  photo: photo | undefined,
   /** Photo caption */
   caption: string,
   /** True, if the photo is secret */
@@ -11905,7 +11905,7 @@ export type pushMessageContentPhoto = {
 export type pushMessageContentPhoto$Input = {
   readonly _: 'pushMessageContentPhoto',
   /** Message content; may be null */
-  readonly photo?: photo$Input,
+  readonly photo?: photo$Input | undefined,
   /** Photo caption */
   readonly caption?: string,
   /** True, if the photo is secret */
@@ -11950,7 +11950,7 @@ export type pushMessageContentScreenshotTaken$Input = {
 export type pushMessageContentSticker = {
   _: 'pushMessageContentSticker',
   /** Message content; may be null */
-  sticker: sticker,
+  sticker: sticker | undefined,
   /** Emoji corresponding to the sticker; may be empty */
   emoji: string,
   /** True, if the message is a pinned message with the specified content */
@@ -11961,7 +11961,7 @@ export type pushMessageContentSticker = {
 export type pushMessageContentSticker$Input = {
   readonly _: 'pushMessageContentSticker',
   /** Message content; may be null */
-  readonly sticker?: sticker$Input,
+  readonly sticker?: sticker$Input | undefined,
   /** Emoji corresponding to the sticker; may be empty */
   readonly emoji?: string,
   /** True, if the message is a pinned message with the specified content */
@@ -11990,7 +11990,7 @@ export type pushMessageContentText$Input = {
 export type pushMessageContentVideo = {
   _: 'pushMessageContentVideo',
   /** Message content; may be null */
-  video: video,
+  video: video | undefined,
   /** Video caption */
   caption: string,
   /** True, if the video is secret */
@@ -12003,7 +12003,7 @@ export type pushMessageContentVideo = {
 export type pushMessageContentVideo$Input = {
   readonly _: 'pushMessageContentVideo',
   /** Message content; may be null */
-  readonly video?: video$Input,
+  readonly video?: video$Input | undefined,
   /** Video caption */
   readonly caption?: string,
   /** True, if the video is secret */
@@ -12016,7 +12016,7 @@ export type pushMessageContentVideo$Input = {
 export type pushMessageContentVideoNote = {
   _: 'pushMessageContentVideoNote',
   /** Message content; may be null */
-  video_note: videoNote,
+  video_note: videoNote | undefined,
   /** True, if the message is a pinned message with the specified content */
   is_pinned: boolean,
 }
@@ -12025,7 +12025,7 @@ export type pushMessageContentVideoNote = {
 export type pushMessageContentVideoNote$Input = {
   readonly _: 'pushMessageContentVideoNote',
   /** Message content; may be null */
-  readonly video_note?: videoNote$Input,
+  readonly video_note?: videoNote$Input | undefined,
   /** True, if the message is a pinned message with the specified content */
   readonly is_pinned?: boolean,
 }
@@ -12034,7 +12034,7 @@ export type pushMessageContentVideoNote$Input = {
 export type pushMessageContentVoiceNote = {
   _: 'pushMessageContentVoiceNote',
   /** Message content; may be null */
-  voice_note: voiceNote,
+  voice_note: voiceNote | undefined,
   /** True, if the message is a pinned message with the specified content */
   is_pinned: boolean,
 }
@@ -12043,7 +12043,7 @@ export type pushMessageContentVoiceNote = {
 export type pushMessageContentVoiceNote$Input = {
   readonly _: 'pushMessageContentVoiceNote',
   /** Message content; may be null */
-  readonly voice_note?: voiceNote$Input,
+  readonly voice_note?: voiceNote$Input | undefined,
   /** True, if the message is a pinned message with the specified content */
   readonly is_pinned?: boolean,
 }
@@ -13034,7 +13034,7 @@ export type messageLinkInfo = {
   /** If found, identifier of the chat to which the message belongs, 0 otherwise */
   chat_id: number,
   /** If found, the linked message; may be null */
-  message: message,
+  message: message | undefined,
   /** True, if the whole media album to which the message belongs is linked */
   for_album: boolean,
 }
@@ -13047,7 +13047,7 @@ export type messageLinkInfo$Input = {
   /** If found, identifier of the chat to which the message belongs, 0 otherwise */
   readonly chat_id?: number,
   /** If found, the linked message; may be null */
-  readonly message?: message$Input,
+  readonly message?: message$Input | undefined,
   /** True, if the whole media album to which the message belongs is linked */
   readonly for_album?: boolean,
 }
@@ -13974,7 +13974,7 @@ export type inputSticker = {
   /** Emoji corresponding to the sticker */
   emojis: string,
   /** For masks, position where the mask should be placed; may be null */
-  mask_position: maskPosition,
+  mask_position: maskPosition | undefined,
 }
 
 /** Describes a sticker that should be added to a sticker set */
@@ -13985,7 +13985,7 @@ export type inputSticker$Input = {
   /** Emoji corresponding to the sticker */
   readonly emojis?: string,
   /** For masks, position where the mask should be placed; may be null */
-  readonly mask_position?: maskPosition$Input,
+  readonly mask_position?: maskPosition$Input | undefined,
 }
 
 /** The user authorization state has changed */
@@ -14132,7 +14132,7 @@ export type updateMessageEdited = {
   /** Point in time (Unix timestamp) when the message was edited */
   edit_date: number,
   /** New message reply markup; may be null */
-  reply_markup: ReplyMarkup,
+  reply_markup: ReplyMarkup | undefined,
 }
 
 /** A message was edited. Changes in the message content will come in a separate updateMessageContent */
@@ -14145,7 +14145,7 @@ export type updateMessageEdited$Input = {
   /** Point in time (Unix timestamp) when the message was edited */
   readonly edit_date?: number,
   /** New message reply markup; may be null */
-  readonly reply_markup?: ReplyMarkup$Input,
+  readonly reply_markup?: ReplyMarkup$Input | undefined,
 }
 
 /** The view count of the message has changed */
@@ -14271,7 +14271,7 @@ export type updateChatChatList = {
   /** Chat identifier */
   chat_id: number,
   /** The new chat's chat list; may be null */
-  chat_list: ChatList,
+  chat_list: ChatList | undefined,
 }
 
 /**
@@ -14283,7 +14283,7 @@ export type updateChatChatList$Input = {
   /** Chat identifier */
   readonly chat_id?: number,
   /** The new chat's chat list; may be null */
-  readonly chat_list?: ChatList$Input,
+  readonly chat_list?: ChatList$Input | undefined,
 }
 
 /** The title of a chat was changed */
@@ -14310,7 +14310,7 @@ export type updateChatPhoto = {
   /** Chat identifier */
   chat_id: number,
   /** The new chat photo; may be null */
-  photo: chatPhoto,
+  photo: chatPhoto | undefined,
 }
 
 /** A chat photo was changed */
@@ -14319,7 +14319,7 @@ export type updateChatPhoto$Input = {
   /** Chat identifier */
   readonly chat_id?: number,
   /** The new chat photo; may be null */
-  readonly photo?: chatPhoto$Input,
+  readonly photo?: chatPhoto$Input | undefined,
 }
 
 /** Chat permissions was changed */
@@ -14350,7 +14350,7 @@ export type updateChatLastMessage = {
   /** Chat identifier */
   chat_id: number,
   /** The new last message in the chat; may be null */
-  last_message: message,
+  last_message: message | undefined,
   /** New value of the chat order */
   order: number | string,
 }
@@ -14365,7 +14365,7 @@ export type updateChatLastMessage$Input = {
   /** Chat identifier */
   readonly chat_id?: number,
   /** The new last message in the chat; may be null */
-  readonly last_message?: message$Input,
+  readonly last_message?: message$Input | undefined,
   /** New value of the chat order */
   readonly order?: number | string,
 }
@@ -14598,7 +14598,7 @@ export type updateChatActionBar = {
   /** Chat identifier */
   chat_id: number,
   /** The new value of the action bar; may be null */
-  action_bar: ChatActionBar,
+  action_bar: ChatActionBar | undefined,
 }
 
 /** The chat action bar was changed */
@@ -14607,7 +14607,7 @@ export type updateChatActionBar$Input = {
   /** Chat identifier */
   readonly chat_id?: number,
   /** The new value of the action bar; may be null */
-  readonly action_bar?: ChatActionBar$Input,
+  readonly action_bar?: ChatActionBar$Input | undefined,
 }
 
 /** The chat pinned message was changed */
@@ -14674,7 +14674,7 @@ export type updateChatDraftMessage = {
   /** Chat identifier */
   chat_id: number,
   /** The new draft message; may be null */
-  draft_message: draftMessage,
+  draft_message: draftMessage | undefined,
   /** New value of the chat order */
   order: number | string,
 }
@@ -14689,7 +14689,7 @@ export type updateChatDraftMessage$Input = {
   /** Chat identifier */
   readonly chat_id?: number,
   /** The new draft message; may be null */
-  readonly draft_message?: draftMessage$Input,
+  readonly draft_message?: draftMessage$Input | undefined,
   /** New value of the chat order */
   readonly order?: number | string,
 }
@@ -15352,7 +15352,7 @@ export type updateSelectedBackground = {
   /** True, if background for dark theme has changed */
   for_dark_theme: boolean,
   /** The new selected background; may be null */
-  background: background,
+  background: background | undefined,
 }
 
 /** The selected background has changed */
@@ -15361,7 +15361,7 @@ export type updateSelectedBackground$Input = {
   /** True, if background for dark theme has changed */
   readonly for_dark_theme?: boolean,
   /** The new selected background; may be null */
-  readonly background?: background$Input,
+  readonly background?: background$Input | undefined,
 }
 
 /** Some language pack strings have been updated */
@@ -15452,7 +15452,7 @@ export type updateNewInlineQuery = {
   /** Identifier of the user who sent the query */
   sender_user_id: number,
   /** User location, provided by the client; may be null */
-  user_location: location,
+  user_location: location | undefined,
   /** Text of the query */
   query: string,
   /** Offset of the first entry to return */
@@ -15467,7 +15467,7 @@ export type updateNewInlineQuery$Input = {
   /** Identifier of the user who sent the query */
   readonly sender_user_id?: number,
   /** User location, provided by the client; may be null */
-  readonly user_location?: location$Input,
+  readonly user_location?: location$Input | undefined,
   /** Text of the query */
   readonly query?: string,
   /** Offset of the first entry to return */
@@ -15480,7 +15480,7 @@ export type updateNewChosenInlineResult = {
   /** Identifier of the user who sent the query */
   sender_user_id: number,
   /** User location, provided by the client; may be null */
-  user_location: location,
+  user_location: location | undefined,
   /** Text of the query */
   query: string,
   /** Identifier of the chosen result */
@@ -15495,7 +15495,7 @@ export type updateNewChosenInlineResult$Input = {
   /** Identifier of the user who sent the query */
   readonly sender_user_id?: number,
   /** User location, provided by the client; may be null */
-  readonly user_location?: location$Input,
+  readonly user_location?: location$Input | undefined,
   /** Text of the query */
   readonly query?: string,
   /** Identifier of the chosen result */
@@ -15613,7 +15613,7 @@ export type updateNewPreCheckoutQuery = {
   /** Identifier of a shipping option chosen by the user; may be empty if not applicable */
   shipping_option_id: string,
   /** Information about the order; may be null */
-  order_info: orderInfo,
+  order_info: orderInfo | undefined,
 }
 
 /**
@@ -15635,7 +15635,7 @@ export type updateNewPreCheckoutQuery$Input = {
   /** Identifier of a shipping option chosen by the user; may be empty if not applicable */
   readonly shipping_option_id?: string,
   /** Information about the order; may be null */
-  readonly order_info?: orderInfo$Input,
+  readonly order_info?: orderInfo$Input | undefined,
 }
 
 /** A new incoming event; for bots only */
@@ -17003,7 +17003,7 @@ export type editMessageLiveLocation = {
    * New location content of the message; may be null. Pass null to stop sharing the live
    * location
    */
-  readonly location?: location$Input,
+  readonly location?: location$Input | undefined,
 }
 
 /**
@@ -17083,7 +17083,7 @@ export type editInlineMessageLiveLocation = {
    * New location content of the message; may be null. Pass null to stop sharing the live
    * location
    */
-  readonly location?: location$Input,
+  readonly location?: location$Input | undefined,
 }
 
 /**
@@ -17691,7 +17691,7 @@ export type setChatDraftMessage = {
   /** Chat identifier */
   readonly chat_id?: number,
   /** New draft message; may be null */
-  readonly draft_message?: draftMessage$Input,
+  readonly draft_message?: draftMessage$Input | undefined,
 }
 
 /**
