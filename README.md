@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/tdl.svg)](https://www.npmjs.com/package/tdl)
 [![CI](https://github.com/Bannerets/tdl/workflows/Build%20and%20test/badge.svg)](https://github.com/Bannerets/tdl/actions?query=workflow%3A%22Build+and+test%22)
 
-A JavaScript wrapper for [TDLib][] (Telegram Database library), version 1.4.0 or newer.
+A JavaScript wrapper for [TDLib][] (Telegram Database library), version 1.5.0 or newer.
 
 [TDLib]: https://github.com/tdlib/td
 
@@ -130,8 +130,6 @@ The `getName` function is called if the user is not registered.
 Also see the `LoginDetails` interface in the [Options](#options) section.
 
 It is possible to not use the `client.login` helper and implement login process manually.
-
-This function requires TDLib v1.5.0+ to work.
 
 ##### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<undefined>`
 
