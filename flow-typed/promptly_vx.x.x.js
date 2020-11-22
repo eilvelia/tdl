@@ -8,16 +8,20 @@ declare module 'promptly' {
     trim?: boolean,
     /** A validator or an array of validators */
     validator?: Validator | Validator[],
-    /** Retry if any of the validators fail	 */
+    /** Retry if any of the validators fail */
     retry?: boolean,
-    /**	Do not print what the user types */
+    /** Do not print what the user types */
     silent?: boolean,
     /** Replace each character with the specified string when silent is true */
     replace?: string,
-    /**	Input stream to read from */
+    /** Input stream to read from */
     input?: stream$Readable | tty$ReadStream,
     /** Output stream to write to */
-    output?: stream$Writable | tty$WriteStream
+    output?: stream$Writable | tty$WriteStream,
+    /** Timeout in ms */
+    timeout?: number,
+    /** Return default value if timed out */
+    useDefaultOnTimeout?: boolean
   }
 
   declare export function prompt(message: string, options?: Options): Promise<string>
