@@ -4,7 +4,7 @@ import { TDLib as TdFFI } from '../packages/tdl-tdlib-ffi'
 import { TDLib as TdAddon } from '../packages/tdl-tdlib-addon'
 import { Tdl, TdlError, Client } from '../packages/tdl'
 
-import * as Td from '../packages/tdlib-typings'
+import * as Td from '../packages/tdlib-types'
 
 var tdlib = new TdFFI()
 var tdlibAddon = new TdAddon()

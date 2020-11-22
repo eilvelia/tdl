@@ -13,7 +13,7 @@ import {
   Update as Td$Update,
   formattedText as Td$formattedText,
   formattedText$Input as Td$formattedText$Input
-} from '../packages/tdlib-typings'
+} from '../packages/tdlib-types'
 
 const cl = new Client(tdlib, {
   apiId: 2234,
