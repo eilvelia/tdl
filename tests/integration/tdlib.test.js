@@ -2,11 +2,11 @@
 
 const path = require('path')
 
-const { TDLib: TDLibFFI } = require('../packages/tdl-tdlib-ffi')
-const { TDLib: TDLibAddon } = require('../packages/tdl-tdlib-addon')
-const { Client } = require('../packages/tdl')
+const { TDLib: TDLibFFI } = require('../../packages/tdl-tdlib-ffi')
+const { TDLib: TDLibAddon } = require('../../packages/tdl-tdlib-addon')
+const { Client } = require('../../packages/tdl')
 
-/*:: import type { ITDLibJSON } from '../packages/tdl-shared' */
+/*:: import type { ITDLibJSON } from '../../packages/tdl-shared' */
 
 const defaultLibtdjson = (() => {
   switch (process.platform) {
@@ -18,7 +18,7 @@ const defaultLibtdjson = (() => {
 
 const libtdjsonPath = process.env.LIBTDJSON_PATH || defaultLibtdjson
 
-const libtdjson = path.join(__dirname, '..', libtdjsonPath)
+const libtdjson = path.join(__dirname, '..', '..', libtdjsonPath)
 
 describe.each([
   ['tdl-tdlib-ffi', new TDLibFFI(libtdjson)],

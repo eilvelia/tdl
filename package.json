@@ -10,7 +10,7 @@
     "build": "node copy.js && lerna run build",
     "lint": "eslint . --max-warnings 0",
     "test": "npm run flow:check && npm run ts:check && npm run lint",
-    "integration-tests": "jest",
+    "integration-tests": "jest tests/integration",
     "coverage": "jest --coverage",
     "postinstall": "lerna bootstrap",
     "publish": "node scripts/publish.js",
