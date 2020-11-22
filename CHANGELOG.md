@@ -37,7 +37,7 @@ This adds support for Node.js v14 and drops support for Node.js older than v10.
 
 [#71]: https://github.com/Bannerets/tdl/pull/71
 
-## tdl@6.0.1 (2020-05-07)
+## tdl@6.0.1 (2019-05-07)
 
 - Fixed renaming of objects in an array (see [#48][]).
 
