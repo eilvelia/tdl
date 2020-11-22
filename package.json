@@ -38,7 +38,7 @@
     "jest-extended": "^0.11.5",
     "lerna": "^3.22.1",
     "rimraf": "^3.0.2",
-    "typescript": "^4.0.5"
+    "typescript": "^4.1.2"
   },
   "files": [
     "flow",
