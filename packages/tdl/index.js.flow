@@ -6,7 +6,7 @@ import type {
   Invoke,
   InvokeFuture,
   Execute
-} from './types/tdlib'
+} from 'tdlib-types'
 
 import type { TDLibClient, ITDLibJSON } from 'tdl-shared'
 

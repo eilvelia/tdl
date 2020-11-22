@@ -34,7 +34,7 @@ import type {
   Invoke,
   InvokeFuture,
   Execute
-} from '../types/tdlib'
+} from 'tdlib-types'
 
 const debug = Debug('tdl:client')
 const debugEmitter = Debug('tdl:client:emitter')

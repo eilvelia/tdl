@@ -1,6 +1,6 @@
 {
   "name": "tdl",
-  "version": "6.2.0",
+  "version": "6.3.0-beta.2",
   "description": "A JavaScript wrapper for TDLib (Telegram Database library)",
   "main": "index.js",
   "types": "index.d.ts",
@@ -25,6 +25,9 @@
   },
   "optionalDependencies": {
     "fluture": "^8.0.2"
+  },
+  "devDependencies": {
+    "tdlib-types": "^0.1001006.4"
   },
   "author": "Bannerets <comonoid@protonmail.com>",
   "license": "MIT",

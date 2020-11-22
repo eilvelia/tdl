@@ -1,16 +1,41 @@
 {
-  "name": "tdlib-typings",
-  "version": "0.0.0",
-  "description": "",
-  "main": "dist/index.js",
+  "name": "tdlib-types",
+  "version": "0.1001006.4",
+  "description": "TypeScript / Flow types for TDLib",
+  "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
-    "build": "babel src/ -d dist/ --root-mode upward",
-    "start": "npm run build && node dist"
+    "build:babel": "babel src/ -d dist/ --root-mode upward",
+    "build:gen": "node generate.js latest",
+    "build": "npm run build:babel && npm run build:gen"
   },
-  "private": true,
-  "dependencies": {
-    "tldoc": "^0.2.0"
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md"
+  ],
+  "keywords": [
+    "typings",
+    "types",
+    "telegram",
+    "tdlib",
+    "tdl"
+  ],
+  "devDependencies": {
+    "tldoc": "^0.2.0",
+    "fluture": "^8.0.2"
+  },
+  "peerDependencies": {
+    "tdl": ">= 6.3.0"
   },
   "author": "Bannerets <comonoid@protonmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bannerets/tdl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Bannerets/tdl/issues"
+  },
+  "homepage": "https://github.com/Bannerets/tdl/tree/master/packages/tdlib-types"
 }

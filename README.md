@@ -3,9 +3,11 @@
 [![npm](https://img.shields.io/npm/v/tdl.svg)](https://www.npmjs.com/package/tdl)
 [![CI](https://github.com/Bannerets/tdl/workflows/Build%20and%20test/badge.svg)](https://github.com/Bannerets/tdl/actions?query=workflow%3A%22Build+and+test%22)
 
-A JavaScript wrapper for [TDLib][] (Telegram Database library), version 1.5.0 or newer.
+A JavaScript wrapper for [TDLib][] (Telegram Database library), a library to create [Telegram][] clients or bots.<br>
+TDLib version 1.5.0 or newer is required.
 
 [TDLib]: https://github.com/tdlib/td
+[Telegram]: https://telegram.org/
 
 ### Table of Contents
 
@@ -28,7 +30,8 @@ A JavaScript wrapper for [TDLib][] (Telegram Database library), version 1.5.0 or
 ### Installation
 
 1. Build TDLib (https://github.com/tdlib/td#building)
-2. `npm install tdl tdl-tdlib-addon` (install both)
+2. `npm i tdl tdl-tdlib-addon` (install both)
+3. `npm i --save-dev tdlib-types` if you use TypeScript or Flow (recommended)
 
 You can also use third-party pre-built binaries:
 
@@ -45,7 +48,7 @@ You can also use third-party pre-built binaries:
 
 Note that Node.js exports OpenSSL symbols.
 If libtdjson is linked dynamically against openssl, it will use openssl symbols from the Node.js binary, not from your system.
-Therefore libtdjson's openssl version should be compatible with the openssl version Node.js statically linked against (`process.versions.openssl`).<br>
+Therefore libtdjson's openssl version should be compatible with the openssl version that Node.js statically linked against (`process.versions.openssl`).<br>
 If you get segmentation faults, it's most likely due to openssl incompatibility.
 
 <!-- Node.js contains openssl headers, so you can add an option like `-DOPENSSL_INCLUDE_DIR=<path-to-node>/include/node/` to the TDLib build. -->
@@ -62,6 +65,8 @@ $ nvm install -s 12 --shared-openssl --shared-openssl-includes=/usr/include/ --s
 Or you can build TDLib with the same openssl version that Node.js linked against.
 
 This doesn't apply to Electron, since it doesn't export openssl symbols.
+
+<!-- TODO: also doesn't apply to Windows? -->
 
 ---
 
@@ -83,7 +88,7 @@ const client = new Client(new TDLib(), {
 
 `api_id` and `api_hash` can be obtained at https://my.telegram.org/.
 
-You can specify the path to `libtdjson` in the `TDLib` constructor's argument.
+The path to `libtdjson` can be specified in the `TDLib` constructor's argument.
 It is directly passed to [`dlopen`][dlopen] / [`LoadLibrary`][ll].
 Check your OS documentation to see where it searches for the library.
 
@@ -175,8 +180,10 @@ You can consider using reactive libraries like RxJS or [most][] for convenient e
 Asynchronously send a message to Telegram and receive a response.<br>
 Returns a promise, which resolves with the response, or rejects with an error.
 
-The API list can be found at https://core.telegram.org/tdlib/docs/annotated.html (more convenient one: https://hexdocs.pm/tdlib/TDLib.Method.html).<br>
-Note that tdl renames `@type` to `_`.
+The API list can be found at https://core.telegram.org/tdlib/docs/annotated.html
+or in the [td_api.tl](https://github.com/tdlib/td/blob/master/td/generate/scheme/td_api.tl) file.
+Note: the `bytes` type means you should pass a base64-encoded string.<br>
+Also, tdl renames `@type` to `_`.
 
 ```javascript
 const chats = await client.invoke({
@@ -303,13 +310,13 @@ type Options = {
   databaseEncryptionKey: string, // Optional key for database encryption
   verbosityLevel: number, // Verbosity level (default is 2)
   useTestDc: boolean, // Use telegram dev server (default is false)
+  tdlibParameters: Object, // Raw TDLib parameters
   // Advanced options:
   skipOldUpdates: boolean, // Don't emit old updates on launch
   receiveTimeout: number,
   useMutableRename: boolean,
   useDefaultVerbosityLevel: boolean,
-  disableAuth: boolean,
-  tdlibParameters: Object // Raw TDLib parameters
+  disableAuth: boolean
 }
 
 // The `login` function accepts one of these two objects:
@@ -348,23 +355,25 @@ tdlibParameters: {
 <a name="typings"></a>
 ### Typings
 
-`tdl` fully supports [Flow][] and [TypeScript][] out of the box.<br>
-Typings are generated from the [td_api.tl][td-scheme] scheme in the TDLib repository.
+`tdl` fully supports [TypeScript][] and [Flow][] out of the box.
+`tdlib-types` should be installed to use the typings.
+They are generated from the [td_api.tl][td-scheme] scheme.
 
-You can import the TDLib types:
+You can import TDLib types:
 
 ```typescript
-import type { updateMessageViews, messageInvoice /* ... */ } from 'tdl/types/tdlib'
+import type { updateMessageViews, messageInvoice /* ... */ } from 'tdlib-types'
 ```
 
-Current built-in typings are for TDLib v1.6.0.
+Latest available typings are for TDLib v1.6.0.
 
-The typings can be generated for the appropriate TDLib version using `tdlib-typings` in [packages/tdlib-typings/](packages/tdlib-typings/)
+The typings can be installed for other TDLib versions.
+Example for TDLib v1.5.0: `npm install -D tdlib-types@td-1.5.0`.
 
-**Warning**: TDLib typings do not follow SemVer, just as TDLib itself doesn't. You can consider using `~` instead of `^` in your `package.json` dependencies.
+See also [packages/tdlib-types/README.md](packages/tdlib-types/README.md).
 
-[Flow]: https://flow.org/
 [TypeScript]: https://www.typescriptlang.org/
+[Flow]: https://flow.org/
 
 [td-scheme]: https://github.com/tdlib/td/blob/f3480b94d7d86c0e02ad5cc3418eace3d6b09857/td/generate/scheme/td_api.tl
 
@@ -373,7 +382,7 @@ The typings can be generated for the appropriate TDLib version using `tdlib-typi
 <a name="webassembly"></a>
 ### WebAssembly
 
-`tdl` also has an experimental wrapper for tdlib in wasm, see [tdl-tdlib-wasm/](packages/tdl-tdlib-wasm/).
+`tdl` also has an experimental wrapper for tdlib in wasm, see [packages/tdl-tdlib-wasm/](packages/tdl-tdlib-wasm/).
 
 ---
 
@@ -387,11 +396,13 @@ and in the browser with webassembly.
 
 Available "backends" in the `tdl` repository:
 
+- [tdl-tdlib-addon](packages/tdl-tdlib-addon/) (recommended)
 - [tdl-tdlib-ffi](packages/tdl-tdlib-ffi/)
-- [tdl-tdlib-addon](packages/tdl-tdlib-addon/)
 - [tdl-tdlib-wasm](packages/tdl-tdlib-wasm/) (experimental)
 
 You can easily substitute one with another, since they follow the same interface.
+
+<!-- TODO: tdl-tdlib-ffi use cases? -->
 
 ---
 
@@ -400,7 +411,10 @@ You can easily substitute one with another, since they follow the same interface
 
 You can use multiple clients with `tdl-tdlib-addon` if the number of clients < [UV_THREADPOOL_SIZE](http://docs.libuv.org/en/v1.x/threadpool.html).
 
-With `tdl-tdlib-ffi` it's not possible to use multiple clients simultaneously in one process, see [#18][]. If you try, it will result in use after free. You can create multiple processes using [child_process.fork][]. You also can "pause" clients that you don't currently need via `client.pause()` and `client.resume()` functions.
+With `tdl-tdlib-ffi` it's not possible to use multiple clients simultaneously in one process, see [#18][].
+If you try, it will result in use after free.
+You can create multiple processes using [child_process.fork][].
+You also can "pause" clients that you don't currently need via `client.pause()` and `client.resume()` functions.
 
 [#18]: https://github.com/Bannerets/tdl/issues/18
 [child_process.fork]: https://nodejs.org/dist/latest-v14.x/docs/api/child_process.html#child_process_child_process_fork_modulepath_args_options
@@ -417,4 +431,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 <a name="windows"></a>
 ### Windows
 
-`tdl-tdlib-ffi` and `tdl-tdlib-addon` depend on node-gyp, which may be difficult to install on Windows. You should install Visual Studio (or just Build Tools) and Python first. E.g. see https://gist.github.com/jtrefry/fd0ea70a89e2c3b7779c, https://github.com/Microsoft/nodejs-guidelines/blob/dd5074c/windows-environment.md#compiling-native-addon-modules. npm also has [`windows-build-tools` package](https://github.com/felixrieseberg/windows-build-tools).
+`tdl-tdlib-ffi` and `tdl-tdlib-addon` depend on node-gyp, which may be difficult to install on Windows.
+You should install Visual Studio (or just Build Tools) and Python first.
+E.g. see https://gist.github.com/jtrefry/fd0ea70a89e2c3b7779c, https://github.com/Microsoft/nodejs-guidelines/blob/dd5074c/windows-environment.md#compiling-native-addon-modules.
+npm also has a [`windows-build-tools` package](https://github.com/felixrieseberg/windows-build-tools).
