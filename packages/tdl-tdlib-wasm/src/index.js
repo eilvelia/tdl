@@ -19,8 +19,8 @@ type TDFunctions = {
   td_destroy: (TDLibClient) => void,
   td_send: (TDLibClient, string) => void,
   td_execute: (null | TDLibClient, string) => string,
-  td_receive: (TDLibClient) => string,
-  td_set_verbosity: (number) => void
+  td_receive: (TDLibClient) => string
+  // td_set_verbosity: (number) => void
 }
 
 const delay = x => new Promise(resolve => setTimeout(resolve, x))
@@ -34,8 +34,8 @@ export class TDLib implements ITDLibJSON {
       td_destroy: module.cwrap('td_destroy', null, ['number']),
       td_send: module.cwrap('td_send', null, ['number', 'string']),
       td_execute: module.cwrap('td_execute', 'string', ['number', 'string']),
-      td_receive: module.cwrap('td_receive', 'string', ['number']),
-      td_set_verbosity: module.cwrap('td_set_verbosity', null, ['number'])
+      td_receive: module.cwrap('td_receive', 'string', ['number'])
+      // td_set_verbosity: module.cwrap('td_set_verbosity', null, ['number'])
     }
   }
 
@@ -55,7 +55,7 @@ export class TDLib implements ITDLibJSON {
   async receive (client: TDLibClient): Promise<Object | null> {
     const response = this._tdlib.td_receive(client)
     if (!response) {
-      await delay(100)
+      await delay(100) // TODO
       return null
     }
     return JSON.parse(response)
@@ -72,20 +72,7 @@ export class TDLib implements ITDLibJSON {
     this._tdlib.td_destroy(client)
   }
 
-  setLogFilePath (/*:: path: string */): number {
-    throw new Error('setLogFilePath doesn\'t supported')
-  }
-
-  setLogMaxFileSize (/*:: maxFileSize: number | string */): void {
-    throw new Error('setLogMaxFileSize doesn\'t supported')
-  }
-
-  setLogVerbosityLevel (verbosity: number): void {
-    debug('setLogVerbosityLevel', verbosity)
-    this._tdlib.td_set_verbosity(verbosity)
-  }
-
-  setLogFatalErrorCallback (/*:: fn: null | (errorMessage: string) => void */): void {
-    throw new Error('setLogFatalErrorCallback doesn\'t supported')
+  setLogFatalErrorCallback (/*:: fn: null | ((errorMessage: string) => void) */): void {
+    throw new Error('setLogFatalErrorCallback is not supported')
   }
 }

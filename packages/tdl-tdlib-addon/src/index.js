@@ -71,21 +71,6 @@ export class TDLib implements ITDLibJSON {
     this._addon.td_client_destroy(client)
   }
 
-  setLogFilePath (path: string): number {
-    debug('setLogFilePath', path)
-    return this._addon.td_set_file_path(path)
-  }
-
-  setLogMaxFileSize (maxFileSize: number | string): void {
-    debug('setLogMaxFileSize', maxFileSize)
-    this._addon.td_set_max_file_size(maxFileSize.toString())
-  }
-
-  setLogVerbosityLevel (verbosity: number): void {
-    debug('setLogVerbosityLevel', verbosity)
-    this._addon.td_set_verbosity_level(verbosity)
-  }
-
   setLogFatalErrorCallback (fn: null | (errorMessage: string) => void): void {
     this._addon.td_set_fatal_error_callback(fn)
   }

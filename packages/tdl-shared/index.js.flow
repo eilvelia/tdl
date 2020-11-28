@@ -9,9 +9,6 @@ export interface ITDLibJSON {
   execute(client: null | TDLibClient, query: Object): Object | null;
   receive(client: TDLibClient, timeout: number): Promise<Object | null>;
   send(client: TDLibClient, query: Object): void;
-  setLogFilePath(path: string): number;
-  setLogMaxFileSize(maxFileSize: number | string): void;
-  setLogVerbosityLevel(verbosity: number): void;
   setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): void;
 }
 
@@ -22,8 +19,5 @@ export interface IAsyncTDLibJSON {
   execute(client: null | TDLibClient, query: Object): Promise<Object | null>;
   receive(client: TDLibClient, timeout: number): Promise<Object | null>;
   send(client: TDLibClient, query: Object): Promise<void>;
-  setLogFilePath(path: string): Promise<number>;
-  setLogMaxFileSize(maxFileSize: number | string): Promise<void>;
-  setLogVerbosityLevel(verbosity: number): Promise<void>;
   setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): Promise<void>;
 }

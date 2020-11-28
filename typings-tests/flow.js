@@ -18,8 +18,6 @@ var tdlibAddon = new TdAddon()
   // $ExpectError
   t.destroy({})
 
-  t.setLogMaxFileSize(235)
-
   new Tdl(t)
   const tdl = new Tdl(t, { loginDetails: { type: 'user' } })
   await tdl.connect()
@@ -141,9 +139,6 @@ client.setLogFatalErrorCallback('1234')
   ;(client.off: typeof client.removeListener)
   ;(client.addListener: typeof client.on)
   ;(client.once: typeof client.on)
-
-  // $ExpectError
-  client.setLogFilePath(1234, 'abc', 123423)
 
   const res = client.execute({
     _: 'getTextEntities',
