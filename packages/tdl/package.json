@@ -24,7 +24,7 @@
     "tdl-shared": "^0.9.0"
   },
   "devDependencies": {
-    "tdlib-types": "^0.1001006.4"
+    "tdlib-types": "^0.1001007.1"
   },
   "author": "Bannerets <comonoid@protonmail.com>",
   "license": "MIT",

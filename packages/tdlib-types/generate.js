@@ -9,13 +9,13 @@ const readline = require('readline')
 
 const PKG_NAME = 'tdlib-types'
 
-const LATEST_VERSION = 'v1.6.0'
+const LATEST_VERSION = 'v1.7.0'
 const REV = '1'
 
 /* eslint-disable comma-dangle */
 const MINOR_REVS = {
-  'v1.5.0': '4',
-  'v1.6.0': '4',
+  'v1.5.0': '5',
+  'v1.6.0': '5',
 }
 
 function getMinorRev (ver/*: string */)/*: string */ {

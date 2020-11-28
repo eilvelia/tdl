@@ -365,7 +365,7 @@ You can import TDLib types:
 import type { updateMessageViews, messageInvoice /* ... */ } from 'tdlib-types'
 ```
 
-Latest available typings are for TDLib v1.6.0.
+Latest available typings are for TDLib v1.7.0.
 
 The typings can be installed for other TDLib versions.
 Example for TDLib v1.5.0: `npm install -D tdlib-types@td-1.5.0`.

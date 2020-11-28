@@ -1,6 +1,6 @@
 {
   "name": "tdlib-types",
-  "version": "0.1001006.4",
+  "version": "0.1001007.1",
   "description": "TypeScript / Flow types for TDLib",
   "main": "index.js",
   "types": "index.d.ts",
