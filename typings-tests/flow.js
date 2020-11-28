@@ -6,6 +6,8 @@ import { Tdl, TdlError, Client } from '../packages/tdl'
 
 import * as Td from '../packages/tdlib-types'
 
+import * as Future from 'fluture'
+
 var tdlib = new TdFFI()
 var tdlibAddon = new TdAddon()
 
@@ -175,21 +177,6 @@ client.setLogFatalErrorCallback('1234')
     limit: 100
   })
 
-  client.invokeFuture({
-    _: 'searchPublicChat',
-    username: 'username'
-  })
-    .map((e: Td.Chat) => e.title)
-    .mapRej((e: Td.error) => e)
-    .fork(console.error, (e: string) => console.log(e))
-
-  client.invokeFuture({
-    _: 'searchPublicChat',
-    username: 'username'
-  })
-    // $ExpectError
-    .map((e: number) => e)
-
   await client.login(() => ({
     getPhoneNumber: retry => retry
       ? Promise.reject('Invalid phone number')
@@ -218,4 +205,21 @@ client.setLogFatalErrorCallback('1234')
   // subtyping also should work correctly with 'may be null' fields
   declare var authCode: Td.authenticationCodeInfo
   const authCodeInp: Td.authenticationCodeInfo$Input = authCode
+
+  const invokeFuture: Td.InvokeFuture = (Future.encaseP(client.invoke): any)
+
+  invokeFuture({
+    _: 'searchPublicChat',
+    username: 'username'
+  })
+    .map((e: Td.Chat) => e.title)
+    .mapRej((e: Td.error) => e)
+    .fork(console.error, (e: string) => console.log(e))
+
+  invokeFuture({
+    _: 'searchPublicChat',
+    username: 'username'
+  })
+    // $ExpectError
+    .map((e: number) => e)
 })()

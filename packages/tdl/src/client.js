@@ -3,7 +3,6 @@
 import { resolve as resolvePath } from 'path'
 import EventEmitter from 'eventemitter3'
 import Debug from 'debug'
-import { tryP } from './fluture'
 import uuidv4 from '../vendor/uuidv4'
 import { deepRenameKey, deepRenameKey_, mergeDeepRight } from './util'
 import {
@@ -32,7 +31,6 @@ import type {
   error as Td$error,
   ConnectionState as Td$ConnectionState,
   Invoke,
-  InvokeFuture,
   Execute
 } from 'tdlib-types'
 
@@ -347,13 +345,6 @@ export class Client {
     this._send(request)
     return receiveResponse
   }
-
-  // Deprecated message descriptions are specified in the
-  // index.js.flow/index.d.ts files
-
-  /** @deprecated */
-  invokeFuture: InvokeFuture =
-    (request => tryP(() => this.invoke(request)): $FlowOff)
 
   destroy = (): void => {
     if (!this._client) return

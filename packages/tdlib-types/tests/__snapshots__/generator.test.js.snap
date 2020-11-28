@@ -24254,6 +24254,8 @@ export type Execute =
   & ((query: testUseUpdate) => Update | error | null)
   & ((query: testReturnError) => Error | error | null)
 
+// Fluture support.
+// Tested with fluture v8.0.
 // Future<Left, Right>
 import type { Future } from 'fluture'
 

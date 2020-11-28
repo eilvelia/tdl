@@ -23,9 +23,6 @@
     "promptly": "^3.2.0",
     "tdl-shared": "^0.9.0"
   },
-  "optionalDependencies": {
-    "fluture": "^8.0.2"
-  },
   "devDependencies": {
     "tdlib-types": "^0.1001006.4"
   },

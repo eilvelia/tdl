@@ -303,6 +303,8 @@ export function generate (input: string, outputType: OutputType, options: Option
   add()
   if (commentFluture)
     add('/*')
+  add('// Fluture support.')
+  add('// Tested with fluture v8.0.')
   add('// Future<Left, Right>')
   add(!TS
     ? 'import type { Future } from \'fluture\''

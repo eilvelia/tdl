@@ -55,8 +55,6 @@ declare export class Client {
   removeListener: Off;
   emit: Emit;
   invoke: Invoke;
-  /** @deprecated Use client.invoke or create your own wrapper for Fluture */
-  invokeFuture: InvokeFuture;
   destroy: () => void;
   close: () => Promise<void>;
   setLogFatalErrorCallback: (fn: null | ((errorMessage: string) => void)) => void;

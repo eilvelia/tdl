@@ -12,8 +12,11 @@ import {
   User as Td$User,
   Update as Td$Update,
   formattedText as Td$formattedText,
-  formattedText$Input as Td$formattedText$Input
+  formattedText$Input as Td$formattedText$Input,
+  InvokeFuture
 } from '../packages/tdlib-types'
+
+import * as Future from 'fluture'
 
 const cl = new Client(tdlib, {
   apiId: 2234,
@@ -109,7 +112,9 @@ new TDLib()
 
 const pp: Promise<Td$User> = cl.invoke({ _: 'getMe' })
 
-cl.invokeFuture({
+const invokeFuture = Future.encaseP(client.invoke) as InvokeFuture
+
+invokeFuture({
   _: 'searchPublicChat',
   username: 'username'
 })
@@ -117,7 +122,7 @@ cl.invokeFuture({
   .mapRej(err => `Error: ${err.message}`)
   .fork(console.error, console.log)
 
-client.invokeFuture({
+invokeFuture({
   _: 'searchPublicChat',
   username: 'username'
 })
