@@ -112,6 +112,8 @@ new TDLib()
 
 const pp: Promise<Td$User> = cl.invoke({ _: 'getMe' })
 
+const name: string = client.getBackendName()
+
 const invokeFuture = Future.encaseP(client.invoke) as InvokeFuture
 
 invokeFuture({

@@ -181,6 +181,10 @@ export class Client {
     return new Client(tdlibInstance, options)
   }
 
+  getBackendName = (): string => {
+    return this._tdlib.getName()
+  }
+
   _catchError (err: Td$error | TdlError): void {
     debug('catchError', err)
 
@@ -201,7 +205,7 @@ export class Client {
     this._loginDefer.reject(err)
   }
 
-  async _init (): Promise<void> {
+  _init (): void {
     try {
       if (!this._options.useDefaultVerbosityLevel) {
         debug('_init: setLogVerbosityLevel', this._options.verbosityLevel)
@@ -211,7 +215,7 @@ export class Client {
         })
       }
 
-      this._client = await this._tdlib.create()
+      this._client = this._tdlib.create()
     } catch (e) {
       this._catchError(new TdlError(e, 'Error while creating client'))
       return
@@ -223,6 +227,7 @@ export class Client {
       this._connectDefer.resolve()
 
     this._loop()
+      .catch(e => this._catchError(new TdlError(e)))
   }
 
   connect = (): Promise<void> => {

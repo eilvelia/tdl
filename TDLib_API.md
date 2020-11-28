@@ -10,7 +10,7 @@ See interface declarations in [tdl-shared/index.js.flow](packages/tdl-shared/ind
 
 ---
 
-##### `create: () => Promise<TDLibClient>`
+##### `create: () => TDLibClient`
 
 ```js
 const client = await tdlib.create()

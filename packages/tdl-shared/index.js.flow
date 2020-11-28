@@ -3,7 +3,8 @@ export type TDLibClient = { +_TDLibClientBrand: void } // Structural typing is n
 declare export function makeTDLibClient (x: any): TDLibClient
 
 export interface ITDLibJSON {
-  create(): Promise<TDLibClient>;
+  getName(): string;
+  create(): TDLibClient;
   destroy(client: TDLibClient): void;
   execute(client: null | TDLibClient, query: Object): Object | null;
   receive(client: TDLibClient, timeout: number): Promise<Object | null>;
@@ -11,10 +12,11 @@ export interface ITDLibJSON {
   setLogFilePath(path: string): number;
   setLogMaxFileSize(maxFileSize: number | string): void;
   setLogVerbosityLevel(verbosity: number): void;
-  setLogFatalErrorCallback(fn: null | (errorMessage: string) => void): void;
+  setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): void;
 }
 
 export interface IAsyncTDLibJSON {
+  getName(): string;
   create(): Promise<TDLibClient>;
   destroy(client: TDLibClient): Promise<void>;
   execute(client: null | TDLibClient, query: Object): Promise<Object | null>;
@@ -23,5 +25,5 @@ export interface IAsyncTDLibJSON {
   setLogFilePath(path: string): Promise<number>;
   setLogMaxFileSize(maxFileSize: number | string): Promise<void>;
   setLogVerbosityLevel(verbosity: number): Promise<void>;
-  setLogFatalErrorCallback(fn: null | (errorMessage: string) => void): Promise<void>;
+  setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): Promise<void>;
 }

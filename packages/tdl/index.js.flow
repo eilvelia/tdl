@@ -43,6 +43,7 @@ export type Off =
 declare export class Client {
   constructor(tdlibInstance: ITDLibJSON, options?: ConfigType): this;
   static create(tdlibInstance: ITDLibJSON, options?: ConfigType): Client;
+  getBackendName: () => string;
   connect: () => Promise<void>;
   login: (getLoginDetails?: () => LoginDetails) => Promise<void>;
   connectAndLogin: (getLoginDetails?: () => LoginDetails) => Promise<void>;

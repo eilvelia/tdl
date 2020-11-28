@@ -3,7 +3,7 @@
 import type { TDLibClient, ITDLibJSON } from 'tdl-shared'
 
 declare export class TDLib implements ITDLibJSON {
-  constructor(libraryFile?: string, addonPath?: string): this;
+  constructor(libraryFile?: string): this;
   getName(): string;
   create(): TDLibClient;
   destroy(client: TDLibClient): void;

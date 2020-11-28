@@ -3,8 +3,9 @@
 import type { TDLibClient, ITDLibJSON } from 'tdl-shared'
 
 declare export class TDLib implements ITDLibJSON {
-  constructor(path?: string): this;
-  create(): Promise<TDLibClient>;
+  constructor(module: any): this;
+  getName(): string;
+  create(): TDLibClient;
   destroy(client: TDLibClient): void;
   execute(client: null | TDLibClient, query: Object): Object | null;
   receive(client: TDLibClient, timeout: number): Promise<Object | null>;

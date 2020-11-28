@@ -40,7 +40,11 @@ export class TDLib implements ITDLibJSON {
       })
   }
 
-  async create (): Promise<TDLibClient> {
+  getName (): string {
+    return 'ffi'
+  }
+
+  create (): TDLibClient {
     debug('create')
     return this._tdlib.td_json_client_create()
   }

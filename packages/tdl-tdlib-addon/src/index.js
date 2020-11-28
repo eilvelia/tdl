@@ -31,7 +31,11 @@ export class TDLib implements ITDLibJSON {
     this._addon.load_tdjson(libraryFile)
   }
 
-  async create (): Promise<TDLibClient> {
+  getName (): string {
+    return 'addon'
+  }
+
+  create (): TDLibClient {
     debug('create')
     return this._addon.td_client_create()
   }

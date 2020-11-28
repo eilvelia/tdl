@@ -206,6 +206,8 @@ client.setLogFatalErrorCallback('1234')
   declare var authCode: Td.authenticationCodeInfo
   const authCodeInp: Td.authenticationCodeInfo$Input = authCode
 
+  const name: string = client.getBackendName()
+
   const invokeFuture: Td.InvokeFuture = (Future.encaseP(client.invoke): any)
 
   invokeFuture({
