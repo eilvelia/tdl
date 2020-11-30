@@ -25,7 +25,7 @@ export class TDLib implements ITDLibJSON {
     addonPath: string = '../build/Release/td.node'
   ) {
     debug('constructor')
-    // $FlowOff
+    // $FlowIgnore[unsupported-syntax]
     this._addon = require(addonPath)
     // console.log(this._addon)
     this._addon.load_tdjson(libraryFile)

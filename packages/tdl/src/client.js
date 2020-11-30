@@ -153,7 +153,7 @@ const TDL_MAGIC = '6c47e6b71ea'
 
 export class Client {
   +_options: StrictConfigType;
-  +_emitter = new EventEmitter();
+  +_emitter: EventEmitter = new EventEmitter();
   +_fetching: Map<string, PendingPromise> = new Map();
   +_tdlib: ITDLibJSON;
   _client: ?TDLibClient
@@ -162,8 +162,8 @@ export class Client {
   _authNeeded: boolean = false
   _loginDetails: ?StrictLoginDetails
   _loginDefer: TdlDeferred<void, any> = new TdlDeferred()
-  _paused = false
-  _initialized = false
+  _paused: boolean = false
+  _initialized: boolean = false
 
   constructor (tdlibInstance: ITDLibJSON, options: ConfigType = {}) {
     this._options = (mergeDeepRight(defaultOptions, options): StrictConfigType)
@@ -247,7 +247,7 @@ export class Client {
     debug('client.login()')
     this._emitter.once('auth-needed', () => {
       this._loginDetails = (mergeDeepRight(
-        defaultLoginDetails, getLoginDetails()): $FlowOff)
+        defaultLoginDetails, getLoginDetails()): $FlowIgnore)
       debug('set _loginDetails to', this._loginDetails)
     })
     return new Promise((resolve, reject) => {
@@ -335,7 +335,7 @@ export class Client {
 
   invoke: Invoke = async request => {
     const id = uuidv4()
-    // $FlowOff
+    // $FlowIgnore[prop-missing]
     request['@extra'] = id
     const receiveResponse = new Promise((resolve, reject) => {
       // This promise must not be rejected with values other than Td$error
@@ -401,7 +401,7 @@ export class Client {
   }
 
   _sendTdl (request: TDFunction): void {
-    // $FlowOff
+    // $FlowIgnore[prop-missing]
     this._send({ ...request, '@extra': TDL_MAGIC })
   }
 
@@ -498,6 +498,7 @@ export class Client {
       case 'authorizationStateWaitTdlibParameters':
         return this._sendTdl({
           _: 'setTdlibParameters',
+          // $FlowFixMe[incompatible-exact]
           'parameters': {
             ...this._options.tdlibParameters,
             _: 'tdlibParameters',
@@ -588,18 +589,18 @@ export class Client {
   }
 
   _emitErrWithoutExtra (error: Td$error): void {
-    // $FlowOff
+    // $FlowIgnore[prop-missing]
     delete error['@extra']
     this._catchError(error)
   }
 
   async _handleError (error: Td$error): Promise<void> {
-    // $FlowOff
+    // $FlowIgnore[prop-missing]
     const id = error['@extra']
     const defer = this._fetching.get(id)
 
     if (defer) {
-      // $FlowOff
+      // $FlowIgnore[prop-missing]
       delete error['@extra']
       defer.reject(error)
       this._fetching.delete(id)

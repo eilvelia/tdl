@@ -40,16 +40,16 @@ function map (obj, f) {
 }
 
 // immutable
-export const renameKey = (
+export function renameKey (
   oldKey: string,
   newKey: string,
   obj: { [k: string]: mixed }
-): { [k: string]: mixed } =>
-  Object.keys(obj)
-    .reduce((acc, key) => ({
-      ...acc,
-      ...{ [key === oldKey ? newKey : key]: obj[key] }
-    }), {})
+): { [k: string]: mixed } {
+  const newObj = {}
+  for (const [k, v] of Object.entries(obj))
+    newObj[k === oldKey ? newKey : k] = v
+  return newObj
+}
 
 // mutable
 export const renameKey_ = (

@@ -13,8 +13,8 @@ if (toPublish.length === 0) {
 
 const packagesDir = path.resolve(__dirname, '..', 'packages')
 
-function getPackageInfo (pkgStr) {
-  // $FlowOff
+function getPackageInfo (pkgStr)/*: [string, string] */ {
+  // $FlowIgnore[unsupported-syntax]
   const packageJson = require(path.join(packagesDir, pkgStr, 'package.json'))
   return [packageJson.name, packageJson.version]
 }

@@ -10,12 +10,12 @@
 module.use_strict=true
 include_warnings=true
 module.name_mapper='^fluture$' -> '<PROJECT_ROOT>/flow/fluture'
-suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe
-suppress_comment=\\(.\\|\n\\)*\\$FlowOff
-suppress_comment=\\(.\\|\n\\)*\\$FlowTodo
-suppress_comment=\\(.\\|\n\\)*\\$ExpectError
-suppress_type=$FlowOff
+suppress_type=$FlowIgnore
 suppress_type=$FlowFixMe
 suppress_type=$FlowTodo
+types_first=false
 
 [strict]
+
+[declarations]
+<PROJECT_ROOT>/packages/tdlib-types/node_modules/tldoc/.*

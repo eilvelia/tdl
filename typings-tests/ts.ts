@@ -21,7 +21,10 @@ import * as Future from 'fluture'
 const cl = new Client(tdlib, {
   apiId: 2234,
   apiHash: 'abcdef',
-  useTestDc: false
+  useTestDc: false,
+  tdlibParameters: {
+    device_model: 'unknown'
+  }
 })
 
 new Client(tdlib, { receiveTimeout: 10 })

@@ -10,7 +10,7 @@ const debug = Debug('tdl-tdlib-ffi')
 
 const buildQuery = (query: Object) => {
   const buffer = Buffer.from(JSON.stringify(query) + '\0', 'utf-8')
-  // $FlowOff
+  // $FlowIgnore[prop-missing]
   buffer.type = ref.types.CString
   return buffer
 }
