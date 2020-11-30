@@ -1,22 +1,8 @@
 // @flow
 
-export type TDLibParameters = {
-  use_test_dc?: boolean,
-  database_directory?: string,
-  files_directory?: string,
-  use_file_database?: boolean,
-  use_chat_info_database?: boolean,
-  use_message_database?: boolean,
-  use_secret_chats?: boolean,
-  api_id?: number,
-  api_hash?: string,
-  system_language_code?: string,
-  device_model?: string,
-  system_version?: string,
-  application_version?: string,
-  enable_storage_optimizer?: boolean,
-  ignore_file_names?: boolean
-}
+import type { tdlibParameters$Input } from 'tdlib-types'
+
+export type TDLibParameters = $Rest<tdlibParameters$Input, {| _: 'tdlibParameters' |}>
 
 export type LoginUser = {|
   type: 'user',

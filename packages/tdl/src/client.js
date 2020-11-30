@@ -408,6 +408,7 @@ export class Client {
   async _receive (timeout: number = this._options.receiveTimeout): Promise<Object/*TDObject*/ | null> {
     if (!this._client) return null
     const tdResponse = await this._tdlib.receive(this._client, timeout)
+    // Note: Immutable rename is used to preserve key order (for better logs)
     return tdResponse && (this._options.useMutableRename
       ? deepRenameKey_('@type', '_', tdResponse)
       : deepRenameKey('@type', '_', tdResponse))
@@ -498,15 +499,14 @@ export class Client {
       case 'authorizationStateWaitTdlibParameters':
         return this._sendTdl({
           _: 'setTdlibParameters',
-          // $FlowFixMe[incompatible-exact]
           'parameters': {
-            ...this._options.tdlibParameters,
-            _: 'tdlibParameters',
             database_directory: resolvePath(this._options.databaseDirectory),
             files_directory: resolvePath(this._options.filesDirectory),
             api_id: this._options.apiId,
             api_hash: this._options.apiHash,
-            use_test_dc: this._options.useTestDc
+            use_test_dc: this._options.useTestDc,
+            ...this._options.tdlibParameters,
+            _: 'tdlibParameters'
           }
         })
 

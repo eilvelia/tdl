@@ -10,10 +10,12 @@ const inputStr = fs.readFileSync(inputFile).toString()
 
 // This is done via regexps because:
 // (1) https://github.com/bcherny/flow-to-typescript doesn't work well
-// (2) Maintaining both index.js.flow and index.d.ts is uncomfortable
+// (2) Maintaining both index.js.flow and index.d.ts is inconvenient
 
 const outputStr = inputStr
   .replace(/^\/\/ ?@flow\r?\n?\r?\n?/, '')
+  .replace(/\$Rest<(.+?), ?{}>/g, 'Partial<$1>')
+  .replace(/\$Rest<(.+?), ?{\| ?(.+):.*\|}>/g, 'Omit<$1, \'$2\'>')
   .replace(/import type/g, 'import')
   .replace(/export type {/g, 'export {')
   .replace(/declare export/g, 'export')
@@ -22,6 +24,5 @@ const outputStr = inputStr
   .replace(/\+err/g, 'readonly err')
   .replace(/(constructor\(.*?\)): this;/, '$1;')
   .replace(/\/\*::\r?\n?([\S\s]*?)\r?\n?\*\//g, '$1')
-  .replace(/\$Rest<(.*?), ?{}>/g, 'Partial<$1>')
 
 fs.writeFileSync(outputFile, outputStr)
