@@ -1,0 +1,114 @@
+// @flow
+
+/* eslint-disable quotes */
+/* eslint-disable semi */
+/* eslint-disable comma-dangle */
+
+const { deepRenameKey, deepRenameKey_ } = require("../dist/util");
+
+const OBJ = Object.freeze({
+  _: "chat",
+  order: "0",
+  is_pinned: false,
+  type: {
+    _: "chatTypeSupergroup",
+    is_channel: true,
+  },
+  innerObjWithoutType: {
+    k1: "v1",
+    k2: "v2",
+  },
+  nullField: null,
+  emptyStr: "",
+  typeInStr: "@type",
+  underscoreInStr: "_",
+  arrayTest: [
+    {
+      _: "chatPermissions",
+      can_send_messages: false,
+      can_send_media_messages: false,
+      can_send_polls: false,
+    },
+    {
+      _: "chatNotificationSettings",
+      use_default_mute_for: true,
+      mute_for: 0,
+    },
+  ],
+});
+
+test("immutable deepRenameKey", () => {
+  const obj = { ...OBJ };
+  const newObj = deepRenameKey("_", "@type", obj);
+  expect(obj).toStrictEqual(OBJ);
+  expect(newObj).toMatchInlineSnapshot(`
+    Object {
+      "@type": "chat",
+      "arrayTest": Array [
+        Object {
+          "@type": "chatPermissions",
+          "can_send_media_messages": false,
+          "can_send_messages": false,
+          "can_send_polls": false,
+        },
+        Object {
+          "@type": "chatNotificationSettings",
+          "mute_for": 0,
+          "use_default_mute_for": true,
+        },
+      ],
+      "emptyStr": "",
+      "innerObjWithoutType": Object {
+        "k1": "v1",
+        "k2": "v2",
+      },
+      "is_pinned": false,
+      "nullField": null,
+      "order": "0",
+      "type": Object {
+        "@type": "chatTypeSupergroup",
+        "is_channel": true,
+      },
+      "typeInStr": "@type",
+      "underscoreInStr": "_",
+    }
+  `);
+});
+
+test("mutable deepRenameKey_", () => {
+  const obj = { ...OBJ };
+  const newObj = deepRenameKey_("_", "@type", obj);
+  expect(obj).toBe(newObj);
+  expect(newObj).toMatchInlineSnapshot(`
+    Object {
+      "@type": "chat",
+      "arrayTest": Array [
+        Object {
+          "@type": "chatPermissions",
+          "can_send_media_messages": false,
+          "can_send_messages": false,
+          "can_send_polls": false,
+        },
+        Object {
+          "@type": "chatNotificationSettings",
+          "mute_for": 0,
+          "use_default_mute_for": true,
+        },
+      ],
+      "emptyStr": "",
+      "innerObjWithoutType": Object {
+        "k1": "v1",
+        "k2": "v2",
+      },
+      "is_pinned": false,
+      "nullField": null,
+      "order": "0",
+      "type": Object {
+        "@type": "chatTypeSupergroup",
+        "is_channel": true,
+      },
+      "typeInStr": "@type",
+      "underscoreInStr": "_",
+    }
+  `);
+});
