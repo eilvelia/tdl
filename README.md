@@ -73,7 +73,7 @@ This doesn't apply to Electron, since it doesn't export openssl symbols.
 <a name="api"></a>
 ### API
 
-##### `new Client(tdlibInstance, options) => Client`
+#### `new Client(tdlibInstance, options) => Client`
 
 ```javascript
 // Example in Node.js:
@@ -95,7 +95,7 @@ Check your OS documentation to see where it searches for the library.
 [dlopen]: https://www.man7.org/linux/man-pages/man3/dlopen.3.html
 [ll]: https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryw
 
-##### `client.connect() => Promise<undefined>`
+#### `client.connect() => Promise<undefined>`
 
 Initialize and connect your client with Telegram.
 Returns a promise.
@@ -104,7 +104,9 @@ Returns a promise.
 await client.connect()
 ```
 
-##### `client.login(fn?: () => LoginDetails) => Promise<undefined>`
+#### `client.login(fn?: () => LoginDetails) => Promise<undefined>`
+
+Log in to your Telegram account.
 
 ```javascript
 await client.login()
@@ -136,13 +138,11 @@ Also see the `LoginDetails` interface in the [Options](#options) section.
 
 It is possible to not use the `client.login` helper and implement login process manually.
 
-##### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<undefined>`
+#### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<undefined>`
 
 Same as `client.connect().then(() => client.login(fn))`.
 
-##### `client.on(event: string, callback: Function) => Client`
-
-##### `client.addListener(event: string, callback: Function) => Client`
+#### `client.on(event: string, callback: Function) => Client`
 
 Attach an event listener to receive the updates.
 
@@ -153,13 +153,13 @@ client.on('error', console.error)
 
 Ideally you should always have a listener on `client.on('error')`.
 
-##### `client.once(event: string, callback: Function) => Client`
+`client.addListener` is an alias to this function.
+
+#### `client.once(event: string, callback: Function) => Client`
 
 Add a one-time listener.
 
-##### `client.off(event: string, listener: Function, once?: boolean) => Client`
-
-##### `client.removeListener(event: string, listener: Function, once?: boolean) => Client`
+#### `client.off(event: string, listener: Function, once?: boolean) => Client`
 
 Remove an event listener.
 
@@ -173,17 +173,21 @@ client.on('update', listener)
 
 You can consider using reactive libraries like RxJS or [most][] for convenient event processing.
 
+`client.removeListener` is an alias to this function.
+
 [most]: https://github.com/cujojs/most
 
-##### `client.invoke(query: Object) => Promise<Object>`
+#### `client.invoke(query: Object) => Promise<Object>`
 
 Asynchronously send a message to Telegram and receive a response.<br>
 Returns a promise, which resolves with the response, or rejects with an error.
 
 The API list can be found at https://core.telegram.org/tdlib/docs/annotated.html
-or in the [td_api.tl](https://github.com/tdlib/td/blob/master/td/generate/scheme/td_api.tl) file.
+or in the [td_api.tl][] file.
 Note: the `bytes` type means you should pass a base64-encoded string.<br>
 Also, tdl renames `@type` to `_`.
+
+[td_api.tl]: https://github.com/tdlib/td/blob/eb80924dad30af4e6d8385d058bb7e847174df5e/td/generate/scheme/td_api.tl
 
 ```javascript
 const chats = await client.invoke({
@@ -208,10 +212,10 @@ await client.invoke({
 })
 ```
 
-##### `client.execute(query: Object) => (Object | null)`
+#### `client.execute(query: Object) => (Object | null)`
 
 Synchronously send a message to Telegram and receive a response.
-Only a few methods can be called using this function.
+This function can be called only with methods that are marked as "can be called synchronously" in the TDLib documentation.
 
 ```javascript
 const res = client.execute({
@@ -220,7 +224,7 @@ const res = client.execute({
 })
 ```
 
-##### `client.close() => Promise<undefined>`
+#### `client.close() => Promise<undefined>`
 
 Close the TDLib instance.
 
@@ -230,16 +234,16 @@ This method sends `{ _: 'close' }` and waits until the client gets destroyed.
 await client.close()
 ```
 
-##### `client.setLogFatalErrorCallback(fn: (null | Function)) => undefined`
+#### `client.setLogFatalErrorCallback(fn: (null | Function)) => undefined`
 
 Set the callback that will be called when a TDLib fatal error happens.
 
 See the [TDLib doc](https://core.telegram.org/tdlib/docs/td__log_8h.html#addebe91c4525817a6d2b448634c19d71).
 
 ```javascript
-client.setLogFatalErrorCallback(
-  errorMessage => console.error('Fatal error:', errorMessage)
-)
+client.setLogFatalErrorCallback(errorMessage => {
+  console.error('Fatal error:', errorMessage)
+})
 ```
 
 #### Low-level TDLib API
@@ -309,7 +313,7 @@ type Options = {
   filesDirectory: string, // Relative path (default is '_td_files')
   databaseEncryptionKey: string, // Optional key for database encryption
   verbosityLevel: number, // Verbosity level (default is 2)
-  useTestDc: boolean, // Use telegram dev server (default is false)
+  useTestDc: boolean, // Use test telegram server (default is false)
   tdlibParameters: Object, // Raw TDLib parameters
   // Advanced options:
   skipOldUpdates: boolean, // Don't emit old updates on launch
@@ -334,7 +338,8 @@ type LoginDetails = {
 
 Only `apiId` and `apiHash` are required fields. Any other field can be omitted.
 
-About `tdlibParameters` option: see https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html.
+See https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html
+for parameters that can be specified in the `tdlibParameters` option.
 
 Default `tdlibParameters`:
 
@@ -346,7 +351,12 @@ tdlibParameters: {
   application_version: '1.0',
   device_model: 'Unknown device',
   system_version: 'Unknown',
-  enable_storage_optimizer: true
+  enable_storage_optimizer: true,
+  api_id: options.apiId,
+  api_hash: options.apiHash,
+  database_directory: options.databaseDirectory,
+  files_directory: options.filesDirectory,
+  use_test_dc: options.useTestDc
 }
 ```
 
@@ -355,27 +365,24 @@ tdlibParameters: {
 <a name="typings"></a>
 ### Typings
 
-`tdl` fully supports [TypeScript][] and [Flow][] out of the box.
+`tdl` fully supports [TypeScript][] and [Flow][].
 `tdlib-types` should be installed to use the typings.
-They are generated from the [td_api.tl][td-scheme] scheme.
 
-You can import TDLib types:
+TDLib types can be imported using:
 
 ```typescript
 import type { updateMessageViews, messageInvoice /* ... */ } from 'tdlib-types'
 ```
 
-Latest available typings are for TDLib v1.7.0.
+The latest available typings are for TDLib v1.7.0.
 
-The typings can be installed for other TDLib versions.
+You can install typings for other TDLib versions.
 Example for TDLib v1.5.0: `npm install -D tdlib-types@td-1.5.0`.
 
 See also [packages/tdlib-types/README.md](packages/tdlib-types/README.md).
 
 [TypeScript]: https://www.typescriptlang.org/
 [Flow]: https://flow.org/
-
-[td-scheme]: https://github.com/tdlib/td/blob/f3480b94d7d86c0e02ad5cc3418eace3d6b09857/td/generate/scheme/td_api.tl
 
 ---
 
