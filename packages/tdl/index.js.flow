@@ -4,7 +4,6 @@ import type {
   Update as Td$Update,
   error as Td$error,
   Invoke,
-  InvokeFuture,
   Execute
 } from 'tdlib-types'
 
