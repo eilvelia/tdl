@@ -7,7 +7,7 @@
     "clean": "rimraf packages/*/dist/ && lerna run clean",
     "clean-modules": "rimraf node_modules/ && lerna clean -y",
     "clean-all": "npm run clean && npm run clean-modules",
-    "build": "lerna run build",
+    "build": "node copy.js && lerna run build",
     "lint": "eslint . --max-warnings 0",
     "jest-tests": "jest --testPathIgnorePatterns tests/integration",
     "test": "npm run flow:check && npm run ts:check && npm run lint && npm run jest-tests",
