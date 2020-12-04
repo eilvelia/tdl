@@ -2,6 +2,10 @@
 
 <!-- Hi. -->
 
+## tdl-tdlib-addon@0.8.2 (2020-12-04)
+
+- Fixed not building on Windows.
+
 ## tdl@6.2.0 (2020-11-08)
 
 - New method: `client.close()`, returns a promise.

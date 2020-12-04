@@ -1,6 +1,6 @@
 {
   "name": "tdl-tdlib-addon",
-  "version": "0.8.0",
+  "version": "0.8.2",
   "description": "Node.js N-API addon that provides bindings to TDLib",
   "main": "index.js",
   "types": "index.d.ts",
@@ -31,6 +31,8 @@
     "index.d.ts",
     "binding.gyp",
     "td.cpp",
+    "win32-dlfcn.cpp",
+    "win32-dlfcn.h",
     "LICENSE"
   ],
   "keywords": [
