@@ -4,9 +4,9 @@
 
 Node.js N-API addon that provides bindings to [TDLib][]'s libtdjson.
 
-It is meant to use with the [tdl][] package.
+It is meant to be used with the [tdl][] package.
 
-`tdl-tdlib-addon` supports TypeScript and Flow typings out of the box.
+`tdl-tdlib-addon` provides TypeScript and Flow typings out of the box.
 
 [TDLib]: https://github.com/tdlib/td
 [tdl]: https://github.com/Bannerets/tdl
