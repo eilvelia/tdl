@@ -1,8 +1,6 @@
 // @flow
 
-/* eslint-disable quotes */
-/* eslint-disable semi */
-/* eslint-disable comma-dangle */
+/* eslint-disable quotes, semi, comma-dangle */
 
 const { deepRenameKey, deepRenameKey_ } = require("../dist/util");
 
@@ -17,8 +15,12 @@ const OBJ = Object.freeze({
   innerObjWithoutType: {
     k1: "v1",
     k2: "v2",
+    nil: null,
+    und: undefined,
   },
   nullField: null,
+  undefinedField: undefined,
+  numbers: 1234,
   emptyStr: "",
   typeInStr: "@type",
   underscoreInStr: "_",
@@ -28,6 +30,11 @@ const OBJ = Object.freeze({
       can_send_messages: false,
       can_send_media_messages: false,
       can_send_polls: false,
+      innerArray: [
+        {
+          _: "type",
+        },
+      ],
     },
     {
       _: "chatNotificationSettings",
@@ -50,6 +57,11 @@ test("immutable deepRenameKey", () => {
           "can_send_media_messages": false,
           "can_send_messages": false,
           "can_send_polls": false,
+          "innerArray": Array [
+            Object {
+              "@type": "type",
+            },
+          ],
         },
         Object {
           "@type": "chatNotificationSettings",
@@ -61,15 +73,19 @@ test("immutable deepRenameKey", () => {
       "innerObjWithoutType": Object {
         "k1": "v1",
         "k2": "v2",
+        "nil": null,
+        "und": undefined,
       },
       "is_pinned": false,
       "nullField": null,
+      "numbers": 1234,
       "order": "0",
       "type": Object {
         "@type": "chatTypeSupergroup",
         "is_channel": true,
       },
       "typeInStr": "@type",
+      "undefinedField": undefined,
       "underscoreInStr": "_",
     }
   `);
@@ -88,6 +104,11 @@ test("mutable deepRenameKey_", () => {
           "can_send_media_messages": false,
           "can_send_messages": false,
           "can_send_polls": false,
+          "innerArray": Array [
+            Object {
+              "@type": "type",
+            },
+          ],
         },
         Object {
           "@type": "chatNotificationSettings",
@@ -99,15 +120,19 @@ test("mutable deepRenameKey_", () => {
       "innerObjWithoutType": Object {
         "k1": "v1",
         "k2": "v2",
+        "nil": null,
+        "und": undefined,
       },
       "is_pinned": false,
       "nullField": null,
+      "numbers": 1234,
       "order": "0",
       "type": Object {
         "@type": "chatTypeSupergroup",
         "is_channel": true,
       },
       "typeInStr": "@type",
+      "undefinedField": undefined,
       "underscoreInStr": "_",
     }
   `);

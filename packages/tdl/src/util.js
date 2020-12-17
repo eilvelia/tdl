@@ -22,72 +22,52 @@ export function mergeDeepRight (obj1, obj2) {
   return obj2
 }
 
-declare function map<T, R>(
-  xs: Array<T>,
-  fn: (x: T) => R
-): Array<R>
-declare function map<T, R>(
-  xs: { [key: string]: T },
-  fn: (x: T) => R
-): { [key: string]: R }
-function map (obj, f) {
-  if (Array.isArray(obj))
-    return obj.map(f)
-  const result = {}
-  for (const [k, v] of Object.entries(obj))
-    result[k] = f(v)
-  return result
-}
-
-// immutable
-export function renameKey (
+function deepRenameValue (
   oldKey: string,
   newKey: string,
-  obj: { [k: string]: mixed }
-): { [k: string]: mixed } {
+  v: mixed
+): any {
+  if (Array.isArray(v))
+    return v.map(x => deepRenameValue(oldKey, newKey, x))
+  if (typeof v === 'object' && v !== null)
+    return deepRenameKey(oldKey, newKey, v)
+  return v
+}
+
+/** Immutable. Functions in the object are not supported */
+export function deepRenameKey (
+  oldKey: string,
+  newKey: string,
+  obj: { +[key: string]: mixed }
+): any {
   const newObj = {}
   for (const [k, v] of Object.entries(obj))
-    newObj[k === oldKey ? newKey : k] = v
+    newObj[k === oldKey ? newKey : k] = deepRenameValue(oldKey, newKey, v)
   return newObj
 }
 
-// mutable
-export const renameKey_ = (
+/** Mutable (changes the `obj` object) */
+export function deepRenameKey_ (
   oldKey: string,
   newKey: string,
-  obj: { [k: string]: mixed }
-): { [k: string]: mixed } => {
-  obj[newKey] = obj[oldKey]
-  delete obj[oldKey]
-  return obj
-}
+  obj: { [key: string]: mixed }
+): any {
+  const stack: Array<{ [key: string]: mixed } | Array<mixed>> = []
 
-// immutable
-export const deepRenameKey = (
-  oldKey: string,
-  newKey: string,
-  obj: Object
-): Object => {
-  const newObj: Object = obj[oldKey] ? renameKey(oldKey, newKey, obj) : obj
+  stack.push(obj)
 
-  const fn = e => (e && typeof e === 'object')
-    ? deepRenameKey(oldKey, newKey, e)
-    : e
-
-  return map(newObj, fn)
-}
-
-// mutable
-export const deepRenameKey_ = (
-  oldKey: string,
-  newKey: string,
-  obj: Object
-): Object => {
-  if (obj[oldKey]) renameKey_(oldKey, newKey, obj)
-
-  for (const e of Object.values(obj)) {
-    if (e && typeof e === 'object')
-      deepRenameKey_(oldKey, newKey, e)
+  while (stack.length !== 0) {
+    const obj = stack.pop()
+    if (oldKey in obj && !Array.isArray(obj)) {
+      obj[newKey] = obj[oldKey]
+      delete obj[oldKey]
+    }
+    for (const v of Object.values(obj)) {
+      if (typeof v === 'object' && v !== null)
+        // `v` is read-only here, but we want to mutate it
+        // $FlowIgnore[incompatible-call]
+        stack.push(v)
+    }
   }
 
   return obj
