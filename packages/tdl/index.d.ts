@@ -49,9 +49,9 @@ export class Client {
   connect: () => Promise<void>;
   login: (getLoginDetails?: () => LoginDetails) => Promise<void>;
   connectAndLogin: (getLoginDetails?: () => LoginDetails) => Promise<void>;
-  /** @deprecated: unstable */
+  /** @deprecated unstable */
   pause: () => void;
-  /** @deprecated: unstable */
+  /** @deprecated unstable */
   resume: () => void;
   on: On;
   once: On;
@@ -60,6 +60,7 @@ export class Client {
   removeListener: Off;
   emit: Emit;
   invoke: Invoke;
+  /** Warning: for most use cases you should use client.close() instead of client.destroy() */
   destroy: () => void;
   close: () => Promise<void>;
   setLogFatalErrorCallback: (fn: null | ((errorMessage: string) => void)) => void;
