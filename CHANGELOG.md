@@ -2,6 +2,32 @@
 
 <!-- Hi. -->
 
+## tdl@7.0.0 (unreleased)
+
+- **Important**: TypeScript and Flow users now need to install `tdlib-types` for the TDLib typings to work.
+It is now possible to install the typings for other TDLib versions.
+- `client.pause()` and `client.resume()` are now deprecated.
+- Removed deprecated `client.invokeFuture`.
+- Added `client.getBackendName(): string` function.
+- Supports only TDLib v1.5.0 or newer (instead of v1.4.0).
+- Requires `tdl-shared@0.10.0`.
+- Multiple documentation improvements.
+- Internal:
+- - Updated Flow to v0.138.0.
+
+## tdlib-types@1 (unreleased)
+
+- This is the first release of `tdlib-types`, see its [README](packages/tdlib-types/README.md).
+- The TDLib typings have been split from the `tdl` package into this package.
+- The generator now parses "may be null" comments.
+- Added typings for TDLib v1.7.0.
+
+## tdl-shared@0.10.0, tdl-tdlib-addon@1.0.0, tdl-tdlib-ffi@3.0.0, tdl-tdlib-wasm@0.6.0 (unreleased)
+
+- Removed deprecated `setLogFilePath`, `setLogMaxFileSize`, and `setLogVerbosityLevel`.
+- New method: `getName(): string`.
+- `create()` now doesn't need to return a promise.
+
 ## tdl-tdlib-addon@0.8.2 (2020-12-04)
 
 - Fixed not building on Windows.

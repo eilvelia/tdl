@@ -30,8 +30,8 @@ TDLib version 1.5.0 or newer is required.
 ### Installation
 
 1. Build TDLib (https://github.com/tdlib/td#building)
-2. `npm i tdl tdl-tdlib-addon` (install both)
-3. `npm i --save-dev tdlib-types` if you use TypeScript or Flow (recommended)
+2. `npm i tdl tdl-tdlib-addon` &nbsp;(install both)
+3. `npm i --save-dev tdlib-types` if you use TypeScript or Flow &nbsp;(recommended)
 
 You can also use third-party pre-built binaries:
 
@@ -376,7 +376,7 @@ import type { updateMessageViews, messageInvoice /* ... */ } from 'tdlib-types'
 
 The latest available typings are for TDLib v1.7.0.
 
-You can install typings for other TDLib versions.
+You can install typings for other TDLib versions using `npm install -D tdlib-types@td-<TDLIB_VERSION>`.
 Example for TDLib v1.5.0: `npm install -D tdlib-types@td-1.5.0`.
 
 See also [packages/tdlib-types/README.md](packages/tdlib-types/README.md).
