@@ -49,7 +49,9 @@ declare export class Client {
   connect: () => Promise<void>;
   login: (getLoginDetails?: () => LoginDetails) => Promise<void>;
   connectAndLogin: (getLoginDetails?: () => LoginDetails) => Promise<void>;
+  /** @deprecated: unstable */
   pause: () => void;
+  /** @deprecated: unstable */
   resume: () => void;
   on: On;
   once: On;

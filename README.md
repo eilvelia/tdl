@@ -421,7 +421,6 @@ You can use multiple clients with `tdl-tdlib-addon` if the number of clients < [
 With `tdl-tdlib-ffi` it's not possible to use multiple clients simultaneously in one process, see [#18][].
 If you try, it will result in use after free.
 You can create multiple processes using [child_process.fork][].
-You also can "pause" clients that you don't currently need via `client.pause()` and `client.resume()` functions.
 
 [#18]: https://github.com/Bannerets/tdl/issues/18
 [child_process.fork]: https://nodejs.org/dist/latest-v14.x/docs/api/child_process.html#child_process_child_process_fork_modulepath_args_options

@@ -283,6 +283,7 @@ export class Client {
     return this.login(fn)
   }
 
+  /** @deprecated */
   pause = (): void => {
     if (!this._paused) {
       debug('pause')
@@ -292,6 +293,7 @@ export class Client {
     }
   }
 
+  /** @deprecated */
   resume = (): void => {
     if (this._paused) {
       debug('resume')
