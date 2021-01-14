@@ -25,7 +25,7 @@
     "tldoc": "^0.2.0"
   },
   "peerDependencies": {
-    "tdl": ">= 6.3.0"
+    "tdl": ">= 7.0.0"
   },
   "author": "Bannerets <comonoid@protonmail.com>",
   "license": "MIT",
