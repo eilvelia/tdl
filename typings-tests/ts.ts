@@ -4,7 +4,7 @@ import { Client, TdlError } from '../packages/tdl'
 
 const tdlib = new TDLib('str')
 
-const tdlibAddon = new TDLib('tdjson')
+const tdlibAddon = new TDLibAddon('tdjson')
 
 import {
   error as Td$error,
@@ -12,13 +12,19 @@ import {
   User as Td$User,
   Update as Td$Update,
   formattedText as Td$formattedText,
-  formattedText$Input as Td$formattedText$Input
-} from '../packages/tdl/types/tdlib'
+  formattedText$Input as Td$formattedText$Input,
+  InvokeFuture
+} from '../packages/tdlib-types'
+
+import * as Future from 'fluture'
 
 const cl = new Client(tdlib, {
   apiId: 2234,
   apiHash: 'abcdef',
-  useTestDc: false
+  useTestDc: false,
+  tdlibParameters: {
+    device_model: 'unknown'
+  }
 })
 
 new Client(tdlib, { receiveTimeout: 10 })
@@ -109,7 +115,11 @@ new TDLib()
 
 const pp: Promise<Td$User> = cl.invoke({ _: 'getMe' })
 
-cl.invokeFuture({
+const name: string = client.getBackendName()
+
+const invokeFuture = Future.encaseP(client.invoke) as InvokeFuture
+
+invokeFuture({
   _: 'searchPublicChat',
   username: 'username'
 })
@@ -117,7 +127,7 @@ cl.invokeFuture({
   .mapRej(err => `Error: ${err.message}`)
   .fork(console.error, console.log)
 
-client.invokeFuture({
+invokeFuture({
   _: 'searchPublicChat',
   username: 'username'
 })

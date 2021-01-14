@@ -4,13 +4,15 @@ import type {
   Update as Td$Update,
   error as Td$error,
   Invoke,
-  InvokeFuture,
-  Execute
-} from './types/tdlib'
+  Execute,
+  tdlibParameters$Input
+} from 'tdlib-types'
 
 import type { TDLibClient, ITDLibJSON } from 'tdl-shared'
 
 export type { TDLibClient, ITDLibJSON }
+
+export type TDLibParameters = $Rest<tdlibParameters$Input, {| _: 'tdlibParameters' |}>
 
 declare export class TdlError extends Error {
   +err: any;
@@ -43,10 +45,13 @@ export type Off =
 declare export class Client {
   constructor(tdlibInstance: ITDLibJSON, options?: ConfigType): this;
   static create(tdlibInstance: ITDLibJSON, options?: ConfigType): Client;
+  getBackendName: () => string;
   connect: () => Promise<void>;
   login: (getLoginDetails?: () => LoginDetails) => Promise<void>;
   connectAndLogin: (getLoginDetails?: () => LoginDetails) => Promise<void>;
+  /** @deprecated unstable */
   pause: () => void;
+  /** @deprecated unstable */
   resume: () => void;
   on: On;
   once: On;
@@ -55,8 +60,7 @@ declare export class Client {
   removeListener: Off;
   emit: Emit;
   invoke: Invoke;
-  /** @deprecated Use client.invoke or create your own wrapper for Fluture */
-  invokeFuture: InvokeFuture;
+  /** Warning: for most use cases you should use client.close() instead of client.destroy() */
   destroy: () => void;
   close: () => Promise<void>;
   setLogFatalErrorCallback: (fn: null | ((errorMessage: string) => void)) => void;
@@ -73,24 +77,6 @@ declare export {
 declare export default Client
 
 // ---
-
-export type TDLibParameters = {
-  use_test_dc?: boolean,
-  database_directory?: string,
-  files_directory?: string,
-  use_file_database?: boolean,
-  use_chat_info_database?: boolean,
-  use_message_database?: boolean,
-  use_secret_chats?: boolean,
-  api_id?: number,
-  api_hash?: string,
-  system_language_code?: string,
-  device_model?: string,
-  system_version?: string,
-  application_version?: string,
-  enable_storage_optimizer?: boolean,
-  ignore_file_names?: boolean
-}
 
 export type LoginUser = {|
   type: 'user',

@@ -13,8 +13,9 @@ const client = new Client(new TDLib(), {
 
 client.on('error', console.error)
 
-// You can import TypeScript/Flow type `InvokeFuture` for this function
-// using `import type { InvokeFuture } from 'tdl/types/tdlib'`
+// For TypeScript / Flow, `InvokeFuture` type for this function can be imported
+// via `import type { InvokeFuture } from 'tdlib-types'`. Use it like this:
+// `const invokeFuture = Future.encaseP(client.invoke) as InvokeFuture`
 const invokeFuture = Future.encaseP(client.invoke)
 
 const searchChat = username =>

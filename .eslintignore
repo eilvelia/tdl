@@ -5,7 +5,8 @@ flow/
 scripts/
 vendor/
 examples/
-/packages/tdl/types/tdlib.js
+/packages/tdlib-types/index.js
 /test.js
 *.ts
 typings-tests/
+/jest.config.js

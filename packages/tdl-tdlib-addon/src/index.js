@@ -25,13 +25,17 @@ export class TDLib implements ITDLibJSON {
     addonPath: string = '../build/Release/td.node'
   ) {
     debug('constructor')
-    // $FlowOff
+    // $FlowIgnore[unsupported-syntax]
     this._addon = require(addonPath)
     // console.log(this._addon)
     this._addon.load_tdjson(libraryFile)
   }
 
-  async create (): Promise<TDLibClient> {
+  getName (): string {
+    return 'addon'
+  }
+
+  create (): TDLibClient {
     debug('create')
     return this._addon.td_client_create()
   }
@@ -65,21 +69,6 @@ export class TDLib implements ITDLibJSON {
   destroy (client: TDLibClient): void {
     debug('destroy')
     this._addon.td_client_destroy(client)
-  }
-
-  setLogFilePath (path: string): number {
-    debug('setLogFilePath', path)
-    return this._addon.td_set_file_path(path)
-  }
-
-  setLogMaxFileSize (maxFileSize: number | string): void {
-    debug('setLogMaxFileSize', maxFileSize)
-    this._addon.td_set_max_file_size(maxFileSize.toString())
-  }
-
-  setLogVerbosityLevel (verbosity: number): void {
-    debug('setLogVerbosityLevel', verbosity)
-    this._addon.td_set_verbosity_level(verbosity)
   }
 
   setLogFatalErrorCallback (fn: null | (errorMessage: string) => void): void {

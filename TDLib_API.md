@@ -10,7 +10,7 @@ See interface declarations in [tdl-shared/index.js.flow](packages/tdl-shared/ind
 
 ---
 
-##### `create: () => Promise<TDLibClient>`
+##### `create: () => TDLibClient`
 
 ```js
 const client = await tdlib.create()
@@ -62,31 +62,6 @@ tdlib.destroy(client)
 ```
 
 [Docs](https://core.telegram.org/tdlib/docs/td__json__client_8h.html#a75c765a44f3bdf6a724d90c2e7f75ecf)
-
-##### `setLogFilePath: (path: string) => number`
-
-Deprecated.
-
-```js
-client.setLogFilePath('log.txt')
-```
-
-##### `setLogMaxFileSize: (maxFileSize: number | string) => void`
-
-Deprecated.
-
-```js
-tdlib.setLogMaxFileSize(50000)
-tdlib.setLogMaxFileSize('9007199254748991')
-```
-
-##### `setLogVerbosityLevel: (verbosity: number) => void`
-
-Deprecated.
-
-```js
-tdlib.setLogVerbosityLevel(2)
-```
 
 ##### `setLogFatalErrorCallback: (fn: null | (errorMessage: string) => void) => void`
 

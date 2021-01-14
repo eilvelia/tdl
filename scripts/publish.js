@@ -13,8 +13,8 @@ if (toPublish.length === 0) {
 
 const packagesDir = path.resolve(__dirname, '..', 'packages')
 
-function getPackageInfo (pkgStr) {
-  // $FlowOff
+function getPackageInfo (pkgStr)/*: [string, string] */ {
+  // $FlowIgnore[unsupported-syntax]
   const packageJson = require(path.join(packagesDir, pkgStr, 'package.json'))
   return [packageJson.name, packageJson.version]
 }
@@ -37,7 +37,7 @@ function createCommit (pkgs) {
 
 function createTag ([name, v]) {
   return new Promise((resolve, reject) => {
-    const child = spawn('git', ['tag', `${name}@${v}`])
+    const child = spawn('git', ['tag', '-a', '-m', '', `${name}@${v}`])
     child.stdout.pipe(process.stdout)
     child.stderr.pipe(process.stderr)
     child.on('close', code => {

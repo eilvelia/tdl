@@ -1,6 +1,6 @@
 [![npm](https://img.shields.io/npm/v/tdl-tdlib-wasm.svg)](https://www.npmjs.com/package/tdl-tdlib-wasm)
 
-Experimental wrapper. Tested with TDLib v1.3.0.
+An experimental wrapper. Tested with TDLib v1.3.0.
 
 ## Installation
 
@@ -32,9 +32,9 @@ async function main () {
     apiHash: 'YOUR_API_HASH', // Your api_hash
     useDefaultVerbosityLevel: true
   })
-  
+
   console.log(client)
-  
+
   await client.connectAndLogin(() => ({
     getPhoneNumber: retry => Promise.resolve(window.prompt(retry
       ? 'Invalid phone number, please re-enter:'
@@ -49,7 +49,7 @@ async function main () {
       throw new Error('not supported')
     }
   }))
-  
+
   const result = await client.invoke({
     _: 'getChats',
     offset_order: '9223372036854775807',

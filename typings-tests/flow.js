@@ -1,20 +1,22 @@
 // @flow
 
-import { TDLib as Td } from '../packages/tdl-tdlib-ffi'
+import { TDLib as TdFFI } from '../packages/tdl-tdlib-ffi'
 import { TDLib as TdAddon } from '../packages/tdl-tdlib-addon'
 import { Tdl, TdlError, Client } from '../packages/tdl'
 
-var tdlib = new Td()
+import * as Td from '../packages/tdlib-types'
+
+import * as Future from 'fluture'
+
+var tdlib = new TdFFI()
 var tdlibAddon = new TdAddon()
 
 ;(async () => {
-  var t = new Td('abc')
+  var t = new TdFFI('abc')
   var cl = await t.create()
   t.destroy(cl)
-  // $ExpectError
+  // $FlowExpectedError[prop-missing]
   t.destroy({})
-
-  t.setLogMaxFileSize(235)
 
   new Tdl(t)
   const tdl = new Tdl(t, { loginDetails: { type: 'user' } })
@@ -22,7 +24,7 @@ var tdlibAddon = new TdAddon()
 
   tdl.pause()
   tdl.resume()
-  // $ExpectError
+  // $FlowExpectedError[extra-arg]
   tdl.resume(2)
 
   await tdl.login(() => ({
@@ -46,55 +48,49 @@ var tdlibAddon = new TdAddon()
 
   await tdl.login(() => ({}))
 
-  // $ExpectError
+  // $FlowExpectedError[incompatible-call]
   await tdl.login(() => ({ getToken: () => Promise.resolve('token') }))
-  // $ExpectError
+  // $FlowExpectedError[incompatible-call]
   await tdl.login(() => {})
-  // $ExpectError
+  // $FlowExpectedError[incompatible-call]
   await tdl.login(() => ({ a: 2 }))
-  // $ExpectError
+  // $FlowExpectedError[incompatible-call]
   await tdl.login(() => ({ type: 'abc' }))
 
-  // $ExpectError
+  // $FlowExpectedError[incompatible-call]
   tdl.login(123)
-  // $ExpectError
+  // $FlowExpectedError[incompatible-call]
   tdl.login(() => 2)
 
   await tdl.close()
 })
 
-
-import type {
-  error as Td$error,
-  Chat as Td$Chat,
-  Update as Td$Update,
-  formattedText as Td$formattedText,
-  formattedText$Input as Td$formattedText$Input
-} from '../packages/tdl/types/tdlib'
-
 const client = new Client(tdlib, {
   apiId: 222,
   apiHash: 'abc',
-  useTestDc: true
+  useTestDc: true,
+  tdlibParameters: {
+    device_model: 'unknown'
+  }
 })
 
 new Client(tdlibAddon)
 
 new Client(tdlib, { receiveTimeout: 10 })
 
-// $ExpectError
+// $FlowExpectedError[prop-missing]
 new Client({ useTestDc: {} })
 
 
 Client.create(tdlib).on('error', console.error)
 Client.create(tdlib, {})
 Client.create(tdlib, { apiId: 222 })
-// $ExpectError
+// $FlowExpectedError[prop-missing]
 Client.create({ apiId: {} })
 
 client.setLogFatalErrorCallback(a => console.log(a))
 client.setLogFatalErrorCallback(null)
-// $ExpectError
+// $FlowExpectedError[incompatible-call]
 client.setLogFatalErrorCallback('1234')
 
 
@@ -109,14 +105,14 @@ client.setLogFatalErrorCallback('1234')
     .on('auth-not-needed', () => {})
     .on('auth-needed', () => {})
 
-  // $ExpectError
+  // $FlowExpectedError[incompatible-call]
   client.on('abc')
-  // $ExpectError
+  // $FlowExpectedError[incompatible-call]
   client.on('error')
 
   client.once('update', e => {
-    ;(e: Td$Update)
-    // $ExpectError
+    ;(e: Td.Update)
+    // $FlowExpectedError[incompatible-cast]
     ;(e: number)
   })
 
@@ -124,31 +120,28 @@ client.setLogFatalErrorCallback('1234')
     if (e instanceof TdlError) {
       console.log((e: TdlError))
       console.log(e.err)
-      // $ExpectError
+      // $FlowExpectedError[prop-missing]
       console.log(e.ab)
       return
     }
     console.log(e.message)
-    // $ExpectError
+    // $FlowExpectedError[prop-missing]
     console.log(e.abc)
   })
 
   client.removeListener('update', () => {})
   client.removeListener('update', () => {}, true)
   client.removeListener('update', () => {}, false)
-  // $ExpectError
+  // $FlowExpectedError[incompatible-call]
   client.removeListener('update', () => {}, 'abc')
-  // $ExpectError
+  // $FlowExpectedError[incompatible-call]
   client.removeListener('myevent', () => {})
-  // $ExpectError
+  // $FlowExpectedError[incompatible-call]
   client.removeListener('update', 'abc')
 
   ;(client.off: typeof client.removeListener)
   ;(client.addListener: typeof client.on)
   ;(client.once: typeof client.on)
-
-  // $ExpectError
-  client.setLogFilePath(1234, 'abc', 123423)
 
   const res = client.execute({
     _: 'getTextEntities',
@@ -182,21 +175,6 @@ client.setLogFatalErrorCallback('1234')
     limit: 100
   })
 
-  client.invokeFuture({
-    _: 'searchPublicChat',
-    username: 'username'
-  })
-    .map((e: Td$Chat) => e.title)
-    .mapRej((e: Td$error) => e)
-    .fork(console.error, (e: string) => console.log(e))
-
-  client.invokeFuture({
-    _: 'searchPublicChat',
-    username: 'username'
-  })
-    // $ExpectError
-    .map((e: number) => e)
-
   await client.login(() => ({
     getPhoneNumber: retry => retry
       ? Promise.reject('Invalid phone number')
@@ -218,7 +196,30 @@ client.setLogFatalErrorCallback('1234')
       : Promise.resolve('YOUR_BOT_TOKEN') // Token from @BotFather
   }))
 
-  // Td$formattedText <: Td$formattedText$Input
-  declare var fmt: Td$formattedText
-  const fmtOpt: Td$formattedText$Input = fmt
+  // Td.formattedText <: Td.formattedText$Input
+  declare var fmt: Td.formattedText
+  const fmtInp: Td.formattedText$Input = fmt
+
+  // subtyping also should work correctly with 'may be null' fields
+  declare var authCode: Td.authenticationCodeInfo
+  const authCodeInp: Td.authenticationCodeInfo$Input = authCode
+
+  const name: string = client.getBackendName()
+
+  const invokeFuture: Td.InvokeFuture = (Future.encaseP(client.invoke): any)
+
+  invokeFuture({
+    _: 'searchPublicChat',
+    username: 'username'
+  })
+    .map((e: Td.Chat) => e.title)
+    .mapRej((e: Td.error) => e)
+    .fork(console.error, (e: string) => console.log(e))
+
+  invokeFuture({
+    _: 'searchPublicChat',
+    username: 'username'
+  })
+    // $FlowExpectedError[incompatible-call]
+    .map((e: number) => e)
 })()

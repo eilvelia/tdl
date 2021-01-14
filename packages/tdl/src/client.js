@@ -3,7 +3,6 @@
 import { resolve as resolvePath } from 'path'
 import EventEmitter from 'eventemitter3'
 import Debug from 'debug'
-import { tryP } from './fluture'
 import uuidv4 from '../vendor/uuidv4'
 import { deepRenameKey, deepRenameKey_, mergeDeepRight } from './util'
 import {
@@ -32,9 +31,8 @@ import type {
   error as Td$error,
   ConnectionState as Td$ConnectionState,
   Invoke,
-  InvokeFuture,
   Execute
-} from '../types/tdlib'
+} from 'tdlib-types'
 
 const debug = Debug('tdl:client')
 const debugEmitter = Debug('tdl:client:emitter')
@@ -155,7 +153,7 @@ const TDL_MAGIC = '6c47e6b71ea'
 
 export class Client {
   +_options: StrictConfigType;
-  +_emitter = new EventEmitter();
+  +_emitter: EventEmitter = new EventEmitter();
   +_fetching: Map<string, PendingPromise> = new Map();
   +_tdlib: ITDLibJSON;
   _client: ?TDLibClient
@@ -164,8 +162,8 @@ export class Client {
   _authNeeded: boolean = false
   _loginDetails: ?StrictLoginDetails
   _loginDefer: TdlDeferred<void, any> = new TdlDeferred()
-  _paused = false
-  _initialized = false
+  _paused: boolean = false
+  _initialized: boolean = false
 
   constructor (tdlibInstance: ITDLibJSON, options: ConfigType = {}) {
     this._options = (mergeDeepRight(defaultOptions, options): StrictConfigType)
@@ -181,6 +179,10 @@ export class Client {
 
   static create (tdlibInstance: ITDLibJSON, options: ConfigType = {}): Client {
     return new Client(tdlibInstance, options)
+  }
+
+  getBackendName = (): string => {
+    return this._tdlib.getName()
   }
 
   _catchError (err: Td$error | TdlError): void {
@@ -203,7 +205,7 @@ export class Client {
     this._loginDefer.reject(err)
   }
 
-  async _init (): Promise<void> {
+  _init (): void {
     try {
       if (!this._options.useDefaultVerbosityLevel) {
         debug('_init: setLogVerbosityLevel', this._options.verbosityLevel)
@@ -213,14 +215,19 @@ export class Client {
         })
       }
 
-      this._client = await this._tdlib.create()
+      this._client = this._tdlib.create()
     } catch (e) {
       this._catchError(new TdlError(e, 'Error while creating client'))
       return
     }
 
     this._initialized = true
+
+    if (this._options.disableAuth)
+      this._connectDefer.resolve()
+
     this._loop()
+      .catch(e => this._catchError(new TdlError(e)))
   }
 
   connect = (): Promise<void> => {
@@ -240,7 +247,7 @@ export class Client {
     debug('client.login()')
     this._emitter.once('auth-needed', () => {
       this._loginDetails = (mergeDeepRight(
-        defaultLoginDetails, getLoginDetails()): $FlowOff)
+        defaultLoginDetails, getLoginDetails()): $FlowIgnore)
       debug('set _loginDetails to', this._loginDetails)
     })
     return new Promise((resolve, reject) => {
@@ -276,6 +283,7 @@ export class Client {
     return this.login(fn)
   }
 
+  /** @deprecated */
   pause = (): void => {
     if (!this._paused) {
       debug('pause')
@@ -285,6 +293,7 @@ export class Client {
     }
   }
 
+  /** @deprecated */
   resume = (): void => {
     if (this._paused) {
       debug('resume')
@@ -328,7 +337,7 @@ export class Client {
 
   invoke: Invoke = async request => {
     const id = uuidv4()
-    // $FlowOff
+    // $FlowIgnore[prop-missing]
     request['@extra'] = id
     const receiveResponse = new Promise((resolve, reject) => {
       // This promise must not be rejected with values other than Td$error
@@ -343,13 +352,6 @@ export class Client {
     this._send(request)
     return receiveResponse
   }
-
-  // Deprecated message descriptions are specified in the
-  // index.js.flow/index.d.ts files
-
-  /** @deprecated */
-  invokeFuture: InvokeFuture =
-    (request => tryP(() => this.invoke(request)): $FlowOff)
 
   destroy = (): void => {
     if (!this._client) return
@@ -401,13 +403,14 @@ export class Client {
   }
 
   _sendTdl (request: TDFunction): void {
-    // $FlowOff
+    // $FlowIgnore[prop-missing]
     this._send({ ...request, '@extra': TDL_MAGIC })
   }
 
   async _receive (timeout: number = this._options.receiveTimeout): Promise<Object/*TDObject*/ | null> {
     if (!this._client) return null
     const tdResponse = await this._tdlib.receive(this._client, timeout)
+    // Note: Immutable rename is used to preserve key order (for better logs)
     return tdResponse && (this._options.useMutableRename
       ? deepRenameKey_('@type', '_', tdResponse)
       : deepRenameKey('@type', '_', tdResponse))
@@ -499,13 +502,13 @@ export class Client {
         return this._sendTdl({
           _: 'setTdlibParameters',
           'parameters': {
-            ...this._options.tdlibParameters,
-            _: 'tdlibParameters',
             database_directory: resolvePath(this._options.databaseDirectory),
             files_directory: resolvePath(this._options.filesDirectory),
             api_id: this._options.apiId,
             api_hash: this._options.apiHash,
-            use_test_dc: this._options.useTestDc
+            use_test_dc: this._options.useTestDc,
+            ...this._options.tdlibParameters,
+            _: 'tdlibParameters'
           }
         })
 
@@ -588,18 +591,18 @@ export class Client {
   }
 
   _emitErrWithoutExtra (error: Td$error): void {
-    // $FlowOff
+    // $FlowIgnore[prop-missing]
     delete error['@extra']
     this._catchError(error)
   }
 
   async _handleError (error: Td$error): Promise<void> {
-    // $FlowOff
+    // $FlowIgnore[prop-missing]
     const id = error['@extra']
     const defer = this._fetching.get(id)
 
     if (defer) {
-      // $FlowOff
+      // $FlowIgnore[prop-missing]
       delete error['@extra']
       defer.reject(error)
       this._fetching.delete(id)

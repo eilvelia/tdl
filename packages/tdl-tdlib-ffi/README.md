@@ -2,11 +2,11 @@
 
 [![npm](https://img.shields.io/npm/v/tdl-tdlib-ffi.svg)](https://www.npmjs.com/package/tdl-tdlib-ffi)
 
-Node.js FFI bindings to [TDLib][]'s libtdjson. It uses [node-ffi-napi][].
+Node.js FFI bindings to [TDLib][]'s libtdjson. Uses [node-ffi-napi][].
 
-It is meant to use with the [tdl][] package.
+It is meant to be used with the [tdl][] package.
 
-`tdl-tdlib-ffi` supports TypeScript and Flow typings out of the box.
+`tdl-tdlib-ffi` provides TypeScript and Flow typings out of the box.
 
 [TDLib]: https://github.com/tdlib/td
 [tdl]: https://github.com/Bannerets/tdl
