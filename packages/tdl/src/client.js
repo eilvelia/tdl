@@ -168,10 +168,10 @@ export class Client {
   constructor (tdlibInstance: ITDLibJSON, options: ConfigType = {}) {
     this._options = (mergeDeepRight(defaultOptions, options): StrictConfigType)
 
-    if (!options.apiId)
+    if (!options.apiId && !options.tdlibParameters?.api_id)
       throw new TypeError('Valid api_id must be provided.')
 
-    if (!options.apiHash)
+    if (!options.apiHash && !options.tdlibParameters?.api_hash)
       throw new TypeError('Valid api_hash must be provided.')
 
     this._tdlib = tdlibInstance
