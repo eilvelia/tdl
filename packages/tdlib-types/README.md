@@ -43,6 +43,10 @@ If you use Flow and you don't have fluture installed, add this to your `.flowcon
 
 ---
 
+If you use TypeScript and see errors in `.d.ts` files, set `skipLibCheck` to true in your `tsconfig.json` (it is the default in `tsc --init`).
+
+---
+
 [tdl]: https://github.com/Bannerets/tdl
 
 See also [GENERATOR.md](GENERATOR.md).
