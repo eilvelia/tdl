@@ -2,6 +2,10 @@
 
 <!-- Hi. -->
 
+## tdl-tdlib-addon@1.0.1 (2021-02-16)
+
+- Fixes node-gyp's error log output when installing using npm v7.
+
 ## tdl@7.0.0 (2021-01-14)
 
 - **Important**: TypeScript and Flow users now need to install `tdlib-types` for the TDLib typings to work.
