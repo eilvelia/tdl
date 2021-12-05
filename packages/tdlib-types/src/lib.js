@@ -46,7 +46,7 @@ export function generate (input: string, outputType: OutputType, options: Option
   const READ_ONLY = TS ? 'readonly ' : '+'
   const EXACT = TS ? '' : '|'
 
-  const source = input.replace(/^ *vector.+$/mg, '') // XXX
+  const source = input.replace(/^ *vector +{.+$/mg, '') // XXX
 
   // console.log(JSON.stringify(tldoc(source), null, '  '))
 
