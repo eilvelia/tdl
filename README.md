@@ -23,6 +23,7 @@ TDLib version 1.5.0 or newer is required.
 - [Can I create multiple clients?](#can-i-create-multiple-clients)
 - [Contributing](#contributing)
 - [Windows](#windows)
+- [UPDATE_APP_TO_LOGIN](#update_app_to_login)
 
 ---
 
@@ -441,3 +442,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 You should install Visual Studio (or just Build Tools) and Python first.
 E.g. see https://gist.github.com/jtrefry/fd0ea70a89e2c3b7779c, https://github.com/Microsoft/nodejs-guidelines/blob/dd5074c/windows-environment.md#compiling-native-addon-modules.
 npm also has a [`windows-build-tools` package](https://github.com/felixrieseberg/windows-build-tools).
+
+---
+
+<a name="update_app_to_login"></a>
+### UPDATE_APP_TO_LOGIN
+
+If you get this error, update TDLib to v1.7.9 or newer. It is no longer
+possible to log in using a phone number in older versions of TDLib.
