@@ -117,6 +117,26 @@ const pp: Promise<Td$User> = cl.invoke({ _: 'getMe' })
 
 const name: string = client.getBackendName()
 
+client.invoke({
+  _: 'addProxy',
+  server: '127.0.0.1',
+  port: 443,
+  enable: true,
+  type: { _: 'proxyTypeMtproto', secret: '15abcdef1234567890deadbeef123456' }
+})
+
+client.invoke({
+  _: 'sendMessage',
+  chat_id: 123456789,
+  input_message_content: {
+    _: 'inputMessageText',
+    text: {
+      _: 'formattedText',
+      text: 'Hi'
+    }
+  }
+})
+
 const invokeFuture = Future.encaseP(client.invoke) as InvokeFuture
 
 invokeFuture({

@@ -192,9 +192,8 @@ Also, tdl renames `@type` to `_`.
 ```javascript
 const chats = await client.invoke({
   _: 'getChats',
-  offset_order: '9223372036854775807',
-  offset_chat_id: 0,
-  limit: 100
+  chat_list: { _: 'chatListMain' },
+  limit: 4000
 })
 ```
 
@@ -374,7 +373,7 @@ TDLib types can be imported using:
 import type { updateMessageViews, messageInvoice /* ... */ } from 'tdlib-types'
 ```
 
-The latest available typings are for TDLib v1.7.0.
+The latest available typings are for TDLib v1.8.0.
 
 You can install typings for other TDLib versions using `npm install -D tdlib-types@td-<TDLIB_VERSION>`.
 Example for TDLib v1.5.0: `npm install -D tdlib-types@td-1.5.0`.

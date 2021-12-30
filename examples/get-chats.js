@@ -1,7 +1,7 @@
 const { Client } = require('tdl')
 const { TDLib } = require('tdl-tdlib-addon')
 
-const client = new Client(new TDLib('libtdjson'), {
+const client = new Client(new TDLib(), {
   apiId: 2222, // Your api_id
   apiHash: 'YOUR_API_HASH'
 })
@@ -13,12 +13,10 @@ async function main() {
 
   const result = await client.invoke({
     _: 'getChats',
-    offset_order: '9223372036854775807',
-    offset_chat_id: 0,
-    limit: 100
+    chat_list: { _: 'chatListMain' },
+    limit: 4000
   })
 
-  // latest 100 chats will be returned
   console.log(result)
 }
 
