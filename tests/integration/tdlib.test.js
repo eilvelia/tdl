@@ -44,7 +44,7 @@ describe.each([
 
   afterAll(() => client.close())
 
-  test('authorizationStateWaitTdlibParameters received', () => new Promise(resolve => {
+  test('authorizationStateWaitTdlibParameters has been received', () => new Promise(resolve => {
     const fn = u => {
       if (u._ !== 'updateAuthorizationState') return
       if (u.authorization_state._ === 'authorizationStateWaitTdlibParameters') {
@@ -55,7 +55,7 @@ describe.each([
     client.on('update', fn)
   }))
 
-  test('invoke(testCallString) should response with the same value', async () => {
+  test('invoke(testCallString) should respond with the same value', async () => {
     const response = await client.invoke({ _: 'testCallString', x: 'hi' })
     await expect(response).toStrictEqual({ _: 'testString', value: 'hi' })
   })
