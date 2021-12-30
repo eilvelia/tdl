@@ -150,9 +150,7 @@ client.setLogFatalErrorCallback('1234')
 
   const result = await client.invoke({
     _: 'getChats',
-    //offset_order: 0,
-    offset_order: '2134',
-    offset_chat_id: 0,
+    chat_list: { _: 'chatListMain' },
     limit: 100
   })
 
@@ -170,8 +168,7 @@ client.setLogFatalErrorCallback('1234')
 
   await client.invoke({
     _: 'getChats',
-    offset_order: '9223372036854775807',
-    offset_chat_id: 0,
+    chat_list: { _: 'chatListMain' },
     limit: 100
   })
 
