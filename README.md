@@ -30,8 +30,8 @@ TDLib version 1.5.0 or newer is required.
 ### Installation
 
 1. Build TDLib (https://github.com/tdlib/td#building)
-2. `npm i tdl tdl-tdlib-addon` &nbsp;(install both)
-3. `npm i --save-dev tdlib-types` if you use TypeScript or Flow &nbsp;(recommended)
+2. `npm install tdl tdl-tdlib-addon` &nbsp;(install both)
+3. `npm install --save-dev tdlib-types` if you use TypeScript or Flow &nbsp;(recommended)
 
 You can also use third-party pre-built binaries:
 
@@ -48,13 +48,11 @@ You can also use third-party pre-built binaries:
 
 Note that Node.js exports OpenSSL symbols.
 If libtdjson is linked dynamically against openssl, it will use openssl symbols from the Node.js binary, not from your system.
-Therefore libtdjson's openssl version should be compatible with the openssl version that Node.js statically linked against (`process.versions.openssl`).<br>
-If you get segmentation faults, it's most likely due to openssl incompatibility.
+Therefore libtdjson's openssl version should be compatible with the openssl version that Node.js is statically linked against (`process.versions.openssl`).<br>
+If you get segmentation faults, it's most likely due to the incompatibility of openssl versions.
 
-<!-- Node.js contains openssl headers, so you can add an option like `-DOPENSSL_INCLUDE_DIR=<path-to-node>/include/node/` to the TDLib build. -->
-
-If you linked TDLib against system OpenSSL, you may consider rebuilding Node.js with the system openssl.<br>
-For example, you can install Node.js v12 from source via [nvm][] on GNU/Linux this way:
+If you have already built TDLib with your system OpenSSL, a possible option is to rebuild Node.js from source, dynamically linking it against the same system OpenSSL.<br>
+For example, using [nvm][], you can install Node.js v12 from source on GNU/Linux via this command:
 
 ```console
 $ nvm install -s 12 --shared-openssl --shared-openssl-includes=/usr/include/ --shared-openssl-libpath=/usr/lib/x86_64-linux-gnu/
@@ -62,7 +60,13 @@ $ nvm install -s 12 --shared-openssl --shared-openssl-includes=/usr/include/ --s
 
 [nvm]: https://github.com/nvm-sh/nvm
 
-Or you can build TDLib with the same openssl version that Node.js linked against.
+Another option is to build TDLib with the same OpenSSL version that the Node.js binary on your system includes.
+
+<!--
+Node.js contains openssl headers, so it might be possible to build TDLib directly with openssl included in Node.js using an option like this:
+`-DOPENSSL_INCLUDE_DIR=<path-to-node>/include/node/`
+However, Node.js doesn't contain the libssl library itself, so I'm not sure if it would work.
+-->
 
 This doesn't apply to Electron, since it doesn't export openssl symbols.
 
@@ -97,7 +101,7 @@ Check your OS documentation to see where it searches for the library.
 
 #### `client.connect() => Promise<undefined>`
 
-Initialize and connect your client with Telegram.
+Initialize the client and pass the options to TDLib.
 Returns a promise.
 
 ```javascript
@@ -132,11 +136,12 @@ await client.login(() => ({
 }))
 ```
 
-The `getName` function is called if the user is not registered.
+The `getName` function is called if the user is not signed up.
 
 Also see the `LoginDetails` interface in the [Options](#options) section.
 
-It is possible to not use the `client.login` helper and implement login process manually.
+It is possible to not use the `client.login` helper and implement the authorization process manually.
+This function supports logging in via phone number only. Some other authorization methods like QR code are also available on Telegram.
 
 #### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<undefined>`
 
@@ -144,7 +149,7 @@ Same as `client.connect().then(() => client.login(fn))`.
 
 #### `client.on(event: string, callback: Function) => Client`
 
-Attach an event listener to receive the updates.
+Attach an event listener to receive updates.
 
 ```javascript
 client.on('update', console.log)
@@ -179,8 +184,8 @@ You can consider using reactive libraries like RxJS or [most][] for convenient e
 
 #### `client.invoke(query: Object) => Promise<Object>`
 
-Asynchronously send a message to Telegram and receive a response.<br>
-Returns a promise, which resolves with the response, or rejects with an error.
+Asynchronously call a TDLib method.
+Returns a promise, which resolves with the response or rejects with an error.
 
 The API list can be found at https://core.telegram.org/tdlib/docs/annotated.html
 or in the [td_api.tl][] file.
@@ -213,7 +218,7 @@ await client.invoke({
 
 #### `client.execute(query: Object) => (Object | null)`
 
-Synchronously send a message to Telegram and receive a response.
+Synchronously call a TDLib method and receive a response.
 This function can be called only with methods that are marked as "can be called synchronously" in the TDLib documentation.
 
 ```javascript
@@ -235,7 +240,7 @@ await client.close()
 
 #### `client.setLogFatalErrorCallback(fn: (null | Function)) => undefined`
 
-Set the callback that will be called when a TDLib fatal error happens.
+Set the callback that will be called when a fatal error happens in TDLib.
 
 See the [TDLib doc](https://core.telegram.org/tdlib/docs/td__log_8h.html#addebe91c4525817a6d2b448634c19d71).
 
@@ -367,7 +372,7 @@ tdlibParameters: {
 `tdl` fully supports [TypeScript][] and [Flow][].
 `tdlib-types` should be installed to use the typings.
 
-TDLib types can be imported using:
+The TDLib types can be imported using:
 
 ```typescript
 import type { updateMessageViews, messageInvoice /* ... */ } from 'tdlib-types'
