@@ -56,6 +56,7 @@ See also [GENERATOR.md](GENERATOR.md).
 npm tags:
 
 [![npm](https://img.shields.io/npm/v/tdlib-types/latest.svg)](https://www.npmjs.com/package/tdlib-types)<br>
+[![npm](https://img.shields.io/npm/v/tdlib-types/td-1.8.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.7.0)<br>
 [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.7.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.7.0)<br>
 [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.6.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.6.0)<br>
 [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.5.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.5.0)<br>
