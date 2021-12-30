@@ -8,6 +8,8 @@ function gen (input/*: string*/)/*: string */ {
   return generate(input, 'flow', { version: '<ver>', commentFluture: false })
 }
 
+const schemeDir = path.join(__dirname, '..', 'scheme')
+
 describe('the tdlib-types generator', () => {
   //test('should parse "may be null" comment', () => {
   //  const str = `
@@ -20,8 +22,8 @@ describe('the tdlib-types generator', () => {
   //  expect(gen(str)).toMatchSnapshot()
   //})
 
-  test('should generate typings for TDLib v1.6.0 correctly', () => {
-    const scheme = fs.readFileSync(path.join(__dirname, 'scheme-example-1.6.0.tl'))
+  test('should generate typings for TDLib v1.8.0 correctly', () => {
+    const scheme = fs.readFileSync(path.join(schemeDir, 'v1.8.0.tl'))
       .toString()
     expect(gen(scheme)).toMatchSnapshot()
   })

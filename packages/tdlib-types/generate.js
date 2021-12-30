@@ -9,7 +9,7 @@ const readline = require('readline')
 
 const PKG_NAME = 'tdlib-types'
 
-const LATEST_VERSION = 'v1.7.0'
+const LATEST_VERSION = 'v1.8.0'
 const REV = '1'
 
 /* eslint-disable comma-dangle */
