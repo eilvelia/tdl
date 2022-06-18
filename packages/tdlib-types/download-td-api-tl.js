@@ -1,22 +1,36 @@
 #!/usr/bin/env node
-// @flow
 
-const https = require('https')
-const fs = require('fs')
-const path = require('path')
+const fetch = require('node-fetch').default
+const { createWriteStream } = require('fs')
+const { join } = require('path')
+const { pipeline } = require('stream/promises')
 
-const tag = process.argv[2]
+async function main() {
 
-if (!tag) {
-  console.error('The tag is not set.')
-  process.exit(1)
+  let tag = process.argv.slice[2] || 'latest'
+
+  const url = tag === 'latest' ?
+    'https://github.com/tdlib/td/raw/master/td/generate/scheme/td_api.tl' :
+    `https://raw.githubusercontent.com/tdlib/td/${tag}/td/generate/scheme/td_api.tl`
+
+  if (tag === 'latest') {
+
+    const cppHeader = await (await fetch('https://raw.githubusercontent.com/tdlib/td/master/td/telegram/Td.h')).text()
+
+    tag = cppHeader.match(/TDLIB_VERSION\s*=\s"(?<ver>[^"]+)"/)?.groups?.ver || '';
+
+    if (!tag) {
+      throw 'The tag is not set.'
+    }
+
+    tag = 'v' + tag;
+  }
+
+  await pipeline((await fetch(url)).body, createWriteStream(join(__dirname, 'scheme', `${tag}.tl`)))
+
 }
 
-const filepath = path.join(__dirname, 'scheme', `${tag}.tl`)
-
-const url = `https://raw.githubusercontent.com/tdlib/td/${tag}/td/generate/scheme/td_api.tl`
-
-https.get(url, res => {
-  const ostream = fs.createWriteStream(filepath)
-  res.pipe(ostream)
+main().catch(e => {
+  console.error(e);
+  process.exit(1);
 })

@@ -6,10 +6,12 @@ const path = require('path')
 const fs = require('fs')
 const fsp = fs.promises
 const readline = require('readline')
+const { extractVersion, findLatestTl, parseBinaryArgv } = require('./src/utils')
 
 const PKG_NAME = 'tdlib-types'
 
-const LATEST_VERSION = 'v1.8.0'
+const LATEST_TL = findLatestTl()
+const LATEST_VERSION = 'v' + extractVersion(LATEST_TL)
 const REV = '1'
 
 /* eslint-disable comma-dangle */
@@ -18,13 +20,15 @@ const MINOR_REVS = {
   'v1.6.0': '5',
 }
 
-function getMinorRev (ver/*: string */)/*: string */ {
+function getMinorRev(ver/*: string */)/*: string */ {
+  //todo get info from npm registry
   return MINOR_REVS[ver] || '1'
 }
 
-const inputVersion = process.argv[2]
-const help = process.argv.includes('--help')
-const toPublish = process.argv.includes('--publish')
+const { help, toPublish, argv: [inputVersion] } = parseBinaryArgv({
+  '--help': 'help',
+  '--publish': 'toPublish'
+});
 
 if (!inputVersion || help) {
   console.error('Usage: ./generate.js <tdlib-version> [--publish]')
@@ -38,11 +42,11 @@ const rl = readline.createInterface({
   output: process.stdout
 })
 
-async function replacePackageJsonVersion (ver) {
+async function replacePackageJsonVersion(ver) {
   const packageJson = path.join(__dirname, 'package.json')
   const packageLockJson = path.join(__dirname, 'package-lock.json')
 
-  async function replaceInFile (file, newVer) {
+  async function replaceInFile(file, newVer) {
     const contents = await fsp.readFile(file)
     const replaced = contents
       .toString()
@@ -63,7 +67,7 @@ async function replacePackageJsonVersion (ver) {
   return packageVer
 }
 
-function waitForClose (subprocess) {
+function waitForClose(subprocess) {
   return new Promise((resolve, reject) => {
     subprocess.on('close', code => {
       if (code !== 0) reject(new Error(`Exited with code ${code}`))
@@ -72,33 +76,34 @@ function waitForClose (subprocess) {
   })
 }
 
-function question (string) {
+function question(string) {
   return new Promise(resolve => rl.question(string, answer => resolve(answer)))
 }
 
 const schemeDir = path.join(__dirname, 'scheme')
 
-async function forVersion (ver) {
+async function forVersion(schemeFile) {
+  const rawVer = extractVersion(schemeFile)
+  const ver = 'v' + rawVer;
+  schemeFile = path.join(schemeDir, schemeFile)
+
   const flowOutputFile = path.join(__dirname, 'index.js')
   const tsOutputFile = path.join(__dirname, 'index.d.ts')
 
-  const schemeFile = path.join(schemeDir, `${ver}.tl`)
-
-  const options = { stdio: ['ignore', 'pipe', 'inherit'] }
   const flowArgs = ['./dist/index.js', ver, schemeFile]
   const tsArgs = [...flowArgs, '--ts']
 
-  const genFlow = spawn('node', flowArgs, options)
+  const genFlow = spawn('node', flowArgs, { stdio: ['ignore', 'pipe', 'inherit'] })
   const flowStream = fs.createWriteStream(flowOutputFile)
   genFlow.stdout.pipe(flowStream)
   console.log(`${ver} > index.js`)
 
-  const genTs = spawn('node', tsArgs, options)
+  const genTs = spawn('node', tsArgs, { stdio: ['ignore', 'pipe', 'inherit'] })
   const tsStream = fs.createWriteStream(tsOutputFile)
   genTs.stdout.pipe(tsStream)
   console.log(`${ver} > index.d.ts`)
 
-  await Promise.all([ waitForClose(genFlow), waitForClose(genTs) ])
+  await Promise.all([waitForClose(genFlow), waitForClose(genTs)])
 
   const pkgVer = await replacePackageJsonVersion(ver)
 
@@ -110,10 +115,9 @@ async function forVersion (ver) {
   const answer = await question(`Publish ${PKG_NAME}@${pkgVer}? [Y/n] `)
   if (!/^y/i.test(answer) && answer !== '') return
 
-  const npmOptions = { stdio: ['ignore', 'inherit', 'inherit'] }
-  const rawVer = ver.replace(/^v/, '')
+
   const distTag = `td-${rawVer}`
-  const publish = spawn('npm', ['publish', '--tag', distTag], npmOptions)
+  const publish = spawn('npm', ['publish', '--tag', distTag], { stdio: ['ignore', 'inherit', 'inherit'] })
   await waitForClose(publish)
 
   if (ver !== LATEST_VERSION) return
@@ -124,22 +128,21 @@ async function forVersion (ver) {
   console.log(`tag: latest -> ${pkgVer}`)
 }
 
-async function forAllVersions () {
-  const files = fs.readdirSync(schemeDir)
-    .filter(x => /^v.+\.tl$/.test(x))
-  const versions = files.map(x => x.replace(/^(v?.+)\.tl$/, '$1'))
-  for (const ver of versions)
-    await forVersion(ver)
+async function forAllVersions() {
+  const files = fs.readdirSync(schemeDir).filter(x => /^v.+\.tl$/i.test(x))
+  for (const file of files) {
+    await forVersion(file)
+  }
 }
 
-function start () {
+function start() {
   switch (inputVersion) {
     case 'latest':
-      return forVersion(LATEST_VERSION)
+      return forVersion(LATEST_TL)
     case 'all':
       return forAllVersions()
     default:
-      return forVersion(inputVersion)
+      return forVersion(fs.readdirSync(schemeDir).find(x => x.includes(inputVersion)))
   }
 }
 

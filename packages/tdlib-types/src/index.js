@@ -1,15 +1,24 @@
 // @flow
 
 import fs from 'fs'
+import { join, resolve } from 'path'
 import { generate } from './lib'
+import { extractVersion, findLatestTl, parseBinaryArgv } from './utils'
 
-const version = process.argv[2] || '<version>'
-const arg: ?string = process.argv[3]
-const filepath = (!arg || /^--/.test(arg)) ? 'td_api.tl' : arg
-const ts = process.argv.includes('--ts')
-const commentFluture = process.argv.includes('--no-fl')
-const usage = process.argv.includes('--usage')
-const help = process.argv.includes('--help')
+let { help, usage, commentFluture, ts, argv: [version, filepath] } = parseBinaryArgv({
+  '--usage': 'usage',
+  '--help': 'help',
+  '--no-fl': 'commentFluture',
+  '--ts': 'ts'
+})
+
+version ||= 'latest'
+filepath ||= join(__dirname, '..', 'scheme', findLatestTl() || 'td_api.tl')
+
+if (version === 'latest') {
+  const v = extractVersion(filepath);
+  version = v ? 'v' + v : '<version>'
+}
 
 if (usage || help) {
   console.log('$ ./bin <version> [filename] [--ts] [--no-fl]')
@@ -19,7 +28,7 @@ if (usage || help) {
   process.exit()
 }
 
-const source = fs.readFileSync(filepath).toString()
+const source = fs.readFileSync(resolve(filepath), 'utf-8')
 
 const outputType = ts ? 'typescript' : 'flow'
 

@@ -5,7 +5,9 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
+    "download:master_scheme": "node download-td-api-tl.js",
     "build:babel": "babel src/ -d dist/ --root-mode upward",
+    "build:gen_ts_nofl": "node dist latest --ts --no-fl > index.d.ts",
     "build:gen": "node generate.js latest",
     "build": "npm run build:babel && npm run build:gen"
   },
@@ -21,6 +23,10 @@
     "tdlib",
     "tdl"
   ],
+  "dependencies": {
+    "natsort": "^2.0.3",
+    "node-fetch": "2.6.7"
+  },
   "devDependencies": {
     "tldoc": "^0.2.0"
   },
