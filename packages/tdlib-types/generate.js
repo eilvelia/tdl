@@ -43,11 +43,17 @@ async function replacePackageJsonVersion (ver) {
   const packageLockJson = path.join(__dirname, 'package-lock.json')
 
   async function replaceInFile (file, newVer) {
-    const contents = await fsp.readFile(file)
-    const replaced = contents
-      .toString()
-      .replace(/"version":\s*".*?"/, `"version": "${newVer}"`)
-    return fsp.writeFile(file, replaced)
+    try {
+      const contents = await fsp.readFile(file)
+      const replaced = contents
+        .toString()
+        .replace(/"version":\s*".*?"/, `"version": "${newVer}"`)
+      return fsp.writeFile(file, replaced)
+    } catch (e) {
+      if (e && e.code === 'ENOENT' && file === packageLockJson)
+        return
+      throw e
+    }
   }
 
   const [major, minor, patch] = ver.replace(/^v/, '').split('.')
