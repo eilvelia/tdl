@@ -18,7 +18,7 @@
     "README.md"
   ],
   "dependencies": {
-    "debug": "^4.3.1",
+    "debug": "^4.3.4",
     "eventemitter3": "^4.0.7",
     "promptly": "^3.2.0",
     "tdl-shared": "^0.10.0"

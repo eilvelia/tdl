@@ -23,14 +23,14 @@ td_json_client_destroy_t td_json_client_destroy;
 
 td_set_log_fatal_error_callback_t td_set_log_fatal_error_callback;
 
-Napi::ArrayBuffer td_client_create(const Napi::CallbackInfo& info) {
+Napi::External<void> td_client_create(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   void* client = td_json_client_create();
-  return Napi::ArrayBuffer::New(env, client, 0);
+  return Napi::External<void>::New(env, client);
 }
 
 void td_client_send(const Napi::CallbackInfo& info) {
-  void* client = info[0].As<Napi::ArrayBuffer>().Data();
+  void* client = info[0].As<Napi::External<void>>().Data();
   std::string request_str = info[1].As<Napi::String>().Utf8Value();
   const char* request = request_str.c_str();
   td_json_client_send(client, request);
@@ -74,7 +74,7 @@ private:
 
 void td_client_receive(const Napi::CallbackInfo& info) {
   // Napi::Env env = info.Env();
-  void* client = info[0].As<Napi::ArrayBuffer>().Data();
+  void* client = info[0].As<Napi::External<void>>().Data();
   double timeout = info[1].As<Napi::Number>().DoubleValue();
   Napi::Function cb = info[2].As<Napi::Function>();
   (new ReceiverAsyncWorker(cb, client, timeout))->Queue();
@@ -82,7 +82,7 @@ void td_client_receive(const Napi::CallbackInfo& info) {
 
 Napi::Value td_client_execute(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  void* client = info[0].IsNull() ? NULL : info[0].As<Napi::ArrayBuffer>().Data();
+  void* client = info[0].IsNull() ? NULL : info[0].As<Napi::External<void>>().Data();
   std::string request_str = info[1].As<Napi::String>().Utf8Value();
   const char* request = request_str.c_str();
   const char* response = td_json_client_execute(client, request);
@@ -90,8 +90,11 @@ Napi::Value td_client_execute(const Napi::CallbackInfo& info) {
   return Napi::String::New(env, response);
 }
 
+// TODO: Call destroy automatically in a JS finalizer instead of passing
+//       the function to JS?
+
 void td_client_destroy(const Napi::CallbackInfo& info) {
-  void* client = info[0].As<Napi::ArrayBuffer>().Data();
+  void* client = info[0].As<Napi::External<void>>().Data();
   td_json_client_destroy(client);
 }
 

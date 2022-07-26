@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "types": "index.d.ts",
-  "scripts": {},
+  "scripts": {
+    "build": ""
+  },
   "author": "Bannerets <comonoid@protonmail.com>",
   "license": "MIT",
   "files": [

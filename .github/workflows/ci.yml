@@ -10,25 +10,27 @@ jobs:
         os:
           - ubuntu-latest
           - macos-latest
-          - windows-latest
+          - windows-2019
         node:
-          - 12
+          - 16
         include:
           - node: 10
+            os: ubuntu-latest
+          - node: 12
             os: ubuntu-latest
           - node: 14
             os: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-      - name: ~/.npm cache
-        uses: actions/cache@v2
-        # TODO: .npm cache doesn't work on Windows
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          cache: npm
+          cache-dependency-path: '**/package-lock.json'
+      - name: Update npm
+        run: npm install -g npm@7
+        # It looks like npm v8 doesn't work with the error:
+        # "Cannot set properties of null (setting 'parent')"
       - run: npm install # also runs the `prepare` npm script, which runs `build`
       - run: npm test
   integration-tests:
@@ -38,26 +40,25 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - ubuntu-18.04
+          - ubuntu-20.04
         tdlib:
           - v1.8.0
           - v1.7.0
           - v1.6.0
           - v1.5.0
         node:
-          - 12
+          - 16
     env:
       LIBTDJSON_PATH: tdlib/build/libtdjson.so
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-      - name: ~/.npm cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          cache: npm
+          cache-dependency-path: 'package-lock.json'
+      - name: Update npm
+        run: npm install -g npm@7
       - run: npm install
       - name: TDLib build cache
         id: tdlib-cache

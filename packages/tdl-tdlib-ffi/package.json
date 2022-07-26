@@ -8,9 +8,9 @@
     "build": "babel src/ -d dist/ --root-mode upward"
   },
   "dependencies": {
-    "debug": "^4.3.1",
-    "ffi-napi": "^3.0.1",
-    "ref-napi": "^2.0.3",
+    "debug": "^4.3.4",
+    "ffi-napi": "^4.0.3",
+    "ref-napi": "^3.0.3",
     "tdl-shared": "^0.10.0"
   },
   "peerDependencies": {

@@ -11,7 +11,7 @@ Initially was in the https://github.com/Bannerets/tdlib-typings repository.
 Build:
 
 ```console
-$ lerna run build --scope tdlib-types
+$ npm run build -w tdlib-types
 ```
 
 Run:
