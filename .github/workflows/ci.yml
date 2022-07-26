@@ -12,11 +12,15 @@ jobs:
           - macos-latest
           - windows-latest
         node:
-          - 12
+          - 16
         include:
           - node: 10
             os: ubuntu-latest
+          - node: 12
+            os: ubuntu-latest
           - node: 14
+            os: ubuntu-latest
+          - node: 18
             os: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
