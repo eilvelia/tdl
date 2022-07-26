@@ -8,7 +8,7 @@
     "build": "babel src/ -d dist/ --root-mode upward"
   },
   "dependencies": {
-    "debug": "^4.3.1",
+    "debug": "^4.3.4",
     "tdl-shared": "^0.10.0"
   },
   "peerDependencies": {

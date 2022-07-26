@@ -11,12 +11,12 @@
     "build": "babel src/ -d dist/ --root-mode upward && node-gyp rebuild"
   },
   "dependencies": {
-    "debug": "^4.3.1",
-    "node-addon-api": "^3.0.2",
+    "debug": "^4.3.4",
+    "node-addon-api": "^4.3.0",
     "tdl-shared": "^0.10.0"
   },
   "devDependencies": {
-    "node-gyp": "^7.1.0"
+    "node-gyp": "^8.4.1"
   },
   "peerDependencies": {
     "tdl": ">= 7.0.0"

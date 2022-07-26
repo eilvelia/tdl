@@ -19,3 +19,4 @@ types_first=false
 
 [declarations]
 <PROJECT_ROOT>/packages/tdlib-types/node_modules/tldoc/.*
+<PROJECT_ROOT>/node_modules/.*
