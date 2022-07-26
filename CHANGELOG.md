@@ -2,6 +2,11 @@
 
 <!-- Hi. -->
 
+## tdl-tdlib-addon@1.1.0 (2022-07-27)
+
+- Fixes `Check failed: result.second` errors on Node.js v16+ (and sometimes v14).
+This changes the representation of the `client`.
+
 ## tdl-tdlib-addon@1.0.1 (2021-02-16)
 
 - Fixes node-gyp's error log output when installing using npm v7.
