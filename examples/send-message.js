@@ -23,6 +23,8 @@ async function main() {
       }
     }
   })
+
+  await client.close()
 }
 
-main()
+main().catch(console.error)

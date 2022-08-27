@@ -74,7 +74,7 @@ type DeferredPromise<R, E> = {
   reject: (error: E) => void
 }
 
-// With `TDObject` instead of `Object` Flow was too slow
+// Flow was too slow with `TDObject` instead of `Object`
 type PendingPromise = DeferredPromise<Object/* TDObject */, Td$error>
 
 class TdlDeferred<R, E> {
@@ -150,6 +150,12 @@ function invariant (cond: boolean, msg: string) {
 }
 
 const TDL_MAGIC = '6c47e6b71ea'
+
+// Note: The public methods in Client are defined as properties.
+// The users of the library are not meant to extend Client.
+
+// Many of the functions in Client contain some complicated control flow,
+// but it should be fine on a small scale.
 
 export class Client {
   +_options: StrictConfigType;

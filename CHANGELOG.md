@@ -1,6 +1,6 @@
 # Changelog
 
-<!-- Hi. -->
+<!-- Hi! -->
 
 ## tdl-tdlib-addon@1.1.0 (2022-07-27)
 
@@ -17,8 +17,8 @@ This changes the representation of the `client`.
 It is now possible to install the typings for other TDLib versions.
 - `client.pause()` and `client.resume()` are now deprecated.
 - Removed deprecated `client.invokeFuture`.
-- Added `client.getBackendName(): string` function.
-- Supports only TDLib v1.5.0 or newer (instead of v1.4.0).
+- Added a `client.getBackendName(): string` function.
+- Dropped support for TDLib v1.4.0. TDLib v1.5.0 or newer is required now.
 - Requires `tdl-shared@0.10.0`.
 - Multiple documentation improvements.
 - Internal:

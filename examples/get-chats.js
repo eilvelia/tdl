@@ -14,10 +14,12 @@ async function main() {
   const result = await client.invoke({
     _: 'getChats',
     chat_list: { _: 'chatListMain' },
-    limit: 4000
+    limit: 9000
   })
 
   console.log(result)
+
+  await client.close()
 }
 
-main()
+main().catch(console.error)

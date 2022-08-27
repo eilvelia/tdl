@@ -10,7 +10,7 @@ See interface declarations in [tdl-shared/index.js.flow](packages/tdl-shared/ind
 
 ---
 
-##### `create: () => TDLibClient`
+#### `create: () => TDLibClient`
 
 ```js
 const client = await tdlib.create()
@@ -18,7 +18,7 @@ const client = await tdlib.create()
 
 [Docs](https://core.telegram.org/tdlib/docs/td__json__client_8h.html#a45cd6979ada11b7690d9dcb1ddc841a0)
 
-##### `send: (client: TDLibClient, query: Object) => void`
+#### `send: (client: TDLibClient, query: Object) => void`
 
 ```js
 tdlib.send(client, {
@@ -36,7 +36,7 @@ tdlib.send(client, {
 
 [Docs](https://core.telegram.org/tdlib/docs/td__json__client_8h.html#a1fea1f986bf950d19eee3032c24cce83)
 
-##### `receive: (client: TDLibClient, timeout: number) => Promise<Object | null>`
+#### `receive: (client: TDLibClient, timeout: number) => Promise<Object | null>`
 
 ```js
 const response = await tdlib.receive(client, 10)
@@ -44,7 +44,7 @@ const response = await tdlib.receive(client, 10)
 
 [Docs](https://core.telegram.org/tdlib/docs/td__json__client_8h.html#a9e0cb36bfa2bc2249905aebd7d07a4ac)
 
-##### `execute: (client: null | TDLibClient, query: Object) => Object | null`
+#### `execute: (client: null | TDLibClient, query: Object) => Object | null`
 
 ```js
 const res = await tdlib.execute(client, {
@@ -55,7 +55,7 @@ const res = await tdlib.execute(client, {
 
 [Docs](https://core.telegram.org/tdlib/docs/td__json__client_8h.html#a6d6c76380793072d4a9ce3c71ba0f1cf)
 
-##### `destroy: (client: TDLibClient) => void`
+#### `destroy: (client: TDLibClient) => void`
 
 ```js
 tdlib.destroy(client)
@@ -63,7 +63,7 @@ tdlib.destroy(client)
 
 [Docs](https://core.telegram.org/tdlib/docs/td__json__client_8h.html#a75c765a44f3bdf6a724d90c2e7f75ecf)
 
-##### `setLogFatalErrorCallback: (fn: null | (errorMessage: string) => void) => void`
+#### `setLogFatalErrorCallback: (fn: null | (errorMessage: string) => void) => void`
 
 ```js
 tdlib.setLogFatalErrorCallback(
@@ -73,4 +73,4 @@ tdlib.setLogFatalErrorCallback(
 tdlib.setLogFatalErrorCallback(null)
 ```
 
-[Docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#addebe91c4525817a6d2b448634c19d71)
+[Docs](https://core.telegram.org/tdlib/docs/td__log_8h.html#a6b2d796393f3eb6fb3c764b69c1588b5)

@@ -1,9 +1,7 @@
-## tdl
+## tdl &nbsp; [![npm](https://img.shields.io/npm/v/tdl.svg)](https://www.npmjs.com/package/tdl) [![CI](https://github.com/Bannerets/tdl/workflows/Build%20and%20test/badge.svg)](https://github.com/Bannerets/tdl/actions?query=workflow%3A%22Build+and+test%22)
 
-[![npm](https://img.shields.io/npm/v/tdl.svg)](https://www.npmjs.com/package/tdl)
-[![CI](https://github.com/Bannerets/tdl/workflows/Build%20and%20test/badge.svg)](https://github.com/Bannerets/tdl/actions?query=workflow%3A%22Build+and+test%22)
-
-A JavaScript wrapper for [TDLib][] (Telegram Database library), a library to create [Telegram][] clients or bots.<br>
+`tdl` is a JavaScript wrapper for [TDLib][] (Telegram Database library),
+a library to create [Telegram][] clients or bots.<br>
 TDLib version 1.5.0 or newer is required.
 
 [TDLib]: https://github.com/tdlib/td
@@ -18,12 +16,10 @@ TDLib version 1.5.0 or newer is required.
 - [Log in as a bot](#log-in-as-a-bot)
 - [Options](#options)
 - [Typings](#typings)
+- [Creating multiple clients](#creating-multiple-clients)
 - [WebAssembly](#webassembly)
-- [Architecture notes](#architecture-notes)
-- [Can I create multiple clients?](#can-i-create-multiple-clients)
-- [Contributing](#contributing)
-- [Windows](#windows)
-- [UPDATE_APP_TO_LOGIN](#update_app_to_login)
+- [Using on Windows](#using-on-windows)
+- [Possible errors](#possible-errors)
 
 ---
 
@@ -32,9 +28,10 @@ TDLib version 1.5.0 or newer is required.
 
 1. Build TDLib (https://github.com/tdlib/td#building)
 2. `npm install tdl tdl-tdlib-addon` &nbsp;(install both)
-3. `npm install --save-dev tdlib-types` if you use TypeScript or Flow &nbsp;(recommended)
+3. `npm install --save-dev tdlib-types` if you use Flow or TypeScript &nbsp;(recommended)
 
-You can also use third-party pre-built binaries:
+Instead of building TDLib, you can try to use third-party pre-built binaries,
+but those may depend on different versions of shared libraries:
 
 - [tdlib.native](https://github.com/ForNeVeR/tdlib.native/releases)
 
@@ -47,13 +44,18 @@ You can also use third-party pre-built binaries:
 - A C++ compiler and Python installed
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
 
-Note that Node.js exports OpenSSL symbols.
-If libtdjson is linked dynamically against openssl, it will use openssl symbols from the Node.js binary, not from your system.
-Therefore libtdjson's openssl version should be compatible with the openssl version that Node.js is statically linked against (`process.versions.openssl`).<br>
-If you get segmentation faults, it's most likely due to the incompatibility of openssl versions.
+Note that Node.js exports OpenSSL symbols. If libtdjson is linked dynamically
+against openssl, it will use openssl symbols from the Node.js binary, not from
+the system. Therefore, libtdjson's openssl version must be compatible with the
+openssl version that Node.js is statically linked against (`process.versions.openssl`).<br>
+If you get segmentation faults, it's most likely due to the incompatibility of
+openssl versions.
 
-If you have already built TDLib with your system OpenSSL, a possible option is to rebuild Node.js from source, dynamically linking it against the same system OpenSSL.<br>
-For example, using [nvm][], you can install Node.js v12 from source on GNU/Linux via this command:
+If you have already built TDLib with your system OpenSSL, a possible option is
+to rebuild Node.js from source, dynamically linking it against the same system
+OpenSSL.<br>
+For example, using [nvm][], you can install Node.js v12 from source on GNU/Linux
+via this command:
 
 ```console
 $ nvm install -s 12 --shared-openssl --shared-openssl-includes=/usr/include/ --shared-openssl-libpath=/usr/lib/x86_64-linux-gnu/
@@ -61,7 +63,9 @@ $ nvm install -s 12 --shared-openssl --shared-openssl-includes=/usr/include/ --s
 
 [nvm]: https://github.com/nvm-sh/nvm
 
-Another option is to build TDLib with the same OpenSSL version that the Node.js binary on your system includes.
+Another option, which is probably more convenient for most users, is to build
+TDLib against the same OpenSSL version that the installed Node.js binary
+includes.
 
 <!--
 Node.js contains openssl headers, so it might be possible to build TDLib directly with openssl included in Node.js using an option like this:
@@ -69,7 +73,7 @@ Node.js contains openssl headers, so it might be possible to build TDLib directl
 However, Node.js doesn't contain the libssl library itself, so I'm not sure if it would work.
 -->
 
-This doesn't apply to Electron, since it doesn't export openssl symbols.
+This doesn't apply to Electron because it doesn't export the OpenSSL symbols.
 
 <!-- TODO: also doesn't apply to Windows? -->
 
@@ -93,16 +97,17 @@ const client = new Client(new TDLib(), {
 
 `api_id` and `api_hash` can be obtained at https://my.telegram.org/.
 
-The path to `libtdjson` can be specified in the `TDLib` constructor's argument.
-It is directly passed to [`dlopen`][dlopen] / [`LoadLibrary`][ll].
-Check your OS documentation to see where it searches for the library.
+The path to `libtdjson` can be optionally specified in the `TDLib` constructor's
+argument (e.g., `new TDLib('libtdjon.so')`). It is directly passed to
+[`dlopen`][dlopen] / [`LoadLibrary`][LoadLibraryW]. Check your OS documentation
+to see where it searches for a shared library.
 
-[dlopen]: https://www.man7.org/linux/man-pages/man3/dlopen.3.html
-[ll]: https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryw
+The `Options` interface is described in [#options](#options).
 
 #### `client.connect() => Promise<undefined>`
 
 Initialize the client and pass the options to TDLib.
+This function (or `client.connectAndLogin`) should be called after creating a `Client`.
 Returns a promise.
 
 ```javascript
@@ -111,14 +116,14 @@ await client.connect()
 
 #### `client.login(fn?: () => LoginDetails) => Promise<undefined>`
 
-Log in to your Telegram account.
+Log in to the Telegram account.
 
 ```javascript
 await client.login()
 ```
 
-By default, `tdl` asks the user for the phone number, auth code, and password (if specified) in the console.
-You can pass your functions:
+By default, `tdl` asks the user for the phone number, auth code, and 2FA
+password (if specified) in the console. You can pass custom functions:
 
 ```javascript
 // Example
@@ -139,31 +144,63 @@ await client.login(() => ({
 
 The `getName` function is called if the user is not signed up.
 
-Also see the `LoginDetails` interface in the [Options](#options) section.
+It is possible (and advisable for larger apps) not to use the `client.login`
+helper and implement the authorization process manually, handling
+`authorizationStateWaitPhoneNumber` and other updates. This function supports
+logging in via phone number only. Some other methods like QR code are also
+available on Telegram.
 
-It is possible to not use the `client.login` helper and implement the authorization process manually.
-This function supports logging in via phone number only. Some other authorization methods like QR code are also available on Telegram.
+The function accepts the following interface:
+
+```typescript
+type LoginDetails = {
+  type?: 'user',
+  getPhoneNumber?: (retry?: boolean) => Promise<string>,
+  getAuthCode?: (retry?: boolean) => Promise<string>,
+  getPassword?: (passwordHint: string, retry?: boolean) => Promise<string>,
+  getName?: () => Promise<{ firstName: string, lastName?: string }>
+} | {
+  type: 'bot',
+  getToken: (retry?: boolean) => Promise<string>
+}
+// Note that client.login accepts a function that returns the object, not the
+// object directly. The function will not be called if the client is already
+// authorized.
+declare function login (fn?: () => LoginDetails): Promise<undefined>
+```
 
 #### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<undefined>`
 
 Same as `client.connect().then(() => client.login(fn))`.
+
+```javascript
+await client.connectAndLogin()
+```
 
 #### `client.on(event: string, callback: Function) => Client`
 
 Attach an event listener to receive updates.
 
 ```javascript
-client.on('update', console.log)
+function onUpdate (update) {
+  console.log('New update:', update)
+}
+client.on('update', onUpdate)
 client.on('error', console.error)
 ```
 
-Ideally you should always have a listener on `client.on('error')`.
+Ideally, you should always have a listener on `client.on('error')`.
+There is no default listener, all errors will be ignored otherwise.
+
+You can consider using reactive libraries like RxJS or [most][] for convenient event processing.
 
 `client.addListener` is an alias to this function.
 
+[most]: https://github.com/cujojs/most
+
 #### `client.once(event: string, callback: Function) => Client`
 
-Add a one-time listener.
+Attach a one-time listener.
 
 #### `client.off(event: string, listener: Function, once?: boolean) => Client`
 
@@ -171,17 +208,13 @@ Remove an event listener.
 
 ```javascript
 const listener = v => {
-  console.log('New update.', v)
-  client.off('update', listener)
+  console.log('New update:', v)
+  client.off('update', listener) // Removes the listener
 }
 client.on('update', listener)
 ```
 
-You can consider using reactive libraries like RxJS or [most][] for convenient event processing.
-
 `client.removeListener` is an alias to this function.
-
-[most]: https://github.com/cujojs/most
 
 #### `client.invoke(query: Object) => Promise<Object>`
 
@@ -190,10 +223,10 @@ Returns a promise, which resolves with the response or rejects with an error.
 
 The API list can be found at https://core.telegram.org/tdlib/docs/annotated.html
 or in the [td_api.tl][] file.
-Note: the `bytes` type means you should pass a base64-encoded string.<br>
-Also, tdl renames `@type` to `_`.
+In the tl file, the `byte` type means you should pass a **base64-encoded** string. For `int64`, it is possible to pass either a number or string, pass string for large numbers.<br>
+Note that the TDLib JSON interface actually sends a `@type` field, but `tdl` renames it to `_`.
 
-[td_api.tl]: https://github.com/tdlib/td/blob/eb80924dad30af4e6d8385d058bb7e847174df5e/td/generate/scheme/td_api.tl
+[td_api.tl]: https://github.com/tdlib/td/blob/v1.8.0/td/generate/scheme/td_api.tl
 
 ```javascript
 const chats = await client.invoke({
@@ -219,8 +252,9 @@ await client.invoke({
 
 #### `client.execute(query: Object) => (Object | null)`
 
-Synchronously call a TDLib method and receive a response.
-This function can be called only with methods that are marked as "can be called synchronously" in the TDLib documentation.
+Synchronously call a TDLib method and receive a response. This function can be
+called only with the methods marked as "can be called synchronously" in the
+TDLib documentation.
 
 ```javascript
 const res = client.execute({
@@ -233,7 +267,8 @@ const res = client.execute({
 
 Close the TDLib instance.
 
-This method sends `{ _: 'close' }` and waits until the client gets destroyed.
+This function sends `client.invoke({ _: 'close' })` and waits until the client
+gets destroyed.
 
 ```javascript
 await client.close()
@@ -243,17 +278,13 @@ await client.close()
 
 Set the callback that will be called when a fatal error happens in TDLib.
 
-See the [TDLib doc](https://core.telegram.org/tdlib/docs/td__log_8h.html#addebe91c4525817a6d2b448634c19d71).
+See this function in the [TDLib documentation](https://core.telegram.org/tdlib/docs/td__log_8h.html#a6b2d796393f3eb6fb3c764b69c1588b5).
 
 ```javascript
 client.setLogFatalErrorCallback(errorMessage => {
   console.error('Fatal error:', errorMessage)
 })
 ```
-
-#### Low-level TDLib API
-
-See [TDLib_API.md](TDLib_API.md).
 
 ---
 
@@ -299,8 +330,8 @@ const client = new Client(new TDLib(), {
 await client.connectAndLogin(() => ({
   type: 'bot',
   getToken: retry => retry
-    ? Promise.reject('Token is not valid')
-    : Promise.resolve('YOUR_BOT_TOKEN') // Token from @BotFather
+    ? Promise.reject('Invalid bot token')
+    : Promise.resolve('YOUR_BOT_TOKEN') // Enter your token from @BotFather
 }))
 ```
 
@@ -310,7 +341,7 @@ await client.connectAndLogin(() => ({
 ### Options
 
 ```typescript
-// The interface of the options you can pass to the Client constructor:
+// The interface of the options passed to the Client constructor:
 type Options = {
   apiId: number, // Can be obtained at https://my.telegram.org
   apiHash: string, // Can be obtained at https://my.telegram.org
@@ -321,32 +352,20 @@ type Options = {
   useTestDc: boolean, // Use test telegram server (default is false)
   tdlibParameters: Object, // Raw TDLib parameters
   // Advanced options:
-  skipOldUpdates: boolean, // Don't emit old updates on launch
+  skipOldUpdates: boolean, // Don't emit updates when connectionStateUpdating
   receiveTimeout: number,
   useMutableRename: boolean,
   useDefaultVerbosityLevel: boolean,
   disableAuth: boolean
-}
-
-// The `login` function accepts one of these two objects:
-type LoginDetails = {
-  type: 'user',
-  getPhoneNumber: (retry?: boolean) => Promise<string>,
-  getAuthCode: (retry?: boolean) => Promise<string>,
-  getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
-  getName: () => Promise<{ firstName: string, lastName?: string }>
-} | {
-  type: 'bot',
-  getToken: (retry?: boolean) => Promise<string>
 }
 ```
 
 Only `apiId` and `apiHash` are required fields. Any other field can be omitted.
 
 See https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html
-for parameters that can be specified in the `tdlibParameters` option.
+for the parameters that can be specified in the `tdlibParameters` option.
 
-Default `tdlibParameters`:
+The default `tdlibParameters` are:
 
 ```javascript
 tdlibParameters: {
@@ -376,13 +395,23 @@ tdlibParameters: {
 The TDLib types can be imported using:
 
 ```typescript
-import type { updateMessageViews, messageInvoice /* ... */ } from 'tdlib-types'
+import type { message as Td$message, user /* ... */ } from 'tdlib-types'
+```
+
+Or import all types at once:
+
+```typescript
+import * as Td from 'tdlib-types'
+// Use as: Td.message, Td.user, ...
 ```
 
 The latest available typings are for TDLib v1.8.0.
 
 You can install typings for other TDLib versions using `npm install -D tdlib-types@td-<TDLIB_VERSION>`.
-Example for TDLib v1.5.0: `npm install -D tdlib-types@td-1.5.0`.
+For example, to install typings for TDLib v1.7.0, run `npm install -D tdlib-types@td-1.7.0`.
+
+It is much more convenient to use `tdl` with the TypeScript types, which
+enables full autocompletion for the TDLib methods and objects.
 
 See also [packages/tdlib-types/README.md](packages/tdlib-types/README.md).
 
@@ -391,66 +420,74 @@ See also [packages/tdlib-types/README.md](packages/tdlib-types/README.md).
 
 ---
 
+<a name="creating-multiple-clients"></a>
+### Creating multiple clients
+
+`tdl-tdlib-addon` allows you to create multiple clients, but currently the number of created clients should not exceed [UV_THREADPOOL_SIZE](http://docs.libuv.org/en/v1.x/threadpool.html).
+
+---
+
 <a name="webassembly"></a>
 ### WebAssembly
 
-`tdl` also has an experimental wrapper for tdlib in wasm, see [packages/tdl-tdlib-wasm/](packages/tdl-tdlib-wasm/).
+`tdl` also has an [experimental wrapper](packages/tdl-tdlib-wasm/) for TDLib compiled to WebAssembly.
+To use it, install `tdl-tdlib-wasm` instead of `tdl-tdlib-addon`. It works in the browser only.
 
 ---
 
-<a name="architecture-notes"></a>
-### Architecture notes
+In the repository, there is also an older package `tdl-tdlib-ffi` (_now deprecated_) for Node.js,
+which uses `node-ffi-napi` instead of a custom node addon. Note that `tdl-tdlib-ffi` does not allow to create multiple clients, that will result in use-after-free. One advantage of using `ffi-napi` might be the availability of prebuilt binaries for the node addon.
 
-The library is designed to work with different "backends",
-their interface is described in [TDLib_API.md](TDLib_API.md) file.
-So the same main wrapper can be used with node ffi, with node addons,
-and in the browser with webassembly.
-
-Available "backends" in the `tdl` repository:
-
-- [tdl-tdlib-addon](packages/tdl-tdlib-addon/) (recommended)
-- [tdl-tdlib-ffi](packages/tdl-tdlib-ffi/)
-- [tdl-tdlib-wasm](packages/tdl-tdlib-wasm/) (experimental)
-
-You can easily substitute one with another, since they follow the same interface.
-
-<!-- TODO: tdl-tdlib-ffi use cases? -->
+The library is designed to work with different "backends", which all follow the same interface
+described in the [TDLib_API.md](TDLib_API.md) file (the types are described in the `tdl-shared` package),
+so it is possible to easily swap one with another. The `tdl` package itself is platform-independent. Currently, the present "backends" are `tdl-tdlib-addon` (recommended), `tdl-tdlib-ffi` (deprecated), `tdl-tdlib-wasm` (experimental).
 
 ---
 
-<a name="can-i-create-multiple-clients"></a>
-### Can I create multiple clients?
+<a name="using-on-windows"></a>
+### Using on Windows
 
-You can use multiple clients with `tdl-tdlib-addon` if the number of clients < [UV_THREADPOOL_SIZE](http://docs.libuv.org/en/v1.x/threadpool.html).
-
-With `tdl-tdlib-ffi` it's not possible to use multiple clients simultaneously in one process, see [#18][].
-If you try, it will result in use after free.
-You can create multiple processes using [child_process.fork][].
-
-[#18]: https://github.com/Bannerets/tdl/issues/18
-[child_process.fork]: https://nodejs.org/dist/latest-v14.x/docs/api/child_process.html#child_process_child_process_fork_modulepath_args_options
-
----
-
-<a name="contributing"></a>
-### Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
-
----
-
-<a name="windows"></a>
-### Windows
-
-`tdl-tdlib-ffi` and `tdl-tdlib-addon` depend on node-gyp, which may be difficult to install on Windows.
+The library depends on node-gyp, which may be difficult to install on Windows.
 You should install Visual Studio (or just Build Tools) and Python first.
-E.g. see https://gist.github.com/jtrefry/fd0ea70a89e2c3b7779c, https://github.com/Microsoft/nodejs-guidelines/blob/dd5074c/windows-environment.md#compiling-native-addon-modules.
-npm also has a [`windows-build-tools` package](https://github.com/felixrieseberg/windows-build-tools).
+For example, see https://gist.github.com/jtrefry/fd0ea70a89e2c3b7779c,
+https://github.com/Microsoft/nodejs-guidelines/blob/dd5074c/windows-environment.md#compiling-native-addon-modules.
+There's also a [`windows-build-tools` package](https://github.com/felixrieseberg/windows-build-tools) on npm.
+
+Otherwise, `tdl` works fine on Windows.
 
 ---
 
-<a name="update_app_to_login"></a>
-### UPDATE_APP_TO_LOGIN
+<a name="possible-errors"></a>
+### Possible errors
 
-If you get this error, update TDLib to v1.7.9 or newer. It is no longer
+- `UPDATE_APP_TO_LOGIN`
+
+If you get this error, update TDLib to v1.7.9 (v1.8.0) or newer. It is no longer
 possible to log in using a phone number in older versions of TDLib.
+
+- `Dynamic Loading Error: dlopen(…) image not found`
+- `Dynamic Loading Error: Win32 error 126`
+
+The tdjson shared library or one of its dependencies cannot be found. To
+troubleshoot dependency issues, try to run `ldd libtdjson.so` on Linux or
+`otool -L libtdjson.dylib` on macOS. On Windows, you can use an app like
+Dependency Walker.
+
+Recheck the documentation of [dlopen][] (Linux), [dlopen][dlopen-macos] (macOS),
+[Dynamic-Link Library Search Order][dllso] (Windows) to make sure the shared
+library is present in the search paths. By default, Linux does not search in the
+current working directory, while macOS does.
+
+[dllso]: https://docs.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-search-order#standard-search-order-for-desktop-applications
+[dlopen-macos]: https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/dlopen.3.html
+
+[dlopen]: https://www.man7.org/linux/man-pages/man3/dlopen.3.html
+[LoadLibraryW]: https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryw
+
+- Segmentation fault
+
+Most likely, the version of OpenSSL is incompatible.
+
+- `Error while reading RSA public key`
+
+The OpenSSL version is incompatible.

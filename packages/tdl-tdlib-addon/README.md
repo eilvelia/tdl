@@ -2,7 +2,8 @@
 
 [![npm](https://img.shields.io/npm/v/tdl-tdlib-addon.svg)](https://www.npmjs.com/package/tdl-tdlib-addon)
 
-Node.js N-API addon that provides bindings to [TDLib][]'s libtdjson.
+A Node.js N-API addon that provides bindings to the [TDLib][]'s libtdjson shared
+library.
 
 It is meant to be used with the [tdl][] package.
 
@@ -23,14 +24,19 @@ $ npm install tdl-tdlib-addon
 const { TDLib } = require('tdl-tdlib-addon')
 ```
 
-##### constructor: `new TDLib(libraryFile?: string, addonPath?: string)`
+#### constructor: `new TDLib(libraryFile?: string, addonPath?: string)`
 
-`libraryFile` is the filename that will be passed to [`dlopen`](https://www.man7.org/linux/man-pages/man3/dlopen.3.html) ([`LoadLibraryW`](https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryw) on Windows).
+`libraryFile` is the filename that will be passed to [`dlopen`][dlopen]
+([`LoadLibraryW`][LoadLibraryW] on Windows).
 
-By default `libraryFile` is
-`tdjson.dll` on Windows,
-`libtdjson.dylib` on macOS,
-and `libtdjson.so` on a different OS.
+[dlopen]: https://www.man7.org/linux/man-pages/man3/dlopen.3.html
+[LoadLibraryW]: https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryw
+
+By default, `libraryFile` is `tdjson.dll` on Windows, `libtdjson.dylib` on
+macOS, and `libtdjson.so` on a different OS.
+
+`addonPath` is `../build/Release/td.node` by default. This parameter generally
+should not be changed.
 
 Examples:
 

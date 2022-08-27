@@ -39,7 +39,8 @@
     "telegram",
     "telegram-api",
     "tdlib",
-    "tdl"
+    "tdl",
+    "node-addon"
   ],
   "author": "Bannerets <comonoid@protonmail.com>",
   "license": "MIT",

@@ -34,7 +34,6 @@
     "tdlib",
     "bindings",
     "mtproto",
-    "tg",
     "tglib",
     "wrapper"
   ],

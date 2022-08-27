@@ -24,7 +24,7 @@ $ npm install tdl-tdlib-ffi
 const { TDLib } = require('tdl-tdlib-ffi')
 ```
 
-##### constructor: `new TDLib(libraryFile?: string)`
+#### constructor: `new TDLib(libraryFile?: string)`
 
 `libraryFile`'s extension can be omitted.
 
