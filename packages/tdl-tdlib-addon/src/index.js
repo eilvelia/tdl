@@ -6,7 +6,7 @@ import type { TDLibClient, ITDLibJSON } from 'tdl-shared'
 
 const debug = Debug('tdl-tdlib-addon')
 
-const defaultLibraryFile = (() => {
+export const defaultLibraryFile = (() => {
   switch (process.platform) {
     case 'win32':
       return 'tdjson.dll'

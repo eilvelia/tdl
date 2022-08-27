@@ -2,6 +2,11 @@
 
 <!-- Hi! -->
 
+## (unreleased) tdl-tdlib-addon@1.2.0
+
+- Exports the `defaultLibraryFile` string. It can be imported using
+`const { TDLib, defaultLibraryFile } = require('tdl-tdlib-addon')`.
+
 ## tdl-tdlib-addon@1.1.0 (2022-07-27)
 
 - Fixes `Check failed: result.second` errors on Node.js v16+ (and sometimes v14).

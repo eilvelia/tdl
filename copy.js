@@ -23,9 +23,9 @@ async function copy (pkg, converter/*: string => string */) {
   ])
 }
 
-copy('tdl-tdlib-addon', inp => inp.replace(
-  'constructor()',
-  'constructor(libraryFile?: string, addonPath?: string)'))
+// copy('tdl-tdlib-addon', inp => inp.replace(
+//   'constructor()',
+//   'constructor(libraryFile?: string, addonPath?: string)'))
 
 copy('tdl-tdlib-ffi', inp => inp.replace(
   'constructor()',

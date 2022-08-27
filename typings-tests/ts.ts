@@ -1,10 +1,10 @@
 import { TDLib } from '../packages/tdl-tdlib-ffi'
-import { TDLib as TDLibAddon } from '../packages/tdl-tdlib-addon'
+import { TDLib as TDLibAddon, defaultLibraryFile } from '../packages/tdl-tdlib-addon'
 import { Client, TdlError } from '../packages/tdl'
 
 const tdlib = new TDLib('str')
 
-const tdlibAddon = new TDLibAddon('tdjson')
+const tdlibAddon = new TDLibAddon(`path/${defaultLibraryFile}`)
 
 import {
   error as Td$error,

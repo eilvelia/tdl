@@ -1,7 +1,7 @@
 // @flow
 
 import { TDLib as TdFFI } from '../packages/tdl-tdlib-ffi'
-import { TDLib as TdAddon } from '../packages/tdl-tdlib-addon'
+import { TDLib as TdAddon, defaultLibraryFile } from '../packages/tdl-tdlib-addon'
 import { Tdl, TdlError, Client } from '../packages/tdl'
 
 import * as Td from '../packages/tdlib-types'
@@ -9,7 +9,7 @@ import * as Td from '../packages/tdlib-types'
 import * as Future from 'fluture'
 
 var tdlib = new TdFFI()
-var tdlibAddon = new TdAddon()
+var tdlibAddon = new TdAddon(defaultLibraryFile)
 
 ;(async () => {
   var t = new TdFFI('abc')

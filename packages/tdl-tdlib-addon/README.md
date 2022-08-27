@@ -33,7 +33,8 @@ const { TDLib } = require('tdl-tdlib-addon')
 [LoadLibraryW]: https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryw
 
 By default, `libraryFile` is `tdjson.dll` on Windows, `libtdjson.dylib` on
-macOS, and `libtdjson.so` on a different OS.
+macOS, and `libtdjson.so` on a different OS. This default value is exported as
+`defaultLibraryFile` (`const { defaultLibraryFile } = require('tdl-tdlib-addon')`).
 
 `addonPath` is `../build/Release/td.node` by default. This parameter generally
 should not be changed.
