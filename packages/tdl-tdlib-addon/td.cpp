@@ -1,9 +1,34 @@
 #include <napi.h>
 
-#ifdef WIN32
-#include "win32-dlfcn.h"
+// features.h is needed for __GLIBC__
+#if defined(__has_include)
+#  if __has_include(<features.h>)
+#    include <features.h>
+#  endif
 #else
-#include <dlfcn.h>
+#  include <stdio.h>
+#endif
+
+// _GNU_SOURCE is for dlmopen
+#if defined(__GLIBC__) && !defined(_GNU_SOURCE)
+#  define _GNU_SOURCE
+#endif
+
+#if defined(WIN32) or defined(_WIN32) or defined(__WIN32__)
+#  include "win32-dlfcn.h"
+#else
+#  include <dlfcn.h>
+#endif
+
+#ifdef __GLIBC__
+#  pragma message("Glibc found: using dlmopen")
+#  define DLOPEN(FILE) dlmopen(LM_ID_NEWLM, FILE, RTLD_LAZY | RTLD_LOCAL);
+#elif defined(RTLD_DEEPBIND)
+#  pragma message("Using RTLD_DEEPBIND")
+#  define DLOPEN(FILE) dlopen(FILE, RTLD_LAZY | RTLD_LOCAL | RTLD_DEEPBIND);
+#else
+#  pragma message("Using standard dlopen")
+#  define DLOPEN(FILE) dlopen(FILE, RTLD_LAZY | RTLD_LOCAL);
 #endif
 
 typedef void * (*td_json_client_create_t)();
@@ -129,7 +154,7 @@ void load_tdjson(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   std::string library_file_str = info[0].As<Napi::String>().Utf8Value();
   const char* library_file = library_file_str.c_str();
-  void* handle = dlopen(library_file, RTLD_LAZY | RTLD_LOCAL);
+  void* handle = DLOPEN(library_file)
   if (handle == NULL) {
     char* dlerror_message = dlerror();
     std::string err_message(dlerror_message == NULL ? "NULL" : dlerror_message);

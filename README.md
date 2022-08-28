@@ -44,38 +44,7 @@ but those may depend on different versions of shared libraries:
 - A C++ compiler and Python installed
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
 
-Note that Node.js exports OpenSSL symbols. If libtdjson is linked dynamically
-against openssl, it will use openssl symbols from the Node.js binary, not from
-the system. Therefore, libtdjson's openssl version must be compatible with the
-openssl version that Node.js is statically linked against (`process.versions.openssl`).<br>
-If you get segmentation faults, it's most likely due to the incompatibility of
-openssl versions.
-
-If you have already built TDLib with your system OpenSSL, a possible option is
-to rebuild Node.js from source, dynamically linking it against the same system
-OpenSSL.<br>
-For example, using [nvm][], you can install Node.js v12 from source on GNU/Linux
-via this command:
-
-```console
-$ nvm install -s 12 --shared-openssl --shared-openssl-includes=/usr/include/ --shared-openssl-libpath=/usr/lib/x86_64-linux-gnu/
-```
-
-[nvm]: https://github.com/nvm-sh/nvm
-
-Another option, which is probably more convenient for most users, is to build
-TDLib against the same OpenSSL version that the installed Node.js binary
-includes.
-
-<!--
-Node.js contains openssl headers, so it might be possible to build TDLib directly with openssl included in Node.js using an option like this:
-`-DOPENSSL_INCLUDE_DIR=<path-to-node>/include/node/`
-However, Node.js doesn't contain the libssl library itself, so I'm not sure if it would work.
--->
-
-This doesn't apply to Electron because it doesn't export the OpenSSL symbols.
-
-<!-- TODO: also doesn't apply to Windows? -->
+The shared library should be installed in your system (present in the search paths).
 
 ---
 
@@ -462,8 +431,8 @@ Otherwise, `tdl` works fine on Windows.
 
 - `UPDATE_APP_TO_LOGIN`
 
-If you get this error, update TDLib to v1.7.9 (v1.8.0) or newer. It is no longer
-possible to log in using a phone number in older versions of TDLib.
+Update TDLib to v1.7.9 (v1.8.0) or newer. It is no longer possible to log in
+using a phone number in older versions of TDLib.
 
 - `Dynamic Loading Error: dlopen(…) image not found`
 - `Dynamic Loading Error: Win32 error 126`
@@ -484,10 +453,69 @@ current working directory, while macOS does.
 [dlopen]: https://www.man7.org/linux/man-pages/man3/dlopen.3.html
 [LoadLibraryW]: https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryw
 
-- Segmentation fault
-
-Most likely, the version of OpenSSL is incompatible.
-
 - `Error while reading RSA public key`
 
-The OpenSSL version is incompatible.
+You can get this error if libtdjson is dynamically linked against OpenSSL and
+some of the symbols got resolved to Node.js instead of the system OpenSSL.
+
+Note that Node.js also uses OpenSSL (the distributed binaries are statically
+linked against it) and _exports the OpenSSL symbols_. In the result, there are
+two versions of OpenSSL in the same application. Then, using standard dlopen,
+especially on Linux, most of the symbols will be resolved into libcrypto
+inside the Node.js binary, not into the system libcrypto. It still can work
+correctly if the versions are ABI-compatible, i.e. if TDLib is linked against an
+OpenSSL version sufficiently similar to the version Node.js uses
+(`node -p "process.versions.openssl"`).
+
+`tdl` tries to get around the symbol conflict issues by using `dlmopen` or
+`RTLD_DEEPBIND` when available, so these issues should be rare in practice.
+
+You can check in `lldb` / `gdb` if the symbols get resolved into Node.js. For
+example, open `lldb -- node index.js` and set these breakpoints:
+
+```
+break set -r EVP_ -s node
+break set -r AES_ -s node
+break set -r BIO_ -s node
+break set -r RSA_ -s node
+break set -r CRYPTO_ -s node
+```
+
+It's also possible to set breakpoints inside the system OpenSSL (if `dlmopen` is
+not used):
+
+```
+break set -r . -s libcrypto.so.1.1
+break set -r . -s libssl.so.1.1
+```
+
+To solve this issue, try to link TDLib statically against OpenSSL (the
+`OPENSSL_USE_STATIC_LIBS` option in cmake) or link it against the OpenSSL version
+that Node.js uses.
+
+Another possible option is to rebuild Node.js from source, linking it
+dynamically against the same system OpenSSL. That way, there is only one
+instance of OpenSSL in the application. For example, using [nvm][], you can
+install Node.js v16 from source on GNU/Linux via this command:
+
+```console
+$ nvm install -s 16 --shared-openssl --shared-openssl-includes=/usr/include/ --shared-openssl-libpath=/usr/lib/x86_64-linux-gnu/
+```
+
+[nvm]: https://github.com/nvm-sh/nvm
+
+However, it's inconvenient for most users to rebuild Node.js.
+
+Another hypothetical solution is to rebuild TDLib with the OpenSSL headers
+distributed in Node.js (`<path-to-node>/include/node/`) without linking it to
+anything, simply leaving the undefined symbols. Using this option, there is also
+only one OpenSSL. I haven't checked that this works or that Node exports all the
+symbols needed for TDLib. With this option, TDLib also should be rebuilt every
+time Node.js updates the OpenSSL dependency.
+
+This issue doesn't apply to Electron because it doesn't export the OpenSSL
+symbols.
+
+- Segmentation fault
+
+Most likely, the cause of this error is the same as above.

@@ -21,20 +21,20 @@ $ npm install tdl-tdlib-addon
 ## API
 
 ```javascript
-const { TDLib } = require('tdl-tdlib-addon')
+const { TDLib, defaultLibraryFile } = require('tdl-tdlib-addon')
 ```
 
 #### constructor: `new TDLib(libraryFile?: string, addonPath?: string)`
 
 `libraryFile` is the filename that will be passed to [`dlopen`][dlopen]
-([`LoadLibraryW`][LoadLibraryW] on Windows).
+(`dlmopen`) or [`LoadLibraryW`][LoadLibraryW] on Windows.
 
 [dlopen]: https://www.man7.org/linux/man-pages/man3/dlopen.3.html
 [LoadLibraryW]: https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryw
 
 By default, `libraryFile` is `tdjson.dll` on Windows, `libtdjson.dylib` on
 macOS, and `libtdjson.so` on a different OS. This default value is exported as
-`defaultLibraryFile` (`const { defaultLibraryFile } = require('tdl-tdlib-addon')`).
+`defaultLibraryFile`.
 
 `addonPath` is `../build/Release/td.node` by default. This parameter generally
 should not be changed.

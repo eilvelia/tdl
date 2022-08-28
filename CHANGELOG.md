@@ -5,7 +5,9 @@
 ## (unreleased) tdl-tdlib-addon@1.2.0
 
 - Exports the `defaultLibraryFile` string. It can be imported using
-`const { TDLib, defaultLibraryFile } = require('tdl-tdlib-addon')`.
+`const { defaultLibraryFile } = require('tdl-tdlib-addon')`.
+- On GNU/Linux with glibc, `dlmopen` is used instead of `dlopen` to prevent
+OpenSSL compatibility issues.
 
 ## tdl-tdlib-addon@1.1.0 (2022-07-27)
 
