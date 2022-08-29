@@ -2,7 +2,7 @@
 
 <!-- Hi! -->
 
-## (unreleased) tdl-tdlib-addon@1.2.0
+## tdl-tdlib-addon@1.2.0 (2022-08-29)
 
 - Exports the `defaultLibraryFile` string. It can be imported using
 `const { defaultLibraryFile } = require('tdl-tdlib-addon')`.
