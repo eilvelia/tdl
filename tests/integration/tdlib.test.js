@@ -1,27 +1,17 @@
 // @flow
 
 const path = require('path')
-
-// const { TDLib: TDLibFFI } = require('../../packages/tdl-tdlib-ffi')
-const { TDLib: TDLibAddon } = require('../../packages/tdl-tdlib-addon')
 const { Client } = require('../../packages/tdl')
+const { TDLib, defaultLibraryFile } = require('../../packages/tdl-tdlib-addon')
 
-/*:: import type { ITDLibJSON } from '../../packages/tdl-shared' */
+const fromRoot = p => path.join(__dirname, '..', '..', p)
 
-const defaultLibtdjson = (() => {
-  switch (process.platform) {
-    case 'win32': return 'tdjson.dll'
-    case 'darwin': return 'libtdjson.dylib'
-    default: return 'libtdjson.so'
-  }
-})()
-
-const libtdjsonPath = process.env.LIBTDJSON_PATH || defaultLibtdjson
-
-const libtdjson = path.join(__dirname, '..', '..', libtdjsonPath)
+const libtdjson = process.env.TEST_PREBUILT === '1'
+  ? require('../../packages/prebuilt-tdlib').getTdjson()
+  : fromRoot(process.env.LIBTDJSON_PATH || defaultLibraryFile)
 
 describe('Client with tdl-tdlib-addon', () => {
-  const tdlib = new TDLibAddon(libtdjson)
+  const tdlib = new TDLib(libtdjson)
   const backend = 'tdl-tdlib-addon'
 
   const client = new Client(tdlib, {
@@ -30,13 +20,13 @@ describe('Client with tdl-tdlib-addon', () => {
     disableAuth: true
   })
 
-  client.on('error', e => console.error(`${backend} error`, e))
+  client.on('error', e => console.error(`[${backend}] error`, e))
 
   client.on('update', u => {
-    console.log(`${backend} update`, u)
-    const cond = u._ === 'updateAuthorizationState'
+    console.log(`[${backend}] update`, u)
+    const closed = u._ === 'updateAuthorizationState'
       && u.authorization_state._ === 'authorizationStateClosed'
-    if (cond)
+    if (closed)
       client.destroy()
   })
 

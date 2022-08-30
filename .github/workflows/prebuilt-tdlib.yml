@@ -1,0 +1,228 @@
+name: Prebuild TDLib
+# This workflow can be executed using a command like this:
+# gh workflow run prebuilt-tdlib.yml --ref develop -f tdlib=v1.8.0 \
+# -f npm-version=0.1008000.0 -f npm-tag=latest -f npm-add-tag=td-1.8.0
+on:
+  workflow_dispatch:
+    inputs:
+      tdlib:
+        description: 'TDLib git ref (e.g. v1.8.0 or a commit hash)'
+        type: string
+        required: true
+      npm-version:
+        description: 'prebuilt-tdlib version to publish on npm'
+        type: string
+        required: false
+      npm-tag:
+        description: 'npm tag (e.g. latest, beta), required to publish'
+        type: string
+        required: false
+      npm-add-tag:
+        description: 'Additional npm tag (e.g. td-1.8.0)'
+        type: string
+        required: false
+# NOTE: The ZLIB_USE_STATIC_LIBS option requires CMake >= 3.24
+jobs:
+  build-linux-x64:
+    name: Build TDLib on Linux x86_64 (glibc)
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: 'tdlib/td'
+          ref: ${{ inputs.tdlib }}
+      - name: Install gperf
+        run: sudo apt-get install -y -q gperf
+      - name: CMake version
+        run: cmake --version
+      - name: Build TDLib
+        run: |
+          mkdir -p build && cd build
+          cmake -DCMAKE_BUILD_TYPE=Release \
+            -DOPENSSL_USE_STATIC_LIBS=TRUE -DZLIB_USE_STATIC_LIBS=TRUE ..
+          cmake --build . --target tdjson -- -j 2
+          cd ..
+      - name: Strip
+        run: strip build/libtdjson.so
+      - name: Info
+        run: |
+          uname -a
+          ldd --version
+          openssl version
+          ldd build/libtdjson.so
+      - uses: actions/upload-artifact@v3
+        with:
+          name: tdlib-linux-x64
+          path: build/libtdjson.so
+  build-linux-x64-musl:
+    name: Build TDLib on Linux x86_64 (musl)
+    runs-on: ubuntu-latest
+    # Disabled for now
+    if: ${{ false }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: 'tdlib/td'
+          ref: ${{ inputs.tdlib }}
+      # In alpine 3.16, cmake is only 3.23
+      - run: |
+          docker build -t build -f - . <<EOF
+          FROM alpine:3.16
+          RUN apk update
+          RUN apk --no-cache add \
+            gcc g++ musl-dev make cmake binutils linux-headers git gperf \
+            openssl-dev openssl-libs-static zlib-dev zlib-static
+          ADD . /td/
+          WORKDIR /td
+          RUN mkdir -p build
+          WORKDIR /td/build
+          RUN cmake --version
+          # TODO: -static fails
+          RUN cmake \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DOPENSSL_USE_STATIC_LIBS=TRUE \
+            -DZLIB_USE_STATIC_LIBS=TRUE \
+            -DZLIB_LIBRARY=/lib/libz.a \
+            ..
+          RUN cmake --build . --target tdjson -- -j 2
+          RUN strip libtdjson.so
+          RUN ldd libtdjson.so
+          EOF
+      - run: docker create --name dummy build
+      - run: 'docker cp -L dummy:/td/build/libtdjson.so libtdjson.so'
+      - run: ldd libtdjson.so
+      - uses: actions/upload-artifact@v3
+        with:
+          name: tdlib-linux-x64-musl
+          path: libtdjson.so
+  build-macos-x64:
+    name: Build TDLib on macOS x86_64
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: 'tdlib/td'
+          ref: ${{ inputs.tdlib }}
+      - name: Install dependencies
+        run: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install gperf openssl zlib
+      - name: CMake version
+        run: cmake --version
+      - name: Build TDLib
+        run: |
+          mkdir -p build && cd build
+          cmake -DCMAKE_BUILD_TYPE=Release \
+            -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl \
+            -DZLIB_INCLUDE_DIR=/usr/local/opt/zlib/include \
+            -DZLIB_LIBRARY=/usr/local/opt/zlib/lib/libz.a \
+            -DOPENSSL_USE_STATIC_LIBS=TRUE -DZLIB_USE_STATIC_LIBS=TRUE ..
+          cmake --build . --target tdjson -- -j 3
+          cd ..
+      - name: Info
+        run: |
+          uname -a
+          /usr/local/opt/openssl/bin/openssl version
+          otool -L build/libtdjson.dylib
+      - uses: actions/upload-artifact@v3
+        with:
+          name: tdlib-macos-x64
+          path: build/libtdjson.dylib
+  build-windows-x64:
+    name: Build TDLib on Windows x86_64
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: 'tdlib/td'
+          ref: ${{ inputs.tdlib }}
+      - name: vcpkg cache
+        uses: actions/cache@v3
+        with:
+          path: '~\AppData\Local\vcpkg\archives'
+          key: windows-vcpkg-${{ github.run_id }}
+          restore-keys: |
+            windows-vcpkg-
+      - name: Install dependencies using vcpkg
+        run: vcpkg install gperf:x64-windows-static openssl:x64-windows-static zlib:x64-windows-static
+      - name: CMake version
+        run: cmake --version
+      - name: Build TDLib
+        shell: pwsh
+        run: |
+          mkdir build
+          cd build
+          cmake -A x64 `
+            -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake `
+            -DVCPKG_TARGET_TRIPLET=x64-windows-static `
+            -DOPENSSL_USE_STATIC_LIBS=TRUE -DZLIB_USE_STATIC_LIBS=TRUE ..
+          cmake --build . --target tdjson --config Release --parallel 2
+          cd ..
+        # It should be possible to print the dependencies using dumpbin.exe
+      - uses: actions/upload-artifact@v3
+        with:
+          name: tdlib-windows-x64
+          path: build\Release\tdjson.dll
+
+  test:
+    name: 'Test the ${{ matrix.os[1] }} prebuilt libraries'
+    needs: [build-linux-x64, build-macos-x64, build-windows-x64]
+    runs-on: ${{ matrix.os[0] }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - [ubuntu-20.04, tdlib-linux-x64, libtdjson.so]
+          - [macos-latest, tdlib-macos-x64, libtdjson.dylib]
+          - [windows-2019, tdlib-windows-x64, tdjson.dll]
+        node:
+          - 16
+    env:
+      LIBTDJSON_PATH: ${{ matrix.os[2] }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - name: Update npm
+        run: npm install -g npm@7
+      - run: npm install
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ matrix.os[1] }}
+      - run: npm run integration-tests
+
+  publish:
+    name: 'Publish to npm'
+    needs: [test]
+    if: "${{ inputs.npm-version != '' }}"
+    runs-on: ubuntu-latest
+    env:
+      TEST_PREBUILT: 1
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+      - name: Update npm
+        run: npm install -g npm@7
+      - run: npm install
+      - uses: actions/download-artifact@v3
+        with:
+          path: packages/prebuilt-tdlib/prebuilds/
+      - run: tree packages/prebuilt-tdlib
+      - run: npm run integration-tests
+      - run: node packages/prebuilt-tdlib/check-prebuilds.js
+      - name: Update version
+        run: npm version ${{ inputs.npm-version }} --no-git-tag-version -w prebuilt-tdlib
+      - name: Publish
+        if: "${{ inputs.npm-tag != '' }}"
+        run: npm publish --tag ${{ inputs.npm-tag }} -w prebuilt-tdlib
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Update the other tag
+        if: "${{ inputs.npm-tag != '' && inputs.npm-add-tag != '' }}"
+        run: |
+          npm dist-tag add \
+            prebuilt-tdlib@${{ inputs.npm-version }} ${{ inputs.npm-add-tag }} \
+            -w prebuilt-tdlib

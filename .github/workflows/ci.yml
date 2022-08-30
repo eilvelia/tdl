@@ -73,5 +73,5 @@ jobs:
           git checkout ${{ matrix.tdlib }}
           mkdir -p build && cd build
           cmake -DCMAKE_BUILD_TYPE=Debug ..
-          cmake --build . -- -j 2
+          cmake --build . --target tdjson -- -j 2
       - run: npm run integration-tests
