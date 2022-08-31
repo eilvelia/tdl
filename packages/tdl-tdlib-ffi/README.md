@@ -2,6 +2,8 @@
 
 [![npm](https://img.shields.io/npm/v/tdl-tdlib-ffi.svg)](https://www.npmjs.com/package/tdl-tdlib-ffi)
 
+**Deprecated**: use tdl-tdlib-addon.
+
 Node.js FFI bindings to [TDLib][]'s libtdjson. Uses [node-ffi-napi][].
 
 It is meant to be used with the [tdl][] package.

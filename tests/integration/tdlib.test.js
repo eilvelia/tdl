@@ -21,8 +21,9 @@ const libtdjsonPath = process.env.LIBTDJSON_PATH || defaultLibtdjson
 const libtdjson = path.join(__dirname, '..', '..', libtdjsonPath)
 
 describe.each([
-  ['tdl-tdlib-ffi', new TDLibFFI(libtdjson)],
-  ['tdl-tdlib-addon', new TDLibAddon(libtdjson)]
+  ['tdl-tdlib-addon', new TDLibAddon(libtdjson)],
+  // TODO: Remove the tests for deprecated tdl-tdlib-ffi in the future
+  ['tdl-tdlib-ffi', new TDLibFFI(libtdjson)]
 ])('Client (%s):', (name, tdlib/*: ITDLibJSON*/) => {
   const client = new Client(tdlib, {
     apiId: 222,
