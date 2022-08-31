@@ -1,8 +1,8 @@
-name: Build and test
+name: CI
 on: [push, pull_request]
 jobs:
-  main:
-    name: Node v${{ matrix.node }} on ${{ matrix.os }}
+  build-and-test:
+    name: 'Build and test: Node v${{ matrix.node }} on ${{ matrix.os }}'
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -26,7 +26,6 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: npm
-          cache-dependency-path: '**/package-lock.json'
       - name: Update npm
         run: npm install -g npm@7
         # It looks like npm v8 doesn't work with the error:
@@ -56,7 +55,6 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: npm
-          cache-dependency-path: 'package-lock.json'
       - name: Update npm
         run: npm install -g npm@7
       - run: npm install
