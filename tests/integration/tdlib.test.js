@@ -2,7 +2,7 @@
 
 const path = require('path')
 
-const { TDLib: TDLibFFI } = require('../../packages/tdl-tdlib-ffi')
+// const { TDLib: TDLibFFI } = require('../../packages/tdl-tdlib-ffi')
 const { TDLib: TDLibAddon } = require('../../packages/tdl-tdlib-addon')
 const { Client } = require('../../packages/tdl')
 
@@ -20,21 +20,20 @@ const libtdjsonPath = process.env.LIBTDJSON_PATH || defaultLibtdjson
 
 const libtdjson = path.join(__dirname, '..', '..', libtdjsonPath)
 
-describe.each([
-  ['tdl-tdlib-addon', new TDLibAddon(libtdjson)],
-  // TODO: Remove the tests for deprecated tdl-tdlib-ffi in the future
-  ['tdl-tdlib-ffi', new TDLibFFI(libtdjson)]
-])('Client (%s):', (name, tdlib/*: ITDLibJSON*/) => {
+describe('Client with tdl-tdlib-addon', () => {
+  const tdlib = new TDLibAddon(libtdjson)
+  const backend = 'tdl-tdlib-addon'
+
   const client = new Client(tdlib, {
     apiId: 222,
     apiHash: 'test',
     disableAuth: true
   })
 
-  client.on('error', e => console.error(`${name} error`, e))
+  client.on('error', e => console.error(`${backend} error`, e))
 
   client.on('update', u => {
-    console.log(`${name} update`, u)
+    console.log(`${backend} update`, u)
     const cond = u._ === 'updateAuthorizationState'
       && u.authorization_state._ === 'authorizationStateClosed'
     if (cond)
