@@ -2,7 +2,7 @@
 
 <!-- Hi! -->
 
-## (unreleased) tdl-tdlib-addon@1.2.1
+## tdl-tdlib-addon@1.2.1 (2022-09-01)
 
 - On Linux, `dlopen` with `RTLD_DEEPBIND` (if available) is now used instead of
   `dlmopen`. `dlmopen` was not stable enough. This fixes some segmentation
