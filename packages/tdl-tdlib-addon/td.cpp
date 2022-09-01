@@ -1,29 +1,12 @@
 #include <napi.h>
 
-// features.h is needed for __GLIBC__
-#if defined(__has_include)
-#  if __has_include(<features.h>)
-#    include <features.h>
-#  endif
-#else
-#  include <stdio.h>
-#endif
-
-// _GNU_SOURCE is for dlmopen
-#if defined(__GLIBC__) && !defined(_GNU_SOURCE)
-#  define _GNU_SOURCE
-#endif
-
-#if defined(WIN32) or defined(_WIN32) or defined(__WIN32__)
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
 #  include "win32-dlfcn.h"
 #else
 #  include <dlfcn.h>
 #endif
 
-#ifdef __GLIBC__
-#  pragma message("Glibc found: using dlmopen")
-#  define DLOPEN(FILE) dlmopen(LM_ID_NEWLM, FILE, RTLD_LAZY | RTLD_LOCAL);
-#elif defined(RTLD_DEEPBIND)
+#ifdef RTLD_DEEPBIND
 #  pragma message("Using RTLD_DEEPBIND")
 #  define DLOPEN(FILE) dlopen(FILE, RTLD_LAZY | RTLD_LOCAL | RTLD_DEEPBIND);
 #else

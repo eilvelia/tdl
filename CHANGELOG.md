@@ -2,6 +2,12 @@
 
 <!-- Hi! -->
 
+## (unreleased) tdl-tdlib-addon@1.2.1
+
+- On Linux, `dlopen` with `RTLD_DEEPBIND` (if available) is now used instead of
+  `dlmopen`. `dlmopen` was not stable enough. This fixes some segmentation
+  faults on GNU/Linux.
+
 ## tdl-tdlib-addon@1.2.0 (2022-08-29)
 
 - Exports the `defaultLibraryFile` string. It can be imported using

@@ -467,8 +467,8 @@ correctly if the versions are ABI-compatible, i.e. if TDLib is linked against an
 OpenSSL version sufficiently similar to the version Node.js uses
 (`node -p "process.versions.openssl"`).
 
-`tdl` tries to get around the symbol conflict issues by using `dlmopen` or
-`RTLD_DEEPBIND` when available, so these issues should be rare in practice.
+`tdl` tries to get around the symbol conflict issues by using `RTLD_DEEPBIND`
+when available, so these issues should be rare in practice.
 
 You can check in `lldb` / `gdb` if the symbols get resolved into Node.js. For
 example, open `lldb -- node index.js` and set these breakpoints:
@@ -481,8 +481,7 @@ break set -r RSA_ -s node
 break set -r CRYPTO_ -s node
 ```
 
-It's also possible to set breakpoints inside the system OpenSSL (if `dlmopen` is
-not used):
+It's also possible to set breakpoints inside the system OpenSSL:
 
 ```
 break set -r . -s libcrypto.so.1.1

@@ -26,8 +26,8 @@ const { TDLib, defaultLibraryFile } = require('tdl-tdlib-addon')
 
 #### constructor: `new TDLib(libraryFile?: string, addonPath?: string)`
 
-`libraryFile` is the filename that will be passed to [`dlopen`][dlopen]
-(`dlmopen`) or [`LoadLibraryW`][LoadLibraryW] on Windows.
+`libraryFile` is the filename that will be passed to [`dlopen`][dlopen] or
+[`LoadLibraryW`][LoadLibraryW] on Windows.
 
 [dlopen]: https://www.man7.org/linux/man-pages/man3/dlopen.3.html
 [LoadLibraryW]: https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryw
