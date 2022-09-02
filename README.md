@@ -44,7 +44,9 @@ but those may depend on different versions of shared libraries:
 - A C++ compiler and Python installed
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
 
-The shared library should be installed in your system (present in the search paths).
+The shared library should be installed on your system (present in the search paths).
+
+> **Note**: When building TDLib, you can install the libraries into the system using `cmake --install .` (optionally specify the `--prefix` option, the default is `/usr/local`) after TDLib has been built successfully.
 
 ---
 
@@ -67,7 +69,7 @@ const client = new Client(new TDLib(), {
 `api_id` and `api_hash` can be obtained at https://my.telegram.org/.
 
 The path to `libtdjson` can be optionally specified in the `TDLib` constructor's
-argument (e.g., `new TDLib('libtdjon.so')`). It is directly passed to
+argument (e.g., `new TDLib(path.join(__dirname, 'libtdjson.so')`). It is directly passed to
 [`dlopen`][dlopen] / [`LoadLibrary`][LoadLibraryW]. Check your OS documentation
 to see where it searches for a shared library.
 
@@ -517,7 +519,7 @@ symbols.
 
 - Segmentation fault
 
-Most likely, the cause of this error is the same as above.
+Most likely, the cause of the segfault is the same as above.
 
 - `fatal error: napi.h: no such file or directory`
 - `error: no such file or directory: …/node-modules/node-addon-api`
