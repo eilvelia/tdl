@@ -431,8 +431,8 @@ Otherwise, `tdl` works fine on Windows.
 
 - `UPDATE_APP_TO_LOGIN`
 
-Update TDLib to v1.7.9 (v1.8.0) or newer. It is no longer possible to log in
-using a phone number in older versions of TDLib.
+Update TDLib to v1.7.9 (v1.8.0) or newer. It is no longer possible to log in by
+phone number in older versions of TDLib.
 
 - `Dynamic Loading Error: dlopen(…) image not found`
 - `Dynamic Loading Error: Win32 error 126`
@@ -518,3 +518,10 @@ symbols.
 - Segmentation fault
 
 Most likely, the cause of this error is the same as above.
+
+- `fatal error: napi.h: no such file or directory`
+- `error: no such file or directory: …/node-modules/node-addon-api`
+
+The path to the directory where you execute `npm install` likely contains
+spaces, which is not supported by gyp:
+https://github.com/nodejs/node-gyp/issues/65#issuecomment-368820565.
