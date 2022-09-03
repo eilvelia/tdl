@@ -35,11 +35,6 @@ For more information, see [prebuilt-tdlib][]. The pre-built libraries are
 available to x86_64 systems. On GNU/Linux, those may not be compatible
 with the glibc version installed on your system.
 
-There is also [tdlib.native][], but it may depend on different versions of
-OpenSSL and zlib than present on the system.
-
-[tdlib.native]: https://github.com/ForNeVeR/tdlib.native/releases
-
 ---
 
 <a name="requirements"></a>
