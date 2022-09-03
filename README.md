@@ -115,7 +115,8 @@ await client.login()
 ```
 
 By default, `tdl` asks the user for the phone number, auth code, and 2FA
-password (if specified) in the console. You can pass custom functions:
+password (if needed) in the console. You can override the defaults with custom
+functions:
 
 ```javascript
 // Example
@@ -301,9 +302,11 @@ async function main () {
   await client.connectAndLogin()
 
   console.log(await client.invoke({ _: 'getMe' }))
+
+  // ...
 }
 
-main()
+main().catch(console.error)
 ```
 
 See the [examples/](examples/) directory.
