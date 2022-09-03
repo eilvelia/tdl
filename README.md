@@ -30,10 +30,15 @@ TDLib version 1.5.0 or newer is required.
 2. `npm install tdl tdl-tdlib-addon` &nbsp;(install both)
 3. `npm install --save-dev tdlib-types` if you use Flow or TypeScript &nbsp;(recommended)
 
-Instead of building TDLib, you can try to use third-party pre-built binaries,
-but those may depend on different versions of shared libraries:
+Instead of building TDLib, you can try to use the pre-built one: `npm i prebuilt-tdlib`.
+For more information, see [prebuilt-tdlib][]. The pre-built libraries are
+available to x86_64 systems. On GNU/Linux, those may not be compatible
+with the glibc version installed on your system.
 
-- [tdlib.native](https://github.com/ForNeVeR/tdlib.native/releases)
+There is also [tdlib.native][], but it may depend on different versions of
+OpenSSL and zlib than present on the system.
+
+[tdlib.native]: https://github.com/ForNeVeR/tdlib.native/releases
 
 ---
 
@@ -44,9 +49,13 @@ but those may depend on different versions of shared libraries:
 - A C++ compiler and Python installed
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
 
-The shared library should be installed on your system (present in the search paths).
+The shared library should be installed on your system (present in the search
+paths). Otherwise, the path to the library can be specified manually.
 
-> **Note**: When building TDLib, you can install the libraries into the system using `cmake --install .` (optionally specify the `--prefix` option, the default is `/usr/local`) after TDLib has been built successfully.
+> **Note**: When building TDLib, you can install the libraries into the system
+> using `cmake --install .` (optionally specify the `--prefix` option, the
+> default is `/usr/local`) after TDLib has been built successfully. This command
+> may require `sudo`.
 
 ---
 
@@ -69,11 +78,23 @@ const client = new Client(new TDLib(), {
 `api_id` and `api_hash` can be obtained at https://my.telegram.org/.
 
 The path to `libtdjson` can be optionally specified in the `TDLib` constructor's
-argument (e.g., `new TDLib(path.join(__dirname, 'libtdjson.so')`). It is directly passed to
+argument (e.g., `new TDLib(path.join(__dirname, 'libtdjson.so'))`). It is directly passed to
 [`dlopen`][dlopen] / [`LoadLibrary`][LoadLibraryW]. Check your OS documentation
-to see where it searches for a shared library.
+to find out where it searches for a shared library.
+
+To use the pre-built `libtdjson` from [prebuilt-tdlib][], import
+it and pass `getTdjson()` to the `TDLib` constructor (`new TDLib(getTdjson())`):
+
+```javascript
+// ...
+const { getTdjson } = require('prebuilt-tdlib')
+const client = new Client(new TDLib(getTdjson()), {
+// ...
+```
 
 The `Options` interface is described in [#options](#options).
+
+[prebuilt-tdlib]: packages/prebuilt-tdlib/README.md
 
 #### `client.connect() => Promise<undefined>`
 
