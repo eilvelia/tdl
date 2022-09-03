@@ -204,6 +204,8 @@ jobs:
         with:
           node-version: 16
           cache: npm
+          # registry-url is mandatory here
+          registry-url: 'https://registry.npmjs.org'
       - name: Update npm
         run: npm install -g npm@7
       - run: npm install
