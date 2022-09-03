@@ -222,9 +222,11 @@ jobs:
         run: npm publish --tag ${{ inputs.npm-tag }} -w prebuilt-tdlib
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Update the other tag
+      - name: Update the additional tag
         if: "${{ inputs.npm-tag != '' && inputs.npm-add-tag != '' }}"
         run: |
           npm dist-tag add \
             prebuilt-tdlib@${{ inputs.npm-version }} ${{ inputs.npm-add-tag }} \
             -w prebuilt-tdlib
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
