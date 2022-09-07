@@ -22,7 +22,7 @@
     "tdl"
   ],
   "devDependencies": {
-    "tldoc": "^0.2.0"
+    "ti-el": "^0.9.1"
   },
   "peerDependencies": {
     "tdl": ">= 7.0.0"

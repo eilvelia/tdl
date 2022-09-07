@@ -1,7 +1,8 @@
 // @flow
 
-import { EOL } from 'os'
-import { tldoc, type Parameter, type TdClass } from 'tldoc'
+import { tldoc, type Parameter, type TdClass } from 'ti-el'
+
+const EOL = '\n'
 
 type JSType =
   | {| type: 'Plain', str: string |} // Plain type
@@ -34,7 +35,7 @@ export type Options = {
   commentFluture: boolean
 }
 
-export function generate (input: string, outputType: OutputType, options: Options): string {
+export function generate (source: string, outputType: OutputType, options: Options): string {
   const TS = outputType === 'typescript'
 
   const { version, commentFluture } = options
@@ -45,8 +46,6 @@ export function generate (input: string, outputType: OutputType, options: Option
 
   const READ_ONLY = TS ? 'readonly ' : '+'
   const EXACT = TS ? '' : '|'
-
-  const source = input.replace(/^ *vector +{.+$/mg, '') // XXX
 
   // console.log(JSON.stringify(tldoc(source), null, '  '))
 
