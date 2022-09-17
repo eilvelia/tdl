@@ -4,6 +4,8 @@
 a library to create [Telegram][] clients or bots.<br>
 TDLib version 1.5.0 or newer is required.
 
+TDLib >= v1.8.6 is not supported yet.
+
 [TDLib]: https://github.com/tdlib/td
 [Telegram]: https://telegram.org/
 

@@ -16,10 +16,10 @@ be installed on your system.
 
 Note that M1 Macs are not supported yet.
 
-To install `prebuilt-tdlib` for e.g. TDLib v1.8.0, run:
+To install `prebuilt-tdlib` for e.g. TDLib v1.8.5, run:
 
 ```console
-$ npm install prebuilt-tdlib@td-1.8.0
+$ npm install prebuilt-tdlib@td-1.8.5
 ```
 
 ### Usage
