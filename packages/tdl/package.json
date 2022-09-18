@@ -1,6 +1,6 @@
 {
   "name": "tdl",
-  "version": "7.0.0",
+  "version": "7.1.0",
   "description": "A JavaScript wrapper for TDLib (Telegram Database library)",
   "main": "index.js",
   "types": "index.d.ts",

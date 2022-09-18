@@ -2,7 +2,7 @@
 
 <!-- Hi! -->
 
-## tdl@7.1.0 (unreleased)
+## tdl@7.1.0 (2022-09-18)
 
 - Added support for TDLib >= v1.8.6.
 - New functions in `LoginDetails`: `getEmailAddress`, `getEmailCode`,
