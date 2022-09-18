@@ -564,8 +564,6 @@ export class Client {
     await this._waitLogin()
     debug('waitLogin end', authorizationState._)
 
-    // TODO: Handle authorizationStateWaitOtherDeviceConfirmation?
-
     switch (authorizationState._) {
       case 'authorizationStateWaitPhoneNumber': {
         const loginDetails = this._authHasNeeded()
