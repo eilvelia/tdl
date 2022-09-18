@@ -58,6 +58,13 @@ export class Version {
     return false
   }
 
+  /** v1.eq(v2) is v1 == v2 */
+  eq (other: Version) {
+    return this._major === other._major
+      && this._minor === other._minor
+      && this._patch === other._patch
+  }
+
   toString () {
     return `${this._major}.${this._minor}.${this._patch}`
   }
