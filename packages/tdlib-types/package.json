@@ -1,7 +1,7 @@
 {
   "name": "tdlib-types",
-  "version": "0.1001008.1",
-  "description": "TypeScript / Flow types for TDLib",
+  "version": "0.1001008005.0",
+  "description": "TypeScript and Flow types for TDLib",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
@@ -23,9 +23,6 @@
   ],
   "devDependencies": {
     "ti-el": "^0.9.1"
-  },
-  "peerDependencies": {
-    "tdl": ">= 7.0.0"
   },
   "author": "Bannerets <comonoid@protonmail.com>",
   "license": "MIT",

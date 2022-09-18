@@ -79,8 +79,8 @@ argument (e.g., `new TDLib(path.join(__dirname, 'libtdjson.so'))`). It is direct
 [`dlopen`][dlopen] / [`LoadLibrary`][LoadLibraryW]. Check your OS documentation
 to find out where it searches for a shared library.
 
-To use the pre-built `libtdjson` from [prebuilt-tdlib][], import
-it and pass `getTdjson()` to the `TDLib` constructor (`new TDLib(getTdjson())`):
+To use the pre-built `libtdjson` from [prebuilt-tdlib][], import it and pass
+`getTdjson()` to the `TDLib` constructor:
 
 ```javascript
 // ...
@@ -390,23 +390,26 @@ The TDLib types can be imported using:
 import type { message as Td$message, user /* ... */ } from 'tdlib-types'
 ```
 
-Or import all types at once:
+Or import all the types at once:
 
 ```typescript
 import * as Td from 'tdlib-types'
 // Use as: Td.message, Td.user, ...
 ```
 
-The latest available typings are for TDLib v1.8.0.
+The latest available typings are for TDLib v1.8.0, the typings for TDLib v1.8.5
+are available under the `@beta` npm tag.
 
-You can install typings for other TDLib versions using `npm install -D tdlib-types@td-<TDLIB_VERSION>`.
-For example, to install typings for TDLib v1.7.0, run `npm install -D tdlib-types@td-1.7.0`.
+`tdlib-types` can be installed for a specific TDLib version via
+`npm i -D tdlib-types@td-<TDLIB_VERSION>`. For example, to install typings for
+TDLib v1.7.0 or TDLib v1.8.5, run `npm i -D tdlib-types@td-1.7.0` or `npm i -D tdlib-types@td-1.8.5`.
 
-It is much more convenient to use `tdl` with the TypeScript types, which
-enables full autocompletion for the TDLib methods and objects.
+It is much more convenient to use `tdl` with TypeScript, which enables full
+autocompletion for the TDLib methods and objects.
 
-See also [packages/tdlib-types/README.md](packages/tdlib-types/README.md).
+For more information, see the [tdlib-types][] README.
 
+[tdlib-types]: packages/tdlib-types/README.md
 [TypeScript]: https://www.typescriptlang.org/
 [Flow]: https://flow.org/
 

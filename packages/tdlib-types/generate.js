@@ -8,18 +8,18 @@ const fsp = fs.promises
 const readline = require('readline')
 
 const PKG_NAME = 'tdlib-types'
-
-const LATEST_VERSION = 'v1.8.0'
+const LATEST_VERSION = 'v1.8.5'
+const LATEST_BETA = 'v1.8.5'
 const REV = '1'
 
 /* eslint-disable comma-dangle */
-const MINOR_REVS = {
+const PATCHES = {
   'v1.5.0': '5',
   'v1.6.0': '5',
 }
 
-function getMinorRev (ver/*: string */)/*: string */ {
-  return MINOR_REVS[ver] || '1'
+function getPatchVer (ver/*: string */)/*: string */ {
+  return PATCHES[ver] || '0'
 }
 
 const inputVersion = process.argv[2]
@@ -38,7 +38,7 @@ const rl = readline.createInterface({
   output: process.stdout
 })
 
-async function replacePackageJsonVersion (ver) {
+async function updatePackageVersion (ver) {
   const packageJson = path.join(__dirname, 'package.json')
   const packageLockJson = path.join(__dirname, 'package-lock.json')
 
@@ -57,11 +57,10 @@ async function replacePackageJsonVersion (ver) {
   }
 
   const [major, minor, patch] = ver.replace(/^v/, '').split('.')
-  const packageMinor = major.padStart(3, '0') + minor.padStart(3, '0')
-  const packagePatch = patch === '0'
-    ? getMinorRev(ver)
-    : patch + getMinorRev(ver).padStart(3, '0')
-  const packageVer = `0.${REV}${packageMinor}.${packagePatch}`
+  const packageMinor =
+    REV + major.padStart(3, '0') + minor.padStart(3, '0') + patch.padStart(3, '0')
+  const packagePatch = getPatchVer(ver)
+  const packageVer = `0.${packageMinor}.${packagePatch}`
   await Promise.all([
     replaceInFile(packageJson, packageVer),
     replaceInFile(packageLockJson, packageVer)
@@ -106,7 +105,7 @@ async function forVersion (ver) {
 
   await Promise.all([ waitForClose(genFlow), waitForClose(genTs) ])
 
-  const pkgVer = await replacePackageJsonVersion(ver)
+  const pkgVer = await updatePackageVersion(ver)
 
   if (!toPublish) {
     console.log(`package.json: ${pkgVer}`)
@@ -122,12 +121,17 @@ async function forVersion (ver) {
   const publish = spawn('npm', ['publish', '--tag', distTag], npmOptions)
   await waitForClose(publish)
 
-  if (ver !== LATEST_VERSION) return
-
-  const distTagAdd =
-    spawn('npm', ['dist-tag', 'add', `${PKG_NAME}@${pkgVer}`, 'latest'])
-  await waitForClose(distTagAdd)
-  console.log(`tag: latest -> ${pkgVer}`)
+  if (ver === LATEST_BETA) {
+    const distTagAdd =
+      spawn('npm', ['dist-tag', 'add', `${PKG_NAME}@${pkgVer}`, 'beta'])
+    await waitForClose(distTagAdd)
+    console.log(`tag: beta -> ${pkgVer}`)
+  } else if (ver === LATEST_VERSION) {
+    const distTagAdd =
+      spawn('npm', ['dist-tag', 'add', `${PKG_NAME}@${pkgVer}`, 'latest'])
+    await waitForClose(distTagAdd)
+    console.log(`tag: latest -> ${pkgVer}`)
+  }
 }
 
 async function forAllVersions () {

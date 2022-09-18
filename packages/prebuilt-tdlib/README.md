@@ -22,6 +22,9 @@ To install `prebuilt-tdlib` for e.g. TDLib v1.8.5, run:
 $ npm install prebuilt-tdlib@td-1.8.5
 ```
 
+For the list of available versions, see `$ npm info prebuilt-tdlib` or the "npm
+tags" section below.
+
 ### Usage
 
 The `prebuilt-tdlib` package exports a single function `getTdjson`, which
@@ -68,7 +71,9 @@ TDLib v1.8.5, just run `npm install prebuilt-tdlib@td-1.8.5`, or
 install the needed version of `prebuilt-tdlib`.
 
 Additionaly, TDLib's versioning is weird, and some of the `prebuilt-tdlib`
-releases are not tied to a specific tag release in the TDLib repository.
+releases are not connected to a specific tag release in the TDLib repository.
+
+The releases of the `prebuilt-tdlib` npm package are not git-tagged.
 
 ### npm tags
 
