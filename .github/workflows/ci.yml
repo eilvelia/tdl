@@ -33,7 +33,7 @@ jobs:
       - run: npm install # also runs the `prepare` npm script, which runs `build`
       - run: npm test
   integration-tests:
-    name: 'Integration tests: TDLib ${{ matrix.tdlib }}'
+    name: 'Integration tests: TDLib ${{ matrix.tdlib.ver }}'
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -41,10 +41,11 @@ jobs:
         os:
           - ubuntu-20.04
         tdlib:
-          - v1.8.0
-          - v1.7.0
-          - v1.6.0
-          - v1.5.0
+          - { ver: v1.8.6, ref: 15db91b536d796778b628fef3d60923cef351512 }
+          - { ver: v1.8.0, ref: v1.8.0 }
+          - { ver: v1.7.0, ref: v1.7.0 }
+          - { ver: v1.6.0, ref: v1.6.0 }
+          - { ver: v1.5.0, ref: v1.6.0 }
         node:
           - 16
     env:
@@ -63,14 +64,14 @@ jobs:
         uses: actions/cache@v2
         with:
           path: tdlib/build/*.so*
-          key: ${{ matrix.os }}-tdlib-${{ matrix.tdlib }}
+          key: ${{ matrix.os }}-tdlib-${{ matrix.tdlib.ref }}
       - name: Build TDLib
         if: steps.tdlib-cache.outputs.cache-hit != 'true'
         run: |
           sudo apt-get install -y -q gperf
           git clone https://github.com/tdlib/td.git tdlib
           cd tdlib
-          git checkout ${{ matrix.tdlib }}
+          git checkout ${{ matrix.tdlib.ref }}
           mkdir -p build && cd build
           cmake -DCMAKE_BUILD_TYPE=Debug ..
           cmake --build . --target tdjson -- -j 2
