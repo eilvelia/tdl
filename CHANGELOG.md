@@ -2,6 +2,11 @@
 
 <!-- Hi! -->
 
+## tdl@7.1.0 (unreleased)
+
+- `client.connect()` works in TDLib >= v1.8.6
+- Adds a `client.getVersion(): string` function, undocumented in the README for now.
+
 ## tdl-tdlib-addon@1.2.1 (2022-09-01)
 
 - On Linux, `dlopen` with `RTLD_DEEPBIND` (if available) is now used instead of

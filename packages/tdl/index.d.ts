@@ -46,6 +46,9 @@ export class Client {
   constructor(tdlibInstance: ITDLibJSON, options?: ConfigType);
   static create(tdlibInstance: ITDLibJSON, options?: ConfigType): Client;
   getBackendName: () => string;
+  /** Get the TDLib version in the `major.minor.patch` format. This can throw an
+    * exception if the version is not (yet) available. */
+  getVersion: () => string;
   connect: () => Promise<void>;
   login: (getLoginDetails?: () => LoginDetails) => Promise<void>;
   connectAndLogin: (getLoginDetails?: () => LoginDetails) => Promise<void>;

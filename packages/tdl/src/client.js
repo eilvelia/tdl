@@ -11,9 +11,9 @@ import {
   getPassword as defaultGetPassword,
   getName as defaultGetName
 } from './prompt'
+import { Version } from './version'
 
 import type { TDLibClient, ITDLibJSON } from 'tdl-shared'
-
 import type {
   ConfigType,
   StrictConfigType,
@@ -22,12 +22,12 @@ import type {
   LoginUser,
   LoginBot
 } from './types'
-
 import type {
   TDFunction,
   // TDObject,
   Update as Td$Update,
   updateAuthorizationState as Td$updateAuthorizationState,
+  // updateOption as Td$updateOption,
   error as Td$error,
   ConnectionState as Td$ConnectionState,
   Invoke,
@@ -74,8 +74,8 @@ type DeferredPromise<R, E> = {
   reject: (error: E) => void
 }
 
-// Flow was too slow with `TDObject` instead of `Object`
-type PendingPromise = DeferredPromise<Object/* TDObject */, Td$error>
+// Flow was too slow with `TDObject`
+type PendingPromise = DeferredPromise<any/* TDObject */, Td$error>
 
 class TdlDeferred<R, E> {
   _innerDefer: ?DeferredPromise<R, E>
@@ -149,6 +149,9 @@ function invariant (cond: boolean, msg: string) {
   if (!cond) throw new Error(msg)
 }
 
+const TDLIB_1_8_6 = new Version('1.8.6')
+const TDLIB_DEFAULT = new Version('1.8.0')
+
 const TDL_MAGIC = '6c47e6b71ea'
 
 // Note: The public methods in Client are defined as properties.
@@ -163,13 +166,14 @@ export class Client {
   +_fetching: Map<string, PendingPromise> = new Map();
   +_tdlib: ITDLibJSON;
   _client: ?TDLibClient
+  _initialized: boolean = false
+  _paused: boolean = false
   _connectionState: Td$ConnectionState = { _: 'connectionStateConnecting' }
   _connectDefer: TdlDeferred<void, any> = new TdlDeferred()
   _authNeeded: boolean = false
   _loginDetails: ?StrictLoginDetails
   _loginDefer: TdlDeferred<void, any> = new TdlDeferred()
-  _paused: boolean = false
-  _initialized: boolean = false
+  _version: Version = TDLIB_DEFAULT
 
   constructor (tdlibInstance: ITDLibJSON, options: ConfigType = {}) {
     this._options = (mergeDeepRight(defaultOptions, options): StrictConfigType)
@@ -189,6 +193,12 @@ export class Client {
 
   getBackendName = (): string => {
     return this._tdlib.getName()
+  }
+
+  getVersion = (): string => {
+    if (this._version === TDLIB_DEFAULT)
+      throw new Error('Unknown TDLib version')
+    return this._version.toString()
   }
 
   _catchError (err: Td$error | TdlError): void {
@@ -413,7 +423,7 @@ export class Client {
     this._send({ ...request, '@extra': TDL_MAGIC })
   }
 
-  async _receive (timeout: number = this._options.receiveTimeout): Promise<Object/*TDObject*/ | null> {
+  async _receive (timeout: number = this._options.receiveTimeout): Promise<any/*TDObject*/ | null> {
     if (!this._client) return null
     const tdResponse = await this._tdlib.receive(this._client, timeout)
     // Note: Immutable rename is used to preserve key order (for better logs)
@@ -449,7 +459,7 @@ export class Client {
     debug('receive loop: end')
   }
 
-  async _handleResponse (res: Object/*TDObject*/): Promise<void> {
+  async _handleResponse (res: any): Promise<void> {
     this.emit('response', res)
     debugRes(res)
 
@@ -475,8 +485,10 @@ export class Client {
     // are always emitted, even with skipOldUpdates set to true
     switch (update._) {
       case 'updateOption':
-        debug('Option:', update)
+        debug('New option:', update)
         this.emit('update', update)
+        if (update.name === 'version' && update.value._ === 'optionValueString')
+          this._version = new Version(update.value.value)
         return
 
       case 'updateConnectionState':
@@ -505,6 +517,23 @@ export class Client {
 
     switch (authorizationState._) {
       case 'authorizationStateWaitTdlibParameters':
+        if (this._version.gte(TDLIB_1_8_6)) {
+          // $FlowIgnore[prop-missing]
+          if (this._options.tdlibParameters._ != null)
+            throw new Error('tdlibParameters must not contain the _ property')
+          // $FlowIgnore[prop-missing]
+          this._sendTdl({
+            _: 'setTdlibParameters',
+            database_directory: resolvePath(this._options.databaseDirectory),
+            files_directory: resolvePath(this._options.filesDirectory),
+            api_id: this._options.apiId,
+            api_hash: this._options.apiHash,
+            use_test_dc: this._options.useTestDc,
+            database_encryption_key: this._options.databaseEncryptionKey,
+            ...this._options.tdlibParameters
+          })
+          return this._connectDefer.resolve()
+        }
         return this._sendTdl({
           _: 'setTdlibParameters',
           'parameters': {
@@ -519,6 +548,7 @@ export class Client {
         })
 
       case 'authorizationStateWaitEncryptionKey':
+        // This update can be received in TDLib <= v1.8.5 only
         this._sendTdl({
           _: 'checkDatabaseEncryptionKey',
           encryption_key: this._options.databaseEncryptionKey
