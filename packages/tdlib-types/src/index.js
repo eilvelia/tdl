@@ -12,7 +12,7 @@ const usage = process.argv.includes('--usage')
 const help = process.argv.includes('--help')
 
 if (usage || help) {
-  console.log('$ ./bin <version> [filename] [--ts] [--no-fl]')
+  console.log('$ ./bin <version> [<filename>] [--ts] [--no-fl]')
   console.log('Options:')
   console.log('  --ts: Emit TypeScript instead of Flow')
   console.log('  --no-fl: Comment \'InvokeFuture\' function type')

@@ -17,7 +17,7 @@ $ npm run build -w tdlib-types
 Run:
 
 ```console
-$ node dist <version> [filename] [--ts] [--no-fl]
+$ node dist <version> [<filename>] [--ts] [--no-fl]
 Options:
   --ts: Emit TypeScript instead of Flow
   --no-fl: Comment 'InvokeFuture' function type

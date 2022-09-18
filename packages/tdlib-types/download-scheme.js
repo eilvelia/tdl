@@ -9,7 +9,7 @@ const ref = process.argv[2]
 const saveAs = process.argv[3]
 
 if (!ref) {
-  console.error('Usage: ./download-scheme.js <tdlib-git-ref> [save-as]')
+  console.error('Usage: ./download-scheme.js <tdlib-git-ref> [<save-as>]')
   process.exit(1)
 }
 
