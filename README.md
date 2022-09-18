@@ -4,8 +4,6 @@
 a library to create [Telegram][] clients or bots.<br>
 TDLib version 1.5.0 or newer is required.
 
-The authorization in TDLib >= v1.8.6 is not supported yet.
-
 [TDLib]: https://github.com/tdlib/td
 [Telegram]: https://telegram.org/
 
@@ -113,7 +111,7 @@ await client.login()
 
 By default, `tdl` asks the user for the phone number, auth code, and 2FA
 password (if needed) in the console. You can override the defaults with custom
-functions:
+functions, for example:
 
 ```javascript
 // Example
@@ -127,8 +125,7 @@ await client.login(() => ({
   getPassword: (passwordHint, retry) => retry
     ? Promise.reject('Invalid password')
     : Promise.resolve('abcdef'),
-  getName: () =>
-    Promise.resolve({ firstName: 'John', lastName: 'Doe' })
+  getName: () => Promise.resolve({ firstName: 'John', lastName: 'Doe' })
 }))
 ```
 
@@ -137,8 +134,7 @@ The `getName` function is called if the user is not signed up.
 It is possible (and advisable for larger apps) not to use the `client.login`
 helper and implement the authorization process manually, handling
 `authorizationStateWaitPhoneNumber` and other updates. This function supports
-logging in via phone number only. Some other methods like QR code are also
-available on Telegram.
+only a subset of authentication methods available on Telegram.
 
 The function accepts the following interface:
 
@@ -146,6 +142,9 @@ The function accepts the following interface:
 type LoginDetails = {
   type?: 'user',
   getPhoneNumber?: (retry?: boolean) => Promise<string>,
+  getEmailAddress?: () => Promise<string>,
+  getEmailCode?: () => Promise<string>,
+  confirmOnAnotherDevice?: (link: string) => void,
   getAuthCode?: (retry?: boolean) => Promise<string>,
   getPassword?: (passwordHint: string, retry?: boolean) => Promise<string>,
   getName?: () => Promise<{ firstName: string, lastName?: string }>
@@ -158,6 +157,8 @@ type LoginDetails = {
 // authorized.
 declare function login (fn?: () => LoginDetails): Promise<undefined>
 ```
+
+`getEmailAddress` and `getEmailCode` are called in TDLib >= v1.8.6 only.
 
 #### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<undefined>`
 

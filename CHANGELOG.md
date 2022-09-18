@@ -4,8 +4,11 @@
 
 ## tdl@7.1.0 (unreleased)
 
-- `client.connect()` works in TDLib >= v1.8.6
-- Adds a `client.getVersion(): string` function, undocumented in the README for now.
+- Added support for TDLib >= v1.8.6.
+- New functions in `LoginDetails`: `getEmailAddress`, `getEmailCode`,
+  `confirmOnAnotherDevice`.
+- Added a `client.getVersion(): string` function, undocumented in the README for
+  now.
 
 ## tdl-tdlib-addon@1.2.1 (2022-09-01)
 

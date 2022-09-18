@@ -7,6 +7,15 @@ export const getPhoneNumber = (retry?: boolean): Promise<string> =>
     ? 'Invalid phone number, please re-enter: '
     : 'Please enter phone number: ')
 
+export const getEmailAddress = (): Promise<string> =>
+  promptly.prompt('Please enter email address: ')
+
+export const getEmailCode = (): Promise<string> =>
+  promptly.prompt('Please enter email authentication code: ')
+
+export const confirmOnAnotherDevice = (link: string): void =>
+  console.log(`Please confirm on another device: ${link}`)
+
 export const getAuthCode = (retry?: boolean): Promise<string> =>
   promptly.prompt(retry
     ? 'Wrong auth code, please re-enter: '

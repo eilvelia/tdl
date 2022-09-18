@@ -7,6 +7,9 @@ export type TDLibParameters = $Rest<tdlibParameters$Input, {| _: 'tdlibParameter
 export type LoginUser = {|
   type: 'user',
   getPhoneNumber: (retry?: boolean) => Promise<string>,
+  getEmailAddress: () => Promise<string>,
+  getEmailCode: () => Promise<string>,
+  confirmOnAnotherDevice: (link: string) => void,
   getAuthCode: (retry?: boolean) => Promise<string>,
   getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
   getName: () => Promise<{ firstName: string, lastName?: string }>

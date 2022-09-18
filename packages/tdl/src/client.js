@@ -5,12 +5,7 @@ import EventEmitter from 'eventemitter3'
 import Debug from 'debug'
 import uuidv4 from '../vendor/uuidv4'
 import { deepRenameKey, deepRenameKey_, mergeDeepRight } from './util'
-import {
-  getPhoneNumber as defaultGetPhoneNumber,
-  getAuthCode as defaultGetAuthCode,
-  getPassword as defaultGetPassword,
-  getName as defaultGetName
-} from './prompt'
+import * as prompt from './prompt'
 import { Version } from './version'
 
 import type { TDLibClient, ITDLibJSON } from 'tdl-shared'
@@ -41,10 +36,13 @@ const debugReq = Debug('tdl:client:request')
 
 const defaultLoginDetails: StrictLoginDetails = {
   type: 'user',
-  getPhoneNumber: defaultGetPhoneNumber,
-  getAuthCode: defaultGetAuthCode,
-  getPassword: defaultGetPassword,
-  getName: defaultGetName
+  getPhoneNumber: prompt.getPhoneNumber,
+  getEmailAddress: prompt.getEmailAddress,
+  getEmailCode: prompt.getEmailCode,
+  confirmOnAnotherDevice: prompt.confirmOnAnotherDevice,
+  getAuthCode: prompt.getAuthCode,
+  getPassword: prompt.getPassword,
+  getName: prompt.getName
 }
 
 const defaultOptions: $Exact<StrictConfigType> = {
@@ -547,8 +545,8 @@ export class Client {
           }
         })
 
+      // This update can be received in TDLib <= v1.8.5 only
       case 'authorizationStateWaitEncryptionKey':
-        // This update can be received in TDLib <= v1.8.5 only
         this._sendTdl({
           _: 'checkDatabaseEncryptionKey',
           encryption_key: this._options.databaseEncryptionKey
@@ -584,6 +582,39 @@ export class Client {
               token: await loginDetails.getToken(false)
             })
         }
+      }
+
+      // $FlowIgnore[incompatible-type]: TDLib >= v1.8.6 only
+      case 'authorizationStateWaitEmailAddress': {
+        const loginDetails = this._authHasNeeded()
+        if (loginDetails.type !== 'user') return
+        // $FlowIgnore[incompatible-call]
+        return this._sendTdl({
+          _: 'setAuthenticationEmailAddress',
+          email_address: await loginDetails.getEmailAddress()
+        })
+      }
+
+      // $FlowIgnore[incompatible-type]: TDLib >= v1.8.6 only
+      case 'authorizationStateWaitEmailCode': {
+        const loginDetails = this._authHasNeeded()
+        if (loginDetails.type !== 'user') return
+        // $FlowIgnore[incompatible-call]
+        return this._sendTdl({
+          _: 'checkAuthenticationEmailCode',
+          code: {
+            // Apple ID and Google ID are not supported
+            _: 'emailAddressAuthenticationCode',
+            code: await loginDetails.getEmailCode()
+          }
+        })
+      }
+
+      case 'authorizationStateWaitOtherDeviceConfirmation': {
+        const loginDetails = this._authHasNeeded()
+        if (loginDetails.type !== 'user') return
+        loginDetails.confirmOnAnotherDevice(authorizationState.link)
+        return
       }
 
       case 'authorizationStateWaitCode': {
