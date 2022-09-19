@@ -66,6 +66,7 @@ export class Client {
   /** Warning: for most use cases you should use client.close() instead of client.destroy() */
   destroy: () => void;
   close: () => Promise<void>;
+  /** @deprecated */
   setLogFatalErrorCallback: (fn: null | ((errorMessage: string) => void)) => void;
   execute: Execute;
 }

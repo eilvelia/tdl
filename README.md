@@ -265,18 +265,6 @@ gets destroyed.
 await client.close()
 ```
 
-#### `client.setLogFatalErrorCallback(fn: (null | Function)) => undefined`
-
-Set the callback that will be called when a fatal error happens in TDLib.
-
-See this function in the [TDLib documentation](https://core.telegram.org/tdlib/docs/td__log_8h.html#a6b2d796393f3eb6fb3c764b69c1588b5).
-
-```javascript
-client.setLogFatalErrorCallback(errorMessage => {
-  console.error('Fatal error:', errorMessage)
-})
-```
-
 ---
 
 <a name="examples"></a>
