@@ -7,7 +7,7 @@
     "clean": "rimraf packages/*/dist/ && npm run clean -w tdl-tdlib-addon",
     "clean-modules": "rimraf node_modules/ && rimraf packages/*/node_modules/",
     "clean-all": "npm run clean && npm run clean-modules",
-    "build": "node copy.js && npm run build -ws",
+    "build": "npm run build -ws",
     "lint": "eslint . --max-warnings 0",
     "jest-tests": "jest --testPathIgnorePatterns tests/integration",
     "test": "npm run flow:check && npm run ts:check && npm run lint && npm run jest-tests",
