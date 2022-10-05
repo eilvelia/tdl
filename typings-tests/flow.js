@@ -18,7 +18,7 @@ var tdlibAddon = new TdAddon(defaultLibraryFile)
   // $FlowExpectedError[prop-missing]
   t.destroy({})
 
-  new Tdl(t)
+  new Tdl(t, { apiId: 2, apiHash: 'hash' })
   const tdl = new Tdl(t, { loginDetails: { type: 'user' } })
   await tdl.connect()
 
@@ -74,19 +74,15 @@ const client = new Client(tdlib, {
   }
 })
 
-new Client(tdlibAddon)
+new Client(tdlibAddon, { apiId: 2, apiHash: 'hash' })
 
-new Client(tdlib, { receiveTimeout: 10 })
+new Client(tdlib, { apiId: 2, apiHash: 'hash', receiveTimeout: 10 })
 
-// $FlowExpectedError[prop-missing]
-new Client({ useTestDc: {} })
+// $FlowExpectedError[incompatible-call]
+new Client()
 
 
-Client.create(tdlib).on('error', console.error)
-Client.create(tdlib, {})
-Client.create(tdlib, { apiId: 222 })
-// $FlowExpectedError[prop-missing]
-Client.create({ apiId: {} })
+Client.create(tdlib, { apiId: 222, apiHash: 'hash' }).on('error', console.error)
 
 client.setLogFatalErrorCallback(a => console.log(a))
 client.setLogFatalErrorCallback(null)
@@ -189,7 +185,7 @@ client.setLogFatalErrorCallback('1234')
   await client.connectAndLogin(() => ({
     type: 'bot',
     getToken: retry => retry
-      ? Promise.reject('Token is not valid')
+      ? Promise.reject('Invalid bot token')
       : Promise.resolve('YOUR_BOT_TOKEN') // Token from @BotFather
   }))
 

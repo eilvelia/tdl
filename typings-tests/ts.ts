@@ -1,6 +1,6 @@
 import { TDLib } from '../packages/tdl-tdlib-ffi'
 import { TDLib as TDLibAddon, defaultLibraryFile } from '../packages/tdl-tdlib-addon'
-import { Client, TdlError } from '../packages/tdl'
+import { Client, TdlError, ConfigType, ClientOptions } from '../packages/tdl'
 import { getTdjson } from '../packages/prebuilt-tdlib'
 
 const tdlib = new TDLib('str')
@@ -33,12 +33,11 @@ const cl = new Client(tdlib, {
 
 new Client(tdlib, { receiveTimeout: 10 })
 
-new Client(tdlib)
+new Client(tdlib, { apiId: 2, apiHash: 'hash' })
 
-new Client(tdlibAddon)
+new Client(tdlibAddon, { apiId: 2, apiHash: 'hash' })
 
-Client.create(tdlib)
-Client.create(tdlib, {})
+Client.create(tdlib, { apiId: 2, apiHash: 'hash' })
 
 const client = cl
 
@@ -49,6 +48,11 @@ const client = cl
     type: 'user',
     getPhoneNumber: () => Promise.resolve('+1234'),
     getAuthCode: () => Promise.resolve('str')
+  }))
+
+  await cl.login(() => ({
+    getPhoneNumber: () => Promise.resolve('+1234'),
+    getAuthCode: () => Promise.resolve('str'),
   }))
 
   await cl.login(() => ({
@@ -68,6 +72,8 @@ const client = cl
 
   cl.pause()
   cl.resume()
+
+  cl.destroy()
 
   client.on('error', e => {
     if (e instanceof TdlError) {

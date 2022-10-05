@@ -2,6 +2,10 @@
 
 <!-- Hi! -->
 
+## (unreleased) tdl@7.2.0
+
+- Added documentation to the `.d.ts` declaration file.
+
 ## tdl@7.1.0 (2022-09-18)
 
 - Added support for TDLib >= v1.8.6.
