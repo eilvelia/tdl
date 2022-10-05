@@ -30,6 +30,21 @@ declare export class Client {
   login: (getLoginDetails?: () => LoginDetails) => Promise<void>;
   /** Same as client.connect().then(() => client.login(fn)) */
   connectAndLogin: (getLoginDetails?: () => LoginDetails) => Promise<void>;
+  /**
+   * Log in as a bot. You can get the token from @BotFather.
+   * If the client is already logged in as a user, it will not be relogged
+   * as a bot. In case a function is passed instead of string, it will not be
+   * called if you are already logged in.
+   * This function is short for
+   * @example
+   * client.login(() => ({
+   *   type: 'bot',
+   *   getToken: retry => retry
+   *     ? Promise.reject('Invalid bot token')
+   *     : Promise.resolve(token)
+   * }))
+   */
+  loginAsBot: (token: string | (() => string | Promise<string>)) => Promise<void>;
   /** Attach an event listener. Use this function to iterate through updates. */
   on: On;
   /** Attach a one-time event listener. */
@@ -180,7 +195,7 @@ export type LoginDetails = $Rest<LoginUser, {}> | LoginBot
  * (c) other internal tdl errors
  */
 declare export class TdlError extends Error {
-  +err: any;
+  +err: any
 }
 
 export type On =

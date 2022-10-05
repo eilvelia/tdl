@@ -62,6 +62,10 @@ var tdlibAddon = new TdAddon(defaultLibraryFile)
   // $FlowExpectedError[incompatible-call]
   tdl.login(() => 2)
 
+  await tdl.loginAsBot('token')
+  await tdl.loginAsBot(() => 'token')
+  await tdl.loginAsBot(() => Promise.resolve('token'))
+
   await tdl.close()
 })
 

@@ -70,6 +70,10 @@ const client = cl
 
   await cl.login(() => ({}))
 
+  await cl.loginAsBot('token')
+  await cl.loginAsBot(() => 'token')
+  await cl.loginAsBot(() => Promise.resolve('token'))
+
   cl.pause()
   cl.resume()
 

@@ -13,7 +13,6 @@ TDLib version 1.5.0 or newer is required.
 - [Requirements](#requirements)
 - [API](#api)
 - [Examples](#examples)
-- [Log in as a bot](#log-in-as-a-bot)
 - [Options](#options)
 - [Typings](#typings)
 - [Creating multiple clients](#creating-multiple-clients)
@@ -160,6 +159,14 @@ declare function login (fn?: () => LoginDetails): Promise<void>
 
 `getEmailAddress` and `getEmailCode` are called in TDLib >= v1.8.6 only.
 
+#### `client.loginAsBot(token: string | (() => string | Promise<string>)) => Promise<void>`
+
+Instead of logging in as a user, you can log in as a bot by token.
+
+```javascript
+await client.loginAsBot('YOUR_BOT_TOKEN') // Enter your token from @BotFather
+```
+
 #### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<void>`
 
 Same as `client.connect().then(() => client.login(fn))`.
@@ -267,6 +274,10 @@ await client.close()
 
 ---
 
+For the full API, see the [index.d.ts](packages/tdl/index.d.ts) file.
+
+---
+
 <a name="examples"></a>
 ### Examples
 
@@ -296,25 +307,6 @@ main().catch(console.error)
 ```
 
 See the [examples/](examples/) directory.
-
----
-
-<a name="log-in-as-a-bot"></a>
-### Log in as a bot
-
-```javascript
-const client = new Client(new TDLib(), {
-  apiId: 2222, // Your api_id
-  apiHash: '0123456789abcdef0123456789abcdef' // Your api_hash
-})
-
-await client.connectAndLogin(() => ({
-  type: 'bot',
-  getToken: retry => retry
-    ? Promise.reject('Invalid bot token')
-    : Promise.resolve('YOUR_BOT_TOKEN') // Enter your token from @BotFather
-}))
-```
 
 ---
 
@@ -468,6 +460,13 @@ current working directory, while macOS does.
 [dlopen]: https://www.man7.org/linux/man-pages/man3/dlopen.3.html
 [LoadLibraryW]: https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryw
 
+- `fatal error: napi.h: no such file or directory`
+- `error: no such file or directory: …/node-modules/node-addon-api`
+
+The path to the directory where you execute `npm install` likely contains
+spaces, which is not supported by gyp:
+https://github.com/nodejs/node-gyp/issues/65#issuecomment-368820565.
+
 - `Error while reading RSA public key`
 
 You can get this error if libtdjson is dynamically linked against OpenSSL and
@@ -533,10 +532,3 @@ symbols.
 - Segmentation fault
 
 Most likely, the cause of the segfault is the same as above.
-
-- `fatal error: napi.h: no such file or directory`
-- `error: no such file or directory: …/node-modules/node-addon-api`
-
-The path to the directory where you execute `npm install` likely contains
-spaces, which is not supported by gyp:
-https://github.com/nodejs/node-gyp/issues/65#issuecomment-368820565.

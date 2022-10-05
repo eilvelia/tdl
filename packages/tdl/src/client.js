@@ -270,6 +270,15 @@ export class Client {
     })
   }
 
+  loginAsBot = (token: string | () => (string | Promise<string>)): Promise<void> => {
+    return this.login(() => ({
+      type: 'bot',
+      getToken: retry => retry
+        ? Promise.reject('Invalid bot token')
+        : Promise.resolve(typeof token === 'string' ? token : token())
+    }))
+  }
+
   // Wait until the 'login' function is called
   _waitLogin (): Promise<void> {
     debug('waitLogin', this._loginDefer)
