@@ -24,8 +24,7 @@ export class Version {
     if (this._major < other._major) return false
     if (this._minor > other._minor) return true
     if (this._minor < other._minor) return false
-    if (this._patch > other._patch) return true
-    return false
+    return this._patch > other._patch
   }
 
   /** v1.lt(v2) is v1 < v2 */
@@ -34,8 +33,7 @@ export class Version {
     if (this._major > other._major) return false
     if (this._minor < other._minor) return true
     if (this._minor > other._minor) return false
-    if (this._patch < other._patch) return true
-    return false
+    return this._patch < other._patch
   }
 
   /** v1.gte(v2) is v1 >= v2 */
@@ -44,8 +42,7 @@ export class Version {
     if (this._major < other._major) return false
     if (this._minor > other._minor) return true
     if (this._minor < other._minor) return false
-    if (this._patch >= other._patch) return true
-    return false
+    return this._patch >= other._patch
   }
 
   /** v1.lte(v2) is v1 <= v2 */
@@ -54,8 +51,7 @@ export class Version {
     if (this._major > other._major) return false
     if (this._minor < other._minor) return true
     if (this._minor > other._minor) return false
-    if (this._patch <= other._patch) return true
-    return false
+    return this._patch <= other._patch
   }
 
   /** v1.eq(v2) is v1 == v2 */

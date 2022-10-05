@@ -3,7 +3,6 @@
 import { resolve as resolvePath } from 'path'
 import EventEmitter from 'eventemitter3'
 import Debug from 'debug'
-import uuidv4 from '../vendor/uuidv4'
 import { deepRenameKey, deepRenameKey_, mergeDeepRight } from './util'
 import * as prompt from './prompt'
 import { Version } from './version'
@@ -159,10 +158,11 @@ const TDL_MAGIC = '6c47e6b71ea'
 // but it should be fine on a small scale.
 
 export class Client {
+  +_tdlib: ITDLibJSON;
   +_options: StrictConfigType;
   +_emitter: EventEmitter = new EventEmitter();
-  +_fetching: Map<string, PendingPromise> = new Map();
-  +_tdlib: ITDLibJSON;
+  +_pending: Map<number, PendingPromise> = new Map();
+  _requestId: number = 0
   _client: ?TDLibClient
   _initialized: boolean = false
   _paused: boolean = false
@@ -350,7 +350,10 @@ export class Client {
   }
 
   invoke: Invoke = async request => {
-    const id = uuidv4()
+    const id = this._requestId
+    this._requestId++
+    if (this._requestId >= Number.MAX_SAFE_INTEGER)
+      this._requestId = 0
     // $FlowIgnore[prop-missing]
     request['@extra'] = id
     const receiveResponse = new Promise((resolve, reject) => {
@@ -358,7 +361,7 @@ export class Client {
       // for Fluture types to be correct
       try {
         const defer = { resolve, reject }
-        this._fetching.set(id, defer)
+        this._pending.set(id, defer)
       } catch (e) {
         this._catchError(new TdlError(e))
       }
@@ -465,12 +468,12 @@ export class Client {
       return this._handleError(res)
 
     const id = res['@extra']
-    const defer = this._fetching.get(id)
+    const defer = this._pending.get(id)
 
     if (defer) {
       delete res['@extra']
       defer.resolve(res)
-      this._fetching.delete(id)
+      this._pending.delete(id)
     } else if (id !== TDL_MAGIC) {
       return this._handleUpdate(res)
     } else {
@@ -664,13 +667,13 @@ export class Client {
   async _handleError (error: Td$error): Promise<void> {
     // $FlowIgnore[prop-missing]
     const id = error['@extra']
-    const defer = this._fetching.get(id)
+    const defer = this._pending.get(id)
 
     if (defer) {
       // $FlowIgnore[prop-missing]
       delete error['@extra']
       defer.reject(error)
-      this._fetching.delete(id)
+      this._pending.delete(id)
     } else if (id === TDL_MAGIC) {
       const loginDetails = this._loginDetails
 
