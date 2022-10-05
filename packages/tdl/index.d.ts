@@ -63,7 +63,7 @@ export class Client {
   removeListener: Off;
   emit: Emit;
   invoke: Invoke;
-  /** Warning: for most use cases you should use client.close() instead of client.destroy() */
+  /** @deprecated Use client.close instead */
   destroy: () => void;
   close: () => Promise<void>;
   /** @deprecated */
