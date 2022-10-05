@@ -91,7 +91,7 @@ The `Options` interface is described in [#options](#options).
 
 [prebuilt-tdlib]: packages/prebuilt-tdlib/README.md
 
-#### `client.connect() => Promise<undefined>`
+#### `client.connect() => Promise<void>`
 
 Initialize the client and pass the options to TDLib.
 This function (or `client.connectAndLogin`) should be called after creating a `Client`.
@@ -101,7 +101,7 @@ Returns a promise.
 await client.connect()
 ```
 
-#### `client.login(fn?: () => LoginDetails) => Promise<undefined>`
+#### `client.login(fn?: () => LoginDetails) => Promise<void>`
 
 Log in to the Telegram account.
 
@@ -155,12 +155,12 @@ type LoginDetails = {
 // Note that client.login accepts a function that returns the object, not the
 // object directly. The function will not be called if the client is already
 // authorized.
-declare function login (fn?: () => LoginDetails): Promise<undefined>
+declare function login (fn?: () => LoginDetails): Promise<void>
 ```
 
 `getEmailAddress` and `getEmailCode` are called in TDLib >= v1.8.6 only.
 
-#### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<undefined>`
+#### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<void>`
 
 Same as `client.connect().then(() => client.login(fn))`.
 
@@ -254,7 +254,7 @@ const res = client.execute({
 })
 ```
 
-#### `client.close() => Promise<undefined>`
+#### `client.close() => Promise<void>`
 
 Close the TDLib instance.
 
