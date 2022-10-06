@@ -9,7 +9,6 @@ const client = new Client(new TDLib(), {
 client.on('error', console.error)
 
 async function main() {
-  await client.connect()
   await client.login()
 
   await client.invoke({

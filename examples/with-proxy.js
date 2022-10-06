@@ -11,8 +11,6 @@ client.on('error', console.error)
 // Works at least in TDLib v1.3.0
 
 async function main() {
-  await client.connect()
-
   const proxy = await client.invoke({
     _: 'addProxy',
     server: '127.0.0.1',

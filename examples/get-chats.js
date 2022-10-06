@@ -9,7 +9,7 @@ const client = new Client(new TDLib(), {
 client.on('error', console.error)
 
 async function main() {
-  await client.connectAndLogin()
+  await client.login()
 
   const result = await client.invoke({
     _: 'getChats',

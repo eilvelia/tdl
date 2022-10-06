@@ -30,8 +30,7 @@ describe('Client with tdl-tdlib-addon', () => {
       client.destroy()
   })
 
-  beforeAll(() => client.connect())
-
+  // beforeAll(() => client.connect())
   afterAll(() => client.close())
 
   test('authorizationStateWaitTdlibParameters has been received', () => new Promise(resolve => {

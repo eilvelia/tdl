@@ -11,7 +11,7 @@ const client = new Client(tdlib, {
 client.on('error', console.error)
 
 async function main() {
-  await client.connectAndLogin()
+  await client.login()
 
   console.log(await client.invoke({ _: 'getMe' }))
 

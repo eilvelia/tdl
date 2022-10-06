@@ -90,19 +90,9 @@ The `Options` interface is described in [#options](#options).
 
 [prebuilt-tdlib]: packages/prebuilt-tdlib/README.md
 
-#### `client.connect() => Promise<void>`
-
-Initialize the client and pass the options to TDLib.
-This function (or `client.connectAndLogin`) should be called after creating a `Client`.
-Returns a promise.
-
-```javascript
-await client.connect()
-```
-
 #### `client.login(fn?: () => LoginDetails) => Promise<void>`
 
-Log in to the Telegram account.
+Log in to your Telegram account.
 
 ```javascript
 await client.login()
@@ -167,14 +157,6 @@ Instead of logging in as a user, you can log in as a bot by token.
 await client.loginAsBot('YOUR_BOT_TOKEN') // Enter your token from @BotFather
 ```
 
-#### `client.connectAndLogin(fn?: () => LoginDetails) => Promise<void>`
-
-Same as `client.connect().then(() => client.login(fn))`.
-
-```javascript
-await client.connectAndLogin()
-```
-
 #### `client.on(event: string, callback: Function) => Client`
 
 Attach an event listener to receive updates.
@@ -192,7 +174,7 @@ There is no default listener, all errors will be ignored otherwise.
 
 You can consider using reactive libraries like RxJS or [most][] for convenient event processing.
 
-`client.addListener` is an alias to this function.
+`client.addListener` is an alias for `client.on`.
 
 [most]: https://github.com/cujojs/most
 
@@ -212,7 +194,7 @@ const listener = v => {
 client.on('update', listener)
 ```
 
-`client.removeListener` is an alias to this function.
+`client.removeListener` is an alias for `client.off`.
 
 #### `client.invoke(query: Object) => Promise<Object>`
 
@@ -221,8 +203,10 @@ Returns a promise, which resolves with the response or rejects with an error.
 
 The API list can be found at https://core.telegram.org/tdlib/docs/annotated.html
 or in the [td_api.tl][] file.
-In the tl file, the `byte` type means you should pass a **base64-encoded** string. For `int64`, it is possible to pass either a number or string, pass string for large numbers.<br>
-Note that the TDLib JSON interface actually sends a `@type` field, but `tdl` renames it to `_`.
+In the tl file, the `byte` type means you should pass a **base64-encoded**
+string. `int64` accepts either a number or string, pass string
+for large numbers. Note that the TDLib JSON interface actually sends a `@type`
+field, but `tdl` renames it to `_`.
 
 [td_api.tl]: https://github.com/tdlib/td/blob/v1.8.0/td/generate/scheme/td_api.tl
 
@@ -296,9 +280,9 @@ client.on('update', update => {
 })
 
 async function main () {
-  await client.connectAndLogin()
+  await client.login()
 
-  console.log(await client.invoke({ _: 'getMe' }))
+  console.log('Me:', await client.invoke({ _: 'getMe' }))
 
   // ...
 }
@@ -315,7 +299,7 @@ See the [examples/](examples/) directory.
 
 ```typescript
 // The interface of the options passed to the Client constructor:
-type Options = {
+type ClientOptions = {
   apiId: number, // Can be obtained at https://my.telegram.org
   apiHash: string, // Can be obtained at https://my.telegram.org
   databaseDirectory: string, // Relative path (default is '_td_database')

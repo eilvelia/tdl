@@ -21,15 +21,11 @@ export type TDLibParameters = $Rest<tdlibParameters$Input, {| _: 'tdlibParameter
 declare export class Client {
   constructor(tdlibInstance: ITDLibJSON, options: ClientOptions): void;
   static create(tdlibInstance: ITDLibJSON, options: ClientOptions): Client;
-  /** Initialize the client. */
-  connect: () => Promise<void>;
   /**
    * Log in to your Telegram account. The getter function will not be called if
    * the client is already logged in.
    */
   login: (getLoginDetails?: () => LoginDetails) => Promise<void>;
-  /** Same as client.connect().then(() => client.login(fn)) */
-  connectAndLogin: (getLoginDetails?: () => LoginDetails) => Promise<void>;
   /**
    * Log in as a bot. You can get the token from @BotFather.
    * If the client is already logged in as a user, it will not be relogged
@@ -87,6 +83,10 @@ declare export class Client {
   pause: () => void;
   /** @deprecated Unstable */
   resume: () => void;
+  /** @deprecated Present for backward compatibility only, does nothing. */
+  connect: () => Promise<void>;
+  /** @deprecated Use client.login instead. */
+  connectAndLogin: (getLoginDetails?: () => LoginDetails) => Promise<void>;
 }
 
 export type ClientOptions = {
@@ -188,11 +188,14 @@ export type LoginBot = {|
 
 export type LoginDetails = $Rest<LoginUser, {}> | LoginBot
 
+export type StrictLoginDetails = LoginUser | LoginBot
+
 /**
  * This wraps any errors that are thrown in:
  * (a) client.on() handlers
- * (b) errors during calls to TDLib
- * (c) other internal tdl errors
+ * (b) client.login handlers
+ * (c) errors during calls to TDLib
+ * (d) other internal tdl errors
  */
 declare export class TdlError extends Error {
   +err: any
@@ -222,9 +225,9 @@ export type Off =
   & ((event: 'auth-not-needed', listener: (...args: any[]) => any, once?: boolean) => void)
   & ((event: 'response', listener: (...args: any[]) => any, once?: boolean) => void)
 
-/** @deprecated Use LoginDetails */
-export type StrictLoginDetails = LoginUser | LoginBot
-/** @deprecated Use ConfigType */
+// The destroy and response events are deprecated.
+
+/** @deprecated Use ClientOptions */
 export type StrictConfigType = {
   apiId?: number,
   apiHash?: string,

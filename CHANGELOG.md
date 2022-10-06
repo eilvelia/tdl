@@ -4,8 +4,11 @@
 
 ## (unreleased) tdl@7.2.0
 
+- It is no longer needed to call `client.connect` or `client.connectAndLogin`,
+  these functions are deprecated.
 - Added a `client.loginAsBot` function.
 - Added documentation to the `.d.ts` declaration file.
+- Deprecated `client.setLogFatalErrorCallback` and `client.destroy`.
 
 ## tdl@7.1.0 (2022-09-18)
 

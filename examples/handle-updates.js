@@ -18,7 +18,6 @@ client
   })
 
 async function main () {
-  await client.connect()
   await client.login()
   // ...
 }

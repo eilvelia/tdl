@@ -35,7 +35,7 @@ async function main () {
 
   console.log(client)
 
-  await client.connectAndLogin(() => ({
+  await client.login(() => ({
     getPhoneNumber: retry => Promise.resolve(window.prompt(retry
       ? 'Invalid phone number, please re-enter:'
       : 'Please enter phone number:')),

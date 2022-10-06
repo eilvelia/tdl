@@ -60,8 +60,10 @@ export function deepRenameKey_ (
     const obj = stack.pop()
     if (oldKey in obj && !Array.isArray(obj)) {
       obj[newKey] = obj[oldKey]
+      // TODO: delete here may actually make it slower than the immutable version
       delete obj[oldKey]
     }
+    // For better performance, we should not use Object.values
     for (const v of Object.values(obj)) {
       if (typeof v === 'object' && v !== null)
         // `v` is read-only here, but we want to mutate it

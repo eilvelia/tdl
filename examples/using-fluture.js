@@ -23,10 +23,7 @@ const searchChat = username =>
     .map(chat => `Chat: ${chat.title}, id: ${chat.id}`)
     .mapRej(err => `Error: ${err.message}`)
 
-const login = Future.encaseP(client.login)
-
 Future
-  .tryP(client.connect)
-  .chain(() => login())
+  .tryP(client.login)
   .chain(() => searchChat('username'))
   .fork(console.error, console.log)

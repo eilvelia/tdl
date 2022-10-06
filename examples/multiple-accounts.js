@@ -26,8 +26,6 @@ client1.on('error', e => console.error('Client1 error', e))
 client2.on('error', e => console.error('Client2 error', e))
 
 async function main() {
-  await Promise.all([ client1.connect(), client2.connect() ])
-
   await client1.login()
   await client2.login()
 
