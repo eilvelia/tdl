@@ -255,6 +255,9 @@ export class Client {
     if (this._options.bare)
       this._initialized = true
 
+    // Note: To allow define listeners before the first update, we must ensure
+    // that emit is not executed in the current tick. process.nextTick or
+    // queueMicrotask are redundant here because of await in the _loop function.
     this._loop()
       .catch(e => this._catchError(new TdlError(e)))
   }
