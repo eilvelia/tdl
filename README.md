@@ -30,9 +30,8 @@ TDLib version 1.5.0 or newer is required.
 3. `npm install --save-dev tdlib-types` if you use Flow or TypeScript &nbsp;(recommended)
 
 Instead of building TDLib, you can try to use the pre-built one: `npm i prebuilt-tdlib`.
-For more information, see [prebuilt-tdlib][]. The pre-built libraries are
-available to x86_64 systems. On GNU/Linux, those may not be compatible
-with the glibc version installed on your system.
+For more information, see [prebuilt-tdlib][]. The pre-built libraries support
+x86_64 systems only. On GNU/Linux, those require glibc >= 2.31.
 
 ---
 
@@ -59,13 +58,12 @@ paths). Otherwise, the path to the library can be specified manually.
 #### `new Client(tdlibInstance, options) => Client`
 
 ```javascript
-// Example in Node.js:
 const { Client } = require('tdl')
 const { TDLib } = require('tdl-tdlib-addon')
 
 const client = new Client(new TDLib(), {
   apiId: 2222, // Your api_id
-  apiHash: '0123456789abcdef0123456789abcdef', // Your api_hash
+  apiHash: '0123456789abcdef0123456789abcdef' // Your api_hash
 })
 ```
 
@@ -82,7 +80,8 @@ To use the pre-built `libtdjson` from [prebuilt-tdlib][], import it and pass
 ```javascript
 // ...
 const { getTdjson } = require('prebuilt-tdlib')
-const client = new Client(new TDLib(getTdjson()), {
+const tdlib = new TDLib(getTdjson())
+const client = new Client(tdlib, {
 // ...
 ```
 
@@ -198,15 +197,14 @@ client.on('update', listener)
 
 #### `client.invoke(query: Object) => Promise<Object>`
 
-Asynchronously call a TDLib method.
-Returns a promise, which resolves with the response or rejects with an error.
+Call a TDLib method asynchronously. The promise can be rejected with a TDLib
+object of type `_: 'error'`.
 
 The API list can be found at https://core.telegram.org/tdlib/docs/annotated.html
-or in the [td_api.tl][] file.
-In the tl file, the `byte` type means you should pass a **base64-encoded**
-string. `int64` accepts either a number or string, pass string
-for large numbers. Note that the TDLib JSON interface actually sends a `@type`
-field, but `tdl` renames it to `_`.
+or in the [td_api.tl][] file. In the tl file, the `byte` type means you should
+pass a **base64-encoded** string. `int64` accepts either a number or string,
+pass string for large numbers. Note that the TDLib JSON interface actually sends
+a `@type` field, but `tdl` renames it to `_`.
 
 [td_api.tl]: https://github.com/tdlib/td/blob/v1.8.0/td/generate/scheme/td_api.tl
 
@@ -234,9 +232,8 @@ await client.invoke({
 
 #### `client.execute(query: Object) => (Object | null)`
 
-Synchronously call a TDLib method and receive a response. This function can be
-called only with the methods marked as "can be called synchronously" in the
-TDLib documentation.
+Call a TDLib method synchronously. This function can be used only with the
+methods marked as "can be called synchronously" in the TDLib documentation.
 
 ```javascript
 const res = client.execute({
@@ -247,10 +244,7 @@ const res = client.execute({
 
 #### `client.close() => Promise<void>`
 
-Close the TDLib instance.
-
-This function sends `client.invoke({ _: 'close' })` and waits until the client
-gets destroyed.
+Close the TDLib client.
 
 ```javascript
 await client.close()
