@@ -12,7 +12,7 @@ TDLib version 1.5.0 or newer is required.
 - [Installation](#installation)
 - [Requirements](#requirements)
 - [API](#api)
-- [Examples](#examples)
+- [Example](#example)
 - [Options](#options)
 - [Typings](#typings)
 - [Creating multiple clients](#creating-multiple-clients)
@@ -262,8 +262,8 @@ For the full API, see the [index.d.ts](packages/tdl/index.d.ts) file.
 
 ---
 
-<a name="examples"></a>
-### Examples
+<a name="example"></a>
+### Example
 
 ```javascript
 const { Client } = require('tdl')
@@ -425,13 +425,14 @@ Otherwise, `tdl` works fine on Windows.
 Update TDLib to v1.7.9 (v1.8.0) or newer. It is no longer possible to log in by
 phone number in older versions of TDLib.
 
-- `Dynamic Loading Error: dlopen(…) image not found`
-- `Dynamic Loading Error: Win32 error 126`
+- `Dynamic Loading Error: Win32 error 126` (Windows)
+- `Dynamic Loading Error: dlopen(…) image not found` (macOS)
+- `…cannot open shared object file: No such file or directory` (Linux)
 
-The tdjson shared library or one of its dependencies cannot be found. To
-troubleshoot dependency issues, try to run `ldd libtdjson.so` on Linux or
-`otool -L libtdjson.dylib` on macOS. On Windows, you can use an app like
-Dependency Walker.
+The tdjson shared library or one of its dependencies (for example, libssl)
+cannot be found. To troubleshoot dependency issues, try to run
+`ldd libtdjson.so` on Linux or `otool -L libtdjson.dylib` on macOS. On Windows,
+you can use an app like Dependency Walker.
 
 Recheck the documentation of [dlopen][] (Linux), [dlopen][dlopen-macos] (macOS),
 [Dynamic-Link Library Search Order][dllso] (Windows) to make sure the shared
@@ -457,19 +458,19 @@ You can get this error if libtdjson is dynamically linked against OpenSSL and
 some of the symbols got resolved to Node.js instead of the system OpenSSL.
 
 Note that Node.js also uses OpenSSL (the distributed binaries are statically
-linked against it) and _exports the OpenSSL symbols_. In the result, there are
+linked against it) and exports the OpenSSL symbols. In the result, there are
 two versions of OpenSSL in the same application. Then, using standard dlopen,
 especially on Linux, most of the symbols will be resolved into libcrypto
 inside the Node.js binary, not into the system libcrypto. It still can work
 correctly if the versions are ABI-compatible, i.e. if TDLib is linked against an
-OpenSSL version sufficiently similar to the version Node.js uses
+OpenSSL version sufficiently similar to the version that Node.js uses
 (`node -p "process.versions.openssl"`).
 
 `tdl` tries to get around the symbol conflict issues by using `RTLD_DEEPBIND`
 when available, so these issues should be rare in practice.
 
-You can check in `lldb` / `gdb` if the symbols get resolved into Node.js. For
-example, open `lldb -- node index.js` and set these breakpoints:
+You can use `lldb` or `gdb` to check whether the symbols get resolved into
+Node.js. For example, open `lldb -- node index.js` and set these breakpoints:
 
 ```
 break set -r EVP_ -s node
