@@ -9,6 +9,8 @@
 - Added a `client.loginAsBot` function.
 - Added documentation to the `.d.ts` declaration file.
 - Deprecated `client.setLogFatalErrorCallback` and `client.destroy`.
+- Deprecated the `useDefaultVerbosityLevel` advanced option, it is replaced
+  with `verbosityLevel: 'default'`.
 
 ## tdl@7.1.0 (2022-09-18)
 

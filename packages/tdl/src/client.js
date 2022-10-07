@@ -55,7 +55,7 @@ export type StrictClientOptions = {
   databaseDirectory: string,
   filesDirectory: string,
   databaseEncryptionKey: string,
-  verbosityLevel: number,
+  verbosityLevel: number | 'default',
   receiveTimeout: number,
   skipOldUpdates: boolean,
   useTestDc: boolean,
@@ -229,7 +229,11 @@ export class Client {
 
     this._tdlib = tdlibInstance
 
-    if (!this._options.useDefaultVerbosityLevel) {
+    // Backward compatibility
+    if (this._options.useDefaultVerbosityLevel)
+      this._options.verbosityLevel = 'default'
+
+    if (this._options.verbosityLevel !== 'default') {
       debug('Executing setLogVerbosityLevel', this._options.verbosityLevel)
       this._tdlib.execute(null, {
         '@type': 'setLogVerbosityLevel',

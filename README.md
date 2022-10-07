@@ -305,15 +305,14 @@ type ClientOptions = {
   databaseDirectory: string, // Relative path (default is '_td_database')
   filesDirectory: string, // Relative path (default is '_td_files')
   databaseEncryptionKey: string, // Optional key for database encryption
-  verbosityLevel: number, // Verbosity level (default is 2)
+  verbosityLevel: number | 'default', // Verbosity level (default is 2)
   useTestDc: boolean, // Use test telegram server (default is false)
   tdlibParameters: Object, // Raw TDLib parameters
   // Advanced options:
   skipOldUpdates: boolean, // Don't emit updates when connectionStateUpdating
+  disableAuth: boolean,
   receiveTimeout: number,
-  useMutableRename: boolean,
-  useDefaultVerbosityLevel: boolean,
-  disableAuth: boolean
+  useMutableRename: boolean
 }
 ```
 

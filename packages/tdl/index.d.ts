@@ -106,9 +106,10 @@ export type ClientOptions = {
    * corresponds to warnings and debug warnings, value 3 corresponds to
    * informational, value 4 corresponds to debug, value 5 corresponds to
    * verbose debug, value greater than 5 and up to 1024 can be used to enable
-   * even more logging". Defaults to 2.
+   * even more logging". Another possible option is "default", tdl will then
+   * not send any verbosity to TDLib. Defaults to 2.
    */
-  verbosityLevel?: number,
+  verbosityLevel?: number | 'default',
   /** Use test telegram server. */
   useTestDc?: boolean,
   /**
@@ -148,10 +149,7 @@ export type ClientOptions = {
    * at the end of the object.
    */
   useMutableRename?: boolean,
-  /**
-   * Advanced option. When set to true, tdl will not send any verbosity level
-   * to TDLib, i.e. setLogVerbosityLevel is not called.
-   */
+  /** @deprecated Use `verbosityLevel: 'default'` instead. */
   useDefaultVerbosityLevel?: boolean,
 }
 
