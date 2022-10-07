@@ -11,6 +11,8 @@
 - Deprecated `client.setLogFatalErrorCallback` and `client.destroy`.
 - Deprecated the `useDefaultVerbosityLevel` advanced option, it is replaced
   with `verbosityLevel: 'default'`.
+- Renamed the `disableAuth` advanced option to `bare`, `disableAuth` is now
+  deprecated.
 
 ## tdl@7.1.0 (2022-09-18)
 

@@ -15,22 +15,12 @@ describe('Client with tdl-tdlib-addon', () => {
   const backend = 'tdl-tdlib-addon'
 
   const client = new Client(tdlib, {
-    apiId: 222,
-    apiHash: 'test',
-    disableAuth: true
+    bare: true
   })
 
   client.on('error', e => console.error(`[${backend}] error`, e))
+  client.on('update', u => console.log(`[${backend}] update`, u))
 
-  client.on('update', u => {
-    console.log(`[${backend}] update`, u)
-    const closed = u._ === 'updateAuthorizationState'
-      && u.authorization_state._ === 'authorizationStateClosed'
-    if (closed)
-      client.destroy()
-  })
-
-  // beforeAll(() => client.connect())
   afterAll(() => client.close())
 
   test('authorizationStateWaitTdlibParameters has been received', () => new Promise(resolve => {

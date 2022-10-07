@@ -132,13 +132,15 @@ export type ClientOptions = {
    */
   skipOldUpdates?: boolean,
   /**
-   * Advanced option. Disables passing of the parameters to TDLib. You then
-   * need to handle the authorizationStateWaitTdlibParameters update manually.
-   * In TDLib <= v1.8.5, this also disables handling of
-   * authorizationStateWaitEncryptionKey.
-   * When set to true, the "login" function will not work.
+   * Advanced option. This disables handling of auth* updates by tdl,
+   * making tdl a relatively tiny wrapper. When set to true, you need to handle
+   * the authorizationStateWaitTdlibParameters update (and
+   * authorizationStateWaitEncryptionKey in TDLib < v1.8.6) manually, calling
+   * setTdlibParameters to pass the parameters to TDLib. The client.login
+   * function will not work and should not be called. The options tdlibParameters,
+   * apiId, apiHash, useTestDc, databaseDirectory, filesDirectory will do nothing.
    */
-  disableAuth?: boolean,
+  bare?: boolean,
   /**
    * Advanced option. Configures the delay for the td_receive function.
    * Defaults to 10.0 seconds.
@@ -151,10 +153,9 @@ export type ClientOptions = {
   useMutableRename?: boolean,
   /** @deprecated Use `verbosityLevel: 'default'` instead. */
   useDefaultVerbosityLevel?: boolean,
+  /** @deprecated Use the "bare" option instead. */
+  disableAuth?: boolean
 }
-
-// Note: apiId and apiHash are not marked as required (without `?`)
-// because they can be defined in the tdlibParameters object
 
 export type LoginUser = {
   type: 'user',

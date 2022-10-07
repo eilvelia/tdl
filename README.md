@@ -310,7 +310,7 @@ type ClientOptions = {
   tdlibParameters: Object, // Raw TDLib parameters
   // Advanced options:
   skipOldUpdates: boolean, // Don't emit updates when connectionStateUpdating
-  disableAuth: boolean,
+  bare: boolean,
   receiveTimeout: number,
   useMutableRename: boolean
 }

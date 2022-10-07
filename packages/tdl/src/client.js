@@ -56,13 +56,14 @@ export type StrictClientOptions = {
   filesDirectory: string,
   databaseEncryptionKey: string,
   verbosityLevel: number | 'default',
-  receiveTimeout: number,
-  skipOldUpdates: boolean,
   useTestDc: boolean,
+  tdlibParameters: TDLibParameters,
+  skipOldUpdates: boolean,
+  bare: boolean,
+  receiveTimeout: number,
   useMutableRename: boolean,
   useDefaultVerbosityLevel: boolean,
-  disableAuth: boolean,
-  tdlibParameters: TDLibParameters
+  disableAuth: boolean
 }
 
 const defaultLoginDetails: StrictLoginDetails = {
@@ -86,6 +87,7 @@ const defaultOptions: $Exact<StrictClientOptions> = {
   useTestDc: false,
   useMutableRename: false,
   useDefaultVerbosityLevel: false,
+  bare: false,
   disableAuth: false,
   tdlibParameters: {
     use_message_database: true,
@@ -190,7 +192,7 @@ const TDL_MAGIC = '6c47e6b71ea'
 
 // To simplify, Client has three states:
 // 1. Created, awaiting initialization (handling of tdlibParameters)
-//    - if disableAuth is set to true, go to 3
+//    - if bare is set to true, go to 3
 //    - once authorizationStateWaitTdlibParameters is received and replied with
 //      setTdlibParameters, go to 2
 //    - what if setTdlibParameters is responded with an error? there is no
@@ -221,17 +223,21 @@ export class Client {
   constructor (tdlibInstance: ITDLibJSON, options: ClientOptions = {}) {
     this._options = (mergeDeepRight(defaultOptions, options): StrictClientOptions)
 
-    if (!options.apiId && !options.tdlibParameters?.api_id)
-      throw new TypeError('Valid api_id must be provided.')
-
-    if (!options.apiHash && !options.tdlibParameters?.api_hash)
-      throw new TypeError('Valid api_hash must be provided.')
-
-    this._tdlib = tdlibInstance
-
     // Backward compatibility
     if (this._options.useDefaultVerbosityLevel)
       this._options.verbosityLevel = 'default'
+    if (this._options.disableAuth)
+      this._options.bare = true
+
+    if (!this._options.bare) {
+      if (!options.apiId && !options.tdlibParameters?.api_id)
+        throw new TypeError('Valid api_id must be provided.')
+
+      if (!options.apiHash && !options.tdlibParameters?.api_hash)
+        throw new TypeError('Valid api_hash must be provided.')
+    }
+
+    this._tdlib = tdlibInstance
 
     if (this._options.verbosityLevel !== 'default') {
       debug('Executing setLogVerbosityLevel', this._options.verbosityLevel)
@@ -246,7 +252,7 @@ export class Client {
     if (!this._client)
       throw new Error('Failed to create a TDLib client')
 
-    if (this._options.disableAuth)
+    if (this._options.bare)
       this._initialized = true
 
     this._loop()
@@ -611,7 +617,7 @@ export class Client {
       return
     }
 
-    if (this._options.disableAuth) return
+    if (this._options.bare) return
 
     switch (authorizationState._) {
       case 'authorizationStateWaitTdlibParameters':
