@@ -227,16 +227,17 @@ export type Off =
 // The destroy and response events are deprecated.
 
 /** @deprecated Use ClientOptions */
-export type StrictConfigType = {
+export type StrictClientOptions = {
   apiId?: number,
   apiHash?: string,
   databaseDirectory: string,
   filesDirectory: string,
   databaseEncryptionKey: string,
-  verbosityLevel: number,
+  verbosityLevel: number | 'default',
   useTestDc: boolean,
   tdlibParameters: TDLibParameters,
   skipOldUpdates: boolean,
+  bare: boolean,
   receiveTimeout: number,
   useMutableRename: boolean,
   useDefaultVerbosityLevel: boolean,

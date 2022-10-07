@@ -255,7 +255,7 @@ export class Client {
     if (this._options.bare)
       this._initialized = true
 
-    // Note: To allow define listeners before the first update, we must ensure
+    // Note: To allow defining listeners before the first update, we must ensure
     // that emit is not executed in the current tick. process.nextTick or
     // queueMicrotask are redundant here because of await in the _loop function.
     this._loop()
@@ -670,6 +670,9 @@ export class Client {
     // Wait until client.login is called (it may never happen)
     await this._waitLogin()
     debug('waitLogin end', authorizationState._)
+
+    // Note that authorizationStateWaitPhoneNumber may not be the first update
+    // in the login flow in case of a previous incomplete login attempt
 
     switch (authorizationState._) {
       case 'authorizationStateReady':
