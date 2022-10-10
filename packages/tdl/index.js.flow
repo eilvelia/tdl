@@ -16,7 +16,7 @@ export type TDLibParameters = $Rest<tdlibParameters$Input, {| _: 'tdlibParameter
 
 /**
  * Note: the public methods in this class are defined as properties, so
- * .bind is not needed. This class is not generally meant to be extended.
+ * `.bind` is not needed. This class is generally not meant to be extended.
  */
 declare export class Client {
   constructor(tdlibInstance: ITDLibJSON, options: ClientOptions): void;
@@ -27,18 +27,19 @@ declare export class Client {
    */
   login: (getLoginDetails?: () => LoginDetails) => Promise<void>;
   /**
-   * Log in as a bot. You can get the token from @BotFather.
+   * Log in as a bot. You can get the token from `@BotFather`.
    * If the client is already logged in as a user, it will not be relogged
    * as a bot. In case a function is passed instead of string, it will not be
    * called if you are already logged in.
    * This function is short for
-   * @example
+   * ```
    * client.login(() => ({
    *   type: 'bot',
    *   getToken: retry => retry
    *     ? Promise.reject('Invalid bot token')
    *     : Promise.resolve(token)
    * }))
+   * ```
    */
   loginAsBot: (token: string | (() => string | Promise<string>)) => Promise<void>;
   /** Attach an event listener. Use this function to iterate through updates. */
@@ -47,9 +48,9 @@ declare export class Client {
   once: On;
   /** Remove an event listener. */
   off: Off;
-  /** Alias for client.on. */
+  /** Alias for `client.on`. */
   addListener: On;
-  /** Alias for client.off. */
+  /** Alias for `client.off`. */
   removeListener: Off;
   /** Call a TDLib method asynchronously. */
   invoke: Invoke;
@@ -59,13 +60,13 @@ declare export class Client {
    */
   execute: Execute;
   /**
-   * Close the client. This sends { _: 'close' } and waits for
-   * authorizationStateClosed.
+   * Close the client. This sends `{ _: 'close' }` and waits for
+   * `authorizationStateClosed`.
    */
   close: () => Promise<void>;
   /**
-   * Get the TDLib version in the `major.minor.patch` format. This can throw an
-   * exception if the version is not (yet) available.
+   * Get the TDLib version in the `major.minor.patch` format. `getVersion` can
+   * throw an exception if the version is not (yet) received.
    */
   getVersion: () => string;
   getBackendName: () => string;
@@ -73,8 +74,8 @@ declare export class Client {
   emit: Emit;
 
   /**
-   * @deprecated Use client.close instead. The client will be automatically
-   * destroyed on authorizationStateClosed.
+   * @deprecated Use `client.close` instead. The client will be automatically
+   * destroyed on `authorizationStateClosed`.
    */
   destroy: () => void;
   /** @deprecated This is deprecated in TDLib since v1.8.0 */
@@ -85,7 +86,7 @@ declare export class Client {
   resume: () => void;
   /** @deprecated Present for backward compatibility only, does nothing. */
   connect: () => Promise<void>;
-  /** @deprecated Use client.login instead. */
+  /** @deprecated Use `client.login` instead. */
   connectAndLogin: (getLoginDetails?: () => LoginDetails) => Promise<void>;
 }
 
@@ -94,9 +95,9 @@ export type ClientOptions = {
   apiId?: number,
   /** Required. Can be obtained at https://my.telegram.org/ */
   apiHash?: string,
-  /** A relative path to the database directory. Defaults to "_td_database". */
+  /** A relative path to the database directory. Defaults to `'_td_database'`. */
   databaseDirectory?: string,
-  /** A relative path to the files directory. Defaults to "_td_files". */
+  /** A relative path to the files directory. Defaults to `'_td_files'`. */
   filesDirectory?: string,
   /** An optional key for database encryption. */
   databaseEncryptionKey?: string,
@@ -104,10 +105,10 @@ export type ClientOptions = {
    * Set TDLib verbosity level. From the TDLib documentation: "value 0
    * corresponds to fatal errors, value 1 corresponds to errors, value 2
    * corresponds to warnings and debug warnings, value 3 corresponds to
-   * informational, value 4 corresponds to debug, value 5 corresponds to
-   * verbose debug, value greater than 5 and up to 1024 can be used to enable
-   * even more logging". Another possible option is "default", tdl will then
-   * not send any verbosity to TDLib. Defaults to 2.
+   * informational, value 4 corresponds to debug, value 5 corresponds to verbose
+   * debug, value greater than 5 and up to 1024 can be used to enable even more
+   * logging". Another possible option is `'default'`, `tdl` will then not send
+   * any verbosity to TDLib. Defaults to 2.
    */
   verbosityLevel?: number | 'default',
   /** Use test telegram server. */
@@ -115,7 +116,7 @@ export type ClientOptions = {
   /**
    * Raw TDLib parameters. These contain fields like application_version,
    * device_model, etc. Defaults to:
-   * @example
+   * ```
    * { use_message_database: true
    * , use_secret_chats: false
    * , system_language_code: 'en'
@@ -123,55 +124,57 @@ export type ClientOptions = {
    * , device_model: 'Unknown device'
    * , system_version: 'Unknown'
    * , enable_storage_optimizer: true }
+   * ```
    */
   tdlibParameters?: TDLibParameters,
 
   /**
    * Advanced option. When set to true, the client does not emit updates if
-   * connectionState equals to "connectionStateUpdating".
+   * `connectionState` equals to `connectionStateUpdating`.
    */
   skipOldUpdates?: boolean,
   /**
-   * Advanced option. This disables handling of auth* updates by tdl,
-   * making tdl a relatively tiny wrapper. When set to true, you need to handle
-   * the authorizationStateWaitTdlibParameters update (and
-   * authorizationStateWaitEncryptionKey in TDLib < v1.8.6) manually, calling
-   * setTdlibParameters to pass the parameters to TDLib. The client.login
-   * function will not work and should not be called. The options tdlibParameters,
-   * apiId, apiHash, useTestDc, databaseDirectory, filesDirectory will do nothing.
+   * Advanced option. This disables handling of auth* updates, making `tdl` a
+   * relatively tiny wrapper. When set to true, you need to handle the
+   * `authorizationStateWaitTdlibParameters` update manually (and
+   * `authorizationStateWaitEncryptionKey` in TDLib < v1.8.6). The parameters
+   * should be passed to TDLib manually by calling `setTdlibParameters`. The
+   * `client.login` function will not work and should not be called. The options
+   * `tdlibParameters`, `apiId`, `apiHash`, `useTestDc`, `databaseDirectory`,
+   * `filesDirectory` will do nothing.
    */
   bare?: boolean,
   /**
-   * Advanced option. Configures the delay for the td_receive function.
-   * Defaults to 10.0 seconds.
+   * Advanced option. Configures the delay for the `receive` tdjson function.
+   * Defaults to `10.0` seconds.
    */
   receiveTimeout?: number,
   /**
-   * Advanced option. This will result in slightly worse logs with the '_' field
+   * Advanced option. This will result in slightly worse logs with the `_` field
    * at the end of the object.
    */
   useMutableRename?: boolean,
   /** @deprecated Use `verbosityLevel: 'default'` instead. */
   useDefaultVerbosityLevel?: boolean,
-  /** @deprecated Use the "bare" option instead. */
+  /** @deprecated Use the `bare` option instead. */
   disableAuth?: boolean
 }
 
 export type LoginUser = {|
   type: 'user',
-  /** Handler for authorizationStateWaitPhoneNumber, will be recalled on error. */
+  /** Handler for `authorizationStateWaitPhoneNumber`, will be recalled on error. */
   getPhoneNumber: (retry?: boolean) => Promise<string>,
-  /** Handler for authorizationStateWaitEmailAddress, TDLib v1.8.6+ only. */
+  /** Handler for `authorizationStateWaitEmailAddress`, TDLib v1.8.6+ only. */
   getEmailAddress: () => Promise<string>,
-  /** Handler for authorizationStateWaitEmailCode, TDLib v1.8.6+ only. */
+  /** Handler for `authorizationStateWaitEmailCode`, TDLib v1.8.6+ only. */
   getEmailCode: () => Promise<string>,
-  /** Handler for authorizationStateWaitOtherDeviceConfirmation, sends nothing. */
+  /** Handler for `authorizationStateWaitOtherDeviceConfirmation`, sends nothing. */
   confirmOnAnotherDevice: (link: string) => void,
-  /** Handler for authorizationStateWaitCode, will be recalled on error. */
+  /** Handler for `authorizationStateWaitCode`, will be recalled on error. */
   getAuthCode: (retry?: boolean) => Promise<string>,
-  /** Handler for authorizationStateWaitPassword, will be recalled on error. */
+  /** Handler for `authorizationStateWaitPassword`, will be recalled on error. */
   getPassword: (passwordHint: string, retry?: boolean) => Promise<string>,
-  /** Handler for authorizationStateWaitRegistration. */
+  /** Handler for `authorizationStateWaitRegistration`. */
   getName: () => Promise<{ firstName: string, lastName?: string }>
 |}
 
@@ -179,8 +182,8 @@ export type LoginBot = {|
   /** You will be logged in as a bot. */
   type: 'bot',
   /**
-   * Handler for authorizationStateWaitPhoneNumber,
-   * sends checkAuthenticationBotToken, will be recalled on error.
+   * Handler for `authorizationStateWaitPhoneNumber`,
+   * sends `checkAuthenticationBotToken`, will be recalled on error.
    */
   getToken: (retry?: boolean) => Promise<string>
 |}
@@ -191,10 +194,10 @@ export type StrictLoginDetails = LoginUser | LoginBot
 
 /**
  * This wraps any errors that are thrown in:
- * (a) client.on() handlers
- * (b) client.login handlers
- * (c) errors during calls to TDLib
- * (d) other internal tdl errors
+ * - `client.on` handlers,
+ * - `client.login` handlers,
+ * - errors during calls to TDLib,
+ * - other internal tdl errors.
  */
 declare export class TdlError extends Error {
   +err: any
