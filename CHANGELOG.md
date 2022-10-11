@@ -2,7 +2,7 @@
 
 <!-- Hi! -->
 
-## (unreleased) tdl@7.2.0
+## tdl@7.2.0 (2022-10-11)
 
 - It is no longer needed to call `client.connect` or `client.connectAndLogin`,
   these functions are deprecated.
