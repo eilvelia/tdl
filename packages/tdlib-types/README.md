@@ -71,10 +71,10 @@ For information about the TL -> TypeScript/Flow translator, see
 
 ### npm tags
 
-[![npm](https://img.shields.io/npm/v/tdlib-types/latest.svg)](https://www.npmjs.com/package/tdlib-types)<br>
-[![npm](https://img.shields.io/npm/v/tdlib-types/beta.svg)](https://www.npmjs.com/package/tdlib-types)<br>
-[![npm](https://img.shields.io/npm/v/tdlib-types/td-1.8.5.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.8.5) (tdlib commit [d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9](https://github.com/tdlib/td/commit/d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9))<br>
-[![npm](https://img.shields.io/npm/v/tdlib-types/td-1.8.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.8.0)<br>
-[![npm](https://img.shields.io/npm/v/tdlib-types/td-1.7.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.7.0)<br>
-[![npm](https://img.shields.io/npm/v/tdlib-types/td-1.6.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.6.0)<br>
-[![npm](https://img.shields.io/npm/v/tdlib-types/td-1.5.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.5.0)<br>
+- [![npm](https://img.shields.io/npm/v/tdlib-types/latest.svg)](https://www.npmjs.com/package/tdlib-types)
+- [![npm](https://img.shields.io/npm/v/tdlib-types/beta.svg)](https://www.npmjs.com/package/tdlib-types)
+- [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.8.5.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.8.5) (tdlib commit [d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9](https://github.com/tdlib/td/commit/d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9))
+- [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.8.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.8.0)
+- [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.7.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.7.0)
+- [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.6.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.6.0)
+- [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.5.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.5.0)

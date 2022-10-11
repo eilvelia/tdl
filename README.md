@@ -9,8 +9,8 @@ TDLib version 1.5.0 or newer is required.
 
 ### Table of Contents
 
-- [Installation](#installation)
 - [Requirements](#requirements)
+- [Installation](#installation)
 - [API](#api)
 - [Example](#example)
 - [Options](#options)
@@ -22,33 +22,36 @@ TDLib version 1.5.0 or newer is required.
 
 ---
 
-<a name="installation"></a>
-### Installation
-
-1. Build TDLib (https://github.com/tdlib/td#building)
-2. `npm install tdl tdl-tdlib-addon` &nbsp;(install both)
-3. `npm install --save-dev tdlib-types` if you use Flow or TypeScript &nbsp;(recommended)
-
-Instead of building TDLib, you can try to use the pre-built one: `npm i prebuilt-tdlib`.
-For more information, see [prebuilt-tdlib][]. The pre-built libraries support
-x86_64 systems only. On GNU/Linux, those require glibc >= 2.31.
-
----
-
 <a name="requirements"></a>
 ### Requirements
 
-- Node.js v10+
-- A C++ compiler and Python installed
+- Node.js v10.0.0 or newer
+- A C++ compiler and Python installed to build the node addon
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
 
-The shared library should be installed on your system (present in the search
-paths). Otherwise, the path to the library can be specified manually.
+<a name="installation"></a>
+### Installation
 
-> **Note**: When building TDLib, you can install the libraries into the system
+1. Build TDLib (https://github.com/tdlib/td#building) or install pre-built
+   libraries
+2. Run `npm install tdl tdl-tdlib-addon` (install both)
+3. If you use TypeScript or Flow, run `npm install -D tdlib-types@td-1.8.5` to
+   get the types for TDLib
+
+To use `tdl`, TDLib should be installed on your system. The tdjson shared
+library should be present in the search paths (otherwise the path to tdjson can
+be specified manually).
+
+> **Note**: When building TDLib, the libraries can be installed into the system
 > using `cmake --install .` (optionally specify the `--prefix` option, the
 > default is `/usr/local`) after TDLib has been built successfully. This command
 > may require `sudo`.
+
+Alternatively, instead of building TDLib from source, you can try to use
+pre-built TDLib libraries distributed through npm:
+`npm install prebuilt-tdlib@td-1.8.5`. See the README of [prebuilt-tdlib][] for
+more information. The pre-built libraries support x86_64 systems only. On
+GNU/Linux, those require glibc >= 2.31.
 
 ---
 
@@ -74,8 +77,8 @@ argument (e.g., `new TDLib(path.join(__dirname, 'libtdjson.so'))`). It is direct
 [`dlopen`][dlopen] / [`LoadLibrary`][LoadLibraryW]. Check your OS documentation
 to find out where it searches for a shared library.
 
-To use the pre-built `libtdjson` from [prebuilt-tdlib][], import it and pass
-`getTdjson()` to the `TDLib` constructor:
+To use the pre-built `libtdjson` from the [prebuilt-tdlib][] package, import it
+and pass the result of `getTdjson()` to the `TDLib` constructor:
 
 ```javascript
 // ...
@@ -291,8 +294,9 @@ See the [examples/](examples/) directory.
 <a name="options"></a>
 ### Options
 
+The `Client` constructor accepts the following options:
+
 ```typescript
-// The interface of the options passed to the Client constructor:
 type ClientOptions = {
   apiId: number, // Can be obtained at https://my.telegram.org
   apiHash: string, // Can be obtained at https://my.telegram.org
@@ -310,7 +314,8 @@ type ClientOptions = {
 }
 ```
 
-Only `apiId` and `apiHash` are required fields. Any other field can be omitted.
+Of these fields, only `apiId` and `apiHash` are required. Any other field can be
+omitted.
 
 See https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html
 for the parameters that can be specified in the `tdlibParameters` option.
@@ -376,24 +381,34 @@ For more information, see the [tdlib-types][] README.
 <a name="creating-multiple-clients"></a>
 ### Creating multiple clients
 
-`tdl-tdlib-addon` allows you to create multiple clients, but currently the number of created clients should not exceed [UV_THREADPOOL_SIZE](http://docs.libuv.org/en/v1.x/threadpool.html).
+With `tdl-tdlib-addon`, you can create multiple clients but currently the
+number of created clients should not exceed [UV_THREADPOOL_SIZE][].
+
+[UV_THREADPOOL_SIZE]: http://docs.libuv.org/en/v1.x/threadpool.html
 
 ---
 
 <a name="webassembly"></a>
 ### WebAssembly
 
-`tdl` also has an [experimental wrapper](packages/tdl-tdlib-wasm/) for TDLib compiled to WebAssembly.
-To use it, install `tdl-tdlib-wasm` instead of `tdl-tdlib-addon`. It works in the browser only.
+`tdl` also has an [experimental wrapper](packages/tdl-tdlib-wasm/) for TDLib
+compiled to WebAssembly. To use it, install `tdl-tdlib-wasm` instead of
+`tdl-tdlib-addon`. It works in the browser only.
 
 ---
 
-In the repository, there is also an older package `tdl-tdlib-ffi` (_now deprecated_) for Node.js,
-which uses `node-ffi-napi` instead of a custom node addon. Note that `tdl-tdlib-ffi` does not allow to create multiple clients, that will result in use-after-free. One advantage of using `ffi-napi` might be the availability of prebuilt binaries for the node addon.
+In the repository, there is also an older package `tdl-tdlib-ffi` (_now deprecated_)
+for Node.js, which uses `node-ffi-napi` instead of a custom node
+addon. Note that `tdl-tdlib-ffi` does not work with multiple clients (that will
+result in use-after-free). One advantage of using `ffi-napi` might be the
+availability of prebuilt binaries for the node addon.
 
-The library is designed to work with different "backends", which all follow the same interface
-described in the [TDLib_API.md](TDLib_API.md) file (the types are described in the `tdl-shared` package),
-so it is possible to easily swap one with another. The `tdl` package itself is platform-independent. Currently, the present "backends" are `tdl-tdlib-addon` (recommended), `tdl-tdlib-ffi` (deprecated), `tdl-tdlib-wasm` (experimental).
+The library is designed to work with different "backends", which all follow the
+same interface described in the [TDLib_API.md](TDLib_API.md) file (the types are
+described in the `tdl-shared` package), so that it's possible to easily swap one
+with another. The `tdl` package itself is platform-independent. Currently, the
+present backends are `tdl-tdlib-addon` (recommended), `tdl-tdlib-ffi`
+(deprecated), `tdl-tdlib-wasm` (experimental).
 
 ---
 
