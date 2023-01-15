@@ -15,9 +15,9 @@ async function main() {
 
   if (tag === 'latest') {
 
-    const cppHeader = await (await fetch('https://raw.githubusercontent.com/tdlib/td/master/td/telegram/Td.h')).text()
+    const cmake = await (await fetch('https://raw.githubusercontent.com/tdlib/td/master/CMakeLists.txt')).text()
 
-    tag = cppHeader.match(/TDLIB_VERSION\s*=\s"(?<ver>[^"]+)"/)?.groups?.ver || '';
+    tag = cmake.match(/project\(TDLib\s+VERSION\s+(?<ver>[\S]+)/)?.groups?.ver || ''
 
     if (!tag) {
       throw 'The tag is not set.'
