@@ -27,7 +27,6 @@
     "packages/tdlib-types",
     "packages/prebuilt-tdlib",
     "packages/tdl-tdlib-addon",
-    "packages/tdl-tdlib-ffi",
     "packages/tdl-tdlib-wasm"
   ],
   "devDependencies": {

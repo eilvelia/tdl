@@ -1,11 +1,8 @@
-import { TDLib } from '../packages/tdl-tdlib-ffi'
-import { TDLib as TDLibAddon, defaultLibraryFile } from '../packages/tdl-tdlib-addon'
+import { TDLib, defaultLibraryFile } from '../packages/tdl-tdlib-addon'
 import { Client, TdlError, ConfigType, ClientOptions } from '../packages/tdl'
 import { getTdjson } from '../packages/prebuilt-tdlib'
 
-const tdlib = new TDLib('str')
-
-const tdlibAddon = new TDLibAddon(`path/${defaultLibraryFile}`)
+const tdlib = new TDLib(`path/${defaultLibraryFile}`)
 
 const libtdjson1: string = getTdjson()
 const libtdjson2: string = getTdjson({ libc: 'glibc' })
@@ -34,8 +31,6 @@ const cl = new Client(tdlib, {
 new Client(tdlib, { receiveTimeout: 10 })
 
 new Client(tdlib, { apiId: 2, apiHash: 'hash' })
-
-new Client(tdlibAddon, { apiId: 2, apiHash: 'hash' })
 
 Client.create(tdlib, { apiId: 2, apiHash: 'hash' })
 

@@ -11,7 +11,6 @@ The following namespaces are defined:
 - `tdl:client:response`
 - `tdl:client:request`
 - `tdl-tdlib-addon`
-- `tdl-tdlib-ffi`
 - `tdl-tdlib-wasm`
 
 Examples:

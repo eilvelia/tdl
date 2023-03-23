@@ -402,12 +402,6 @@ compiled to WebAssembly. To use it, install `tdl-tdlib-wasm` instead of
 
 ---
 
-In the repository, there is also an older package `tdl-tdlib-ffi` (_now deprecated_)
-for Node.js, which uses `node-ffi-napi` instead of a custom node
-addon. Note that `tdl-tdlib-ffi` does not work with multiple clients (that will
-result in use-after-free). One advantage of using `ffi-napi` might be the
-availability of prebuilt binaries for the node addon.
-
 The library is designed to work with different "backends", which all follow the
 same interface described in the [TDLib_API.md](TDLib_API.md) file (the types are
 described in the `tdl-shared` package), so that it's possible to easily swap one
