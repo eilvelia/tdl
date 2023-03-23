@@ -2,6 +2,11 @@
 
 <!-- Hi! -->
 
+## tdl-tdlib-addon@1.2.2 (unreleased)
+
+- Fixed freeing unallocated memory on app shutdown if callbacks were set.
+- Updated dependencies.
+
 ## tdl@7.2.0 (2022-10-11)
 
 - It is no longer needed to call `client.connect` or `client.connectAndLogin`,

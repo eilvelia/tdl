@@ -496,12 +496,6 @@ export class Client {
 
       if (this._client === null) {
         debug('receive loop: destroyed client')
-        // TODO: If the fatal error callback is set, it looks like finishing
-        // the loop can crash the program with a segmentation fault or
-        //  node [...] malloc: *** error for object 0x104a458d0: pointer being freed was not allocated
-        //  node [...] malloc: *** set a breakpoint in malloc_error_break to debug
-        //  'node index.js' terminated by signal SIGABRT (Abort)
-        // This is caused by napi_delete_reference in FunctionReference.
         break
       }
 

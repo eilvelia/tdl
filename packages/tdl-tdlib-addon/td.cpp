@@ -108,18 +108,17 @@ void td_client_destroy(const Napi::CallbackInfo& info) {
 
 Napi::FunctionReference js_fatal_cb;
 
-// This should work, but I haven't tested it
 extern "C" void fatal_cb (const char *error_message) {
-  // if (js_fatal_cb == NULL) return;
   js_fatal_cb.Call({ Napi::String::New(js_fatal_cb.Env(), error_message) });
 }
 
+// Not thread safe
 void td_set_fatal_error_callback(const Napi::CallbackInfo& info) {
-  // Not thread safe
   if (info[0].IsNull() || info[0].IsUndefined()) {
     td_set_log_fatal_error_callback(NULL);
   } else {
     js_fatal_cb = Napi::Persistent(info[0].As<Napi::Function>());
+    js_fatal_cb.SuppressDestruct();
     td_set_log_fatal_error_callback(&fatal_cb);
   }
 }
