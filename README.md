@@ -35,8 +35,8 @@ TDLib version 1.5.0 or newer is required.
 1. Build TDLib (https://github.com/tdlib/td#building) or install pre-built
    libraries
 2. Run `npm install tdl tdl-tdlib-addon` (install both)
-3. If you use TypeScript or Flow, run `npm install -D tdlib-types@td-1.8.5` to
-   get the types for TDLib
+3. (optional) If you use TypeScript or Flow, also install the `tdlib-types` package,
+   see the [Typings](#typings) section below
 
 To use `tdl`, TDLib should be installed on your system. The tdjson shared
 library should be present in the search paths (otherwise the path to tdjson can
@@ -49,9 +49,9 @@ be specified manually).
 
 Alternatively, instead of building TDLib from source, you can try to use
 pre-built TDLib libraries distributed through npm:
-`npm install prebuilt-tdlib@td-1.8.5`. See the README of [prebuilt-tdlib][] for
+`npm install prebuilt-tdlib@td-1.8.12`. See the README of [prebuilt-tdlib][] for
 more information. The pre-built libraries support x86_64 systems only. On
-GNU/Linux, those require glibc >= 2.31.
+GNU/Linux, glibc >= 2.31 is required.
 
 ---
 
@@ -317,10 +317,10 @@ type ClientOptions = {
 Of these fields, only `apiId` and `apiHash` are required. Any other field can be
 omitted.
 
-See https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html
-for the parameters that can be specified in the `tdlibParameters` option.
+Valid fields in the `tdlibParameters` option are described in
+https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html.
 
-The default `tdlibParameters` are:
+By default, `tdlibParameters` is set to:
 
 ```javascript
 tdlibParameters: {
@@ -345,29 +345,34 @@ tdlibParameters: {
 ### Typings
 
 `tdl` fully supports [TypeScript][] and [Flow][].
-`tdlib-types` should be installed to use the typings.
 
-The TDLib types can be imported using:
+To use the typings, install `tdlib-types`: `npm i -D tdlib-types@td-<TDLIB_VERSION>`.
+Since `tdl` can be used with different TDLib versions, you need to manually
+specify the TDLib version for `tdlib-types`.
+
+For example, to install `tdlib-types` for TDLib v1.8.12 or TDLib v1.7.0,
+run `npm i -D tdlib-types@td-1.8.12` or `npm i -D tdlib-types@td-1.7.0` respectively.
+
+To get the list of possible TDLib versions, run `npm info tdlib-types` (the "dist-tags" section).
+
+By default, `npm i -D tdlib-types` installs types for latest tag release of TDLib
+(`v1.8.0` currently), `npm i -D tdlib-types@beta` installs types for TDLib
+v1.8.12.
+
+Import the types:
 
 ```typescript
 import type { message as Td$message, user /* ... */ } from 'tdlib-types'
 ```
 
-Or import all the types at once:
+Alternatively, import all the types at once:
 
 ```typescript
 import * as Td from 'tdlib-types'
 // Use as: Td.message, Td.user, ...
 ```
 
-The latest available typings are for TDLib v1.8.0, the typings for TDLib v1.8.5
-are available under the `@beta` npm tag.
-
-`tdlib-types` can be installed for a specific TDLib version via
-`npm i -D tdlib-types@td-<TDLIB_VERSION>`. For example, to install typings for
-TDLib v1.7.0 or TDLib v1.8.5, run `npm i -D tdlib-types@td-1.7.0` or `npm i -D tdlib-types@td-1.8.5`.
-
-It is much more convenient to use `tdl` with TypeScript, which enables full
+It is considerably more convenient to use `tdl` in TypeScript, which enables full
 autocompletion for the TDLib methods and objects.
 
 For more information, see the [tdlib-types][] README.
