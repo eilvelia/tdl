@@ -41,10 +41,10 @@ jobs:
         os:
           - ubuntu-20.04
         tdlib:
+          - { ver: v1.8.12, ref: 70bee089d492437ce931aa78446d89af3da182fc }
           - { ver: v1.8.6, ref: 15db91b536d796778b628fef3d60923cef351512 }
           - { ver: v1.8.0, ref: v1.8.0 }
           - { ver: v1.7.0, ref: v1.7.0 }
-          - { ver: v1.6.0, ref: v1.6.0 }
           - { ver: v1.5.0, ref: v1.6.0 }
         node:
           - 16
