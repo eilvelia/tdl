@@ -25,7 +25,7 @@ TDLib version 1.5.0 or newer is required.
 <a name="requirements"></a>
 ### Requirements
 
-- Node.js v10.0.0 or newer
+- Node.js v12.0.0 or newer
 - A C++ compiler and Python installed to build the node addon
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
 

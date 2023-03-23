@@ -14,8 +14,6 @@ jobs:
         node:
           - 16
         include:
-          - node: 10
-            os: ubuntu-latest
           - node: 12
             os: ubuntu-latest
           - node: 14
