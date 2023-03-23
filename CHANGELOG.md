@@ -2,7 +2,7 @@
 
 <!-- Hi! -->
 
-## tdl-tdlib-addon@1.2.2 (unreleased)
+## tdl-tdlib-addon@1.2.2 (2023-03-23)
 
 - Fixed freeing unallocated memory on app shutdown if callbacks were set.
 - Updated dependencies.
