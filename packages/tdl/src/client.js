@@ -16,7 +16,7 @@ import type {
   // updateOption as Td$updateOption,
   error as Td$error,
   ConnectionState as Td$ConnectionState,
-  tdlibParameters$Input,
+  setTdlibParameters as Td$setTdlibParameters,
   Invoke,
   Execute
 } from 'tdlib-types'
@@ -26,7 +26,7 @@ const debugEmitter = Debug('tdl:client:emitter')
 const debugReceive = Debug('tdl:client:receive')
 const debugReq = Debug('tdl:client:request')
 
-export type TDLibParameters = $Rest<tdlibParameters$Input, {| _: 'tdlibParameters' |}>
+export type TDLibParameters = $Rest<Td$setTdlibParameters, {| _: 'setTdlibParameters' |}>
 
 export type LoginUser = {|
   type: 'user',
@@ -181,7 +181,7 @@ function invariant (cond: boolean, msg: string = 'Invariant violation') {
 }
 
 const TDLIB_1_8_6 = new Version('1.8.6')
-const TDLIB_DEFAULT = new Version('1.8.0')
+const TDLIB_DEFAULT = new Version('1.8.12')
 
 const TDL_MAGIC = '6c47e6b71ea'
 
@@ -625,10 +625,8 @@ export class Client {
     switch (authorizationState._) {
       case 'authorizationStateWaitTdlibParameters':
         if (this._version.gte(TDLIB_1_8_6)) {
-          // $FlowIgnore[prop-missing]
-          if (this._options.tdlibParameters._ != null)
+          if ((this._options.tdlibParameters: any)._ != null)
             throw new Error('tdlibParameters must not contain the _ property')
-          // $FlowIgnore[prop-missing]
           this._sendTdl({
             _: 'setTdlibParameters',
             database_directory: resolvePath(this._options.databaseDirectory),
@@ -641,6 +639,7 @@ export class Client {
           })
           return this._finishInit()
         }
+        // $FlowIgnore[prop-missing]
         return this._sendTdl({
           _: 'setTdlibParameters',
           'parameters': {
@@ -655,7 +654,9 @@ export class Client {
         })
 
       // This update can be received in TDLib <= v1.8.5 only
+      // $FlowIgnore[incompatible-type]
       case 'authorizationStateWaitEncryptionKey':
+        // $FlowIgnore[incompatible-call]
         this._sendTdl({
           _: 'checkDatabaseEncryptionKey',
           encryption_key: this._options.databaseEncryptionKey
@@ -694,20 +695,18 @@ export class Client {
         }
       }
 
-      // $FlowIgnore[incompatible-type]: TDLib >= v1.8.6 only
+      // TDLib >= v1.8.6 only
       case 'authorizationStateWaitEmailAddress': {
         const loginDetails = this._needUserLogin()
-        // $FlowIgnore[incompatible-call]
         return this._sendTdl({
           _: 'setAuthenticationEmailAddress',
           email_address: await loginDetails.getEmailAddress()
         })
       }
 
-      // $FlowIgnore[incompatible-type]: TDLib >= v1.8.6 only
+      // TDLib >= v1.8.6 only
       case 'authorizationStateWaitEmailCode': {
         const loginDetails = this._needUserLogin()
-        // $FlowIgnore[incompatible-call]
         return this._sendTdl({
           _: 'checkAuthenticationEmailCode',
           code: {

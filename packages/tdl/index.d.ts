@@ -5,14 +5,14 @@ import {
   error as Td$error,
   Invoke,
   Execute,
-  tdlibParameters$Input
+  setTdlibParameters as Td$setTdlibParameters
 } from 'tdlib-types'
 
 import { TDLibClient, ITDLibJSON } from 'tdl-shared'
 
 export { TDLibClient, ITDLibJSON }
 
-export type TDLibParameters = Omit<tdlibParameters$Input, '_'>
+export type TDLibParameters = Omit<Td$setTdlibParameters, '_'>
 
 /**
  * Note: the public methods in this class are defined as properties, so
