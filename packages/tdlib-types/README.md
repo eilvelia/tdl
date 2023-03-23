@@ -73,6 +73,7 @@ For information about the TL -> TypeScript/Flow translator, see
 
 - [![npm](https://img.shields.io/npm/v/tdlib-types/latest.svg)](https://www.npmjs.com/package/tdlib-types)
 - [![npm](https://img.shields.io/npm/v/tdlib-types/beta.svg)](https://www.npmjs.com/package/tdlib-types)
+- [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.8.12.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.8.12) (tdlib commit [70bee089d492437ce931aa78446d89af3da182fc](https://github.com/tdlib/td/commit/70bee089d492437ce931aa78446d89af3da182fc))
 - [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.8.5.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.8.5) (tdlib commit [d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9](https://github.com/tdlib/td/commit/d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9))
 - [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.8.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.8.0)
 - [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.7.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.7.0)

@@ -8,8 +8,8 @@ const fsp = fs.promises
 const readline = require('readline')
 
 const PKG_NAME = 'tdlib-types'
-const LATEST_VERSION = 'v1.8.5'
-const LATEST_BETA = 'v1.8.5'
+const LATEST_VERSION = 'v1.8.12'
+const LATEST_BETA = 'v1.8.12'
 const REV = '1'
 
 /* eslint-disable comma-dangle */
