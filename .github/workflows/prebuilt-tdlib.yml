@@ -1,4 +1,4 @@
-name: Prebuild TDLib
+name: Prebuild TDLib 
 # This workflow can be executed using a command like this:
 # gh workflow run prebuilt-tdlib.yml --ref develop -f tdlib=v1.8.0 \
 # -f npm-version=0.1008000.0 -f npm-tag=latest -f npm-add-tag=td-1.8.0
