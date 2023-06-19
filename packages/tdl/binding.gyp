@@ -1,10 +1,13 @@
 {
-    "targets": [{
-        "target_name": "td",
-        "cflags!": [ "-fno-exceptions" ],
-        "cflags_cc!": [ "-fno-exceptions" ],
-        "sources": [
-            "td.cpp"
+    'variables': {
+        'openssl_fips': ''
+    },
+    'targets': [{
+        'target_name': 'td',
+        'cflags!': [ '-fno-exceptions' ],
+        'cflags_cc!': [ '-fno-exceptions' ],
+        'sources': [
+            'addon/td.cpp'
         ],
         'include_dirs': [
             "<!@(node -p \"require('node-addon-api').include\")"
@@ -17,9 +20,12 @@
         'conditions': [
             ['OS=="win"', {
                 'sources': [
-                    'win32-dlfcn.cpp'
+                    'addon/win32-dlfcn.cpp'
                 ]
             }]
-        ]
+        ],
+        'xcode_settings': {
+            'MACOSX_DEPLOYMENT_TARGET': '10.14'
+        }
     }]
 }

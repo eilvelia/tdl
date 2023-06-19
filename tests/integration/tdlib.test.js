@@ -1,25 +1,53 @@
 // @flow
 
 const path = require('path')
-const { Client } = require('../../packages/tdl')
-const { TDLib, defaultLibraryFile } = require('../../packages/tdl-tdlib-addon')
+const tdl = require('../../packages/tdl')
 
-const fromRoot = p => path.join(__dirname, '..', '..', p)
+const projectRoot = path.join(__dirname, '..', '..')
 
-const libtdjson = process.env.TEST_PREBUILT === '1'
-  ? require('../../packages/prebuilt-tdlib').getTdjson()
-  : fromRoot(process.env.LIBTDJSON_PATH || defaultLibraryFile)
+let tdjson
+let libPrefix
 
-describe('Client with tdl-tdlib-addon', () => {
-  const tdlib = new TDLib(libtdjson)
-  const backend = 'tdl-tdlib-addon'
+if (process.env.TEST_PREBUILT === '1') {
+  console.log('Using local prebuilt-tdlib')
+  tdjson = require('../../packages/prebuilt-tdlib').getTdjson()
+} else if (process.env.USE_PREBUILT) {
+  const prebuiltPath = process.env.USE_PREBUILT
+  console.log(`Using prebuilt-tdlib from '${prebuiltPath}'`)
+  // $FlowIgnore[unsupported-syntax]
+  tdjson = require(path.join(projectRoot, prebuiltPath)).getTdjson()
+} else if (process.env.LIBTDJSON_PATH) {
+  const tdjsonPath = process.env.LIBTDJSON_PATH
+  console.log(`Using tdjson from ${tdjsonPath}`)
+  tdjson = path.isAbsolute(tdjsonPath) ? tdjsonPath : path.join(projectRoot, tdjsonPath)
+} else {
+  libPrefix = projectRoot
+}
 
-  const client = new Client(tdlib, {
-    bare: true
-  })
+let testName/*: string */
+let createClient/*: () => tdl.Client */
 
-  client.on('error', e => console.error(`[${backend}] error`, e))
-  client.on('update', u => console.log(`[${backend}] update`, u))
+if (process.env.TEST_TDL_TDLIB_ADDON === '1') {
+  testName = 'tdl with tdl-tdlib-addon (backward compatibility)'
+  createClient = function () {
+    const { TDLib, defaultLibraryFile } = require('tdl-tdlib-addon')
+    if (libPrefix) tdjson = path.join(projectRoot, defaultLibraryFile)
+    return new tdl.Client(new TDLib(tdjson), { bare: true })
+  }
+} else {
+  testName = 'tdl'
+  createClient = function () {
+    if (libPrefix) tdl.configure({ libPrefix })
+    else tdl.configure({ tdjson })
+    return tdl.createClient({ bare: true })
+  }
+}
+
+describe(testName, () => {
+  const client = createClient()
+
+  client.on('error', e => console.error('error', e))
+  client.on('update', u => console.log('update', u))
 
   afterAll(() => client.close())
 

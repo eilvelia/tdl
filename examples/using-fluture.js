@@ -2,11 +2,10 @@
 
 // This was written for fluture v8.0
 
-const { Client } = require('tdl')
-const { TDLib } = require('tdl-tdlib-addon')
+const tdl = require('tdl')
 const Future = require('fluture')
 
-const client = new Client(new TDLib(), {
+const client = tdl.createClient({
   apiId: 2222, // Your api_id
   apiHash: 'YOUR_API_HASH'
 })

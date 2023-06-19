@@ -1,4 +1,6 @@
-const tdl = require('tdl')
+import * as tdl from 'tdl'
+// import TDLib types:
+// import * as Td from 'tdlib-types'
 
 const client = tdl.createClient({
   apiId: 2222, // Your api_id
@@ -6,17 +8,12 @@ const client = tdl.createClient({
 })
 
 client.on('error', console.error)
+client.on('update', console.log)
 
 async function main() {
   await client.login()
 
-  const result = await client.invoke({
-    _: 'getChats',
-    chat_list: { _: 'chatListMain' },
-    limit: 9000
-  })
-
-  console.log(result)
+  console.log(await client.invoke({ _: 'getMe' }))
 
   await client.close()
 }

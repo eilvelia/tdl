@@ -6,16 +6,16 @@
 
 The following namespaces are defined:
 
+- `tdl`
+- `tdl:addon`
 - `tdl:client`
-- `tdl:client:emitter`
-- `tdl:client:response`
 - `tdl:client:request`
-- `tdl-tdlib-addon`
-- `tdl-tdlib-wasm`
+- `tdl:client:receive`
+- `tdl:client:emitter`
 
 Examples:
 
 ```console
 $ DEBUG=tdl* node index.js
-$ DEBUG=tdl:client,tdl:client:request node index.js
+$ DEBUG=tdl,tdl:addon,tdl:client,tdl:client:request node index.js
 ```

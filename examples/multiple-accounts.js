@@ -1,21 +1,18 @@
-// NOTE: The number of clients you created shouldn't be higher than UV_THREADPOOL_SIZE
+// NOTE: The number of clients you create shouldn't be greater than UV_THREADPOOL_SIZE
 
-const { Client } = require('tdl')
-const { TDLib } = require('tdl-tdlib-addon')
+const tdl = require('tdl')
 
 const API_ID = 2222 // Your api_id
 const API_HASH = '0123456789abcdef0123456789abcdef' // Your api_hash
 
-const tdlib = new TDLib()
-
-const client1 = new Client(tdlib, {
+const client1 = tdl.createClient({
   apiId: API_ID,
   apiHash: API_HASH,
   databaseDirectory: '_td_database1',
   filesDirectory: '_td_files1'
 })
 
-const client2 = new Client(tdlib, {
+const client2 = tdl.createClient({
   apiId: API_ID,
   apiHash: API_HASH,
   databaseDirectory: '_td_database2',
@@ -32,4 +29,4 @@ async function main() {
   // ...
 }
 
-main()
+main().catch(console.error)

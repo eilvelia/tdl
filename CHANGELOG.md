@@ -2,6 +2,43 @@
 
 <!-- Hi! -->
 
+## tdl@7.3.0 (unreleased)
+
+This update introduces some significant and long-planned changes to the
+interface, while retaining backward compatiblity.
+
+- No longer need to separately install `tdl` and `tdl-tdlib-addon`; just install
+  `tdl`. `tdl-tdlib-addon` is deprecated. The library is mostly focused to
+  Node.js only now, deno support can be added later as a separate library. This
+  simplifies tdl.
+- To better reflect the distinction between TDLib-global and instance-specific
+  functions, TDLib-global options are now passed in the special `configure`
+  function, and `execute` is decoupled from clients. As an example:
+  ```javascript
+  const tdl = require('tdl')
+  tdl.configure({
+    tdjson: 'libtdjson.dylib',
+    libPrefix: '/usr/local/lib',
+    verbosityLevel: 3 /* the default is 2 */
+  })
+  tdl.execute({ _: 'setLogStream', /* ... */ })
+  const client = tdl.createClient({
+    apiId: /* your api id */,
+    apihash: /* your api hash */
+  })
+  await client.login()
+  ```
+  The full documentation for the `configure` function is available in the
+  TypeScript typings. The old `new Client` approach is still supported but
+  deprecated.
+- The `verbosityLevel` client option is deprecated (moved to `tdl.configure`).
+- Added pre-built binaries for the node addon using `prebuildify` and `node-gyp-build`.
+- Updated README to be somewhat more user-friendly. Aside of documentation
+  changes, the library also should be simpler to use now.
+- The packages `tdl-tdlib-wasm` and `tdl-shared` are deprecated. Any webassembly
+  support is removed.
+- Deprecated `Client#getBackendName`.
+
 ## tdl-tdlib-addon@1.2.2 (2023-03-23)
 
 - Fixed freeing unallocated memory on app shutdown if callbacks were set.
@@ -276,7 +313,7 @@ This adds support for Node.js v14 and drops support for Node.js older than v10.
 - Added `skipOldUpdates` option.
 - Node.js `events` replaced with `eventemitter3`.
 
-## v3.2.2
+## v3.2.2 (2018-05-16)
 
 - Fixes in TDLib flow typings.
 - Internal:

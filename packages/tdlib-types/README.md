@@ -11,7 +11,7 @@ $ npm install --save-dev tdlib-types@td-1.8.5
 ```
 
 The other available versions of `tdlib-types` are listed in the "npm tags"
-section below. You can also see the available versions by running `$ npm info tdlib-types`.
+section below. You can also see the available versions by running `$ npm info tdlib-types dist-tags`.
 
 > **Note**: If you use TypeScript and get errors in `.d.ts` files, set
 > `skipLibCheck` to `true` in the `tsconfig.json` file
@@ -20,7 +20,10 @@ section below. You can also see the available versions by running `$ npm info td
 [TDLib]: https://github.com/tdlib/td
 [tdl]: https://github.com/Bannerets/tdl
 
-### Verison naming
+### Versioning conventions
+
+> **Note**: This information is mostly for maintaining `tdlib-types`, it
+> isn't necessary for using this package. Just use the dist-tags.
 
 The package is published to npm under versions `0.wxxxyyyzzz.v`, where
 - `x` / `y` / `z` correspond to the `x.y.z` TDLib version with leading zeros

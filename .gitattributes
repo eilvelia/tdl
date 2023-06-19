@@ -1,4 +1,1 @@
 *.flow linguist-language=JavaScript
-
-packages/tdl/types/tdlib.js linguist-generated=true
-packages/tdl/types/tdlib.ts linguist-generated=true

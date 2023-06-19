@@ -7,7 +7,6 @@ import { deepRenameKey, deepRenameKey_, mergeDeepRight } from './util'
 import * as prompt from './prompt'
 import { Version } from './version'
 
-import type { TDLibClient, ITDLibJSON } from 'tdl-shared'
 import type {
   TDFunction,
   // TDObject,
@@ -21,10 +20,26 @@ import type {
   Execute
 } from 'tdlib-types'
 
+// NOTE: if needed, this client can be abstracted into a different package later
+
 const debug = Debug('tdl:client')
 const debugEmitter = Debug('tdl:client:emitter')
 const debugReceive = Debug('tdl:client:receive')
 const debugReq = Debug('tdl:client:request')
+
+// export type TdjsonClient = { +_TdjsonClientBrand: void }
+export opaque type TdjsonClient = mixed
+
+export interface Tdjson {
+  getName?: () => string;
+  create(): TdjsonClient;
+  destroy(client: TdjsonClient): void;
+  execute(client: null | TdjsonClient, query: Object): Object | null;
+  receive(client: TdjsonClient, timeout: number): Promise<Object | null>;
+  send(client: TdjsonClient, query: Object): void;
+  // setLogFatalErrorCallback is deprecated in TDLib
+  setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): void;
+}
 
 export type TDLibParameters = $Rest<Td$setTdlibParameters, {| _: 'setTdlibParameters' |}>
 
@@ -81,7 +96,7 @@ const defaultOptions: $Exact<StrictClientOptions> = {
   databaseDirectory: '_td_database',
   filesDirectory: '_td_files',
   databaseEncryptionKey: '',
-  verbosityLevel: 2,
+  verbosityLevel: 'default',
   receiveTimeout: 10,
   skipOldUpdates: false,
   useTestDc: false,
@@ -198,7 +213,7 @@ const TDL_MAGIC = '6c47e6b71ea'
 //    - what if setTdlibParameters is responded with an error? there is no
 //      promise that can be rejected. currently, it is passed to
 //      client.login (if it is called) or client.on('error')
-//    - On TDLib <= v1.8.5, this also handles authorizationStateWaitEncryptionKey
+//    - on TDLib <= v1.8.5, this also handles authorizationStateWaitEncryptionKey
 // 2. Initialized, awaiting client.login (not a real state actually)
 //    - arbitrary client.invoke calls are allowed now
 //    - if client.login is never called, go to 3
@@ -206,12 +221,12 @@ const TDL_MAGIC = '6c47e6b71ea'
 // 3. Ready
 
 export class Client {
-  +_tdlib: ITDLibJSON;
+  +_tdlib: Tdjson;
   +_options: StrictClientOptions;
   +_emitter: EventEmitter = new EventEmitter();
   +_pending: Map<number, PendingPromise> = new Map();
   _requestId: number = 0
-  _client: TDLibClient | null
+  _client: TdjsonClient | null
   _initialized: boolean = false
   _paused: boolean = false
   _connectionState: Td$ConnectionState = { _: 'connectionStateConnecting' }
@@ -220,8 +235,9 @@ export class Client {
   _loginDefer: TdlDeferred<void, any> = new TdlDeferred()
   _version: Version = TDLIB_DEFAULT
 
-  constructor (tdlibInstance: ITDLibJSON, options: ClientOptions = {}) {
+  constructor (tdlibInstance: Tdjson, options: ClientOptions = {}) {
     this._options = (mergeDeepRight(defaultOptions, options): StrictClientOptions)
+    this._tdlib = tdlibInstance
 
     // Backward compatibility
     if (this._options.useDefaultVerbosityLevel)
@@ -237,13 +253,18 @@ export class Client {
         throw new TypeError('Valid api_hash must be provided.')
     }
 
-    this._tdlib = tdlibInstance
-
-    if (this._options.verbosityLevel !== 'default') {
+    // Backward compatibility
+    if (this._options.verbosityLevel != null && this._options.verbosityLevel !== 'default') {
       debug('Executing setLogVerbosityLevel', this._options.verbosityLevel)
       this._tdlib.execute(null, {
         '@type': 'setLogVerbosityLevel',
         new_verbosity_level: this._options.verbosityLevel
+      })
+    } else if (this._tdlib.getName && this._tdlib.getName() === 'addon') {
+      debug('Executing setLogVerbosityLevel (tdl-tdlib-addon found)', this._options.verbosityLevel)
+      this._tdlib.execute(null, {
+        '@type': 'setLogVerbosityLevel',
+        new_verbosity_level: 2
       })
     }
 
@@ -262,13 +283,13 @@ export class Client {
       .catch(e => this._catchError(new TdlError(e)))
   }
 
-  static create (tdlibInstance: ITDLibJSON, options: ClientOptions = {}): Client {
+  /** @deprecated */
+  static create (tdlibInstance: Tdjson, options: ClientOptions = {}): Client {
     return new Client(tdlibInstance, options)
   }
 
-  getBackendName = (): string => {
-    return this._tdlib.getName()
-  }
+  /** @deprecated */
+  getBackendName = (): string => 'addon'
 
   getVersion = (): string => {
     if (this._version === TDLIB_DEFAULT)

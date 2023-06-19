@@ -1,0 +1,84 @@
+name: Publish tdl
+# This workflow can be executed using a command like this:
+# gh workflow run publish-tdl.yml --ref develop -f npm-tag=latest
+on:
+  workflow_dispatch:
+    inputs:
+      npm-tag:
+        description: 'npm tag (e.g. latest, beta), required to publish'
+        type: string
+        required: false
+
+jobs:
+  build-and-test:
+    name: Build the node addon on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: Install dependencies
+        run: npm install
+      - name: Clean old binaries
+        run: npm run clean -w tdl
+      # prebuildify-cross doesn't work with npm workspaces
+      - name: Prebuildify in docker
+        if: runner.os == 'Linux'
+        run: |
+          docker run -u root -v $(pwd):/app ghcr.io/prebuild/centos7-devtoolset7:2 \
+            npm run make-prebuild -w tdl -- --tag-libc
+          tree packages/tdl
+      - name: Prebuildify
+        if: runner.os != 'Linux'
+        run: npm run make-prebuild -w tdl
+      - name: "Prebuildify: Crosscompile to arm64 Apple Silicon"
+        if: runner.os == 'macOS'
+        run: npm run make-prebuild -w tdl -- --arch arm64
+      - name: Download prebuilt-tdlib
+        run: |
+          npm pack prebuilt-tdlib@td-1.8.0
+          tar -xzvf prebuilt-tdlib-0.1008000.0.tgz
+          rm package/package.json
+      - name: Run tests
+        run: npm run test:all
+        env:
+          USE_PREBUILT: package/index.js
+      - uses: actions/upload-artifact@v3
+        with:
+          name: tdl-prebuilds
+          path: packages/tdl/prebuilds
+
+  publish:
+    name: 'Publish to npm'
+    needs: [build-and-test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+          cache: npm
+          # registry-url is mandatory here
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies
+        run: npm install
+      - uses: actions/download-artifact@v3
+        with:
+          name: tdl-prebuilds
+          path: packages/tdl/prebuilds
+      - run: tree packages/tdl/prebuilds
+      - name: Ensure prebuilts exist
+        run: (( $(ls packages/tdl/prebuilds | wc -l) > 3 ))
+      - name: Tests (excluding integration tests)
+        run: npm test
+      - name: Publish
+        if: "${{ inputs.npm-tag != '' }}"
+        run: npm publish --tag ${{ inputs.npm-tag }} -w tdl
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

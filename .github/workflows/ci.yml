@@ -12,24 +12,25 @@ jobs:
           - macos-latest
           - windows-2019
         node:
-          - 16
+          - 18
         include:
-          - node: 12
-            os: ubuntu-latest
+          # tdl should still work with node v12, however many of the dev deps in
+          # this repository don't support v12
           - node: 14
             os: ubuntu-latest
-          - node: 18
+          - node: 16
+            os: ubuntu-latest
+          - node: 20
             os: ubuntu-latest
     steps:
+      # TODO: would be better to add integration tests via prebuilt-tdlib here too
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
           cache: npm
       - name: Update npm
-        run: npm install -g npm@7
-        # It looks like npm v8 doesn't work with the error:
-        # "Cannot set properties of null (setting 'parent')"
+        run: npm install -g npm@8
       - run: npm install # also runs the `prepare` npm script, which runs `build`
       - run: npm test
   integration-tests:
@@ -47,7 +48,7 @@ jobs:
           - { ver: v1.7.0, ref: v1.7.0 }
           - { ver: v1.5.0, ref: v1.6.0 }
         node:
-          - 16
+          - 18
     env:
       LIBTDJSON_PATH: tdlib/build/libtdjson.so
     steps:
@@ -57,7 +58,7 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: npm
       - name: Update npm
-        run: npm install -g npm@7
+        run: npm install -g npm@8
       - run: npm install
       - name: TDLib build cache
         id: tdlib-cache

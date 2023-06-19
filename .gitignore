@@ -12,7 +12,10 @@ _td_files/
 *.dylib
 *.so
 *.dll
-
+compile_commands.json
+.ccls
+.clangd/
+/.vim
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

@@ -3,11 +3,13 @@
 const path = require('path')
 
 // For now, the `Options` object is present for forward compatibility.
+// TODO: Add an option like "fallback"?
 /*::
 export type Options = {
   // Can be 'glibc' | 'musl' in the future
   libc: 'glibc'
-} */
+}
+*/
 
 function prebuild (pathcomps/*: string[] */) {
   return path.resolve(__dirname, 'prebuilds', ...pathcomps)

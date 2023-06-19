@@ -1,96 +1,221 @@
-## tdl &nbsp; [![npm](https://img.shields.io/npm/v/tdl.svg)](https://www.npmjs.com/package/tdl) [![CI](https://github.com/Bannerets/tdl/actions/workflows/ci.yml/badge.svg)](https://github.com/Bannerets/tdl/actions/workflows/ci.yml)
+# tdl &nbsp; [![npm](https://img.shields.io/npm/v/tdl.svg)](https://www.npmjs.com/package/tdl) [![CI](https://github.com/Bannerets/tdl/actions/workflows/ci.yml/badge.svg)](https://github.com/Bannerets/tdl/actions/workflows/ci.yml)
 
-`tdl` is a JavaScript wrapper for [TDLib][] (Telegram Database library),
-a library to create [Telegram][] clients or bots.<br>
+`tdl` is a fairly simple JavaScript wrapper for [TDLib][] (Telegram Database library),
+a library to create [Telegram][] clients or bots.
+
 TDLib version 1.5.0 or newer is required.
 
 [TDLib]: https://github.com/tdlib/td
 [Telegram]: https://telegram.org/
 
-### Table of Contents
-
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [API](#api)
-- [Example](#example)
-- [Options](#options)
-- [Typings](#typings)
-- [Creating multiple clients](#creating-multiple-clients)
-- [WebAssembly](#webassembly)
-- [Using on Windows](#using-on-windows)
-- [Possible errors](#possible-errors)
-
----
-
 <a name="requirements"></a>
-### Requirements
+## Requirements
 
 - Node.js v12.0.0 or newer
-- A C++ compiler and Python installed to build the node addon
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
+- In some cases, a C++ compiler and Python installed to build the node addon[^1]
+
+[^1]: `tdl` is packaged with pre-built addons for Windows (x86_64), GNU/Linux (x86_64, glibc >= 2.17), and macOS (x86_64, aarch64). If a pre-built binary is not available for your system, then the node addon will be built using node-gyp, requiring Python and a C++ toolchain to be installed (on Windows, MSVS or Build Tools). Pass `--build-from-source` to never use the pre-built binaries. Note that macOS aarch64 binaries aren't tested.
 
 <a name="installation"></a>
-### Installation
+## Installation
 
 1. Build TDLib (https://github.com/tdlib/td#building) or install pre-built
    libraries
-2. Run `npm install tdl tdl-tdlib-addon` (install both)
-3. (optional) If you use TypeScript or Flow, also install the `tdlib-types` package,
-   see the [Typings](#typings) section below
+2. Run `npm install tdl`
+3. (optional) If you use TypeScript or Flow, types for TDLib can be installed
+   via the `tdlib-types` package, see the [Types](#types) section below
 
-To use `tdl`, TDLib should be installed on your system. The tdjson shared
-library should be present in the search paths (otherwise the path to tdjson can
-be specified manually).
+To use `tdl`, you need to get TDLib first. The tdjson shared library should be
+present in the system search paths (otherwise the path to libtdjson can be
+specified manually).
 
 > **Note**: When building TDLib, the libraries can be installed into the system
 > using `cmake --install .` (optionally specify the `--prefix` option, the
 > default is `/usr/local`) after TDLib has been built successfully. This command
 > may require `sudo`.
 
-Alternatively, instead of building TDLib from source, you can try to use
-pre-built TDLib libraries distributed through npm:
-`npm install prebuilt-tdlib@td-1.8.12`. See the README of [prebuilt-tdlib][] for
-more information. The pre-built libraries support x86_64 systems only. On
-GNU/Linux, glibc >= 2.31 is required.
+Instead of building TDLib from source, you can possibly install pre-built TDLib
+libraries distributed through the `prebuilt-tdlib` npm package. The pre-built
+libraries support x86_64 systems only (no M1). On GNU/Linux, glibc >= 2.31 is required.
+To install `prebuilt-tdlib` for e.g. TDLib v1.8.12, run `npm install prebuilt-tdlib@td-1.8.12`
+(the available versions of `prebuilt-tdlib` can be found by running
+`npm info prebuilt-tdlib dist-tags`). An example of using libraries
+from `prebuilt-tdlib` is present in the section below. See the README of
+[prebuilt-tdlib][] for more information.
 
----
-
-<a name="api"></a>
-### API
-
-#### `new Client(tdlibInstance, options) => Client`
+<a name="getting-started"></a>
+## Getting started
 
 ```javascript
-const { Client } = require('tdl')
-const { TDLib } = require('tdl-tdlib-addon')
+const tdl = require('tdl')
 
-const client = new Client(new TDLib(), {
+// If libtdjson is not present in the system search paths, the path to the
+// libtdjson shared library can be set manually, e.g.:
+//   tdl.configure({ tdjson: '/usr/local/lib/libtdjson.dylib'})
+// The library prefix can be set separate from the library name,
+// example to search for libtdjson in the directory of the current script:
+//   tdl.configure({ libPrefix: __dirname })
+
+const client = tdl.createClient({
   apiId: 2222, // Your api_id
   apiHash: '0123456789abcdef0123456789abcdef' // Your api_hash
 })
+// Passing apiId and apiHash is mandatory, these values can be obtained at https://my.telegram.org/
+
+client.on('error', console.error)
+
+// Aside of receiving responses to your requests, the server can push to you
+// events called "updates" which ar received as follows:
+client.on('update', update => {
+  console.log('Got update:', update)
+})
+
+async function main () {
+  // Log in to a Telegram account. By default, with no arguments, this function will ask
+  // for phone number etc. in the console. Instead of logging in as a normal user,
+  // it's also possible to log in as a bot using `client.logInAsBot('<TOKEN>')`.
+  await client.login()
+
+  // Invoke a TDLib method. The information regarding TDLib method list and
+  // documentation is below this code block.
+  const me = await client.invoke({ _: 'getMe' })
+  console.log('My user:', me)
+
+  // Invoke some other TDLib method.
+  const chats = await client.invoke({
+    _: 'getChats',
+    chat_list: { _: 'chatListMain' },
+    limit: 10
+  })
+  console.log('A part of my chat list:', chats)
+
+  // Close the instance so that TDLib exits gracefully and the JS runtime can finish the process.
+  await client.close()
+}
+
+main().catch(console.error)
 ```
 
-`api_id` and `api_hash` can be obtained at https://my.telegram.org/.
+The API list of TDLib methods, which are called in `client.invoke` can be found at, e.g.:
+- https://core.telegram.org/tdlib/docs/annotated.html (possibly outdated)
+- or in the [td_api.tl][] file in the TDLib repository.
 
-The path to `libtdjson` can be optionally specified in the `TDLib` constructor's
-argument (e.g., `new TDLib(path.join(__dirname, 'libtdjson.so'))`). It is directly passed to
-[`dlopen`][dlopen] / [`LoadLibrary`][LoadLibraryW]. Check your OS documentation
-to find out where it searches for a shared library.
+[td_api.tl]: https://github.com/tdlib/td/blob/v1.8.0/td/generate/scheme/td_api.tl
 
-To use the pre-built `libtdjson` from the [prebuilt-tdlib][] package, import it
-and pass the result of `getTdjson()` to the `TDLib` constructor:
+In that TDLib documentation, the `bytes` type means a **base64-encoded** string.
+`int64` accepts either a number or a string, pass string for large numbers.
+Other types are self-evident. If `tdlib-types` is installed, the TDLib types are
+also annotated with the documentation (i.e. the documentation can be browsed in
+the `.d.ts` file).
+
+See also https://core.telegram.org/tdlib/getting-started for some basic
+information on how to use TDLib (tdl handles the authorization part with
+`client.login`). Note that the TDLib JSON interface actually sends a `@type`
+field, but tdl renames it to `_`.
+
+<!-- TODO: Add a guide on how to read the tl scheme or similar? -->
+
+Instead of building TDLib yourself, the aforementioned [prebuilt-tdlib][] can
+be used as follows:
 
 ```javascript
-// ...
+// . . .
 const { getTdjson } = require('prebuilt-tdlib')
-const tdlib = new TDLib(getTdjson())
-const client = new Client(tdlib, {
-// ...
+tdl.configure({ tdjson: getTdjson() })
+// . . .
 ```
 
-The `Options` interface is described in [#options](#options).
-
 [prebuilt-tdlib]: packages/prebuilt-tdlib/README.md
+
+Some short examples are available in the [examples/](examples/) directory.
+
+<a name="api"></a>
+## API
+
+> **Note**: A more exhaustive documentation is available in the
+> [TypeScript typings](packages/tdl/index.d.ts) file.
+
+#### `tdl.configure(options: TDLibConfiguration) => void`
+
+```javascript
+tdl.configure({
+  // Path to the library. By default, it is 'tdjson.dll' on Windows,
+  // 'libtdjson.dylib' on macOS, or 'libtdjson.so' otherwise.
+  tdjson: '...',
+  // Path to the library directory. By default, it is empty string.
+  libPrefix: '...',
+  // Verbosity level of TDLib. By default, it is 2.
+  verbosityLevel: 3
+})
+```
+
+Some examples:
+- `tdl.configure({ tdjson: '/root/libtdjson.so', verbosityLevel: 5 })`
+- `tdl.configure({ tdjson: 'libtdjson.1.8.6.dylib', libPrefix: '/usr/local/lib' })`
+- `tdl.configure({ libPrefix: __dirname })`
+
+The path concatenation of `libPrefix` + `tdjson` is directly passed to
+[`dlopen`][dlopen] (Unix) or [`LoadLibrary`][LoadLibraryW] (Windows). Check your OS documentation
+to find out where the shared library will be searched for.
+
+#### `tdl.createClient(options: ClientOptions) => Client`
+
+Create a TDLib client.
+
+```javascript
+const client = tdl.createClient({
+  apiId: 2222, // Your api_id
+  apiHash: '0123456789abcdef0123456789abcdef' // Your api_hash
+  // ... other options ...
+})
+```
+
+The interface of the options that can be passed here:
+
+```typescript
+type ClientOptions = {
+  apiId: number, // Can be obtained at https://my.telegram.org
+  apiHash: string, // Can be obtained at https://my.telegram.org
+  databaseDirectory: string, // Relative path (default is '_td_database')
+  filesDirectory: string, // Relative path (default is '_td_files')
+  databaseEncryptionKey: string, // Optional key for database encryption
+  useTestDc: boolean, // Use test telegram server (default is false)
+  tdlibParameters: Object, // Raw TDLib parameters
+  // Advanced options:
+  skipOldUpdates: boolean,
+  bare: boolean,
+  receiveTimeout: number
+}
+```
+
+Of these fields, only `apiId` and `apiHash` are required. Any other field can be
+omitted.
+
+The `tdlibParameters` option is described in
+https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html.
+
+By default, in tdl, `tdlibParameters` is set to:
+
+```javascript
+tdlibParameters: {
+  use_message_database: true,
+  use_secret_chats: false,
+  system_language_code: 'en',
+  application_version: '1.0',
+  device_model: 'Unknown device',
+  system_version: 'Unknown',
+  enable_storage_optimizer: true,
+  api_id: options.apiId,
+  api_hash: options.apiHash,
+  database_directory: options.databaseDirectory,
+  files_directory: options.filesDirectory,
+  use_test_dc: options.useTestDc
+}
+```
+
+In a real application, you probably want to change `device_model` and other
+parameters.
 
 #### `client.login(fn?: () => LoginDetails) => Promise<void>`
 
@@ -127,7 +252,7 @@ helper and implement the authorization process manually, handling
 `authorizationStateWaitPhoneNumber` and other updates. This function supports
 only a subset of authentication methods available on Telegram.
 
-The function accepts the following interface:
+`client.login` accepts the following interface:
 
 ```typescript
 type LoginDetails = {
@@ -176,6 +301,8 @@ There is no default listener, all errors will be ignored otherwise.
 
 You can consider using reactive libraries like RxJS or [most][] for convenient event processing.
 
+Some other rarely-used events also exist and are described in the TypeScript interface.
+
 `client.addListener` is an alias for `client.on`.
 
 [most]: https://github.com/cujojs/most
@@ -203,13 +330,8 @@ client.on('update', listener)
 Call a TDLib method asynchronously. The promise can be rejected with a TDLib
 object of type `_: 'error'`.
 
-The API list can be found at https://core.telegram.org/tdlib/docs/annotated.html
-or in the [td_api.tl][] file. In the tl file, the `byte` type means you should
-pass a **base64-encoded** string. `int64` accepts either a number or string,
-pass string for large numbers. Note that the TDLib JSON interface actually sends
-a `@type` field, but `tdl` renames it to `_`.
-
-[td_api.tl]: https://github.com/tdlib/td/blob/v1.8.0/td/generate/scheme/td_api.tl
+For the information regarding TDLib API list, see the "Getting started" section
+of this README.
 
 ```javascript
 const chats = await client.invoke({
@@ -233,17 +355,21 @@ await client.invoke({
 })
 ```
 
-#### `client.execute(query: Object) => (Object | null)`
+#### `tdl.execute(query: Object) => (Object | null)`
 
 Call a TDLib method synchronously. This function can be used only with the
 methods marked as "can be called synchronously" in the TDLib documentation.
 
 ```javascript
-const res = client.execute({
+const res = tdl.execute({
   _: 'getTextEntities',
   text: '@telegram /test_command https://telegram.org telegram.me'
 })
 ```
+
+#### `client.execute(query: Object) => (Object | null)`
+
+Same as `tdl.execute`.
 
 #### `client.close() => Promise<void>`
 
@@ -257,175 +383,57 @@ await client.close()
 
 For the full API, see the [index.d.ts](packages/tdl/index.d.ts) file.
 
----
+<a name="types"></a>
+## Types
 
-<a name="example"></a>
-### Example
+`tdl` fully supports [TypeScript][] and [Flow][]. However, to get the types for
+TDLib, `tdlib-types` should be additionally installed.
 
-```javascript
-const { Client } = require('tdl')
-const { TDLib } = require('tdl-tdlib-addon')
+While `tdl` works with any TDLib version (above the requirement), the types have
+to be installed specifically for the TDLib version you use.
 
-const client = new Client(new TDLib(), {
-  apiId: 2222, // Your api_id, get it at http://my.telegram.org/
-  apiHash: '0123456789abcdef0123456789abcdef' // Your api_hash
-})
+`tdlib-types` is installed by running `npm i -D tdlib-types@td-<TDLIB_VERSION>`.
+For example, to install `tdlib-types` for TDLib v1.8.12, run `npm i -D tdlib-types@td-1.8.12`
+To get the list of available versions of `tdlib-types`, run `npm info tdlib-types dist-tags`.
 
-client.on('error', console.error)
-client.on('update', update => {
-  console.log('Received update:', update)
-})
+The latest supported version of TDLib in `tdlib-types` is v1.8.12
+(`tdlib-types@beta` tag, the `@latest` tag installs types for TDLib v1.8.0).
 
-async function main () {
-  await client.login()
-
-  console.log('Me:', await client.invoke({ _: 'getMe' }))
-
-  // ...
-}
-
-main().catch(console.error)
-```
-
-See the [examples/](examples/) directory.
-
----
-
-<a name="options"></a>
-### Options
-
-The `Client` constructor accepts the following options:
-
-```typescript
-type ClientOptions = {
-  apiId: number, // Can be obtained at https://my.telegram.org
-  apiHash: string, // Can be obtained at https://my.telegram.org
-  databaseDirectory: string, // Relative path (default is '_td_database')
-  filesDirectory: string, // Relative path (default is '_td_files')
-  databaseEncryptionKey: string, // Optional key for database encryption
-  verbosityLevel: number | 'default', // Verbosity level (default is 2)
-  useTestDc: boolean, // Use test telegram server (default is false)
-  tdlibParameters: Object, // Raw TDLib parameters
-  // Advanced options:
-  skipOldUpdates: boolean, // Don't emit updates when connectionStateUpdating
-  bare: boolean,
-  receiveTimeout: number,
-  useMutableRename: boolean
-}
-```
-
-Of these fields, only `apiId` and `apiHash` are required. Any other field can be
-omitted.
-
-Valid fields in the `tdlibParameters` option are described in
-https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html.
-
-By default, `tdlibParameters` is set to:
-
-```javascript
-tdlibParameters: {
-  use_message_database: true,
-  use_secret_chats: false,
-  system_language_code: 'en',
-  application_version: '1.0',
-  device_model: 'Unknown device',
-  system_version: 'Unknown',
-  enable_storage_optimizer: true,
-  api_id: options.apiId,
-  api_hash: options.apiHash,
-  database_directory: options.databaseDirectory,
-  files_directory: options.filesDirectory,
-  use_test_dc: options.useTestDc
-}
-```
-
----
-
-<a name="typings"></a>
-### Typings
-
-`tdl` fully supports [TypeScript][] and [Flow][].
-
-To use the typings, install `tdlib-types`: `npm i -D tdlib-types@td-<TDLIB_VERSION>`.
-Since `tdl` can be used with different TDLib versions, you need to manually
-specify the TDLib version for `tdlib-types`.
-
-For example, to install `tdlib-types` for TDLib v1.8.12 or TDLib v1.7.0,
-run `npm i -D tdlib-types@td-1.8.12` or `npm i -D tdlib-types@td-1.7.0` respectively.
-
-To get the list of possible TDLib versions, run `npm info tdlib-types` (the "dist-tags" section).
-
-By default, `npm i -D tdlib-types` installs types for latest tag release of TDLib
-(`v1.8.0` currently), `npm i -D tdlib-types@beta` installs types for TDLib
-v1.8.12.
-
-Import the types:
+The types can be imported:
 
 ```typescript
 import type { message as Td$message, user /* ... */ } from 'tdlib-types'
+// Or import all the types at once:
+import type * as Td from 'tdlib-types'
+// And use as: Td.message, Td.user, ...
 ```
 
-Alternatively, import all the types at once:
+It is considerably more convenient to use `tdl` in TypeScript, which enables
+full autocompletion for the TDLib methods and objects along with the
+documentation.
 
-```typescript
-import * as Td from 'tdlib-types'
-// Use as: Td.message, Td.user, ...
-```
+For more information, see the [tdlib-types][]' README.
 
-It is considerably more convenient to use `tdl` in TypeScript, which enables full
-autocompletion for the TDLib methods and objects.
-
-For more information, see the [tdlib-types][] README.
+The process to manually install types beyond supported versions of `tdlib-types`
+currently isn't fleshed out. You can clone the `tdl` repository, run the
+`tdlib-types` generator, and put the generated typings in a `.d.ts` file within
+`declare module 'tdlib-types' { ... }`. In the future, `tdl` could possibly
+provide a cli utility to automatically download and install the types.
 
 [tdlib-types]: packages/tdlib-types/README.md
 [TypeScript]: https://www.typescriptlang.org/
 [Flow]: https://flow.org/
 
----
-
 <a name="creating-multiple-clients"></a>
-### Creating multiple clients
+## Creating multiple clients
 
-With `tdl-tdlib-addon`, you can create multiple clients but currently the
-number of created clients should not exceed [UV_THREADPOOL_SIZE][].
+The current limitation is that the number of created clients should not exceed
+[UV_THREADPOOL_SIZE][] (as for now, the default is 4, max is 1024).
 
 [UV_THREADPOOL_SIZE]: http://docs.libuv.org/en/v1.x/threadpool.html
 
----
-
-<a name="webassembly"></a>
-### WebAssembly
-
-`tdl` also has an [experimental wrapper](packages/tdl-tdlib-wasm/) for TDLib
-compiled to WebAssembly. To use it, install `tdl-tdlib-wasm` instead of
-`tdl-tdlib-addon`. It works in the browser only.
-
----
-
-The library is designed to work with different "backends", which all follow the
-same interface described in the [TDLib_API.md](TDLib_API.md) file (the types are
-described in the `tdl-shared` package), so that it's possible to easily swap one
-with another. The `tdl` package itself is platform-independent. Currently, the
-present backends are `tdl-tdlib-addon` (recommended), `tdl-tdlib-ffi`
-(deprecated), `tdl-tdlib-wasm` (experimental).
-
----
-
-<a name="using-on-windows"></a>
-### Using on Windows
-
-The library depends on node-gyp, which may be difficult to install on Windows.
-You should install Visual Studio (or just Build Tools) and Python first.
-For example, see https://gist.github.com/jtrefry/fd0ea70a89e2c3b7779c,
-https://github.com/Microsoft/nodejs-guidelines/blob/dd5074c/windows-environment.md#compiling-native-addon-modules.
-There's also a [`windows-build-tools` package](https://github.com/felixrieseberg/windows-build-tools) on npm.
-
-Otherwise, `tdl` works fine on Windows.
-
----
-
 <a name="possible-errors"></a>
-### Possible errors
+## Possible errors
 
 - `UPDATE_APP_TO_LOGIN`
 

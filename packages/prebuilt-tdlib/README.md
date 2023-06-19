@@ -25,9 +25,9 @@ To install `prebuilt-tdlib` for e.g. TDLib v1.8.12, run:
 $ npm install prebuilt-tdlib@td-1.8.12
 ```
 
-`prebuilt-tdlib` can be installed for other TDLib versions, see the "npm tags"
-section below or `$ npm info prebuilt-tdlib` to get the list of available
-versions.
+`prebuilt-tdlib` can be installed for other TDLib versions, run
+`$ npm info prebuilt-tdlib dist-tags` to get the list of available versions
+(or see the "npm tags" section below).
 
 ### Usage
 
@@ -42,19 +42,23 @@ console.log(getTdjson())
 ```
 
 This package can be used with, for example, [`tdl`][tdl]. You can pass the
-path to the `TDLib` constructor:
+path to `tdl.configure` (since tdl v7.3.0):
 
 [tdl]: https://github.com/Bannerets/tdl
 
 ```javascript
-const { TDLib } = require('tdl-tdlib-addon')
+const tdl = require('tdl')
 const { getTdjson } = require('prebuilt-tdlib')
-/* ... */ new TDLib(getTdjson()) /* ... */
+tdl.configure({ tdjson: getTdjson() })
+// ...
 ```
 
-### Versioning
+### Versioning conventions
 
-Because TDLib does not follow Semver, to not require the users to manually
+> **Note**: This information is mostly for maintaining `prebuilt-tdlib`, it
+> isn't necessary for using this package.
+
+Because TDLib does not follow SemVer, not to require the users to manually
 specify the exact version of `prebuilt-tdlib` in their `package.json`, the TDLib
 version is packed into a single minor version.
 
@@ -87,3 +91,6 @@ The releases of the `prebuilt-tdlib` npm package are not git-tagged.
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.7.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.7) (tdlib commit [de5379f00b6af7686f197037ca3b494e6277e523](https://github.com/tdlib/td/commit/de5379f00b6af7686f197037ca3b494e6277e523)
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.5.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.5) (tdlib commit [d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9](https://github.com/tdlib/td/commit/d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9))
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.0.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.0)
+- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.7.0.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.7.0)
+- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.6.0.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.6.0)
+- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.5.0.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.5.0)

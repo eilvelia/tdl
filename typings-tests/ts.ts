@@ -1,169 +1,163 @@
-import { TDLib, defaultLibraryFile } from '../packages/tdl-tdlib-addon'
-import { Client, TdlError, ConfigType, ClientOptions } from '../packages/tdl'
+// @flow
+
+import * as tdl from '../packages/tdl'
+import * as Td from '../packages/tdlib-types'
 import { getTdjson } from '../packages/prebuilt-tdlib'
-
-const tdlib = new TDLib(`path/${defaultLibraryFile}`)
-
-const libtdjson1: string = getTdjson()
-const libtdjson2: string = getTdjson({ libc: 'glibc' })
-
-import {
-  error as Td$error,
-  Chat as Td$Chat,
-  User as Td$User,
-  Update as Td$Update,
-  formattedText as Td$formattedText,
-  formattedText$Input as Td$formattedText$Input,
-  InvokeFuture
-} from '../packages/tdlib-types'
-
 import * as Future from 'fluture'
 
-const cl = new Client(tdlib, {
-  apiId: 2234,
-  apiHash: 'abcdef',
-  useTestDc: false,
+const { TdlError } = tdl
+
+tdl.configure({ tdjson: 'libtdjson.dylib', libPrefix: '/usr/local/lib' })
+tdl.configure({ verbosityLevel: 'default' })
+tdl.configure({ libPrefix: __dirname })
+tdl.configure({ libPrefix: '' })
+tdl.configure({ tdjson: getTdjson() })
+
+getTdjson({ libc: 'glibc' })
+
+const client = tdl.createClient({
+  apiId: 2,
+  apiHash: 'hash'
+})
+
+tdl.createClient({
+  apiId: 222,
+  apiHash: 'abc',
+  useTestDc: true,
   tdlibParameters: {
     device_model: 'unknown'
   }
 })
+tdl.createClient({ bare: true })
+tdl.createClient({ apiId: 2, apiHash: 'hash', receiveTimeout: 10 })
 
-new Client(tdlib, { receiveTimeout: 10 })
+tdl.init()
 
-new Client(tdlib, { apiId: 2, apiHash: 'hash' })
+tdl.execute({
+  _: 'getTextEntities',
+  text: '@telegram /test_command https://telegram.org telegram.me'
+})
 
-Client.create(tdlib, { apiId: 2, apiHash: 'hash' })
-
-const client = cl
-
-;(async () => {
-  await cl.connect()
-
-  await cl.login(() => ({
+async function main () {
+  await client.login(() => ({
     type: 'user',
     getPhoneNumber: () => Promise.resolve('+1234'),
-    getAuthCode: () => Promise.resolve('str')
+    getAuthCode: () => Promise.resolve('123')
   }))
 
-  await cl.login(() => ({
-    getPhoneNumber: () => Promise.resolve('+1234'),
-    getAuthCode: () => Promise.resolve('str'),
-  }))
-
-  await cl.login(() => ({
+  await client.login(() => ({
     type: 'bot',
-    getToken: () => Promise.resolve('abcdef')
+    getToken: () => Promise.resolve('token')
   }))
 
-  await cl.connectAndLogin(() => ({
-    type: 'bot',
-    getToken: () => Promise.resolve('abcdef')
+  await client.login()
+
+  await client.login(() => ({}))
+
+  await client.login(() => ({
+    getPhoneNumber: retry => retry
+      ? Promise.reject('Invalid phone number')
+      : Promise.resolve('+9996620001'),
+    getAuthCode: retry => retry
+      ? Promise.reject('Invalid auth code')
+      : Promise.resolve('22222'),
+    getPassword: (passwordHint, retry) => retry
+      ? Promise.reject('Invalid password')
+      : Promise.resolve('abcdef'),
+    getName: () =>
+      Promise.resolve({ firstName: 'John', lastName: 'Doe' })
   }))
 
-  await cl.login()
-  await cl.connectAndLogin()
+  await client.loginAsBot('token')
+  await client.loginAsBot(() => 'token')
+  await client.loginAsBot(() => Promise.resolve('token'))
 
-  await cl.login(() => ({}))
+  client.setLogFatalErrorCallback(a => console.log(a))
+  client.setLogFatalErrorCallback(null)
 
-  await cl.loginAsBot('token')
-  await cl.loginAsBot(() => 'token')
-  await cl.loginAsBot(() => Promise.resolve('token'))
+  const res = client.execute({
+    _: 'getTextEntities',
+    text: '@telegram /test_command https://telegram.org telegram.me'
+  })
+  console.log(res)
 
-  cl.pause()
-  cl.resume()
-
-  cl.destroy()
-
-  client.on('error', e => {
-    if (e instanceof TdlError) {
-      const a: TdlError = e
-      console.log(e.err)
-      return
-    }
-    console.log(e.message)
+  const result = await client.invoke({
+    _: 'getChats',
+    chat_list: { _: 'chatListMain' },
+    limit: 100
   })
 
-  const remove1: typeof client.removeListener = client.off
-  const add1: typeof client.on = client.addListener
-  const add2: typeof client.on = client.once
+  const msg = await client.invoke({
+    _: 'sendMessage',
+    chat_id: 123456789,
+    input_message_content: {
+      _: 'inputMessageText',
+      text: {
+        _: 'formattedText',
+        text: 'Hi',
+      }
+    }
+  })
 
-  await cl.close()
-})()
+  const user: Promise<Td.User> = client.invoke({ _: 'getMe' })
 
-cl.on('update', u => {
-  console.log(u)
+  client.invoke({
+    _: 'addProxy',
+    server: '127.0.0.1',
+    port: 443,
+    enable: true,
+    type: { _: 'proxyTypeMtproto', secret: '15abcdef1234567890deadbeef123456' }
+  })
+
+  const ver: string = client.getVersion()
+
+  await client.close()
+}
+
+client
+  .on('error', e => console.log('error', e))
+  .on('auth-not-needed', () => {})
+  .on('auth-needed', () => {})
+
+client.once('update', e => {
+  const e2: Td.Update = e
 })
 
-cl
-  .on('error', e => {
+client.on('error', e => {
+  if (e instanceof TdlError) {
     console.log(e)
-  })
-  .on('destroy', () => {})
-  .on('response', r => {})
-
-
-cl.emit('error', { _: 'error', code: 1235, message: 'MSG', })
-cl.emit('destroy')
-cl.emit('auth-needed')
-
-const { on } = cl
-
-on('destroy', () => {})
-
-new TDLib()
-
-;(async () => {
-  const tdclient = await tdlib.create()
-
-  const { destroy } = tdlib
-
-  destroy(tdclient)
-
-  tdlib.destroy({ _TDLibClientBrand: undefined })
-})()
-
-const pp: Promise<Td$User> = cl.invoke({ _: 'getMe' })
-
-const name: string = client.getBackendName()
-
-client.invoke({
-  _: 'addProxy',
-  server: '127.0.0.1',
-  port: 443,
-  enable: true,
-  type: { _: 'proxyTypeMtproto', secret: '15abcdef1234567890deadbeef123456' }
-})
-
-client.invoke({
-  _: 'sendMessage',
-  chat_id: 123456789,
-  input_message_content: {
-    _: 'inputMessageText',
-    text: {
-      _: 'formattedText',
-      text: 'Hi'
-    }
+    console.log(e.err)
+    return
   }
+  console.log(e.message)
 })
 
-const invokeFuture = Future.encaseP(client.invoke) as InvokeFuture
+client.removeListener('update', () => {})
+client.removeListener('update', () => {}, true)
+client.removeListener('update', () => {}, false)
+
+client.emit('auth-needed')
+
+main().catch(console.error)
+
+// Td.formattedText <: Td.formattedText$Input
+declare var fmt: Td.formattedText
+const fmtInp: Td.formattedText$Input = fmt
+
+// subtyping should also work correctly with 'may be null' fields
+declare var authCode: Td.authenticationCodeInfo
+const authCodeInp: Td.authenticationCodeInfo$Input = authCode
+
+const invokeFuture = Future.encaseP(client.invoke) as Td.InvokeFuture
 
 invokeFuture({
   _: 'searchPublicChat',
   username: 'username'
 })
-  .map(chat => `Chat: ${chat.title}, id: ${chat.id}`)
-  .mapRej(err => `Error: ${err.message}`)
-  .fork(console.error, console.log)
-
-invokeFuture({
-  _: 'searchPublicChat',
-  username: 'username'
-})
-  .map((e: Td$Chat) => e.title)
-  .mapRej((e: Td$error) => e)
+  .map((e: Td.Chat) => e.title)
+  .mapRej((e: Td.error) => e)
   .fork(console.error, (e: string) => console.log(e))
 
-// Td$formattedText <: Td$formattedText$Input
-declare var fmt: Td$formattedText
-const fmtOpt: Td$formattedText$Input = fmt
+const oldclient = new tdl.Client({}, { apiId: 2, apiHash: 'hash' })
+oldclient.invoke({ _: 'getMe' })
+const oldclient2 = tdl.Client.create({}, { apiId: 2, apiHash: 'hash' })

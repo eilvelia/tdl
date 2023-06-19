@@ -8,22 +8,58 @@ import {
   setTdlibParameters as Td$setTdlibParameters
 } from 'tdlib-types'
 
-import { TDLibClient, ITDLibJSON } from 'tdl-shared'
-
-export { TDLibClient, ITDLibJSON }
-
 export type TDLibParameters = Omit<Td$setTdlibParameters, '_'>
 
-/**
- * Note: the public methods in this class are defined as properties, so
- * `.bind` is not needed. This class is generally not meant to be extended.
- */
-export class Client {
-  constructor(tdlibInstance: ITDLibJSON, options: ClientOptions);
-  static create(tdlibInstance: ITDLibJSON, options: ClientOptions): Client;
+export type TDLibConfiguration = {
   /**
-   * Log in to your Telegram account. The getter function will not be called if
-   * the client is already logged in.
+   * The path to libtdjson. Defaults to `'tdjson.dll'` on Windows,
+   * `'libtdjson.dylib'` on macOS, or `'libtdjson.so'` on a different OS.
+   */
+  tdjson?: string,
+  /**
+   * The path to the directory with libtdjson. Defaults to `''`. Can be set to,
+   * for example, `'/usr/local/lib'` or `__dirname` while keeping the `tdjson`
+   * option unchanged.
+   */
+  libPrefix?: string,
+  /**
+   * Set the verbosity level of TDLib. From the TDLib documentation: "value 0
+   * corresponds to fatal errors, value 1 corresponds to errors, value 2
+   * corresponds to warnings and debug warnings, value 3 corresponds to
+   * informational, value 4 corresponds to debug, value 5 corresponds to verbose
+   * debug, value greater than 5 and up to 1024 can be used to enable even more
+   * logging". Another possible option is `'default'`, `tdl` will then not send
+   * any verbosity to TDLib. Defaults to 2.
+   */
+  verbosityLevel?: number | 'default'
+}
+
+/**
+ * Configure options such as path to the tdjson library or the verbosity level.
+ * Only options passed in the object are set; can be called multiple times.
+ * The shared library will be loaded using `path.join(libPrefix, tdjson)` as `filename`.
+ */
+export function configure(cfg: TDLibConfiguration): void;
+
+/**
+ * Call a TDLib method synchronously. Can be used only with the methods
+ * marked as "can be called synchronously" in the TDLib documentation.
+ */
+export var execute: Execute;
+
+/** Create a TDLib client. */
+export function createClient(opts: ClientOptions): Client;
+
+/**
+ * This function is entirely optional to call, TDLib will be initialized
+ * automatically on the first call of `createClient` or `execute`.
+ */
+export function init(): void;
+
+export class Client {
+  /**
+   * Log in to a Telegram account. `getLoginDetails` will not be called if the
+   * client is already logged in.
    */
   login: (getLoginDetails?: () => LoginDetails) => Promise<void>;
   /**
@@ -37,7 +73,7 @@ export class Client {
    *   type: 'bot',
    *   getToken: retry => retry
    *     ? Promise.reject('Invalid bot token')
-   *     : Promise.resolve(token)
+   *     : Promise.resolve(typeof token === 'string' ? token : token())
    * }))
    * ```
    */
@@ -54,10 +90,7 @@ export class Client {
   removeListener: Off;
   /** Call a TDLib method asynchronously. */
   invoke: Invoke;
-  /**
-   * Call a TDLib method synchronously. Can be used only with the methods
-   * marked as "can be called synchronously" in the TDLib documentation.
-   */
+  /** Same as `tdl.execute`. */
   execute: Execute;
   /**
    * Close the client. This sends `{ _: 'close' }` and waits for
@@ -65,11 +98,10 @@ export class Client {
    */
   close: () => Promise<void>;
   /**
-   * Get the TDLib version in the `major.minor.patch` format. `getVersion` can
-   * throw an exception if the version is not (yet) received.
+   * Get the TDLib version in the `major.minor.patch` format. Can throw an
+   * exception if the version (the `updateOption` update) is not (yet) received.
    */
   getVersion: () => string;
-  getBackendName: () => string;
   /** For advanced use only. */
   emit: Emit;
 
@@ -88,6 +120,22 @@ export class Client {
   connect: () => Promise<void>;
   /** @deprecated Use `client.login` instead. */
   connectAndLogin: (getLoginDetails?: () => LoginDetails) => Promise<void>;
+  /** @deprecated */
+  getBackendName: () => string;
+  /**
+   * @deprecated Use `tdl.configure` and `tdl.createClient` instead. See the
+   * `tdl@7.3.0` entry in `CHANGELOG.md` for more information. The new approach
+   * to create a client is:
+   * ```
+   * const tdl = require('tdl')
+   * tdl.configure({ tdjson: 'path to tdjson' }) // was: new TDLib('path to tdjson')
+   * const client = tdl.createClient({ apiId: 12345, apiHash: 'your api hash' })
+   * ```
+   * If tdjson is in the default location, then the `configure` line is optional.
+   */
+  constructor(tdlibInstance: any, options: ClientOptions);
+  /** @deprecated Use `tdl.configure` and `tdl.createClient` instead. */
+  static create(tdlibInstance: any, options: ClientOptions): Client;
 }
 
 export type ClientOptions = {
@@ -101,16 +149,6 @@ export type ClientOptions = {
   filesDirectory?: string,
   /** An optional key for database encryption. */
   databaseEncryptionKey?: string,
-  /**
-   * Set TDLib verbosity level. From the TDLib documentation: "value 0
-   * corresponds to fatal errors, value 1 corresponds to errors, value 2
-   * corresponds to warnings and debug warnings, value 3 corresponds to
-   * informational, value 4 corresponds to debug, value 5 corresponds to verbose
-   * debug, value greater than 5 and up to 1024 can be used to enable even more
-   * logging". Another possible option is `'default'`, `tdl` will then not send
-   * any verbosity to TDLib. Defaults to 2.
-   */
-  verbosityLevel?: number | 'default',
   /** Use test telegram server. */
   useTestDc?: boolean,
   /**
@@ -130,7 +168,8 @@ export type ClientOptions = {
 
   /**
    * Advanced option. When set to true, the client does not emit updates if
-   * `connectionState` equals to `connectionStateUpdating`.
+   * `connectionState` equals to `connectionStateUpdating`. See also the
+   * `ignore_background_updates` option in TDLib.
    */
   skipOldUpdates?: boolean,
   /**
@@ -151,9 +190,12 @@ export type ClientOptions = {
   receiveTimeout?: number,
   /**
    * Advanced option. This will result in slightly worse logs with the `_` field
-   * at the end of the object.
+   * at the end of the object. Not recommended to use this option.
    */
   useMutableRename?: boolean,
+
+  /** @deprecated Set the verbosity level in `tdl.configure` instead. */
+  verbosityLevel?: number | 'default',
   /** @deprecated Use `verbosityLevel: 'default'` instead. */
   useDefaultVerbosityLevel?: boolean,
   /** @deprecated Use the `bare` option instead. */
@@ -227,7 +269,7 @@ export type Off =
   & ((event: 'auth-not-needed', listener: (...args: any[]) => any, once?: boolean) => void)
   & ((event: 'response', listener: (...args: any[]) => any, once?: boolean) => void)
 
-// The destroy and response events are deprecated.
+// NOTE: The destroy and response events are deprecated.
 
 /** @deprecated Use ClientOptions */
 export type StrictClientOptions = {
@@ -249,6 +291,5 @@ export type StrictClientOptions = {
 /** @deprecated Use ClientOptions */
 export type ConfigType = ClientOptions
 
-// TDL, TDl, default exist for backward compatibility only. Use Client instead.
+// TDL, TDl exports exist for backward compatibility only.
 export { Client as TDL, Client as Tdl }
-export default Client

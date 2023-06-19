@@ -1,4 +1,0 @@
-build/
-compile_commands.json
-.ccls
-.clangd/
