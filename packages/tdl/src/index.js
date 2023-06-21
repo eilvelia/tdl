@@ -40,13 +40,13 @@ const cfg: StrictTDLibConfiguration = {
   verbosityLevel: 2
 }
 
-export function configure (opts: TDLibConfiguration = {}) {
+export function configure (opts: TDLibConfiguration = {}): void {
   if (opts.tdjson) cfg.tdjson = opts.tdjson
   if (opts.libPrefix) cfg.libPrefix = opts.libPrefix
   if (opts.verbosityLevel) cfg.verbosityLevel = opts.verbosityLevel
 }
 
-export function init () {
+export function init (): void {
   if (tdjsonAddon) return
   debug('Initializing the node addon')
   const lib = path.join(cfg.libPrefix, cfg.tdjson)
@@ -60,7 +60,7 @@ export function init () {
   }
 }
 
-export function execute (request: any) {
+export function execute (request: any): void {
   if (!tdjsonAddon) {
     init()
     if (!tdjsonAddon) throw Error('TDLib is uninitialized')
@@ -68,7 +68,7 @@ export function execute (request: any) {
   tdjsonAddon.execute(null, request)
 }
 
-export function createClient (opts: any) {
+export function createClient (opts: any): Client {
   if (!tdjsonAddon) {
     init()
     if (!tdjsonAddon) throw Error('TDLib is uninitialized')

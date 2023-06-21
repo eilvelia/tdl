@@ -19,7 +19,7 @@ export class Version {
   }
 
   /** v1.gt(v2) is v1 > v2 */
-  gt (other: Version) {
+  gt (other: Version): boolean {
     if (this._major > other._major) return true
     if (this._major < other._major) return false
     if (this._minor > other._minor) return true
@@ -28,7 +28,7 @@ export class Version {
   }
 
   /** v1.lt(v2) is v1 < v2 */
-  lt (other: Version) {
+  lt (other: Version): boolean {
     if (this._major < other._major) return true
     if (this._major > other._major) return false
     if (this._minor < other._minor) return true
@@ -37,7 +37,7 @@ export class Version {
   }
 
   /** v1.gte(v2) is v1 >= v2 */
-  gte (other: Version) {
+  gte (other: Version): boolean {
     if (this._major > other._major) return true
     if (this._major < other._major) return false
     if (this._minor > other._minor) return true
@@ -46,7 +46,7 @@ export class Version {
   }
 
   /** v1.lte(v2) is v1 <= v2 */
-  lte (other: Version) {
+  lte (other: Version): boolean {
     if (this._major < other._major) return true
     if (this._major > other._major) return false
     if (this._minor < other._minor) return true
@@ -55,13 +55,13 @@ export class Version {
   }
 
   /** v1.eq(v2) is v1 == v2 */
-  eq (other: Version) {
+  eq (other: Version): boolean {
     return this._major === other._major
       && this._minor === other._minor
       && this._patch === other._patch
   }
 
-  toString () {
+  toString (): string {
     return `${this._major}.${this._minor}.${this._patch}`
   }
 }

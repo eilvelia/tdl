@@ -288,10 +288,8 @@ export class Client {
     return new Client(tdlibInstance, options)
   }
 
-  /** @deprecated */
-  getBackendName = (): string => 'addon'
 
-  getVersion = (): string => {
+  getVersion: () => string = () => {
     if (this._version === TDLIB_DEFAULT)
       throw new Error('Unknown TDLib version')
     return this._version.toString()
@@ -346,11 +344,11 @@ export class Client {
       this.emit('error', err)
   }
 
-  login = (getLoginDetails: () => LoginDetails = emptyDetails): Promise<void> => {
+  login: (getLoginDetails?: () => LoginDetails) => Promise<void> = (getLoginDetails = emptyDetails) => {
     debug('client.login()')
     this._emitter.once('auth-needed', () => {
       this._loginDetails = (mergeDeepRight(
-        defaultLoginDetails, getLoginDetails()): $FlowIgnore)
+        defaultLoginDetails, getLoginDetails()): any)
       debug('set _loginDetails to', this._loginDetails)
     })
     return new Promise((resolve, reject) => {
@@ -359,7 +357,8 @@ export class Client {
     })
   }
 
-  loginAsBot = (token: string | () => (string | Promise<string>)): Promise<void> => {
+  loginAsBot: (string | () => (string | Promise<string>)) => Promise<void> = token => {
+  // loginAsBot = (token: string | () => (string | Promise<string>)): Promise<void> => {
     return this.login(() => ({
       type: 'bot',
       getToken: retry => retry
@@ -369,15 +368,18 @@ export class Client {
   }
 
   /** @deprecated */
-  connect = (): Promise<void> => Promise.resolve()
+  connect: () => Promise<void> = () => Promise.resolve()
 
   /** @deprecated */
-  connectAndLogin = (fn: () => LoginDetails = emptyDetails): Promise<void> => {
+  connectAndLogin: (fn?: () => LoginDetails) => Promise<void> = (fn = emptyDetails) => {
     return this.login(fn)
   }
 
   /** @deprecated */
-  pause = (): void => {
+  getBackendName: () => string = () => 'addon'
+
+  /** @deprecated */
+  pause: () => void = () => {
     if (!this._paused) {
       debug('pause')
       this._paused = true
@@ -387,7 +389,7 @@ export class Client {
   }
 
   /** @deprecated */
-  resume = (): void => {
+  resume: () => void = () => {
     if (this._paused) {
       debug('resume')
       this._paused = false
@@ -444,7 +446,7 @@ export class Client {
     return receiveResponse
   }
 
-  destroy = (): void => {
+  destroy: () => void = () => {
     debug('destroy')
     if (this._client === null) return
     this._tdlib.destroy(this._client)
@@ -454,7 +456,7 @@ export class Client {
   }
 
   // Sends { _: 'close' } and waits until the client gets destroyed
-  close = (): Promise<void> => {
+  close: () => Promise<void> = () => {
     debug('close')
     return new Promise(resolve => {
       if (this._client === null) return resolve()
@@ -466,7 +468,7 @@ export class Client {
     })
   }
 
-  setLogFatalErrorCallback = (fn: null | (errorMessage: string) => void): void => {
+  setLogFatalErrorCallback: (null | (msg: string) => void) => void = fn => {
     this._tdlib.setLogFatalErrorCallback(fn)
   }
 
