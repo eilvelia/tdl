@@ -24,7 +24,7 @@ interface, while retaining backward compatiblity.
   tdl.execute({ _: 'setLogStream', /* ... */ })
   const client = tdl.createClient({
     apiId: /* your api id */,
-    apihash: /* your api hash */
+    apiHash: /* your api hash */
   })
   await client.login()
   ```

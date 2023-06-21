@@ -140,6 +140,9 @@ Some short examples are available in the [examples/](examples/) directory.
 
 #### `tdl.configure(options: TDLibConfiguration) => void`
 
+Configure several parameters such as libtdjson name or verbosity level. This
+function should be called before `tdl.createClient` or `tdl.execute`.
+
 ```javascript
 tdl.configure({
   // Path to the library. By default, it is 'tdjson.dll' on Windows,

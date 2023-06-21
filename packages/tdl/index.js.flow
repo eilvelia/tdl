@@ -36,10 +36,14 @@ export type TDLibConfiguration = {
 
 /**
  * Configure options such as path to the tdjson library or the verbosity level.
- * Only options passed in the object are set; can be called multiple times.
- * The shared library will be loaded using `path.join(libdir, tdjson)` as `filename`.
+ * Only options passed in the object are set; can be called none or multiple
+ * times. The shared library will be loaded using `path.join(libdir, tdjson)` as
+ * `filename`. Should be called before `createClient` / `execute` / `init`.
  */
 declare export function configure(cfg: TDLibConfiguration): void;
+
+/** Create a TDLib client. */
+declare export function createClient(opts: ClientOptions): Client;
 
 /**
  * Call a TDLib method synchronously. Can be used only with the methods
@@ -47,12 +51,10 @@ declare export function configure(cfg: TDLibConfiguration): void;
  */
 declare export var execute: Execute;
 
-/** Create a TDLib client. */
-declare export function createClient(opts: ClientOptions): Client;
-
 /**
- * This function is entirely optional to call, TDLib will be initialized
- * automatically on the first call of `createClient` or `execute`.
+ * Initialize the node addon explicitly. This function is entirely optional to
+ * call, TDLib will be initialized automatically on the first call of
+ * `createClient` or `execute`.
  */
 declare export function init(): void;
 
