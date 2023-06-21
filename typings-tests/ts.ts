@@ -7,10 +7,10 @@ import * as Future from 'fluture'
 
 const { TdlError } = tdl
 
-tdl.configure({ tdjson: 'libtdjson.dylib', libPrefix: '/usr/local/lib' })
+tdl.configure({ tdjson: 'libtdjson.dylib', libdir: '/usr/local/lib' })
 tdl.configure({ verbosityLevel: 'default' })
-tdl.configure({ libPrefix: __dirname })
-tdl.configure({ libPrefix: '' })
+tdl.configure({ libdir: __dirname })
+tdl.configure({ libdir: '' })
 tdl.configure({ tdjson: getTdjson() })
 
 getTdjson({ libc: 'glibc' })

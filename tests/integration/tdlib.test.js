@@ -6,7 +6,7 @@ const tdl = require('../../packages/tdl')
 const projectRoot = path.join(__dirname, '..', '..')
 
 let tdjson
-let libPrefix
+let libdir
 
 if (process.env.TEST_PREBUILT === '1') {
   console.log('Using local prebuilt-tdlib')
@@ -21,7 +21,7 @@ if (process.env.TEST_PREBUILT === '1') {
   console.log(`Using tdjson from ${tdjsonPath}`)
   tdjson = path.isAbsolute(tdjsonPath) ? tdjsonPath : path.join(projectRoot, tdjsonPath)
 } else {
-  libPrefix = projectRoot
+  libdir = projectRoot
 }
 
 let testName/*: string */
@@ -31,13 +31,13 @@ if (process.env.TEST_TDL_TDLIB_ADDON === '1') {
   testName = 'tdl with tdl-tdlib-addon (backward compatibility)'
   createClient = function () {
     const { TDLib, defaultLibraryFile } = require('tdl-tdlib-addon')
-    if (libPrefix) tdjson = path.join(projectRoot, defaultLibraryFile)
+    if (libdir) tdjson = path.join(projectRoot, defaultLibraryFile)
     return new tdl.Client(new TDLib(tdjson), { bare: true })
   }
 } else {
   testName = 'tdl'
   createClient = function () {
-    if (libPrefix) tdl.configure({ libPrefix })
+    if (libdir) tdl.configure({ libdir })
     else tdl.configure({ tdjson })
     return tdl.createClient({ bare: true })
   }

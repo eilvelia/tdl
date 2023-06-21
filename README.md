@@ -65,7 +65,7 @@ const tdl = require('tdl')
 //   tdl.configure({ tdjson: '/usr/local/lib/libtdjson.dylib'})
 // The library prefix can be set separate from the library name,
 // example to search for libtdjson in the directory of the current script:
-//   tdl.configure({ libPrefix: __dirname })
+//   tdl.configure({ libdir: __dirname })
 
 // Instead of building TDLib yourself, the aforementioned prebuilt-tdlib can be used as follows:
 //   const { getTdjson } = require('prebuilt-tdlib')
@@ -146,7 +146,7 @@ tdl.configure({
   // 'libtdjson.dylib' on macOS, or 'libtdjson.so' otherwise.
   tdjson: '...',
   // Path to the library directory. By default, it is empty string.
-  libPrefix: '...',
+  libdir: '...',
   // Verbosity level of TDLib. By default, it is 2.
   verbosityLevel: 3
 })
@@ -154,11 +154,11 @@ tdl.configure({
 
 Some examples:
 - `tdl.configure({ tdjson: '/root/libtdjson.so', verbosityLevel: 5 })`
-- `tdl.configure({ tdjson: 'libtdjson.dylib.1.8.6', libPrefix: '/usr/local/lib' })`
-- `tdl.configure({ libPrefix: __dirname })`
+- `tdl.configure({ tdjson: 'libtdjson.dylib.1.8.6', libdir: '/usr/local/lib' })`
+- `tdl.configure({ libdir: __dirname })`
 - `tdl.configure({ tdjson: require('prebuilt-tdlib').getTdjson() })`
 
-The path concatenation of `libPrefix` + `tdjson` is directly passed to
+The path concatenation of `libdir` + `tdjson` is directly passed to
 [`dlopen`][dlopen] (Unix) or [`LoadLibrary`][LoadLibraryW] (Windows). Check your OS documentation
 to find out where the shared library will be searched for.
 

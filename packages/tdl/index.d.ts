@@ -21,7 +21,7 @@ export type TDLibConfiguration = {
    * for example, `'/usr/local/lib'` or `__dirname` while keeping the `tdjson`
    * option unchanged.
    */
-  libPrefix?: string,
+  libdir?: string,
   /**
    * Set the verbosity level of TDLib. From the TDLib documentation: "value 0
    * corresponds to fatal errors, value 1 corresponds to errors, value 2
@@ -37,7 +37,7 @@ export type TDLibConfiguration = {
 /**
  * Configure options such as path to the tdjson library or the verbosity level.
  * Only options passed in the object are set; can be called multiple times.
- * The shared library will be loaded using `path.join(libPrefix, tdjson)` as `filename`.
+ * The shared library will be loaded using `path.join(libdir, tdjson)` as `filename`.
  */
 export function configure(cfg: TDLibConfiguration): void;
 

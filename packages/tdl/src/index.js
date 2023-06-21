@@ -23,20 +23,20 @@ const defaultLibraryFile = (() => {
 
 export type TDLibConfiguration = {
   tdjson?: string,
-  libPrefix?: string,
+  libdir?: string,
   verbosityLevel?: number | 'default'
 }
 
 // TODO: Use Required<T> from new Flow versions
 type StrictTDLibConfiguration = {
   tdjson: string,
-  libPrefix: string,
+  libdir: string,
   verbosityLevel: number | 'default'
 }
 
 const cfg: StrictTDLibConfiguration = {
   tdjson: defaultLibraryFile,
-  libPrefix: '',
+  libdir: '',
   verbosityLevel: 2
 }
 
@@ -44,14 +44,14 @@ export function configure (opts: TDLibConfiguration = {}): void {
   if (tdjsonAddon)
     throw Error('TDLib is already initialized; too late to configure')
   if (opts.tdjson) cfg.tdjson = opts.tdjson
-  if (opts.libPrefix) cfg.libPrefix = opts.libPrefix
+  if (opts.libdir) cfg.libdir = opts.libdir
   if (opts.verbosityLevel) cfg.verbosityLevel = opts.verbosityLevel
 }
 
 export function init (): void {
   if (tdjsonAddon) return
   debug('Initializing the node addon')
-  const lib = path.join(cfg.libPrefix, cfg.tdjson)
+  const lib = path.join(cfg.libdir, cfg.tdjson)
   tdjsonAddon = loadAddon(lib)
   if (cfg.verbosityLevel !== 'default') {
     debug('Executing setLogVerbosityLevel', cfg.verbosityLevel)

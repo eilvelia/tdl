@@ -18,7 +18,7 @@ interface, while retaining backward compatiblity.
   const tdl = require('tdl')
   tdl.configure({
     tdjson: 'libtdjson.dylib',
-    libPrefix: '/usr/local/lib',
+    libdir: '/usr/local/lib',
     verbosityLevel: 3 /* the default is 2 */
   })
   tdl.execute({ _: 'setLogStream', /* ... */ })
