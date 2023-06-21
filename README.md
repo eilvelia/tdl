@@ -8,6 +8,14 @@ TDLib version 1.5.0 or newer is required.
 [TDLib]: https://github.com/tdlib/td
 [Telegram]: https://telegram.org/
 
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Getting started](#getting-started)
+- [API](#api)
+- [Types](#types)
+- [Creating multiple clients](#creating-multiple-clients)
+- [Possible errors](#possible-errors)
+
 <a name="requirements"></a>
 ## Requirements
 
