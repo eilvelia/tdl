@@ -52,6 +52,8 @@ To install `prebuilt-tdlib` for e.g. TDLib v1.8.12, run `npm install prebuilt-td
 from `prebuilt-tdlib` is present in the section below. See the README of
 [prebuilt-tdlib][] for more information.
 
+[prebuilt-tdlib]: packages/prebuilt-tdlib/README.md
+
 <a name="getting-started"></a>
 ## Getting started
 
@@ -64,6 +66,10 @@ const tdl = require('tdl')
 // The library prefix can be set separate from the library name,
 // example to search for libtdjson in the directory of the current script:
 //   tdl.configure({ libPrefix: __dirname })
+
+// Instead of building TDLib yourself, the aforementioned prebuilt-tdlib can be used as follows:
+//   const { getTdjson } = require('prebuilt-tdlib')
+//   tdl.configure({ tdjson: getTdjson() })
 
 const client = tdl.createClient({
   apiId: 2222, // Your api_id
@@ -124,18 +130,6 @@ field, but tdl renames it to `_`.
 
 <!-- TODO: Add a guide on how to read the tl scheme or similar? -->
 
-Instead of building TDLib yourself, the aforementioned [prebuilt-tdlib][] can
-be used as follows:
-
-```javascript
-// . . .
-const { getTdjson } = require('prebuilt-tdlib')
-tdl.configure({ tdjson: getTdjson() })
-// . . .
-```
-
-[prebuilt-tdlib]: packages/prebuilt-tdlib/README.md
-
 Some short examples are available in the [examples/](examples/) directory.
 
 <a name="api"></a>
@@ -160,8 +154,9 @@ tdl.configure({
 
 Some examples:
 - `tdl.configure({ tdjson: '/root/libtdjson.so', verbosityLevel: 5 })`
-- `tdl.configure({ tdjson: 'libtdjson.1.8.6.dylib', libPrefix: '/usr/local/lib' })`
+- `tdl.configure({ tdjson: 'libtdjson.dylib.1.8.6', libPrefix: '/usr/local/lib' })`
 - `tdl.configure({ libPrefix: __dirname })`
+- `tdl.configure({ tdjson: require('prebuilt-tdlib').getTdjson() })`
 
 The path concatenation of `libPrefix` + `tdjson` is directly passed to
 [`dlopen`][dlopen] (Unix) or [`LoadLibrary`][LoadLibraryW] (Windows). Check your OS documentation
