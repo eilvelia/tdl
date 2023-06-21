@@ -4,7 +4,7 @@
   "private": true,
   "description": "A JavaScript wrapper for TDLib",
   "scripts": {
-    "clean": "rimraf packages/*/dist/ && npm run clean -w tdl",
+    "clean": "rimraf --glob packages/*/dist/ && npm run clean -w tdl",
     "clean-modules": "rm -rf node_modules/ && rm -rf packages/node_modules/",
     "clean-all": "npm run clean && npm run clean-modules",
     "build": "npm run build -ws",
