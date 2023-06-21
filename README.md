@@ -403,7 +403,7 @@ For example, to install `tdlib-types` for TDLib v1.8.12, run `npm i -D tdlib-typ
 To get the list of available versions of `tdlib-types`, run `npm info tdlib-types dist-tags`.
 
 The latest supported version of TDLib in `tdlib-types` is v1.8.12
-(`tdlib-types@beta` tag, the `@latest` tag installs types for TDLib v1.8.0).
+(the `prebuilt-tdlib@stable` tag installs types for TDLib v1.8.0).
 
 The types can be imported:
 

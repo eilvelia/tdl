@@ -9,7 +9,7 @@ const readline = require('readline')
 
 const PKG_NAME = 'tdlib-types'
 const LATEST_VERSION = 'v1.8.12'
-const LATEST_BETA = 'v1.8.12'
+const LATEST_STABLE = 'v1.8.0'
 const REV = '1'
 
 /* eslint-disable comma-dangle */
@@ -121,11 +121,11 @@ async function forVersion (ver) {
   const publish = spawn('npm', ['publish', '--tag', distTag], npmOptions)
   await waitForClose(publish)
 
-  if (ver === LATEST_BETA) {
+  if (ver === LATEST_STABLE) {
     const distTagAdd =
-      spawn('npm', ['dist-tag', 'add', `${PKG_NAME}@${pkgVer}`, 'beta'])
+      spawn('npm', ['dist-tag', 'add', `${PKG_NAME}@${pkgVer}`, 'stable'])
     await waitForClose(distTagAdd)
-    console.log(`tag: beta -> ${pkgVer}`)
+    console.log(`tag: stable -> ${pkgVer}`)
   } else if (ver === LATEST_VERSION) {
     const distTagAdd =
       spawn('npm', ['dist-tag', 'add', `${PKG_NAME}@${pkgVer}`, 'latest'])
