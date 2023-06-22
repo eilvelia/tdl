@@ -2,7 +2,7 @@
 
 <!-- Hi! -->
 
-## tdl@7.3.0 (unreleased)
+## tdl@7.3.0 (2023-06-22)
 
 This update introduces some significant and long-planned changes to the
 interface, while retaining backward compatiblity.
