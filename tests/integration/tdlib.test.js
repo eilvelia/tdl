@@ -74,8 +74,11 @@ describe(testName, () => {
   })
 
   test('execute(getTextEntities) should synchronously return a textEntities object', () => {
-    const response = client.execute({ _: 'getTextEntities', text: 'hi @mybot' })
+    const response = tdl.execute({ _: 'getTextEntities', text: 'hi @mybot' })
     expect(response).toBeObject()
     expect(response).toContainEntry(['_', 'textEntities'])
+    const response2 = client.execute({ _: 'getTextEntities', text: 'hi @mybot' })
+    expect(response2).toBeObject()
+    expect(response2).toContainEntry(['_', 'textEntities'])
   })
 })

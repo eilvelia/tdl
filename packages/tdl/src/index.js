@@ -4,6 +4,8 @@ import path from 'path'
 import Debug from 'debug'
 import { Client, TdlError } from './client'
 import { loadAddon } from './addon'
+import { deepRenameKey } from './util'
+import type { Execute } from 'tdlib-types'
 
 const debug = Debug('tdl')
 
@@ -62,12 +64,15 @@ export function init (): void {
   }
 }
 
-export function execute (request: any): void {
+export const execute: Execute = function execute (request: any) {
   if (!tdjsonAddon) {
     init()
     if (!tdjsonAddon) throw Error('TDLib is uninitialized')
   }
-  tdjsonAddon.execute(null, request)
+  debug('execute', request)
+  const tdRequest = deepRenameKey('_', '@type', request)
+  const tdResponse = tdjsonAddon.execute(null, tdRequest)
+  return tdResponse && deepRenameKey('@type', '_', tdResponse)
 }
 
 export function createClient (opts: any): Client {
