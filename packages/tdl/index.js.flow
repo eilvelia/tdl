@@ -125,15 +125,16 @@ declare export class Client {
   /** @deprecated */
   getBackendName: () => string;
   /**
-   * @deprecated Use `tdl.configure` and `tdl.createClient` instead. See the
-   * `tdl@7.3.0` entry in `CHANGELOG.md` for more information. The new approach
-   * to create a client is:
+   * @deprecated Use `tdl.configure` and `tdl.createClient` instead. See the tdl
+   * 7.3 entry in `CHANGELOG.md` for additional information. The new approach to
+   * create a client is:
    * ```
    * const tdl = require('tdl')
    * tdl.configure({ tdjson: 'path to tdjson' }) // was: new TDLib('path to tdjson')
    * const client = tdl.createClient({ apiId: 12345, apiHash: 'your api hash' })
    * ```
-   * If tdjson is in the default location, then the `configure` line is optional.
+   * If tdjson is in the default location, then the `configure` line is
+   * optional.
    */
   constructor(tdlibInstance: any, options: ClientOptions): void;
   /** @deprecated Use `tdl.configure` and `tdl.createClient` instead. */

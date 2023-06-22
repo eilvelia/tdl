@@ -27,7 +27,8 @@ if (process.env.TEST_PREBUILT === '1') {
 let testName/*: string */
 let createClient/*: () => tdl.Client */
 
-if (process.env.TEST_TDL_TDLIB_ADDON === '1') {
+const testingTdlTdlibAddon = process.env.TEST_TDL_TDLIB_ADDON === '1'
+if (testingTdlTdlibAddon) {
   testName = 'tdl with tdl-tdlib-addon (backward compatibility)'
   createClient = function () {
     const { TDLib, defaultLibraryFile } = require('tdl-tdlib-addon')
@@ -73,12 +74,17 @@ describe(testName, () => {
     return expect(responseP).rejects.toStrictEqual(error)
   })
 
-  test('execute(getTextEntities) should synchronously return a textEntities object', () => {
-    const response = tdl.execute({ _: 'getTextEntities', text: 'hi @mybot' })
+  if (!testingTdlTdlibAddon) {
+    test('tdl.execute(getTextEntities) should synchronously return a textEntities object', () => {
+      const response = tdl.execute({ _: 'getTextEntities', text: 'hi @mybot' })
+      expect(response).toBeObject()
+      expect(response).toContainEntry(['_', 'textEntities'])
+    })
+  }
+
+  test('client.execute(getTextEntities) should synchronously return a textEntities object', () => {
+    const response = client.execute({ _: 'getTextEntities', text: 'hi @mybot' })
     expect(response).toBeObject()
     expect(response).toContainEntry(['_', 'textEntities'])
-    const response2 = client.execute({ _: 'getTextEntities', text: 'hi @mybot' })
-    expect(response2).toBeObject()
-    expect(response2).toContainEntry(['_', 'textEntities'])
   })
 })
