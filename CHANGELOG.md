@@ -39,6 +39,34 @@ interface, while retaining backward compatiblity.
   support is removed.
 - Deprecated `Client#getBackendName`.
 
+Old code:
+
+```javascript
+const { Client } = require('tdl')
+const { TDLib } = require('tdl-tdlib-addon')
+const client = new Client(new TDLib('path/to/libtdjson'), {
+  apiId,
+  apiHash,
+  verbosityLevel: 0,
+  // ...
+})
+```
+
+New code:
+
+```javascript
+const tdl = require('tdl')
+tdl.configure({ tdjson: 'path/to/libtdjson', verbosityLevel: 0 })
+const client = tdl.createClient({
+  apiId,
+  apiHash,
+  // ...
+})
+```
+
+If the default values of `tdjson` and `verbosityLevel` are used, then calling
+`configure` is optional.
+
 ## tdl-tdlib-addon@1.2.2 (2023-03-23)
 
 - Fixed freeing unallocated memory on app shutdown if callbacks were set.
