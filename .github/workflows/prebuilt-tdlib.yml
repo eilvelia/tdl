@@ -24,111 +24,142 @@ on:
 # NOTE: The ZLIB_USE_STATIC_LIBS option requires CMake >= 3.24
 jobs:
   build-linux-x64:
-    name: Build TDLib on Linux x86_64 (glibc)
-    runs-on: ubuntu-20.04
-    # TODO: Put in docker so it can work with older glibcs
+    name: Build TDLib (GNU/Linux x86_64)
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           repository: 'tdlib/td'
           ref: ${{ inputs.tdlib }}
-      - name: Install gperf
-        run: sudo apt-get install -y -q gperf
-      - name: CMake version
-        run: cmake --version
-      - name: Build TDLib
+      - name: Create a build script
         run: |
+          cat > prebuilt-tdlib-docker.sh <<EOF
+          set -e
+          source /hbb_shlib/activate
+          set -x
+          yum install -y gperf
+          cd /td
           mkdir -p build && cd build
-          cmake -DCMAKE_BUILD_TYPE=Release \
-            -DOPENSSL_USE_STATIC_LIBS=TRUE -DZLIB_USE_STATIC_LIBS=TRUE ..
+          cmake --version
+          # Currently, cmake in this image should be 3.22.2
+          cmake \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DOPENSSL_USE_STATIC_LIBS=TRUE \
+            -DZLIB_LIBRARY=/hbb_shlib/lib/libz.a \
+            -DZLIB_INCLUDE_DIR=/hbb_shlib/include \
+            ..
           cmake --build . --target tdjson -- -j 2
+          strip libtdjson.so
           cd ..
-      - name: Strip
-        run: strip build/libtdjson.so
-      - name: Info
+          cp -L build/libtdjson.so to-upload/libtdjson.so
+          cd to-upload
+          ldd libtdjson.so
+          touch info.txt
+          gcc --version | grep -i gcc >> info.txt
+          ldd --version | grep ldd >> info.txt
+          openssl version >> info.txt
+          sed -n 's/#define ZLIB_VERSION "\([^"]*\)"/zlib version: \1/p' /hbb_shlib/include/zlib.h >> info.txt
+          EOF
+      - name: Build in docker
         run: |
-          uname -a
-          ldd --version
-          openssl version
-          ldd build/libtdjson.so
+          mkdir to-upload
+          docker run -v $(pwd):/td ghcr.io/phusion/holy-build-box/hbb-64 \
+            bash /td/prebuilt-tdlib-docker.sh
+      - name: Info
+        working-directory: to-upload
+        run: |
+          cat info.txt
+          echo "-----"
+          du -hs libtdjson.so
+          ldd libtdjson.so
       - uses: actions/upload-artifact@v3
         with:
           name: tdlib-linux-x64
-          path: build/libtdjson.so
-  build-linux-x64-musl:
-    name: Build TDLib on Linux x86_64 (musl)
-    runs-on: ubuntu-latest
-    # Disabled for now
-    if: ${{ false }}
+          path: to-upload
+  build-macos:
+    name: Build TDLib (macOS universal)
+    runs-on: macos-12
+    env:
+      openssl_dir: /usr/local/opt/custom_openssl
+      openssl_tag: '1.1.2100' # OpenSSL 1.1.1u
+      zlib_ver: '1.2.13'
+      zlib_dir: /usr/local/opt/custom_zlib
     steps:
       - uses: actions/checkout@v3
         with:
           repository: 'tdlib/td'
           ref: ${{ inputs.tdlib }}
-      # In alpine 3.16, cmake is only 3.23
-      - run: |
-          docker build -t build -f - . <<EOF
-          FROM alpine:3.16
-          RUN apk update
-          RUN apk --no-cache add \
-            gcc g++ musl-dev make cmake binutils linux-headers git gperf \
-            openssl-dev openssl-libs-static zlib-dev zlib-static
-          ADD . /td/
-          WORKDIR /td
-          RUN mkdir -p build
-          WORKDIR /td/build
-          RUN cmake --version
-          RUN cmake \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DOPENSSL_USE_STATIC_LIBS=TRUE \
-            -DZLIB_USE_STATIC_LIBS=TRUE \
-            -DZLIB_LIBRARY=/lib/libz.a \
-            ..
-          RUN cmake --build . --target tdjson -- -j 2
-          RUN strip libtdjson.so
-          RUN ldd libtdjson.so
-          EOF
-      - run: docker create --name dummy build
-      - run: 'docker cp -L dummy:/td/build/libtdjson.so libtdjson.so'
-      - run: ldd libtdjson.so
-      - uses: actions/upload-artifact@v3
-        with:
-          name: tdlib-linux-x64-musl
-          path: libtdjson.so
-  build-macos-x64:
-    name: Build TDLib on macOS x86_64
-    runs-on: macos-latest
-    # TODO: set MACOSX_DEPLOYMENT_TARGET? as for now, minos is 12.6
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          repository: 'tdlib/td'
-          ref: ${{ inputs.tdlib }}
-      - name: Install dependencies
-        run: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install gperf openssl zlib
+      - name: Install gperf via homebrew
+        run: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install gperf
       - name: CMake version
         run: cmake --version
+      # https://github.com/up9cloud/ios-libtdjson/blob/d4426dca16933b6178acb030955de92f040b7574/build.sh
+      - name: Download pre-built OpenSSL
+        run: |
+          # around 80 mb
+          curl -SL https://github.com/krzyzanowskim/OpenSSL/archive/refs/tags/${openssl_tag}.tar.gz -o OpenSSL.tar.gz
+          tar xzf OpenSSL.tar.gz
+          # As for now, MACOSX_DEPLOYMENT_TARGET in these pre-built openssl binaries should be 10.13
+          mv OpenSSL-${openssl_tag}/macosx ${openssl_dir}
+      - name: Download and build zlib
+        run: |
+          set -x
+          curl -SL https://github.com/madler/zlib/releases/download/v${zlib_ver}/zlib-${zlib_ver}.tar.gz -o zlib.tar.gz
+          tar xzf zlib.tar.gz
+          cd zlib-${zlib_ver}
+          MACOSX_DEPLOYMENT_TARGET=10.14 CFLAGS="-O2 -mmacosx-version-min=10.14 -arch x86_64" \
+            ./configure --static --prefix=${zlib_dir}
+          MACOSX_DEPLOYMENT_TARGET=10.14 make
+          make install && rm ${zlib_dir}/lib/libz.a
+          cp libz.a libz-x86_64.a
+          make clean
+          MACOSX_DEPLOYMENT_TARGET=11.0 CFLAGS="-O2 -mmacosx-version-min=11.0 -arch arm64" \
+            ./configure --static
+          MACOSX_DEPLOYMENT_TARGET=11.0 make
+          mv libz.a libz-arm64.a
+          lipo -create libz-x86_64.a libz-arm64.a -output libz.a
+          cp libz.a ${zlib_dir}/lib/libz.a
       - name: Build TDLib
         run: |
+          mkdir to-upload
           mkdir -p build && cd build
-          cmake -DCMAKE_BUILD_TYPE=Release \
-            -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl \
-            -DZLIB_INCLUDE_DIR=/usr/local/opt/zlib/include \
-            -DZLIB_LIBRARY=/usr/local/opt/zlib/lib/libz.a \
-            -DOPENSSL_USE_STATIC_LIBS=TRUE -DZLIB_USE_STATIC_LIBS=TRUE ..
+          MACOSX_DEPLOYMENT_TARGET=10.14 cmake \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_OSX_ARCHITECTURES='x86_64;arm64' \
+            -DOPENSSL_USE_STATIC_LIBS=TRUE -DZLIB_USE_STATIC_LIBS=TRUE \
+            -DOPENSSL_FOUND=1 \
+            -DOPENSSL_CRYPTO_LIBRARY=${openssl_dir}/lib/libcrypto.a \
+            -DOPENSSL_SSL_LIBRARY=${openssl_dir}/lib/libssl.a \
+            -DOPENSSL_LIBRARIES="${openssl_dir}/lib/libcrypto.a;${openssl_dir}/lib/libssl.a" \
+            -DOPENSSL_INCLUDE_DIR=${openssl_dir}/include \
+            -DZLIB_INCLUDE_DIR=${zlib_dir}/include \
+            -DZLIB_LIBRARY=${zlib_dir}/lib/libz.a \
+            ..
           cmake --build . --target tdjson -- -j 3
           cd ..
+          cp -L build/libtdjson.dylib to-upload/libtdjson.dylib
+          install_name_tool -id @rpath/libtdjson.dylib to-upload/libtdjson.dylib
       - name: Info
+        working-directory: to-upload
         run: |
+          touch info.txt
+          grep OPENSSL_VERSION_TEXT ${openssl_dir}/include/openssl/opensslv.h | sed 's/.*"\([^"]*\)"/\1/' >> info.txt
+          echo "zlib version: ${zlib_ver}" >> info.txt
+          otool -L libtdjson.dylib >> info.txt
+          cat info.txt
+          echo "-----"
           uname -a
-          /usr/local/opt/openssl/bin/openssl version
-          otool -L build/libtdjson.dylib
+          file libtdjson.dylib
+          du -hs libtdjson.dylib
+          otool -arch x86_64 -l libtdjson.dylib
+          echo "---"
+          otool -arch arm64 -l libtdjson.dylib
       - uses: actions/upload-artifact@v3
         with:
-          name: tdlib-macos-x64
-          path: build/libtdjson.dylib
+          name: tdlib-macos
+          path: to-upload
   build-windows-x64:
-    name: Build TDLib on Windows x86_64
+    name: Build TDLib (Windows x86_64)
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v3
@@ -147,8 +178,8 @@ jobs:
       - name: CMake version
         run: cmake --version
       - name: Build TDLib
-        shell: pwsh
         run: |
+          mkdir to-upload
           mkdir build
           cd build
           cmake -A x64 `
@@ -157,35 +188,36 @@ jobs:
             -DOPENSSL_USE_STATIC_LIBS=TRUE -DZLIB_USE_STATIC_LIBS=TRUE ..
           cmake --build . --target tdjson --config Release --parallel 2
           cd ..
+          cp build\Release\tdjson.dll to-upload\tdjson.dll
+      - name: Info
         # It should be possible to print the dependencies using dumpbin.exe
+        run: |
+          vcpkg list | Select-String openssl,zlib > to-upload\info.txt
+          cat to-upload\info.txt
       - uses: actions/upload-artifact@v3
         with:
           name: tdlib-windows-x64
-          path: build\Release\tdjson.dll
+          path: to-upload
 
   test:
-    name: 'Test the ${{ matrix.os[1] }} prebuilt libraries'
-    needs: [build-linux-x64, build-macos-x64, build-windows-x64]
+    name: 'Test the ${{ matrix.os[1] }} pre-built libraries'
+    needs: [build-linux-x64, build-macos, build-windows-x64]
     runs-on: ${{ matrix.os[0] }}
     strategy:
       fail-fast: false
       matrix:
         os:
-          - [ubuntu-20.04, tdlib-linux-x64, libtdjson.so]
-          - [macos-latest, tdlib-macos-x64, libtdjson.dylib]
+          - [ubuntu-latest, tdlib-linux-x64, libtdjson.so]
+          - [macos-latest, tdlib-macos, libtdjson.dylib]
           - [windows-2019, tdlib-windows-x64, tdjson.dll]
-        node:
-          - 16
     env:
       LIBTDJSON_PATH: ${{ matrix.os[2] }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node }}
+          node-version: lts/*
           cache: npm
-      - name: Update npm
-        run: npm install -g npm@7
       - run: npm install
       - uses: actions/download-artifact@v3
         with:
@@ -203,12 +235,10 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: lts/*
           cache: npm
           # registry-url is mandatory here
           registry-url: 'https://registry.npmjs.org'
-      - name: Update npm
-        run: npm install -g npm@7
       - run: npm install
       - uses: actions/download-artifact@v3
         with:

@@ -12,5 +12,5 @@ function checkExists (pathparts) {
 }
 
 checkExists(['tdlib-linux-x64', 'libtdjson.so'])
-checkExists(['tdlib-macos-x64', 'libtdjson.dylib'])
+checkExists(['tdlib-macos', 'libtdjson.dylib'])
 checkExists(['tdlib-windows-x64', 'tdjson.dll'])
