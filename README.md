@@ -111,17 +111,17 @@ async function main () {
 main().catch(console.error)
 ```
 
-The API list of TDLib methods, which are called in `client.invoke` can be found at, e.g.:
+The API list of TDLib methods, which are called using `client.invoke`, can be found at, e.g.:
 - https://core.telegram.org/tdlib/docs/annotated.html (possibly outdated)
 - or in the [td_api.tl][] file in the TDLib repository.
 
-[td_api.tl]: https://github.com/tdlib/td/blob/v1.8.0/td/generate/scheme/td_api.tl
+[td_api.tl]: https://github.com/tdlib/td/blob/66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9/td/generate/scheme/td_api.tl
 
 In that TDLib documentation, the `bytes` type means a **base64-encoded** string.
 `int64` accepts either a number or a string, pass string for large numbers.
 Other types are self-evident. If `tdlib-types` is installed, the TDLib types are
-also annotated with the documentation (i.e. the documentation can be browsed in
-the `.d.ts` file).
+also annotated with the documentation comments (i.e. the documentation can be
+browsed in the `.d.ts` file).
 
 See also https://core.telegram.org/tdlib/getting-started for some basic
 information on how to use TDLib (tdl handles the authorization part with
