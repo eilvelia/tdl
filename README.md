@@ -392,10 +392,10 @@ While `tdl` works with any TDLib version (above the requirement), the types have
 to be installed specifically for the TDLib version you use.
 
 `tdlib-types` is installed by running `npm i -D tdlib-types@td-<TDLIB_VERSION>`.
-For example, to install `tdlib-types` for TDLib v1.8.12, run `npm i -D tdlib-types@td-1.8.12`
+For example, to install `tdlib-types` for TDLib v1.8.14, run `npm i -D tdlib-types@td-1.8.14`
 To get the list of available versions of `tdlib-types`, run `npm info tdlib-types dist-tags`.
 
-The latest supported version of TDLib in `tdlib-types` is v1.8.12
+The latest supported version of TDLib in `tdlib-types` is v1.8.14
 (the `prebuilt-tdlib@stable` tag installs types for TDLib v1.8.0).
 
 The types can be imported:

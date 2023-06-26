@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "node-gyp": "^9.4.0",
-    "tdlib-types": "^0.1001008012.0"
+    "tdlib-types": "^0.1001008014.0"
   },
   "author": "Bannerets <comonoid@protonmail.com> (https://github.com/Bannerets)",
   "license": "MIT",

@@ -1,17 +1,17 @@
-## tdlib-types
+# tdlib-types
 
 This npm package provides TypeScript and Flow types for [TDLib][].
 
 These types can be used with [tdl][].
 
-To install the types for e.g. TDLib v1.8.5, run:
+To install the types for e.g. TDLib v1.8.14, run:
 
 ```console
-$ npm install --save-dev tdlib-types@td-1.8.5
+$ npm install --save-dev tdlib-types@td-1.8.14
 ```
 
-The other available versions of `tdlib-types` are listed in the "npm tags"
-section below. You can also see the available versions by running `$ npm info tdlib-types dist-tags`.
+The available versions of `tdlib-types` can be found by running `$ npm info tdlib-types dist-tags`
+or in the "npm tags" section below.
 
 > **Note**: If you use TypeScript and get errors in `.d.ts` files, set
 > `skipLibCheck` to `true` in the `tsconfig.json` file
@@ -20,7 +20,12 @@ section below. You can also see the available versions by running `$ npm info td
 [TDLib]: https://github.com/tdlib/td
 [tdl]: https://github.com/Bannerets/tdl
 
-### Versioning conventions
+---
+
+For information about the TL -> TypeScript/Flow translator, see
+[GENERATOR.md](GENERATOR.md).
+
+## Versioning conventions
 
 > **Note**: This information is mostly for maintaining `tdlib-types`, it
 > isn't necessary for using this package. Just use the dist-tags.
@@ -67,17 +72,14 @@ If you use Flow and don't have fluture installed, add the following to `.flowcon
 <PROJECT_ROOT>/node_modules/.*
 ```
 
----
-
-For information about the TL -> TypeScript/Flow translator, see
-[GENERATOR.md](GENERATOR.md).
-
-### npm tags
+## npm tags
 
 - [![npm](https://img.shields.io/npm/v/tdlib-types/latest.svg)](https://www.npmjs.com/package/tdlib-types)
 - [![npm](https://img.shields.io/npm/v/tdlib-types/stable.svg)](https://www.npmjs.com/package/tdlib-types)
-- [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.8.12.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.8.12) (tdlib commit [70bee089d492437ce931aa78446d89af3da182fc](https://github.com/tdlib/td/commit/70bee089d492437ce931aa78446d89af3da182fc))
-- [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.8.5.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.8.5) (tdlib commit [d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9](https://github.com/tdlib/td/commit/d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9))
+<!-- Add new versions below -->
+- [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.8.14.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.8.14) tdlib [66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9](https://github.com/tdlib/td/commit/66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9)
+- [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.8.12.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.8.12) tdlib [70bee089d492437ce931aa78446d89af3da182fc](https://github.com/tdlib/td/commit/70bee089d492437ce931aa78446d89af3da182fc)
+- [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.8.5.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.8.5) tdlib [d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9](https://github.com/tdlib/td/commit/d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9)
 - [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.8.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.8.0)
 - [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.7.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.7.0)
 - [![npm](https://img.shields.io/npm/v/tdlib-types/td-1.6.0.svg)](https://www.npmjs.com/package/tdlib-types/v/td-1.6.0)
