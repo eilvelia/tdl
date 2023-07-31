@@ -81,7 +81,7 @@ client.on('update', update => {
 async function main () {
   // Log in to a Telegram account. By default, with no arguments, this function will ask
   // for phone number etc. in the console. Instead of logging in as a normal user,
-  // it's also possible to log in as a bot using `client.logInAsBot('<TOKEN>')`.
+  // it's also possible to log in as a bot using `client.loginAsBot('<TOKEN>')`.
   await client.login()
 
   // Invoke a TDLib method. The information regarding TDLib method list and
