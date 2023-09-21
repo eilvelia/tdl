@@ -40,9 +40,8 @@ Napi::External<void> td_client_create(const Napi::CallbackInfo& info) {
 
 void td_client_send(const Napi::CallbackInfo& info) {
   void *client = info[0].As<Napi::External<void>>().Data();
-  std::string request_str = info[1].As<Napi::String>().Utf8Value();
-  const char *request = request_str.c_str();
-  td_json_client_send(client, request);
+  std::string request = info[1].As<Napi::String>().Utf8Value();
+  td_json_client_send(client, request.c_str());
 }
 
 // TODO: Use a dedicated thread per client instead of libuv's threadpool
@@ -82,7 +81,6 @@ private:
 };
 
 void td_client_receive(const Napi::CallbackInfo& info) {
-  // Napi::Env env = info.Env();
   void *client = info[0].As<Napi::External<void>>().Data();
   double timeout = info[1].As<Napi::Number>().DoubleValue();
   Napi::Function cb = info[2].As<Napi::Function>();
@@ -92,9 +90,8 @@ void td_client_receive(const Napi::CallbackInfo& info) {
 Napi::Value td_client_execute(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   void *client = info[0].IsNull() ? NULL : info[0].As<Napi::External<void>>().Data();
-  std::string request_str = info[1].As<Napi::String>().Utf8Value();
-  const char *request = request_str.c_str();
-  const char *response = td_json_client_execute(client, request);
+  std::string request = info[1].As<Napi::String>().Utf8Value();
+  const char *response = td_json_client_execute(client, request.c_str());
   if (response == NULL) return env.Null();
   return Napi::String::New(env, response);
 }
@@ -127,24 +124,27 @@ void td_set_fatal_error_callback(const Napi::CallbackInfo& info) {
 #define FINDFUNC(F) \
   F = (F##_t) dlsym(handle, #F); \
   if ((dlsym_err_cstr = dlerror()) != NULL) { \
-    std::string dlsym_err(dlsym_err_cstr == NULL ? "" : dlsym_err_cstr); \
-    std::string js_dlsym_err = "Failed to load '" #F "': " + dlsym_err; \
-    Napi::Error::New(env, js_dlsym_err).ThrowAsJavaScriptException(); \
+    std::string dlsym_err(dlsym_err_cstr); \
+    Napi::Error::New(env, "Failed to get " #F ": " + dlsym_err) \
+      .ThrowAsJavaScriptException(); \
+    return; \
+  } \
+  if (F == NULL) { \
+    Napi::Error::New(env, "Failed to get " #F " (null)") \
+      .ThrowAsJavaScriptException(); \
     return; \
   }
 
 void load_tdjson(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  std::string library_file_str = info[0].As<Napi::String>().Utf8Value();
-  const char *library_file = library_file_str.c_str();
+  std::string library_file = info[0].As<Napi::String>().Utf8Value();
   dlerror(); // Clear errors
-  void *handle = DLOPEN(library_file)
+  void *handle = DLOPEN(library_file.c_str())
+  char *dlopen_err_cstr = dlerror();
   if (handle == NULL) {
-    char *dlerror_message = dlerror();
-    std::string err_message(dlerror_message == NULL ? "NULL" : dlerror_message);
-    std::string js_err_message = "Dynamic Loading Error: " + err_message;
-    auto err = Napi::Error::New(env, js_err_message);
-    err.ThrowAsJavaScriptException();
+    std::string dlopen_err(dlopen_err_cstr == NULL ? "NULL" : dlopen_err_cstr);
+    Napi::Error::New(env, "Dynamic Loading Error: " + dlopen_err)
+      .ThrowAsJavaScriptException();
     return;
   }
   char *dlsym_err_cstr;
