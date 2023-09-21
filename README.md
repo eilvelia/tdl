@@ -140,7 +140,7 @@ function should be called before `tdl.createClient` or `tdl.execute`.
 tdl.configure({
   // Path to the library. By default, it is 'tdjson.dll' on Windows,
   // 'libtdjson.dylib' on macOS, or 'libtdjson.so' otherwise.
-  tdjson: '...',
+  tdjson: 'libtdjson.so',
   // Path to the library directory. By default, it is empty string.
   libdir: '...',
   // Verbosity level of TDLib. By default, it is 2.
@@ -246,12 +246,12 @@ await client.login(() => ({
 
 The `getName` function is called if the user is not signed up.
 
-It is possible (and advisable for larger apps) not to use the `client.login`
-helper and implement the authorization process manually, handling
-`authorizationStateWaitPhoneNumber` and other updates. This function supports
-only a subset of authentication methods available on Telegram.
+`client.login` supports only a subset of authentication methods available on
+Telegram. It is possible (and advisable for larger apps) not to use the
+`client.login` helper and implement the authorization process manually, handling
+`authorizationStateWaitPhoneNumber` and other updates.
 
-`client.login` accepts the following interface:
+This function accepts the following interface:
 
 ```typescript
 type LoginDetails = {

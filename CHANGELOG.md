@@ -2,6 +2,11 @@
 
 <!-- Hi! -->
 
+## tdl@7.3.2 (2023-09-21)
+
+- Fixed `Symbol not found: node_register_module_v…` errors on some platforms.
+- Fixed passing falsy values to `tdl.configure`.
+
 ## prebuilt-tdlib@td-1.8.14 (2023-06-26)
 
 Changes were made to the building process of `prebuilt-tdlib`:
