@@ -137,6 +137,7 @@ void load_tdjson(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   std::string library_file_str = info[0].As<Napi::String>().Utf8Value();
   const char *library_file = library_file_str.c_str();
+  dlerror(); // Clear errors
   void *handle = DLOPEN(library_file)
   if (handle == NULL) {
     char *dlerror_message = dlerror();
