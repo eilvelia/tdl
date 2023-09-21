@@ -45,9 +45,9 @@ const cfg: StrictTDLibConfiguration = {
 export function configure (opts: TDLibConfiguration = {}): void {
   if (tdjsonAddon)
     throw Error('TDLib is already initialized; too late to configure')
-  if (opts.tdjson) cfg.tdjson = opts.tdjson
-  if (opts.libdir) cfg.libdir = opts.libdir
-  if (opts.verbosityLevel) cfg.verbosityLevel = opts.verbosityLevel
+  if (opts.tdjson != null) cfg.tdjson = opts.tdjson
+  if (opts.libdir != null) cfg.libdir = opts.libdir
+  if (opts.verbosityLevel != null) cfg.verbosityLevel = opts.verbosityLevel
 }
 
 export function init (): void {
