@@ -2,7 +2,7 @@ name: CI
 on: [push, pull_request]
 jobs:
   build-and-test:
-    name: 'Build and test: Node v${{ matrix.node }} on ${{ matrix.os }}'
+    name: 'Test (Node v${{ matrix.node }} on ${{ matrix.os }})'
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -23,7 +23,6 @@ jobs:
           - node: 20
             os: ubuntu-latest
     steps:
-      # TODO: would be better to add integration tests via prebuilt-tdlib here too
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
@@ -33,47 +32,27 @@ jobs:
         run: npm install -g npm@8
       - run: npm install # also runs the `prepare` npm script, which runs `build`
       - run: npm test
-  integration-tests:
-    name: 'Integration tests: TDLib ${{ matrix.tdlib.ver }}'
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - ubuntu-20.04
-        tdlib:
-          - { ver: v1.8.14, ref: 66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9 }
-          - { ver: v1.8.12, ref: 70bee089d492437ce931aa78446d89af3da182fc }
-          - { ver: v1.8.0, ref: v1.8.0 }
-          - { ver: v1.7.0, ref: v1.7.0 }
-          - { ver: v1.5.0, ref: v1.6.0 }
-        node:
-          - 18
-    env:
-      LIBTDJSON_PATH: tdlib/build/libtdjson.so
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node }}
-          cache: npm
-      - name: Update npm
-        run: npm install -g npm@8
-      - run: npm install
-      - name: TDLib build cache
-        id: tdlib-cache
-        uses: actions/cache@v2
-        with:
-          path: tdlib/build/*.so*
-          key: ${{ matrix.os }}-tdlib-${{ matrix.tdlib.ref }}
-      - name: Build TDLib
-        if: steps.tdlib-cache.outputs.cache-hit != 'true'
+      - name: Run integration tests
+        shell: pwsh
         run: |
-          sudo apt-get install -y -q gperf
-          git clone https://github.com/tdlib/td.git tdlib
-          cd tdlib
-          git checkout ${{ matrix.tdlib.ref }}
-          mkdir -p build && cd build
-          cmake -DCMAKE_BUILD_TYPE=Debug ..
-          cmake --build . --target tdjson -- -j 2
-      - run: npm run integration-tests
+          $ErrorActionPreference = "Stop"
+          $tds = @(
+            "td-1.8.14",
+            "td-1.8.12",
+            "td-1.8.0",
+            "td-1.7.0",
+            "td-1.5.0"
+          )
+          foreach ($td in $tds) {
+            mkdir $td
+            npm pack prebuilt-tdlib@$td --pack-destination=$td
+            Get-ChildItem -Path $td -Filter *.tgz | ForEach-Object {
+              tar xzvf $_.FullName --directory=$td
+            }
+            rm $td/package/package.json
+            $env:USE_PREBUILT="$td/package/index.js"
+            npm run integration-tests
+            if ($LastExitCode -ne 0) {
+              exit $LastExitCode
+            }
+          }
