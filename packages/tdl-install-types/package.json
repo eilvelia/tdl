@@ -1,0 +1,40 @@
+{
+  "name": "tdl-install-types",
+  "version": "0.0.3",
+  "description": "Generate TypeScript (and Flow) types for TDLib",
+  "main": "src/index.js",
+  "scripts": {
+    "build": ""
+  },
+  "files": [
+    "src",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "typings",
+    "types",
+    "tdlib",
+    "tdl",
+    "typescript",
+    "flow"
+  ],
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "ti-el": "^0.9.1"
+  },
+  "bin": {
+    "tdl-install-types": "bin/tdl-install-types"
+  },
+  "author": "Bannerets <comonoid@protonmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bannerets/tdl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Bannerets/tdl/issues"
+  },
+  "homepage": "https://github.com/Bannerets/tdl/tree/master/packages/tdl-install-types"
+}

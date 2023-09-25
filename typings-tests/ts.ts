@@ -1,9 +1,8 @@
 // @flow
 
 import * as tdl from '../packages/tdl'
-import * as Td from '../packages/tdlib-types'
 import { getTdjson } from '../packages/prebuilt-tdlib'
-import * as Future from 'fluture'
+import type * as Td from 'tdlib-types'
 
 const { TdlError } = tdl
 
@@ -143,20 +142,6 @@ main().catch(console.error)
 // Td.formattedText <: Td.formattedText$Input
 declare var fmt: Td.formattedText
 const fmtInp: Td.formattedText$Input = fmt
-
-// subtyping should also work correctly with 'may be null' fields
-declare var authCode: Td.authenticationCodeInfo
-const authCodeInp: Td.authenticationCodeInfo$Input = authCode
-
-const invokeFuture = Future.encaseP(client.invoke) as Td.InvokeFuture
-
-invokeFuture({
-  _: 'searchPublicChat',
-  username: 'username'
-})
-  .map((e: Td.Chat) => e.title)
-  .mapRej((e: Td.error) => e)
-  .fork(console.error, (e: string) => console.log(e))
 
 const oldclient = new tdl.Client({}, { apiId: 2, apiHash: 'hash' })
 oldclient.invoke({ _: 'getMe' })

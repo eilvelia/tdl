@@ -9,10 +9,8 @@
 [options]
 module.use_strict=true
 include_warnings=true
-module.name_mapper='^fluture$' -> '<PROJECT_ROOT>/flow/fluture'
 
 [strict]
 
 [declarations]
-<PROJECT_ROOT>/packages/tdlib-types/node_modules/tldoc/.*
 <PROJECT_ROOT>/node_modules/.*

@@ -8,8 +8,6 @@ import * as prompt from './prompt'
 import { Version } from './version'
 
 import type {
-  TDFunction,
-  // TDObject,
   Update as Td$Update,
   updateAuthorizationState as Td$updateAuthorizationState,
   // updateOption as Td$updateOption,
@@ -487,7 +485,7 @@ export class Client {
     return tdResponse && deepRenameKey('@type', '_', tdResponse)
   }
 
-  _send (request: TDFunction): void {
+  _send (request: { +_: string, +[k: any]: any }): void {
     debugReq('send', request)
     const tdRequest = deepRenameKey('_', '@type', request)
     if (this._client === null)
@@ -495,8 +493,7 @@ export class Client {
     this._tdlib.send(this._client, tdRequest)
   }
 
-  _sendTdl (request: TDFunction): void {
-    // $FlowIgnore[prop-missing]
+  _sendTdl (request: { +_: string, +[k: any]: any }): void {
     this._send({ ...request, '@extra': TDL_MAGIC })
   }
 
@@ -656,7 +653,7 @@ export class Client {
           })
           return this._finishInit()
         }
-        // $FlowIgnore[prop-missing]
+        // $Flow__Ignore[prop-missing]
         return this._sendTdl({
           _: 'setTdlibParameters',
           'parameters': {
@@ -673,7 +670,7 @@ export class Client {
       // This update can be received in TDLib <= v1.8.5 only
       // $FlowIgnore[incompatible-type]
       case 'authorizationStateWaitEncryptionKey':
-        // $FlowIgnore[incompatible-call]
+        // $Flow__Ignore[incompatible-call]
         this._sendTdl({
           _: 'checkDatabaseEncryptionKey',
           encryption_key: this._options.databaseEncryptionKey

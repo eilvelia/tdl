@@ -19,7 +19,7 @@ TDLib version 1.5.0 or newer is required.
 <a name="requirements"></a>
 ## Requirements
 
-- Node.js v12.0.0 or newer
+- Node.js v12.0.0 or newer (>= v16 recommended)
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
 - In some cases, a C++ compiler and Python installed to build the node addon[^1]
 
@@ -31,8 +31,8 @@ TDLib version 1.5.0 or newer is required.
 1. Build TDLib (https://github.com/tdlib/td#building) or install pre-built
    libraries
 2. Run `npm install tdl`
-3. (optional) If you use TypeScript or Flow, types for TDLib can be installed
-   via the `tdlib-types` package, see the [Types](#types) section below
+3. (optional) If you use TypeScript, types for TDLib are installed separately,
+   see the [Types](#types) section
 
 To use `tdl`, you need to get TDLib first. The tdjson shared library should be
 present in the system search paths (otherwise the path to libtdjson can be
@@ -43,7 +43,9 @@ specified manually).
 > default is `/usr/local`) after TDLib has been built successfully. This command
 > may require `sudo`.
 
-Instead of building TDLib from source, you can possibly install pre-built TDLib libraries distributed through the `prebuilt-tdlib` npm package. To install `prebuilt-tdlib` for e.g. TDLib v1.8.14, run `npm install prebuilt-tdlib@td-1.8.14` (the available versions of `prebuilt-tdlib` can be found by running `npm info prebuilt-tdlib dist-tags`). An example of using libraries from `prebuilt-tdlib` is present in the section below. See the README of [prebuilt-tdlib][] for additional information (the supported systems are listed there).
+### prebuilt-tdlib
+
+Instead of building TDLib from source, you can possibly install pre-built TDLib libraries distributed through the `prebuilt-tdlib` npm package. To install `prebuilt-tdlib` for e.g. TDLib v1.8.14, run `npm install prebuilt-tdlib@td-1.8.14` (the available versions of `prebuilt-tdlib` can be found by running `npm info prebuilt-tdlib dist-tags`). An example of using libraries from `prebuilt-tdlib` is present in the section below. The supported systems are x86_64 GNU/Linux, x86_64 & arm64 macOS, and x86_64 Windows. See the README of [prebuilt-tdlib][] for additional information.
 
 [prebuilt-tdlib]: packages/prebuilt-tdlib/README.md
 
@@ -110,11 +112,12 @@ The API list of TDLib methods, which are called using `client.invoke`, can be fo
 
 [td_api.tl]: https://github.com/tdlib/td/blob/66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9/td/generate/scheme/td_api.tl
 
-In that TDLib documentation, the `bytes` type means a **base64-encoded** string.
+In the TDLib documentation, the `bytes` type means a **base64-encoded** string.
 `int64` accepts either a number or a string, pass string for large numbers.
-Other types are self-evident. If `tdlib-types` is installed, the TDLib types are
-also annotated with the documentation comments (i.e. the documentation can be
-browsed in the `.d.ts` file).
+`int32`, `int53`, and `double` are the number JS type. If TypeScript types are
+installed, note that the types are annotated with jsdoc comments, and the
+documentation can be browsed directly in the `.d.ts` file or in the
+autocompletion menu.
 
 See also https://core.telegram.org/tdlib/getting-started for some basic
 information on how to use TDLib (tdl handles the authorization part with
@@ -176,10 +179,10 @@ The interface of the options that can be passed here:
 type ClientOptions = {
   apiId: number, // Can be obtained at https://my.telegram.org
   apiHash: string, // Can be obtained at https://my.telegram.org
-  databaseDirectory: string, // Relative path (default is '_td_database')
-  filesDirectory: string, // Relative path (default is '_td_files')
+  databaseDirectory: string, // Relative path (defaults to '_td_database')
+  filesDirectory: string, // Relative path (defaults to '_td_files')
   databaseEncryptionKey: string, // Optional key for database encryption
-  useTestDc: boolean, // Use test telegram server (default is false)
+  useTestDc: boolean, // Use test telegram server (defaults to false)
   tdlibParameters: Object, // Raw TDLib parameters
   // Advanced options:
   skipOldUpdates: boolean,
@@ -298,13 +301,11 @@ client.on('error', console.error)
 Ideally, you should always have a listener on `client.on('error')`.
 There is no default listener, all errors will be ignored otherwise.
 
-You can consider using reactive libraries like RxJS or [most][] for convenient event processing.
+You can consider using reactive libraries like RxJS or most.js for convenient event processing.
 
 Some other rarely-used events also exist and are described in the TypeScript interface.
 
 `client.addListener` is an alias for `client.on`.
-
-[most]: https://github.com/cujojs/most
 
 #### `client.once(event: string, callback: Function) => Client`
 
@@ -385,43 +386,34 @@ For the full API, see the [index.d.ts](packages/tdl/index.d.ts) file.
 <a name="types"></a>
 ## Types
 
-`tdl` fully supports [TypeScript][] and [Flow][]. However, to get the types for
-TDLib, `tdlib-types` should be additionally installed.
+While `tdl` works with any TDLib version (above the requirement), the TypeScript
+types have to be installed specifically for the TDLib version you use. This can
+be done via a small `tdl-install-types` utility, which downloads and generates
+types for you. It can be called using `npx tdl-install-types` without
+manually installing.
 
-While `tdl` works with any TDLib version (above the requirement), the types have
-to be installed specifically for the TDLib version you use.
+```console
+$ npx tdl-install-types [<options>] [<target>]
+```
 
-`tdlib-types` is installed by running `npm i -D tdlib-types@td-<TDLIB_VERSION>`.
-For example, to install `tdlib-types` for TDLib v1.8.14, run `npm i -D tdlib-types@td-1.8.14`
-To get the list of available versions of `tdlib-types`, run `npm info tdlib-types dist-tags`.
+It can generate types given a tdjson library (e.g. `npx tdl-install-types ./libtdjson.so`), a TDLib git ref (examples: `npx tdl-install-types v1.8.0`, `npx tdl-install-types master`, `npx tdl-install-types 2de39ffffe71dc41c538e66085658d21cecbae08`), or a td_api.tl file (`npx tdl-install-types td_api.tl`). When called without arguments, it will try to use `require('prebuilt-tdlib').getTdjson()` as the target. By default, the types are generated into a `tdlib-types.d.ts` file that you can git-commit.
 
-The latest supported version of TDLib in `tdlib-types` is v1.8.14
-(the `prebuilt-tdlib@stable` tag installs types for TDLib v1.8.0).
+See `npx tdl-install-types@latest --help` for additional information.
 
-The types can be imported:
+The types can be imported by using the `tdlib-types` module name:
 
 ```typescript
-import type { message as Td$message, user /* ... */ } from 'tdlib-types'
-// Or import all the types at once:
 import type * as Td from 'tdlib-types'
 // And use as: Td.message, Td.user, ...
 ```
 
-It is considerably more convenient to use `tdl` in TypeScript, which enables
+It is considerably more convenient to use `tdl` with TypeScript, which enables
 full autocompletion for the TDLib methods and objects along with the
 documentation.
 
-For more information, see the [tdlib-types][]' README.
-
-The process to manually install types beyond supported versions of `tdlib-types`
-currently isn't fleshed out. You can clone the `tdl` repository, run the
-`tdlib-types` generator, and put the generated typings in a `.d.ts` file within
-`declare module 'tdlib-types' { ... }`. In the future, `tdl` could possibly
-provide a cli utility to automatically download and install the types.
-
-[tdlib-types]: packages/tdlib-types/README.md
-[TypeScript]: https://www.typescriptlang.org/
-[Flow]: https://flow.org/
+Note that when using `npx`, the version of `tdl-install-types` might be outdated
+if you are not appending the `@latest` tag. You can also install the utility
+globally or per-project as a dev dependency.
 
 <a name="creating-multiple-clients"></a>
 ## Creating multiple clients
