@@ -427,11 +427,11 @@ declare module 'tdlib-types' {
      * Remote file identifier; may be empty. Can be used by the current user across
      * application restarts or even from other devices. Uniquely identifies a file,
      * but a file can have a lot of different valid identifiers. If the ID starts with
-     * \\"http://\\" or \\"https://\\", it represents the HTTP URL of the file. TDLib is currently
+     * "http://" or "https://", it represents the HTTP URL of the file. TDLib is currently
      * unable to download files if only their URL is known. If downloadFile is called
      * on such a file or if it is sent to a secret chat, TDLib starts a file generation
      * process by sending updateFileGenerationStart to the application with the HTTP
-     * URL in the original_path and \\"#url#\\" as the conversion string. Application must
+     * URL in the original_path and "#url#" as the conversion string. Application must
      * generate the file by downloading it to the specified location
      */
     id: string,
@@ -802,7 +802,7 @@ declare module 'tdlib-types' {
     height: number,
     /** Original name of the file; as defined by the sender */
     file_name: string,
-    /** MIME type of the file, usually \\"image/gif\\" or \\"video/mp4\\" */
+    /** MIME type of the file, usually "image/gif" or "video/mp4" */
     mime_type: string,
     /**
      * True, if stickers were added to the animation. The list of corresponding sticker
@@ -1048,8 +1048,8 @@ declare module 'tdlib-types' {
     /** Venue address; as defined by the sender */
     address: string,
     /**
-     * Provider of the venue database; as defined by the sender. Currently, only \\"foursquare\\"
-     * and \\"gplaces\\" (Google Places) need to be supported
+     * Provider of the venue database; as defined by the sender. Currently, only "foursquare"
+     * and "gplaces" (Google Places) need to be supported
      */
     provider: string,
     /** Identifier of the venue in the provider database; as defined by the sender */
@@ -1068,8 +1068,8 @@ declare module 'tdlib-types' {
     /** Venue address; as defined by the sender */
     +address?: string,
     /**
-     * Provider of the venue database; as defined by the sender. Currently, only \\"foursquare\\"
-     * and \\"gplaces\\" (Google Places) need to be supported
+     * Provider of the venue database; as defined by the sender. Currently, only "foursquare"
+     * and "gplaces" (Google Places) need to be supported
      */
     +provider?: string,
     /** Identifier of the venue in the provider database; as defined by the sender */
@@ -2600,7 +2600,7 @@ declare module 'tdlib-types' {
   declare export type messageCalendar = {|
     /**
      * Contains information about found messages, split by days according to the option
-     * \\"utc_time_offset\\"
+     * "utc_time_offset"
      */
     _: 'messageCalendar',
     /** Total number of found messages */
@@ -2883,9 +2883,9 @@ declare module 'tdlib-types' {
     title: string,
     /**
      * The chosen icon name for short filter representation. If non-empty, must be
-     * one of \\"All\\", \\"Unread\\", \\"Unmuted\\", \\"Bots\\", \\"Channels\\", \\"Groups\\", \\"Private\\",
-     * \\"Custom\\", \\"Setup\\", \\"Cat\\", \\"Crown\\", \\"Favorite\\", \\"Flower\\", \\"Game\\", \\"Home\\", \\"Love\\",
-     * \\"Mask\\", \\"Party\\", \\"Sport\\", \\"Study\\", \\"Trade\\", \\"Travel\\", \\"Work\\". If empty, use
+     * one of "All", "Unread", "Unmuted", "Bots", "Channels", "Groups", "Private",
+     * "Custom", "Setup", "Cat", "Crown", "Favorite", "Flower", "Game", "Home", "Love",
+     * "Mask", "Party", "Sport", "Study", "Trade", "Travel", "Work". If empty, use
      * getChatFilterDefaultIconName to get default icon name for the filter
      */
     icon_name: string,
@@ -2920,9 +2920,9 @@ declare module 'tdlib-types' {
     +title?: string,
     /**
      * The chosen icon name for short filter representation. If non-empty, must be
-     * one of \\"All\\", \\"Unread\\", \\"Unmuted\\", \\"Bots\\", \\"Channels\\", \\"Groups\\", \\"Private\\",
-     * \\"Custom\\", \\"Setup\\", \\"Cat\\", \\"Crown\\", \\"Favorite\\", \\"Flower\\", \\"Game\\", \\"Home\\", \\"Love\\",
-     * \\"Mask\\", \\"Party\\", \\"Sport\\", \\"Study\\", \\"Trade\\", \\"Travel\\", \\"Work\\". If empty, use
+     * one of "All", "Unread", "Unmuted", "Bots", "Channels", "Groups", "Private",
+     * "Custom", "Setup", "Cat", "Crown", "Favorite", "Flower", "Game", "Home", "Love",
+     * "Mask", "Party", "Sport", "Study", "Trade", "Travel", "Work". If empty, use
      * getChatFilterDefaultIconName to get default icon name for the filter
      */
     +icon_name?: string,
@@ -2958,10 +2958,10 @@ declare module 'tdlib-types' {
     /** The title of the filter; 1-12 characters without line feeds */
     title: string,
     /**
-     * The chosen or default icon name for short filter representation. One of \\"All\\",
-     * \\"Unread\\", \\"Unmuted\\", \\"Bots\\", \\"Channels\\", \\"Groups\\", \\"Private\\", \\"Custom\\", \\"Setup\\",
-     * \\"Cat\\", \\"Crown\\", \\"Favorite\\", \\"Flower\\", \\"Game\\", \\"Home\\", \\"Love\\", \\"Mask\\", \\"Party\\",
-     * \\"Sport\\", \\"Study\\", \\"Trade\\", \\"Travel\\", \\"Work\\"
+     * The chosen or default icon name for short filter representation. One of "All",
+     * "Unread", "Unmuted", "Bots", "Channels", "Groups", "Private", "Custom", "Setup",
+     * "Cat", "Crown", "Favorite", "Flower", "Game", "Home", "Love", "Mask", "Party",
+     * "Sport", "Study", "Trade", "Travel", "Work"
      */
     icon_name: string,
   |}
@@ -4377,7 +4377,7 @@ declare module 'tdlib-types' {
   |}
 
   declare export type labeledPricePart = {|
-    /** Portion of the price of a product (e.g., \\"delivery cost\\", \\"tax amount\\") */
+    /** Portion of the price of a product (e.g., "delivery cost", "tax amount") */
     _: 'labeledPricePart',
     /** Label for this portion of the product price */
     label: string,
@@ -4386,7 +4386,7 @@ declare module 'tdlib-types' {
   |}
 
   declare export type labeledPricePart$Input = {|
-    /** Portion of the price of a product (e.g., \\"delivery cost\\", \\"tax amount\\") */
+    /** Portion of the price of a product (e.g., "delivery cost", "tax amount") */
     +_: 'labeledPricePart',
     /** Label for this portion of the product price */
     +label?: string,
@@ -4832,7 +4832,7 @@ declare module 'tdlib-types' {
     native_last_name: string,
     /** Birthdate of the user */
     birthdate: date,
-    /** Gender of the user, \\"male\\" or \\"female\\" */
+    /** Gender of the user, "male" or "female" */
     gender: string,
     /** A two-letter ISO 3166-1 alpha-2 country code of the user's country */
     country_code: string,
@@ -4857,7 +4857,7 @@ declare module 'tdlib-types' {
     +native_last_name?: string,
     /** Birthdate of the user */
     +birthdate?: date$Input,
-    /** Gender of the user, \\"male\\" or \\"female\\" */
+    /** Gender of the user, "male" or "female" */
     +gender?: string,
     /** A two-letter ISO 3166-1 alpha-2 country code of the user's country */
     +country_code?: string,
@@ -5886,38 +5886,38 @@ declare module 'tdlib-types' {
   |}
 
   declare export type textEntityTypeHashtag = {|
-    /** A hashtag text, beginning with \\"#\\" */
+    /** A hashtag text, beginning with "#" */
     _: 'textEntityTypeHashtag',
   |}
 
   declare export type textEntityTypeHashtag$Input = {|
-    /** A hashtag text, beginning with \\"#\\" */
+    /** A hashtag text, beginning with "#" */
     +_: 'textEntityTypeHashtag',
   |}
 
   declare export type textEntityTypeCashtag = {|
     /**
-     * A cashtag text, beginning with \\"$\\" and consisting of capital English letters
-     * (e.g., \\"$USD\\")
+     * A cashtag text, beginning with "$" and consisting of capital English letters
+     * (e.g., "$USD")
      */
     _: 'textEntityTypeCashtag',
   |}
 
   declare export type textEntityTypeCashtag$Input = {|
     /**
-     * A cashtag text, beginning with \\"$\\" and consisting of capital English letters
-     * (e.g., \\"$USD\\")
+     * A cashtag text, beginning with "$" and consisting of capital English letters
+     * (e.g., "$USD")
      */
     +_: 'textEntityTypeCashtag',
   |}
 
   declare export type textEntityTypeBotCommand = {|
-    /** A bot command, beginning with \\"/\\" */
+    /** A bot command, beginning with "/" */
     _: 'textEntityTypeBotCommand',
   |}
 
   declare export type textEntityTypeBotCommand$Input = {|
-    /** A bot command, beginning with \\"/\\" */
+    /** A bot command, beginning with "/" */
     +_: 'textEntityTypeBotCommand',
   |}
 
@@ -6222,7 +6222,7 @@ declare module 'tdlib-types' {
     /** A text message */
     _: 'inputMessageText',
     /**
-     * Formatted text to be sent; 1-GetOption(\\"message_text_length_max\\") characters.
+     * Formatted text to be sent; 1-GetOption("message_text_length_max") characters.
      * Only Bold, Italic, Underline, Strikethrough, Code, Pre, PreCode, TextUrl and
      * MentionName entities are allowed to be specified manually
      */
@@ -6237,7 +6237,7 @@ declare module 'tdlib-types' {
     /** A text message */
     +_: 'inputMessageText',
     /**
-     * Formatted text to be sent; 1-GetOption(\\"message_text_length_max\\") characters.
+     * Formatted text to be sent; 1-GetOption("message_text_length_max") characters.
      * Only Bold, Italic, Underline, Strikethrough, Code, Pre, PreCode, TextUrl and
      * MentionName entities are allowed to be specified manually
      */
@@ -6264,7 +6264,7 @@ declare module 'tdlib-types' {
     /** Height of the animation; may be replaced by the server */
     height: number,
     /**
-     * Animation caption; pass null to use an empty caption; 0-GetOption(\\"message_caption_length_max\\")
+     * Animation caption; pass null to use an empty caption; 0-GetOption("message_caption_length_max")
      * characters
      */
     caption: formattedText,
@@ -6286,7 +6286,7 @@ declare module 'tdlib-types' {
     /** Height of the animation; may be replaced by the server */
     +height?: number,
     /**
-     * Animation caption; pass null to use an empty caption; 0-GetOption(\\"message_caption_length_max\\")
+     * Animation caption; pass null to use an empty caption; 0-GetOption("message_caption_length_max")
      * characters
      */
     +caption?: formattedText$Input,
@@ -6306,7 +6306,7 @@ declare module 'tdlib-types' {
     /** Performer of the audio; 0-64 characters, may be replaced by the server */
     performer: string,
     /**
-     * Audio caption; pass null to use an empty caption; 0-GetOption(\\"message_caption_length_max\\")
+     * Audio caption; pass null to use an empty caption; 0-GetOption("message_caption_length_max")
      * characters
      */
     caption: formattedText,
@@ -6326,7 +6326,7 @@ declare module 'tdlib-types' {
     /** Performer of the audio; 0-64 characters, may be replaced by the server */
     +performer?: string,
     /**
-     * Audio caption; pass null to use an empty caption; 0-GetOption(\\"message_caption_length_max\\")
+     * Audio caption; pass null to use an empty caption; 0-GetOption("message_caption_length_max")
      * characters
      */
     +caption?: formattedText$Input,
@@ -6345,7 +6345,7 @@ declare module 'tdlib-types' {
      */
     disable_content_type_detection: boolean,
     /**
-     * Document caption; pass null to use an empty caption; 0-GetOption(\\"message_caption_length_max\\")
+     * Document caption; pass null to use an empty caption; 0-GetOption("message_caption_length_max")
      * characters
      */
     caption: formattedText,
@@ -6364,7 +6364,7 @@ declare module 'tdlib-types' {
      */
     +disable_content_type_detection?: boolean,
     /**
-     * Document caption; pass null to use an empty caption; 0-GetOption(\\"message_caption_length_max\\")
+     * Document caption; pass null to use an empty caption; 0-GetOption("message_caption_length_max")
      * characters
      */
     +caption?: formattedText$Input,
@@ -6387,7 +6387,7 @@ declare module 'tdlib-types' {
     /** Photo height */
     height: number,
     /**
-     * Photo caption; pass null to use an empty caption; 0-GetOption(\\"message_caption_length_max\\")
+     * Photo caption; pass null to use an empty caption; 0-GetOption("message_caption_length_max")
      * characters
      */
     caption: formattedText,
@@ -6415,7 +6415,7 @@ declare module 'tdlib-types' {
     /** Photo height */
     +height?: number,
     /**
-     * Photo caption; pass null to use an empty caption; 0-GetOption(\\"message_caption_length_max\\")
+     * Photo caption; pass null to use an empty caption; 0-GetOption("message_caption_length_max")
      * characters
      */
     +caption?: formattedText$Input,
@@ -6474,7 +6474,7 @@ declare module 'tdlib-types' {
     /** True, if the video is supposed to be streamed */
     supports_streaming: boolean,
     /**
-     * Video caption; pass null to use an empty caption; 0-GetOption(\\"message_caption_length_max\\")
+     * Video caption; pass null to use an empty caption; 0-GetOption("message_caption_length_max")
      * characters
      */
     caption: formattedText,
@@ -6503,7 +6503,7 @@ declare module 'tdlib-types' {
     /** True, if the video is supposed to be streamed */
     +supports_streaming?: boolean,
     /**
-     * Video caption; pass null to use an empty caption; 0-GetOption(\\"message_caption_length_max\\")
+     * Video caption; pass null to use an empty caption; 0-GetOption("message_caption_length_max")
      * characters
      */
     +caption?: formattedText$Input,
@@ -6550,7 +6550,7 @@ declare module 'tdlib-types' {
     /** Waveform representation of the voice note, in 5-bit format */
     waveform: string,
     /**
-     * Voice note caption; pass null to use an empty caption; 0-GetOption(\\"message_caption_length_max\\")
+     * Voice note caption; pass null to use an empty caption; 0-GetOption("message_caption_length_max")
      * characters
      */
     caption: formattedText,
@@ -6566,7 +6566,7 @@ declare module 'tdlib-types' {
     /** Waveform representation of the voice note, in 5-bit format */
     +waveform?: string,
     /**
-     * Voice note caption; pass null to use an empty caption; 0-GetOption(\\"message_caption_length_max\\")
+     * Voice note caption; pass null to use an empty caption; 0-GetOption("message_caption_length_max")
      * characters
      */
     +caption?: formattedText$Input,
@@ -7506,7 +7506,7 @@ declare module 'tdlib-types' {
   declare export type groupCallVideoSourceGroup = {|
     /** Describes a group of video synchronization source identifiers */
     _: 'groupCallVideoSourceGroup',
-    /** The semantics of sources, one of \\"SIM\\" or \\"FID\\" */
+    /** The semantics of sources, one of "SIM" or "FID" */
     semantics: string,
     /** The list of synchronization source identifiers */
     source_ids: Array<number>,
@@ -7663,7 +7663,7 @@ declare module 'tdlib-types' {
      */
     +allow_sms_retriever_api?: boolean,
     /**
-     * List of up to 20 authentication tokens, recently received in updateOption(\\"authentication_token\\")
+     * List of up to 20 authentication tokens, recently received in updateOption("authentication_token")
      * in previously logged out sessions
      */
     +authentication_tokens?: $ReadOnlyArray<string>,
@@ -7739,13 +7739,13 @@ declare module 'tdlib-types' {
     /** URL of the result thumbnail (JPEG, GIF, or MPEG4), if it exists */
     +thumbnail_url?: string,
     /**
-     * MIME type of the video thumbnail. If non-empty, must be one of \\"image/jpeg\\",
-     * \\"image/gif\\" and \\"video/mp4\\"
+     * MIME type of the video thumbnail. If non-empty, must be one of "image/jpeg",
+     * "image/gif" and "video/mp4"
      */
     +thumbnail_mime_type?: string,
     /** The URL of the video file (file size must not exceed 1MB) */
     +video_url?: string,
-    /** MIME type of the video file. Must be one of \\"image/gif\\" and \\"video/mp4\\" */
+    /** MIME type of the video file. Must be one of "image/gif" and "video/mp4" */
     +video_mime_type?: string,
     /** Duration of the video, in seconds */
     +video_duration?: number,
@@ -7860,7 +7860,7 @@ declare module 'tdlib-types' {
     /** URL of the file */
     +document_url?: string,
     /**
-     * MIME type of the file content; only \\"application/pdf\\" and \\"application/zip\\"
+     * MIME type of the file content; only "application/pdf" and "application/zip"
      * are currently allowed
      */
     +mime_type?: string,
@@ -8024,7 +8024,7 @@ declare module 'tdlib-types' {
     /** URL of the embedded video player or video file */
     +video_url?: string,
     /**
-     * MIME type of the content of the video URL, only \\"text/html\\" or \\"video/mp4\\" are
+     * MIME type of the content of the video URL, only "text/html" or "video/mp4" are
      * currently supported
      */
     +mime_type?: string,
@@ -9028,7 +9028,7 @@ declare module 'tdlib-types' {
 
   declare export type backgroundTypePattern = {|
     /**
-     * A PNG or TGV (gzipped subset of SVG with MIME type \\"application/x-tgwallpattern\\")
+     * A PNG or TGV (gzipped subset of SVG with MIME type "application/x-tgwallpattern")
      * pattern to be combined with the background fill chosen by the user
      */
     _: 'backgroundTypePattern',
@@ -9047,7 +9047,7 @@ declare module 'tdlib-types' {
 
   declare export type backgroundTypePattern$Input = {|
     /**
-     * A PNG or TGV (gzipped subset of SVG with MIME type \\"application/x-tgwallpattern\\")
+     * A PNG or TGV (gzipped subset of SVG with MIME type "application/x-tgwallpattern")
      * pattern to be combined with the background fill chosen by the user
      */
     +_: 'backgroundTypePattern',
@@ -9973,7 +9973,7 @@ declare module 'tdlib-types' {
     /**
      * A privacy setting for managing whether the user can be found by their phone
      * number. Checked only if the phone number is not known to the other user. Can
-     * be set only to \\"Allow contacts\\" or \\"Allow all\\"
+     * be set only to "Allow contacts" or "Allow all"
      */
     _: 'userPrivacySettingAllowFindingByPhoneNumber',
   |}
@@ -9982,7 +9982,7 @@ declare module 'tdlib-types' {
     /**
      * A privacy setting for managing whether the user can be found by their phone
      * number. Checked only if the phone number is not known to the other user. Can
-     * be set only to \\"Allow contacts\\" or \\"Allow all\\"
+     * be set only to "Allow contacts" or "Allow all"
      */
     +_: 'userPrivacySettingAllowFindingByPhoneNumber',
   |}
@@ -10346,9 +10346,9 @@ declare module 'tdlib-types' {
   declare export type internalLinkTypeQrCodeAuthentication = {|
     /**
      * The link can be used to login the current user on another device, but it must
-     * be scanned from QR-code using in-app camera. An alert similar to \\"This code
+     * be scanned from QR-code using in-app camera. An alert similar to "This code
      * can be used to allow someone to log in to your Telegram account. To confirm
-     * Telegram login, please go to Settings > Devices > Scan QR and scan the code\\"
+     * Telegram login, please go to Settings > Devices > Scan QR and scan the code"
      * needs to be shown
      */
     _: 'internalLinkTypeQrCodeAuthentication',
@@ -10825,7 +10825,7 @@ declare module 'tdlib-types' {
      * to an audio file
      */
     preload_next_audio: boolean,
-    /** True, if \\"use less data for calls\\" option needs to be enabled */
+    /** True, if "use less data for calls" option needs to be enabled */
     use_less_data_for_calls: boolean,
   |}
 
@@ -10849,7 +10849,7 @@ declare module 'tdlib-types' {
      * to an audio file
      */
     +preload_next_audio?: boolean,
-    /** True, if \\"use less data for calls\\" option needs to be enabled */
+    /** True, if "use less data for calls" option needs to be enabled */
     +use_less_data_for_calls?: boolean,
   |}
 
@@ -10982,7 +10982,7 @@ declare module 'tdlib-types' {
 
   declare export type suggestedActionEnableArchiveAndMuteNewChats = {|
     /**
-     * Suggests the user to enable \\"archive_and_mute_new_chats_from_unknown_users\\"
+     * Suggests the user to enable "archive_and_mute_new_chats_from_unknown_users"
      * option
      */
     _: 'suggestedActionEnableArchiveAndMuteNewChats',
@@ -10990,7 +10990,7 @@ declare module 'tdlib-types' {
 
   declare export type suggestedActionEnableArchiveAndMuteNewChats$Input = {|
     /**
-     * Suggests the user to enable \\"archive_and_mute_new_chats_from_unknown_users\\"
+     * Suggests the user to enable "archive_and_mute_new_chats_from_unknown_users"
      * option
      */
     +_: 'suggestedActionEnableArchiveAndMuteNewChats',
@@ -11118,15 +11118,15 @@ declare module 'tdlib-types' {
     /** The text uses Markdown-style formatting */
     +_: 'textParseModeMarkdown',
     /**
-     * Version of the parser: 0 or 1 - Telegram Bot API \\"Markdown\\" parse mode, 2 -
-     * Telegram Bot API \\"MarkdownV2\\" parse mode
+     * Version of the parser: 0 or 1 - Telegram Bot API "Markdown" parse mode, 2 -
+     * Telegram Bot API "MarkdownV2" parse mode
      */
     +version?: number,
   |}
 
   declare export type textParseModeHTML$Input = {|
     /**
-     * The text uses HTML-style formatting. The same as Telegram Bot API \\"HTML\\" parse
+     * The text uses HTML-style formatting. The same as Telegram Bot API "HTML" parse
      * mode
      */
     +_: 'textParseModeHTML',
@@ -11497,7 +11497,7 @@ declare module 'tdlib-types' {
     /**
      * A request to send a message has reached the Telegram server. This doesn't mean
      * that the message will be sent successfully or even that the send message request
-     * will be processed. This update will be sent only if the option \\"use_quick_ack\\"
+     * will be processed. This update will be sent only if the option "use_quick_ack"
      * is set to true. This update may be sent multiple times for the same message
      */
     _: 'updateMessageSendAcknowledged',
@@ -11587,8 +11587,8 @@ declare module 'tdlib-types' {
 
   declare export type updateMessageContentOpened = {|
     /**
-     * The message content was opened. Updates voice note messages to \\"listened\\", video
-     * note messages to \\"viewed\\" and starts the TTL timer for self-destructing messages
+     * The message content was opened. Updates voice note messages to "listened", video
+     * note messages to "viewed" and starts the TTL timer for self-destructing messages
      */
     _: 'updateMessageContentOpened',
     /** Chat identifier */
@@ -12065,8 +12065,8 @@ declare module 'tdlib-types' {
      */
     _: 'updateServiceNotification',
     /**
-     * Notification type. If type begins with \\"AUTH_KEY_DROP_\\", then two buttons \\"Cancel\\"
-     * and \\"Log out\\" must be shown under notification; if user presses the second,
+     * Notification type. If type begins with "AUTH_KEY_DROP_", then two buttons "Cancel"
+     * and "Log out" must be shown under notification; if user presses the second,
      * all local data must be destroyed using Destroy method
      */
     type: string,
@@ -12092,7 +12092,7 @@ declare module 'tdlib-types' {
     destination_path: string,
     /**
      * String specifying the conversion applied to the original file. If conversion
-     * is \\"#url#\\" than original_path contains an HTTP/HTTPS URL of a file, which must
+     * is "#url#" than original_path contains an HTTP/HTTPS URL of a file, which must
      * be downloaded by the application
      */
     conversion: string,
@@ -12285,8 +12285,8 @@ declare module 'tdlib-types' {
   declare export type updateTermsOfService = {|
     /**
      * New terms of service must be accepted by the user. If the terms of service are
-     * declined, then the deleteAccount method must be called with the reason \\"Decline
-     * ToS update\\"
+     * declined, then the deleteAccount method must be called with the reason "Decline
+     * ToS update"
      */
     _: 'updateTermsOfService',
     /** Identifier of the terms of service */
@@ -12329,7 +12329,7 @@ declare module 'tdlib-types' {
 
   declare export type updateAnimationSearchParameters = {|
     /**
-     * The parameters of animation search through GetOption(\\"animation_search_bot_username\\")
+     * The parameters of animation search through GetOption("animation_search_bot_username")
      * bot has changed
      */
     _: 'updateAnimationSearchParameters',
@@ -13696,7 +13696,7 @@ declare module 'tdlib-types' {
      * Returns information about the next messages of the specified type in the chat
      * split by days. Returns the results in reverse chronological order. Can return
      * partial result for the last returned day. Behavior of this method depends on
-     * the value of the option \\"utc_time_offset\\"
+     * the value of the option "utc_time_offset"
      */
     +_: 'getChatMessageCalendar',
     /** Identifier of the chat in which to return information about messages */
@@ -13939,8 +13939,8 @@ declare module 'tdlib-types' {
     +result_id?: string,
     /**
      * If true, there will be no mention of a bot, via which the message is sent. Can
-     * be used only for bots GetOption(\\"animation_search_bot_username\\"), GetOption(\\"photo_search_bot_username\\")
-     * and GetOption(\\"venue_search_bot_username\\")
+     * be used only for bots GetOption("animation_search_bot_username"), GetOption("photo_search_bot_username")
+     * and GetOption("venue_search_bot_username")
      */
     +hide_via_bot?: boolean,
   |}
@@ -14147,7 +14147,7 @@ declare module 'tdlib-types' {
     /** The new message reply markup; pass null if none; for bots only */
     +reply_markup?: ReplyMarkup$Input,
     /**
-     * New message content caption; 0-GetOption(\\"message_caption_length_max\\") characters;
+     * New message content caption; 0-GetOption("message_caption_length_max") characters;
      * pass null to remove caption
      */
     +caption?: formattedText$Input,
@@ -14227,7 +14227,7 @@ declare module 'tdlib-types' {
     /** The new message reply markup; pass null if none */
     +reply_markup?: ReplyMarkup$Input,
     /**
-     * New message content caption; pass null to remove caption; 0-GetOption(\\"message_caption_length_max\\")
+     * New message content caption; pass null to remove caption; 0-GetOption("message_caption_length_max")
      * characters
      */
     +caption?: formattedText$Input,
@@ -14286,8 +14286,8 @@ declare module 'tdlib-types' {
      */
     +_: 'parseMarkdown',
     /**
-     * The text to parse. For example, \\"__italic__ ~~strikethrough~~ **bold** \`code\`
-     * \`\`\`pre\`\`\` __[italic__ text_url](telegram.org) __italic**bold italic__bold**\\"
+     * The text to parse. For example, "__italic__ ~~strikethrough~~ **bold** \`code\`
+     * \`\`\`pre\`\`\` __[italic__ text_url](telegram.org) __italic**bold italic__bold**"
      */
     +text?: formattedText$Input,
   |}
@@ -15342,14 +15342,14 @@ declare module 'tdlib-types' {
   declare export type resetAllNotificationSettings = {|
     /**
      * Resets all notification settings to their default values. By default, all chats
-     * are unmuted, the sound is set to \\"default\\" and message previews are shown
+     * are unmuted, the sound is set to "default" and message previews are shown
      */
     +_: 'resetAllNotificationSettings',
   |}
 
   declare export type toggleChatIsPinned = {|
     /**
-     * Changes the pinned state of a chat. There can be up to GetOption(\\"pinned_chat_count_max\\")/GetOption(\\"pinned_archived_chat_count_max\\")
+     * Changes the pinned state of a chat. There can be up to GetOption("pinned_chat_count_max")/GetOption("pinned_archived_chat_count_max")
      * pinned non-secret chats and the same number of secret chats in the main/arhive
      * chat list
      */
@@ -15388,7 +15388,7 @@ declare module 'tdlib-types' {
     /** The starting position from which the file needs to be downloaded */
     +offset?: number,
     /**
-     * Number of bytes which need to be downloaded starting from the \\"offset\\" position
+     * Number of bytes which need to be downloaded starting from the "offset" position
      * before the download will automatically be canceled; use 0 to download without
      * a limit
      */
@@ -16629,7 +16629,7 @@ declare module 'tdlib-types' {
     /**
      * Manually adds a new animation to the list of saved animations. The new animation
      * is added to the beginning of the list. If the animation was already in the list,
-     * it is removed first. Only non-secret video animations with MIME type \\"video/mp4\\"
+     * it is removed first. Only non-secret video animations with MIME type "video/mp4"
      * can be added to the list
      */
     +_: 'addSavedAnimation',
@@ -16729,7 +16729,7 @@ declare module 'tdlib-types' {
 
   declare export type setLocation = {|
     /**
-     * Changes the location of the current user. Needs to be called if GetOption(\\"is_location_visible\\")
+     * Changes the location of the current user. Needs to be called if GetOption("is_location_visible")
      * is true and location changes for more than 1 kilometer
      */
     +_: 'setLocation',
@@ -17196,7 +17196,7 @@ declare module 'tdlib-types' {
     +_: 'addCustomServerLanguagePack',
     /**
      * Identifier of a language pack to be added; may be different from a name that
-     * is used in an \\"https://t.me/setlanguage/\\" link
+     * is used in an "https://t.me/setlanguage/" link
      */
     +language_pack_id?: string,
   |}
@@ -17271,7 +17271,7 @@ declare module 'tdlib-types' {
     +_: 'processPushNotification',
     /**
      * JSON-encoded push notification payload with all fields sent by the server, and
-     * \\"google.sent_time\\" and \\"google.notification.sound\\" fields added
+     * "google.sent_time" and "google.notification.sound" fields added
      */
     +payload?: string,
   |}
@@ -17583,7 +17583,7 @@ declare module 'tdlib-types' {
   declare export type setPassportElement = {|
     /**
      * Adds an element to the user's Telegram Passport. May return an error with a
-     * message \\"PHONE_VERIFICATION_NEEDED\\" or \\"EMAIL_VERIFICATION_NEEDED\\" if the chosen
+     * message "PHONE_VERIFICATION_NEEDED" or "EMAIL_VERIFICATION_NEEDED" if the chosen
      * phone number or the chosen email address must be verified first
      */
     +_: 'setPassportElement',
@@ -17785,7 +17785,7 @@ declare module 'tdlib-types' {
     +title?: string,
     /**
      * Sticker set name. Can contain only English letters, digits and underscores.
-     * Must end with *\\"_by_<bot username>\\"* (*<bot_username>* is case insensitive)
+     * Must end with *"_by_<bot username>"* (*<bot_username>* is case insensitive)
      * for bots; 1-64 characters
      */
     +name?: string,
@@ -17946,8 +17946,8 @@ declare module 'tdlib-types' {
 
   declare export type getDeepLinkInfo = {|
     /**
-     * Returns information about a tg:// deep link. Use \\"tg://need_update_for_some_feature\\"
-     * or \\"tg:some_unsupported_feature\\" for testing. Returns a 404 error for unknown
+     * Returns information about a tg:// deep link. Use "tg://need_update_for_some_feature"
+     * or "tg:some_unsupported_feature" for testing. Returns a 404 error for unknown
      * links. Can be called before authorization
      */
     +_: 'getDeepLinkInfo',
@@ -18084,8 +18084,8 @@ declare module 'tdlib-types' {
 
   declare export type getLogTags = {|
     /**
-     * Returns list of available TDLib internal log tags, for example, [\\"actor\\", \\"binlog\\",
-     * \\"connections\\", \\"notifications\\", \\"proxy\\"]. Can be called synchronously
+     * Returns list of available TDLib internal log tags, for example, ["actor", "binlog",
+     * "connections", "notifications", "proxy"]. Can be called synchronously
      */
     +_: 'getLogTags',
   |}
