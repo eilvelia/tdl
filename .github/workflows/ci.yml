@@ -37,8 +37,8 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
           $tds = @(
+            "td-1.8.19",
             "td-1.8.14",
-            "td-1.8.12",
             "td-1.8.0",
             "td-1.7.0",
             "td-1.5.0"

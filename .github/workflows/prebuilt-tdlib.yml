@@ -254,7 +254,6 @@ jobs:
       - name: Update version
         run: npm version ${{ inputs.npm-version }} --no-git-tag-version -w prebuilt-tdlib
       - name: Publish
-        if: "${{ inputs.npm-tag != '' }}"
         run: |
           if test -z "{{ inputs.npm-tag }}"
           then

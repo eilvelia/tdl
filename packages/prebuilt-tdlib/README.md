@@ -88,6 +88,7 @@ The releases of the `prebuilt-tdlib` npm package are not git-tagged.
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/latest.svg)](https://www.npmjs.com/package/prebuilt-tdlib)
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/stable.svg)](https://www.npmjs.com/package/prebuilt-tdlib)
 <!-- Add new versions below -->
+- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.19.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.19) tdlib [2589c3fd46925f5d57e4ec79233cd1bd0f5d0c09](https://github.com/tdlib/td/commit/2589c3fd46925f5d57e4ec79233cd1bd0f5d0c09)
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.14.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.14) tdlib [66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9](https://github.com/tdlib/td/commit/66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9)
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.12.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.12) tdlib [70bee089d492437ce931aa78446d89af3da182fc](https://github.com/tdlib/td/commit/70bee089d492437ce931aa78446d89af3da182fc)
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.7.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.7) tdlib [de5379f00b6af7686f197037ca3b494e6277e523](https://github.com/tdlib/td/commit/de5379f00b6af7686f197037ca3b494e6277e523)
