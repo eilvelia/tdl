@@ -2,6 +2,14 @@
 
 <!-- Hi! -->
 
+## tdl-install-types@0.1.0 (2023-09-26)
+
+Initial release of a new cli utility that is now recommended to use instead of
+installing the `tdlib-types` package. It can generate a `tdlib-types.d.ts` file
+when given a shared library / tdlib git ref / td_api.tl file and can be called
+via `npx`. (See the "Types" section in the README for more information.) Changes
+were also made to the generator to make the autocompletion faster.
+
 ## tdl@7.3.2 (2023-09-21)
 
 - Fixed `Symbol not found: node_register_module_v…` errors on some platforms.
