@@ -28,16 +28,35 @@ const debugReq = Debug('tdl:client:request')
 // export type TdjsonClient = { +_TdjsonClientBrand: void }
 export opaque type TdjsonClient = mixed
 
-export interface Tdjson {
-  getName?: () => string;
-  create(): TdjsonClient;
-  destroy(client: TdjsonClient): void;
-  execute(client: null | TdjsonClient, query: Object): Object | null;
-  receive(client: TdjsonClient, timeout: number): Promise<Object | null>;
-  send(client: TdjsonClient, query: Object): void;
-  // setLogFatalErrorCallback is deprecated in TDLib
-  setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): void;
-}
+export type Tdjson = {|
+  create(): TdjsonClient,
+  destroy(client: TdjsonClient): void,
+  execute(client: null | TdjsonClient, query: {...}): {...} | null,
+  receive(client: TdjsonClient, timeout: number): Promise<{...} | null>,
+  send(client: TdjsonClient, query: {...}): void,
+  /** td_set_log_fatal_error_callback is deprecated in TDLib v1.8.0 */
+  setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): void,
+  setLogMessageCallback(
+    maxVerbosityLevel: number,
+    callback: null | ((verbosityLevel: number, message: string) => void)
+  ): void
+|}
+
+export type TdjsonCompat = {|
+  // Compatibility with tdl-tdlib-addon
+  +getName?: () => void,
+  create(): TdjsonClient,
+  destroy(client: TdjsonClient): void,
+  execute(client: null | TdjsonClient, query: {...}): {...} | null,
+  receive(client: TdjsonClient, timeout: number): Promise<{...} | null>,
+  send(client: TdjsonClient, query: {...}): void,
+  /** td_set_log_fatal_error_callback is deprecated in TDLib v1.8.0 */
+  setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): void,
+  +setLogMessageCallback?: (
+    maxVerbosityLevel: number,
+    callback: null | ((verbosityLevel: number, message: string) => void)
+  ) => void
+|}
 
 export type TDLibParameters = $Rest<Td$setTdlibParameters, {| _: 'setTdlibParameters' |}>
 
@@ -118,8 +137,7 @@ type DeferredPromise<R, E> = {
   reject: (error: E) => void
 }
 
-// Flow was too slow with `TDObject`
-type PendingPromise = DeferredPromise<any/* TDObject */, Td$error>
+type PendingPromise = DeferredPromise<any, Td$error>
 
 class TdlDeferred<R, E> {
   _innerDefer: ?DeferredPromise<R, E>
@@ -219,7 +237,7 @@ const TDL_MAGIC = '6c47e6b71ea'
 // 3. Ready
 
 export class Client {
-  +_tdlib: Tdjson;
+  +_tdlib: TdjsonCompat;
   +_options: StrictClientOptions;
   +_emitter: EventEmitter = new EventEmitter();
   +_pending: Map<number, PendingPromise> = new Map();
@@ -233,7 +251,7 @@ export class Client {
   _loginDefer: TdlDeferred<void, any> = new TdlDeferred()
   _version: Version = TDLIB_DEFAULT
 
-  constructor (tdlibInstance: Tdjson, options: ClientOptions = {}) {
+  constructor (tdlibInstance: TdjsonCompat, options: ClientOptions = {}) {
     this._options = (mergeDeepRight(defaultOptions, options): StrictClientOptions)
     this._tdlib = tdlibInstance
 
@@ -258,7 +276,7 @@ export class Client {
         '@type': 'setLogVerbosityLevel',
         new_verbosity_level: this._options.verbosityLevel
       })
-    } else if (this._tdlib.getName && this._tdlib.getName() === 'addon') {
+    } else if (this._tdlib.getName?.() === 'addon') {
       debug('Executing setLogVerbosityLevel (tdl-tdlib-addon found)', this._options.verbosityLevel)
       this._tdlib.execute(null, {
         '@type': 'setLogVerbosityLevel',
@@ -282,10 +300,9 @@ export class Client {
   }
 
   /** @deprecated */
-  static create (tdlibInstance: Tdjson, options: ClientOptions = {}): Client {
+  static create (tdlibInstance: TdjsonCompat, options: ClientOptions = {}): Client {
     return new Client(tdlibInstance, options)
   }
-
 
   getVersion: () => string = () => {
     if (this._version === TDLIB_DEFAULT)
@@ -356,7 +373,6 @@ export class Client {
   }
 
   loginAsBot: (string | () => (string | Promise<string>)) => Promise<void> = token => {
-  // loginAsBot = (token: string | () => (string | Promise<string>)): Promise<void> => {
     return this.login(() => ({
       type: 'bot',
       getToken: retry => retry

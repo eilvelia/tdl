@@ -29,7 +29,7 @@ export type TDLibConfiguration = {
    * informational, value 4 corresponds to debug, value 5 corresponds to verbose
    * debug, value greater than 5 and up to 1024 can be used to enable even more
    * logging". Another possible option is `'default'`, `tdl` will then not send
-   * any verbosity to TDLib. Defaults to 2.
+   * any verbosity level to TDLib. Defaults to 2.
    */
   verbosityLevel?: number | 'default'
 }
@@ -54,9 +54,20 @@ declare export var execute: Execute;
 /**
  * Initialize the node addon explicitly. This function is entirely optional to
  * call, TDLib will be initialized automatically on the first call of
- * `createClient` or `execute`.
+ * `createClient`, `execute`, or `setLogMessageCallback`.
  */
 declare export function init(): void;
+
+/**
+ * The `td_set_log_message_callback` tdjson function, sets the callback that
+ * will be called when a message is added to the internal TDLib log. Note that
+ * setting a callback overrides the previous callback. Pass null to remove the
+ * callback. Available since TDLib v1.8.0.
+ */
+declare export var setLogMessageCallback: (
+  maxVerbosityLevel: number,
+  callback: null | ((verbosityLevel: number, message: string) => void)
+) => void;
 
 declare export class Client {
   /**
@@ -112,7 +123,7 @@ declare export class Client {
    * destroyed on `authorizationStateClosed`.
    */
   destroy: () => void;
-  /** @deprecated This is deprecated in TDLib since v1.8.0 */
+  /** @deprecated Deprecated in TDLib v1.8.0, use tdl.setLogMessageCallback instead. */
   setLogFatalErrorCallback: (fn: null | ((errorMessage: string) => void)) => void;
   /** @deprecated Unstable */
   pause: () => void;
@@ -125,9 +136,9 @@ declare export class Client {
   /** @deprecated */
   getBackendName: () => string;
   /**
-   * @deprecated Use `tdl.configure` and `tdl.createClient` instead. See the tdl
-   * 7.3 entry in `CHANGELOG.md` for additional information. The new approach to
-   * create a client is:
+   * @deprecated Use `tdl.configure` and `tdl.createClient` instead. See the
+   * tdl@7.3.1 entry in `CHANGELOG.md` for additional information. The new
+   * approach to create a client is:
    * ```
    * const tdl = require('tdl')
    * tdl.configure({ tdjson: 'path to tdjson' }) // was: new TDLib('path to tdjson')

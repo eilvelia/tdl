@@ -2,14 +2,14 @@
 
 import path from 'path'
 import Debug from 'debug'
-import { Client, TdlError } from './client'
+import { Client, TdlError, type Tdjson } from './client'
 import { loadAddon } from './addon'
 import { deepRenameKey } from './util'
 import type { Execute } from 'tdlib-types'
 
 const debug = Debug('tdl')
 
-let tdjsonAddon = null
+let tdjsonAddon: Tdjson | null = null
 
 // TODO: Should we export this?
 const defaultLibraryFile = (() => {
@@ -81,6 +81,17 @@ export function createClient (opts: any): Client {
     if (!tdjsonAddon) throw Error('TDLib is uninitialized')
   }
   return new Client(tdjsonAddon, opts)
+}
+
+export function setLogMessageCallback (
+  maxVerbosityLevel: number,
+  callback: null | (verbosityLevel: number, message: string) => void
+): void {
+  if (!tdjsonAddon) {
+    init()
+    if (!tdjsonAddon) throw Error('TDLib is uninitialized')
+  }
+  tdjsonAddon.setLogMessageCallback(maxVerbosityLevel, callback)
 }
 
 // TODO: We could possibly export an unsafe/unstable getRawTdjson() : Tdjson

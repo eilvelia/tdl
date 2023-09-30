@@ -1,4 +1,5 @@
 *.flow linguist-language=JavaScript
+*.h linguist-language=C++
 *.snap linguist-generated=true
 *.shot linguist-generated=true
 tdlib-types.d.ts linguist-vendored=true

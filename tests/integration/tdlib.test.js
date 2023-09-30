@@ -46,22 +46,47 @@ if (testingTdlTdlibAddon) {
 
 describe(testName, () => {
   const client = createClient()
+  const updates = []
 
   client.on('error', e => console.error('error', e))
-  client.on('update', u => console.log('update', u))
+  client.on('update', u => {
+    console.log('update', u)
+    updates.push(u)
+  })
+
+  function expectUpdate (pred) {
+    return new Promise(resolve => {
+      for (const u of updates)
+        if (pred(u)) return resolve()
+      const fn = u => {
+        if (pred(u)) {
+          client.off('update', fn)
+          resolve()
+        }
+      }
+      client.on('update', fn)
+    })
+  }
+
+  function versionGte (minMajor, minMinor) {
+    let [major, minor] = client.getVersion().split('.')
+    major = Number(major)
+    minor = Number(minor)
+    if (major < minMajor) return false
+    if (major > minMajor) return true
+    return minor >= minMinor
+  }
+
+  beforeAll(() => {
+    return expectUpdate(u => u._ === 'updateOption' && u.name === 'version')
+  }, 2000)
 
   afterAll(() => client.close())
 
-  test('authorizationStateWaitTdlibParameters has been received', () => new Promise(resolve => {
-    const fn = u => {
-      if (u._ !== 'updateAuthorizationState') return
-      if (u.authorization_state._ === 'authorizationStateWaitTdlibParameters') {
-        client.off('update', fn)
-        resolve()
-      }
-    }
-    client.on('update', fn)
-  }))
+  test('authorizationStateWaitTdlibParameters has been received', () => {
+    return expectUpdate(u => u._ === 'updateAuthorizationState'
+      && u?.authorization_state._ === 'authorizationStateWaitTdlibParameters')
+  }, 2000)
 
   test('invoke(testCallString) should respond with the same value', async () => {
     const response = await client.invoke({ _: 'testCallString', x: 'hi' })
@@ -80,6 +105,33 @@ describe(testName, () => {
       expect(response).toBeObject()
       expect(response).toContainEntry(['_', 'textEntities'])
     })
+
+    test('tdl.setLogMessageCallback should set the callback in TDLib v1.8.0+', done => {
+      if (!versionGte(1, 8)) {
+        expect(() => tdl.setLogMessageCallback(5, () => {})).toThrow()
+        return done()
+      }
+      let receivedSpecial = 0
+      tdl.setLogMessageCallback(5, (verbosityLevel, message) => {
+        try {
+          // console.log(verbosityLevel, 'Received message:', message)
+          expect(verbosityLevel).toBeNumber()
+          expect(message).toBeString()
+          if (message.includes('TDL-SPECIAL')) receivedSpecial++
+          if (receivedSpecial >= 3) {
+            tdl.setLogMessageCallback(5, null)
+            // The process should exit with the callback attached
+            tdl.setLogMessageCallback(1, () => {})
+            done()
+          }
+        } catch (err) {
+          done(err)
+        }
+      })
+      tdl.execute({ _: 'addLogMessage', verbosity_level: 1, text: 'TDL-SPECIAL 1' })
+      tdl.execute({ _: 'addLogMessage', verbosity_level: 1, text: 'TDL-SPECIAL 2' })
+      tdl.execute({ _: 'addLogMessage', verbosity_level: 1, text: 'TDL-SPECIAL 3' })
+    }, 2000)
   }
 
   test('client.execute(getTextEntities) should synchronously return a textEntities object', () => {

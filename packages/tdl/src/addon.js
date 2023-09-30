@@ -45,8 +45,16 @@ function destroy (client: TdjsonClient): void {
   addon.td_client_destroy(client)
 }
 
+// Deprecated in TDLib v1.8.0.
 function setLogFatalErrorCallback (fn: null | (errorMessage: string) => void): void {
   addon.td_set_fatal_error_callback(fn)
+}
+
+function setLogMessageCallback (
+  maxVerbosityLevel: number,
+  callback: null | (verbosityLevel: number, message: string) => void
+): void {
+  addon.td_set_message_callback(maxVerbosityLevel, callback)
 }
 
 export function loadAddon (libraryFile: string): Tdjson {
@@ -55,5 +63,13 @@ export function loadAddon (libraryFile: string): Tdjson {
   debug('Loading the node addon')
   addon = nodeGypBuild(path.join(__dirname, '..'))
   addon.load_tdjson(libraryFile)
-  return { create, send, receive, execute, destroy, setLogFatalErrorCallback }
+  return {
+    create,
+    send,
+    receive,
+    execute,
+    destroy,
+    setLogFatalErrorCallback,
+    setLogMessageCallback
+  }
 }
