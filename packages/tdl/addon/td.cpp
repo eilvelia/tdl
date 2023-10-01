@@ -38,6 +38,11 @@ td_json_client_destroy_t td_json_client_destroy;
 td_set_log_fatal_error_callback_t td_set_log_fatal_error_callback;
 td_set_log_message_callback_t td_set_log_message_callback;
 
+#define FAIL(MSG) NAPI_THROW(Napi::Error::New(env, MSG));
+#define TYPEFAIL(MSG) NAPI_THROW(Napi::TypeError::New(env, MSG));
+#define FAIL_VALUE(MSG) NAPI_THROW(Napi::Error::New(env, MSG), Napi::Value());
+#define TYPEFAIL_VALUE(MSG) NAPI_THROW(Napi::TypeError::New(env, MSG), Napi::Value());
+
 Napi::External<void> TdClientCreate(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   void *client = td_json_client_create();
@@ -45,8 +50,13 @@ Napi::External<void> TdClientCreate(const Napi::CallbackInfo& info) {
 }
 
 void TdClientSend(const Napi::CallbackInfo& info) {
+  Napi::Env env = info.Env();
   void *client = info[0].As<Napi::External<void>>().Data();
-  std::string request = info[1].As<Napi::String>().Utf8Value();
+  auto request_obj = info[1].As<Napi::Object>();
+  auto json = env.Global().Get("JSON").As<Napi::Object>();
+  auto stringify = json.Get("stringify").As<Napi::Function>();
+  std::string request =
+    stringify.Call(json, { request_obj }).As<Napi::String>().Utf8Value();
   td_json_client_send(client, request.c_str());
 }
 
@@ -72,8 +82,14 @@ protected:
 
   void OnOK() override {
     Napi::Env env = Env();
-    auto val = response.empty() ? env.Null() : Napi::String::New(env, response);
-    deferred.Resolve(val);
+    if (response.empty()) {
+      deferred.Resolve(env.Null());
+    } else {
+      auto json = env.Global().Get("JSON").As<Napi::Object>();
+      auto parse = json.Get("parse").As<Napi::Function>();
+      Napi::Value obj = parse.Call(json, { Napi::String::New(env, response) });
+      deferred.Resolve(obj);
+    }
   }
 
   void OnError(const Napi::Error& err) override {
@@ -98,20 +114,26 @@ Napi::Value TdClientReceive(const Napi::CallbackInfo& info) {
 
 Napi::Value TdClientExecute(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  void *client = info[0].IsNull() ? NULL : info[0].As<Napi::External<void>>().Data();
-  std::string request = info[1].As<Napi::String>().Utf8Value();
+  void *client = info[0].IsNull() || info[0].IsUndefined()
+    ? nullptr
+    : info[0].As<Napi::External<void>>().Data();
+  auto json = env.Global().Get("JSON").As<Napi::Object>();
+  auto stringify = json.Get("stringify").As<Napi::Function>();
+  if (!info[1].IsObject())
+    TYPEFAIL_VALUE("Expected second argument to be an object");
+  Napi::Object request_obj = info[1].As<Napi::Object>();
+  std::string request =
+    stringify.Call(json, { request_obj }).As<Napi::String>().Utf8Value();
   const char *response = td_json_client_execute(client, request.c_str());
-  if (response == NULL) return env.Null();
-  return Napi::String::New(env, response);
+  if (response == nullptr) return env.Null();
+  auto parse = json.Get("parse").As<Napi::Function>();
+  return parse.Call(json, { Napi::String::New(env, response) });
 }
 
 void TdClientDestroy(const Napi::CallbackInfo& info) {
   void *client = info[0].As<Napi::External<void>>().Data();
   td_json_client_destroy(client);
 }
-
-#define FAIL(MSG) NAPI_THROW(Napi::Error::New(env, MSG));
-#define TYPEFAIL(MSG) NAPI_THROW(Napi::TypeError::New(env, MSG));
 
 namespace MessageCallback {
   using Context = std::nullptr_t;
@@ -154,7 +176,7 @@ namespace MessageCallback {
 void TdSetLogMessageCallback(const Napi::CallbackInfo& info) {
   using namespace MessageCallback;
   Napi::Env env = info.Env();
-  if (td_set_log_message_callback == NULL)
+  if (td_set_log_message_callback == nullptr)
     FAIL("td_set_log_message_callback is not available")
   if (info.Length() < 2)
     TYPEFAIL("Expected two arguments")
@@ -162,7 +184,7 @@ void TdSetLogMessageCallback(const Napi::CallbackInfo& info) {
     TYPEFAIL("Expected first argument to be a number")
   int max_verbosity_level = info[0].As<Napi::Number>().Int32Value();
   if (info[1].IsNull() || info[1].IsUndefined()) {
-    td_set_log_message_callback(max_verbosity_level, NULL);
+    td_set_log_message_callback(max_verbosity_level, nullptr);
     std::lock_guard<std::mutex> lock(tsfn_mutex);
     if (tsfn != nullptr) {
       tsfn.Release();
@@ -201,7 +223,7 @@ extern "C" void c_fatal_callback (const char *error_message) {
 void TdSetLogFatalErrorCallback(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   if (info[0].IsNull() || info[0].IsUndefined()) {
-    td_set_log_fatal_error_callback(NULL);
+    td_set_log_fatal_error_callback(nullptr);
     if (fatal_callback_tsfn != nullptr) {
       fatal_callback_tsfn.Release();
       fatal_callback_tsfn = nullptr;
@@ -220,12 +242,12 @@ void TdSetLogFatalErrorCallback(const Napi::CallbackInfo& info) {
 
 #define FINDFUNC(F) \
   F = (F##_t) dlsym(handle, #F); \
-  if ((dlsym_err_cstr = dlerror()) != NULL) { \
+  if ((dlsym_err_cstr = dlerror()) != nullptr) { \
     std::string dlsym_err(dlsym_err_cstr); \
-    NAPI_THROW(Napi::Error::New(env, "Failed to get " #F ": " + dlsym_err)); \
+    FAIL("Failed to get " #F ": " + dlsym_err); \
   } \
-  if (F == NULL) { \
-    NAPI_THROW(Napi::Error::New(env, "Failed to get " #F " (null)")); \
+  if (F == nullptr) { \
+    FAIL("Failed to get " #F " (null)"); \
   }
 
 #define FINDFUNC_OPT(F) \
@@ -238,9 +260,9 @@ void LoadTdjson(const Napi::CallbackInfo& info) {
   dlerror(); // Clear errors
   void *handle = DLOPEN(library_file.c_str())
   char *dlopen_err_cstr = dlerror();
-  if (handle == NULL) {
-    std::string dlopen_err(dlopen_err_cstr == NULL ? "NULL" : dlopen_err_cstr);
-    NAPI_THROW(Napi::Error::New(env, "Dynamic Loading Error: " + dlopen_err));
+  if (handle == nullptr) {
+    std::string dlopen_err(dlopen_err_cstr == nullptr ? "NULL" : dlopen_err_cstr);
+    FAIL("Dynamic Loading Error: " + dlopen_err);
   }
   char *dlsym_err_cstr;
   FINDFUNC(td_json_client_create);
