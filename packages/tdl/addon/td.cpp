@@ -56,41 +56,44 @@ class ReceiverAsyncWorker : public Napi::AsyncWorker
 {
 public:
   ReceiverAsyncWorker(
-    const Napi::Function& callback,
+    const Napi::Env& env,
     void *client,
     double timeout
-  ) : Napi::AsyncWorker(callback), client(client), timeout(timeout)
-  {}
+  ) : Napi::AsyncWorker(env), deferred(env), client(client), timeout(timeout) {}
+
+  Napi::Promise GetPromise() { return deferred.Promise(); }
 
 protected:
   void Execute() override {
     const char *tdres = td_json_client_receive(client, timeout);
     // It's also important to copy the string
-    res = tdres == NULL ? std::string() : std::string(tdres);
+    response = tdres == nullptr ? std::string() : std::string(tdres);
   }
 
   void OnOK() override {
     Napi::Env env = Env();
-    auto val = res.empty() ? env.Null() : Napi::String::New(env, res);
-    Callback().MakeCallback(Receiver().Value(), { env.Null(), val });
+    auto val = response.empty() ? env.Null() : Napi::String::New(env, response);
+    deferred.Resolve(val);
   }
 
-  void OnError(const Napi::Error& e) override {
-    Napi::Env env = Env();
-    Callback().MakeCallback(Receiver().Value(), { e.Value(), env.Undefined() });
+  void OnError(const Napi::Error& err) override {
+    deferred.Reject(err.Value());
   }
 
 private:
+  Napi::Promise::Deferred deferred;
   void *client;
   double timeout;
-  std::string res;
+  std::string response;
 };
 
-void TdClientReceive(const Napi::CallbackInfo& info) {
+Napi::Value TdClientReceive(const Napi::CallbackInfo& info) {
+  Napi::Env env = info.Env();
   void *client = info[0].As<Napi::External<void>>().Data();
   double timeout = info[1].As<Napi::Number>().DoubleValue();
-  Napi::Function cb = info[2].As<Napi::Function>();
-  (new ReceiverAsyncWorker(cb, client, timeout))->Queue();
+  auto *worker = new ReceiverAsyncWorker(env, client, timeout);
+  worker->Queue();
+  return worker->GetPromise();
 }
 
 Napi::Value TdClientExecute(const Napi::CallbackInfo& info) {

@@ -17,13 +17,8 @@ export function loadAddon (libraryFile: string): Tdjson {
     addon.send(client, JSON.stringify(query))
   }
   function receive (client: TdjsonClient, timeout: number): Promise<{...} | null> {
-    return new Promise((resolve, reject) => {
-      addon.receive(client, timeout, (err, res) => {
-        if (err) return reject(err)
-        if (!res) return resolve(null)
-        resolve(JSON.parse(res))
-      })
-    })
+    return addon.receive(client, timeout)
+      .then(res => JSON.parse(res))
   }
   function execute (client: null | TdjsonClient, query: {...}): {...} | null {
     const res = addon.execute(client, JSON.stringify(query))
