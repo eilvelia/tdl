@@ -1,6 +1,8 @@
 #define NAPI_VERSION 5
 #define NODE_API_NO_EXTERNAL_BUFFERS_ALLOWED 1
+
 #include <napi.h>
+#include <thread>
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
 #  include "win32-dlfcn.h"
@@ -116,14 +118,16 @@ namespace MessageCallback {
   };
 
   void CallJs(Napi::Env env, Napi::Function callback, Context *context, DataType *data) {
-    if (env == nullptr || callback == nullptr || data == nullptr) return;
-    // NOTE: Without --force-node-api-uncaught-exceptions-policy=true, this will
-    // print a warning and won't rethrow an exception from inside the callback
-    // https://github.com/nodejs/node-addon-api/pull/1345
-    callback.Call({
-      Napi::Number::New(env, data->verbosity_level),
-      Napi::String::New(env, data->message)
-    });
+    if (data == nullptr) return;
+    if (env != nullptr && callback != nullptr) {
+      // NOTE: Without --force-node-api-uncaught-exceptions-policy=true, this will
+      // print a warning and won't rethrow an exception from inside the callback
+      // https://github.com/nodejs/node-addon-api/pull/1345
+      callback.Call({
+        Napi::Number::New(env, data->verbosity_level),
+        Napi::String::New(env, data->message)
+      });
+    }
     delete data;
   }
 
@@ -137,6 +141,10 @@ namespace MessageCallback {
     if (tsfn == nullptr) return;
     auto *data = new DataType { verbosity_level, std::string(message) };
     tsfn.NonBlockingCall(data);
+    if (verbosity_level == 0) {
+      // See below.
+      std::this_thread::sleep_for(std::chrono::seconds(5));
+    }
   }
 }
 
@@ -180,7 +188,11 @@ extern "C" void c_fatal_callback (const char *error_message) {
   auto callback = [=](Napi::Env env, Napi::Function js_callback) {
     js_callback.Call({ Napi::String::New(env, message_str) });
   };
-  fatal_callback_tsfn.BlockingCall(callback);
+  fatal_callback_tsfn.NonBlockingCall(callback);
+  // Hack for the aforementioned issue. Note that there is still no guarantee
+  // that the callback will be executed. For example, td_execute(addLogMessage)
+  // with verbosity_level=0 runs this function on the main thread.
+  std::this_thread::sleep_for(std::chrono::seconds(5));
 }
 
 void td_set_fatal_error_callback(const Napi::CallbackInfo& info) {
