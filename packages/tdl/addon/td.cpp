@@ -38,13 +38,13 @@ td_json_client_destroy_t td_json_client_destroy;
 td_set_log_fatal_error_callback_t td_set_log_fatal_error_callback;
 td_set_log_message_callback_t td_set_log_message_callback;
 
-Napi::External<void> td_client_create(const Napi::CallbackInfo& info) {
+Napi::External<void> TdClientCreate(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   void *client = td_json_client_create();
   return Napi::External<void>::New(env, client);
 }
 
-void td_client_send(const Napi::CallbackInfo& info) {
+void TdClientSend(const Napi::CallbackInfo& info) {
   void *client = info[0].As<Napi::External<void>>().Data();
   std::string request = info[1].As<Napi::String>().Utf8Value();
   td_json_client_send(client, request.c_str());
@@ -86,14 +86,14 @@ private:
   std::string res;
 };
 
-void td_client_receive(const Napi::CallbackInfo& info) {
+void TdClientReceive(const Napi::CallbackInfo& info) {
   void *client = info[0].As<Napi::External<void>>().Data();
   double timeout = info[1].As<Napi::Number>().DoubleValue();
   Napi::Function cb = info[2].As<Napi::Function>();
   (new ReceiverAsyncWorker(cb, client, timeout))->Queue();
 }
 
-Napi::Value td_client_execute(const Napi::CallbackInfo& info) {
+Napi::Value TdClientExecute(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   void *client = info[0].IsNull() ? NULL : info[0].As<Napi::External<void>>().Data();
   std::string request = info[1].As<Napi::String>().Utf8Value();
@@ -102,7 +102,7 @@ Napi::Value td_client_execute(const Napi::CallbackInfo& info) {
   return Napi::String::New(env, response);
 }
 
-void td_client_destroy(const Napi::CallbackInfo& info) {
+void TdClientDestroy(const Napi::CallbackInfo& info) {
   void *client = info[0].As<Napi::External<void>>().Data();
   td_json_client_destroy(client);
 }
@@ -148,7 +148,7 @@ namespace MessageCallback {
   }
 }
 
-void td_set_message_callback(const Napi::CallbackInfo& info) {
+void TdSetLogMessageCallback(const Napi::CallbackInfo& info) {
   using namespace MessageCallback;
   Napi::Env env = info.Env();
   if (td_set_log_message_callback == NULL)
@@ -195,7 +195,7 @@ extern "C" void c_fatal_callback (const char *error_message) {
   std::this_thread::sleep_for(std::chrono::seconds(5));
 }
 
-void td_set_fatal_error_callback(const Napi::CallbackInfo& info) {
+void TdSetLogFatalErrorCallback(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   if (info[0].IsNull() || info[0].IsUndefined()) {
     td_set_log_fatal_error_callback(NULL);
@@ -229,7 +229,7 @@ void td_set_fatal_error_callback(const Napi::CallbackInfo& info) {
   F = (F##_t) dlsym(handle, #F); \
   dlerror();
 
-void load_tdjson(const Napi::CallbackInfo& info) {
+void LoadTdjson(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
   std::string library_file = info[0].As<Napi::String>().Utf8Value();
   dlerror(); // Clear errors
@@ -250,22 +250,16 @@ void load_tdjson(const Napi::CallbackInfo& info) {
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
-  exports.Set(
-    "td_client_create", Napi::Function::New(env, td_client_create));
-  exports.Set(
-    "td_client_send", Napi::Function::New(env, td_client_send));
-  exports.Set(
-    "td_client_receive", Napi::Function::New(env, td_client_receive));
-  exports.Set(
-    "td_client_execute", Napi::Function::New(env, td_client_execute));
-  exports.Set(
-    "td_client_destroy", Napi::Function::New(env, td_client_destroy));
-  exports.Set(
-    "td_set_fatal_error_callback", Napi::Function::New(env, td_set_fatal_error_callback));
-  exports.Set(
-    "td_set_message_callback", Napi::Function::New(env, td_set_message_callback));
-  exports.Set(
-    "load_tdjson", Napi::Function::New(env, load_tdjson));
+  exports["create"] = Napi::Function::New(env, TdClientCreate, "create");
+  exports["send"] = Napi::Function::New(env, TdClientSend, "send");
+  exports["receive"] = Napi::Function::New(env, TdClientReceive, "receive");
+  exports["execute"] = Napi::Function::New(env, TdClientExecute, "execute");
+  exports["destroy"] = Napi::Function::New(env, TdClientDestroy, "destroy");
+  exports["setLogFatalErrorCallback"] =
+    Napi::Function::New(env, TdSetLogFatalErrorCallback, "setLogFatalErrorCallback");
+  exports["setLogMessageCallback"] =
+    Napi::Function::New(env, TdSetLogMessageCallback, "setLogMessageCallback");
+  exports["loadTdjson"] = Napi::Function::New(env, LoadTdjson, "loadTdjson");
   return exports;
 }
 

@@ -7,7 +7,6 @@
 The following namespaces are defined:
 
 - `tdl`
-- `tdl:addon`
 - `tdl:client`
 - `tdl:client:request`
 - `tdl:client:receive`
