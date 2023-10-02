@@ -22,55 +22,43 @@ export function mergeDeepRight (obj1, obj2) {
   return obj2
 }
 
-function deepRenameValue (
-  oldKey: string,
-  newKey: string,
-  v: mixed
-): any {
-  if (Array.isArray(v))
-    return v.map(x => deepRenameValue(oldKey, newKey, x))
-  if (typeof v === 'object' && v !== null)
-    return deepRenameKey(oldKey, newKey, v)
-  return v
-}
-
-/** Immutable. Functions in the object are not supported */
+/** Renames `oldKey` to `newKey` deeply. The objects should not contain functions. */
 export function deepRenameKey (
   oldKey: string,
   newKey: string,
-  obj: { +[key: string]: mixed }
+  v: any
 ): any {
-  const newObj = {}
-  for (const [k, v] of Object.entries(obj))
-    newObj[k === oldKey ? newKey : k] = deepRenameValue(oldKey, newKey, v)
-  return newObj
-}
-
-/** Mutable (changes the `obj` object) */
-export function deepRenameKey_ (
-  oldKey: string,
-  newKey: string,
-  obj: { [key: string]: mixed }
-): any {
-  const stack: Array<{ [key: string]: mixed } | Array<mixed>> = []
-
-  stack.push(obj)
-
-  while (stack.length !== 0) {
-    const obj = stack.pop()
-    if (oldKey in obj && !Array.isArray(obj)) {
-      obj[newKey] = obj[oldKey]
-      // TODO: delete here may actually make it slower than the immutable version
-      delete obj[oldKey]
-    }
-    // For better performance, we should not use Object.values
-    for (const v of Object.values(obj)) {
-      if (typeof v === 'object' && v !== null)
-        // `v` is read-only here, but we want to mutate it
-        // $FlowIgnore[incompatible-call]
-        stack.push(v)
-    }
+  if (Array.isArray(v))
+    return v.map(x => deepRenameKey(oldKey, newKey, x))
+  if (typeof v === 'object' && v !== null) {
+    const newObj = {}
+    for (const k in v)
+      newObj[k === oldKey ? newKey : k] = deepRenameKey(oldKey, newKey, v[k])
+    return newObj
   }
-
-  return obj
+  return v
 }
+
+// export function deepRenameKeyNonrec (
+//   oldKey: string,
+//   newKey: string,
+//   initObj: { +[key: string]: any }
+// ): any {
+//   const newInitObj = {}
+//   const stack/*: any[] */ = []
+//   stack.push([initObj, newInitObj])
+//   let el
+//   while ((el = stack.pop()) !== undefined) {
+//     const [obj, newObj] = el
+//     for (const k in obj) {
+//       let v = obj[k]
+//       if (typeof v === 'object' && v !== null) {
+//         const newV = Array.isArray(v) ? new Array(v.length) : {}
+//         stack.push([v, newV])
+//         v = newV
+//       }
+//       newObj[k === oldKey ? newKey : k] = v
+//     }
+//   }
+//   return newInitObj
+// }

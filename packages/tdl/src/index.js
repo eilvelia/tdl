@@ -72,7 +72,8 @@ export const execute: Execute = function execute (request: any) {
   debug('execute', request)
   const tdRequest = deepRenameKey('_', '@type', request)
   const tdResponse = tdjsonAddon.execute(null, tdRequest)
-  return tdResponse && deepRenameKey('@type', '_', tdResponse)
+  if (tdResponse == null) return null
+  return deepRenameKey('@type', '_', tdResponse)
 }
 
 export function createClient (opts: any): Client {

@@ -3,7 +3,7 @@
 import { resolve as resolvePath } from 'path'
 import EventEmitter from 'eventemitter3'
 import Debug from 'debug'
-import { deepRenameKey, deepRenameKey_, mergeDeepRight } from './util'
+import { deepRenameKey, mergeDeepRight } from './util'
 import * as prompt from './prompt'
 import { Version } from './version'
 
@@ -498,7 +498,8 @@ export class Client {
     const tdRequest = deepRenameKey('_', '@type', request)
     // the client can be null, it's fine
     const tdResponse = this._tdlib.execute(this._client, tdRequest)
-    return tdResponse && deepRenameKey('@type', '_', tdResponse)
+    if (tdResponse == null) return null
+    return deepRenameKey('@type', '_', tdResponse)
   }
 
   _send (request: { +_: string, +[k: any]: any }): void {
@@ -516,10 +517,8 @@ export class Client {
   async _receive (timeout: number = this._options.receiveTimeout): Promise<any/*TDObject*/ | null> {
     if (this._client === null) return null
     const tdResponse = await this._tdlib.receive(this._client, timeout)
-    // Note: Immutable rename is used to preserve key order (for better logs)
-    return tdResponse && (this._options.useMutableRename
-      ? deepRenameKey_('@type', '_', tdResponse)
-      : deepRenameKey('@type', '_', tdResponse))
+    if (tdResponse == null) return null
+    return deepRenameKey('@type', '_', tdResponse)
   }
 
   async _loop (): Promise<void> {

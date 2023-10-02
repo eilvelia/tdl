@@ -7,6 +7,7 @@
 - Added `tdl.setLogMessageCallback` that allows to pass a callback to the
   `td_set_log_message_callback` TDLib function using Node-API's thread-safe
   functions. (TDLib v1.8.0+ only)
+- Deprecated the `useMutableRename` advanced option.
 
 ## tdl-install-types@0.1.0 (2023-09-26)
 

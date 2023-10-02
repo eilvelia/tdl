@@ -202,18 +202,15 @@ export type ClientOptions = {
    * Defaults to `10.0` seconds.
    */
   receiveTimeout?: number,
-  /**
-   * Advanced option. This will result in slightly worse logs with the `_` field
-   * at the end of the object. Not recommended to use this option.
-   */
-  useMutableRename?: boolean,
 
   /** @deprecated Set the verbosity level in `tdl.configure` instead. */
   verbosityLevel?: number | 'default',
   /** @deprecated Use `verbosityLevel: 'default'` instead. */
   useDefaultVerbosityLevel?: boolean,
   /** @deprecated Use the `bare` option instead. */
-  disableAuth?: boolean
+  disableAuth?: boolean,
+  /** @deprecated Does nothing. */
+  useMutableRename?: boolean
 }
 
 export type LoginUser = {|
@@ -298,9 +295,9 @@ export type StrictClientOptions = {
   skipOldUpdates: boolean,
   bare: boolean,
   receiveTimeout: number,
-  useMutableRename: boolean,
   useDefaultVerbosityLevel: boolean,
-  disableAuth: boolean
+  disableAuth: boolean,
+  useMutableRename: boolean
 }
 /** @deprecated Use ClientOptions */
 export type ConfigType = ClientOptions
