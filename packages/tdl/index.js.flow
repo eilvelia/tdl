@@ -31,7 +31,16 @@ export type TDLibConfiguration = {
    * logging". Another possible option is `'default'`, `tdl` will then not send
    * any verbosity level to TDLib. Defaults to 2.
    */
-  verbosityLevel?: number | 'default'
+  verbosityLevel?: number | 'default',
+  /**
+   * Experimental option. Use the new tdjson interface (`td_create_client_id`
+   * and other functions). */
+  useNewTdjsonInterface?: boolean,
+  /**
+   * Advanced option. Configures the delay for the `receive` tdjson function.
+   * Defaults to `10.0` seconds.
+   */
+  receiveTimeout?: number
 }
 
 /**
@@ -197,12 +206,9 @@ export type ClientOptions = {
    * `filesDirectory` will do nothing.
    */
   bare?: boolean,
-  /**
-   * Advanced option. Configures the delay for the `receive` tdjson function.
-   * Defaults to `10.0` seconds.
-   */
-  receiveTimeout?: number,
 
+  /** @deprecated Set `receiveTimeout` in `tdl.configure` instead. */
+  receiveTimeout?: number,
   /** @deprecated Set the verbosity level in `tdl.configure` instead. */
   verbosityLevel?: number | 'default',
   /** @deprecated Use `verbosityLevel: 'default'` instead. */

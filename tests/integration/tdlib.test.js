@@ -28,12 +28,26 @@ let testName/*: string */
 let createClient/*: () => tdl.Client */
 
 const testingTdlTdlibAddon = process.env.TEST_TDL_TDLIB_ADDON === '1'
+const testingNewTdjson = process.env.TEST_NEW_TDJSON === '1'
 if (testingTdlTdlibAddon) {
   testName = 'tdl with tdl-tdlib-addon (backward compatibility)'
   createClient = function () {
     const { TDLib, defaultLibraryFile } = require('tdl-tdlib-addon')
     if (libdir) tdjson = path.join(projectRoot, defaultLibraryFile)
     return new tdl.Client(new TDLib(tdjson), { bare: true })
+  }
+} else if (testingNewTdjson) {
+  const ver = tdjson && tdjson.match(/td-1\.(\d)\.0/)
+  if (ver && ver[1] && Number(ver[1]) < 7) {
+    console.log('TEST_NEW_TDJSON is disabled for TDLib < 1.7.0.')
+    process.exit(0)
+  }
+  testName = 'tdl with useNewTdjsonInterface'
+  createClient = function () {
+    if (libdir) tdl.configure({ libdir })
+    else tdl.configure({ tdjson })
+    tdl.configure({ useNewTdjsonInterface: true })
+    return tdl.createClient({ bare: true })
   }
 } else {
   testName = 'tdl'
@@ -50,7 +64,7 @@ describe(testName, () => {
 
   client.on('error', e => console.error('error', e))
   client.on('update', u => {
-    console.log('update', u)
+    // console.log('update', u)
     updates.push(u)
   })
 

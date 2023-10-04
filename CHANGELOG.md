@@ -2,11 +2,20 @@
 
 <!-- Hi! -->
 
-## tdl (unreleased)
+## tdl@7.4.0 (unreleased)
 
 - Added `tdl.setLogMessageCallback` that allows to pass a callback to the
   `td_set_log_message_callback` TDLib function using Node-API's thread-safe
   functions. (TDLib v1.8.0+ only)
+- `tdl.configure`: Added an experimental option `useNewTdjsonInterface` that
+  enables the use of `td_create_client_id`/`td_send`/`td_receive`/`td_execute`
+  interface with a client manager and global receive loop, though the old
+  interface still works well.
+  This does not use the libuv threadpool and does not have a limitation of max
+  `UV_THREADPOOL_SIZE` clients.
+  (TDLib v1.7.0+ only)
+- `tdl.configure`: Added a `receiveTimeout` advanced option.
+- `receiveTimeout` in the client options is deprecated.
 - Deprecated the `useMutableRename` advanced option.
 
 ## tdl-install-types@0.1.0 (2023-09-26)

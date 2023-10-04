@@ -11,7 +11,7 @@
     "lint": "eslint . --max-warnings 0",
     "jest-tests": "jest --testPathIgnorePatterns tests/integration",
     "test": "npm run flow:check && npm run ts:check && npm run lint && npm run jest-tests",
-    "integration-tests": "jest tests/integration && cross-env TEST_TDL_TDLIB_ADDON=1 jest tests/integration",
+    "integration-tests": "jest tests/integration && cross-env TEST_TDL_TDLIB_ADDON=1 jest tests/integration && cross-env TEST_NEW_TDJSON=1 jest tests/integration",
     "test:all": "npm run test && npm run integration-tests",
     "coverage": "jest --coverage",
     "prepare": "npm run clean && npm run build",

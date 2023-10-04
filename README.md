@@ -23,7 +23,7 @@ TDLib version 1.5.0 or newer is required.
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
 - In some cases, a C++ compiler and Python installed to build the node addon[^1]
 
-[^1]: `tdl` is packaged with pre-built addons for Windows (x86_64), GNU/Linux (x86_64, glibc >= 2.17), and macOS (x86_64, aarch64). If a pre-built binary is not available for your system, then the node addon will be built using node-gyp, requiring Python and a C++ toolchain to be installed (on Windows, MSVS or Build Tools). Pass `--build-from-source` to never use the pre-built binaries. Note that macOS aarch64 binaries aren't tested.
+[^1]: `tdl` is packaged with pre-built addons for Windows (x86_64), GNU/Linux (x86_64, glibc >= 2.17), and macOS (x86_64, aarch64). If a pre-built binary is not available for your system, then the node addon will be built using node-gyp, requiring Python and a C++ toolchain (C++14 is required) to be installed (on Windows, MSVS or Build Tools). Pass `--build-from-source` to never use the pre-built binaries. Note that macOS aarch64 binaries aren't tested.
 
 <a name="installation"></a>
 ## Installation
@@ -57,7 +57,7 @@ const tdl = require('tdl')
 
 // If libtdjson is not present in the system search paths, the path to the
 // libtdjson shared library can be set manually, e.g.:
-//   tdl.configure({ tdjson: '/usr/local/lib/libtdjson.dylib'})
+//   tdl.configure({ tdjson: '/usr/local/lib/libtdjson.dylib' })
 // The library prefix can be set separate from the library name,
 // example to search for libtdjson in the directory of the current script:
 //   tdl.configure({ libdir: __dirname })
@@ -145,9 +145,11 @@ tdl.configure({
   // 'libtdjson.dylib' on macOS, or 'libtdjson.so' otherwise.
   tdjson: 'libtdjson.so',
   // Path to the library directory. By default, it is empty string.
-  libdir: '...',
+  libdir: '/usr/local/lib',
   // Verbosity level of TDLib. By default, it is 2.
-  verbosityLevel: 3
+  verbosityLevel: 3,
+  // Experimental option. Defaults to false.
+  useNewTdjsonInterface: false
 })
 ```
 
@@ -158,8 +160,8 @@ Some examples:
 - `tdl.configure({ tdjson: require('prebuilt-tdlib').getTdjson() })`
 
 The path concatenation of `libdir` + `tdjson` is directly passed to
-[`dlopen`][dlopen] (Unix) or [`LoadLibrary`][LoadLibraryW] (Windows). Check your OS documentation
-to find out where the shared library will be searched for.
+[`dlopen`][dlopen] (Unix) or [`LoadLibrary`][LoadLibraryW] (Windows). Check your
+OS documentation to find out where the shared library will be searched for.
 
 #### `tdl.createClient(options: ClientOptions) => Client`
 
@@ -185,9 +187,8 @@ type ClientOptions = {
   useTestDc: boolean, // Use test telegram server (defaults to false)
   tdlibParameters: Object, // Raw TDLib parameters
   // Advanced options:
-  skipOldUpdates: boolean,
   bare: boolean,
-  receiveTimeout: number
+  skipOldUpdates: boolean
 }
 ```
 
@@ -420,6 +421,9 @@ globally or per-project as a dev dependency.
 
 The current limitation is that the number of created clients should not exceed
 [UV_THREADPOOL_SIZE][] (as for now, the default is 4, max is 1024).
+
+When `useNewTdjsonInterface` (experimental option) is set to true in
+`tdl.configure`, this limitation does not apply.
 
 [UV_THREADPOOL_SIZE]: http://docs.libuv.org/en/v1.x/threadpool.html
 

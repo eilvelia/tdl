@@ -20,6 +20,13 @@ export function loadAddon (libraryFile: string): Tdjson {
     execute: addon.execute,
     destroy: addon.destroy,
     setLogFatalErrorCallback: addon.setLogFatalErrorCallback,
-    setLogMessageCallback: addon.setLogMessageCallback
+    setLogMessageCallback: addon.setLogMessageCallback,
+    tdn: {
+      init: addon.tdnInit,
+      createClientId: addon.tdnCreateClientId,
+      send: addon.tdnSend,
+      receive: addon.tdnReceive,
+      execute: addon.tdnExecute
+    }
   }
 }

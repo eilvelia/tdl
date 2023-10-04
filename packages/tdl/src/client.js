@@ -28,35 +28,100 @@ const debugReq = Debug('tdl:client:request')
 // export type TdjsonClient = { +_TdjsonClientBrand: void }
 export opaque type TdjsonClient = mixed
 
+export type TdjsonNew = {|
+  init(receiveTimeout: number): void,
+  createClientId(): number,
+  send(clientId: number, request: string): string | null,
+  /** Do not call receive again until the promise is completed. */
+  receive(): Promise<string | null>,
+  execute(request: string): string | null
+|}
+
 export type Tdjson = {|
   create(): TdjsonClient,
   destroy(client: TdjsonClient): void,
-  execute(client: null | TdjsonClient, query: {...}): {...} | null,
-  receive(client: TdjsonClient, timeout: number): Promise<{...} | null>,
-  send(client: TdjsonClient, query: {...}): void,
+  execute(client: null | TdjsonClient, request: string): string | null,
+  receive(client: TdjsonClient, timeout: number): Promise<string | null>,
+  send(client: TdjsonClient, request: string): void,
   /** td_set_log_fatal_error_callback is deprecated in TDLib v1.8.0 */
   setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): void,
   setLogMessageCallback(
     maxVerbosityLevel: number,
     callback: null | ((verbosityLevel: number, message: string) => void)
-  ): void
+  ): void,
+  tdn: TdjsonNew
 |}
 
-export type TdjsonCompat = {|
-  // Compatibility with tdl-tdlib-addon
-  +getName?: () => void,
+export type TdjsonTdlTdlibAddon = {|
+  getName(): void,
   create(): TdjsonClient,
   destroy(client: TdjsonClient): void,
-  execute(client: null | TdjsonClient, query: {...}): {...} | null,
+  execute(client: null | TdjsonClient, request: {...}): {...} | null,
   receive(client: TdjsonClient, timeout: number): Promise<{...} | null>,
-  send(client: TdjsonClient, query: {...}): void,
-  /** td_set_log_fatal_error_callback is deprecated in TDLib v1.8.0 */
+  send(client: TdjsonClient, request: {...}): void,
   setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): void,
-  +setLogMessageCallback?: (
+|}
+
+type TdjsonCompat = {|
+  /** `true` if runs in compatibility with the tdl-tdlib-addon package */
+  compat?: boolean,
+  create(): TdjsonClient,
+  destroy(client: TdjsonClient): void,
+  execute(client: null | TdjsonClient, request: {...}): {...} | null,
+  receive(client: TdjsonClient, timeout: number): Promise<{...} | null>,
+  send(client: TdjsonClient, request: {...}): void,
+  setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): void,
+  setLogMessageCallback(
     maxVerbosityLevel: number,
     callback: null | ((verbosityLevel: number, message: string) => void)
-  ) => void
+  ): void,
+  tdn: TdjsonNew
 |}
+
+// Compatibility with tdl-tdlib-addon
+function tdjsonCompat (td: TdjsonTdlTdlibAddon | Tdjson): TdjsonCompat {
+  function unvailable (name: string) {
+    throw new Error(`${name} is not available in tdl-tdlib-addon`)
+  }
+  const foundTdlTdlibAddon = (td: any).getName?.() === 'addon'
+  if (!foundTdlTdlibAddon) {
+    const tdjson: Tdjson = (td: any)
+    return {
+      ...tdjson,
+      execute (client, request) {
+        const response = tdjson.execute(client, JSON.stringify(request))
+        if (response == null) return null
+        return JSON.parse(response)
+      },
+      send (client, request) {
+        tdjson.send(client, JSON.stringify(request))
+      },
+      async receive (client, timeout) {
+        const response = await tdjson.receive(client, timeout)
+        if (response == null) return null
+        return JSON.parse(response)
+      }
+    }
+  }
+  const tdjsonOld: TdjsonTdlTdlibAddon = (td: any)
+  return {
+    compat: true,
+    create: tdjsonOld.create.bind(tdjsonOld),
+    destroy: tdjsonOld.destroy.bind(tdjsonOld),
+    execute: tdjsonOld.execute.bind(tdjsonOld),
+    receive: tdjsonOld.receive.bind(tdjsonOld),
+    send: tdjsonOld.send.bind(tdjsonOld),
+    setLogFatalErrorCallback: tdjsonOld.setLogFatalErrorCallback.bind(tdjsonOld),
+    setLogMessageCallback: () => unvailable('setLogMessageCallback'),
+    tdn: {
+      init: () => unvailable('tdn.init'),
+      createClientId: () => unvailable('tdn.createClientId'),
+      send: () => unvailable('tdn.send'),
+      receive: () => unvailable('tdn.receive'),
+      execute: () => unvailable('tdn.execute')
+    }
+  }
+}
 
 export type TDLibParameters = $Rest<Td$setTdlibParameters, {| _: 'setTdlibParameters' |}>
 
@@ -211,8 +276,13 @@ function invariant (cond: boolean, msg: string = 'Invariant violation') {
   if (!cond) throw new Error(msg)
 }
 
+export type ManagingOptions = {
+  useTdn: boolean,
+  onClose: () => void
+}
+
 const TDLIB_1_8_6 = new Version('1.8.6')
-const TDLIB_DEFAULT = new Version('1.8.12')
+const TDLIB_DEFAULT = new Version('1.8.19')
 
 const TDL_MAGIC = '6c47e6b71ea'
 
@@ -242,7 +312,7 @@ export class Client {
   +_emitter: EventEmitter = new EventEmitter();
   +_pending: Map<number, PendingPromise> = new Map();
   _requestId: number = 0
-  _client: TdjsonClient | null
+  _client: TdjsonClient | null = null
   _initialized: boolean = false
   _paused: boolean = false
   _connectionState: Td$ConnectionState = { _: 'connectionStateConnecting' }
@@ -250,10 +320,22 @@ export class Client {
   _loginDetails: ?StrictLoginDetails
   _loginDefer: TdlDeferred<void, any> = new TdlDeferred()
   _version: Version = TDLIB_DEFAULT
+  _tdn: boolean = false
+  _onClose: (() => void) = (() => {})
+  _clientId: number = -1
 
-  constructor (tdlibInstance: TdjsonCompat, options: ClientOptions = {}) {
+  constructor (
+    tdlibInstance: TdjsonTdlTdlibAddon | Tdjson,
+    options: ClientOptions = {},
+    managing?: ManagingOptions
+  ) {
     this._options = (mergeDeepRight(defaultOptions, options): StrictClientOptions)
-    this._tdlib = tdlibInstance
+    this._tdlib = tdjsonCompat(tdlibInstance)
+
+    if (managing && managing.useTdn) {
+      this._tdn = true
+      this._onClose = managing.onClose
+    }
 
     // Backward compatibility
     if (this._options.useDefaultVerbosityLevel)
@@ -272,35 +354,44 @@ export class Client {
     // Backward compatibility
     if (this._options.verbosityLevel != null && this._options.verbosityLevel !== 'default') {
       debug('Executing setLogVerbosityLevel', this._options.verbosityLevel)
-      this._tdlib.execute(null, {
-        '@type': 'setLogVerbosityLevel',
-        new_verbosity_level: this._options.verbosityLevel
+      this.execute({
+        _: 'setLogVerbosityLevel',
+        new_verbosity_level: parseInt(this._options.verbosityLevel)
       })
-    } else if (this._tdlib.getName?.() === 'addon') {
+    } else if (this._tdlib.compat) {
       debug('Executing setLogVerbosityLevel (tdl-tdlib-addon found)', this._options.verbosityLevel)
-      this._tdlib.execute(null, {
-        '@type': 'setLogVerbosityLevel',
+      this.execute({
+        _: 'setLogVerbosityLevel',
         new_verbosity_level: 2
       })
     }
 
-    this._client = this._tdlib.create()
-
-    if (!this._client)
-      throw new Error('Failed to create a TDLib client')
-
     if (this._options.bare)
       this._initialized = true
 
-    // Note: To allow defining listeners before the first update, we must ensure
-    // that emit is not executed in the current tick. process.nextTick or
-    // queueMicrotask are redundant here because of await in the _loop function.
-    this._loop()
-      .catch(e => this._catchError(new TdlError(e)))
+    if (!this._tdn) {
+      this._client = this._tdlib.create()
+
+      if (!this._client) throw new Error('Failed to create a TDLib client')
+
+      // Note: To allow defining listeners before the first update, we must
+      // ensure that emit is not executed in the current tick. process.nextTick
+      // or queueMicrotask are redundant here because of await in the _loop
+      // function.
+      this._loop().catch(e => this._catchError(new TdlError(e)))
+    } else {
+      this._clientId = this._tdlib.tdn.createClientId()
+      // The new tdjson interface requires to send a dummy request first
+      this._sendTdl({ _: 'getOption', name: 'version' })
+    }
+  }
+
+  getClientId (): number {
+    return this._clientId
   }
 
   /** @deprecated */
-  static create (tdlibInstance: TdjsonCompat, options: ClientOptions = {}): Client {
+  static create (tdlibInstance: TdjsonTdlTdlibAddon, options: ClientOptions = {}): Client {
     return new Client(tdlibInstance, options)
   }
 
@@ -383,15 +474,12 @@ export class Client {
 
   /** @deprecated */
   connect: () => Promise<void> = () => Promise.resolve()
-
   /** @deprecated */
   connectAndLogin: (fn?: () => LoginDetails) => Promise<void> = (fn = emptyDetails) => {
     return this.login(fn)
   }
-
   /** @deprecated */
   getBackendName: () => string = () => 'addon'
-
   /** @deprecated */
   pause: () => void = () => {
     if (!this._paused) {
@@ -401,7 +489,6 @@ export class Client {
       debug('pause (no-op)')
     }
   }
-
   /** @deprecated */
   resume: () => void = () => {
     if (this._paused) {
@@ -462,6 +549,12 @@ export class Client {
 
   destroy: () => void = () => {
     debug('destroy')
+    if (this._tdn) {
+      this._onClose()
+      this._clientId = -1
+      this.emit('destroy')
+      return
+    }
     if (this._client === null) return
     this._tdlib.destroy(this._client)
     this._client = null
@@ -473,7 +566,7 @@ export class Client {
   close: () => Promise<void> = () => {
     debug('close')
     return new Promise(resolve => {
-      if (this._client === null) return resolve()
+      if (this._client === null && this._clientId === -1) return resolve()
       // TODO: call this.resume() here?
       // If the client is paused, we can't receive authorizationStateClosed
       // and destroy won't be called
@@ -495,6 +588,13 @@ export class Client {
 
   execute: Execute = request => {
     debugReq('execute', request)
+    if (this._tdn) {
+      const tdRequest = deepRenameKey('_', '@type', request)
+      // the client can be null, it's fine
+      const tdResponse = this._tdlib.tdn.execute(JSON.stringify(tdRequest))
+      if (tdResponse == null) return null
+      return deepRenameKey('@type', '_', JSON.parse(tdResponse))
+    }
     const tdRequest = deepRenameKey('_', '@type', request)
     // the client can be null, it's fine
     const tdResponse = this._tdlib.execute(this._client, tdRequest)
@@ -505,23 +605,21 @@ export class Client {
   _send (request: { +_: string, +[k: any]: any }): void {
     debugReq('send', request)
     const tdRequest = deepRenameKey('_', '@type', request)
-    if (this._client === null)
+    if (this._client === null && this._clientId === -1)
       throw new Error('A closed client cannot be reused, create a new Client')
-    this._tdlib.send(this._client, tdRequest)
+    if (this._tdn)
+      this._tdlib.tdn.send(this._clientId, JSON.stringify(tdRequest))
+    else
+      this._tdlib.send(this._client, tdRequest)
   }
 
   _sendTdl (request: { +_: string, +[k: any]: any }): void {
     this._send({ ...request, '@extra': TDL_MAGIC })
   }
 
-  async _receive (timeout: number = this._options.receiveTimeout): Promise<any/*TDObject*/ | null> {
-    if (this._client === null) return null
-    const tdResponse = await this._tdlib.receive(this._client, timeout)
-    if (tdResponse == null) return null
-    return deepRenameKey('@type', '_', tdResponse)
-  }
-
+  // Used with the old tdjson interface only
   async _loop (): Promise<void> {
+    const timeout = this._options.receiveTimeout
     while (true) {
       if (this._paused) {
         debug('receive loop: waiting for resume')
@@ -534,18 +632,27 @@ export class Client {
         break
       }
 
-      const response = await this._receive()
+      const res = await this._tdlib.receive(this._client, timeout)
 
-      if (!response) {
+      if (res == null) {
         debug('receive loop: response is empty')
         continue
       }
 
       try {
-        this._handleReceive(response)
+        this._handleReceive(deepRenameKey('@type', '_', res))
       } catch (e) {
         this._catchError(new TdlError(e))
       }
+    }
+  }
+
+  // Can be called by the client manager in case the new interface is used
+  handleReceive (res: any): void {
+    try {
+      this._handleReceive(deepRenameKey('@type', '_', res))
+    } catch (e) {
+      this._catchError(new TdlError(e))
     }
   }
 
