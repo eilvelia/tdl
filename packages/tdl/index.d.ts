@@ -34,7 +34,7 @@ export type TDLibConfiguration = {
   verbosityLevel?: number | 'default',
   /**
    * Experimental option. Use the new tdjson interface (`td_create_client_id`
-   * and other functions). */
+   * and other functions) that was added in TDLib v1.7.0. */
   useNewTdjsonInterface?: boolean,
   /**
    * Advanced option. Configures the delay for the `receive` tdjson function.
@@ -147,7 +147,7 @@ export class Client {
   /**
    * @deprecated Use `tdl.configure` and `tdl.createClient` instead. See the
    * tdl@7.3.1 entry in `CHANGELOG.md` for additional information. The new
-   * approach to create a client is:
+   * approach to create a client is (`tdl-tdlib-addon` is no longer needed):
    * ```
    * const tdl = require('tdl')
    * tdl.configure({ tdjson: 'path to tdjson' }) // was: new TDLib('path to tdjson')

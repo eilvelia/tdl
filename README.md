@@ -148,7 +148,7 @@ tdl.configure({
   libdir: '/usr/local/lib',
   // Verbosity level of TDLib. By default, it is 2.
   verbosityLevel: 3,
-  // Experimental option. Defaults to false.
+  // Experimental option. Disabled by default.
   useNewTdjsonInterface: false
 })
 ```
@@ -526,4 +526,4 @@ symbols.
 
 - Segmentation fault
 
-Most likely, the cause of the segfault is the same as above.
+The cause of the segfault might be the same as above.
