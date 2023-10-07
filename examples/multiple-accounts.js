@@ -1,5 +1,3 @@
-// NOTE: The number of clients you create shouldn't be greater than UV_THREADPOOL_SIZE
-
 const tdl = require('tdl')
 
 const API_ID = 2222 // Your api_id

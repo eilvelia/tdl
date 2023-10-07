@@ -10,13 +10,12 @@
 - `tdl.configure`: Added an experimental option `useNewTdjsonInterface` that
   enables the use of `td_create_client_id`/`td_send`/`td_receive`/`td_execute`
   interface with a client manager and global receive loop, though the old
-  interface still works well.
-  This does not use the libuv threadpool and does not have a limitation of max
-  `UV_THREADPOOL_SIZE` clients.
-  (TDLib v1.7.0+ only)
+  interface still works well. (TDLib v1.7.0+ only)
+- Changed the implementation of the old tdjson interface bindings so that the
+  limitation of max `UV_THREADPOOL_SIZE` clients is lifted.
 - `tdl.configure`: Added a `receiveTimeout` advanced option.
-- `receiveTimeout` in the client options is deprecated.
-- Deprecated the `useMutableRename` advanced option.
+- `tdl.createClient`: `receiveTimeout` in the client options is deprecated.
+- `tdl.createClient`: Deprecated the `useMutableRename` advanced option.
 
 ## tdl-install-types@0.1.0 (2023-09-26)
 

@@ -38,12 +38,13 @@ export type TdjsonNew = {|
 |}
 
 export type Tdjson = {|
-  create(): TdjsonClient,
+  create(receiveTimeout: number): TdjsonClient,
   destroy(client: TdjsonClient): void,
   execute(client: null | TdjsonClient, request: string): string | null,
-  receive(client: TdjsonClient, timeout: number): Promise<string | null>,
+  /** Do not call receive again until the promise is completed. */
+  receive(client: TdjsonClient): Promise<string | null>,
   send(client: TdjsonClient, request: string): void,
-  /** td_set_log_fatal_error_callback is deprecated in TDLib v1.8.0 */
+  /** td_set_log_fatal_error_callback is deprecated in TDLib v1.8.0. */
   setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): void,
   setLogMessageCallback(
     maxVerbosityLevel: number,
@@ -65,10 +66,10 @@ export type TdjsonTdlTdlibAddon = {|
 type TdjsonCompat = {|
   /** `true` if runs in compatibility with the tdl-tdlib-addon package */
   compat?: boolean,
-  create(): TdjsonClient,
+  create(receiveTimeout: number): TdjsonClient,
   destroy(client: TdjsonClient): void,
   execute(client: null | TdjsonClient, request: {...}): {...} | null,
-  receive(client: TdjsonClient, timeout: number): Promise<{...} | null>,
+  receive(client: TdjsonClient): Promise<{...} | null>,
   send(client: TdjsonClient, request: {...}): void,
   setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): void,
   setLogMessageCallback(
@@ -80,9 +81,6 @@ type TdjsonCompat = {|
 
 // Compatibility with tdl-tdlib-addon
 function tdjsonCompat (td: TdjsonTdlTdlibAddon | Tdjson): TdjsonCompat {
-  function unvailable (name: string) {
-    throw new Error(`${name} is not available in tdl-tdlib-addon`)
-  }
   const foundTdlTdlibAddon = (td: any).getName?.() === 'addon'
   if (!foundTdlTdlibAddon) {
     const tdjson: Tdjson = (td: any)
@@ -96,20 +94,31 @@ function tdjsonCompat (td: TdjsonTdlTdlibAddon | Tdjson): TdjsonCompat {
       send (client, request) {
         tdjson.send(client, JSON.stringify(request))
       },
-      async receive (client, timeout) {
-        const response = await tdjson.receive(client, timeout)
+      async receive (client) {
+        const response = await tdjson.receive(client)
         if (response == null) return null
         return JSON.parse(response)
       }
     }
   }
+  function unvailable (name: string) {
+    throw new Error(`${name} is not available in tdl-tdlib-addon`)
+  }
   const tdjsonOld: TdjsonTdlTdlibAddon = (td: any)
+  let receiveTimeout = 10
   return {
     compat: true,
-    create: tdjsonOld.create.bind(tdjsonOld),
+    create (timeout) {
+      receiveTimeout = timeout
+      return tdjsonOld.create()
+    },
     destroy: tdjsonOld.destroy.bind(tdjsonOld),
     execute: tdjsonOld.execute.bind(tdjsonOld),
-    receive: tdjsonOld.receive.bind(tdjsonOld),
+    async receive (client) {
+      const response = await tdjsonOld.receive(client, receiveTimeout)
+      if (response == null) return null
+      return response
+    },
     send: tdjsonOld.send.bind(tdjsonOld),
     setLogFatalErrorCallback: tdjsonOld.setLogFatalErrorCallback.bind(tdjsonOld),
     setLogMessageCallback: () => unvailable('setLogMessageCallback'),
@@ -370,7 +379,7 @@ export class Client {
       this._initialized = true
 
     if (!this._tdn) {
-      this._client = this._tdlib.create()
+      this._client = this._tdlib.create(this._options.receiveTimeout)
 
       if (!this._client) throw new Error('Failed to create a TDLib client')
 
@@ -619,7 +628,6 @@ export class Client {
 
   // Used with the old tdjson interface only
   async _loop (): Promise<void> {
-    const timeout = this._options.receiveTimeout
     while (true) {
       if (this._paused) {
         debug('receive loop: waiting for resume')
@@ -632,7 +640,7 @@ export class Client {
         break
       }
 
-      const res = await this._tdlib.receive(this._client, timeout)
+      const res = await this._tdlib.receive(this._client)
 
       if (res == null) {
         debug('receive loop: response is empty')

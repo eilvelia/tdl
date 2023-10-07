@@ -13,7 +13,7 @@ TDLib version 1.5.0 or newer is required.
 - [Getting started](#getting-started)
 - [API](#api)
 - [Types](#types)
-- [Creating multiple clients](#creating-multiple-clients)
+- [Other JavaScript runtimes](#other-javascript-runtimes)
 - [Possible errors](#possible-errors)
 
 <a name="requirements"></a>
@@ -416,16 +416,17 @@ Note that when using `npx`, the version of `tdl-install-types` might be outdated
 if you are not appending the `@latest` tag. You can also install the utility
 globally or per-project as a dev dependency.
 
-<a name="creating-multiple-clients"></a>
-## Creating multiple clients
+<a name="other-javascript-runtimes"></a>
+## Other JavaScript runtimes
 
-The current limitation is that the number of created clients should not exceed
-[UV_THREADPOOL_SIZE][] (as for now, the default is 4, max is 1024).
+Since [bun][] is Node.js-compatible and [supports Node-API][bun-napi], `tdl`
+should work out of the box, however the stability may not be the best yet.
 
-When `useNewTdjsonInterface` (experimental option) is set to true in
-`tdl.configure`, this limitation does not apply.
+[deno][] is not yet supported.
 
-[UV_THREADPOOL_SIZE]: http://docs.libuv.org/en/v1.x/threadpool.html
+[bun]: https://bun.sh/
+[bun-napi]: https://github.com/oven-sh/bun/issues/158
+[deno]: https://deno.com/
 
 <a name="possible-errors"></a>
 ## Possible errors
