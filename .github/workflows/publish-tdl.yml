@@ -27,13 +27,28 @@ jobs:
         run: npm install
       - name: Clean old binaries
         run: npm run clean -w tdl
-      # prebuildify-cross doesn't work with npm workspaces
       - name: Prebuildify in docker
         if: runner.os == 'Linux'
         run: |
-          docker run -u root -v $(pwd):/app ghcr.io/prebuild/centos7-devtoolset7:2 \
-            npm run make-prebuild -w tdl -- --tag-libc
-          tree packages/tdl
+          # docker run -u root -v $(pwd):/app ghcr.io/prebuild/centos7-devtoolset7:2 \
+          #  npm run make-prebuild -w tdl -- --tag-libc
+          cat > prebuilt-node-addon.sh <<EOF
+          set -ex
+          yum update -y
+          yum install -y centos-release-scl
+          yum install -y devtoolset-9 make python3
+          yum install https://rpm.nodesource.com/pub_16.x/nodistro/repo/nodesource-release-nodistro-1.noarch.rpm -y
+          yum install nodejs -y --setopt=nodesource-nodejs.module_hotfixes=1
+          source /opt/rh/devtoolset-9/enable
+          gcc --version
+          ldd --version
+          cd /app
+          npm run make-prebuild -w tdl -- --tag-libc
+          EOF
+          docker run -v $(pwd):/app centos:7 \
+            bash /app/prebuilt-node-addon.sh
+          ldd packages/tdl/prebuilds/*/*.node
+          du -hs packages/tdl/prebuilds/*/*.node
       - name: Prebuildify
         if: runner.os != 'Linux'
         run: npm run make-prebuild -w tdl
