@@ -508,6 +508,12 @@ export class Client {
       debug('resume (no-op)')
     }
   }
+  /** @deprecated */
+  destroy: () => void = () => {
+    debug('destroy')
+    // Force close
+    this._handleClose()
+  }
 
   _waitResume (): Promise<void> {
     return new Promise(resolve => {
@@ -556,19 +562,18 @@ export class Client {
     return receiveResponse
   }
 
-  destroy: () => void = () => {
-    debug('destroy')
+  _handleClose (): void {
     if (this._tdn) {
       this._onClose()
       this._clientId = -1
-      this.emit('destroy')
-      return
+    } else {
+      if (this._client === null) return
+      this._tdlib.destroy(this._client)
+      this._client = null
+      this.resume()
     }
-    if (this._client === null) return
-    this._tdlib.destroy(this._client)
-    this._client = null
-    this.resume()
-    this.emit('destroy')
+    debug('closed')
+    this.emit('destroy') // TODO: rename to closed?
   }
 
   // Sends { _: 'close' } and waits until the client gets destroyed
@@ -588,23 +593,20 @@ export class Client {
     this._tdlib.setLogFatalErrorCallback(fn)
   }
 
-  // tdl renames '@type' to '_'.
-  // Initially it was because Flow didn't support disjoint unions
-  // if the tag is referenced via square brackets.
+  // tdl renames '@type' to '_'. Initially, it was because Flow didn't support
+  // disjoint unions if the tag is referenced via square brackets.
   // (https://flow.org/en/docs/lang/refinements/)
-  // It was fixed, but I kept the renaming, since it's more convenient
-  // to write if (o._ === '...') instead of if (o['@type'] === '...')
+  // It was fixed, but the renaming was kept, since it's more convenient
+  // to write `if (o._ === '...')` instead of `if (o['@type'] === '...')`
 
   execute: Execute = request => {
     debugReq('execute', request)
+    const tdRequest = deepRenameKey('_', '@type', request)
     if (this._tdn) {
-      const tdRequest = deepRenameKey('_', '@type', request)
-      // the client can be null, it's fine
       const tdResponse = this._tdlib.tdn.execute(JSON.stringify(tdRequest))
       if (tdResponse == null) return null
       return deepRenameKey('@type', '_', JSON.parse(tdResponse))
     }
-    const tdRequest = deepRenameKey('_', '@type', request)
     // the client can be null, it's fine
     const tdResponse = this._tdlib.execute(this._client, tdRequest)
     if (tdResponse == null) return null
@@ -744,7 +746,12 @@ export class Client {
       case 'updateAuthorizationState':
         debug('New authorization state:', update.authorization_state._)
         this.emit('update', update)
-        this._handleAuth(update).catch(e => this._catchError(new TdlError(e)))
+        if (update.authorization_state._ === 'authorizationStateClosed') {
+          this._loginDefer.reject(Error('Received authorizationStateClosed'))
+          this._handleClose()
+        } else if (!this._options.bare) {
+          this._handleAuth(update).catch(e => this._catchError(new TdlError(e)))
+        }
         return
 
       default:
@@ -757,14 +764,6 @@ export class Client {
 
   async _handleAuth (update: Td$updateAuthorizationState): Promise<void> {
     const authorizationState = update.authorization_state
-
-    if (authorizationState._ === 'authorizationStateClosed') {
-      this._loginDefer.reject(Error('Received authorizationStateClosed'))
-      this.destroy()
-      return
-    }
-
-    if (this._options.bare) return
 
     switch (authorizationState._) {
       case 'authorizationStateWaitTdlibParameters':
