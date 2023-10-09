@@ -422,7 +422,10 @@ globally or per-project as a dev dependency.
 Since [bun][] is Node.js-compatible and [supports Node-API][bun-napi], `tdl`
 should work out of the box, however the stability may not be the best yet.
 
-[deno][] is not yet supported.
+[deno][] can also import `tdl` through the node compatibility via
+`import * as tdl from 'npm:tdl'`. Currently, the Node-API implementation in deno
+seems to be unstable and random segfaults sometimes occur. Not recommended to
+use `tdl` in deno.
 
 [bun]: https://bun.sh/
 [bun-napi]: https://github.com/oven-sh/bun/issues/158
