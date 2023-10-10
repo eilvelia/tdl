@@ -57,8 +57,8 @@ jobs:
         run: npm run make-prebuild -w tdl -- --arch arm64
       - name: Download prebuilt-tdlib
         run: |
-          npm pack prebuilt-tdlib@td-1.8.0
-          tar -xzvf prebuilt-tdlib-0.1008000.0.tgz
+          npm pack prebuilt-tdlib@0.1008000.1
+          tar -xzvf prebuilt-tdlib-0.1008000.1.tgz
           rm package/package.json
       - name: Run tests
         run: npm run test:all
