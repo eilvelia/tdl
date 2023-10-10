@@ -58,7 +58,7 @@ const tdl = require('tdl')
 // If libtdjson is not present in the system search paths, the path to the
 // libtdjson shared library can be set manually, e.g.:
 //   tdl.configure({ tdjson: '/usr/local/lib/libtdjson.dylib' })
-// The library prefix can be set separate from the library name,
+// The library directory can be set separate from the library name,
 // example to search for libtdjson in the directory of the current script:
 //   tdl.configure({ libdir: __dirname })
 
@@ -81,8 +81,8 @@ client.on('update', update => {
 })
 
 async function main () {
-  // Log in to a Telegram account. By default, with no arguments, this function will ask
-  // for phone number etc. in the console. Instead of logging in as a normal user,
+  // Log in to a Telegram account. By default, with no arguments, this function will
+  // ask for phone number etc. in the console. Instead of logging in as a user,
   // it's also possible to log in as a bot using `client.loginAsBot('<TOKEN>')`.
   await client.login()
 
@@ -110,7 +110,7 @@ The API list of TDLib methods, which are called using `client.invoke`, can be fo
 - https://core.telegram.org/tdlib/docs/annotated.html (possibly outdated)
 - or in the [td_api.tl][] file in the TDLib repository.
 
-[td_api.tl]: https://github.com/tdlib/td/blob/66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9/td/generate/scheme/td_api.tl
+[td_api.tl]: https://github.com/tdlib/td/blob/2589c3fd46925f5d57e4ec79233cd1bd0f5d0c09/td/generate/scheme/td_api.tl
 
 In the TDLib documentation, the `bytes` type means a **base64-encoded** string.
 `int64` accepts either a number or a string, pass string for large numbers.
@@ -124,7 +124,7 @@ information on how to use TDLib (tdl handles the authorization part with
 `client.login`). Note that the TDLib JSON interface actually sends a `@type`
 field, but tdl renames it to `_`.
 
-<!-- TODO: Add a guide on how to read the tl scheme or similar? -->
+<!-- TODO: Add a guide on how to read the tl schema or similar? -->
 
 Some short examples are available in the [examples/](examples/) directory.
 
@@ -289,7 +289,7 @@ await client.loginAsBot('YOUR_BOT_TOKEN') // Enter your token from @BotFather
 
 #### `client.on(event: string, callback: Function) => Client`
 
-Attach an event listener to receive updates.
+Attach an event listener to receive updates and other events.
 
 ```javascript
 function onUpdate (update) {
@@ -302,9 +302,11 @@ client.on('error', console.error)
 Ideally, you should always have a listener on `client.on('error')`.
 There is no default listener, all errors will be ignored otherwise.
 
-You can consider using reactive libraries like RxJS or most.js for convenient event processing.
+You can consider using reactive libraries like RxJS or most.js for convenient
+event processing.
 
-Some other rarely-used events also exist and are described in the TypeScript interface.
+Some other rarely-used events also exist and are described in the TypeScript
+interface.
 
 `client.addListener` is an alias for `client.on`.
 
@@ -317,9 +319,10 @@ Attach a one-time listener.
 Remove an event listener.
 
 ```javascript
-const listener = v => {
-  console.log('New update:', v)
-  client.off('update', listener) // Removes the listener
+const listener = u => {
+  console.log('New update:', u)
+  if (u?.authorization_state?._ === 'authorizationStateReady')
+    client.off('update', listener) // Removes the listener
 }
 client.on('update', listener)
 ```
@@ -356,6 +359,14 @@ await client.invoke({
 })
 ```
 
+#### `client.close() => Promise<void>`
+
+Close the TDLib client.
+
+```javascript
+await client.close()
+```
+
 #### `tdl.execute(query: Object) => (Object | null)`
 
 Call a TDLib method synchronously. This function can be used only with the
@@ -368,21 +379,12 @@ const res = tdl.execute({
 })
 ```
 
-#### `client.execute(query: Object) => (Object | null)`
+`client.execute` is the same as `tdl.execute`.
 
-Same as `tdl.execute`.
+#### `tdl.setLogMessageCallback(maxVerbosityLevel: number, cb: Function | null) => void`
 
-#### `client.close() => Promise<void>`
-
-Close the TDLib client.
-
-```javascript
-await client.close()
-```
-
----
-
-For the full API, see the [index.d.ts](packages/tdl/index.d.ts) file.
+Set the callback that is called when a message is added to the TDLib log. This
+corresponds to the `td_set_log_message_callback` tdjson function.
 
 <a name="types"></a>
 ## Types
@@ -469,7 +471,7 @@ https://github.com/nodejs/node-gyp/issues/65#issuecomment-368820565.
 - `Error while reading RSA public key`
 
 You can get this error if libtdjson is dynamically linked against OpenSSL and
-some of the symbols got resolved to Node.js instead of the system OpenSSL.
+some of the symbols got resolved into Node.js instead of the system OpenSSL.
 
 Note that Node.js also uses OpenSSL (the distributed binaries are statically
 linked against it) and exports the OpenSSL symbols. In the result, there are

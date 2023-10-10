@@ -14,20 +14,20 @@ Supported systems:
 - macOS x86_64, arm64 (universal, requires macOS >= 10.14)
 - Windows x86_64
 
-To install `prebuilt-tdlib` for e.g. TDLib v1.8.14, run:
+To install `prebuilt-tdlib` for e.g. TDLib v1.8.19, run:
 
 ```console
-$ npm install prebuilt-tdlib@td-1.8.14
+$ npm install prebuilt-tdlib@td-1.8.19
 ```
 
 `prebuilt-tdlib` can be installed for other TDLib versions, run
 `$ npm info prebuilt-tdlib dist-tags` to get the list of available versions
 (or see the "npm tags" section below).
 
-> **Note**: Before `prebuilt-tdlib@td-1.8.14`, the Linux binary was built on
-> Ubuntu 20.04 requiring glibc >= 2.31, and macOS arm64 was not supported.
-> Currently, the Linux build environment is based on CentOS 7.
-> The macOS arm64 binary isn't tested in the CI.
+> **Note**: Before `prebuilt-tdlib@td-1.8.14` (2023-06-26), the Linux binary was
+> built on Ubuntu 20.04 requiring glibc >= 2.31, and macOS arm64 was not
+> supported. Currently, the Linux build environment is based on CentOS 7. The
+> macOS arm64 binary isn't tested in the CI.
 
 ## Usage
 
@@ -52,6 +52,9 @@ const { getTdjson } = require('prebuilt-tdlib')
 tdl.configure({ tdjson: getTdjson() })
 // ...
 ```
+
+The pre-built libraries can also be extracted and used with any other library
+or programming language.
 
 ## Versioning conventions
 
@@ -78,8 +81,9 @@ TDLib v1.8.5, just run `npm install prebuilt-tdlib@td-1.8.5`, or
 `npm install prebuilt-tdlib@td-1.8.0` for TDLib v1.8.0. This will automatically
 install the needed version of `prebuilt-tdlib`.
 
-Additionaly, TDLib's versioning is weird, and some of the `prebuilt-tdlib`
-releases are not connected to a specific tag release in the TDLib repository.
+Additionaly, TDLib's releasing process is weird, and most of the
+`prebuilt-tdlib` releases are not connected to a specific tag release in the
+TDLib repository.
 
 The releases of the `prebuilt-tdlib` npm package are not git-tagged.
 
@@ -87,6 +91,7 @@ The releases of the `prebuilt-tdlib` npm package are not git-tagged.
 
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/latest.svg)](https://www.npmjs.com/package/prebuilt-tdlib)
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/stable.svg)](https://www.npmjs.com/package/prebuilt-tdlib)
+
 <!-- Add new versions below -->
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.19.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.19) tdlib [2589c3fd46925f5d57e4ec79233cd1bd0f5d0c09](https://github.com/tdlib/td/commit/2589c3fd46925f5d57e4ec79233cd1bd0f5d0c09)
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.14.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.14) tdlib [66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9](https://github.com/tdlib/td/commit/66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9)
@@ -94,6 +99,9 @@ The releases of the `prebuilt-tdlib` npm package are not git-tagged.
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.7.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.7) tdlib [de5379f00b6af7686f197037ca3b494e6277e523](https://github.com/tdlib/td/commit/de5379f00b6af7686f197037ca3b494e6277e523)
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.5.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.5) tdlib [d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9](https://github.com/tdlib/td/commit/d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9)
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.0.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.0)
+
+Outdated versions:
+
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.7.0.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.7.0)
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.6.0.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.6.0)
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.5.0.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.5.0)
