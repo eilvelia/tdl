@@ -2,7 +2,7 @@
 
 <!-- Hi! -->
 
-## tdl@7.4.0 (unreleased)
+## tdl@7.4.0 (2023-10-10)
 
 - Added `tdl.setLogMessageCallback` that allows to pass a callback to the
   `td_set_log_message_callback` TDLib function using Node-API's thread-safe
