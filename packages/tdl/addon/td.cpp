@@ -62,16 +62,16 @@ td_execute_t td_execute;
 class ReceiveWorker {
 public:
   ReceiveWorker(const Napi::Env& env, void *client, double timeout)
-    : client(client), timeout(timeout), cycle_ref(client == nullptr),
+    : client(client), timeout(timeout),
       tsfn(Tsfn::New(env, "ReceiveTSFN", 0, 1, this)),
       thread(&ReceiveWorker::loop, this)
     {
-      if (client != nullptr) return;
-      thread.detach();
-      tsfn.Unref(env);
+      if (client == nullptr) {
+        thread.detach();
+        tsfn.Unref(env);
+      }
     }
   ~ReceiveWorker() {
-    working = false;
     {
       std::lock_guard<std::mutex> lock(mutex);
       stop = true;
@@ -90,9 +90,11 @@ public:
       new_deferred->Reject(error.Value());
       return promise;
     }
+    working = true;
     {
       std::lock_guard<std::mutex> lock(mutex);
-      if (cycle_ref) tsfn.Ref(env);
+      // We cycle TSFN refs in case the new tdjson interface is used
+      if (client == nullptr) tsfn.Ref(env);
       deferred = std::move(new_deferred);
     }
     cv.notify_all();
@@ -110,8 +112,11 @@ private:
       auto val = data->response == nullptr
         ? env.Null()
         : Napi::String::New(env, data->response);
-      if (ctx != nullptr && ctx->cycle_ref) ctx->tsfn.Unref(env);
-      // Note that this can potentially execute the JS code
+      if (ctx != nullptr) {
+        ctx->working = false;
+        if (ctx->client == nullptr) ctx->tsfn.Unref(env);
+      }
+      // Note that this can potentially yield to the JS code (it does in deno)
       data->deferred->Resolve(val);
       // ctx may not exist anymore
     }
@@ -124,28 +129,27 @@ private:
       std::unique_lock<std::mutex> lock(mutex);
       cv.wait(lock, [this] { return deferred != nullptr || stop; });
       if (stop) break;
-      working = true;
       const char *response = client == nullptr
         ? td_receive(timeout)
         : td_json_client_receive(client, timeout);
-      if (working == false) break;
       // TDLib stores the response in thread-local storage that is deallocated
       // on execute() and receive(). Since we never call execute() in this
       // thread, it should be safe not to copy the response here.
       auto data = new TsfnData { std::move(deferred), response };
-      auto status = tsfn.NonBlockingCall(data);
-      if (status != napi_ok) delete data;
       deferred = nullptr;
-      working = false;
+      auto status = tsfn.NonBlockingCall(data);
+      if (status != napi_ok) {
+        delete data;
+        working = false;
+      }
     }
     tsfn.Release();
-    // TODO: Perhaps we should deallocate the response if this thread will not
-    // call receive anymore?
+    // NOTE: If this thread is not calling receive anymore, the last response
+    // (if not null) probably will stay to be allocated forever.
   }
 
   void *client;
   double timeout;
-  bool cycle_ref;
   Tsfn tsfn;
   std::atomic_bool working {false};
   std::unique_ptr<Napi::Promise::Deferred> deferred;
