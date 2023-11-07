@@ -32,8 +32,7 @@
     "node-gyp-build": "^4.6.0"
   },
   "devDependencies": {
-    "node-gyp": "^9.4.0",
-    "tdlib-types": "^0.1001008014.0"
+    "node-gyp": "^10.0.1"
   },
   "author": "Bannerets <comonoid@protonmail.com> (https://github.com/Bannerets)",
   "license": "MIT",
