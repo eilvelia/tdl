@@ -2,6 +2,10 @@
 
 <!-- Hi! -->
 
+## Unreleased
+
+- Fixed a race condition particularly when used in bun.
+
 ## tdl@7.4.0 (2023-10-10)
 
 - Added `tdl.setLogMessageCallback` that allows to pass a callback to the
