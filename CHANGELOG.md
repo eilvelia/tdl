@@ -2,9 +2,10 @@
 
 <!-- Hi! -->
 
-## Unreleased
+## tdl@7.4.1 (2024-02-16)
 
-- Fixed a race condition particularly when used in bun.
+- Fixed a race condition (first reported when used in bun). This was publised as
+  `tdl@7.4.1-beta.0` on 2023-11-07.
 
 ## tdl@7.4.0 (2023-10-10)
 
