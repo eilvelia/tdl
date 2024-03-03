@@ -23,7 +23,7 @@ jobs:
     name: Build TDLib (GNU/Linux x86_64)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: 'tdlib/td'
           ref: ${{ inputs.tdlib }}
@@ -81,7 +81,7 @@ jobs:
       zlib_ver: '1.2.13'
       zlib_dir: /usr/local/opt/custom_zlib
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: 'tdlib/td'
           ref: ${{ inputs.tdlib }}
@@ -158,12 +158,12 @@ jobs:
     name: Build TDLib (Windows x86_64)
     runs-on: windows-2019
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: 'tdlib/td'
           ref: ${{ inputs.tdlib }}
       - name: vcpkg cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: '~\AppData\Local\vcpkg\archives'
           key: windows-vcpkg-${{ github.run_id }}
@@ -209,8 +209,8 @@ jobs:
     env:
       LIBTDJSON_PATH: ${{ matrix.os[2] }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: lts/*
           cache: npm
@@ -228,8 +228,8 @@ jobs:
     env:
       TEST_PREBUILT: 1
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: lts/*
           cache: npm
