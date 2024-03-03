@@ -45,7 +45,7 @@ specified manually).
 
 ### prebuilt-tdlib
 
-Instead of building TDLib from source, you can possibly install pre-built TDLib libraries distributed through the `prebuilt-tdlib` npm package (`npm install prebult-tdlib`). To install `prebuilt-tdlib` for a specific TDLib version, for example v1.8.23, run `npm install prebuilt-tdlib@td-1.8.23`. The available versions of `prebuilt-tdlib` can be found by running `npm info prebuilt-tdlib dist-tags`. An example of using libraries from `prebuilt-tdlib` is present in the section below. The supported systems are x86_64 GNU/Linux, x86_64 & arm64 macOS, and x86_64 Windows. See the README of [prebuilt-tdlib][] for additional information.
+Instead of building TDLib from source, you can possibly install pre-built TDLib libraries distributed through the `prebuilt-tdlib` npm package (`npm install prebult-tdlib`). To install `prebuilt-tdlib` for a specific TDLib version, for example v1.8.25, run `npm install prebuilt-tdlib@td-1.8.25`. The available versions of `prebuilt-tdlib` can be found by running `npm info prebuilt-tdlib dist-tags`. An example of using libraries from `prebuilt-tdlib` is present in the section below. The supported systems are x86_64 GNU/Linux, x86_64 & arm64 macOS, and x86_64 Windows. See the README of [prebuilt-tdlib][] for additional information.
 
 [prebuilt-tdlib]: packages/prebuilt-tdlib/README.md
 
