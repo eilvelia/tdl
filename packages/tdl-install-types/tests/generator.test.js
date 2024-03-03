@@ -4,7 +4,7 @@ const { generate } = require('../src/gen.js')
 
 require('jest-specific-snapshot')
 
-const schemaDir = path.join(__dirname, '..', 'schema')
+const schemaDir = path.join(__dirname, 'schema')
 
 const schema180 = fs.readFileSync(path.join(schemaDir, 'v1.8.0.tl'))
   .toString()
