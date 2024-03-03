@@ -14,15 +14,26 @@ Supported systems:
 - macOS x86_64, arm64 (universal, requires macOS >= 10.14)
 - Windows x86_64
 
-To install `prebuilt-tdlib` for e.g. TDLib v1.8.19, run:
+To install `prebuilt-tdlib` for the latest TDLib version that `prebuilt-tdlib`
+supports, run:
 
 ```console
-$ npm install prebuilt-tdlib@td-1.8.19
+$ npm install prebuilt-tdlib
 ```
 
-`prebuilt-tdlib` can be installed for other TDLib versions, run
+To install `prebuilt-tdlib` for a specific TDLib version, e.g. TDLib v1.8.23,
+run:
+
+```console
+$ npm install prebuilt-tdlib@td-1.8.23
+```
+
+`prebuilt-tdlib` can be installed for other TDLib versions, execute
 `$ npm info prebuilt-tdlib dist-tags` to get the list of available versions
 (or see the "npm tags" section below).
+
+The TDLib version is important: there is no backward compatibility and the
+interface you use can completely change.
 
 > **Note**: Before `prebuilt-tdlib@td-1.8.14` (2023-06-26), the Linux binary was
 > built on Ubuntu 20.04 requiring glibc >= 2.31, and macOS arm64 was not
@@ -58,8 +69,8 @@ or programming language.
 
 ## Versioning conventions
 
-> **Note**: This information is mostly for maintaining `prebuilt-tdlib`, it
-> isn't necessary for using this package.
+> **Note**: This information is present mostly for maintaining `prebuilt-tdlib`,
+> it is not necessary for using this package.
 
 Because TDLib does not follow SemVer, not to require the users to manually
 specify the exact version of `prebuilt-tdlib` in their `package.json`, the TDLib

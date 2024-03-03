@@ -23,7 +23,7 @@ TDLib version 1.5.0 or newer is required.
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
 - In some cases, a C++ compiler and Python installed to build the node addon[^1]
 
-[^1]: `tdl` is packaged with pre-built addons for Windows (x86_64), GNU/Linux (x86_64, glibc >= 2.17), and macOS (x86_64, aarch64). If a pre-built binary is not available for your system, then the node addon will be built using node-gyp, requiring Python and a C++ toolchain (C++14 is required) to be installed (on Windows, MSVS or Build Tools). Pass `--build-from-source` to never use the pre-built binaries. Note that macOS aarch64 binaries aren't tested.
+[^1]: `tdl` is packaged with pre-built addons for Windows (x86_64), GNU/Linux (x86_64; glibc >= 2.17), and macOS (x86_64, aarch64; v10.14+). If a pre-built binary is not available for your system, then the node addon will be built using node-gyp, requiring Python and a C++ toolchain (C++14 is required) to be installed (on Windows, MSVS or Build Tools). Pass `--build-from-source` to never use the pre-built binaries. Note that macOS aarch64 binaries aren't tested.
 
 <a name="installation"></a>
 ## Installation
@@ -38,14 +38,14 @@ To use `tdl`, you need to get TDLib first. The tdjson shared library should be
 present in the system search paths (otherwise the path to libtdjson can be
 specified manually).
 
-> **Note**: When building TDLib, the libraries can be installed into the system
+> **Tip**: When building TDLib, the libraries can be installed into the system
 > using `cmake --install .` (optionally specify the `--prefix` option, the
 > default is `/usr/local`) after TDLib has been built successfully. This command
 > may require `sudo`.
 
 ### prebuilt-tdlib
 
-Instead of building TDLib from source, you can possibly install pre-built TDLib libraries distributed through the `prebuilt-tdlib` npm package. To install `prebuilt-tdlib` for e.g. TDLib v1.8.19, run `npm install prebuilt-tdlib@td-1.8.19` (the available versions of `prebuilt-tdlib` can be found by running `npm info prebuilt-tdlib dist-tags`). An example of using libraries from `prebuilt-tdlib` is present in the section below. The supported systems are x86_64 GNU/Linux, x86_64 & arm64 macOS, and x86_64 Windows. See the README of [prebuilt-tdlib][] for additional information.
+Instead of building TDLib from source, you can possibly install pre-built TDLib libraries distributed through the `prebuilt-tdlib` npm package (`npm install prebult-tdlib`). To install `prebuilt-tdlib` for a specific TDLib version, for example v1.8.23, run `npm install prebuilt-tdlib@td-1.8.23`. The available versions of `prebuilt-tdlib` can be found by running `npm info prebuilt-tdlib dist-tags`. An example of using libraries from `prebuilt-tdlib` is present in the section below. The supported systems are x86_64 GNU/Linux, x86_64 & arm64 macOS, and x86_64 Windows. See the README of [prebuilt-tdlib][] for additional information.
 
 [prebuilt-tdlib]: packages/prebuilt-tdlib/README.md
 
@@ -70,7 +70,8 @@ const client = tdl.createClient({
   apiId: 2222, // Your api_id
   apiHash: '0123456789abcdef0123456789abcdef' // Your api_hash
 })
-// Passing apiId and apiHash is mandatory, these values can be obtained at https://my.telegram.org/
+// Passing apiId and apiHash is mandatory,
+// these values can be obtained at https://my.telegram.org/
 
 client.on('error', console.error)
 
@@ -110,14 +111,15 @@ The API list of TDLib methods, which are called using `client.invoke`, can be fo
 - https://core.telegram.org/tdlib/docs/annotated.html (possibly outdated)
 - or in the [td_api.tl][] file in the TDLib repository.
 
-[td_api.tl]: https://github.com/tdlib/td/blob/2589c3fd46925f5d57e4ec79233cd1bd0f5d0c09/td/generate/scheme/td_api.tl
+[td_api.tl]: https://github.com/tdlib/td/blob/d93a99e3351db82573d765ce4f5e84714c277518/td/generate/scheme/td_api.tl
 
 In the TDLib documentation, the `bytes` type means a **base64-encoded** string.
 `int64` accepts either a number or a string, pass string for large numbers.
-`int32`, `int53`, and `double` are the number JS type. If TypeScript types are
-installed, note that the types are annotated with jsdoc comments, and the
-documentation can be browsed directly in the `.d.ts` file or in the
-autocompletion menu.
+`int32`, `int53`, and `double` are the number JS type.
+
+If TypeScript types for TDLib are installed, note the types are annotated
+with jsdoc comments, and the documentation can also be browsed directly in the
+`.d.ts` file or in the autocompletion menu of the editor.
 
 See also https://core.telegram.org/tdlib/getting-started for some basic
 information on how to use TDLib (tdl handles the authorization part with
@@ -175,7 +177,7 @@ const client = tdl.createClient({
 })
 ```
 
-The interface of the options that can be passed here:
+The options that can be passed here have the following interface:
 
 ```typescript
 type ClientOptions = {
@@ -193,7 +195,8 @@ type ClientOptions = {
 ```
 
 Of these fields, only `apiId` and `apiHash` are required. Any other field can be
-omitted.
+omitted. They are more thoroughly described in the documentation comments
+of TypeScript types.
 
 The `tdlibParameters` option is described in
 https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html.
@@ -281,7 +284,7 @@ declare function login (fn?: () => LoginDetails): Promise<void>
 
 #### `client.loginAsBot(token: string | (() => string | Promise<string>)) => Promise<void>`
 
-Instead of logging in as a user, you can log in as a bot by token.
+Instead of logging in as a user, you can log in as a bot using a bot token.
 
 ```javascript
 await client.loginAsBot('YOUR_BOT_TOKEN') // Enter your token from @BotFather
@@ -384,10 +387,15 @@ const res = tdl.execute({
 #### `tdl.setLogMessageCallback(maxVerbosityLevel: number, cb: Function | null) => void`
 
 Set the callback that is called when a message is added to the TDLib log. This
-corresponds to the `td_set_log_message_callback` tdjson function.
+corresponds to the `td_set_log_message_callback` tdjson function. The callback
+overrides previously set callbacks.
 
 <a name="types"></a>
 ## Types
+
+> **Tip**: It is considerably more convenient to use `tdl` with TypeScript,
+> which enables full autocompletion for the TDLib methods and objects along with
+> the documentation.
 
 While `tdl` works with any TDLib version (above the requirement), the TypeScript
 types have to be installed specifically for the TDLib version you use. This can
@@ -399,9 +407,17 @@ manually installing.
 $ npx tdl-install-types [<options>] [<target>]
 ```
 
-It can generate types given a tdjson library (e.g. `npx tdl-install-types ./libtdjson.so`), a TDLib git ref (examples: `npx tdl-install-types v1.8.0`, `npx tdl-install-types master`, `npx tdl-install-types 2de39ffffe71dc41c538e66085658d21cecbae08`), or a td_api.tl file (`npx tdl-install-types td_api.tl`). When called without arguments, it will try to use `require('prebuilt-tdlib').getTdjson()` as the target. By default, the types are generated into a `tdlib-types.d.ts` file that you can git-commit.
+It can generate types given a tdjson library file (e.g. `npx tdl-install-types ./libtdjson.so`), a TDLib git ref (examples: `npx tdl-install-types v1.8.0`, `npx tdl-install-types master`, `npx tdl-install-types 2de39ffffe71dc41c538e66085658d21cecbae08`), or a td_api.tl file (`npx tdl-install-types td_api.tl`). When called without arguments, it will try to use `require('prebuilt-tdlib').getTdjson()` as the tdjson library, generating types for the installed version of `prebuilt-tdlib`. By default, the types are generated into a `tdlib-types.d.ts` file that you can git-commit. The generated file should be inside your project. When you update the version of TDLib, the types should also be updated.
 
-See `npx tdl-install-types@latest --help` for additional information.
+```console
+$ # Various examples:
+$ npx tdl-install-types libtdjson.so # generate types for this shared library in the cwd
+$ npx tdl-install-types 0ada45c3618108a62806ce7d9ab435a18dac1aab # types for the TDLib commit
+$ npx tdl-install-types # tries to use prebult-tdlib
+$ npx tdl-install-types v1.8.0 # types for the git tag in the TDLib repository
+```
+
+See `npx tdl-install-types --help` for additional information.
 
 The types can be imported by using the `tdlib-types` module name:
 
@@ -410,13 +426,11 @@ import type * as Td from 'tdlib-types'
 // And use as: Td.message, Td.user, ...
 ```
 
-It is considerably more convenient to use `tdl` with TypeScript, which enables
-full autocompletion for the TDLib methods and objects along with the
-documentation.
+That is, a package named `tdlib-types` does not need to be installed separately.
 
-Note that when using `npx`, the version of `tdl-install-types` might be outdated
-if you are not appending the `@latest` tag. You can also install the utility
-globally or per-project as a dev dependency.
+Note that when using `npx`, the version of `tdl-install-types` might be cached and outdated if you are not appending the `@latest` tag (`npx tdl-install-types@latest --help`). You can also install the utility globally or per-project as a dev dependency.
+
+If you encounter any issues, create a new issue in the tdl's GitHub tracker.
 
 <a name="other-javascript-runtimes"></a>
 ## Other JavaScript runtimes
@@ -426,20 +440,21 @@ should work out of the box, however the stability may not be the best yet.
 
 [deno][] can also import `tdl` through the node compatibility via
 `import * as tdl from 'npm:tdl'`. Currently, the Node-API implementation in deno
-seems to be unstable and random segfaults sometimes occur. Not recommended to
+is incorrect and random segfaults may sometimes occur. Not recommended to
 use `tdl` in deno.
+
+`tdl` depends on native libraries and cannot be used in the browser. However,
+TDLib itself can possibly work in the browser by compiling it to WebAssembly.
+There is an outdated official [tdweb][] library, for example. Previously, `tdl`
+implemented basic browser support as well, but the idea has been dropped.
 
 [bun]: https://bun.sh/
 [bun-napi]: https://github.com/oven-sh/bun/issues/158
 [deno]: https://deno.com/
+[tdweb]: https://www.npmjs.com/package/tdweb
 
 <a name="possible-errors"></a>
 ## Possible errors
-
-- `UPDATE_APP_TO_LOGIN`
-
-Update TDLib to v1.7.9 (v1.8.0) or newer. It is no longer possible to log in by
-phone number in older versions of TDLib.
 
 - `Dynamic Loading Error: Win32 error 126` (Windows)
 - `Dynamic Loading Error: dlopen(…) image not found` (macOS)
@@ -467,6 +482,11 @@ current working directory, while macOS does.
 The path to the directory where you execute `npm install` likely contains
 spaces, which is not supported by gyp:
 https://github.com/nodejs/node-gyp/issues/65#issuecomment-368820565.
+
+- `UPDATE_APP_TO_LOGIN`
+
+Update TDLib to v1.7.9 (v1.8.0) or newer. It is no longer possible to log in by
+phone number in older versions of TDLib.
 
 - `Error while reading RSA public key`
 
