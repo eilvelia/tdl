@@ -183,8 +183,7 @@ export type ClientOptions = {
    * , system_language_code: 'en'
    * , application_version: '1.0'
    * , device_model: 'Unknown device'
-   * , system_version: 'Unknown'
-   * , enable_storage_optimizer: true }
+   * , system_version: 'Unknown' }
    * ```
    */
   tdlibParameters?: TDLibParameters,

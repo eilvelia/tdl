@@ -211,7 +211,6 @@ tdlibParameters: {
   application_version: '1.0',
   device_model: 'Unknown device',
   system_version: 'Unknown',
-  enable_storage_optimizer: true,
   api_id: options.apiId,
   api_hash: options.apiHash,
   database_directory: options.databaseDirectory,
