@@ -21,11 +21,11 @@ supports, run:
 $ npm install prebuilt-tdlib
 ```
 
-To install `prebuilt-tdlib` for a specific TDLib version, e.g. TDLib v1.8.25,
+To install `prebuilt-tdlib` for a specific TDLib version, e.g. TDLib v1.8.26,
 run:
 
 ```console
-$ npm install prebuilt-tdlib@td-1.8.25
+$ npm install prebuilt-tdlib@td-1.8.26
 ```
 
 `prebuilt-tdlib` can be installed for other TDLib versions, execute
@@ -69,7 +69,7 @@ or programming language.
 
 ## Versioning conventions
 
-> **Note**: This information is present mostly for maintaining `prebuilt-tdlib`,
+> This information is present mostly for maintaining `prebuilt-tdlib`,
 > it is not necessary for using this package.
 
 Because TDLib does not follow SemVer, not to require the users to manually
@@ -92,25 +92,35 @@ TDLib v1.8.5, just run `npm install prebuilt-tdlib@td-1.8.5`, or
 `npm install prebuilt-tdlib@td-1.8.0` for TDLib v1.8.0. This will automatically
 install the needed version of `prebuilt-tdlib`.
 
-Additionaly, TDLib's releasing process is weird, and most of the
-`prebuilt-tdlib` releases are not connected to a specific tag release in the
-TDLib repository.
-
 The releases of the `prebuilt-tdlib` npm package are not git-tagged.
 
+Additionaly, TDLib's releasing process is unusual, and the updates generally do
+not have a specific git-tagged release. Most `prebuilt-tdlib` releases are not
+connected to a tag release in the TDLib repository. Usually, the prebuilt
+packages are generated based on the "Update version to x.y.z." TDLib commits
+([example][commit-example]). Otherwise, the commit is indicated in the list
+below. Since `prebuilt-tdlib@td-1.8.19` (2023-09-26), the packages include a
+`prebuilds/tdlib.json` file specifying the commit hash and version of TDLib.
+
+[commit-example]: https://github.com/tdlib/td/commit/b3b63bbdc14dc377d2de6b78e5844fec1564f95d
+
 ## npm tags
+
+For the always up-to-date list, check `npm info prebuilt-tdlib dist-tags`.
+Or for the all ever published versions, see `npm info prebuilt-tdlib versions`.
 
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/latest.svg)](https://www.npmjs.com/package/prebuilt-tdlib)
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/stable.svg)](https://www.npmjs.com/package/prebuilt-tdlib)
 
 <!-- Add new versions below -->
-- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.25.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.25) tdlib [d93a99e3351db82573d765ce4f5e84714c277518](https://github.com/tdlib/td/commit/d93a99e3351db82573d765ce4f5e84714c277518)
-- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.23.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.23) tdlib [27c3eaeb4964bd5f18d8488e354abde1a4383e49](https://github.com/tdlib/td/commit/27c3eaeb4964bd5f18d8488e354abde1a4383e49)
-- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.19.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.19) tdlib [2589c3fd46925f5d57e4ec79233cd1bd0f5d0c09](https://github.com/tdlib/td/commit/2589c3fd46925f5d57e4ec79233cd1bd0f5d0c09)
-- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.14.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.14) tdlib [66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9](https://github.com/tdlib/td/commit/66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9)
-- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.12.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.12) tdlib [70bee089d492437ce931aa78446d89af3da182fc](https://github.com/tdlib/td/commit/70bee089d492437ce931aa78446d89af3da182fc)
-- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.7.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.7) tdlib [de5379f00b6af7686f197037ca3b494e6277e523](https://github.com/tdlib/td/commit/de5379f00b6af7686f197037ca3b494e6277e523)
-- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.5.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.5) tdlib [d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9](https://github.com/tdlib/td/commit/d9cfcf88fe4ad06dae1716ce8f66bbeb7f9491d9)
-- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.0.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.0)
+- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.26.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.26) [tdlib [b1b33cf42790ca10ef34abc2ac8828ae704f1f56](https://github.com/tdlib/td/commit/b1b33cf42790ca10ef34abc2ac8828ae704f1f56)]
+- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.25.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.25)
+- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.23.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.23)
+- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.19.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.19)
+- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.14.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.14) [tdlib [66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9](https://github.com/tdlib/td/commit/66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9)]
+- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.12.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.12) [tdlib [70bee089d492437ce931aa78446d89af3da182fc](https://github.com/tdlib/td/commit/70bee089d492437ce931aa78446d89af3da182fc)]
+- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.7.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.7) [tdlib [de5379f00b6af7686f197037ca3b494e6277e523](https://github.com/tdlib/td/commit/de5379f00b6af7686f197037ca3b494e6277e523)]
+- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.5.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.5)
+- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.0.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.0) [last released 2023-10-10]
 
 Outdated versions: `prebuilt-tdlib@td-1.7.0`, `prebuilt-tdlib@td-1.6.0`, `prebuilt-tdlib@td-1.5.0`.
