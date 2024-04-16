@@ -17,6 +17,7 @@ on:
         description: 'npm tag (e.g. latest, beta)'
         type: string
         required: false
+        default: 'latest'
 # NOTE: The ZLIB_USE_STATIC_LIBS option requires CMake >= 3.24
 jobs:
   build-linux-x64:
@@ -255,12 +256,7 @@ jobs:
         run: npm version ${{ inputs.npm-version }} --no-git-tag-version -w prebuilt-tdlib
       - name: Publish
         run: |
-          if test -z "{{ inputs.npm-tag }}"
-          then
-            npm publish -w prebuilt-tdlib
-          else
-            npm publish --tag ${{ inputs.npm-tag }} -w prebuilt-tdlib
-          fi
+          npm publish --tag ${{ inputs.npm-tag }} -w prebuilt-tdlib
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Set the td- tag
