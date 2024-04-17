@@ -400,13 +400,17 @@ While `tdl` works with any TDLib version (above the requirement), the TypeScript
 types have to be installed specifically for the TDLib version you use. This can
 be done via a small `tdl-install-types` utility, which downloads and generates
 types for you. It can be called using `npx tdl-install-types` without
-manually installing.
+any separate installation.
 
 ```console
 $ npx tdl-install-types [<options>] [<target>]
 ```
 
-It can generate types given a tdjson library file (e.g. `npx tdl-install-types ./libtdjson.so`), a TDLib git ref (examples: `npx tdl-install-types v1.8.0`, `npx tdl-install-types master`, `npx tdl-install-types 2de39ffffe71dc41c538e66085658d21cecbae08`), or a td_api.tl file (`npx tdl-install-types td_api.tl`). When called without arguments, it will try to use `require('prebuilt-tdlib').getTdjson()` as the tdjson library, generating types for the installed version of `prebuilt-tdlib`. By default, the types are generated into a `tdlib-types.d.ts` file that you can git-commit. The generated file should be inside your project. When you update the version of TDLib, the types should also be updated.
+(Type "y" in case it asks to install the `tdl-install-types` package.)
+
+The utility can generate types given a tdjson library file (e.g. `npx tdl-install-types ./libtdjson.so`), a TDLib git ref (examples: `npx tdl-install-types v1.8.0`, `npx tdl-install-types master`, `npx tdl-install-types 2de39ffffe71dc41c538e66085658d21cecbae08`), or a td_api.tl file (`npx tdl-install-types td_api.tl`). When called without arguments, it will try to use `require('prebuilt-tdlib').getTdjson()` as the tdjson library, generating types for the installed version of `prebuilt-tdlib`.
+
+By default, the types are generated into a `tdlib-types.d.ts` file that you can git-commit. The declaration file should be inside your project to work. When you update the version of TDLib, don't forget to also update the types: it's important to keep the types in sync with the interface TDLib actually uses.
 
 ```console
 $ # Various examples:
@@ -439,8 +443,8 @@ should work out of the box, however the stability may not be the best yet.
 
 [deno][] can also import `tdl` through the node compatibility via
 `import * as tdl from 'npm:tdl'`. Currently, the Node-API implementation in deno
-is incorrect and random segfaults may sometimes occur. Not recommended to
-use `tdl` in deno.
+is incorrect and race conditions leading to random segfaults sometimes occur.
+Not recommended to use `tdl` in deno.
 
 `tdl` depends on native libraries and cannot be used in the browser. However,
 TDLib itself can possibly work in the browser by compiling it to WebAssembly.
@@ -502,7 +506,8 @@ OpenSSL version sufficiently similar to the version that Node.js uses
 (`node -p "process.versions.openssl"`).
 
 `tdl` tries to get around the symbol conflict issues by using `RTLD_DEEPBIND`
-when available, so these issues should be rare in practice.
+when available, so these issues should be rare in practice (unless you use
+musl).
 
 You can use `lldb` or `gdb` to check whether the symbols get resolved into
 Node.js. For example, open `lldb -- node index.js` and set these breakpoints:
@@ -551,4 +556,5 @@ symbols.
 
 - Segmentation fault
 
-The cause of the segfault might be the same as above.
+The cause of the segfault might be the same as above. If you get segmentation
+faults, open an issue.

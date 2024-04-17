@@ -98,7 +98,7 @@ Additionaly, TDLib's releasing process is unusual, and the updates generally do
 not have a specific git-tagged release. Most `prebuilt-tdlib` releases are not
 connected to a tag release in the TDLib repository. Usually, the prebuilt
 packages are generated based on the "Update version to x.y.z." TDLib commits
-([example][commit-example]). Otherwise, the commit is indicated in the list
+([example][commit-example]). Otherwise, the commit hash is indicated in the list
 below. Since `prebuilt-tdlib@td-1.8.19` (2023-09-26), the packages include a
 `prebuilds/tdlib.json` file specifying the commit hash and version of TDLib.
 
@@ -107,7 +107,7 @@ below. Since `prebuilt-tdlib@td-1.8.19` (2023-09-26), the packages include a
 ## npm tags
 
 For the always up-to-date list, check `npm info prebuilt-tdlib dist-tags`.
-Or for the all ever published versions, see `npm info prebuilt-tdlib versions`.
+For all ever published versions, see `npm info prebuilt-tdlib versions`.
 
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/latest.svg)](https://www.npmjs.com/package/prebuilt-tdlib)
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/stable.svg)](https://www.npmjs.com/package/prebuilt-tdlib)
