@@ -110,7 +110,7 @@ declare module 'tdlib-types' {
      */
     _: 'authenticationCodeTypeFirebaseAndroid',
     /** Nonce to pass to the SafetyNet Attestation API */
-    nonce: string,
+    nonce: string /* base64 */,
     /** Length of the code */
     length: number,
   }
@@ -650,7 +650,7 @@ declare module 'tdlib-types' {
     /** Thumbnail height, usually doesn't exceed 40 */
     height: number,
     /** The thumbnail in JPEG format */
-    data: string,
+    data: string /* base64 */,
   }
 
   export type thumbnailFormatJpeg = {
@@ -1109,7 +1109,7 @@ declare module 'tdlib-types' {
      * A waveform representation of the video note's audio in 5-bit format; may be
      * empty if unknown
      */
-    waveform: string,
+    waveform: string /* base64 */,
     /** Video width and height; as defined by the sender */
     length: number,
     /** Video minithumbnail; may be null */
@@ -1132,7 +1132,7 @@ declare module 'tdlib-types' {
     /** Duration of the voice note, in seconds; as defined by the sender */
     duration: number,
     /** A waveform representation of the voice note in 5-bit format */
-    waveform: string,
+    waveform: string /* base64 */,
     /** MIME type of the file; as defined by the sender */
     mime_type: string,
     /** Result of speech recognition in the voice note; may be null */
@@ -3428,7 +3428,7 @@ declare module 'tdlib-types' {
      * left to right, top to bottom. Alternatively, the first 32 bytes of the hash
      * can be converted to the hexadecimal format and printed as 32 2-digit hex numbers
      */
-    key_hash: string,
+    key_hash: string /* base64 */,
     /**
      * Secret chat layer; determines features supported by the chat partner's application.
      * Nested text entities and underline and strikethrough entities are supported
@@ -5573,14 +5573,14 @@ declare module 'tdlib-types' {
     /** A button that sends a callback query to a bot */
     _: 'inlineKeyboardButtonTypeCallback',
     /** Data to be sent to the bot via a callback query */
-    data: string,
+    data: string /* base64 */,
   }
 
   export type inlineKeyboardButtonTypeCallback$Input = {
     /** A button that sends a callback query to a bot */
     readonly _: 'inlineKeyboardButtonTypeCallback',
     /** Data to be sent to the bot via a callback query */
-    readonly data?: string,
+    readonly data?: string /* base64 */,
   }
 
   export type inlineKeyboardButtonTypeCallbackWithPassword = {
@@ -5590,7 +5590,7 @@ declare module 'tdlib-types' {
      */
     _: 'inlineKeyboardButtonTypeCallbackWithPassword',
     /** Data to be sent to the bot via a callback query */
-    data: string,
+    data: string /* base64 */,
   }
 
   export type inlineKeyboardButtonTypeCallbackWithPassword$Input = {
@@ -5600,7 +5600,7 @@ declare module 'tdlib-types' {
      */
     readonly _: 'inlineKeyboardButtonTypeCallbackWithPassword',
     /** Data to be sent to the bot via a callback query */
-    readonly data?: string,
+    readonly data?: string /* base64 */,
   }
 
   export type inlineKeyboardButtonTypeCallbackGame = {
@@ -7850,11 +7850,11 @@ declare module 'tdlib-types' {
     /** Contains encrypted Telegram Passport data credentials */
     _: 'encryptedCredentials',
     /** The encrypted credentials */
-    data: string,
+    data: string /* base64 */,
     /** The decrypted data hash */
-    hash: string,
+    hash: string /* base64 */,
     /** Secret for data decryption, encrypted with the service's public key */
-    secret: string,
+    secret: string /* base64 */,
   }
 
   export type encryptedPassportElement = {
@@ -7866,7 +7866,7 @@ declare module 'tdlib-types' {
     /** Type of Telegram Passport element */
     type: PassportElementType,
     /** Encrypted JSON-encoded data about the user */
-    data: string,
+    data: string /* base64 */,
     /** The front side of an identity document */
     front_side: datedFile,
     /** The reverse side of an identity document; may be null */
@@ -7890,7 +7890,7 @@ declare module 'tdlib-types' {
      */
     readonly _: 'inputPassportElementErrorSourceUnspecified',
     /** Current hash of the entire element */
-    readonly element_hash?: string,
+    readonly element_hash?: string /* base64 */,
   }
 
   export type inputPassportElementErrorSourceDataField$Input = {
@@ -7902,7 +7902,7 @@ declare module 'tdlib-types' {
     /** Field name */
     readonly field_name?: string,
     /** Current data hash */
-    readonly data_hash?: string,
+    readonly data_hash?: string /* base64 */,
   }
 
   export type inputPassportElementErrorSourceFrontSide$Input = {
@@ -7912,7 +7912,7 @@ declare module 'tdlib-types' {
      */
     readonly _: 'inputPassportElementErrorSourceFrontSide',
     /** Current hash of the file containing the front side */
-    readonly file_hash?: string,
+    readonly file_hash?: string /* base64 */,
   }
 
   export type inputPassportElementErrorSourceReverseSide$Input = {
@@ -7922,7 +7922,7 @@ declare module 'tdlib-types' {
      */
     readonly _: 'inputPassportElementErrorSourceReverseSide',
     /** Current hash of the file containing the reverse side */
-    readonly file_hash?: string,
+    readonly file_hash?: string /* base64 */,
   }
 
   export type inputPassportElementErrorSourceSelfie$Input = {
@@ -7932,7 +7932,7 @@ declare module 'tdlib-types' {
      */
     readonly _: 'inputPassportElementErrorSourceSelfie',
     /** Current hash of the file containing the selfie */
-    readonly file_hash?: string,
+    readonly file_hash?: string /* base64 */,
   }
 
   export type inputPassportElementErrorSourceTranslationFile$Input = {
@@ -7942,7 +7942,7 @@ declare module 'tdlib-types' {
      */
     readonly _: 'inputPassportElementErrorSourceTranslationFile',
     /** Current hash of the file containing the translation */
-    readonly file_hash?: string,
+    readonly file_hash?: string /* base64 */,
   }
 
   export type inputPassportElementErrorSourceTranslationFiles$Input = {
@@ -7952,14 +7952,14 @@ declare module 'tdlib-types' {
      */
     readonly _: 'inputPassportElementErrorSourceTranslationFiles',
     /** Current hashes of all files with the translation */
-    readonly file_hashes?: ReadonlyArray<string>,
+    readonly file_hashes?: ReadonlyArray<string /* base64 */>,
   }
 
   export type inputPassportElementErrorSourceFile$Input = {
     /** The file contains an error. The error is considered resolved when the file changes */
     readonly _: 'inputPassportElementErrorSourceFile',
     /** Current hash of the file which has the error */
-    readonly file_hash?: string,
+    readonly file_hash?: string /* base64 */,
   }
 
   export type inputPassportElementErrorSourceFiles$Input = {
@@ -7969,7 +7969,7 @@ declare module 'tdlib-types' {
      */
     readonly _: 'inputPassportElementErrorSourceFiles',
     /** Current hashes of all attached files */
-    readonly file_hashes?: ReadonlyArray<string>,
+    readonly file_hashes?: ReadonlyArray<string /* base64 */>,
   }
 
   export type inputPassportElementError$Input = {
@@ -8532,7 +8532,7 @@ declare module 'tdlib-types' {
     /** True, if this is the first recurring payment */
     is_first_recurring: boolean,
     /** Invoice payload */
-    invoice_payload: string,
+    invoice_payload: string /* base64 */,
     /** Identifier of the shipping option chosen by the user; may be empty if not applicable */
     shipping_option_id: string,
     /** Information about the order; may be null */
@@ -9561,7 +9561,7 @@ declare module 'tdlib-types' {
     /** Duration of the voice note, in seconds */
     duration: number,
     /** Waveform representation of the voice note in 5-bit format */
-    waveform: string,
+    waveform: string /* base64 */,
     /**
      * Voice note caption; may be null if empty; pass null to use an empty caption;
      * 0-getOption("message_caption_length_max") characters
@@ -9582,7 +9582,7 @@ declare module 'tdlib-types' {
     /** Duration of the voice note, in seconds */
     readonly duration?: number,
     /** Waveform representation of the voice note in 5-bit format */
-    readonly waveform?: string,
+    readonly waveform?: string /* base64 */,
     /**
      * Voice note caption; may be null if empty; pass null to use an empty caption;
      * 0-getOption("message_caption_length_max") characters
@@ -9723,7 +9723,7 @@ declare module 'tdlib-types' {
     /** Product photo height */
     photo_height: number,
     /** The invoice payload */
-    payload: string,
+    payload: string /* base64 */,
     /** Payment provider token */
     provider_token: string,
     /** JSON-encoded data about the invoice, which will be shared with the payment provider */
@@ -9758,7 +9758,7 @@ declare module 'tdlib-types' {
     /** Product photo height */
     readonly photo_height?: number,
     /** The invoice payload */
-    readonly payload?: string,
+    readonly payload?: string /* base64 */,
     /** Payment provider token */
     readonly provider_token?: string,
     /** JSON-encoded data about the invoice, which will be shared with the payment provider */
@@ -11234,7 +11234,7 @@ declare module 'tdlib-types' {
     /** A Telegram call reflector */
     _: 'callServerTypeTelegramReflector',
     /** A peer tag to be used with the reflector */
-    peer_tag: string,
+    peer_tag: string /* base64 */,
     /** True, if the server uses TCP instead of UDP */
     is_tcp: boolean,
   }
@@ -11305,7 +11305,7 @@ declare module 'tdlib-types' {
     /** A JSON-encoded call config */
     config: string,
     /** Call encryption key */
-    encryption_key: string,
+    encryption_key: string /* base64 */,
     /** Encryption key emojis fingerprint */
     emojis: Array<string>,
     /** True, if peer-to-peer connection is allowed by users privacy settings */
@@ -12502,14 +12502,14 @@ declare module 'tdlib-types' {
     /** The payload for a general callback button */
     _: 'callbackQueryPayloadData',
     /** Data that was attached to the callback button */
-    data: string,
+    data: string /* base64 */,
   }
 
   export type callbackQueryPayloadData$Input = {
     /** The payload for a general callback button */
     readonly _: 'callbackQueryPayloadData',
     /** Data that was attached to the callback button */
-    readonly data?: string,
+    readonly data?: string /* base64 */,
   }
 
   export type callbackQueryPayloadDataWithPassword = {
@@ -12518,7 +12518,7 @@ declare module 'tdlib-types' {
     /** The 2-step verification password for the current user */
     password: string,
     /** Data that was attached to the callback button */
-    data: string,
+    data: string /* base64 */,
   }
 
   export type callbackQueryPayloadDataWithPassword$Input = {
@@ -12527,7 +12527,7 @@ declare module 'tdlib-types' {
     /** The 2-step verification password for the current user */
     readonly password?: string,
     /** Data that was attached to the callback button */
-    readonly data?: string,
+    readonly data?: string /* base64 */,
   }
 
   export type callbackQueryPayloadGame = {
@@ -16802,7 +16802,7 @@ declare module 'tdlib-types' {
     /** Contains a part of a file */
     _: 'filePart',
     /** File bytes */
-    data: string,
+    data: string /* base64 */,
   }
 
   export type fileTypeNone = {
@@ -18960,7 +18960,7 @@ declare module 'tdlib-types' {
     /** The call identifier */
     call_id: number,
     /** The data */
-    data: string,
+    data: string /* base64 */,
   }
 
   export type updateUserPrivacySettingRules = {
@@ -19463,7 +19463,7 @@ declare module 'tdlib-types' {
     /** Total price for the product, in the smallest units of the currency */
     total_amount: number,
     /** Invoice payload */
-    invoice_payload: string,
+    invoice_payload: string /* base64 */,
     /** Identifier of a shipping option chosen by the user; may be empty if not applicable */
     shipping_option_id: string,
     /** Information about the order; may be null */
@@ -19692,7 +19692,7 @@ declare module 'tdlib-types' {
     /** A simple object containing a sequence of bytes; for testing only */
     _: 'testBytes',
     /** Bytes */
-    value: string,
+    value: string /* base64 */,
   }
 
   export type testVectorInt = {
@@ -19760,7 +19760,7 @@ declare module 'tdlib-types' {
      * Encryption key for the database. If the encryption key is invalid, then an error
      * with code 401 will be returned
      */
-    readonly database_encryption_key?: string,
+    readonly database_encryption_key?: string /* base64 */,
     /**
      * Pass true to keep information about downloaded and uploaded files between application
      * restarts
@@ -20017,7 +20017,7 @@ declare module 'tdlib-types' {
      */
     readonly _: 'setDatabaseEncryptionKey',
     /** New encryption key */
-    readonly new_encryption_key?: string,
+    readonly new_encryption_key?: string /* base64 */,
   }
 
   export type getPasswordState = {
@@ -24549,7 +24549,7 @@ declare module 'tdlib-types' {
     /** The offset from which to write the data to the file */
     readonly offset?: number,
     /** The data to write */
-    readonly data?: string,
+    readonly data?: string /* base64 */,
   }
 
   export type setFileGenerationProgress = {
@@ -25001,7 +25001,7 @@ declare module 'tdlib-types' {
     /** Call identifier */
     readonly call_id?: number,
     /** The data */
-    readonly data?: string,
+    readonly data?: string /* base64 */,
   }
 
   export type discardCall = {
@@ -28037,7 +28037,7 @@ declare module 'tdlib-types' {
      */
     readonly _: 'assignAppStoreTransaction',
     /** App Store receipt */
-    readonly receipt?: string,
+    readonly receipt?: string /* base64 */,
     /** Transaction purpose */
     readonly purpose?: StorePaymentPurpose$Input,
   }
@@ -28373,7 +28373,7 @@ declare module 'tdlib-types' {
      */
     readonly _: 'testCallBytes',
     /** Bytes to return */
-    readonly x?: string,
+    readonly x?: string /* base64 */,
   }
 
   export type testCallVectorInt = {

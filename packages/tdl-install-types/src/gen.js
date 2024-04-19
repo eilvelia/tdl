@@ -59,8 +59,7 @@ function generate (
         case 'int53': return 'number'
         case 'int64': return 'number | string'
         case 'Bool': return 'boolean'
-        // TODO: Generate a comment signifying the string is base64-encoded?
-        case 'bytes': return 'string' // base64 string
+        case 'bytes': return 'string /* base64 */'
         default: return input ? p.type + INPUT_SUFFIX : p.type
       }
     })()
