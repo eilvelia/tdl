@@ -14,7 +14,7 @@
     "integration-tests": "jest tests/integration && cross-env TEST_TDL_TDLIB_ADDON=1 jest tests/integration && cross-env TEST_NEW_TDJSON=1 jest tests/integration",
     "test:all": "npm run test && npm run integration-tests",
     "coverage": "jest --coverage",
-    "prepare": "npm run clean && npm run build",
+    "prepare": "npm run build",
     "prepack": "npm test",
     "ts:check": "tsc --noEmit",
     "flow:check": "flow check --include-warnings --max-warnings 0"
