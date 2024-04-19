@@ -2,7 +2,7 @@ name: CI
 on: [push, pull_request]
 jobs:
   build-and-test:
-    name: 'Test (Node v${{ matrix.node }} on ${{ matrix.os }})'
+    name: 'Test / Node v${{ matrix.node }} / ${{ matrix.os }})'
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -10,7 +10,7 @@ jobs:
         os:
           - ubuntu-latest
           - macos-latest
-          - windows-2019
+          - windows-latest
         node:
           - 20
         include:
