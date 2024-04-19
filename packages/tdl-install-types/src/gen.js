@@ -38,7 +38,7 @@ function formatDesc (desc/*: string */, indent = 0) {
 function generate (
   source/*: string */,
   lang/*: 'typescript' | 'flow' */,
-  header/*: string */
+  header/*: string[] */
 )/*: string */ {
   const TS = lang !== 'flow'
 
@@ -237,7 +237,7 @@ function generate (
 
   return [
     TS ? null : '// @flow',
-    header,
+    header.join(EOL),
     'declare module \'tdlib-types\' {',
     addIndent(2, [
       objectTypes,

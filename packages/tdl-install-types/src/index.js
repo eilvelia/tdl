@@ -5,6 +5,8 @@ const fetch = (...args) => import('node-fetch')
   .then(({ default: fetch }) => fetch(...args))
 const { generate } = require('./gen')
 
+const packageVersion = require('../package.json').version
+
 const argv = [...process.argv].slice(2)
 
 const help = `\
@@ -29,13 +31,13 @@ const help = `\
 
   Options:
     --lib
-      Interpret <target> as a path to the tdjson shared library. This is the
-      default behavior if <target> ends with .so, .dylib, or .dll.
+      Interpret <target> as a file path to the tdjson shared library. This is
+      the default behavior if <target> ends with .so, .dylib, or .dll.
       Can fail if the heuristics cannot find the version inside the shared
       library, especially for older TDLib versions.
 
     --tl
-      Interpret <target> as a path to a td_api.tl file describing the TDLib
+      Interpret <target> as a file path to a td_api.tl file describing the TDLib
       schema in the TL language. This is the default behavior if <target> ends
       with .tl.
 
@@ -60,18 +62,13 @@ const help = `\
       Output generated Flow types to <path>.
       Defaults to flow-typed/tdlib-types_vx.x.x.js.
 
-    --help        Print this text and exit.
-    -v            Print version and exit.`
+    --github-repo <username>/<repository>
+      Set the TDLib GitHub repository.
+      Can be set, for example, to the tdlight's repository.
+      Defaults to tdlib/td.
 
-if (argv.includes('--help')) {
-  console.log(help)
-  process.exit()
-}
-
-if (argv.includes('-v')) {
-  console.log(require('../package.json').version)
-  process.exit()
-}
+    -h, --help            Print this text and exit.
+    -v, --version         Print version and exit.`
 
 const LIB = 'lib'
 const GIT_REF = 'git-ref'
@@ -83,64 +80,86 @@ let type
 let tsOutput = 'tdlib-types.d.ts'
 let flow = false
 let flowOutput = 'flow-typed/tdlib-types_vx.x.x.js'
+let githubRepo = 'tdlib/td'
 let defaultTarget = false
 
-for (let i = 0; i < argv.length; i++) {
-  const arg = argv[i]
-  switch (arg) {
-    case '--lib':
-      type = LIB
-      break
-    case '--tl':
-      type = TL
-      break
-    case '--git-ref':
-      type = GIT_REF
-      break
-    case '--prebuilt-tdlib':
-      type = LIB
-      target = PREBUILT_TDLIB_TARGET
-      break
-    case '-o':
-      if (!argv[i + 1]) {
-        console.error('-o expectes a path')
-        process.exit(1)
-      }
-      tsOutput = argv[i + 1]
-      i++
-      break
-    case '--flow':
-      flow = true
-      break
-    case '--flow-output':
-      if (!argv[i + 1]) {
-        console.error('--flow-output expects a path')
-        process.exit(1)
-      }
-      flowOutput = argv[i + 1]
-      i++
-      break
-    default:
-      if (arg.startsWith('-')) {
-        console.error(`WARN Unrecognized option ${arg}`)
-        break
-      }
-      if (target === PREBUILT_TDLIB_TARGET) break
-      target = arg
-      if (type != null) break
-      if (target.endsWith('.so') || target.endsWith('.dylib') || target.endsWith('.dll'))
-        type = LIB
-      else if (target.endsWith('.tl'))
-        type = TL
-      else
-        type = GIT_REF
+function parseArgs () {
+  if (argv.includes('--help') || argv.includes('-h')) {
+    console.log(help)
+    return false
   }
-}
-
-if (!target) {
-  type = LIB
-  target = PREBUILT_TDLIB_TARGET
-  defaultTarget = true
+  if (argv.includes('--version') || argv.includes('-v')) {
+    console.log(packageVersion)
+    return false
+  }
+  for (let i = 0; i < argv.length; i++) {
+    const arg = argv[i]
+    switch (arg) {
+      case '--lib':
+        type = LIB
+        break
+      case '--tl':
+        type = TL
+        break
+      case '--git-ref':
+        type = GIT_REF
+        break
+      case '--prebuilt-tdlib':
+        type = LIB
+        target = PREBUILT_TDLIB_TARGET
+        break
+      case '-o':
+        if (!argv[i + 1]) {
+          console.error(`${arg} expects a file path`)
+          process.exitCode = 1
+          return false
+        }
+        tsOutput = argv[i + 1]
+        i++
+        break
+      case '--flow':
+        flow = true
+        break
+      case '--flow-output':
+        if (!argv[i + 1]) {
+          console.error(`${arg} expects a file path`)
+          process.exitCode = 1
+          return false
+        }
+        flowOutput = argv[i + 1]
+        i++
+        break
+      case '--github-repo':
+        if (!argv[i + 1] || argv[i + 1].startsWith('-')) {
+          console.error(`${arg} expects a value`)
+          process.exitCode = 1
+          return false
+        }
+        githubRepo = argv[i + 1]
+        i++
+        break
+      default:
+        if (arg.startsWith('-')) {
+          console.error(`WARN Unrecognized option ${arg}`)
+          break
+        }
+        if (target === PREBUILT_TDLIB_TARGET) break
+        target = arg
+        if (type != null) break
+        if (target.endsWith('.so') || target.endsWith('.dylib') || target.endsWith('.dll'))
+          type = LIB
+        else if (target.endsWith('.tl'))
+          type = TL
+        else
+          type = GIT_REF
+    }
+  }
+  if (!target) {
+    type = LIB
+    target = PREBUILT_TDLIB_TARGET
+    defaultTarget = true
+  }
+  return true
 }
 
 function writeFile (file, contents) {
@@ -151,20 +170,22 @@ function writeFile (file, contents) {
 }
 
 function fromSchema (schema, { ver, hash } = {}) {
-  let headerComment = '// Autogenerated types for TDLib'
-  if (ver) headerComment += ` v${ver}`
-  if (hash) headerComment += ` (${hash})`
-  const tsGenerated = generate(schema, 'typescript', headerComment)
+  let line1 = '// Types for TDLib'
+  if (ver) line1 += ` v${ver}`
+  if (hash) line1 += ` (${hash})`
+  const line2 = `// Generated using tdl-install-types v${packageVersion}`
+  const header = [line1, line2]
+  const tsGenerated = generate(schema, 'typescript', header)
   writeFile(tsOutput, tsGenerated)
   if (flow) {
-    const flowGenerated = generate(schema, 'flow', headerComment)
+    const flowGenerated = generate(schema, 'flow', header)
     writeFile(flowOutput, flowGenerated)
   }
 }
 
 async function fetchTdVersion (ref) {
   try {
-    const res = await fetch(`https://raw.githubusercontent.com/tdlib/td/${ref}/CMakeLists.txt`)
+    const res = await fetch(`https://raw.githubusercontent.com/${githubRepo}/${ref}/CMakeLists.txt`)
     const text = await res.text()
     if (text.includes('404: Not Found')) throw Error('Not found')
     const version = text.match(/TDLib VERSION ([\w.]+) /)?.[1]
@@ -177,7 +198,7 @@ async function fetchTdVersion (ref) {
 }
 
 async function fromGitRef (ref, ver) {
-  const res = await fetch(`https://raw.githubusercontent.com/tdlib/td/${ref}/td/generate/scheme/td_api.tl`)
+  const res = await fetch(`https://raw.githubusercontent.com/${githubRepo}/${ref}/td/generate/scheme/td_api.tl`)
   const schema = await res.text()
   if (schema.length < 2000)
     throw Error(`Failed to fetch schema: ${schema}`)
@@ -241,11 +262,15 @@ async function fromPrebuiltTdlib () {
     } else {
       console.error(String(e))
     }
-    process.exit(1)
+    process.exitCode = 1
   }
 }
 
-if (type === TL) {
+const shouldContinue = parseArgs()
+
+if (!shouldContinue) {
+  // Nothing, exit
+} else if (type === TL) {
   const schema = fs.readFileSync(target).toString()
   fromSchema(schema)
 } else if (type === GIT_REF) {

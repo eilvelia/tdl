@@ -2,6 +2,14 @@
 
 <!-- Hi! -->
 
+## Unreleased tdl-install-types@0.2.0
+
+- Added a `--github-repo` CLI option.
+- Added `-h` and `--version` aliases.
+- The generator now indicates that the `bytes` parameters are base64.
+- The version of `tdl-install-types` is now included in the header of the
+  generated files.
+
 ## tdl@7.4.1 (2024-02-16)
 
 - Fixed a race condition (first reported when used in bun). This was publised as
