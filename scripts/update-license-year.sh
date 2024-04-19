@@ -2,4 +2,4 @@
 
 # Requires fd and sd
 
-fd LICENSE | xargs -L 1 sd '2018-\d{4}' "2018-$(date '+%Y')"
+fd LICENSE | xargs -L 1 sd ' (\d{4})-\d{4} ' " \$1-$(date '+%Y') "
