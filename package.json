@@ -40,7 +40,7 @@
     "jest-extended": "^4.0.1",
     "jest-specific-snapshot": "^8.0.0",
     "node-gyp": "^10.0.1",
-    "prebuildify": "^5.0.1",
+    "prebuildify": "^6.0.1",
     "rimraf": "^5.0.3",
     "tdl-tdlib-addon": "^1.2.2",
     "typescript": "^5.4.5"
