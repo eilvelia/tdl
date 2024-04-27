@@ -1,16 +1,18 @@
 // @flow
 
-import * as tdl from '../packages/tdl'
-import { getTdjson } from '../packages/prebuilt-tdlib'
+import * as tdl from '../../packages/tdl'
+import { getTdjson } from '../../packages/prebuilt-tdlib'
 import * as Td from 'tdlib-types'
 
-const { TdlError } = tdl
+const { TDLibError, UnknownError } = tdl
 
 tdl.configure({ tdjson: 'libtdjson.dylib', libdir: '/usr/local/lib' })
 tdl.configure({ verbosityLevel: 'default' })
 tdl.configure({ libdir: __dirname })
 tdl.configure({ libdir: '' })
 tdl.configure({ tdjson: getTdjson() })
+
+tdl.configure({ receiveTimeout: 10 })
 
 getTdjson({ libc: 'glibc' })
 
@@ -27,10 +29,10 @@ tdl.createClient({
     device_model: 'unknown'
   }
 })
-tdl.createClient({ bare: true })
-tdl.createClient({ apiId: 2, apiHash: 'hash', receiveTimeout: 10 })
 // $FlowExpectedError[incompatible-call]
 tdl.createClient()
+
+tdl.createBareClient()
 
 tdl.init()
 
@@ -38,6 +40,11 @@ tdl.execute({
   _: 'getTextEntities',
   text: '@telegram /test_command https://telegram.org telegram.me'
 })
+
+tdl.setLogMessageCallback(4, a => console.log(a))
+tdl.setLogMessageCallback(4, null)
+// $FlowExpectedError[incompatible-call]
+tdl.setLogMessageCallback('1234')
 
 async function main () {
   await client.login(() => ({
@@ -89,11 +96,6 @@ async function main () {
   // $FlowExpectedError[incompatible-call]
   await client.loginAsBot(Promise.resolve('token'))
 
-  client.setLogFatalErrorCallback(a => console.log(a))
-  client.setLogFatalErrorCallback(null)
-  // $FlowExpectedError[incompatible-call]
-  client.setLogFatalErrorCallback('1234')
-
   const res = client.execute({
     _: 'getTextEntities',
     text: '@telegram /test_command https://telegram.org telegram.me'
@@ -133,10 +135,7 @@ async function main () {
   await client.close()
 }
 
-client
-  .on('error', e => console.log('error', e))
-  .on('auth-not-needed', () => {})
-  .on('auth-needed', () => {})
+client.on('error', e => console.log('error', e))
 
 // $FlowExpectedError[incompatible-call]
 client.on('foo')
@@ -150,9 +149,9 @@ client.once('update', e => {
 })
 
 client.on('error', e => {
-  if (e instanceof TdlError) {
-    console.log((e: TdlError))
-    console.log(e.err)
+  if (e instanceof TDLibError) {
+    console.log((e: TDLibError))
+    console.log(e.code, e.message)
     // $FlowExpectedError[prop-missing]
     console.log(e.ab)
     return
@@ -163,8 +162,6 @@ client.on('error', e => {
 })
 
 client.removeListener('update', () => {})
-client.removeListener('update', () => {}, true)
-client.removeListener('update', () => {}, false)
 // $FlowExpectedError[incompatible-call]
 client.removeListener('update', () => {}, 'abc')
 // $FlowExpectedError[incompatible-call]
@@ -172,7 +169,7 @@ client.removeListener('myevent', () => {})
 // $FlowExpectedError[incompatible-call]
 client.removeListener('update', 'abc')
 
-client.emit('auth-needed')
+client.emit('close')
 
 main().catch(console.error)
 
@@ -183,7 +180,3 @@ const fmtInput: Td.formattedText$Input = fmt
 // subtyping should also work correctly with 'may be null' fields
 declare var chatFolder: Td.chatFolder
 const chatFolderInput: Td.chatFolder$Input = chatFolder
-
-const oldclient = new tdl.Client({}, { apiId: 2, apiHash: 'hash' })
-oldclient.invoke({ _: 'getMe' })
-const oldclient2 = tdl.Client.create({}, { apiId: 2, apiHash: 'hash' })

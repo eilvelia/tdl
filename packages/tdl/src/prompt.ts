@@ -1,6 +1,4 @@
-// @flow
-
-import * as readline from 'readline'
+import * as readline from 'node:readline'
 
 function prompt (query: string): Promise<string> {
   return new Promise((resolve, reject) => {

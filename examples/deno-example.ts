@@ -1,11 +1,11 @@
 // Simple deno example. Requires --allow-read --allow-env --allow-ffi.
 // WARNING: May be unstable.
 
-import * as tdl from 'npm:tdl@7'
+import * as tdl from 'npm:tdl@8'
 // Also use prebuilt TDLib:
-import { getTdjson } from 'npm:prebuilt-tdlib@td-1.8.19'
+import { getTdjson } from 'npm:prebuilt-tdlib@td-1.8.27'
 
-tdl.configure({ tdjson: getTdjson(), useNewTdjsonInterface: true })
+tdl.configure({ tdjson: getTdjson() })
 
 const client = tdl.createClient({
   apiId: 2222, // Your api_id

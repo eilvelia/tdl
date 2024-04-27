@@ -1,4 +1,4 @@
-// Types for TDLib v1.8.26 (b1b33cf42790ca10ef34abc2ac8828ae704f1f56)
+// Types for TDLib v1.8.28 (38d31da77a72619cf7ec5d479338a48274cc7446)
 // Generated using tdl-install-types v0.2.0-dev
 declare module 'tdlib-types' {
   export type error = {
@@ -681,17 +681,20 @@ declare module 'tdlib-types' {
   }
 
   export type thumbnailFormatTgs = {
-    /** The thumbnail is in TGS format. It will be used only for TGS sticker sets */
+    /** The thumbnail is in TGS format. It will be used only for sticker sets */
     _: 'thumbnailFormatTgs',
   }
 
   export type thumbnailFormatWebm = {
-    /** The thumbnail is in WEBM format. It will be used only for WEBM sticker sets */
+    /** The thumbnail is in WEBM format. It will be used only for sticker sets */
     _: 'thumbnailFormatWebm',
   }
 
   export type thumbnailFormatWebp = {
-    /** The thumbnail is in WEBP format. It will be used only for some stickers */
+    /**
+     * The thumbnail is in WEBP format. It will be used only for some stickers and
+     * sticker sets
+     */
     _: 'thumbnailFormatWebp',
   }
 
@@ -1147,7 +1150,7 @@ declare module 'tdlib-types' {
     _: 'animatedEmoji',
     /**
      * Sticker for the emoji; may be null if yet unknown for a custom emoji. If the
-     * sticker is a custom emoji, it can have arbitrary format different from stickerFormatTgs
+     * sticker is a custom emoji, then it can have arbitrary format
      */
     sticker?: sticker,
     /** Expected width of the sticker, which can be used if the sticker is null */
@@ -1452,6 +1455,8 @@ declare module 'tdlib-types' {
      * to this bot
      */
     need_location: boolean,
+    /** True, if the bot supports connection to Telegram Business accounts */
+    can_connect_to_business: boolean,
     /** True, if the bot can be added to attachment or side menu */
     can_be_added_to_attachment_menu: boolean,
   }
@@ -1529,6 +1534,37 @@ declare module 'tdlib-types' {
     readonly address?: string,
   }
 
+  export type birthdate = {
+    /** Represents a birthdate of a user */
+    _: 'birthdate',
+    /** Day of the month; 1-31 */
+    day: number,
+    /** Month of the year; 1-12 */
+    month: number,
+    /** Birth year; 0 if unknown */
+    year: number,
+  }
+
+  export type birthdate$Input = {
+    /** Represents a birthdate of a user */
+    readonly _: 'birthdate',
+    /** Day of the month; 1-31 */
+    readonly day?: number,
+    /** Month of the year; 1-12 */
+    readonly month?: number,
+    /** Birth year; 0 if unknown */
+    readonly year?: number,
+  }
+
+  export type closeBirthdayUser = {
+    /** Describes a user that had or will have a birthday soon */
+    _: 'closeBirthdayUser',
+    /** User identifier */
+    user_id: number,
+    /** Birthdate of the user */
+    birthdate: birthdate,
+  }
+
   export type businessAwayMessageScheduleAlways = {
     /** Send away messages always */
     _: 'businessAwayMessageScheduleAlways',
@@ -1590,6 +1626,11 @@ declare module 'tdlib-types' {
     _: 'businessRecipients',
     /** Identifiers of selected private chats */
     chat_ids: Array<number>,
+    /**
+     * Identifiers of private chats that are always excluded; for businessConnectedBot
+     * only
+     */
+    excluded_chat_ids: Array<number>,
     /** True, if all existing private chats are selected */
     select_existing_chats: boolean,
     /** True, if all new private chats are selected */
@@ -1610,6 +1651,11 @@ declare module 'tdlib-types' {
     readonly _: 'businessRecipients',
     /** Identifiers of selected private chats */
     readonly chat_ids?: ReadonlyArray<number>,
+    /**
+     * Identifiers of private chats that are always excluded; for businessConnectedBot
+     * only
+     */
+    readonly excluded_chat_ids?: ReadonlyArray<number>,
     /** True, if all existing private chats are selected */
     readonly select_existing_chats?: boolean,
     /** True, if all new private chats are selected */
@@ -1719,6 +1765,37 @@ declare module 'tdlib-types' {
     readonly can_reply?: boolean,
   }
 
+  export type businessStartPage = {
+    /** Describes settings for a business account start page */
+    _: 'businessStartPage',
+    /** Title text of the start page */
+    title: string,
+    /** Message text of the start page */
+    message: string,
+    /** Greeting sticker of the start page; may be null if none */
+    sticker?: sticker,
+  }
+
+  export type inputBusinessStartPage$Input = {
+    /** Describes settings for a business account start page to set */
+    readonly _: 'inputBusinessStartPage',
+    /**
+     * Title text of the start page; 0-getOption("business_start_page_title_length_max")
+     * characters
+     */
+    readonly title?: string,
+    /**
+     * Message text of the start page; 0-getOption("business_start_page_message_length_max")
+     * characters
+     */
+    readonly message?: string,
+    /**
+     * Greeting sticker of the start page; pass null if none. The sticker must belong
+     * to a sticker set and must not be a custom emoji
+     */
+    readonly sticker?: InputFile$Input,
+  }
+
   export type businessOpeningHoursInterval = {
     /** Describes an interval of time when the business is open */
     _: 'businessOpeningHoursInterval',
@@ -1775,6 +1852,46 @@ declare module 'tdlib-types' {
      * current user
      */
     away_message_settings?: businessAwayMessageSettings,
+    /** Information about start page of the account; may be null if none */
+    start_page?: businessStartPage,
+  }
+
+  export type businessChatLink = {
+    /** Contains information about a business chat link */
+    _: 'businessChatLink',
+    /** The HTTPS link */
+    link: string,
+    /** Message draft text that will be added to the input field */
+    text: formattedText,
+    /** Link title */
+    title: string,
+    /** Number of times the link was used */
+    view_count: number,
+  }
+
+  export type businessChatLinks = {
+    /** Contains a list of business chat links created by the user */
+    _: 'businessChatLinks',
+    /** List of links */
+    links: Array<businessChatLink>,
+  }
+
+  export type inputBusinessChatLink$Input = {
+    /** Describes a business chat link to create or edit */
+    readonly _: 'inputBusinessChatLink',
+    /** Message draft text that will be added to the input field */
+    readonly text?: formattedText$Input,
+    /** Link title */
+    readonly title?: string,
+  }
+
+  export type businessChatLinkInfo = {
+    /** Contains information about a business chat link */
+    _: 'businessChatLinkInfo',
+    /** Identifier of the private chat that created the link */
+    chat_id: number,
+    /** Message draft text that must be added to the input field */
+    text: formattedText,
   }
 
   export type chatPhotoStickerTypeRegularOrMask = {
@@ -2413,7 +2530,10 @@ declare module 'tdlib-types' {
      * toggleBotUsernameIsActive, or toggleSupergroupUsernameIsActive
      */
     disabled_usernames: Array<string>,
-    /** The active username, which can be changed with setUsername or setSupergroupUsername */
+    /**
+     * The active username, which can be changed with setUsername or setSupergroupUsername.
+     * Information about other active usernames can be received using getCollectibleItemInfo
+     */
     editable_username: string,
   }
 
@@ -2603,6 +2723,10 @@ declare module 'tdlib-types' {
     set_chat_background: boolean,
     /** A short user bio; may be null for bots */
     bio?: formattedText,
+    /** Birthdate of the user; may be null if unknown */
+    birthdate?: birthdate,
+    /** Identifier of the personal chat of the user; 0 if none */
+    personal_chat_id: number,
     /** The list of available options for gifting Telegram Premium to the user */
     premium_gift_options: Array<premiumPaymentOption>,
     /**
@@ -3344,6 +3468,8 @@ declare module 'tdlib-types' {
     can_set_location: boolean,
     /** True, if the supergroup or channel statistics are available */
     can_get_statistics: boolean,
+    /** True, if the supergroup or channel revenue statistics are available */
+    can_get_revenue_statistics: boolean,
     /** True, if aggressive anti-spam checks can be enabled or disabled in the supergroup */
     can_toggle_aggressive_anti_spam: boolean,
     /**
@@ -3353,6 +3479,11 @@ declare module 'tdlib-types' {
      * value of this field is only available to chat administrators
      */
     is_all_history_available: boolean,
+    /**
+     * True, if the chat can have sponsored messages. The value of this field is only
+     * available to the owner of the chat
+     */
+    can_have_sponsored_messages: boolean,
     /**
      * True, if aggressive anti-spam checks are enabled in the supergroup. The value
      * of this field is only available to chat administrators
@@ -3652,7 +3783,7 @@ declare module 'tdlib-types' {
      * for other forwards or if unknown
      */
     source?: forwardSource,
-    /** The type of a public service announcement for the forwarded message */
+    /** The type of public service announcement for the forwarded message */
     public_service_announcement_type: string,
   }
 
@@ -3948,6 +4079,11 @@ declare module 'tdlib-types' {
     /** True, if the message is pinned */
     is_pinned: boolean,
     /**
+     * True, if the message was sent because of a scheduled action by the message sender,
+     * for example, as away, or greeting service message
+     */
+    is_from_offline: boolean,
+    /**
      * True, if the message can be edited. For live location and poll messages this
      * fields shows whether editMessageLiveLocation or stopPoll can be used with this
      * message by the application
@@ -4042,8 +4178,13 @@ declare module 'tdlib-types' {
      * setting of the chat, in seconds; 0 if never
      */
     auto_delete_in: number,
-    /** If non-zero, the user identifier of the bot through which this message was sent */
+    /**
+     * If non-zero, the user identifier of the inline bot through which this message
+     * was sent
+     */
     via_bot_user_id: number,
+    /** If non-zero, the user identifier of the business bot that sent this message */
+    sender_business_bot_user_id: number,
     /**
      * Number of times the sender of the message boosted the supergroup at the time
      * the message was sent; 0 if none or unknown. For messages sent by the current
@@ -4053,8 +4194,8 @@ declare module 'tdlib-types' {
     /** For channel posts and anonymous group messages, optional author signature */
     author_signature: string,
     /**
-     * Unique identifier of an album this message belongs to. Only audios, documents,
-     * photos and videos can be grouped together in albums
+     * Unique identifier of an album this message belongs to; 0 if none. Only audios,
+     * documents, photos and videos can be grouped together in albums
      */
     media_album_id: number | string,
     /**
@@ -4138,6 +4279,22 @@ declare module 'tdlib-types' {
     total_count: number,
     /** Information about messages sent */
     days: Array<messageCalendarDay>,
+  }
+
+  export type businessMessage = {
+    /** Describes a message from a business account as received by a bot */
+    _: 'businessMessage',
+    /** The message */
+    message: message,
+    /** Message that is replied by the message in the same chat; may be null if none */
+    reply_to_message?: message,
+  }
+
+  export type businessMessages = {
+    /** Contains a list of messages from a business account as received by a bot */
+    _: 'businessMessages',
+    /** List of business messages */
+    messages: Array<businessMessage>,
   }
 
   export type messageSourceChatHistory$Input = {
@@ -4268,6 +4425,8 @@ declare module 'tdlib-types' {
     message_id: number,
     /** True, if the message needs to be labeled as "recommended" instead of "sponsored" */
     is_recommended: boolean,
+    /** True, if the message can be reported to Telegram moderators through reportChatSponsoredMessage */
+    can_be_reported: boolean,
     /** Content of the message. Currently, can be only of the type messageText */
     content: MessageContent,
     /** Information about the sponsor of the message */
@@ -4291,6 +4450,50 @@ declare module 'tdlib-types' {
      * one sponsored message must be shown after all ordinary messages
      */
     messages_between: number,
+  }
+
+  export type reportChatSponsoredMessageOption = {
+    /** Describes an option to report a sponsored message */
+    _: 'reportChatSponsoredMessageOption',
+    /** Unique identifier of the option */
+    id: string /* base64 */,
+    /** Text of the option */
+    text: string,
+  }
+
+  export type reportChatSponsoredMessageResultOk = {
+    /** The message was reported successfully */
+    _: 'reportChatSponsoredMessageResultOk',
+  }
+
+  export type reportChatSponsoredMessageResultFailed = {
+    /** The sponsored message is too old or not found */
+    _: 'reportChatSponsoredMessageResultFailed',
+  }
+
+  export type reportChatSponsoredMessageResultOptionRequired = {
+    /**
+     * The user must choose an option to report the message and repeat request with
+     * the chosen option
+     */
+    _: 'reportChatSponsoredMessageResultOptionRequired',
+    /** Title for the option choice */
+    title: string,
+    /** List of available options */
+    options: Array<reportChatSponsoredMessageOption>,
+  }
+
+  export type reportChatSponsoredMessageResultAdsHidden = {
+    /** Sponsored messages were hidden for the user in all chats */
+    _: 'reportChatSponsoredMessageResultAdsHidden',
+  }
+
+  export type reportChatSponsoredMessageResultPremiumRequired = {
+    /**
+     * The user asked to hide sponsored messages, but Telegram Premium is required
+     * for this
+     */
+    _: 'reportChatSponsoredMessageResultPremiumRequired',
   }
 
   export type fileDownload = {
@@ -4683,7 +4886,8 @@ declare module 'tdlib-types' {
     icon?: chatFolderIcon,
     /**
      * The identifier of the chosen color for the chat folder icon; from -1 to 6. If
-     * -1, then color is didabled
+     * -1, then color is disabled. Can't be changed if folder tags are disabled or
+     * the current user doesn't have Telegram Premium subscription
      */
     color_id: number,
     /** True, if at least one link has been created for the folder */
@@ -4738,7 +4942,8 @@ declare module 'tdlib-types' {
     readonly icon?: chatFolderIcon$Input,
     /**
      * The identifier of the chosen color for the chat folder icon; from -1 to 6. If
-     * -1, then color is didabled
+     * -1, then color is disabled. Can't be changed if folder tags are disabled or
+     * the current user doesn't have Telegram Premium subscription
      */
     readonly color_id?: number,
     /** True, if at least one link has been created for the folder */
@@ -4792,7 +4997,7 @@ declare module 'tdlib-types' {
     icon: chatFolderIcon,
     /**
      * The identifier of the chosen color for the chat folder icon; from -1 to 6. If
-     * -1, then color is didabled
+     * -1, then color is disabled
      */
     color_id: number,
     /** True, if at least one link has been created for the folder */
@@ -5023,6 +5228,22 @@ declare module 'tdlib-types' {
     tags: Array<savedMessagesTag>,
   }
 
+  export type businessBotManageBar = {
+    /** Contains information about a business bot that manages the chat */
+    _: 'businessBotManageBar',
+    /** User identifier of the bot */
+    bot_user_id: number,
+    /** URL to be opened to manage the bot */
+    manage_url: string,
+    /**
+     * True, if the bot is paused. Use toggleBusinessConnectedBotChatIsPaused to change
+     * the value of the field
+     */
+    is_bot_paused: boolean,
+    /** True, if the bot can reply */
+    can_bot_reply: boolean,
+  }
+
   export type videoChat = {
     /** Describes a video chat */
     _: 'videoChat',
@@ -5146,6 +5367,11 @@ declare module 'tdlib-types' {
      * bar; may be null if none
      */
     action_bar?: ChatActionBar,
+    /**
+     * Information about bar for managing a business bot in the chat; may be null if
+     * none
+     */
+    business_bot_manage_bar?: businessBotManageBar,
     /** Information about video chat of the chat */
     video_chat: videoChat,
     /** Information about pending join requests; may be null if none */
@@ -5172,6 +5398,39 @@ declare module 'tdlib-types' {
     total_count: number,
     /** List of chat identifiers */
     chat_ids: Array<number>,
+  }
+
+  export type failedToAddMember = {
+    /** Contains information about a user that has failed to be added to a chat */
+    _: 'failedToAddMember',
+    /** User identifier */
+    user_id: number,
+    /**
+     * True, if subscription to Telegram Premium would have allowed to add the user
+     * to the chat
+     */
+    premium_would_allow_invite: boolean,
+    /**
+     * True, if subscription to Telegram Premium is required to send the user chat
+     * invite link
+     */
+    premium_required_to_send_messages: boolean,
+  }
+
+  export type failedToAddMembers = {
+    /** Represents a list of users that has failed to be added to a chat */
+    _: 'failedToAddMembers',
+    /** Information about users that weren't added to the chat */
+    failed_to_add_members: Array<failedToAddMember>,
+  }
+
+  export type createdBasicGroupChat = {
+    /** Contains information about a newly created basic group chat */
+    _: 'createdBasicGroupChat',
+    /** Chat identifier */
+    chat_id: number,
+    /** Information about failed to add members */
+    failed_to_add_members: failedToAddMembers,
   }
 
   export type chatNearby = {
@@ -5373,6 +5632,12 @@ declare module 'tdlib-types' {
     user_is_premium: boolean,
     /** The maximum number of users to share */
     max_quantity: number,
+    /** Pass true to request name of the users; bots only */
+    request_name: boolean,
+    /** Pass true to request username of the users; bots only */
+    request_username: boolean,
+    /** Pass true to request photo of the users; bots only */
+    request_photo: boolean,
   }
 
   export type keyboardButtonTypeRequestUsers$Input = {
@@ -5400,6 +5665,12 @@ declare module 'tdlib-types' {
     readonly user_is_premium?: boolean,
     /** The maximum number of users to share */
     readonly max_quantity?: number,
+    /** Pass true to request name of the users; bots only */
+    readonly request_name?: boolean,
+    /** Pass true to request username of the users; bots only */
+    readonly request_username?: boolean,
+    /** Pass true to request photo of the users; bots only */
+    readonly request_photo?: boolean,
   }
 
   export type keyboardButtonTypeRequestChat = {
@@ -5440,6 +5711,12 @@ declare module 'tdlib-types' {
      * chats only
      */
     bot_is_member: boolean,
+    /** Pass true to request title of the chat; bots only */
+    request_title: boolean,
+    /** Pass true to request username of the chat; bots only */
+    request_username: boolean,
+    /** Pass true to request photo of the chat; bots only */
+    request_photo: boolean,
   }
 
   export type keyboardButtonTypeRequestChat$Input = {
@@ -5480,6 +5757,12 @@ declare module 'tdlib-types' {
      * chats only
      */
     readonly bot_is_member?: boolean,
+    /** Pass true to request title of the chat; bots only */
+    readonly request_title?: boolean,
+    /** Pass true to request username of the chat; bots only */
+    readonly request_username?: boolean,
+    /** Pass true to request photo of the chat; bots only */
+    readonly request_photo?: boolean,
   }
 
   export type keyboardButtonTypeWebApp = {
@@ -6072,6 +6355,34 @@ declare module 'tdlib-types' {
      * preview will be shown below the message text; ignored in secret chats
      */
     readonly show_above_text?: boolean,
+  }
+
+  export type sharedUser = {
+    /** Contains information about a user shared with a bot */
+    _: 'sharedUser',
+    /** User identifier */
+    user_id: number,
+    /** First name of the user; for bots only */
+    first_name: string,
+    /** Last name of the user; for bots only */
+    last_name: string,
+    /** Username of the user; for bots only */
+    username: string,
+    /** Profile photo of the user; for bots only; may be null */
+    photo?: photo,
+  }
+
+  export type sharedChat = {
+    /** Contains information about a chat shared with a bot */
+    _: 'sharedChat',
+    /** Chat identifier */
+    chat_id: number,
+    /** Title of the chat; for bots only */
+    title: string,
+    /** Username of the chat; for bots only */
+    username: string,
+    /** Photo of the chat; for bots only; may be null */
+    photo?: photo,
   }
 
   export type richTextPlain = {
@@ -6714,8 +7025,42 @@ declare module 'tdlib-types' {
      * by the user
      */
     formatted_phone_number: string,
-    /** True, if the phone number was bought on Fragment and isn't tied to a SIM card */
+    /**
+     * True, if the phone number was bought at https://fragment.com and isn't tied
+     * to a SIM card. Information about the phone number can be received using getCollectibleItemInfo
+     */
     is_anonymous: boolean,
+  }
+
+  export type collectibleItemTypeUsername$Input = {
+    /** A username */
+    readonly _: 'collectibleItemTypeUsername',
+    /** The username */
+    readonly username?: string,
+  }
+
+  export type collectibleItemTypePhoneNumber$Input = {
+    /** A phone number */
+    readonly _: 'collectibleItemTypePhoneNumber',
+    /** The phone number */
+    readonly phone_number?: string,
+  }
+
+  export type collectibleItemInfo = {
+    /** Contains information about a collectible item and its last purchase */
+    _: 'collectibleItemInfo',
+    /** Point in time (Unix timestamp) when the item was purchased */
+    purchase_date: number,
+    /** Currency for the paid amount */
+    currency: string,
+    /** The paid amount, in the smallest units of the currency */
+    amount: number,
+    /** Cryptocurrency used to pay for the item */
+    cryptocurrency: string,
+    /** The paid amount, in the smallest units of the cryptocurrency */
+    cryptocurrency_amount: number | string,
+    /** Individual URL for the item on https://fragment.com */
+    url: string,
   }
 
   export type bankCardActionOpenUrl = {
@@ -7142,7 +7487,7 @@ declare module 'tdlib-types' {
     width: number,
     /** Media height; 0 if unknown */
     height: number,
-    /** Media duration; 0 if unknown */
+    /** Media duration, in seconds; 0 if unknown */
     duration: number,
     /** Media minithumbnail; may be null */
     minithumbnail?: minithumbnail,
@@ -7205,8 +7550,9 @@ declare module 'tdlib-types' {
      * The list of two-letter ISO 3166-1 alpha-2 codes of countries, users from which
      * will be eligible for the giveaway. If empty, then all users can participate
      * in the giveaway. There can be up to getOption("giveaway_country_count_max")
-     * chosen countries. Users with phone number that was bought on Fragment can participate
-     * in any giveaway and the country code "FT" must not be specified in the list
+     * chosen countries. Users with phone number that was bought at https://fragment.com
+     * can participate in any giveaway and the country code "FT" must not be specified
+     * in the list
      */
     country_codes: Array<string>,
     /** Additional description of the giveaway prize; 0-128 characters */
@@ -7243,8 +7589,9 @@ declare module 'tdlib-types' {
      * The list of two-letter ISO 3166-1 alpha-2 codes of countries, users from which
      * will be eligible for the giveaway. If empty, then all users can participate
      * in the giveaway. There can be up to getOption("giveaway_country_count_max")
-     * chosen countries. Users with phone number that was bought on Fragment can participate
-     * in any giveaway and the country code "FT" must not be specified in the list
+     * chosen countries. Users with phone number that was bought at https://fragment.com
+     * can participate in any giveaway and the country code "FT" must not be specified
+     * in the list
      */
     readonly country_codes?: ReadonlyArray<string>,
     /** Additional description of the giveaway prize; 0-128 characters */
@@ -8290,7 +8637,7 @@ declare module 'tdlib-types' {
   }
 
   export type messageInviteVideoChatParticipants = {
-    /** A message with information about an invite to a video chat */
+    /** A message with information about an invitation to a video chat */
     _: 'messageInviteVideoChatParticipants',
     /**
      * Identifier of the video chat. The video chat can be received through the method
@@ -8673,8 +9020,8 @@ declare module 'tdlib-types' {
   export type messageUsersShared = {
     /** The current user shared users, which were requested by the bot */
     _: 'messageUsersShared',
-    /** Identifier of the shared users */
-    user_ids: Array<number>,
+    /** The shared users */
+    users: Array<sharedUser>,
     /** Identifier of the keyboard button with the request */
     button_id: number,
   }
@@ -8682,8 +9029,8 @@ declare module 'tdlib-types' {
   export type messageChatShared = {
     /** The current user shared a chat, which was requested by the bot */
     _: 'messageChatShared',
-    /** Identifier of the shared chat */
-    chat_id: number,
+    /** The shared chat */
+    chat: sharedChat,
     /** Identifier of the keyboard button with the request */
     button_id: number,
   }
@@ -9525,7 +9872,7 @@ declare module 'tdlib-types' {
     video_note: InputFile,
     /** Video thumbnail; may be null if empty; pass null to skip thumbnail uploading */
     thumbnail?: inputThumbnail,
-    /** Duration of the video, in seconds */
+    /** Duration of the video, in seconds; 0-60 */
     duration: number,
     /** Video width and height; must be positive and not greater than 640 */
     length: number,
@@ -9543,7 +9890,7 @@ declare module 'tdlib-types' {
     readonly video_note?: InputFile$Input,
     /** Video thumbnail; may be null if empty; pass null to skip thumbnail uploading */
     readonly thumbnail?: inputThumbnail$Input,
-    /** Duration of the video, in seconds */
+    /** Duration of the video, in seconds; 0-60 */
     readonly duration?: number,
     /** Video width and height; must be positive and not greater than 640 */
     readonly length?: number,
@@ -10277,6 +10624,8 @@ declare module 'tdlib-types' {
      * may be empty. The coordinate system origin is in the upper-left corner
      */
     thumbnail_outline: Array<closedVectorPath>,
+    /** True, if the sticker set is owned by the current user */
+    is_owned: boolean,
     /** True, if the sticker set has been installed by the current user */
     is_installed: boolean,
     /**
@@ -10286,8 +10635,6 @@ declare module 'tdlib-types' {
     is_archived: boolean,
     /** True, if the sticker set is official */
     is_official: boolean,
-    /** Format of the stickers in the set */
-    sticker_format: StickerFormat,
     /** Type of the stickers in the set */
     sticker_type: StickerType,
     /**
@@ -10331,6 +10678,8 @@ declare module 'tdlib-types' {
      * may be empty. The coordinate system origin is in the upper-left corner
      */
     thumbnail_outline: Array<closedVectorPath>,
+    /** True, if the sticker set is owned by the current user */
+    is_owned: boolean,
     /** True, if the sticker set has been installed by the current user */
     is_installed: boolean,
     /**
@@ -10340,8 +10689,6 @@ declare module 'tdlib-types' {
     is_archived: boolean,
     /** True, if the sticker set is official */
     is_official: boolean,
-    /** Format of the stickers in the set */
-    sticker_format: StickerFormat,
     /** Type of the stickers in the set */
     sticker_type: StickerType,
     /**
@@ -10893,21 +11240,28 @@ declare module 'tdlib-types' {
     /** True, if the message can be edited */
     can_be_edited: boolean,
     /**
-     * Information about the identifier of the quick reply message to which the message
-     * replies
+     * The identifier of the quick reply message to which the message replies; 0 if
+     * none
      */
     reply_to_message_id: number,
     /** If non-zero, the user identifier of the bot through which this message was sent */
     via_bot_user_id: number,
     /**
-     * Unique identifier of an album this message belongs to. Only audios, documents,
-     * photos and videos can be grouped together in albums
+     * Unique identifier of an album this message belongs to; 0 if none. Only audios,
+     * documents, photos and videos can be grouped together in albums
      */
     media_album_id: number | string,
     /** Content of the message */
     content: MessageContent,
     /** Inline keyboard reply markup for the message; may be null if none */
     reply_markup?: ReplyMarkup,
+  }
+
+  export type quickReplyMessages = {
+    /** Contains a list of quick reply messages */
+    _: 'quickReplyMessages',
+    /** List of quick reply messages; messages may be null */
+    messages: Array<quickReplyMessage | null>,
   }
 
   export type quickReplyShortcut = {
@@ -10989,6 +11343,8 @@ declare module 'tdlib-types' {
      * by all users
      */
     can_recognize_speech: boolean,
+    /** True, if sponsored messages can be disabled in the chat */
+    can_disable_sponsored_messages: boolean,
   }
 
   export type chatBoostFeatures = {
@@ -11019,6 +11375,11 @@ declare module 'tdlib-types' {
      * note messages for non-Premium users; for supergroup chats only
      */
     min_speech_recognition_boost_level: number,
+    /**
+     * The minimum boost level allowing to disable sponsored messages in the chat;
+     * for channel chats only
+     */
+    min_sponsored_message_disable_boost_level: number,
   }
 
   export type chatBoostSourceGiftCode = {
@@ -11311,6 +11672,8 @@ declare module 'tdlib-types' {
     emojis: Array<string>,
     /** True, if peer-to-peer connection is allowed by users privacy settings */
     allow_p2p: boolean,
+    /** Custom JSON-encoded call parameters to be passed to tgcalls */
+    custom_parameters: string,
   }
 
   export type callStateHangingUp = {
@@ -11806,6 +12169,23 @@ declare module 'tdlib-types' {
      * when media duration is too big to be recognized
      */
     error: error,
+  }
+
+  export type businessConnection = {
+    /** Describes a connection of the bot with a business account */
+    _: 'businessConnection',
+    /** Unique identifier of the connection */
+    id: string,
+    /** Identifier of the business user that created the connection */
+    user_id: number,
+    /** Chat identifier of the private chat with the user */
+    user_chat_id: number,
+    /** Point in time (Unix timestamp) when the connection was established */
+    date: number,
+    /** True, if the bot can send messages to the connected user; false otherwise */
+    can_reply: boolean,
+    /** True, if the connection is enabled; false otherwise */
+    is_enabled: boolean,
   }
 
   export type attachmentMenuBotColor = {
@@ -13544,12 +13924,12 @@ declare module 'tdlib-types' {
   }
 
   export type premiumFeatureEmojiStatus = {
-    /** An emoji status shown along with the user's name */
+    /** The ability to show an emoji status along with the user's name */
     _: 'premiumFeatureEmojiStatus',
   }
 
   export type premiumFeatureEmojiStatus$Input = {
-    /** An emoji status shown along with the user's name */
+    /** The ability to show an emoji status along with the user's name */
     readonly _: 'premiumFeatureEmojiStatus',
   }
 
@@ -13677,6 +14057,132 @@ declare module 'tdlib-types' {
     readonly _: 'premiumFeatureLastSeenTimes',
   }
 
+  export type premiumFeatureBusiness = {
+    /** The ability to use Business features */
+    _: 'premiumFeatureBusiness',
+  }
+
+  export type premiumFeatureBusiness$Input = {
+    /** The ability to use Business features */
+    readonly _: 'premiumFeatureBusiness',
+  }
+
+  export type businessFeatureLocation = {
+    /** The ability to set location */
+    _: 'businessFeatureLocation',
+  }
+
+  export type businessFeatureLocation$Input = {
+    /** The ability to set location */
+    readonly _: 'businessFeatureLocation',
+  }
+
+  export type businessFeatureOpeningHours = {
+    /** The ability to set opening hours */
+    _: 'businessFeatureOpeningHours',
+  }
+
+  export type businessFeatureOpeningHours$Input = {
+    /** The ability to set opening hours */
+    readonly _: 'businessFeatureOpeningHours',
+  }
+
+  export type businessFeatureQuickReplies = {
+    /** The ability to use quick replies */
+    _: 'businessFeatureQuickReplies',
+  }
+
+  export type businessFeatureQuickReplies$Input = {
+    /** The ability to use quick replies */
+    readonly _: 'businessFeatureQuickReplies',
+  }
+
+  export type businessFeatureGreetingMessage = {
+    /** The ability to set up a greeting message */
+    _: 'businessFeatureGreetingMessage',
+  }
+
+  export type businessFeatureGreetingMessage$Input = {
+    /** The ability to set up a greeting message */
+    readonly _: 'businessFeatureGreetingMessage',
+  }
+
+  export type businessFeatureAwayMessage = {
+    /** The ability to set up an away message */
+    _: 'businessFeatureAwayMessage',
+  }
+
+  export type businessFeatureAwayMessage$Input = {
+    /** The ability to set up an away message */
+    readonly _: 'businessFeatureAwayMessage',
+  }
+
+  export type businessFeatureAccountLinks = {
+    /**
+     * The ability to create links to the business account with predefined message
+     * text
+     */
+    _: 'businessFeatureAccountLinks',
+  }
+
+  export type businessFeatureAccountLinks$Input = {
+    /**
+     * The ability to create links to the business account with predefined message
+     * text
+     */
+    readonly _: 'businessFeatureAccountLinks',
+  }
+
+  export type businessFeatureStartPage = {
+    /** The ability to customize start page */
+    _: 'businessFeatureStartPage',
+  }
+
+  export type businessFeatureStartPage$Input = {
+    /** The ability to customize start page */
+    readonly _: 'businessFeatureStartPage',
+  }
+
+  export type businessFeatureBots = {
+    /** The ability to connect a bot to the account */
+    _: 'businessFeatureBots',
+  }
+
+  export type businessFeatureBots$Input = {
+    /** The ability to connect a bot to the account */
+    readonly _: 'businessFeatureBots',
+  }
+
+  export type businessFeatureEmojiStatus = {
+    /** The ability to show an emoji status along with the business name */
+    _: 'businessFeatureEmojiStatus',
+  }
+
+  export type businessFeatureEmojiStatus$Input = {
+    /** The ability to show an emoji status along with the business name */
+    readonly _: 'businessFeatureEmojiStatus',
+  }
+
+  export type businessFeatureChatFolderTags = {
+    /** The ability to display folder names for each chat in the chat list */
+    _: 'businessFeatureChatFolderTags',
+  }
+
+  export type businessFeatureChatFolderTags$Input = {
+    /** The ability to display folder names for each chat in the chat list */
+    readonly _: 'businessFeatureChatFolderTags',
+  }
+
+  export type businessFeatureUpgradedStories = {
+    /** Allowed to use many additional features for stories */
+    _: 'businessFeatureUpgradedStories',
+  }
+
+  export type businessFeatureUpgradedStories$Input = {
+    /** Allowed to use many additional features for stories */
+    readonly _: 'businessFeatureUpgradedStories',
+  }
+
   export type premiumStoryFeaturePriorityOrder$Input = {
     /**
      * Stories of the current user are displayed before stories of non-Premium contacts,
@@ -13740,6 +14246,13 @@ declare module 'tdlib-types' {
     payment_link?: InternalLinkType,
   }
 
+  export type businessFeatures = {
+    /** Contains information about features, available to Business user accounts */
+    _: 'businessFeatures',
+    /** The list of available business features */
+    features: Array<BusinessFeature>,
+  }
+
   export type premiumSourceLimitExceeded$Input = {
     /** A limit was exceeded */
     readonly _: 'premiumSourceLimitExceeded',
@@ -13752,6 +14265,13 @@ declare module 'tdlib-types' {
     readonly _: 'premiumSourceFeature',
     /** The used feature */
     readonly feature?: PremiumFeature$Input,
+  }
+
+  export type premiumSourceBusinessFeature$Input = {
+    /** A user tried to use a Business feature */
+    readonly _: 'premiumSourceBusinessFeature',
+    /** The used feature; pass null if none specific feature was used */
+    readonly feature?: BusinessFeature$Input,
   }
 
   export type premiumSourceStoryFeature$Input = {
@@ -13782,6 +14302,15 @@ declare module 'tdlib-types' {
     animation: animation,
   }
 
+  export type businessFeaturePromotionAnimation = {
+    /** Describes a promotion animation for a Business feature */
+    _: 'businessFeaturePromotionAnimation',
+    /** Business feature */
+    feature: BusinessFeature,
+    /** Promotion animation for the feature */
+    animation: animation,
+  }
+
   export type premiumState = {
     /**
      * Contains state of Telegram Premium subscription and promotion videos for Premium
@@ -13797,6 +14326,8 @@ declare module 'tdlib-types' {
     payment_options: Array<premiumStatePaymentOption>,
     /** The list of available promotion animations for Premium features */
     animations: Array<premiumFeaturePromotionAnimation>,
+    /** The list of available promotion animations for Business features */
+    business_animations: Array<businessFeaturePromotionAnimation>,
   }
 
   export type storePaymentPurposePremiumSubscription$Input = {
@@ -14317,7 +14848,10 @@ declare module 'tdlib-types' {
   }
 
   export type checkChatUsernameResultUsernamePurchasable = {
-    /** The username can be purchased at fragment.com */
+    /**
+     * The username can be purchased at https://fragment.com. Information about the
+     * username can be received using getCollectibleItemInfo
+     */
     _: 'checkChatUsernameResultUsernamePurchasable',
   }
 
@@ -15045,6 +15579,22 @@ declare module 'tdlib-types' {
     readonly _: 'userPrivacySettingRuleAllowContacts',
   }
 
+  export type userPrivacySettingRuleAllowPremiumUsers = {
+    /**
+     * A rule to allow all Premium Users to do something; currently, allowed only for
+     * userPrivacySettingAllowChatInvites
+     */
+    _: 'userPrivacySettingRuleAllowPremiumUsers',
+  }
+
+  export type userPrivacySettingRuleAllowPremiumUsers$Input = {
+    /**
+     * A rule to allow all Premium Users to do something; currently, allowed only for
+     * userPrivacySettingAllowChatInvites
+     */
+    readonly _: 'userPrivacySettingRuleAllowPremiumUsers',
+  }
+
   export type userPrivacySettingRuleAllowUsers = {
     /** A rule to allow certain specified users to do something */
     _: 'userPrivacySettingRuleAllowUsers',
@@ -15209,6 +15759,16 @@ declare module 'tdlib-types' {
   export type userPrivacySettingShowBio$Input = {
     /** A privacy setting for managing whether the user's bio is visible */
     readonly _: 'userPrivacySettingShowBio',
+  }
+
+  export type userPrivacySettingShowBirthdate = {
+    /** A privacy setting for managing whether the user's birthdate is visible */
+    _: 'userPrivacySettingShowBirthdate',
+  }
+
+  export type userPrivacySettingShowBirthdate$Input = {
+    /** A privacy setting for managing whether the user's birthdate is visible */
+    readonly _: 'userPrivacySettingShowBirthdate',
   }
 
   export type userPrivacySettingAllowChatInvites = {
@@ -15932,6 +16492,28 @@ declare module 'tdlib-types' {
     readonly administrator_rights?: chatAdministratorRights$Input,
   }
 
+  export type internalLinkTypeBusinessChat = {
+    /**
+     * The link is a link to a business chat. Use getBusinessChatLinkInfo with the
+     * provided link name to get information about the link, then open received private
+     * chat and replace chat draft with the provided text
+     */
+    _: 'internalLinkTypeBusinessChat',
+    /** Name of the link */
+    link_name: string,
+  }
+
+  export type internalLinkTypeBusinessChat$Input = {
+    /**
+     * The link is a link to a business chat. Use getBusinessChatLinkInfo with the
+     * provided link name to get information about the link, then open received private
+     * chat and replace chat draft with the provided text
+     */
+    readonly _: 'internalLinkTypeBusinessChat',
+    /** Name of the link */
+    readonly link_name?: string,
+  }
+
   export type internalLinkTypeChangePhoneNumber = {
     /** The link is a link to the change phone number section of the app */
     _: 'internalLinkTypeChangePhoneNumber',
@@ -16213,7 +16795,10 @@ declare module 'tdlib-types' {
      * outside of the application; otherwise, ignore it
      */
     _: 'internalLinkTypePassportDataRequest',
-    /** User identifier of the service's bot */
+    /**
+     * User identifier of the service's bot; the corresponding user may be unknown
+     * yet
+     */
     bot_user_id: number,
     /** Telegram Passport element types requested by the service */
     scope: string,
@@ -16238,7 +16823,10 @@ declare module 'tdlib-types' {
      * outside of the application; otherwise, ignore it
      */
     readonly _: 'internalLinkTypePassportDataRequest',
-    /** User identifier of the service's bot */
+    /**
+     * User identifier of the service's bot; the corresponding user may be unknown
+     * yet
+     */
     readonly bot_user_id?: number,
     /** Telegram Passport element types requested by the service */
     readonly scope?: string,
@@ -16259,10 +16847,9 @@ declare module 'tdlib-types' {
   export type internalLinkTypePhoneNumberConfirmation = {
     /**
      * The link can be used to confirm ownership of a phone number to prevent account
-     * deletion. Call sendPhoneNumberConfirmationCode with the given hash and phone
-     * number to process the link. If succeeded, call checkPhoneNumberConfirmationCode
-     * to check entered by the user code, or resendPhoneNumberConfirmationCode to resend
-     * it
+     * deletion. Call sendPhoneNumberCode with the given phone number and with phoneNumberCodeTypeConfirmOwnership
+     * with the given hash to process the link. If succeeded, call checkPhoneNumberCode
+     * to check entered by the user code, or resendPhoneNumberCode to resend it
      */
     _: 'internalLinkTypePhoneNumberConfirmation',
     /** Hash value from the link */
@@ -16274,10 +16861,9 @@ declare module 'tdlib-types' {
   export type internalLinkTypePhoneNumberConfirmation$Input = {
     /**
      * The link can be used to confirm ownership of a phone number to prevent account
-     * deletion. Call sendPhoneNumberConfirmationCode with the given hash and phone
-     * number to process the link. If succeeded, call checkPhoneNumberConfirmationCode
-     * to check entered by the user code, or resendPhoneNumberConfirmationCode to resend
-     * it
+     * deletion. Call sendPhoneNumberCode with the given phone number and with phoneNumberCodeTypeConfirmOwnership
+     * with the given hash to process the link. If succeeded, call checkPhoneNumberCode
+     * to check entered by the user code, or resendPhoneNumberCode to resend it
      */
     readonly _: 'internalLinkTypePhoneNumberConfirmation',
     /** Hash value from the link */
@@ -16392,22 +16978,28 @@ declare module 'tdlib-types' {
     /**
      * The link is a link to a chat by its username. Call searchPublicChat with the
      * given chat username to process the link If the chat is found, open its profile
-     * information screen or the chat itself
+     * information screen or the chat itself. If draft text isn't empty and the chat
+     * is a private chat, then put the draft text in the input field
      */
     _: 'internalLinkTypePublicChat',
     /** Username of the chat */
     chat_username: string,
+    /** Draft text for message to send in the chat */
+    draft_text: string,
   }
 
   export type internalLinkTypePublicChat$Input = {
     /**
      * The link is a link to a chat by its username. Call searchPublicChat with the
      * given chat username to process the link If the chat is found, open its profile
-     * information screen or the chat itself
+     * information screen or the chat itself. If draft text isn't empty and the chat
+     * is a private chat, then put the draft text in the input field
      */
     readonly _: 'internalLinkTypePublicChat',
     /** Username of the chat */
     readonly chat_username?: string,
+    /** Draft text for message to send in the chat */
+    readonly draft_text?: string,
   }
 
   export type internalLinkTypeQrCodeAuthentication = {
@@ -16600,22 +17192,28 @@ declare module 'tdlib-types' {
     /**
      * The link is a link to a user by its phone number. Call searchUserByPhoneNumber
      * with the given phone number to process the link. If the user is found, then
-     * call createPrivateChat and open the chat
+     * call createPrivateChat and open the chat. If draft text isn't empty, then put
+     * the draft text in the input field
      */
     _: 'internalLinkTypeUserPhoneNumber',
     /** Phone number of the user */
     phone_number: string,
+    /** Draft text for message to send in the chat */
+    draft_text: string,
   }
 
   export type internalLinkTypeUserPhoneNumber$Input = {
     /**
      * The link is a link to a user by its phone number. Call searchUserByPhoneNumber
      * with the given phone number to process the link. If the user is found, then
-     * call createPrivateChat and open the chat
+     * call createPrivateChat and open the chat. If draft text isn't empty, then put
+     * the draft text in the input field
      */
     readonly _: 'internalLinkTypeUserPhoneNumber',
     /** Phone number of the user */
     readonly phone_number?: string,
+    /** Draft text for message to send in the chat */
+    readonly draft_text?: string,
   }
 
   export type internalLinkTypeUserToken = {
@@ -17635,6 +18233,16 @@ declare module 'tdlib-types' {
     readonly _: 'suggestedActionGiftPremiumForChristmas',
   }
 
+  export type suggestedActionSetBirthdate = {
+    /** Suggests the user to set birthdate */
+    _: 'suggestedActionSetBirthdate',
+  }
+
+  export type suggestedActionSetBirthdate$Input = {
+    /** Suggests the user to set birthdate */
+    readonly _: 'suggestedActionSetBirthdate',
+  }
+
   export type count = {
     /** Contains a counter */
     _: 'count',
@@ -17784,6 +18392,8 @@ declare module 'tdlib-types' {
      * requirements
      */
     readonly sticker?: InputFile$Input,
+    /** Format of the sticker */
+    readonly format?: StickerFormat$Input,
     /** String with 1-20 emoji corresponding to the sticker */
     readonly emojis?: string,
     /** Position where the mask is placed; pass null if not specified */
@@ -17990,6 +18600,31 @@ declare module 'tdlib-types' {
     recent_interactions: Array<chatStatisticsInteractionInfo>,
   }
 
+  export type chatRevenueStatistics = {
+    /** A detailed statistics about revenue earned from sponsored messages in a chat */
+    _: 'chatRevenueStatistics',
+    /** A graph containing amount of revenue in a given hour */
+    revenue_by_hour_graph: StatisticalGraph,
+    /** A graph containing amount of revenue */
+    revenue_graph: StatisticalGraph,
+    /** Cryptocurrency in which revenue is calculated */
+    cryptocurrency: string,
+    /** Total amount of the cryptocurrency earned, in the smallest units of the cryptocurrency */
+    cryptocurrency_total_amount: number | string,
+    /**
+     * Amount of the cryptocurrency that isn't withdrawn yet, in the smallest units
+     * of the cryptocurrency
+     */
+    cryptocurrency_balance_amount: number | string,
+    /**
+     * Amount of the cryptocurrency available for withdrawal, in the smallest units
+     * of the cryptocurrency
+     */
+    cryptocurrency_available_amount: number | string,
+    /** Current conversion rate of the cryptocurrency to USD */
+    usd_rate: number,
+  }
+
   export type messageStatistics = {
     /** A detailed statistics about a message */
     _: 'messageStatistics',
@@ -18006,6 +18641,74 @@ declare module 'tdlib-types' {
     story_interaction_graph: StatisticalGraph,
     /** A graph containing number of story reactions */
     story_reaction_graph: StatisticalGraph,
+  }
+
+  export type chatRevenueWithdrawalStatePending = {
+    /** Withdrawal is pending */
+    _: 'chatRevenueWithdrawalStatePending',
+  }
+
+  export type chatRevenueWithdrawalStateCompleted = {
+    /** Withdrawal was completed */
+    _: 'chatRevenueWithdrawalStateCompleted',
+    /** Point in time (Unix timestamp) when the withdrawal was completed */
+    date: number,
+    /** The URL where the withdrawal transaction can be viewed */
+    url: string,
+  }
+
+  export type chatRevenueWithdrawalStateFailed = {
+    /** Withdrawal has_failed */
+    _: 'chatRevenueWithdrawalStateFailed',
+  }
+
+  export type chatRevenueTransactionTypeEarnings = {
+    /** Describes earnings from sponsored messages in a chat in some time frame */
+    _: 'chatRevenueTransactionTypeEarnings',
+    /** Point in time (Unix timestamp) when the earnings started */
+    start_date: number,
+    /** Point in time (Unix timestamp) when the earnings ended */
+    end_date: number,
+  }
+
+  export type chatRevenueTransactionTypeWithdrawal = {
+    /** Describes a withdrawal of earnings */
+    _: 'chatRevenueTransactionTypeWithdrawal',
+    /** Point in time (Unix timestamp) when the earnings withdrawal started */
+    withdrawal_date: number,
+    /** Name of the payment provider */
+    provider: string,
+    /** State of the withdrawal */
+    state: ChatRevenueWithdrawalState,
+  }
+
+  export type chatRevenueTransactionTypeRefund = {
+    /** Describes a refund for failed withdrawal of earnings */
+    _: 'chatRevenueTransactionTypeRefund',
+    /** Point in time (Unix timestamp) when the transaction was refunded */
+    refund_date: number,
+    /** Name of the payment provider */
+    provider: string,
+  }
+
+  export type chatRevenueTransaction = {
+    /** Contains a chat revenue transactions */
+    _: 'chatRevenueTransaction',
+    /** Cryptocurrency in which revenue is calculated */
+    cryptocurrency: string,
+    /** The withdrawn amount, in the smallest units of the cryptocurrency */
+    cryptocurrency_amount: number | string,
+    /** Type of the transaction */
+    type: ChatRevenueTransactionType,
+  }
+
+  export type chatRevenueTransactions = {
+    /** Contains a list of chat revenue transactions */
+    _: 'chatRevenueTransactions',
+    /** Total number of transactions */
+    total_count: number,
+    /** List of transactions */
+    transactions: Array<chatRevenueTransaction>,
   }
 
   export type point = {
@@ -18076,6 +18779,29 @@ declare module 'tdlib-types' {
     readonly chat_id?: number,
     /** User identifier */
     readonly user_id?: number,
+  }
+
+  export type phoneNumberCodeTypeChange$Input = {
+    /**
+     * Checks ownership of a new phone number to change the user's authentication phone
+     * number; for official Android and iOS applications only.
+     */
+    readonly _: 'phoneNumberCodeTypeChange',
+  }
+
+  export type phoneNumberCodeTypeVerify$Input = {
+    /** Verifies ownership of a phone number to be added to the user's Telegram Passport */
+    readonly _: 'phoneNumberCodeTypeVerify',
+  }
+
+  export type phoneNumberCodeTypeConfirmOwnership$Input = {
+    /**
+     * Confirms ownership of a phone number to prevent account deletion while handling
+     * links of the type internalLinkTypePhoneNumberConfirmation
+     */
+    readonly _: 'phoneNumberCodeTypeConfirmOwnership',
+    /** Hash value from the link */
+    readonly hash?: string,
   }
 
   export type updateAuthorizationState = {
@@ -18364,6 +19090,15 @@ declare module 'tdlib-types' {
     chat_id: number,
     /** The new value of the action bar; may be null */
     action_bar?: ChatActionBar,
+  }
+
+  export type updateChatBusinessBotManageBar = {
+    /** The bar for managing business bot was changed in a chat */
+    _: 'updateChatBusinessBotManageBar',
+    /** Chat identifier */
+    chat_id: number,
+    /** The new value of the business bot manage bar; may be null */
+    business_bot_manage_bar?: businessBotManageBar,
   }
 
   export type updateChatAvailableReactions = {
@@ -19291,7 +20026,7 @@ declare module 'tdlib-types' {
     _: 'updateSpeechRecognitionTrial',
     /**
      * The maximum allowed duration of media for speech recognition without Telegram
-     * Premium subscription
+     * Premium subscription, in seconds
      */
     max_media_duration: number,
     /** The total number of allowed speech recognitions per week; 0 if none */
@@ -19348,16 +20083,27 @@ declare module 'tdlib-types' {
     removed_actions: Array<SuggestedAction>,
   }
 
-  export type updateAddChatMembersPrivacyForbidden = {
+  export type updateSpeedLimitNotification = {
     /**
-     * Adding users to a chat has failed because of their privacy settings. An invite
-     * link can be shared with the users if appropriate
+     * Download or upload file speed for the user was limited, but it can be restored
+     * by subscription to Telegram Premium. The notification can be postponed until
+     * a being downloaded or uploaded file is visible to the user Use getOption("premium_download_speedup")
+     * or getOption("premium_upload_speedup") to get expected speedup after subscription
+     * to Telegram Premium
      */
-    _: 'updateAddChatMembersPrivacyForbidden',
-    /** Chat identifier */
-    chat_id: number,
-    /** Identifiers of users, which weren't added because of their privacy settings */
-    user_ids: Array<number>,
+    _: 'updateSpeedLimitNotification',
+    /** True, if upload speed was limited; false, if download speed was limited */
+    is_upload: boolean,
+  }
+
+  export type updateContactCloseBirthdays = {
+    /**
+     * The list of contacts that had birthdays recently or will have birthday soon
+     * has changed
+     */
+    _: 'updateContactCloseBirthdays',
+    /** List of contact users with close birthday */
+    close_birthday_users: Array<closeBirthdayUser>,
   }
 
   export type updateAutosaveSettings = {
@@ -19367,6 +20113,42 @@ declare module 'tdlib-types' {
     scope: AutosaveSettingsScope,
     /** The new autosave settings; may be null if the settings are reset to default */
     settings?: scopeAutosaveSettings,
+  }
+
+  export type updateBusinessConnection = {
+    /** A business connection has changed; for bots only */
+    _: 'updateBusinessConnection',
+    /** New data about the connection */
+    connection: businessConnection,
+  }
+
+  export type updateNewBusinessMessage = {
+    /** A new message was added to a business account; for bots only */
+    _: 'updateNewBusinessMessage',
+    /** Unique identifier of the business connection */
+    connection_id: string,
+    /** The new message */
+    message: businessMessage,
+  }
+
+  export type updateBusinessMessageEdited = {
+    /** A message in a business account was edited; for bots only */
+    _: 'updateBusinessMessageEdited',
+    /** Unique identifier of the business connection */
+    connection_id: string,
+    /** The edited message */
+    message: businessMessage,
+  }
+
+  export type updateBusinessMessagesDeleted = {
+    /** Messages in a business account were deleted; for bots only */
+    _: 'updateBusinessMessagesDeleted',
+    /** Unique identifier of the business connection */
+    connection_id: string,
+    /** Identifier of a chat in the business account in which messages were deleted */
+    chat_id: number,
+    /** Unique message identifiers of the deleted messages */
+    message_ids: Array<number>,
   }
 
   export type updateNewInlineQuery = {
@@ -20510,7 +21292,7 @@ declare module 'tdlib-types' {
   export type openChatSimilarChat = {
     /**
      * Informs TDLib that a chat was opened from the list of similar chats. The method
-     * is independent from openChat and closeChat methods
+     * is independent of openChat and closeChat methods
      */
     readonly _: 'openChatSimilarChat',
     /** Identifier of the original chat, which similar chats were requested */
@@ -20633,6 +21415,11 @@ declare module 'tdlib-types' {
      * CHANNELS_TOO_MUCH error. Also, the limit can be increased with Telegram Premium
      */
     readonly _: 'getInactiveSupergroupChats',
+  }
+
+  export type getSuitablePersonalChats = {
+    /** Returns a list of channel chats, which can be used as a personal chat */
+    readonly _: 'getSuitablePersonalChats',
   }
 
   export type loadSavedMessagesTopics = {
@@ -21197,6 +21984,17 @@ declare module 'tdlib-types' {
     readonly chat_id?: number,
     /** Identifier of the sponsored message */
     readonly message_id?: number,
+  }
+
+  export type reportChatSponsoredMessage = {
+    /** Reports a sponsored message to Telegram moderators */
+    readonly _: 'reportChatSponsoredMessage',
+    /** Chat identifier of the sponsored message */
+    readonly chat_id?: number,
+    /** Identifier of the sponsored message */
+    readonly message_id?: number,
+    /** Option identifier chosen by the user; leave empty for the initial request */
+    readonly option_id?: string /* base64 */,
   }
 
   export type removeNotification = {
@@ -21775,6 +22573,56 @@ declare module 'tdlib-types' {
     readonly scheduling_state?: MessageSchedulingState$Input,
   }
 
+  export type sendBusinessMessage = {
+    /**
+     * Sends a message on behalf of a business account; for bots only. Returns the
+     * message after it was sent
+     */
+    readonly _: 'sendBusinessMessage',
+    /** Unique identifier of business connection on behalf of which to send the request */
+    readonly business_connection_id?: string,
+    /** Target chat */
+    readonly chat_id?: number,
+    /** Information about the message to be replied; pass null if none */
+    readonly reply_to?: InputMessageReplyTo$Input,
+    /** Pass true to disable notification for the message */
+    readonly disable_notification?: boolean,
+    /**
+     * Pass true if the content of the message must be protected from forwarding and
+     * saving
+     */
+    readonly protect_content?: boolean,
+    /** Markup for replying to the message; pass null if none */
+    readonly reply_markup?: ReplyMarkup$Input,
+    /** The content of the message to be sent */
+    readonly input_message_content?: InputMessageContent$Input,
+  }
+
+  export type sendBusinessMessageAlbum = {
+    /**
+     * Sends 2-10 messages grouped together into an album on behalf of a business account;
+     * for bots only. Currently, only audio, document, photo and video messages can
+     * be grouped into an album. Documents and audio files can be only grouped in an
+     * album with messages of the same type. Returns sent messages
+     */
+    readonly _: 'sendBusinessMessageAlbum',
+    /** Unique identifier of business connection on behalf of which to send the request */
+    readonly business_connection_id?: string,
+    /** Target chat */
+    readonly chat_id?: number,
+    /** Information about the message to be replied; pass null if none */
+    readonly reply_to?: InputMessageReplyTo$Input,
+    /** Pass true to disable notification for the message */
+    readonly disable_notification?: boolean,
+    /**
+     * Pass true if the content of the message must be protected from forwarding and
+     * saving
+     */
+    readonly protect_content?: boolean,
+    /** Contents of messages to be sent. At most 10 messages can be added to an album */
+    readonly input_message_contents?: ReadonlyArray<InputMessageContent$Input>,
+  }
+
   export type checkQuickReplyShortcutName = {
     /** Checks validness of a name for a quick reply shortcut. Can be called synchronously */
     readonly _: 'checkQuickReplyShortcutName',
@@ -21830,6 +22678,95 @@ declare module 'tdlib-types' {
     readonly shortcut_id?: number,
     /** Unique identifiers of the messages */
     readonly message_ids?: ReadonlyArray<number>,
+  }
+
+  export type addQuickReplyShortcutMessage = {
+    /**
+     * Adds a message to a quick reply shortcut. If shortcut doesn't exist and there
+     * are less than getOption("quick_reply_shortcut_count_max") shortcuts, then a
+     * new shortcut is created. The shortcut must not contain more than getOption("quick_reply_shortcut_message_count_max")
+     * messages after adding the new message. Returns the added message
+     */
+    readonly _: 'addQuickReplyShortcutMessage',
+    /** Name of the target shortcut */
+    readonly shortcut_name?: string,
+    /**
+     * Identifier of a quick reply message in the same shortcut to be replied; pass
+     * 0 if none
+     */
+    readonly reply_to_message_id?: number,
+    /**
+     * The content of the message to be added; inputMessagePoll, inputMessageForwarded
+     * and inputMessageLocation with live_period aren't supported
+     */
+    readonly input_message_content?: InputMessageContent$Input,
+  }
+
+  export type addQuickReplyShortcutInlineQueryResultMessage = {
+    /**
+     * Adds a message to a quick reply shortcut via inline bot. If shortcut doesn't
+     * exist and there are less than getOption("quick_reply_shortcut_count_max") shortcuts,
+     * then a new shortcut is created. The shortcut must not contain more than getOption("quick_reply_shortcut_message_count_max")
+     * messages after adding the new message. Returns the added message
+     */
+    readonly _: 'addQuickReplyShortcutInlineQueryResultMessage',
+    /** Name of the target shortcut */
+    readonly shortcut_name?: string,
+    /**
+     * Identifier of a quick reply message in the same shortcut to be replied; pass
+     * 0 if none
+     */
+    readonly reply_to_message_id?: number,
+    /** Identifier of the inline query */
+    readonly query_id?: number | string,
+    /** Identifier of the inline query result */
+    readonly result_id?: string,
+    /**
+     * Pass true to hide the bot, via which the message is sent. Can be used only for
+     * bots getOption("animation_search_bot_username"), getOption("photo_search_bot_username"),
+     * and getOption("venue_search_bot_username")
+     */
+    readonly hide_via_bot?: boolean,
+  }
+
+  export type readdQuickReplyShortcutMessages = {
+    /**
+     * Readds quick reply messages which failed to add. Can be called only for messages
+     * for which messageSendingStateFailed.can_retry is true and after specified in
+     * messageSendingStateFailed.retry_after time passed. If a message is readded,
+     * the corresponding failed to send message is deleted. Returns the sent messages
+     * in the same order as the message identifiers passed in message_ids. If a message
+     * can't be readded, null will be returned instead of the message
+     */
+    readonly _: 'readdQuickReplyShortcutMessages',
+    /** Name of the target shortcut */
+    readonly shortcut_name?: string,
+    /**
+     * Identifiers of the quick reply messages to readd. Message identifiers must be
+     * in a strictly increasing order
+     */
+    readonly message_ids?: ReadonlyArray<number>,
+  }
+
+  export type editQuickReplyMessage = {
+    /**
+     * Asynchronously edits the text, media or caption of a quick reply message. Use
+     * quickReplyMessage.can_be_edited to check whether a message can be edited. Text
+     * message can be edited only to a text message. The type of message content in
+     * an album can't be changed with exception of replacing a photo with a video or
+     * vice versa
+     */
+    readonly _: 'editQuickReplyMessage',
+    /** Unique identifier of the quick reply shortcut with the message */
+    readonly shortcut_id?: number,
+    /** Identifier of the message */
+    readonly message_id?: number,
+    /**
+     * New content of the message. Must be one of the following types: inputMessageText,
+     * inputMessageAnimation, inputMessageAudio, inputMessageDocument, inputMessagePhoto
+     * or inputMessageVideo
+     */
+    readonly input_message_content?: InputMessageContent$Input,
   }
 
   export type getForumTopicDefaultIcons = {
@@ -22352,6 +23289,16 @@ declare module 'tdlib-types' {
     readonly action?: SuggestedAction$Input,
   }
 
+  export type getBusinessConnection = {
+    /**
+     * Returns information about a business connection by its identifier; for bots
+     * only
+     */
+    readonly _: 'getBusinessConnection',
+    /** Identifier of the business connection to return */
+    readonly connection_id?: string,
+  }
+
   export type getLoginUrlInfo = {
     /**
      * Returns information about a button of type inlineKeyboardButtonTypeLoginUrl.
@@ -22730,6 +23677,11 @@ declare module 'tdlib-types' {
     readonly chat_id?: number,
     /** If not 0, the message thread identifier in which the action was performed */
     readonly message_thread_id?: number,
+    /**
+     * Unique identifier of business connection on behalf of which to send the request;
+     * for bots only
+     */
+    readonly business_connection_id?: string,
     /** The action description; pass null to cancel the currently active action */
     readonly action?: ChatAction$Input,
   }
@@ -22819,8 +23771,8 @@ declare module 'tdlib-types' {
 
   export type getInternalLinkType = {
     /**
-     * Returns information about the type of an internal link. Returns a 404 error
-     * if the link is not internal. Can be called before authorization
+     * Returns information about the type of internal link. Returns a 404 error if
+     * the link is not internal. Can be called before authorization
      */
     readonly _: 'getInternalLinkType',
     /** The link */
@@ -22932,7 +23884,7 @@ declare module 'tdlib-types' {
   export type createNewBasicGroupChat = {
     /**
      * Creates a new basic group and sends a corresponding messageBasicGroupChatCreate.
-     * Returns the newly created chat
+     * Returns information about the newly created chat
      */
     readonly _: 'createNewBasicGroupChat',
     /**
@@ -23645,7 +24597,8 @@ declare module 'tdlib-types' {
   export type addChatMember = {
     /**
      * Adds a new member to a chat; requires can_invite_users member right. Members
-     * can't be added to private or secret chats
+     * can't be added to private or secret chats. Returns information about members
+     * that weren't added
      */
     readonly _: 'addChatMember',
     /** Chat identifier */
@@ -23664,7 +24617,8 @@ declare module 'tdlib-types' {
      * Adds multiple new members to a chat; requires can_invite_users member right.
      * Currently, this method is only available for supergroups and channels. This
      * method can't be used to join a chat. Members can't be added to a channel if
-     * it has more than 200 members
+     * it has more than 200 members. Returns information about members that weren't
+     * added
      */
     readonly _: 'addChatMembers',
     /** Chat identifier */
@@ -23939,7 +24893,7 @@ declare module 'tdlib-types' {
     readonly areas?: inputStoryAreas$Input,
     /**
      * Story caption; pass null to use an empty caption; 0-getOption("story_caption_length_max")
-     * characters
+     * characters; can have entities only if getOption("can_use_text_entities_in_story_caption")
      */
     readonly caption?: formattedText$Input,
     /**
@@ -24279,7 +25233,7 @@ declare module 'tdlib-types' {
 
   export type getChatBoostFeatures = {
     /**
-     * Returns list of features available on the first 10 chat boost levels; this is
+     * Returns list of features available for different chat boost levels; this is
      * an offline request
      */
     readonly _: 'getChatBoostFeatures',
@@ -24608,7 +25562,7 @@ declare module 'tdlib-types' {
      * Adds a file from a message to the list of file downloads. Download progress
      * and completion of the download will be notified through updateFile updates.
      * If message database is used, the list of file downloads is persistent across
-     * application restarts. The downloading is independent from download using downloadFile,
+     * application restarts. The downloading is independent of download using downloadFile,
      * i.e. it continues if downloadFile is canceled or is used to download a part
      * of the file
      */
@@ -25649,6 +26603,14 @@ declare module 'tdlib-types' {
     readonly limit?: number,
   }
 
+  export type getGreetingStickers = {
+    /**
+     * Returns greeting stickers from regular sticker sets that can be used for the
+     * start page of other users
+     */
+    readonly _: 'getGreetingStickers',
+  }
+
   export type getPremiumStickers = {
     /** Returns premium stickers from regular sticker sets */
     readonly _: 'getPremiumStickers',
@@ -25668,7 +26630,10 @@ declare module 'tdlib-types' {
     readonly _: 'getArchivedStickerSets',
     /** Type of the sticker sets to return */
     readonly sticker_type?: StickerType$Input,
-    /** Identifier of the sticker set from which to return the result */
+    /**
+     * Identifier of the sticker set from which to return the result; use 0 to get
+     * results from the beginning
+     */
     readonly offset_sticker_set_id?: number | string,
     /** The maximum number of sticker sets to return; up to 100 */
     readonly limit?: number,
@@ -25788,8 +26753,8 @@ declare module 'tdlib-types' {
      * Manually adds a new sticker to the list of recently used stickers. The new sticker
      * is added to the top of the list. If the sticker was already in the list, it
      * is removed from the list first. Only stickers belonging to a sticker set or
-     * in WEBP format can be added to this list. Emoji stickers can't be added to recent
-     * stickers
+     * in WEBP or WEBM format can be added to this list. Emoji stickers can't be added
+     * to recent stickers
      */
     readonly _: 'addRecentSticker',
     /**
@@ -25833,8 +26798,9 @@ declare module 'tdlib-types' {
     /**
      * Adds a new sticker to the list of favorite stickers. The new sticker is added
      * to the top of the list. If the sticker was already in the list, it is removed
-     * from the list first. Only stickers belonging to a sticker set or in WEBP format
-     * can be added to this list. Emoji stickers can't be added to favorite stickers
+     * from the list first. Only stickers belonging to a sticker set or in WEBP or
+     * WEBM format can be added to this list. Emoji stickers can't be added to favorite
+     * stickers
      */
     readonly _: 'addFavoriteSticker',
     /** Sticker file to add */
@@ -26119,6 +27085,23 @@ declare module 'tdlib-types' {
     readonly usernames?: ReadonlyArray<string>,
   }
 
+  export type setBirthdate = {
+    /** Changes the birthdate of the current user */
+    readonly _: 'setBirthdate',
+    /** The new value of the current user's birthdate; pass null to remove the birthdate */
+    readonly birthdate?: birthdate$Input,
+  }
+
+  export type setPersonalChat = {
+    /** Changes the personal chat of the current user */
+    readonly _: 'setPersonalChat',
+    /**
+     * Identifier of the new personal chat; pass 0 to remove the chat. Use getSuitablePersonalChats
+     * to get suitable chats
+     */
+    readonly chat_id?: number,
+  }
+
   export type setEmojiStatus = {
     /** Changes the emoji status of the current user; for Telegram Premium users only */
     readonly _: 'setEmojiStatus',
@@ -26153,7 +27136,10 @@ declare module 'tdlib-types' {
      * subscription
      */
     readonly _: 'setBusinessOpeningHours',
-    /** The new opening hours of the business; pass null to remove the opening hours */
+    /**
+     * The new opening hours of the business; pass null to remove the opening hours;
+     * up to 28 time intervals can be specified
+     */
     readonly opening_hours?: businessOpeningHours$Input,
   }
 
@@ -26183,34 +27169,61 @@ declare module 'tdlib-types' {
     readonly away_message_settings?: businessAwayMessageSettings$Input,
   }
 
-  export type changePhoneNumber = {
+  export type setBusinessStartPage = {
     /**
-     * Changes the phone number of the user and sends an authentication code to the
-     * user's new phone number; for official Android and iOS applications only. On
-     * success, returns information about the sent code
+     * Changes the business start page of the current user. Requires Telegram Business
+     * subscription
      */
-    readonly _: 'changePhoneNumber',
-    /** The new phone number of the user in international format */
+    readonly _: 'setBusinessStartPage',
+    /** The new start page of the business; pass null to remove custom start page */
+    readonly start_page?: inputBusinessStartPage$Input,
+  }
+
+  export type sendPhoneNumberCode = {
+    /**
+     * Sends a code to the specified phone number. Aborts previous phone number verification
+     * if there was one. On success, returns information about the sent code
+     */
+    readonly _: 'sendPhoneNumberCode',
+    /** The phone number, in international format */
     readonly phone_number?: string,
     /**
      * Settings for the authentication of the user's phone number; pass null to use
      * default settings
      */
     readonly settings?: phoneNumberAuthenticationSettings$Input,
+    /** Type of the request for which the code is sent */
+    readonly type?: PhoneNumberCodeType$Input,
   }
 
-  export type resendChangePhoneNumberCode = {
+  export type sendPhoneNumberFirebaseSms = {
     /**
-     * Resends the authentication code sent to confirm a new phone number for the current
-     * user. Works only if the previously received authenticationCodeInfo next_code_type
-     * was not null and the server-specified timeout has passed
+     * Sends Firebase Authentication SMS to the specified phone number. Works only
+     * when received a code of the type authenticationCodeTypeFirebaseAndroid or authenticationCodeTypeFirebaseIos
      */
-    readonly _: 'resendChangePhoneNumberCode',
+    readonly _: 'sendPhoneNumberFirebaseSms',
+    /**
+     * SafetyNet Attestation API token for the Android application, or secret from
+     * push notification for the iOS application
+     */
+    readonly token?: string,
   }
 
-  export type checkChangePhoneNumberCode = {
-    /** Checks the authentication code sent to confirm a new phone number of the user */
-    readonly _: 'checkChangePhoneNumberCode',
+  export type resendPhoneNumberCode = {
+    /**
+     * Resends the authentication code sent to a phone number. Works only if the previously
+     * received authenticationCodeInfo next_code_type was not null and the server-specified
+     * timeout has passed
+     */
+    readonly _: 'resendPhoneNumberCode',
+  }
+
+  export type checkPhoneNumberCode = {
+    /**
+     * Check the authentication code and completes the request for which the code was
+     * sent if appropriate
+     */
+    readonly _: 'checkPhoneNumberCode',
     /** Authentication code to check */
     readonly code?: string,
   }
@@ -26235,6 +27248,67 @@ declare module 'tdlib-types' {
     readonly _: 'deleteBusinessConnectedBot',
     /** Unique user identifier for the bot */
     readonly bot_user_id?: number,
+  }
+
+  export type toggleBusinessConnectedBotChatIsPaused = {
+    /** Pauses or resumes the connected business bot in a specific chat */
+    readonly _: 'toggleBusinessConnectedBotChatIsPaused',
+    /** Chat identifier */
+    readonly chat_id?: number,
+    /** Pass true to pause the connected bot in the chat; pass false to resume the bot */
+    readonly is_paused?: boolean,
+  }
+
+  export type removeBusinessConnectedBotFromChat = {
+    /**
+     * Removes the connected business bot from a specific chat by adding the chat to
+     * businessRecipients.excluded_chat_ids
+     */
+    readonly _: 'removeBusinessConnectedBotFromChat',
+    /** Chat identifier */
+    readonly chat_id?: number,
+  }
+
+  export type getBusinessChatLinks = {
+    /** Returns business chat links created for the current account */
+    readonly _: 'getBusinessChatLinks',
+  }
+
+  export type createBusinessChatLink = {
+    /**
+     * Creates a business chat link for the current account. Requires Telegram Business
+     * subscription. There can be up to getOption("business_chat_link_count_max") links
+     * created. Returns the created link
+     */
+    readonly _: 'createBusinessChatLink',
+    /** Information about the link to create */
+    readonly link_info?: inputBusinessChatLink$Input,
+  }
+
+  export type editBusinessChatLink = {
+    /**
+     * Edits a business chat link of the current account. Requires Telegram Business
+     * subscription. Returns the edited link
+     */
+    readonly _: 'editBusinessChatLink',
+    /** The link to edit */
+    readonly link?: string,
+    /** New description of the link */
+    readonly link_info?: inputBusinessChatLink$Input,
+  }
+
+  export type deleteBusinessChatLink = {
+    /** Deletes a business chat link of the current account */
+    readonly _: 'deleteBusinessChatLink',
+    /** The link to delete */
+    readonly link?: string,
+  }
+
+  export type getBusinessChatLinkInfo = {
+    /** Returns information about a business chat link */
+    readonly _: 'getBusinessChatLinkInfo',
+    /** Name of the link */
+    readonly link_name?: string,
   }
 
   export type getUserLink = {
@@ -26719,6 +27793,19 @@ declare module 'tdlib-types' {
     readonly is_all_history_available?: boolean,
   }
 
+  export type toggleSupergroupCanHaveSponsoredMessages = {
+    /**
+     * Toggles whether sponsored messages are shown in the channel chat; requires owner
+     * privileges in the channel. The chat must have at least chatBoostFeatures.min_sponsored_message_disable_boost_level
+     * boost level to disable sponsored messages
+     */
+    readonly _: 'toggleSupergroupCanHaveSponsoredMessages',
+    /** The identifier of the channel */
+    readonly supergroup_id?: number,
+    /** The new value of can_have_sponsored_messages */
+    readonly can_have_sponsored_messages?: boolean,
+  }
+
   export type toggleSupergroupHasHiddenMembers = {
     /**
      * Toggles whether non-administrators can receive only administrators and bots
@@ -26801,7 +27888,7 @@ declare module 'tdlib-types' {
     readonly filter?: SupergroupMembersFilter$Input,
     /** Number of users to skip */
     readonly offset?: number,
-    /** The maximum number of users be returned; up to 200 */
+    /** The maximum number of users to be returned; up to 200 */
     readonly limit?: number,
   }
 
@@ -27166,7 +28253,7 @@ declare module 'tdlib-types' {
   }
 
   export type setNewChatPrivacySettings = {
-    /** Changes privacy settings for new chat creation; for Telegram Premium users only */
+    /** Changes privacy settings for new chat creation; can be used only if getOption("can_set_new_chat_privacy_settings") */
     readonly _: 'setNewChatPrivacySettings',
     /** New settings */
     readonly settings?: newChatPrivacySettings$Input,
@@ -27316,6 +28403,47 @@ declare module 'tdlib-types' {
     readonly message_id?: number,
     /** Identifier of the sender, which added the reaction */
     readonly sender_id?: MessageSender$Input,
+  }
+
+  export type getChatRevenueStatistics = {
+    /**
+     * Returns detailed revenue statistics about a chat. Currently, this method can
+     * be used only for channels if supergroupFullInfo.can_get_revenue_statistics ==
+     * true
+     */
+    readonly _: 'getChatRevenueStatistics',
+    /** Chat identifier */
+    readonly chat_id?: number,
+    /** Pass true if a dark theme is used by the application */
+    readonly is_dark?: boolean,
+  }
+
+  export type getChatRevenueWithdrawalUrl = {
+    /**
+     * Returns URL for chat revenue withdrawal; requires owner privileges in the chat.
+     * Currently, this method can be used only for channels if supergroupFullInfo.can_get_revenue_statistics
+     * == true and getOption("can_withdraw_chat_revenue")
+     */
+    readonly _: 'getChatRevenueWithdrawalUrl',
+    /** Chat identifier */
+    readonly chat_id?: number,
+    /** The 2-step verification password of the current user */
+    readonly password?: string,
+  }
+
+  export type getChatRevenueTransactions = {
+    /**
+     * Returns list of revenue transactions for a chat. Currently, this method can
+     * be used only for channels if supergroupFullInfo.can_get_revenue_statistics ==
+     * true
+     */
+    readonly _: 'getChatRevenueTransactions',
+    /** Chat identifier */
+    readonly chat_id?: number,
+    /** Number of transactions to skip */
+    readonly offset?: number,
+    /** The maximum number of transactions to be returned; up to 200 */
+    readonly limit?: number,
   }
 
   export type getChatStatistics = {
@@ -27606,30 +28734,6 @@ declare module 'tdlib-types' {
     readonly country_code?: string,
   }
 
-  export type sendPhoneNumberVerificationCode = {
-    /** Sends a code to verify a phone number to be added to a user's Telegram Passport */
-    readonly _: 'sendPhoneNumberVerificationCode',
-    /** The phone number of the user, in international format */
-    readonly phone_number?: string,
-    /**
-     * Settings for the authentication of the user's phone number; pass null to use
-     * default settings
-     */
-    readonly settings?: phoneNumberAuthenticationSettings$Input,
-  }
-
-  export type resendPhoneNumberVerificationCode = {
-    /** Resends the code to verify a phone number to be added to a user's Telegram Passport */
-    readonly _: 'resendPhoneNumberVerificationCode',
-  }
-
-  export type checkPhoneNumberVerificationCode = {
-    /** Checks the phone number verification code for Telegram Passport */
-    readonly _: 'checkPhoneNumberVerificationCode',
-    /** Verification code to check */
-    readonly code?: string,
-  }
-
   export type sendEmailAddressVerificationCode = {
     /** Sends a code to verify an email address to be added to a user's Telegram Passport */
     readonly _: 'sendEmailAddressVerificationCode',
@@ -27694,32 +28798,6 @@ declare module 'tdlib-types' {
     readonly types?: ReadonlyArray<PassportElementType$Input>,
   }
 
-  export type sendPhoneNumberConfirmationCode = {
-    /** Sends phone number confirmation code to handle links of the type internalLinkTypePhoneNumberConfirmation */
-    readonly _: 'sendPhoneNumberConfirmationCode',
-    /** Hash value from the link */
-    readonly hash?: string,
-    /** Phone number value from the link */
-    readonly phone_number?: string,
-    /**
-     * Settings for the authentication of the user's phone number; pass null to use
-     * default settings
-     */
-    readonly settings?: phoneNumberAuthenticationSettings$Input,
-  }
-
-  export type resendPhoneNumberConfirmationCode = {
-    /** Resends phone number confirmation code */
-    readonly _: 'resendPhoneNumberConfirmationCode',
-  }
-
-  export type checkPhoneNumberConfirmationCode = {
-    /** Checks phone number confirmation code */
-    readonly _: 'checkPhoneNumberConfirmationCode',
-    /** Confirmation code to check */
-    readonly code?: string,
-  }
-
   export type setBotUpdatesStatus = {
     /**
      * Informs the server about the number of pending bot updates if they haven't been
@@ -27772,11 +28850,10 @@ declare module 'tdlib-types' {
     /**
      * Sticker set name. Can contain only English letters, digits and underscores.
      * Must end with *"_by_<bot username>"* (*<bot_username>* is case insensitive)
-     * for bots; 1-64 characters
+     * for bots; 0-64 characters. If empty, then the name returned by getSuggestedStickerSetName
+     * will be used automatically
      */
     readonly name?: string,
-    /** Format of the stickers in the set */
-    readonly sticker_format?: StickerFormat$Input,
     /** Type of the stickers in the set */
     readonly sticker_type?: StickerType$Input,
     /**
@@ -27785,9 +28862,9 @@ declare module 'tdlib-types' {
      */
     readonly needs_repainting?: boolean,
     /**
-     * List of stickers to be added to the set; must be non-empty. All stickers must
-     * have the same format. For TGS stickers, uploadStickerFile must be used before
-     * the sticker is shown
+     * List of stickers to be added to the set; 1-200 stickers for custom emoji sticker
+     * sets, and 1-120 stickers otherwise. For TGS stickers, uploadStickerFile must
+     * be used before the sticker is shown
      */
     readonly stickers?: ReadonlyArray<inputSticker$Input>,
     /** Source of the sticker set; may be empty if unknown */
@@ -27795,34 +28872,52 @@ declare module 'tdlib-types' {
   }
 
   export type addStickerToSet = {
-    /** Adds a new sticker to a set; for bots only */
+    /** Adds a new sticker to a set */
     readonly _: 'addStickerToSet',
-    /** Sticker set owner */
+    /** Sticker set owner; ignored for regular users */
     readonly user_id?: number,
-    /** Sticker set name */
+    /**
+     * Sticker set name. The sticker set must be owned by the current user, and contain
+     * less than 200 stickers for custom emoji sticker sets and less than 120 otherwise
+     */
     readonly name?: string,
     /** Sticker to add to the set */
     readonly sticker?: inputSticker$Input,
   }
 
-  export type setStickerSetThumbnail = {
-    /** Sets a sticker set thumbnail; for bots only */
-    readonly _: 'setStickerSetThumbnail',
-    /** Sticker set owner */
-    readonly user_id?: number,
-    /** Sticker set name */
-    readonly name?: string,
+  export type replaceStickerInSet = {
     /**
-     * Thumbnail to set in PNG, TGS, or WEBM format; pass null to remove the sticker
-     * set thumbnail. Thumbnail format must match the format of stickers in the set
+     * Replaces existing sticker in a set. The function is equivalent to removeStickerFromSet,
+     * then addStickerToSet, then setStickerPositionInSet
      */
+    readonly _: 'replaceStickerInSet',
+    /** Sticker set owner; ignored for regular users */
+    readonly user_id?: number,
+    /** Sticker set name. The sticker set must be owned by the current user */
+    readonly name?: string,
+    /** Sticker to remove from the set */
+    readonly old_sticker?: InputFile$Input,
+    /** Sticker to add to the set */
+    readonly new_sticker?: inputSticker$Input,
+  }
+
+  export type setStickerSetThumbnail = {
+    /** Sets a sticker set thumbnail */
+    readonly _: 'setStickerSetThumbnail',
+    /** Sticker set owner; ignored for regular users */
+    readonly user_id?: number,
+    /** Sticker set name. The sticker set must be owned by the current user */
+    readonly name?: string,
+    /** Thumbnail to set; pass null to remove the sticker set thumbnail */
     readonly thumbnail?: InputFile$Input,
+    /** Format of the thumbnail; pass null if thumbnail is removed */
+    readonly format?: StickerFormat$Input,
   }
 
   export type setCustomEmojiStickerSetThumbnail = {
-    /** Sets a custom emoji sticker set thumbnail; for bots only */
+    /** Sets a custom emoji sticker set thumbnail */
     readonly _: 'setCustomEmojiStickerSetThumbnail',
-    /** Sticker set name */
+    /** Sticker set name. The sticker set must be owned by the current user */
     readonly name?: string,
     /**
      * Identifier of the custom emoji from the sticker set, which will be set as sticker
@@ -27832,25 +28927,25 @@ declare module 'tdlib-types' {
   }
 
   export type setStickerSetTitle = {
-    /** Sets a sticker set title; for bots only */
+    /** Sets a sticker set title */
     readonly _: 'setStickerSetTitle',
-    /** Sticker set name */
+    /** Sticker set name. The sticker set must be owned by the current user */
     readonly name?: string,
     /** New sticker set title */
     readonly title?: string,
   }
 
   export type deleteStickerSet = {
-    /** Deleted a sticker set; for bots only */
+    /** Completely deletes a sticker set */
     readonly _: 'deleteStickerSet',
-    /** Sticker set name */
+    /** Sticker set name. The sticker set must be owned by the current user */
     readonly name?: string,
   }
 
   export type setStickerPositionInSet = {
     /**
-     * Changes the position of a sticker in the set to which it belongs; for bots only.
-     * The sticker set must have been created by the bot
+     * Changes the position of a sticker in the set to which it belongs. The sticker
+     * set must be owned by the current user
      */
     readonly _: 'setStickerPositionInSet',
     /** Sticker */
@@ -27861,18 +28956,18 @@ declare module 'tdlib-types' {
 
   export type removeStickerFromSet = {
     /**
-     * Removes a sticker from the set to which it belongs; for bots only. The sticker
-     * set must have been created by the bot
+     * Removes a sticker from the set to which it belongs. The sticker set must be
+     * owned by the current user
      */
     readonly _: 'removeStickerFromSet',
-    /** Sticker */
+    /** Sticker to remove from the set */
     readonly sticker?: InputFile$Input,
   }
 
   export type setStickerEmojis = {
     /**
-     * Changes the list of emoji corresponding to a sticker; for bots only. The sticker
-     * must belong to a regular or custom emoji sticker set created by the bot
+     * Changes the list of emoji corresponding to a sticker. The sticker must belong
+     * to a regular or custom emoji sticker set that is owned by the current user
      */
     readonly _: 'setStickerEmojis',
     /** Sticker */
@@ -27883,8 +28978,8 @@ declare module 'tdlib-types' {
 
   export type setStickerKeywords = {
     /**
-     * Changes the list of keywords of a sticker; for bots only. The sticker must belong
-     * to a regular or custom emoji sticker set created by the bot
+     * Changes the list of keywords of a sticker. The sticker must belong to a regular
+     * or custom emoji sticker set that is owned by the current user
      */
     readonly _: 'setStickerKeywords',
     /** Sticker */
@@ -27898,14 +28993,30 @@ declare module 'tdlib-types' {
 
   export type setStickerMaskPosition = {
     /**
-     * Changes the mask position of a mask sticker; for bots only. The sticker must
-     * belong to a mask sticker set created by the bot
+     * Changes the mask position of a mask sticker. The sticker must belong to a mask
+     * sticker set that is owned by the current user
      */
     readonly _: 'setStickerMaskPosition',
     /** Sticker */
     readonly sticker?: InputFile$Input,
     /** Position where the mask is placed; pass null to remove mask position */
     readonly mask_position?: maskPosition$Input,
+  }
+
+  export type getOwnedStickerSets = {
+    /** Returns sticker sets owned by the current user */
+    readonly _: 'getOwnedStickerSets',
+    /**
+     * Identifier of the sticker set from which to return owned sticker sets; use 0
+     * to get results from the beginning
+     */
+    readonly offset_sticker_set_id?: number | string,
+    /**
+     * The maximum number of sticker sets to be returned; must be positive and can't
+     * be greater than 100. For optimal performance, the number of returned objects
+     * is chosen by TDLib and can be smaller than the specified limit
+     */
+    readonly limit?: number,
   }
 
   export type getMapThumbnailFile = {
@@ -28059,6 +29170,16 @@ declare module 'tdlib-types' {
     readonly purpose?: StorePaymentPurpose$Input,
   }
 
+  export type getBusinessFeatures = {
+    /** Returns information about features, available to Business users */
+    readonly _: 'getBusinessFeatures',
+    /**
+     * Source of the request; pass null if the method is called from settings or some
+     * non-standard source
+     */
+    readonly source?: BusinessFeature$Input,
+  }
+
   export type acceptTermsOfService = {
     /** Accepts Telegram terms of services */
     readonly _: 'acceptTermsOfService',
@@ -28141,6 +29262,16 @@ declare module 'tdlib-types' {
     readonly language_code?: string,
     /** The phone number prefix */
     readonly phone_number_prefix?: string,
+  }
+
+  export type getCollectibleItemInfo = {
+    /** Returns information about a given collectible item that was purchased at https://fragment.com */
+    readonly _: 'getCollectibleItemInfo',
+    /**
+     * Type of the collectible item. The item must be used by a user and must be visible
+     * to the current user
+     */
+    readonly type?: CollectibleItemType$Input,
   }
 
   export type getDeepLinkInfo = {
@@ -28476,7 +29607,7 @@ declare module 'tdlib-types' {
     readonly error?: error$Input,
   }
 
-  // ----
+  // --- ---
 
   export type Error = error
 
@@ -28588,13 +29719,13 @@ declare module 'tdlib-types' {
     | stickerFormatTgs$Input
     | stickerFormatWebm$Input
 
-  /** Describes type of a sticker */
+  /** Describes type of sticker */
   export type StickerType =
     | stickerTypeRegular
     | stickerTypeMask
     | stickerTypeCustomEmoji
 
-  /** Describes type of a sticker */
+  /** Describes type of sticker */
   export type StickerType$Input =
     | stickerTypeRegular$Input
     | stickerTypeMask$Input
@@ -28606,12 +29737,12 @@ declare module 'tdlib-types' {
     | stickerFullTypeMask
     | stickerFullTypeCustomEmoji
 
-  /** Describes the type of a poll */
+  /** Describes the type of poll */
   export type PollType =
     | pollTypeRegular
     | pollTypeQuiz
 
-  /** Describes the type of a poll */
+  /** Describes the type of poll */
   export type PollType$Input =
     | pollTypeRegular$Input
     | pollTypeQuiz$Input
@@ -28625,7 +29756,7 @@ declare module 'tdlib-types' {
   export type Backgrounds = backgrounds
 
   /**
-   * Represents the type of a user. The following types are possible: regular users,
+   * Represents the type of user. The following types are possible: regular users,
    * deleted users and bots
    */
   export type UserType =
@@ -28652,12 +29783,18 @@ declare module 'tdlib-types' {
 
   export type BusinessConnectedBot = businessConnectedBot
 
-  /** Describes type of a sticker, which was used to create a chat photo */
+  export type BusinessChatLink = businessChatLink
+
+  export type BusinessChatLinks = businessChatLinks
+
+  export type BusinessChatLinkInfo = businessChatLinkInfo
+
+  /** Describes type of sticker, which was used to create a chat photo */
   export type ChatPhotoStickerType =
     | chatPhotoStickerTypeRegularOrMask
     | chatPhotoStickerTypeCustomEmoji
 
-  /** Describes type of a sticker, which was used to create a chat photo */
+  /** Describes type of sticker, which was used to create a chat photo */
   export type ChatPhotoStickerType$Input =
     | chatPhotoStickerTypeRegularOrMask$Input
     | chatPhotoStickerTypeCustomEmoji$Input
@@ -28749,7 +29886,7 @@ declare module 'tdlib-types' {
 
   export type ChatInviteLinkMembers = chatInviteLinkMembers
 
-  /** Describes the type of a chat to which points an invite link */
+  /** Describes the type of chat to which points an invite link */
   export type InviteLinkChatType =
     | inviteLinkChatTypeBasicGroup
     | inviteLinkChatTypeSupergroup
@@ -28848,6 +29985,10 @@ declare module 'tdlib-types' {
 
   export type MessageCalendar = messageCalendar
 
+  export type BusinessMessage = businessMessage
+
+  export type BusinessMessages = businessMessages
+
   /** Describes source of a message */
   export type MessageSource$Input =
     | messageSourceChatHistory$Input
@@ -28861,7 +30002,7 @@ declare module 'tdlib-types' {
     | messageSourceScreenshot$Input
     | messageSourceOther$Input
 
-  /** Describes type of a message sponsor */
+  /** Describes type of message sponsor */
   export type MessageSponsorType =
     | messageSponsorTypeBot
     | messageSponsorTypeWebApp
@@ -28870,6 +30011,14 @@ declare module 'tdlib-types' {
     | messageSponsorTypeWebsite
 
   export type SponsoredMessages = sponsoredMessages
+
+  /** Describes result of sponsored message report */
+  export type ReportChatSponsoredMessageResult =
+    | reportChatSponsoredMessageResultOk
+    | reportChatSponsoredMessageResultFailed
+    | reportChatSponsoredMessageResultOptionRequired
+    | reportChatSponsoredMessageResultAdsHidden
+    | reportChatSponsoredMessageResultPremiumRequired
 
   export type FoundFileDownloads = foundFileDownloads
 
@@ -28887,7 +30036,7 @@ declare module 'tdlib-types' {
 
   export type ScopeNotificationSettings = scopeNotificationSettings
 
-  /** Describes the type of a chat */
+  /** Describes the type of chat */
   export type ChatType =
     | chatTypePrivate
     | chatTypeBasicGroup
@@ -28945,6 +30094,10 @@ declare module 'tdlib-types' {
 
   export type Chats = chats
 
+  export type FailedToAddMembers = failedToAddMembers
+
+  export type CreatedBasicGroupChat = createdBasicGroupChat
+
   export type ChatsNearby = chatsNearby
 
   /** Describes a type of public chats */
@@ -28982,7 +30135,7 @@ declare module 'tdlib-types' {
     | keyboardButtonTypeRequestChat$Input
     | keyboardButtonTypeWebApp$Input
 
-  /** Describes the type of an inline keyboard button */
+  /** Describes the type of inline keyboard button */
   export type InlineKeyboardButtonType =
     | inlineKeyboardButtonTypeUrl
     | inlineKeyboardButtonTypeLoginUrl
@@ -28994,7 +30147,7 @@ declare module 'tdlib-types' {
     | inlineKeyboardButtonTypeBuy
     | inlineKeyboardButtonTypeUser
 
-  /** Describes the type of an inline keyboard button */
+  /** Describes the type of inline keyboard button */
   export type InlineKeyboardButtonType$Input =
     | inlineKeyboardButtonTypeUrl$Input
     | inlineKeyboardButtonTypeLoginUrl$Input
@@ -29037,7 +30190,7 @@ declare module 'tdlib-types' {
 
   export type MessageThreadInfo = messageThreadInfo
 
-  /** Describes type of a Saved Messages topic */
+  /** Describes type of Saved Messages topic */
   export type SavedMessagesTopicType =
     | savedMessagesTopicTypeMyNotes
     | savedMessagesTopicTypeAuthorHidden
@@ -29121,6 +30274,13 @@ declare module 'tdlib-types' {
 
   export type PhoneNumberInfo = phoneNumberInfo
 
+  /** Describes a collectible item that can be purchased at https://fragment.com */
+  export type CollectibleItemType$Input =
+    | collectibleItemTypeUsername$Input
+    | collectibleItemTypePhoneNumber$Input
+
+  export type CollectibleItemInfo = collectibleItemInfo
+
   export type BankCardInfo = bankCardInfo
 
   export type OrderInfo = orderInfo
@@ -29159,7 +30319,7 @@ declare module 'tdlib-types' {
     | messageExtendedMediaVideo
     | messageExtendedMediaUnsupported
 
-  /** Contains the type of a Telegram Passport element */
+  /** Contains the type of Telegram Passport element */
   export type PassportElementType =
     | passportElementTypePersonalDetails
     | passportElementTypePassport
@@ -29175,7 +30335,7 @@ declare module 'tdlib-types' {
     | passportElementTypePhoneNumber
     | passportElementTypeEmailAddress
 
-  /** Contains the type of a Telegram Passport element */
+  /** Contains the type of Telegram Passport element */
   export type PassportElementType$Input =
     | passportElementTypePersonalDetails$Input
     | passportElementTypePassport$Input
@@ -29517,20 +30677,20 @@ declare module 'tdlib-types' {
 
   export type EmojiCategories = emojiCategories
 
-  /** Describes type of an emoji category */
+  /** Describes type of emoji category */
   export type EmojiCategoryType$Input =
     | emojiCategoryTypeDefault$Input
     | emojiCategoryTypeEmojiStatus$Input
     | emojiCategoryTypeChatPhoto$Input
 
-  /** Describes type of a clickable rectangle area on a story media */
+  /** Describes type of clickable rectangle area on a story media */
   export type StoryAreaType =
     | storyAreaTypeLocation
     | storyAreaTypeVenue
     | storyAreaTypeSuggestedReaction
     | storyAreaTypeMessage
 
-  /** Describes type of a clickable rectangle area on a story media to be added */
+  /** Describes type of clickable rectangle area on a story media to be added */
   export type InputStoryAreaType$Input =
     | inputStoryAreaTypeLocation$Input
     | inputStoryAreaTypeFoundVenue$Input
@@ -29578,6 +30738,10 @@ declare module 'tdlib-types' {
 
   export type StoryInteractions = storyInteractions
 
+  export type QuickReplyMessage = quickReplyMessage
+
+  export type QuickReplyMessages = quickReplyMessages
+
   /** Describes a public forward or repost of a story */
   export type PublicForward =
     | publicForwardMessage
@@ -29609,7 +30773,7 @@ declare module 'tdlib-types' {
     | callDiscardReasonDisconnected
     | callDiscardReasonHungUp
 
-  /** Describes the type of a call server */
+  /** Describes the type of call server */
   export type CallServerType =
     | callServerTypeTelegramReflector
     | callServerTypeWebrtc
@@ -29639,7 +30803,7 @@ declare module 'tdlib-types' {
 
   export type GroupCall = groupCall
 
-  /** Describes the exact type of a problem with a call */
+  /** Describes the exact type of problem with a call */
   export type CallProblem$Input =
     | callProblemEcho$Input
     | callProblemNoise$Input
@@ -29684,6 +30848,8 @@ declare module 'tdlib-types' {
     | speechRecognitionResultPending
     | speechRecognitionResultText
     | speechRecognitionResultError
+
+  export type BusinessConnection = businessConnection
 
   export type AttachmentMenuBot = attachmentMenuBot
 
@@ -29730,12 +30896,12 @@ declare module 'tdlib-types' {
     | inlineQueryResultVideo
     | inlineQueryResultVoiceNote
 
-  /** Represents a type of a button in results of inline query */
+  /** Represents a type of button in results of inline query */
   export type InlineQueryResultsButtonType =
     | inlineQueryResultsButtonTypeStartBot
     | inlineQueryResultsButtonTypeWebApp
 
-  /** Represents a type of a button in results of inline query */
+  /** Represents a type of button in results of inline query */
   export type InlineQueryResultsButtonType$Input =
     | inlineQueryResultsButtonTypeStartBot$Input
     | inlineQueryResultsButtonTypeWebApp$Input
@@ -29832,7 +30998,7 @@ declare module 'tdlib-types' {
 
   export type LocalizationTargetInfo = localizationTargetInfo
 
-  /** Describes type of a limit, increased for Premium users */
+  /** Describes type of limit, increased for Premium users */
   export type PremiumLimitType =
     | premiumLimitTypeSupergroupCount
     | premiumLimitTypePinnedChatCount
@@ -29854,7 +31020,7 @@ declare module 'tdlib-types' {
     | premiumLimitTypeStorySuggestedReactionAreaCount
     | premiumLimitTypeSimilarChatCount
 
-  /** Describes type of a limit, increased for Premium users */
+  /** Describes type of limit, increased for Premium users */
   export type PremiumLimitType$Input =
     | premiumLimitTypeSupergroupCount$Input
     | premiumLimitTypePinnedChatCount$Input
@@ -29900,6 +31066,7 @@ declare module 'tdlib-types' {
     | premiumFeatureSavedMessagesTags
     | premiumFeatureMessagePrivacy
     | premiumFeatureLastSeenTimes
+    | premiumFeatureBusiness
 
   /** Describes a feature available to Premium users */
   export type PremiumFeature$Input =
@@ -29925,6 +31092,35 @@ declare module 'tdlib-types' {
     | premiumFeatureSavedMessagesTags$Input
     | premiumFeatureMessagePrivacy$Input
     | premiumFeatureLastSeenTimes$Input
+    | premiumFeatureBusiness$Input
+
+  /** Describes a feature available to Business user accounts */
+  export type BusinessFeature =
+    | businessFeatureLocation
+    | businessFeatureOpeningHours
+    | businessFeatureQuickReplies
+    | businessFeatureGreetingMessage
+    | businessFeatureAwayMessage
+    | businessFeatureAccountLinks
+    | businessFeatureStartPage
+    | businessFeatureBots
+    | businessFeatureEmojiStatus
+    | businessFeatureChatFolderTags
+    | businessFeatureUpgradedStories
+
+  /** Describes a feature available to Business user accounts */
+  export type BusinessFeature$Input =
+    | businessFeatureLocation$Input
+    | businessFeatureOpeningHours$Input
+    | businessFeatureQuickReplies$Input
+    | businessFeatureGreetingMessage$Input
+    | businessFeatureAwayMessage$Input
+    | businessFeatureAccountLinks$Input
+    | businessFeatureStartPage$Input
+    | businessFeatureBots$Input
+    | businessFeatureEmojiStatus$Input
+    | businessFeatureChatFolderTags$Input
+    | businessFeatureUpgradedStories$Input
 
   /** Describes a story feature available to Premium users */
   export type PremiumStoryFeature$Input =
@@ -29940,10 +31136,13 @@ declare module 'tdlib-types' {
 
   export type PremiumFeatures = premiumFeatures
 
+  export type BusinessFeatures = businessFeatures
+
   /** Describes a source from which the Premium features screen is opened */
   export type PremiumSource$Input =
     | premiumSourceLimitExceeded$Input
     | premiumSourceFeature$Input
+    | premiumSourceBusinessFeature$Input
     | premiumSourceStoryFeature$Input
     | premiumSourceLink$Input
     | premiumSourceSettings$Input
@@ -29996,14 +31195,14 @@ declare module 'tdlib-types' {
     | backgroundFillGradient$Input
     | backgroundFillFreeformGradient$Input
 
-  /** Describes the type of a background */
+  /** Describes the type of background */
   export type BackgroundType =
     | backgroundTypeWallpaper
     | backgroundTypePattern
     | backgroundTypeFill
     | backgroundTypeChatTheme
 
-  /** Describes the type of a background */
+  /** Describes the type of background */
   export type BackgroundType$Input =
     | backgroundTypeWallpaper$Input
     | backgroundTypePattern$Input
@@ -30174,6 +31373,7 @@ declare module 'tdlib-types' {
   export type UserPrivacySettingRule =
     | userPrivacySettingRuleAllowAll
     | userPrivacySettingRuleAllowContacts
+    | userPrivacySettingRuleAllowPremiumUsers
     | userPrivacySettingRuleAllowUsers
     | userPrivacySettingRuleAllowChatMembers
     | userPrivacySettingRuleRestrictAll
@@ -30185,6 +31385,7 @@ declare module 'tdlib-types' {
   export type UserPrivacySettingRule$Input =
     | userPrivacySettingRuleAllowAll$Input
     | userPrivacySettingRuleAllowContacts$Input
+    | userPrivacySettingRuleAllowPremiumUsers$Input
     | userPrivacySettingRuleAllowUsers$Input
     | userPrivacySettingRuleAllowChatMembers$Input
     | userPrivacySettingRuleRestrictAll$Input
@@ -30201,6 +31402,7 @@ declare module 'tdlib-types' {
     | userPrivacySettingShowLinkInForwardedMessages
     | userPrivacySettingShowPhoneNumber
     | userPrivacySettingShowBio
+    | userPrivacySettingShowBirthdate
     | userPrivacySettingAllowChatInvites
     | userPrivacySettingAllowCalls
     | userPrivacySettingAllowPeerToPeerCalls
@@ -30214,6 +31416,7 @@ declare module 'tdlib-types' {
     | userPrivacySettingShowLinkInForwardedMessages$Input
     | userPrivacySettingShowPhoneNumber$Input
     | userPrivacySettingShowBio$Input
+    | userPrivacySettingShowBirthdate$Input
     | userPrivacySettingAllowChatInvites$Input
     | userPrivacySettingAllowCalls$Input
     | userPrivacySettingAllowPeerToPeerCalls$Input
@@ -30234,7 +31437,7 @@ declare module 'tdlib-types' {
 
   export type MessageAutoDeleteTime = messageAutoDeleteTime
 
-  /** Represents the type of a session */
+  /** Represents the type of session */
   export type SessionType =
     | sessionTypeAndroid
     | sessionTypeApple
@@ -30297,6 +31500,7 @@ declare module 'tdlib-types' {
     | internalLinkTypeBotAddToChannel
     | internalLinkTypeBotStart
     | internalLinkTypeBotStartInGroup
+    | internalLinkTypeBusinessChat
     | internalLinkTypeChangePhoneNumber
     | internalLinkTypeChatBoost
     | internalLinkTypeChatFolderInvite
@@ -30346,6 +31550,7 @@ declare module 'tdlib-types' {
     | internalLinkTypeBotAddToChannel$Input
     | internalLinkTypeBotStart$Input
     | internalLinkTypeBotStartInGroup$Input
+    | internalLinkTypeBusinessChat$Input
     | internalLinkTypeChangePhoneNumber$Input
     | internalLinkTypeChatBoost$Input
     | internalLinkTypeChatFolderInvite$Input
@@ -30391,19 +31596,19 @@ declare module 'tdlib-types' {
 
   export type ChatBoostLinkInfo = chatBoostLinkInfo
 
-  /** Describes a type of a block list */
+  /** Describes a type of block list */
   export type BlockList =
     | blockListMain
     | blockListStories
 
-  /** Describes a type of a block list */
+  /** Describes a type of block list */
   export type BlockList$Input =
     | blockListMain$Input
     | blockListStories$Input
 
   export type FilePart = filePart
 
-  /** Represents the type of a file */
+  /** Represents the type of file */
   export type FileType =
     | fileTypeNone
     | fileTypeAnimation
@@ -30425,7 +31630,7 @@ declare module 'tdlib-types' {
     | fileTypeVoiceNote
     | fileTypeWallpaper
 
-  /** Represents the type of a file */
+  /** Represents the type of file */
   export type FileType$Input =
     | fileTypeNone$Input
     | fileTypeAnimation$Input
@@ -30453,7 +31658,7 @@ declare module 'tdlib-types' {
 
   export type DatabaseStatistics = databaseStatistics
 
-  /** Represents the type of a network */
+  /** Represents the type of network */
   export type NetworkType =
     | networkTypeNone
     | networkTypeMobile
@@ -30461,7 +31666,7 @@ declare module 'tdlib-types' {
     | networkTypeWiFi
     | networkTypeOther
 
-  /** Represents the type of a network */
+  /** Represents the type of network */
   export type NetworkType$Input =
     | networkTypeNone$Input
     | networkTypeMobile$Input
@@ -30524,7 +31729,7 @@ declare module 'tdlib-types' {
 
   export type FoundPositions = foundPositions
 
-  /** Describes the type of a URL linking to an internal Telegram entity */
+  /** Describes the type of URL linking to an internal Telegram entity */
   export type TMeUrlType =
     | tMeUrlTypeUser
     | tMeUrlTypeSupergroup
@@ -30545,6 +31750,7 @@ declare module 'tdlib-types' {
     | suggestedActionRestorePremium
     | suggestedActionSubscribeToAnnualPremium
     | suggestedActionGiftPremiumForChristmas
+    | suggestedActionSetBirthdate
 
   /** Describes an action suggested to the current user */
   export type SuggestedAction$Input =
@@ -30558,6 +31764,7 @@ declare module 'tdlib-types' {
     | suggestedActionRestorePremium$Input
     | suggestedActionSubscribeToAnnualPremium$Input
     | suggestedActionGiftPremiumForChristmas$Input
+    | suggestedActionSetBirthdate$Input
 
   export type Count = count
 
@@ -30574,13 +31781,13 @@ declare module 'tdlib-types' {
     | textParseModeMarkdown$Input
     | textParseModeHTML$Input
 
-  /** Describes the type of a proxy server */
+  /** Describes the type of proxy server */
   export type ProxyType =
     | proxyTypeSocks5
     | proxyTypeHttp
     | proxyTypeMtproto
 
-  /** Describes the type of a proxy server */
+  /** Describes the type of proxy server */
   export type ProxyType$Input =
     | proxyTypeSocks5$Input
     | proxyTypeHttp$Input
@@ -30596,7 +31803,7 @@ declare module 'tdlib-types' {
     | statisticalGraphAsync
     | statisticalGraphError
 
-  /** Describes type of an object, for which statistics are provided */
+  /** Describes type of object, for which statistics are provided */
   export type ChatStatisticsObjectType =
     | chatStatisticsObjectTypeMessage
     | chatStatisticsObjectTypeStory
@@ -30606,9 +31813,28 @@ declare module 'tdlib-types' {
     | chatStatisticsSupergroup
     | chatStatisticsChannel
 
+  export type ChatRevenueStatistics = chatRevenueStatistics
+
   export type MessageStatistics = messageStatistics
 
   export type StoryStatistics = storyStatistics
+
+  /** Describes state of a chat revenue withdrawal */
+  export type ChatRevenueWithdrawalState =
+    | chatRevenueWithdrawalStatePending
+    | chatRevenueWithdrawalStateCompleted
+    | chatRevenueWithdrawalStateFailed
+
+  /**
+   * Describes type of transaction for revenue earned from sponsored messages in
+   * a chat
+   */
+  export type ChatRevenueTransactionType =
+    | chatRevenueTransactionTypeEarnings
+    | chatRevenueTransactionTypeWithdrawal
+    | chatRevenueTransactionTypeRefund
+
+  export type ChatRevenueTransactions = chatRevenueTransactions
 
   /** Represents a vector path command */
   export type VectorPathCommand =
@@ -30624,6 +31850,12 @@ declare module 'tdlib-types' {
     | botCommandScopeChat$Input
     | botCommandScopeChatAdministrators$Input
     | botCommandScopeChatMember$Input
+
+  /** Describes type of the request for which a code is sent to a phone number */
+  export type PhoneNumberCodeType$Input =
+    | phoneNumberCodeTypeChange$Input
+    | phoneNumberCodeTypeVerify$Input
+    | phoneNumberCodeTypeConfirmOwnership$Input
 
   /** Contains notifications about data changes */
   export type Update =
@@ -30652,6 +31884,7 @@ declare module 'tdlib-types' {
     | updateChatReadInbox
     | updateChatReadOutbox
     | updateChatActionBar
+    | updateChatBusinessBotManageBar
     | updateChatAvailableReactions
     | updateChatDraftMessage
     | updateChatEmojiStatus
@@ -30745,8 +31978,13 @@ declare module 'tdlib-types' {
     | updateAnimatedEmojiMessageClicked
     | updateAnimationSearchParameters
     | updateSuggestedActions
-    | updateAddChatMembersPrivacyForbidden
+    | updateSpeedLimitNotification
+    | updateContactCloseBirthdays
     | updateAutosaveSettings
+    | updateBusinessConnection
+    | updateNewBusinessMessage
+    | updateBusinessMessageEdited
+    | updateBusinessMessagesDeleted
     | updateNewInlineQuery
     | updateNewChosenInlineResult
     | updateNewCallbackQuery
@@ -30797,7 +32035,7 @@ declare module 'tdlib-types' {
 
   export type TestVectorStringObject = testVectorStringObject
 
-  // ----
+  // --- Special types ---
 
   export type Invoke = <T>(query: { readonly _: T } & (
     getAuthorizationState
@@ -30881,6 +32119,7 @@ declare module 'tdlib-types' {
     | checkCreatedPublicChatsLimit
     | getSuitableDiscussionChats
     | getInactiveSupergroupChats
+    | getSuitablePersonalChats
     | loadSavedMessagesTopics
     | getSavedMessagesTopicHistory
     | getSavedMessagesTopicMessageByDate
@@ -30910,6 +32149,7 @@ declare module 'tdlib-types' {
     | getChatScheduledMessages
     | getChatSponsoredMessages
     | clickChatSponsoredMessage
+    | reportChatSponsoredMessage
     | removeNotification
     | removeNotificationGroup
     | getMessageLink
@@ -30943,6 +32183,8 @@ declare module 'tdlib-types' {
     | editInlineMessageCaption
     | editInlineMessageReplyMarkup
     | editMessageSchedulingState
+    | sendBusinessMessage
+    | sendBusinessMessageAlbum
     | checkQuickReplyShortcutName
     | loadQuickReplyShortcuts
     | setQuickReplyShortcutName
@@ -30950,6 +32192,10 @@ declare module 'tdlib-types' {
     | reorderQuickReplyShortcuts
     | loadQuickReplyShortcutMessages
     | deleteQuickReplyShortcutMessages
+    | addQuickReplyShortcutMessage
+    | addQuickReplyShortcutInlineQueryResultMessage
+    | readdQuickReplyShortcutMessages
+    | editQuickReplyMessage
     | getForumTopicDefaultIcons
     | createForumTopic
     | editForumTopic
@@ -30990,6 +32236,7 @@ declare module 'tdlib-types' {
     | getPollVoters
     | stopPoll
     | hideSuggestedAction
+    | getBusinessConnection
     | getLoginUrlInfo
     | getLoginUrl
     | shareUsersWithBot
@@ -31241,6 +32488,7 @@ declare module 'tdlib-types' {
     | getStickers
     | getAllStickerEmojis
     | searchStickers
+    | getGreetingStickers
     | getPremiumStickers
     | getInstalledStickerSets
     | getArchivedStickerSets
@@ -31287,18 +32535,29 @@ declare module 'tdlib-types' {
     | setUsername
     | toggleUsernameIsActive
     | reorderActiveUsernames
+    | setBirthdate
+    | setPersonalChat
     | setEmojiStatus
     | setLocation
     | setBusinessLocation
     | setBusinessOpeningHours
     | setBusinessGreetingMessageSettings
     | setBusinessAwayMessageSettings
-    | changePhoneNumber
-    | resendChangePhoneNumberCode
-    | checkChangePhoneNumberCode
+    | setBusinessStartPage
+    | sendPhoneNumberCode
+    | sendPhoneNumberFirebaseSms
+    | resendPhoneNumberCode
+    | checkPhoneNumberCode
     | getBusinessConnectedBot
     | setBusinessConnectedBot
     | deleteBusinessConnectedBot
+    | toggleBusinessConnectedBotChatIsPaused
+    | removeBusinessConnectedBotFromChat
+    | getBusinessChatLinks
+    | createBusinessChatLink
+    | editBusinessChatLink
+    | deleteBusinessChatLink
+    | getBusinessChatLinkInfo
     | getUserLink
     | searchUserByToken
     | setCommands
@@ -31341,6 +32600,7 @@ declare module 'tdlib-types' {
     | toggleSupergroupJoinToSendMessages
     | toggleSupergroupJoinByRequest
     | toggleSupergroupIsAllHistoryAvailable
+    | toggleSupergroupCanHaveSponsoredMessages
     | toggleSupergroupHasHiddenMembers
     | toggleSupergroupHasAggressiveAntiSpamEnabled
     | toggleSupergroupIsForum
@@ -31398,6 +32658,9 @@ declare module 'tdlib-types' {
     | reportChat
     | reportChatPhoto
     | reportMessageReactions
+    | getChatRevenueStatistics
+    | getChatRevenueWithdrawalUrl
+    | getChatRevenueTransactions
     | getChatStatistics
     | getMessageStatistics
     | getMessagePublicForwards
@@ -31423,24 +32686,19 @@ declare module 'tdlib-types' {
     | deletePassportElement
     | setPassportElementErrors
     | getPreferredCountryLanguage
-    | sendPhoneNumberVerificationCode
-    | resendPhoneNumberVerificationCode
-    | checkPhoneNumberVerificationCode
     | sendEmailAddressVerificationCode
     | resendEmailAddressVerificationCode
     | checkEmailAddressVerificationCode
     | getPassportAuthorizationForm
     | getPassportAuthorizationFormAvailableElements
     | sendPassportAuthorizationForm
-    | sendPhoneNumberConfirmationCode
-    | resendPhoneNumberConfirmationCode
-    | checkPhoneNumberConfirmationCode
     | setBotUpdatesStatus
     | uploadStickerFile
     | getSuggestedStickerSetName
     | checkStickerSetName
     | createNewStickerSet
     | addStickerToSet
+    | replaceStickerInSet
     | setStickerSetThumbnail
     | setCustomEmojiStickerSetThumbnail
     | setStickerSetTitle
@@ -31450,6 +32708,7 @@ declare module 'tdlib-types' {
     | setStickerEmojis
     | setStickerKeywords
     | setStickerMaskPosition
+    | getOwnedStickerSets
     | getMapThumbnailFile
     | getPremiumLimit
     | getPremiumFeatures
@@ -31465,6 +32724,7 @@ declare module 'tdlib-types' {
     | canPurchasePremium
     | assignAppStoreTransaction
     | assignGooglePlayTransaction
+    | getBusinessFeatures
     | acceptTermsOfService
     | searchStringsByPrefix
     | sendCustomRequest
@@ -31474,6 +32734,7 @@ declare module 'tdlib-types' {
     | getCountryCode
     | getPhoneNumberInfo
     | getPhoneNumberInfoSync
+    | getCollectibleItemInfo
     | getDeepLinkInfo
     | getApplicationConfig
     | saveApplicationLogEvent
@@ -31592,6 +32853,7 @@ declare module 'tdlib-types' {
     T extends 'checkCreatedPublicChatsLimit' ? Ok :
     T extends 'getSuitableDiscussionChats' ? Chats :
     T extends 'getInactiveSupergroupChats' ? Chats :
+    T extends 'getSuitablePersonalChats' ? Chats :
     T extends 'loadSavedMessagesTopics' ? Ok :
     T extends 'getSavedMessagesTopicHistory' ? Messages :
     T extends 'getSavedMessagesTopicMessageByDate' ? Message :
@@ -31621,6 +32883,7 @@ declare module 'tdlib-types' {
     T extends 'getChatScheduledMessages' ? Messages :
     T extends 'getChatSponsoredMessages' ? SponsoredMessages :
     T extends 'clickChatSponsoredMessage' ? Ok :
+    T extends 'reportChatSponsoredMessage' ? ReportChatSponsoredMessageResult :
     T extends 'removeNotification' ? Ok :
     T extends 'removeNotificationGroup' ? Ok :
     T extends 'getMessageLink' ? MessageLink :
@@ -31654,6 +32917,8 @@ declare module 'tdlib-types' {
     T extends 'editInlineMessageCaption' ? Ok :
     T extends 'editInlineMessageReplyMarkup' ? Ok :
     T extends 'editMessageSchedulingState' ? Ok :
+    T extends 'sendBusinessMessage' ? BusinessMessage :
+    T extends 'sendBusinessMessageAlbum' ? BusinessMessages :
     T extends 'checkQuickReplyShortcutName' ? Ok :
     T extends 'loadQuickReplyShortcuts' ? Ok :
     T extends 'setQuickReplyShortcutName' ? Ok :
@@ -31661,6 +32926,10 @@ declare module 'tdlib-types' {
     T extends 'reorderQuickReplyShortcuts' ? Ok :
     T extends 'loadQuickReplyShortcutMessages' ? Ok :
     T extends 'deleteQuickReplyShortcutMessages' ? Ok :
+    T extends 'addQuickReplyShortcutMessage' ? QuickReplyMessage :
+    T extends 'addQuickReplyShortcutInlineQueryResultMessage' ? QuickReplyMessage :
+    T extends 'readdQuickReplyShortcutMessages' ? QuickReplyMessages :
+    T extends 'editQuickReplyMessage' ? Ok :
     T extends 'getForumTopicDefaultIcons' ? Stickers :
     T extends 'createForumTopic' ? ForumTopicInfo :
     T extends 'editForumTopic' ? Ok :
@@ -31701,6 +32970,7 @@ declare module 'tdlib-types' {
     T extends 'getPollVoters' ? MessageSenders :
     T extends 'stopPoll' ? Ok :
     T extends 'hideSuggestedAction' ? Ok :
+    T extends 'getBusinessConnection' ? BusinessConnection :
     T extends 'getLoginUrlInfo' ? LoginUrlInfo :
     T extends 'getLoginUrl' ? HttpUrl :
     T extends 'shareUsersWithBot' ? Ok :
@@ -31741,7 +33011,7 @@ declare module 'tdlib-types' {
     T extends 'createBasicGroupChat' ? Chat :
     T extends 'createSupergroupChat' ? Chat :
     T extends 'createSecretChat' ? Chat :
-    T extends 'createNewBasicGroupChat' ? Chat :
+    T extends 'createNewBasicGroupChat' ? CreatedBasicGroupChat :
     T extends 'createNewSupergroupChat' ? Chat :
     T extends 'createNewSecretChat' ? Chat :
     T extends 'upgradeBasicGroupChatToSupergroupChat' ? Chat :
@@ -31797,8 +33067,8 @@ declare module 'tdlib-types' {
     T extends 'unpinAllMessageThreadMessages' ? Ok :
     T extends 'joinChat' ? Ok :
     T extends 'leaveChat' ? Ok :
-    T extends 'addChatMember' ? Ok :
-    T extends 'addChatMembers' ? Ok :
+    T extends 'addChatMember' ? FailedToAddMembers :
+    T extends 'addChatMembers' ? FailedToAddMembers :
     T extends 'setChatMemberStatus' ? Ok :
     T extends 'banChatMember' ? Ok :
     T extends 'canTransferOwnership' ? CanTransferOwnershipResult :
@@ -31952,6 +33222,7 @@ declare module 'tdlib-types' {
     T extends 'getStickers' ? Stickers :
     T extends 'getAllStickerEmojis' ? Emojis :
     T extends 'searchStickers' ? Stickers :
+    T extends 'getGreetingStickers' ? Stickers :
     T extends 'getPremiumStickers' ? Stickers :
     T extends 'getInstalledStickerSets' ? StickerSets :
     T extends 'getArchivedStickerSets' ? StickerSets :
@@ -31998,18 +33269,29 @@ declare module 'tdlib-types' {
     T extends 'setUsername' ? Ok :
     T extends 'toggleUsernameIsActive' ? Ok :
     T extends 'reorderActiveUsernames' ? Ok :
+    T extends 'setBirthdate' ? Ok :
+    T extends 'setPersonalChat' ? Ok :
     T extends 'setEmojiStatus' ? Ok :
     T extends 'setLocation' ? Ok :
     T extends 'setBusinessLocation' ? Ok :
     T extends 'setBusinessOpeningHours' ? Ok :
     T extends 'setBusinessGreetingMessageSettings' ? Ok :
     T extends 'setBusinessAwayMessageSettings' ? Ok :
-    T extends 'changePhoneNumber' ? AuthenticationCodeInfo :
-    T extends 'resendChangePhoneNumberCode' ? AuthenticationCodeInfo :
-    T extends 'checkChangePhoneNumberCode' ? Ok :
+    T extends 'setBusinessStartPage' ? Ok :
+    T extends 'sendPhoneNumberCode' ? AuthenticationCodeInfo :
+    T extends 'sendPhoneNumberFirebaseSms' ? Ok :
+    T extends 'resendPhoneNumberCode' ? AuthenticationCodeInfo :
+    T extends 'checkPhoneNumberCode' ? Ok :
     T extends 'getBusinessConnectedBot' ? BusinessConnectedBot :
     T extends 'setBusinessConnectedBot' ? Ok :
     T extends 'deleteBusinessConnectedBot' ? Ok :
+    T extends 'toggleBusinessConnectedBotChatIsPaused' ? Ok :
+    T extends 'removeBusinessConnectedBotFromChat' ? Ok :
+    T extends 'getBusinessChatLinks' ? BusinessChatLinks :
+    T extends 'createBusinessChatLink' ? BusinessChatLink :
+    T extends 'editBusinessChatLink' ? BusinessChatLink :
+    T extends 'deleteBusinessChatLink' ? Ok :
+    T extends 'getBusinessChatLinkInfo' ? BusinessChatLinkInfo :
     T extends 'getUserLink' ? UserLink :
     T extends 'searchUserByToken' ? User :
     T extends 'setCommands' ? Ok :
@@ -32052,6 +33334,7 @@ declare module 'tdlib-types' {
     T extends 'toggleSupergroupJoinToSendMessages' ? Ok :
     T extends 'toggleSupergroupJoinByRequest' ? Ok :
     T extends 'toggleSupergroupIsAllHistoryAvailable' ? Ok :
+    T extends 'toggleSupergroupCanHaveSponsoredMessages' ? Ok :
     T extends 'toggleSupergroupHasHiddenMembers' ? Ok :
     T extends 'toggleSupergroupHasAggressiveAntiSpamEnabled' ? Ok :
     T extends 'toggleSupergroupIsForum' ? Ok :
@@ -32109,6 +33392,9 @@ declare module 'tdlib-types' {
     T extends 'reportChat' ? Ok :
     T extends 'reportChatPhoto' ? Ok :
     T extends 'reportMessageReactions' ? Ok :
+    T extends 'getChatRevenueStatistics' ? ChatRevenueStatistics :
+    T extends 'getChatRevenueWithdrawalUrl' ? HttpUrl :
+    T extends 'getChatRevenueTransactions' ? ChatRevenueTransactions :
     T extends 'getChatStatistics' ? ChatStatistics :
     T extends 'getMessageStatistics' ? MessageStatistics :
     T extends 'getMessagePublicForwards' ? PublicForwards :
@@ -32134,24 +33420,19 @@ declare module 'tdlib-types' {
     T extends 'deletePassportElement' ? Ok :
     T extends 'setPassportElementErrors' ? Ok :
     T extends 'getPreferredCountryLanguage' ? Text :
-    T extends 'sendPhoneNumberVerificationCode' ? AuthenticationCodeInfo :
-    T extends 'resendPhoneNumberVerificationCode' ? AuthenticationCodeInfo :
-    T extends 'checkPhoneNumberVerificationCode' ? Ok :
     T extends 'sendEmailAddressVerificationCode' ? EmailAddressAuthenticationCodeInfo :
     T extends 'resendEmailAddressVerificationCode' ? EmailAddressAuthenticationCodeInfo :
     T extends 'checkEmailAddressVerificationCode' ? Ok :
     T extends 'getPassportAuthorizationForm' ? PassportAuthorizationForm :
     T extends 'getPassportAuthorizationFormAvailableElements' ? PassportElementsWithErrors :
     T extends 'sendPassportAuthorizationForm' ? Ok :
-    T extends 'sendPhoneNumberConfirmationCode' ? AuthenticationCodeInfo :
-    T extends 'resendPhoneNumberConfirmationCode' ? AuthenticationCodeInfo :
-    T extends 'checkPhoneNumberConfirmationCode' ? Ok :
     T extends 'setBotUpdatesStatus' ? Ok :
     T extends 'uploadStickerFile' ? File :
     T extends 'getSuggestedStickerSetName' ? Text :
     T extends 'checkStickerSetName' ? CheckStickerSetNameResult :
     T extends 'createNewStickerSet' ? StickerSet :
     T extends 'addStickerToSet' ? Ok :
+    T extends 'replaceStickerInSet' ? Ok :
     T extends 'setStickerSetThumbnail' ? Ok :
     T extends 'setCustomEmojiStickerSetThumbnail' ? Ok :
     T extends 'setStickerSetTitle' ? Ok :
@@ -32161,6 +33442,7 @@ declare module 'tdlib-types' {
     T extends 'setStickerEmojis' ? Ok :
     T extends 'setStickerKeywords' ? Ok :
     T extends 'setStickerMaskPosition' ? Ok :
+    T extends 'getOwnedStickerSets' ? StickerSets :
     T extends 'getMapThumbnailFile' ? File :
     T extends 'getPremiumLimit' ? PremiumLimit :
     T extends 'getPremiumFeatures' ? PremiumFeatures :
@@ -32176,6 +33458,7 @@ declare module 'tdlib-types' {
     T extends 'canPurchasePremium' ? Ok :
     T extends 'assignAppStoreTransaction' ? Ok :
     T extends 'assignGooglePlayTransaction' ? Ok :
+    T extends 'getBusinessFeatures' ? BusinessFeatures :
     T extends 'acceptTermsOfService' ? Ok :
     T extends 'searchStringsByPrefix' ? FoundPositions :
     T extends 'sendCustomRequest' ? CustomRequestResult :
@@ -32185,6 +33468,7 @@ declare module 'tdlib-types' {
     T extends 'getCountryCode' ? Text :
     T extends 'getPhoneNumberInfo' ? PhoneNumberInfo :
     T extends 'getPhoneNumberInfoSync' ? PhoneNumberInfo :
+    T extends 'getCollectibleItemInfo' ? CollectibleItemInfo :
     T extends 'getDeepLinkInfo' ? DeepLinkInfo :
     T extends 'getApplicationConfig' ? JsonValue :
     T extends 'saveApplicationLogEvent' ? Ok :
@@ -32224,7 +33508,67 @@ declare module 'tdlib-types' {
   never>
 
   export type Execute = <T>(query: { readonly _: T } & (
-    getAuthorizationState
+    checkQuickReplyShortcutName
+    | searchQuote
+    | getTextEntities
+    | parseTextEntities
+    | parseMarkdown
+    | getMarkdownText
+    | getCountryFlagEmoji
+    | getFileMimeType
+    | getFileExtension
+    | cleanFileName
+    | getLanguagePackString
+    | getJsonValue
+    | getJsonString
+    | getThemeParametersJsonString
+    | getChatFolderDefaultIconName
+    | getPushReceiverId
+    | getOption
+    | searchStringsByPrefix
+    | getPhoneNumberInfoSync
+    | setLogStream
+    | getLogStream
+    | setLogVerbosityLevel
+    | getLogVerbosityLevel
+    | getLogTags
+    | setLogTagVerbosityLevel
+    | getLogTagVerbosityLevel
+    | addLogMessage
+    | testReturnError
+  )) => error | (
+    T extends 'checkQuickReplyShortcutName' ? Ok :
+    T extends 'searchQuote' ? FoundPosition :
+    T extends 'getTextEntities' ? TextEntities :
+    T extends 'parseTextEntities' ? FormattedText :
+    T extends 'parseMarkdown' ? FormattedText :
+    T extends 'getMarkdownText' ? FormattedText :
+    T extends 'getCountryFlagEmoji' ? Text :
+    T extends 'getFileMimeType' ? Text :
+    T extends 'getFileExtension' ? Text :
+    T extends 'cleanFileName' ? Text :
+    T extends 'getLanguagePackString' ? LanguagePackStringValue :
+    T extends 'getJsonValue' ? JsonValue :
+    T extends 'getJsonString' ? Text :
+    T extends 'getThemeParametersJsonString' ? Text :
+    T extends 'getChatFolderDefaultIconName' ? ChatFolderIcon :
+    T extends 'getPushReceiverId' ? PushReceiverId :
+    T extends 'getOption' ? OptionValue :
+    T extends 'searchStringsByPrefix' ? FoundPositions :
+    T extends 'getPhoneNumberInfoSync' ? PhoneNumberInfo :
+    T extends 'setLogStream' ? Ok :
+    T extends 'getLogStream' ? LogStream :
+    T extends 'setLogVerbosityLevel' ? Ok :
+    T extends 'getLogVerbosityLevel' ? LogVerbosityLevel :
+    T extends 'getLogTags' ? LogTags :
+    T extends 'setLogTagVerbosityLevel' ? Ok :
+    T extends 'getLogTagVerbosityLevel' ? LogVerbosityLevel :
+    T extends 'addLogMessage' ? Ok :
+    T extends 'testReturnError' ? Error :
+  never)
+
+  type $Function =
+    | getAuthorizationState
     | setTdlibParameters
     | setAuthenticationPhoneNumber
     | setAuthenticationEmailAddress
@@ -32305,6 +33649,7 @@ declare module 'tdlib-types' {
     | checkCreatedPublicChatsLimit
     | getSuitableDiscussionChats
     | getInactiveSupergroupChats
+    | getSuitablePersonalChats
     | loadSavedMessagesTopics
     | getSavedMessagesTopicHistory
     | getSavedMessagesTopicMessageByDate
@@ -32334,6 +33679,7 @@ declare module 'tdlib-types' {
     | getChatScheduledMessages
     | getChatSponsoredMessages
     | clickChatSponsoredMessage
+    | reportChatSponsoredMessage
     | removeNotification
     | removeNotificationGroup
     | getMessageLink
@@ -32367,6 +33713,8 @@ declare module 'tdlib-types' {
     | editInlineMessageCaption
     | editInlineMessageReplyMarkup
     | editMessageSchedulingState
+    | sendBusinessMessage
+    | sendBusinessMessageAlbum
     | checkQuickReplyShortcutName
     | loadQuickReplyShortcuts
     | setQuickReplyShortcutName
@@ -32374,6 +33722,10 @@ declare module 'tdlib-types' {
     | reorderQuickReplyShortcuts
     | loadQuickReplyShortcutMessages
     | deleteQuickReplyShortcutMessages
+    | addQuickReplyShortcutMessage
+    | addQuickReplyShortcutInlineQueryResultMessage
+    | readdQuickReplyShortcutMessages
+    | editQuickReplyMessage
     | getForumTopicDefaultIcons
     | createForumTopic
     | editForumTopic
@@ -32414,6 +33766,7 @@ declare module 'tdlib-types' {
     | getPollVoters
     | stopPoll
     | hideSuggestedAction
+    | getBusinessConnection
     | getLoginUrlInfo
     | getLoginUrl
     | shareUsersWithBot
@@ -32665,6 +34018,7 @@ declare module 'tdlib-types' {
     | getStickers
     | getAllStickerEmojis
     | searchStickers
+    | getGreetingStickers
     | getPremiumStickers
     | getInstalledStickerSets
     | getArchivedStickerSets
@@ -32711,18 +34065,29 @@ declare module 'tdlib-types' {
     | setUsername
     | toggleUsernameIsActive
     | reorderActiveUsernames
+    | setBirthdate
+    | setPersonalChat
     | setEmojiStatus
     | setLocation
     | setBusinessLocation
     | setBusinessOpeningHours
     | setBusinessGreetingMessageSettings
     | setBusinessAwayMessageSettings
-    | changePhoneNumber
-    | resendChangePhoneNumberCode
-    | checkChangePhoneNumberCode
+    | setBusinessStartPage
+    | sendPhoneNumberCode
+    | sendPhoneNumberFirebaseSms
+    | resendPhoneNumberCode
+    | checkPhoneNumberCode
     | getBusinessConnectedBot
     | setBusinessConnectedBot
     | deleteBusinessConnectedBot
+    | toggleBusinessConnectedBotChatIsPaused
+    | removeBusinessConnectedBotFromChat
+    | getBusinessChatLinks
+    | createBusinessChatLink
+    | editBusinessChatLink
+    | deleteBusinessChatLink
+    | getBusinessChatLinkInfo
     | getUserLink
     | searchUserByToken
     | setCommands
@@ -32765,6 +34130,7 @@ declare module 'tdlib-types' {
     | toggleSupergroupJoinToSendMessages
     | toggleSupergroupJoinByRequest
     | toggleSupergroupIsAllHistoryAvailable
+    | toggleSupergroupCanHaveSponsoredMessages
     | toggleSupergroupHasHiddenMembers
     | toggleSupergroupHasAggressiveAntiSpamEnabled
     | toggleSupergroupIsForum
@@ -32822,6 +34188,9 @@ declare module 'tdlib-types' {
     | reportChat
     | reportChatPhoto
     | reportMessageReactions
+    | getChatRevenueStatistics
+    | getChatRevenueWithdrawalUrl
+    | getChatRevenueTransactions
     | getChatStatistics
     | getMessageStatistics
     | getMessagePublicForwards
@@ -32847,24 +34216,19 @@ declare module 'tdlib-types' {
     | deletePassportElement
     | setPassportElementErrors
     | getPreferredCountryLanguage
-    | sendPhoneNumberVerificationCode
-    | resendPhoneNumberVerificationCode
-    | checkPhoneNumberVerificationCode
     | sendEmailAddressVerificationCode
     | resendEmailAddressVerificationCode
     | checkEmailAddressVerificationCode
     | getPassportAuthorizationForm
     | getPassportAuthorizationFormAvailableElements
     | sendPassportAuthorizationForm
-    | sendPhoneNumberConfirmationCode
-    | resendPhoneNumberConfirmationCode
-    | checkPhoneNumberConfirmationCode
     | setBotUpdatesStatus
     | uploadStickerFile
     | getSuggestedStickerSetName
     | checkStickerSetName
     | createNewStickerSet
     | addStickerToSet
+    | replaceStickerInSet
     | setStickerSetThumbnail
     | setCustomEmojiStickerSetThumbnail
     | setStickerSetTitle
@@ -32874,6 +34238,7 @@ declare module 'tdlib-types' {
     | setStickerEmojis
     | setStickerKeywords
     | setStickerMaskPosition
+    | getOwnedStickerSets
     | getMapThumbnailFile
     | getPremiumLimit
     | getPremiumFeatures
@@ -32889,6 +34254,7 @@ declare module 'tdlib-types' {
     | canPurchasePremium
     | assignAppStoreTransaction
     | assignGooglePlayTransaction
+    | getBusinessFeatures
     | acceptTermsOfService
     | searchStringsByPrefix
     | sendCustomRequest
@@ -32898,6 +34264,7 @@ declare module 'tdlib-types' {
     | getCountryCode
     | getPhoneNumberInfo
     | getPhoneNumberInfoSync
+    | getCollectibleItemInfo
     | getDeepLinkInfo
     | getApplicationConfig
     | saveApplicationLogEvent
@@ -32934,716 +34301,4 @@ declare module 'tdlib-types' {
     | testGetDifference
     | testUseUpdate
     | testReturnError
-  )) => null | error | (
-    T extends 'getAuthorizationState' ? AuthorizationState :
-    T extends 'setTdlibParameters' ? Ok :
-    T extends 'setAuthenticationPhoneNumber' ? Ok :
-    T extends 'setAuthenticationEmailAddress' ? Ok :
-    T extends 'resendAuthenticationCode' ? Ok :
-    T extends 'checkAuthenticationEmailCode' ? Ok :
-    T extends 'checkAuthenticationCode' ? Ok :
-    T extends 'requestQrCodeAuthentication' ? Ok :
-    T extends 'registerUser' ? Ok :
-    T extends 'resetAuthenticationEmailAddress' ? Ok :
-    T extends 'checkAuthenticationPassword' ? Ok :
-    T extends 'requestAuthenticationPasswordRecovery' ? Ok :
-    T extends 'checkAuthenticationPasswordRecoveryCode' ? Ok :
-    T extends 'recoverAuthenticationPassword' ? Ok :
-    T extends 'sendAuthenticationFirebaseSms' ? Ok :
-    T extends 'checkAuthenticationBotToken' ? Ok :
-    T extends 'logOut' ? Ok :
-    T extends 'close' ? Ok :
-    T extends 'destroy' ? Ok :
-    T extends 'confirmQrCodeAuthentication' ? Session :
-    T extends 'getCurrentState' ? Updates :
-    T extends 'setDatabaseEncryptionKey' ? Ok :
-    T extends 'getPasswordState' ? PasswordState :
-    T extends 'setPassword' ? PasswordState :
-    T extends 'setLoginEmailAddress' ? EmailAddressAuthenticationCodeInfo :
-    T extends 'resendLoginEmailAddressCode' ? EmailAddressAuthenticationCodeInfo :
-    T extends 'checkLoginEmailAddressCode' ? Ok :
-    T extends 'getRecoveryEmailAddress' ? RecoveryEmailAddress :
-    T extends 'setRecoveryEmailAddress' ? PasswordState :
-    T extends 'checkRecoveryEmailAddressCode' ? PasswordState :
-    T extends 'resendRecoveryEmailAddressCode' ? PasswordState :
-    T extends 'cancelRecoveryEmailAddressVerification' ? PasswordState :
-    T extends 'requestPasswordRecovery' ? EmailAddressAuthenticationCodeInfo :
-    T extends 'checkPasswordRecoveryCode' ? Ok :
-    T extends 'recoverPassword' ? PasswordState :
-    T extends 'resetPassword' ? ResetPasswordResult :
-    T extends 'cancelPasswordReset' ? Ok :
-    T extends 'createTemporaryPassword' ? TemporaryPasswordState :
-    T extends 'getTemporaryPasswordState' ? TemporaryPasswordState :
-    T extends 'getMe' ? User :
-    T extends 'getUser' ? User :
-    T extends 'getUserFullInfo' ? UserFullInfo :
-    T extends 'getBasicGroup' ? BasicGroup :
-    T extends 'getBasicGroupFullInfo' ? BasicGroupFullInfo :
-    T extends 'getSupergroup' ? Supergroup :
-    T extends 'getSupergroupFullInfo' ? SupergroupFullInfo :
-    T extends 'getSecretChat' ? SecretChat :
-    T extends 'getChat' ? Chat :
-    T extends 'getMessage' ? Message :
-    T extends 'getMessageLocally' ? Message :
-    T extends 'getRepliedMessage' ? Message :
-    T extends 'getChatPinnedMessage' ? Message :
-    T extends 'getCallbackQueryMessage' ? Message :
-    T extends 'getMessages' ? Messages :
-    T extends 'getMessageThread' ? MessageThreadInfo :
-    T extends 'getMessageReadDate' ? MessageReadDate :
-    T extends 'getMessageViewers' ? MessageViewers :
-    T extends 'getFile' ? File :
-    T extends 'getRemoteFile' ? File :
-    T extends 'loadChats' ? Ok :
-    T extends 'getChats' ? Chats :
-    T extends 'searchPublicChat' ? Chat :
-    T extends 'searchPublicChats' ? Chats :
-    T extends 'searchChats' ? Chats :
-    T extends 'searchChatsOnServer' ? Chats :
-    T extends 'searchChatsNearby' ? ChatsNearby :
-    T extends 'getChatSimilarChats' ? Chats :
-    T extends 'getChatSimilarChatCount' ? Count :
-    T extends 'openChatSimilarChat' ? Ok :
-    T extends 'getTopChats' ? Chats :
-    T extends 'removeTopChat' ? Ok :
-    T extends 'searchRecentlyFoundChats' ? Chats :
-    T extends 'addRecentlyFoundChat' ? Ok :
-    T extends 'removeRecentlyFoundChat' ? Ok :
-    T extends 'clearRecentlyFoundChats' ? Ok :
-    T extends 'getRecentlyOpenedChats' ? Chats :
-    T extends 'checkChatUsername' ? CheckChatUsernameResult :
-    T extends 'getCreatedPublicChats' ? Chats :
-    T extends 'checkCreatedPublicChatsLimit' ? Ok :
-    T extends 'getSuitableDiscussionChats' ? Chats :
-    T extends 'getInactiveSupergroupChats' ? Chats :
-    T extends 'loadSavedMessagesTopics' ? Ok :
-    T extends 'getSavedMessagesTopicHistory' ? Messages :
-    T extends 'getSavedMessagesTopicMessageByDate' ? Message :
-    T extends 'deleteSavedMessagesTopicHistory' ? Ok :
-    T extends 'deleteSavedMessagesTopicMessagesByDate' ? Ok :
-    T extends 'toggleSavedMessagesTopicIsPinned' ? Ok :
-    T extends 'setPinnedSavedMessagesTopics' ? Ok :
-    T extends 'getGroupsInCommon' ? Chats :
-    T extends 'getChatHistory' ? Messages :
-    T extends 'getMessageThreadHistory' ? Messages :
-    T extends 'deleteChatHistory' ? Ok :
-    T extends 'deleteChat' ? Ok :
-    T extends 'searchChatMessages' ? FoundChatMessages :
-    T extends 'searchMessages' ? FoundMessages :
-    T extends 'searchSecretMessages' ? FoundMessages :
-    T extends 'searchSavedMessages' ? FoundChatMessages :
-    T extends 'searchCallMessages' ? FoundMessages :
-    T extends 'searchOutgoingDocumentMessages' ? FoundMessages :
-    T extends 'deleteAllCallMessages' ? Ok :
-    T extends 'searchChatRecentLocationMessages' ? Messages :
-    T extends 'getActiveLiveLocationMessages' ? Messages :
-    T extends 'getChatMessageByDate' ? Message :
-    T extends 'getChatSparseMessagePositions' ? MessagePositions :
-    T extends 'getChatMessageCalendar' ? MessageCalendar :
-    T extends 'getChatMessageCount' ? Count :
-    T extends 'getChatMessagePosition' ? Count :
-    T extends 'getChatScheduledMessages' ? Messages :
-    T extends 'getChatSponsoredMessages' ? SponsoredMessages :
-    T extends 'clickChatSponsoredMessage' ? Ok :
-    T extends 'removeNotification' ? Ok :
-    T extends 'removeNotificationGroup' ? Ok :
-    T extends 'getMessageLink' ? MessageLink :
-    T extends 'getMessageEmbeddingCode' ? Text :
-    T extends 'getMessageLinkInfo' ? MessageLinkInfo :
-    T extends 'translateText' ? FormattedText :
-    T extends 'translateMessageText' ? FormattedText :
-    T extends 'recognizeSpeech' ? Ok :
-    T extends 'rateSpeechRecognition' ? Ok :
-    T extends 'getChatAvailableMessageSenders' ? ChatMessageSenders :
-    T extends 'setChatMessageSender' ? Ok :
-    T extends 'sendMessage' ? Message :
-    T extends 'sendMessageAlbum' ? Messages :
-    T extends 'sendBotStartMessage' ? Message :
-    T extends 'sendInlineQueryResultMessage' ? Message :
-    T extends 'forwardMessages' ? Messages :
-    T extends 'sendQuickReplyShortcutMessages' ? Messages :
-    T extends 'resendMessages' ? Messages :
-    T extends 'addLocalMessage' ? Message :
-    T extends 'deleteMessages' ? Ok :
-    T extends 'deleteChatMessagesBySender' ? Ok :
-    T extends 'deleteChatMessagesByDate' ? Ok :
-    T extends 'editMessageText' ? Message :
-    T extends 'editMessageLiveLocation' ? Message :
-    T extends 'editMessageMedia' ? Message :
-    T extends 'editMessageCaption' ? Message :
-    T extends 'editMessageReplyMarkup' ? Message :
-    T extends 'editInlineMessageText' ? Ok :
-    T extends 'editInlineMessageLiveLocation' ? Ok :
-    T extends 'editInlineMessageMedia' ? Ok :
-    T extends 'editInlineMessageCaption' ? Ok :
-    T extends 'editInlineMessageReplyMarkup' ? Ok :
-    T extends 'editMessageSchedulingState' ? Ok :
-    T extends 'checkQuickReplyShortcutName' ? Ok :
-    T extends 'loadQuickReplyShortcuts' ? Ok :
-    T extends 'setQuickReplyShortcutName' ? Ok :
-    T extends 'deleteQuickReplyShortcut' ? Ok :
-    T extends 'reorderQuickReplyShortcuts' ? Ok :
-    T extends 'loadQuickReplyShortcutMessages' ? Ok :
-    T extends 'deleteQuickReplyShortcutMessages' ? Ok :
-    T extends 'getForumTopicDefaultIcons' ? Stickers :
-    T extends 'createForumTopic' ? ForumTopicInfo :
-    T extends 'editForumTopic' ? Ok :
-    T extends 'getForumTopic' ? ForumTopic :
-    T extends 'getForumTopicLink' ? MessageLink :
-    T extends 'getForumTopics' ? ForumTopics :
-    T extends 'setForumTopicNotificationSettings' ? Ok :
-    T extends 'toggleForumTopicIsClosed' ? Ok :
-    T extends 'toggleGeneralForumTopicIsHidden' ? Ok :
-    T extends 'toggleForumTopicIsPinned' ? Ok :
-    T extends 'setPinnedForumTopics' ? Ok :
-    T extends 'deleteForumTopic' ? Ok :
-    T extends 'getEmojiReaction' ? EmojiReaction :
-    T extends 'getCustomEmojiReactionAnimations' ? Stickers :
-    T extends 'getMessageAvailableReactions' ? AvailableReactions :
-    T extends 'clearRecentReactions' ? Ok :
-    T extends 'addMessageReaction' ? Ok :
-    T extends 'removeMessageReaction' ? Ok :
-    T extends 'setMessageReactions' ? Ok :
-    T extends 'getMessageAddedReactions' ? AddedReactions :
-    T extends 'setDefaultReactionType' ? Ok :
-    T extends 'getSavedMessagesTags' ? SavedMessagesTags :
-    T extends 'setSavedMessagesTagLabel' ? Ok :
-    T extends 'searchQuote' ? FoundPosition :
-    T extends 'getTextEntities' ? TextEntities :
-    T extends 'parseTextEntities' ? FormattedText :
-    T extends 'parseMarkdown' ? FormattedText :
-    T extends 'getMarkdownText' ? FormattedText :
-    T extends 'getCountryFlagEmoji' ? Text :
-    T extends 'getFileMimeType' ? Text :
-    T extends 'getFileExtension' ? Text :
-    T extends 'cleanFileName' ? Text :
-    T extends 'getLanguagePackString' ? LanguagePackStringValue :
-    T extends 'getJsonValue' ? JsonValue :
-    T extends 'getJsonString' ? Text :
-    T extends 'getThemeParametersJsonString' ? Text :
-    T extends 'setPollAnswer' ? Ok :
-    T extends 'getPollVoters' ? MessageSenders :
-    T extends 'stopPoll' ? Ok :
-    T extends 'hideSuggestedAction' ? Ok :
-    T extends 'getLoginUrlInfo' ? LoginUrlInfo :
-    T extends 'getLoginUrl' ? HttpUrl :
-    T extends 'shareUsersWithBot' ? Ok :
-    T extends 'shareChatWithBot' ? Ok :
-    T extends 'getInlineQueryResults' ? InlineQueryResults :
-    T extends 'answerInlineQuery' ? Ok :
-    T extends 'searchWebApp' ? FoundWebApp :
-    T extends 'getWebAppLinkUrl' ? HttpUrl :
-    T extends 'getWebAppUrl' ? HttpUrl :
-    T extends 'sendWebAppData' ? Ok :
-    T extends 'openWebApp' ? WebAppInfo :
-    T extends 'closeWebApp' ? Ok :
-    T extends 'answerWebAppQuery' ? SentWebAppMessage :
-    T extends 'getCallbackQueryAnswer' ? CallbackQueryAnswer :
-    T extends 'answerCallbackQuery' ? Ok :
-    T extends 'answerShippingQuery' ? Ok :
-    T extends 'answerPreCheckoutQuery' ? Ok :
-    T extends 'setGameScore' ? Message :
-    T extends 'setInlineGameScore' ? Ok :
-    T extends 'getGameHighScores' ? GameHighScores :
-    T extends 'getInlineGameHighScores' ? GameHighScores :
-    T extends 'deleteChatReplyMarkup' ? Ok :
-    T extends 'sendChatAction' ? Ok :
-    T extends 'openChat' ? Ok :
-    T extends 'closeChat' ? Ok :
-    T extends 'viewMessages' ? Ok :
-    T extends 'openMessageContent' ? Ok :
-    T extends 'clickAnimatedEmojiMessage' ? Sticker :
-    T extends 'getInternalLink' ? HttpUrl :
-    T extends 'getInternalLinkType' ? InternalLinkType :
-    T extends 'getExternalLinkInfo' ? LoginUrlInfo :
-    T extends 'getExternalLink' ? HttpUrl :
-    T extends 'readAllChatMentions' ? Ok :
-    T extends 'readAllMessageThreadMentions' ? Ok :
-    T extends 'readAllChatReactions' ? Ok :
-    T extends 'readAllMessageThreadReactions' ? Ok :
-    T extends 'createPrivateChat' ? Chat :
-    T extends 'createBasicGroupChat' ? Chat :
-    T extends 'createSupergroupChat' ? Chat :
-    T extends 'createSecretChat' ? Chat :
-    T extends 'createNewBasicGroupChat' ? Chat :
-    T extends 'createNewSupergroupChat' ? Chat :
-    T extends 'createNewSecretChat' ? Chat :
-    T extends 'upgradeBasicGroupChatToSupergroupChat' ? Chat :
-    T extends 'getChatListsToAddChat' ? ChatLists :
-    T extends 'addChatToList' ? Ok :
-    T extends 'getChatFolder' ? ChatFolder :
-    T extends 'createChatFolder' ? ChatFolderInfo :
-    T extends 'editChatFolder' ? ChatFolderInfo :
-    T extends 'deleteChatFolder' ? Ok :
-    T extends 'getChatFolderChatsToLeave' ? Chats :
-    T extends 'getChatFolderChatCount' ? Count :
-    T extends 'reorderChatFolders' ? Ok :
-    T extends 'toggleChatFolderTags' ? Ok :
-    T extends 'getRecommendedChatFolders' ? RecommendedChatFolders :
-    T extends 'getChatFolderDefaultIconName' ? ChatFolderIcon :
-    T extends 'getChatsForChatFolderInviteLink' ? Chats :
-    T extends 'createChatFolderInviteLink' ? ChatFolderInviteLink :
-    T extends 'getChatFolderInviteLinks' ? ChatFolderInviteLinks :
-    T extends 'editChatFolderInviteLink' ? ChatFolderInviteLink :
-    T extends 'deleteChatFolderInviteLink' ? Ok :
-    T extends 'checkChatFolderInviteLink' ? ChatFolderInviteLinkInfo :
-    T extends 'addChatFolderByInviteLink' ? Ok :
-    T extends 'getChatFolderNewChats' ? Chats :
-    T extends 'processChatFolderNewChats' ? Ok :
-    T extends 'getArchiveChatListSettings' ? ArchiveChatListSettings :
-    T extends 'setArchiveChatListSettings' ? Ok :
-    T extends 'setChatTitle' ? Ok :
-    T extends 'setChatPhoto' ? Ok :
-    T extends 'setChatAccentColor' ? Ok :
-    T extends 'setChatProfileAccentColor' ? Ok :
-    T extends 'setChatMessageAutoDeleteTime' ? Ok :
-    T extends 'setChatEmojiStatus' ? Ok :
-    T extends 'setChatPermissions' ? Ok :
-    T extends 'setChatBackground' ? Ok :
-    T extends 'deleteChatBackground' ? Ok :
-    T extends 'setChatTheme' ? Ok :
-    T extends 'setChatDraftMessage' ? Ok :
-    T extends 'setChatNotificationSettings' ? Ok :
-    T extends 'toggleChatHasProtectedContent' ? Ok :
-    T extends 'toggleChatViewAsTopics' ? Ok :
-    T extends 'toggleChatIsTranslatable' ? Ok :
-    T extends 'toggleChatIsMarkedAsUnread' ? Ok :
-    T extends 'toggleChatDefaultDisableNotification' ? Ok :
-    T extends 'setChatAvailableReactions' ? Ok :
-    T extends 'setChatClientData' ? Ok :
-    T extends 'setChatDescription' ? Ok :
-    T extends 'setChatDiscussionGroup' ? Ok :
-    T extends 'setChatLocation' ? Ok :
-    T extends 'setChatSlowModeDelay' ? Ok :
-    T extends 'pinChatMessage' ? Ok :
-    T extends 'unpinChatMessage' ? Ok :
-    T extends 'unpinAllChatMessages' ? Ok :
-    T extends 'unpinAllMessageThreadMessages' ? Ok :
-    T extends 'joinChat' ? Ok :
-    T extends 'leaveChat' ? Ok :
-    T extends 'addChatMember' ? Ok :
-    T extends 'addChatMembers' ? Ok :
-    T extends 'setChatMemberStatus' ? Ok :
-    T extends 'banChatMember' ? Ok :
-    T extends 'canTransferOwnership' ? CanTransferOwnershipResult :
-    T extends 'transferChatOwnership' ? Ok :
-    T extends 'getChatMember' ? ChatMember :
-    T extends 'searchChatMembers' ? ChatMembers :
-    T extends 'getChatAdministrators' ? ChatAdministrators :
-    T extends 'clearAllDraftMessages' ? Ok :
-    T extends 'getSavedNotificationSound' ? NotificationSounds :
-    T extends 'getSavedNotificationSounds' ? NotificationSounds :
-    T extends 'addSavedNotificationSound' ? NotificationSound :
-    T extends 'removeSavedNotificationSound' ? Ok :
-    T extends 'getChatNotificationSettingsExceptions' ? Chats :
-    T extends 'getScopeNotificationSettings' ? ScopeNotificationSettings :
-    T extends 'setScopeNotificationSettings' ? Ok :
-    T extends 'resetAllNotificationSettings' ? Ok :
-    T extends 'toggleChatIsPinned' ? Ok :
-    T extends 'setPinnedChats' ? Ok :
-    T extends 'readChatList' ? Ok :
-    T extends 'getStory' ? Story :
-    T extends 'getChatsToSendStories' ? Chats :
-    T extends 'canSendStory' ? CanSendStoryResult :
-    T extends 'sendStory' ? Story :
-    T extends 'editStory' ? Ok :
-    T extends 'setStoryPrivacySettings' ? Ok :
-    T extends 'toggleStoryIsPinned' ? Ok :
-    T extends 'deleteStory' ? Ok :
-    T extends 'getStoryNotificationSettingsExceptions' ? Chats :
-    T extends 'loadActiveStories' ? Ok :
-    T extends 'setChatActiveStoriesList' ? Ok :
-    T extends 'getChatActiveStories' ? ChatActiveStories :
-    T extends 'getChatPinnedStories' ? Stories :
-    T extends 'getChatArchivedStories' ? Stories :
-    T extends 'openStory' ? Ok :
-    T extends 'closeStory' ? Ok :
-    T extends 'getStoryAvailableReactions' ? AvailableReactions :
-    T extends 'setStoryReaction' ? Ok :
-    T extends 'getStoryInteractions' ? StoryInteractions :
-    T extends 'getChatStoryInteractions' ? StoryInteractions :
-    T extends 'reportStory' ? Ok :
-    T extends 'activateStoryStealthMode' ? Ok :
-    T extends 'getStoryPublicForwards' ? PublicForwards :
-    T extends 'getChatBoostLevelFeatures' ? ChatBoostLevelFeatures :
-    T extends 'getChatBoostFeatures' ? ChatBoostFeatures :
-    T extends 'getAvailableChatBoostSlots' ? ChatBoostSlots :
-    T extends 'getChatBoostStatus' ? ChatBoostStatus :
-    T extends 'boostChat' ? ChatBoostSlots :
-    T extends 'getChatBoostLink' ? ChatBoostLink :
-    T extends 'getChatBoostLinkInfo' ? ChatBoostLinkInfo :
-    T extends 'getChatBoosts' ? FoundChatBoosts :
-    T extends 'getUserChatBoosts' ? FoundChatBoosts :
-    T extends 'getAttachmentMenuBot' ? AttachmentMenuBot :
-    T extends 'toggleBotIsAddedToAttachmentMenu' ? Ok :
-    T extends 'getThemedEmojiStatuses' ? EmojiStatuses :
-    T extends 'getRecentEmojiStatuses' ? EmojiStatuses :
-    T extends 'getDefaultEmojiStatuses' ? EmojiStatuses :
-    T extends 'clearRecentEmojiStatuses' ? Ok :
-    T extends 'getThemedChatEmojiStatuses' ? EmojiStatuses :
-    T extends 'getDefaultChatEmojiStatuses' ? EmojiStatuses :
-    T extends 'getDisallowedChatEmojiStatuses' ? EmojiStatuses :
-    T extends 'downloadFile' ? File :
-    T extends 'getFileDownloadedPrefixSize' ? FileDownloadedPrefixSize :
-    T extends 'cancelDownloadFile' ? Ok :
-    T extends 'getSuggestedFileName' ? Text :
-    T extends 'preliminaryUploadFile' ? File :
-    T extends 'cancelPreliminaryUploadFile' ? Ok :
-    T extends 'writeGeneratedFilePart' ? Ok :
-    T extends 'setFileGenerationProgress' ? Ok :
-    T extends 'finishFileGeneration' ? Ok :
-    T extends 'readFilePart' ? FilePart :
-    T extends 'deleteFile' ? Ok :
-    T extends 'addFileToDownloads' ? File :
-    T extends 'toggleDownloadIsPaused' ? Ok :
-    T extends 'toggleAllDownloadsArePaused' ? Ok :
-    T extends 'removeFileFromDownloads' ? Ok :
-    T extends 'removeAllFilesFromDownloads' ? Ok :
-    T extends 'searchFileDownloads' ? FoundFileDownloads :
-    T extends 'getMessageFileType' ? MessageFileType :
-    T extends 'getMessageImportConfirmationText' ? Text :
-    T extends 'importMessages' ? Ok :
-    T extends 'replacePrimaryChatInviteLink' ? ChatInviteLink :
-    T extends 'createChatInviteLink' ? ChatInviteLink :
-    T extends 'editChatInviteLink' ? ChatInviteLink :
-    T extends 'getChatInviteLink' ? ChatInviteLink :
-    T extends 'getChatInviteLinkCounts' ? ChatInviteLinkCounts :
-    T extends 'getChatInviteLinks' ? ChatInviteLinks :
-    T extends 'getChatInviteLinkMembers' ? ChatInviteLinkMembers :
-    T extends 'revokeChatInviteLink' ? ChatInviteLinks :
-    T extends 'deleteRevokedChatInviteLink' ? Ok :
-    T extends 'deleteAllRevokedChatInviteLinks' ? Ok :
-    T extends 'checkChatInviteLink' ? ChatInviteLinkInfo :
-    T extends 'joinChatByInviteLink' ? Chat :
-    T extends 'getChatJoinRequests' ? ChatJoinRequests :
-    T extends 'processChatJoinRequest' ? Ok :
-    T extends 'processChatJoinRequests' ? Ok :
-    T extends 'createCall' ? CallId :
-    T extends 'acceptCall' ? Ok :
-    T extends 'sendCallSignalingData' ? Ok :
-    T extends 'discardCall' ? Ok :
-    T extends 'sendCallRating' ? Ok :
-    T extends 'sendCallDebugInformation' ? Ok :
-    T extends 'sendCallLog' ? Ok :
-    T extends 'getVideoChatAvailableParticipants' ? MessageSenders :
-    T extends 'setVideoChatDefaultParticipant' ? Ok :
-    T extends 'createVideoChat' ? GroupCallId :
-    T extends 'getVideoChatRtmpUrl' ? RtmpUrl :
-    T extends 'replaceVideoChatRtmpUrl' ? RtmpUrl :
-    T extends 'getGroupCall' ? GroupCall :
-    T extends 'startScheduledGroupCall' ? Ok :
-    T extends 'toggleGroupCallEnabledStartNotification' ? Ok :
-    T extends 'joinGroupCall' ? Text :
-    T extends 'startGroupCallScreenSharing' ? Text :
-    T extends 'toggleGroupCallScreenSharingIsPaused' ? Ok :
-    T extends 'endGroupCallScreenSharing' ? Ok :
-    T extends 'setGroupCallTitle' ? Ok :
-    T extends 'toggleGroupCallMuteNewParticipants' ? Ok :
-    T extends 'inviteGroupCallParticipants' ? Ok :
-    T extends 'getGroupCallInviteLink' ? HttpUrl :
-    T extends 'revokeGroupCallInviteLink' ? Ok :
-    T extends 'startGroupCallRecording' ? Ok :
-    T extends 'endGroupCallRecording' ? Ok :
-    T extends 'toggleGroupCallIsMyVideoPaused' ? Ok :
-    T extends 'toggleGroupCallIsMyVideoEnabled' ? Ok :
-    T extends 'setGroupCallParticipantIsSpeaking' ? Ok :
-    T extends 'toggleGroupCallParticipantIsMuted' ? Ok :
-    T extends 'setGroupCallParticipantVolumeLevel' ? Ok :
-    T extends 'toggleGroupCallParticipantIsHandRaised' ? Ok :
-    T extends 'loadGroupCallParticipants' ? Ok :
-    T extends 'leaveGroupCall' ? Ok :
-    T extends 'endGroupCall' ? Ok :
-    T extends 'getGroupCallStreams' ? GroupCallStreams :
-    T extends 'getGroupCallStreamSegment' ? FilePart :
-    T extends 'setMessageSenderBlockList' ? Ok :
-    T extends 'blockMessageSenderFromReplies' ? Ok :
-    T extends 'getBlockedMessageSenders' ? MessageSenders :
-    T extends 'addContact' ? Ok :
-    T extends 'importContacts' ? ImportedContacts :
-    T extends 'getContacts' ? Users :
-    T extends 'searchContacts' ? Users :
-    T extends 'removeContacts' ? Ok :
-    T extends 'getImportedContactCount' ? Count :
-    T extends 'changeImportedContacts' ? ImportedContacts :
-    T extends 'clearImportedContacts' ? Ok :
-    T extends 'setCloseFriends' ? Ok :
-    T extends 'getCloseFriends' ? Users :
-    T extends 'setUserPersonalProfilePhoto' ? Ok :
-    T extends 'suggestUserProfilePhoto' ? Ok :
-    T extends 'searchUserByPhoneNumber' ? User :
-    T extends 'sharePhoneNumber' ? Ok :
-    T extends 'getUserProfilePhotos' ? ChatPhotos :
-    T extends 'getStickers' ? Stickers :
-    T extends 'getAllStickerEmojis' ? Emojis :
-    T extends 'searchStickers' ? Stickers :
-    T extends 'getPremiumStickers' ? Stickers :
-    T extends 'getInstalledStickerSets' ? StickerSets :
-    T extends 'getArchivedStickerSets' ? StickerSets :
-    T extends 'getTrendingStickerSets' ? TrendingStickerSets :
-    T extends 'getAttachedStickerSets' ? StickerSets :
-    T extends 'getStickerSet' ? StickerSet :
-    T extends 'searchStickerSet' ? StickerSet :
-    T extends 'searchInstalledStickerSets' ? StickerSets :
-    T extends 'searchStickerSets' ? StickerSets :
-    T extends 'changeStickerSet' ? Ok :
-    T extends 'viewTrendingStickerSets' ? Ok :
-    T extends 'reorderInstalledStickerSets' ? Ok :
-    T extends 'getRecentStickers' ? Stickers :
-    T extends 'addRecentSticker' ? Stickers :
-    T extends 'removeRecentSticker' ? Ok :
-    T extends 'clearRecentStickers' ? Ok :
-    T extends 'getFavoriteStickers' ? Stickers :
-    T extends 'addFavoriteSticker' ? Ok :
-    T extends 'removeFavoriteSticker' ? Ok :
-    T extends 'getStickerEmojis' ? Emojis :
-    T extends 'searchEmojis' ? EmojiKeywords :
-    T extends 'getKeywordEmojis' ? Emojis :
-    T extends 'getEmojiCategories' ? EmojiCategories :
-    T extends 'getAnimatedEmoji' ? AnimatedEmoji :
-    T extends 'getEmojiSuggestionsUrl' ? HttpUrl :
-    T extends 'getCustomEmojiStickers' ? Stickers :
-    T extends 'getDefaultChatPhotoCustomEmojiStickers' ? Stickers :
-    T extends 'getDefaultProfilePhotoCustomEmojiStickers' ? Stickers :
-    T extends 'getDefaultBackgroundCustomEmojiStickers' ? Stickers :
-    T extends 'getSavedAnimations' ? Animations :
-    T extends 'addSavedAnimation' ? Ok :
-    T extends 'removeSavedAnimation' ? Ok :
-    T extends 'getRecentInlineBots' ? Users :
-    T extends 'searchHashtags' ? Hashtags :
-    T extends 'removeRecentHashtag' ? Ok :
-    T extends 'getWebPagePreview' ? WebPage :
-    T extends 'getWebPageInstantView' ? WebPageInstantView :
-    T extends 'setProfilePhoto' ? Ok :
-    T extends 'deleteProfilePhoto' ? Ok :
-    T extends 'setAccentColor' ? Ok :
-    T extends 'setProfileAccentColor' ? Ok :
-    T extends 'setName' ? Ok :
-    T extends 'setBio' ? Ok :
-    T extends 'setUsername' ? Ok :
-    T extends 'toggleUsernameIsActive' ? Ok :
-    T extends 'reorderActiveUsernames' ? Ok :
-    T extends 'setEmojiStatus' ? Ok :
-    T extends 'setLocation' ? Ok :
-    T extends 'setBusinessLocation' ? Ok :
-    T extends 'setBusinessOpeningHours' ? Ok :
-    T extends 'setBusinessGreetingMessageSettings' ? Ok :
-    T extends 'setBusinessAwayMessageSettings' ? Ok :
-    T extends 'changePhoneNumber' ? AuthenticationCodeInfo :
-    T extends 'resendChangePhoneNumberCode' ? AuthenticationCodeInfo :
-    T extends 'checkChangePhoneNumberCode' ? Ok :
-    T extends 'getBusinessConnectedBot' ? BusinessConnectedBot :
-    T extends 'setBusinessConnectedBot' ? Ok :
-    T extends 'deleteBusinessConnectedBot' ? Ok :
-    T extends 'getUserLink' ? UserLink :
-    T extends 'searchUserByToken' ? User :
-    T extends 'setCommands' ? Ok :
-    T extends 'deleteCommands' ? Ok :
-    T extends 'getCommands' ? BotCommands :
-    T extends 'setMenuButton' ? Ok :
-    T extends 'getMenuButton' ? BotMenuButton :
-    T extends 'setDefaultGroupAdministratorRights' ? Ok :
-    T extends 'setDefaultChannelAdministratorRights' ? Ok :
-    T extends 'canBotSendMessages' ? Ok :
-    T extends 'allowBotToSendMessages' ? Ok :
-    T extends 'sendWebAppCustomRequest' ? CustomRequestResult :
-    T extends 'setBotName' ? Ok :
-    T extends 'getBotName' ? Text :
-    T extends 'setBotProfilePhoto' ? Ok :
-    T extends 'toggleBotUsernameIsActive' ? Ok :
-    T extends 'reorderBotActiveUsernames' ? Ok :
-    T extends 'setBotInfoDescription' ? Ok :
-    T extends 'getBotInfoDescription' ? Text :
-    T extends 'setBotInfoShortDescription' ? Ok :
-    T extends 'getBotInfoShortDescription' ? Text :
-    T extends 'getActiveSessions' ? Sessions :
-    T extends 'terminateSession' ? Ok :
-    T extends 'terminateAllOtherSessions' ? Ok :
-    T extends 'confirmSession' ? Ok :
-    T extends 'toggleSessionCanAcceptCalls' ? Ok :
-    T extends 'toggleSessionCanAcceptSecretChats' ? Ok :
-    T extends 'setInactiveSessionTtl' ? Ok :
-    T extends 'getConnectedWebsites' ? ConnectedWebsites :
-    T extends 'disconnectWebsite' ? Ok :
-    T extends 'disconnectAllWebsites' ? Ok :
-    T extends 'setSupergroupUsername' ? Ok :
-    T extends 'toggleSupergroupUsernameIsActive' ? Ok :
-    T extends 'disableAllSupergroupUsernames' ? Ok :
-    T extends 'reorderSupergroupActiveUsernames' ? Ok :
-    T extends 'setSupergroupStickerSet' ? Ok :
-    T extends 'setSupergroupCustomEmojiStickerSet' ? Ok :
-    T extends 'setSupergroupUnrestrictBoostCount' ? Ok :
-    T extends 'toggleSupergroupSignMessages' ? Ok :
-    T extends 'toggleSupergroupJoinToSendMessages' ? Ok :
-    T extends 'toggleSupergroupJoinByRequest' ? Ok :
-    T extends 'toggleSupergroupIsAllHistoryAvailable' ? Ok :
-    T extends 'toggleSupergroupHasHiddenMembers' ? Ok :
-    T extends 'toggleSupergroupHasAggressiveAntiSpamEnabled' ? Ok :
-    T extends 'toggleSupergroupIsForum' ? Ok :
-    T extends 'toggleSupergroupIsBroadcastGroup' ? Ok :
-    T extends 'reportSupergroupSpam' ? Ok :
-    T extends 'reportSupergroupAntiSpamFalsePositive' ? Ok :
-    T extends 'getSupergroupMembers' ? ChatMembers :
-    T extends 'closeSecretChat' ? Ok :
-    T extends 'getChatEventLog' ? ChatEvents :
-    T extends 'getTimeZones' ? TimeZones :
-    T extends 'getPaymentForm' ? PaymentForm :
-    T extends 'validateOrderInfo' ? ValidatedOrderInfo :
-    T extends 'sendPaymentForm' ? PaymentResult :
-    T extends 'getPaymentReceipt' ? PaymentReceipt :
-    T extends 'getSavedOrderInfo' ? OrderInfo :
-    T extends 'deleteSavedOrderInfo' ? Ok :
-    T extends 'deleteSavedCredentials' ? Ok :
-    T extends 'createInvoiceLink' ? HttpUrl :
-    T extends 'getSupportUser' ? User :
-    T extends 'getBackgroundUrl' ? HttpUrl :
-    T extends 'searchBackground' ? Background :
-    T extends 'setDefaultBackground' ? Background :
-    T extends 'deleteDefaultBackground' ? Ok :
-    T extends 'getInstalledBackgrounds' ? Backgrounds :
-    T extends 'removeInstalledBackground' ? Ok :
-    T extends 'resetInstalledBackgrounds' ? Ok :
-    T extends 'getLocalizationTargetInfo' ? LocalizationTargetInfo :
-    T extends 'getLanguagePackInfo' ? LanguagePackInfo :
-    T extends 'getLanguagePackStrings' ? LanguagePackStrings :
-    T extends 'synchronizeLanguagePack' ? Ok :
-    T extends 'addCustomServerLanguagePack' ? Ok :
-    T extends 'setCustomLanguagePack' ? Ok :
-    T extends 'editCustomLanguagePackInfo' ? Ok :
-    T extends 'setCustomLanguagePackString' ? Ok :
-    T extends 'deleteLanguagePack' ? Ok :
-    T extends 'registerDevice' ? PushReceiverId :
-    T extends 'processPushNotification' ? Ok :
-    T extends 'getPushReceiverId' ? PushReceiverId :
-    T extends 'getRecentlyVisitedTMeUrls' ? TMeUrls :
-    T extends 'setUserPrivacySettingRules' ? Ok :
-    T extends 'getUserPrivacySettingRules' ? UserPrivacySettingRules :
-    T extends 'setReadDatePrivacySettings' ? Ok :
-    T extends 'getReadDatePrivacySettings' ? ReadDatePrivacySettings :
-    T extends 'setNewChatPrivacySettings' ? Ok :
-    T extends 'getNewChatPrivacySettings' ? NewChatPrivacySettings :
-    T extends 'canSendMessageToUser' ? CanSendMessageToUserResult :
-    T extends 'getOption' ? OptionValue :
-    T extends 'setOption' ? Ok :
-    T extends 'setAccountTtl' ? Ok :
-    T extends 'getAccountTtl' ? AccountTtl :
-    T extends 'deleteAccount' ? Ok :
-    T extends 'setDefaultMessageAutoDeleteTime' ? Ok :
-    T extends 'getDefaultMessageAutoDeleteTime' ? MessageAutoDeleteTime :
-    T extends 'removeChatActionBar' ? Ok :
-    T extends 'reportChat' ? Ok :
-    T extends 'reportChatPhoto' ? Ok :
-    T extends 'reportMessageReactions' ? Ok :
-    T extends 'getChatStatistics' ? ChatStatistics :
-    T extends 'getMessageStatistics' ? MessageStatistics :
-    T extends 'getMessagePublicForwards' ? PublicForwards :
-    T extends 'getStoryStatistics' ? StoryStatistics :
-    T extends 'getStatisticalGraph' ? StatisticalGraph :
-    T extends 'getStorageStatistics' ? StorageStatistics :
-    T extends 'getStorageStatisticsFast' ? StorageStatisticsFast :
-    T extends 'getDatabaseStatistics' ? DatabaseStatistics :
-    T extends 'optimizeStorage' ? StorageStatistics :
-    T extends 'setNetworkType' ? Ok :
-    T extends 'getNetworkStatistics' ? NetworkStatistics :
-    T extends 'addNetworkStatistics' ? Ok :
-    T extends 'resetNetworkStatistics' ? Ok :
-    T extends 'getAutoDownloadSettingsPresets' ? AutoDownloadSettingsPresets :
-    T extends 'setAutoDownloadSettings' ? Ok :
-    T extends 'getAutosaveSettings' ? AutosaveSettings :
-    T extends 'setAutosaveSettings' ? Ok :
-    T extends 'clearAutosaveSettingsExceptions' ? Ok :
-    T extends 'getBankCardInfo' ? BankCardInfo :
-    T extends 'getPassportElement' ? PassportElement :
-    T extends 'getAllPassportElements' ? PassportElements :
-    T extends 'setPassportElement' ? PassportElement :
-    T extends 'deletePassportElement' ? Ok :
-    T extends 'setPassportElementErrors' ? Ok :
-    T extends 'getPreferredCountryLanguage' ? Text :
-    T extends 'sendPhoneNumberVerificationCode' ? AuthenticationCodeInfo :
-    T extends 'resendPhoneNumberVerificationCode' ? AuthenticationCodeInfo :
-    T extends 'checkPhoneNumberVerificationCode' ? Ok :
-    T extends 'sendEmailAddressVerificationCode' ? EmailAddressAuthenticationCodeInfo :
-    T extends 'resendEmailAddressVerificationCode' ? EmailAddressAuthenticationCodeInfo :
-    T extends 'checkEmailAddressVerificationCode' ? Ok :
-    T extends 'getPassportAuthorizationForm' ? PassportAuthorizationForm :
-    T extends 'getPassportAuthorizationFormAvailableElements' ? PassportElementsWithErrors :
-    T extends 'sendPassportAuthorizationForm' ? Ok :
-    T extends 'sendPhoneNumberConfirmationCode' ? AuthenticationCodeInfo :
-    T extends 'resendPhoneNumberConfirmationCode' ? AuthenticationCodeInfo :
-    T extends 'checkPhoneNumberConfirmationCode' ? Ok :
-    T extends 'setBotUpdatesStatus' ? Ok :
-    T extends 'uploadStickerFile' ? File :
-    T extends 'getSuggestedStickerSetName' ? Text :
-    T extends 'checkStickerSetName' ? CheckStickerSetNameResult :
-    T extends 'createNewStickerSet' ? StickerSet :
-    T extends 'addStickerToSet' ? Ok :
-    T extends 'setStickerSetThumbnail' ? Ok :
-    T extends 'setCustomEmojiStickerSetThumbnail' ? Ok :
-    T extends 'setStickerSetTitle' ? Ok :
-    T extends 'deleteStickerSet' ? Ok :
-    T extends 'setStickerPositionInSet' ? Ok :
-    T extends 'removeStickerFromSet' ? Ok :
-    T extends 'setStickerEmojis' ? Ok :
-    T extends 'setStickerKeywords' ? Ok :
-    T extends 'setStickerMaskPosition' ? Ok :
-    T extends 'getMapThumbnailFile' ? File :
-    T extends 'getPremiumLimit' ? PremiumLimit :
-    T extends 'getPremiumFeatures' ? PremiumFeatures :
-    T extends 'getPremiumStickerExamples' ? Stickers :
-    T extends 'viewPremiumFeature' ? Ok :
-    T extends 'clickPremiumSubscriptionButton' ? Ok :
-    T extends 'getPremiumState' ? PremiumState :
-    T extends 'getPremiumGiftCodePaymentOptions' ? PremiumGiftCodePaymentOptions :
-    T extends 'checkPremiumGiftCode' ? PremiumGiftCodeInfo :
-    T extends 'applyPremiumGiftCode' ? Ok :
-    T extends 'launchPrepaidPremiumGiveaway' ? Ok :
-    T extends 'getPremiumGiveawayInfo' ? PremiumGiveawayInfo :
-    T extends 'canPurchasePremium' ? Ok :
-    T extends 'assignAppStoreTransaction' ? Ok :
-    T extends 'assignGooglePlayTransaction' ? Ok :
-    T extends 'acceptTermsOfService' ? Ok :
-    T extends 'searchStringsByPrefix' ? FoundPositions :
-    T extends 'sendCustomRequest' ? CustomRequestResult :
-    T extends 'answerCustomQuery' ? Ok :
-    T extends 'setAlarm' ? Ok :
-    T extends 'getCountries' ? Countries :
-    T extends 'getCountryCode' ? Text :
-    T extends 'getPhoneNumberInfo' ? PhoneNumberInfo :
-    T extends 'getPhoneNumberInfoSync' ? PhoneNumberInfo :
-    T extends 'getDeepLinkInfo' ? DeepLinkInfo :
-    T extends 'getApplicationConfig' ? JsonValue :
-    T extends 'saveApplicationLogEvent' ? Ok :
-    T extends 'getApplicationDownloadLink' ? HttpUrl :
-    T extends 'addProxy' ? Proxy :
-    T extends 'editProxy' ? Proxy :
-    T extends 'enableProxy' ? Ok :
-    T extends 'disableProxy' ? Ok :
-    T extends 'removeProxy' ? Ok :
-    T extends 'getProxies' ? Proxies :
-    T extends 'getProxyLink' ? HttpUrl :
-    T extends 'pingProxy' ? Seconds :
-    T extends 'setLogStream' ? Ok :
-    T extends 'getLogStream' ? LogStream :
-    T extends 'setLogVerbosityLevel' ? Ok :
-    T extends 'getLogVerbosityLevel' ? LogVerbosityLevel :
-    T extends 'getLogTags' ? LogTags :
-    T extends 'setLogTagVerbosityLevel' ? Ok :
-    T extends 'getLogTagVerbosityLevel' ? LogVerbosityLevel :
-    T extends 'addLogMessage' ? Ok :
-    T extends 'getUserSupportInfo' ? UserSupportInfo :
-    T extends 'setUserSupportInfo' ? UserSupportInfo :
-    T extends 'getSupportName' ? Text :
-    T extends 'testCallEmpty' ? Ok :
-    T extends 'testCallString' ? TestString :
-    T extends 'testCallBytes' ? TestBytes :
-    T extends 'testCallVectorInt' ? TestVectorInt :
-    T extends 'testCallVectorIntObject' ? TestVectorIntObject :
-    T extends 'testCallVectorString' ? TestVectorString :
-    T extends 'testCallVectorStringObject' ? TestVectorStringObject :
-    T extends 'testSquareInt' ? TestInt :
-    T extends 'testNetwork' ? Ok :
-    T extends 'testProxy' ? Ok :
-    T extends 'testGetDifference' ? Ok :
-    T extends 'testUseUpdate' ? Update :
-    T extends 'testReturnError' ? Error :
-  never)
 }

@@ -9,13 +9,13 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macos-latest
+          # Weird, arm64 macos-14 doesn't really work because typescript fails with
+          # RangeError: Maximum call stack size exceeded at getOuterTypeParameters
+          - macos-13
           # - windows-latest
         node:
           - 20
         include:
-          # tdl should still work with node v12 and v14, however the dev
-          # deps in this repository don't support those versions
           - node: 16
             os: ubuntu-latest
           - node: 18
@@ -38,14 +38,12 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
           $tds = @(
+            "td-1.8.27",
             "td-1.8.26",
             "td-1.8.25",
             "td-1.8.19",
             "td-1.8.14",
-            "td-1.8.5",
-            "td-1.8.0",
-            "td-1.7.0",
-            "td-1.5.0"
+            "td-1.8.0"
           )
           foreach ($td in $tds) {
             mkdir $td

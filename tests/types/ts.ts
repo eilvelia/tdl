@@ -1,10 +1,10 @@
 // @flow
 
-import * as tdl from '../packages/tdl'
-import { getTdjson } from '../packages/prebuilt-tdlib'
+import * as tdl from '../../packages/tdl'
+import { getTdjson } from '../../packages/prebuilt-tdlib'
 import type * as Td from 'tdlib-types'
 
-const { TdlError } = tdl
+const { TDLibError, UnknownError } = tdl
 
 tdl.configure({ tdjson: 'libtdjson.dylib', libdir: '/usr/local/lib' })
 tdl.configure({ verbosityLevel: 'default' })
@@ -27,8 +27,8 @@ tdl.createClient({
     device_model: 'unknown'
   }
 })
-tdl.createClient({ bare: true })
-tdl.createClient({ apiId: 2, apiHash: 'hash', receiveTimeout: 10 })
+
+const bareCl: tdl.Client = tdl.createBareClient()
 
 tdl.init()
 
@@ -36,6 +36,9 @@ tdl.execute({
   _: 'getTextEntities',
   text: '@telegram /test_command https://telegram.org telegram.me'
 })
+
+tdl.setLogFatalErrorCallback(a => console.log(a))
+tdl.setLogFatalErrorCallback(null)
 
 async function main () {
   await client.login(() => ({
@@ -70,9 +73,6 @@ async function main () {
   await client.loginAsBot('token')
   await client.loginAsBot(() => 'token')
   await client.loginAsBot(() => Promise.resolve('token'))
-
-  client.setLogFatalErrorCallback(a => console.log(a))
-  client.setLogFatalErrorCallback(null)
 
   const res = client.execute({
     _: 'getTextEntities',
@@ -113,36 +113,26 @@ async function main () {
   await client.close()
 }
 
-client
-  .on('error', e => console.log('error', e))
-  .on('auth-not-needed', () => {})
-  .on('auth-needed', () => {})
+client.on('error', e => console.log('error', e))
+
+client.on('close', () => {})
 
 client.once('update', e => {
   const e2: Td.Update = e
 })
 
 client.on('error', e => {
-  if (e instanceof TdlError) {
-    console.log(e)
-    console.log(e.err)
+  if (e instanceof TDLibError) {
+    console.log(e.code, e.message)
     return
   }
   console.log(e.message)
 })
 
 client.removeListener('update', () => {})
-client.removeListener('update', () => {}, true)
-client.removeListener('update', () => {}, false)
-
-client.emit('auth-needed')
 
 main().catch(console.error)
 
 // Td.formattedText <: Td.formattedText$Input
 declare var fmt: Td.formattedText
 const fmtInp: Td.formattedText$Input = fmt
-
-const oldclient = new tdl.Client({}, { apiId: 2, apiHash: 'hash' })
-oldclient.invoke({ _: 'getMe' })
-const oldclient2 = tdl.Client.create({}, { apiId: 2, apiHash: 'hash' })

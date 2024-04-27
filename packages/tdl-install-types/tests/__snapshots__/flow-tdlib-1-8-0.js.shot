@@ -18248,7 +18248,7 @@ declare module 'tdlib-types' {
     +error?: error$Input,
   |}
 
-  // ----
+  // --- ---
 
   declare export type Error = error
 
@@ -19761,7 +19761,7 @@ declare module 'tdlib-types' {
 
   declare export type TestVectorStringObject = testVectorStringObject
 
-  // ----
+  // --- Special types ---
 
   declare export type Invoke =
     & ((query: getAuthorizationState) => Promise<AuthorizationState>)
@@ -20230,470 +20230,494 @@ declare module 'tdlib-types' {
     & ((query: testReturnError) => Promise<Error>)
 
   declare export type Execute =
-    & ((query: getAuthorizationState) => AuthorizationState | error | null)
-    & ((query: setTdlibParameters) => Ok | error | null)
-    & ((query: checkDatabaseEncryptionKey) => Ok | error | null)
-    & ((query: setAuthenticationPhoneNumber) => Ok | error | null)
-    & ((query: resendAuthenticationCode) => Ok | error | null)
-    & ((query: checkAuthenticationCode) => Ok | error | null)
-    & ((query: requestQrCodeAuthentication) => Ok | error | null)
-    & ((query: registerUser) => Ok | error | null)
-    & ((query: checkAuthenticationPassword) => Ok | error | null)
-    & ((query: requestAuthenticationPasswordRecovery) => Ok | error | null)
-    & ((query: checkAuthenticationPasswordRecoveryCode) => Ok | error | null)
-    & ((query: recoverAuthenticationPassword) => Ok | error | null)
-    & ((query: checkAuthenticationBotToken) => Ok | error | null)
-    & ((query: logOut) => Ok | error | null)
-    & ((query: close) => Ok | error | null)
-    & ((query: destroy) => Ok | error | null)
-    & ((query: confirmQrCodeAuthentication) => Session | error | null)
-    & ((query: getCurrentState) => Updates | error | null)
-    & ((query: setDatabaseEncryptionKey) => Ok | error | null)
-    & ((query: getPasswordState) => PasswordState | error | null)
-    & ((query: setPassword) => PasswordState | error | null)
-    & ((query: getRecoveryEmailAddress) => RecoveryEmailAddress | error | null)
-    & ((query: setRecoveryEmailAddress) => PasswordState | error | null)
-    & ((query: checkRecoveryEmailAddressCode) => PasswordState | error | null)
-    & ((query: resendRecoveryEmailAddressCode) => PasswordState | error | null)
-    & ((query: requestPasswordRecovery) => EmailAddressAuthenticationCodeInfo | error | null)
-    & ((query: checkPasswordRecoveryCode) => Ok | error | null)
-    & ((query: recoverPassword) => PasswordState | error | null)
-    & ((query: resetPassword) => ResetPasswordResult | error | null)
-    & ((query: cancelPasswordReset) => Ok | error | null)
-    & ((query: createTemporaryPassword) => TemporaryPasswordState | error | null)
-    & ((query: getTemporaryPasswordState) => TemporaryPasswordState | error | null)
-    & ((query: getMe) => User | error | null)
-    & ((query: getUser) => User | error | null)
-    & ((query: getUserFullInfo) => UserFullInfo | error | null)
-    & ((query: getBasicGroup) => BasicGroup | error | null)
-    & ((query: getBasicGroupFullInfo) => BasicGroupFullInfo | error | null)
-    & ((query: getSupergroup) => Supergroup | error | null)
-    & ((query: getSupergroupFullInfo) => SupergroupFullInfo | error | null)
-    & ((query: getSecretChat) => SecretChat | error | null)
-    & ((query: getChat) => Chat | error | null)
-    & ((query: getMessage) => Message | error | null)
-    & ((query: getMessageLocally) => Message | error | null)
-    & ((query: getRepliedMessage) => Message | error | null)
-    & ((query: getChatPinnedMessage) => Message | error | null)
-    & ((query: getCallbackQueryMessage) => Message | error | null)
-    & ((query: getMessages) => Messages | error | null)
-    & ((query: getMessageThread) => MessageThreadInfo | error | null)
-    & ((query: getMessageViewers) => Users | error | null)
-    & ((query: getFile) => File | error | null)
-    & ((query: getRemoteFile) => File | error | null)
-    & ((query: loadChats) => Ok | error | null)
-    & ((query: getChats) => Chats | error | null)
-    & ((query: searchPublicChat) => Chat | error | null)
-    & ((query: searchPublicChats) => Chats | error | null)
-    & ((query: searchChats) => Chats | error | null)
-    & ((query: searchChatsOnServer) => Chats | error | null)
-    & ((query: searchChatsNearby) => ChatsNearby | error | null)
-    & ((query: getTopChats) => Chats | error | null)
-    & ((query: removeTopChat) => Ok | error | null)
-    & ((query: addRecentlyFoundChat) => Ok | error | null)
-    & ((query: removeRecentlyFoundChat) => Ok | error | null)
-    & ((query: clearRecentlyFoundChats) => Ok | error | null)
-    & ((query: getRecentlyOpenedChats) => Chats | error | null)
-    & ((query: checkChatUsername) => CheckChatUsernameResult | error | null)
-    & ((query: getCreatedPublicChats) => Chats | error | null)
-    & ((query: checkCreatedPublicChatsLimit) => Ok | error | null)
-    & ((query: getSuitableDiscussionChats) => Chats | error | null)
-    & ((query: getInactiveSupergroupChats) => Chats | error | null)
-    & ((query: getGroupsInCommon) => Chats | error | null)
-    & ((query: getChatHistory) => Messages | error | null)
-    & ((query: getMessageThreadHistory) => Messages | error | null)
-    & ((query: deleteChatHistory) => Ok | error | null)
-    & ((query: deleteChat) => Ok | error | null)
-    & ((query: searchChatMessages) => Messages | error | null)
-    & ((query: searchMessages) => Messages | error | null)
-    & ((query: searchSecretMessages) => FoundMessages | error | null)
-    & ((query: searchCallMessages) => Messages | error | null)
-    & ((query: deleteAllCallMessages) => Ok | error | null)
-    & ((query: searchChatRecentLocationMessages) => Messages | error | null)
-    & ((query: getActiveLiveLocationMessages) => Messages | error | null)
-    & ((query: getChatMessageByDate) => Message | error | null)
-    & ((query: getChatSparseMessagePositions) => MessagePositions | error | null)
-    & ((query: getChatMessageCalendar) => MessageCalendar | error | null)
-    & ((query: getChatMessageCount) => Count | error | null)
-    & ((query: getChatScheduledMessages) => Messages | error | null)
-    & ((query: getMessagePublicForwards) => FoundMessages | error | null)
-    & ((query: getChatSponsoredMessage) => SponsoredMessage | error | null)
-    & ((query: removeNotification) => Ok | error | null)
-    & ((query: removeNotificationGroup) => Ok | error | null)
-    & ((query: getMessageLink) => MessageLink | error | null)
-    & ((query: getMessageEmbeddingCode) => Text | error | null)
-    & ((query: getMessageLinkInfo) => MessageLinkInfo | error | null)
-    & ((query: getChatAvailableMessageSenders) => MessageSenders | error | null)
-    & ((query: setChatMessageSender) => Ok | error | null)
-    & ((query: sendMessage) => Message | error | null)
-    & ((query: sendMessageAlbum) => Messages | error | null)
-    & ((query: sendBotStartMessage) => Message | error | null)
-    & ((query: sendInlineQueryResultMessage) => Message | error | null)
-    & ((query: forwardMessages) => Messages | error | null)
-    & ((query: resendMessages) => Messages | error | null)
-    & ((query: sendChatScreenshotTakenNotification) => Ok | error | null)
-    & ((query: addLocalMessage) => Message | error | null)
-    & ((query: deleteMessages) => Ok | error | null)
-    & ((query: deleteChatMessagesBySender) => Ok | error | null)
-    & ((query: deleteChatMessagesByDate) => Ok | error | null)
-    & ((query: editMessageText) => Message | error | null)
-    & ((query: editMessageLiveLocation) => Message | error | null)
-    & ((query: editMessageMedia) => Message | error | null)
-    & ((query: editMessageCaption) => Message | error | null)
-    & ((query: editMessageReplyMarkup) => Message | error | null)
-    & ((query: editInlineMessageText) => Ok | error | null)
-    & ((query: editInlineMessageLiveLocation) => Ok | error | null)
-    & ((query: editInlineMessageMedia) => Ok | error | null)
-    & ((query: editInlineMessageCaption) => Ok | error | null)
-    & ((query: editInlineMessageReplyMarkup) => Ok | error | null)
-    & ((query: editMessageSchedulingState) => Ok | error | null)
-    & ((query: getTextEntities) => TextEntities | error | null)
-    & ((query: parseTextEntities) => FormattedText | error | null)
-    & ((query: parseMarkdown) => FormattedText | error | null)
-    & ((query: getMarkdownText) => FormattedText | error | null)
-    & ((query: getFileMimeType) => Text | error | null)
-    & ((query: getFileExtension) => Text | error | null)
-    & ((query: cleanFileName) => Text | error | null)
-    & ((query: getLanguagePackString) => LanguagePackStringValue | error | null)
-    & ((query: getJsonValue) => JsonValue | error | null)
-    & ((query: getJsonString) => Text | error | null)
-    & ((query: setPollAnswer) => Ok | error | null)
-    & ((query: getPollVoters) => Users | error | null)
-    & ((query: stopPoll) => Ok | error | null)
-    & ((query: hideSuggestedAction) => Ok | error | null)
-    & ((query: getLoginUrlInfo) => LoginUrlInfo | error | null)
-    & ((query: getLoginUrl) => HttpUrl | error | null)
-    & ((query: getInlineQueryResults) => InlineQueryResults | error | null)
-    & ((query: answerInlineQuery) => Ok | error | null)
-    & ((query: getCallbackQueryAnswer) => CallbackQueryAnswer | error | null)
-    & ((query: answerCallbackQuery) => Ok | error | null)
-    & ((query: answerShippingQuery) => Ok | error | null)
-    & ((query: answerPreCheckoutQuery) => Ok | error | null)
-    & ((query: setGameScore) => Message | error | null)
-    & ((query: setInlineGameScore) => Ok | error | null)
-    & ((query: getGameHighScores) => GameHighScores | error | null)
-    & ((query: getInlineGameHighScores) => GameHighScores | error | null)
-    & ((query: deleteChatReplyMarkup) => Ok | error | null)
-    & ((query: sendChatAction) => Ok | error | null)
-    & ((query: openChat) => Ok | error | null)
-    & ((query: closeChat) => Ok | error | null)
-    & ((query: viewMessages) => Ok | error | null)
-    & ((query: openMessageContent) => Ok | error | null)
-    & ((query: clickAnimatedEmojiMessage) => Sticker | error | null)
-    & ((query: getInternalLinkType) => InternalLinkType | error | null)
-    & ((query: getExternalLinkInfo) => LoginUrlInfo | error | null)
-    & ((query: getExternalLink) => HttpUrl | error | null)
-    & ((query: readAllChatMentions) => Ok | error | null)
-    & ((query: createPrivateChat) => Chat | error | null)
-    & ((query: createBasicGroupChat) => Chat | error | null)
-    & ((query: createSupergroupChat) => Chat | error | null)
-    & ((query: createSecretChat) => Chat | error | null)
-    & ((query: createNewBasicGroupChat) => Chat | error | null)
-    & ((query: createNewSupergroupChat) => Chat | error | null)
-    & ((query: createNewSecretChat) => Chat | error | null)
-    & ((query: upgradeBasicGroupChatToSupergroupChat) => Chat | error | null)
-    & ((query: getChatListsToAddChat) => ChatLists | error | null)
-    & ((query: addChatToList) => Ok | error | null)
-    & ((query: getChatFilter) => ChatFilter | error | null)
-    & ((query: createChatFilter) => ChatFilterInfo | error | null)
-    & ((query: editChatFilter) => ChatFilterInfo | error | null)
-    & ((query: deleteChatFilter) => Ok | error | null)
-    & ((query: reorderChatFilters) => Ok | error | null)
-    & ((query: getRecommendedChatFilters) => RecommendedChatFilters | error | null)
-    & ((query: getChatFilterDefaultIconName) => Text | error | null)
-    & ((query: setChatTitle) => Ok | error | null)
-    & ((query: setChatPhoto) => Ok | error | null)
-    & ((query: setChatMessageTtl) => Ok | error | null)
-    & ((query: setChatPermissions) => Ok | error | null)
-    & ((query: setChatTheme) => Ok | error | null)
-    & ((query: setChatDraftMessage) => Ok | error | null)
-    & ((query: setChatNotificationSettings) => Ok | error | null)
-    & ((query: toggleChatHasProtectedContent) => Ok | error | null)
-    & ((query: toggleChatIsMarkedAsUnread) => Ok | error | null)
-    & ((query: toggleChatDefaultDisableNotification) => Ok | error | null)
-    & ((query: setChatClientData) => Ok | error | null)
-    & ((query: setChatDescription) => Ok | error | null)
-    & ((query: setChatDiscussionGroup) => Ok | error | null)
-    & ((query: setChatLocation) => Ok | error | null)
-    & ((query: setChatSlowModeDelay) => Ok | error | null)
-    & ((query: pinChatMessage) => Ok | error | null)
-    & ((query: unpinChatMessage) => Ok | error | null)
-    & ((query: unpinAllChatMessages) => Ok | error | null)
-    & ((query: joinChat) => Ok | error | null)
-    & ((query: leaveChat) => Ok | error | null)
-    & ((query: addChatMember) => Ok | error | null)
-    & ((query: addChatMembers) => Ok | error | null)
-    & ((query: setChatMemberStatus) => Ok | error | null)
-    & ((query: banChatMember) => Ok | error | null)
-    & ((query: canTransferOwnership) => CanTransferOwnershipResult | error | null)
-    & ((query: transferChatOwnership) => Ok | error | null)
-    & ((query: getChatMember) => ChatMember | error | null)
-    & ((query: searchChatMembers) => ChatMembers | error | null)
-    & ((query: getChatAdministrators) => ChatAdministrators | error | null)
-    & ((query: clearAllDraftMessages) => Ok | error | null)
-    & ((query: getChatNotificationSettingsExceptions) => Chats | error | null)
-    & ((query: getScopeNotificationSettings) => ScopeNotificationSettings | error | null)
-    & ((query: setScopeNotificationSettings) => Ok | error | null)
-    & ((query: resetAllNotificationSettings) => Ok | error | null)
-    & ((query: toggleChatIsPinned) => Ok | error | null)
-    & ((query: setPinnedChats) => Ok | error | null)
-    & ((query: downloadFile) => File | error | null)
-    & ((query: getFileDownloadedPrefixSize) => Count | error | null)
-    & ((query: cancelDownloadFile) => Ok | error | null)
-    & ((query: getSuggestedFileName) => Text | error | null)
-    & ((query: uploadFile) => File | error | null)
-    & ((query: cancelUploadFile) => Ok | error | null)
-    & ((query: writeGeneratedFilePart) => Ok | error | null)
-    & ((query: setFileGenerationProgress) => Ok | error | null)
-    & ((query: finishFileGeneration) => Ok | error | null)
-    & ((query: readFilePart) => FilePart | error | null)
-    & ((query: deleteFile) => Ok | error | null)
-    & ((query: getMessageFileType) => MessageFileType | error | null)
-    & ((query: getMessageImportConfirmationText) => Text | error | null)
-    & ((query: importMessages) => Ok | error | null)
-    & ((query: replacePrimaryChatInviteLink) => ChatInviteLink | error | null)
-    & ((query: createChatInviteLink) => ChatInviteLink | error | null)
-    & ((query: editChatInviteLink) => ChatInviteLink | error | null)
-    & ((query: getChatInviteLink) => ChatInviteLink | error | null)
-    & ((query: getChatInviteLinkCounts) => ChatInviteLinkCounts | error | null)
-    & ((query: getChatInviteLinks) => ChatInviteLinks | error | null)
-    & ((query: getChatInviteLinkMembers) => ChatInviteLinkMembers | error | null)
-    & ((query: revokeChatInviteLink) => ChatInviteLinks | error | null)
-    & ((query: deleteRevokedChatInviteLink) => Ok | error | null)
-    & ((query: deleteAllRevokedChatInviteLinks) => Ok | error | null)
-    & ((query: checkChatInviteLink) => ChatInviteLinkInfo | error | null)
-    & ((query: joinChatByInviteLink) => Chat | error | null)
-    & ((query: getChatJoinRequests) => ChatJoinRequests | error | null)
-    & ((query: processChatJoinRequest) => Ok | error | null)
-    & ((query: processChatJoinRequests) => Ok | error | null)
-    & ((query: createCall) => CallId | error | null)
-    & ((query: acceptCall) => Ok | error | null)
-    & ((query: sendCallSignalingData) => Ok | error | null)
-    & ((query: discardCall) => Ok | error | null)
-    & ((query: sendCallRating) => Ok | error | null)
-    & ((query: sendCallDebugInformation) => Ok | error | null)
-    & ((query: getVideoChatAvailableParticipants) => MessageSenders | error | null)
-    & ((query: setVideoChatDefaultParticipant) => Ok | error | null)
-    & ((query: createVideoChat) => GroupCallId | error | null)
-    & ((query: getGroupCall) => GroupCall | error | null)
-    & ((query: startScheduledGroupCall) => Ok | error | null)
-    & ((query: toggleGroupCallEnabledStartNotification) => Ok | error | null)
-    & ((query: joinGroupCall) => Text | error | null)
-    & ((query: startGroupCallScreenSharing) => Text | error | null)
-    & ((query: toggleGroupCallScreenSharingIsPaused) => Ok | error | null)
-    & ((query: endGroupCallScreenSharing) => Ok | error | null)
-    & ((query: setGroupCallTitle) => Ok | error | null)
-    & ((query: toggleGroupCallMuteNewParticipants) => Ok | error | null)
-    & ((query: inviteGroupCallParticipants) => Ok | error | null)
-    & ((query: getGroupCallInviteLink) => HttpUrl | error | null)
-    & ((query: revokeGroupCallInviteLink) => Ok | error | null)
-    & ((query: startGroupCallRecording) => Ok | error | null)
-    & ((query: endGroupCallRecording) => Ok | error | null)
-    & ((query: toggleGroupCallIsMyVideoPaused) => Ok | error | null)
-    & ((query: toggleGroupCallIsMyVideoEnabled) => Ok | error | null)
-    & ((query: setGroupCallParticipantIsSpeaking) => Ok | error | null)
-    & ((query: toggleGroupCallParticipantIsMuted) => Ok | error | null)
-    & ((query: setGroupCallParticipantVolumeLevel) => Ok | error | null)
-    & ((query: toggleGroupCallParticipantIsHandRaised) => Ok | error | null)
-    & ((query: loadGroupCallParticipants) => Ok | error | null)
-    & ((query: leaveGroupCall) => Ok | error | null)
-    & ((query: endGroupCall) => Ok | error | null)
-    & ((query: getGroupCallStreamSegment) => FilePart | error | null)
-    & ((query: toggleMessageSenderIsBlocked) => Ok | error | null)
-    & ((query: blockMessageSenderFromReplies) => Ok | error | null)
-    & ((query: getBlockedMessageSenders) => MessageSenders | error | null)
-    & ((query: addContact) => Ok | error | null)
-    & ((query: importContacts) => ImportedContacts | error | null)
-    & ((query: getContacts) => Users | error | null)
-    & ((query: searchContacts) => Users | error | null)
-    & ((query: removeContacts) => Ok | error | null)
-    & ((query: getImportedContactCount) => Count | error | null)
-    & ((query: changeImportedContacts) => ImportedContacts | error | null)
-    & ((query: clearImportedContacts) => Ok | error | null)
-    & ((query: sharePhoneNumber) => Ok | error | null)
-    & ((query: getUserProfilePhotos) => ChatPhotos | error | null)
-    & ((query: getStickers) => Stickers | error | null)
-    & ((query: searchStickers) => Stickers | error | null)
-    & ((query: getInstalledStickerSets) => StickerSets | error | null)
-    & ((query: getArchivedStickerSets) => StickerSets | error | null)
-    & ((query: getTrendingStickerSets) => StickerSets | error | null)
-    & ((query: getAttachedStickerSets) => StickerSets | error | null)
-    & ((query: getStickerSet) => StickerSet | error | null)
-    & ((query: searchStickerSet) => StickerSet | error | null)
-    & ((query: searchInstalledStickerSets) => StickerSets | error | null)
-    & ((query: searchStickerSets) => StickerSets | error | null)
-    & ((query: changeStickerSet) => Ok | error | null)
-    & ((query: viewTrendingStickerSets) => Ok | error | null)
-    & ((query: reorderInstalledStickerSets) => Ok | error | null)
-    & ((query: getRecentStickers) => Stickers | error | null)
-    & ((query: addRecentSticker) => Stickers | error | null)
-    & ((query: removeRecentSticker) => Ok | error | null)
-    & ((query: clearRecentStickers) => Ok | error | null)
-    & ((query: getFavoriteStickers) => Stickers | error | null)
-    & ((query: addFavoriteSticker) => Ok | error | null)
-    & ((query: removeFavoriteSticker) => Ok | error | null)
-    & ((query: getStickerEmojis) => Emojis | error | null)
-    & ((query: searchEmojis) => Emojis | error | null)
-    & ((query: getAnimatedEmoji) => AnimatedEmoji | error | null)
-    & ((query: getEmojiSuggestionsUrl) => HttpUrl | error | null)
-    & ((query: getSavedAnimations) => Animations | error | null)
-    & ((query: addSavedAnimation) => Ok | error | null)
-    & ((query: removeSavedAnimation) => Ok | error | null)
-    & ((query: getRecentInlineBots) => Users | error | null)
-    & ((query: searchHashtags) => Hashtags | error | null)
-    & ((query: removeRecentHashtag) => Ok | error | null)
-    & ((query: getWebPagePreview) => WebPage | error | null)
-    & ((query: getWebPageInstantView) => WebPageInstantView | error | null)
-    & ((query: setProfilePhoto) => Ok | error | null)
-    & ((query: deleteProfilePhoto) => Ok | error | null)
-    & ((query: setName) => Ok | error | null)
-    & ((query: setBio) => Ok | error | null)
-    & ((query: setUsername) => Ok | error | null)
-    & ((query: setLocation) => Ok | error | null)
-    & ((query: changePhoneNumber) => AuthenticationCodeInfo | error | null)
-    & ((query: resendChangePhoneNumberCode) => AuthenticationCodeInfo | error | null)
-    & ((query: checkChangePhoneNumberCode) => Ok | error | null)
-    & ((query: setCommands) => Ok | error | null)
-    & ((query: deleteCommands) => Ok | error | null)
-    & ((query: getCommands) => BotCommands | error | null)
-    & ((query: getActiveSessions) => Sessions | error | null)
-    & ((query: terminateSession) => Ok | error | null)
-    & ((query: terminateAllOtherSessions) => Ok | error | null)
-    & ((query: toggleSessionCanAcceptCalls) => Ok | error | null)
-    & ((query: toggleSessionCanAcceptSecretChats) => Ok | error | null)
-    & ((query: setInactiveSessionTtl) => Ok | error | null)
-    & ((query: getConnectedWebsites) => ConnectedWebsites | error | null)
-    & ((query: disconnectWebsite) => Ok | error | null)
-    & ((query: disconnectAllWebsites) => Ok | error | null)
-    & ((query: setSupergroupUsername) => Ok | error | null)
-    & ((query: setSupergroupStickerSet) => Ok | error | null)
-    & ((query: toggleSupergroupSignMessages) => Ok | error | null)
-    & ((query: toggleSupergroupIsAllHistoryAvailable) => Ok | error | null)
-    & ((query: toggleSupergroupIsBroadcastGroup) => Ok | error | null)
-    & ((query: reportSupergroupSpam) => Ok | error | null)
-    & ((query: getSupergroupMembers) => ChatMembers | error | null)
-    & ((query: closeSecretChat) => Ok | error | null)
-    & ((query: getChatEventLog) => ChatEvents | error | null)
-    & ((query: getPaymentForm) => PaymentForm | error | null)
-    & ((query: validateOrderInfo) => ValidatedOrderInfo | error | null)
-    & ((query: sendPaymentForm) => PaymentResult | error | null)
-    & ((query: getPaymentReceipt) => PaymentReceipt | error | null)
-    & ((query: getSavedOrderInfo) => OrderInfo | error | null)
-    & ((query: deleteSavedOrderInfo) => Ok | error | null)
-    & ((query: deleteSavedCredentials) => Ok | error | null)
-    & ((query: getSupportUser) => User | error | null)
-    & ((query: getBackgrounds) => Backgrounds | error | null)
-    & ((query: getBackgroundUrl) => HttpUrl | error | null)
-    & ((query: searchBackground) => Background | error | null)
-    & ((query: setBackground) => Background | error | null)
-    & ((query: removeBackground) => Ok | error | null)
-    & ((query: resetBackgrounds) => Ok | error | null)
-    & ((query: getLocalizationTargetInfo) => LocalizationTargetInfo | error | null)
-    & ((query: getLanguagePackInfo) => LanguagePackInfo | error | null)
-    & ((query: getLanguagePackStrings) => LanguagePackStrings | error | null)
-    & ((query: synchronizeLanguagePack) => Ok | error | null)
-    & ((query: addCustomServerLanguagePack) => Ok | error | null)
-    & ((query: setCustomLanguagePack) => Ok | error | null)
-    & ((query: editCustomLanguagePackInfo) => Ok | error | null)
-    & ((query: setCustomLanguagePackString) => Ok | error | null)
-    & ((query: deleteLanguagePack) => Ok | error | null)
-    & ((query: registerDevice) => PushReceiverId | error | null)
-    & ((query: processPushNotification) => Ok | error | null)
-    & ((query: getPushReceiverId) => PushReceiverId | error | null)
-    & ((query: getRecentlyVisitedTMeUrls) => TMeUrls | error | null)
-    & ((query: setUserPrivacySettingRules) => Ok | error | null)
-    & ((query: getUserPrivacySettingRules) => UserPrivacySettingRules | error | null)
-    & ((query: getOption) => OptionValue | error | null)
-    & ((query: setOption) => Ok | error | null)
-    & ((query: setAccountTtl) => Ok | error | null)
-    & ((query: getAccountTtl) => AccountTtl | error | null)
-    & ((query: deleteAccount) => Ok | error | null)
-    & ((query: removeChatActionBar) => Ok | error | null)
-    & ((query: reportChat) => Ok | error | null)
-    & ((query: reportChatPhoto) => Ok | error | null)
-    & ((query: getChatStatistics) => ChatStatistics | error | null)
-    & ((query: getMessageStatistics) => MessageStatistics | error | null)
-    & ((query: getStatisticalGraph) => StatisticalGraph | error | null)
-    & ((query: getStorageStatistics) => StorageStatistics | error | null)
-    & ((query: getStorageStatisticsFast) => StorageStatisticsFast | error | null)
-    & ((query: getDatabaseStatistics) => DatabaseStatistics | error | null)
-    & ((query: optimizeStorage) => StorageStatistics | error | null)
-    & ((query: setNetworkType) => Ok | error | null)
-    & ((query: getNetworkStatistics) => NetworkStatistics | error | null)
-    & ((query: addNetworkStatistics) => Ok | error | null)
-    & ((query: resetNetworkStatistics) => Ok | error | null)
-    & ((query: getAutoDownloadSettingsPresets) => AutoDownloadSettingsPresets | error | null)
-    & ((query: setAutoDownloadSettings) => Ok | error | null)
-    & ((query: getBankCardInfo) => BankCardInfo | error | null)
-    & ((query: getPassportElement) => PassportElement | error | null)
-    & ((query: getAllPassportElements) => PassportElements | error | null)
-    & ((query: setPassportElement) => PassportElement | error | null)
-    & ((query: deletePassportElement) => Ok | error | null)
-    & ((query: setPassportElementErrors) => Ok | error | null)
-    & ((query: getPreferredCountryLanguage) => Text | error | null)
-    & ((query: sendPhoneNumberVerificationCode) => AuthenticationCodeInfo | error | null)
-    & ((query: resendPhoneNumberVerificationCode) => AuthenticationCodeInfo | error | null)
-    & ((query: checkPhoneNumberVerificationCode) => Ok | error | null)
-    & ((query: sendEmailAddressVerificationCode) => EmailAddressAuthenticationCodeInfo | error | null)
-    & ((query: resendEmailAddressVerificationCode) => EmailAddressAuthenticationCodeInfo | error | null)
-    & ((query: checkEmailAddressVerificationCode) => Ok | error | null)
-    & ((query: getPassportAuthorizationForm) => PassportAuthorizationForm | error | null)
-    & ((query: getPassportAuthorizationFormAvailableElements) => PassportElementsWithErrors | error | null)
-    & ((query: sendPassportAuthorizationForm) => Ok | error | null)
-    & ((query: sendPhoneNumberConfirmationCode) => AuthenticationCodeInfo | error | null)
-    & ((query: resendPhoneNumberConfirmationCode) => AuthenticationCodeInfo | error | null)
-    & ((query: checkPhoneNumberConfirmationCode) => Ok | error | null)
-    & ((query: setBotUpdatesStatus) => Ok | error | null)
-    & ((query: uploadStickerFile) => File | error | null)
-    & ((query: getSuggestedStickerSetName) => Text | error | null)
-    & ((query: checkStickerSetName) => CheckStickerSetNameResult | error | null)
-    & ((query: createNewStickerSet) => StickerSet | error | null)
-    & ((query: addStickerToSet) => StickerSet | error | null)
-    & ((query: setStickerSetThumbnail) => StickerSet | error | null)
-    & ((query: setStickerPositionInSet) => Ok | error | null)
-    & ((query: removeStickerFromSet) => Ok | error | null)
-    & ((query: getMapThumbnailFile) => File | error | null)
-    & ((query: acceptTermsOfService) => Ok | error | null)
-    & ((query: sendCustomRequest) => CustomRequestResult | error | null)
-    & ((query: answerCustomQuery) => Ok | error | null)
-    & ((query: setAlarm) => Ok | error | null)
-    & ((query: getCountries) => Countries | error | null)
-    & ((query: getCountryCode) => Text | error | null)
-    & ((query: getPhoneNumberInfo) => PhoneNumberInfo | error | null)
-    & ((query: getPhoneNumberInfoSync) => PhoneNumberInfo | error | null)
-    & ((query: getApplicationDownloadLink) => HttpUrl | error | null)
-    & ((query: getDeepLinkInfo) => DeepLinkInfo | error | null)
-    & ((query: getApplicationConfig) => JsonValue | error | null)
-    & ((query: saveApplicationLogEvent) => Ok | error | null)
-    & ((query: addProxy) => Proxy | error | null)
-    & ((query: editProxy) => Proxy | error | null)
-    & ((query: enableProxy) => Ok | error | null)
-    & ((query: disableProxy) => Ok | error | null)
-    & ((query: removeProxy) => Ok | error | null)
-    & ((query: getProxies) => Proxies | error | null)
-    & ((query: getProxyLink) => HttpUrl | error | null)
-    & ((query: pingProxy) => Seconds | error | null)
-    & ((query: setLogStream) => Ok | error | null)
-    & ((query: getLogStream) => LogStream | error | null)
-    & ((query: setLogVerbosityLevel) => Ok | error | null)
-    & ((query: getLogVerbosityLevel) => LogVerbosityLevel | error | null)
-    & ((query: getLogTags) => LogTags | error | null)
-    & ((query: setLogTagVerbosityLevel) => Ok | error | null)
-    & ((query: getLogTagVerbosityLevel) => LogVerbosityLevel | error | null)
-    & ((query: addLogMessage) => Ok | error | null)
-    & ((query: testCallEmpty) => Ok | error | null)
-    & ((query: testCallString) => TestString | error | null)
-    & ((query: testCallBytes) => TestBytes | error | null)
-    & ((query: testCallVectorInt) => TestVectorInt | error | null)
-    & ((query: testCallVectorIntObject) => TestVectorIntObject | error | null)
-    & ((query: testCallVectorString) => TestVectorString | error | null)
-    & ((query: testCallVectorStringObject) => TestVectorStringObject | error | null)
-    & ((query: testSquareInt) => TestInt | error | null)
-    & ((query: testNetwork) => Ok | error | null)
-    & ((query: testProxy) => Ok | error | null)
-    & ((query: testGetDifference) => Ok | error | null)
-    & ((query: testUseUpdate) => Update | error | null)
-    & ((query: testReturnError) => Error | error | null)
+    & ((query: getTextEntities) => TextEntities | error)
+    & ((query: parseTextEntities) => FormattedText | error)
+    & ((query: parseMarkdown) => FormattedText | error)
+    & ((query: getMarkdownText) => FormattedText | error)
+    & ((query: getFileMimeType) => Text | error)
+    & ((query: getFileExtension) => Text | error)
+    & ((query: cleanFileName) => Text | error)
+    & ((query: getLanguagePackString) => LanguagePackStringValue | error)
+    & ((query: getJsonValue) => JsonValue | error)
+    & ((query: getJsonString) => Text | error)
+    & ((query: getChatFilterDefaultIconName) => Text | error)
+    & ((query: getPushReceiverId) => PushReceiverId | error)
+    & ((query: getPhoneNumberInfoSync) => PhoneNumberInfo | error)
+    & ((query: setLogStream) => Ok | error)
+    & ((query: getLogStream) => LogStream | error)
+    & ((query: setLogVerbosityLevel) => Ok | error)
+    & ((query: getLogVerbosityLevel) => LogVerbosityLevel | error)
+    & ((query: getLogTags) => LogTags | error)
+    & ((query: setLogTagVerbosityLevel) => Ok | error)
+    & ((query: getLogTagVerbosityLevel) => LogVerbosityLevel | error)
+    & ((query: addLogMessage) => Ok | error)
+    & ((query: testReturnError) => Error | error)
+
+  type $Function =
+    | getAuthorizationState
+    | setTdlibParameters
+    | checkDatabaseEncryptionKey
+    | setAuthenticationPhoneNumber
+    | resendAuthenticationCode
+    | checkAuthenticationCode
+    | requestQrCodeAuthentication
+    | registerUser
+    | checkAuthenticationPassword
+    | requestAuthenticationPasswordRecovery
+    | checkAuthenticationPasswordRecoveryCode
+    | recoverAuthenticationPassword
+    | checkAuthenticationBotToken
+    | logOut
+    | close
+    | destroy
+    | confirmQrCodeAuthentication
+    | getCurrentState
+    | setDatabaseEncryptionKey
+    | getPasswordState
+    | setPassword
+    | getRecoveryEmailAddress
+    | setRecoveryEmailAddress
+    | checkRecoveryEmailAddressCode
+    | resendRecoveryEmailAddressCode
+    | requestPasswordRecovery
+    | checkPasswordRecoveryCode
+    | recoverPassword
+    | resetPassword
+    | cancelPasswordReset
+    | createTemporaryPassword
+    | getTemporaryPasswordState
+    | getMe
+    | getUser
+    | getUserFullInfo
+    | getBasicGroup
+    | getBasicGroupFullInfo
+    | getSupergroup
+    | getSupergroupFullInfo
+    | getSecretChat
+    | getChat
+    | getMessage
+    | getMessageLocally
+    | getRepliedMessage
+    | getChatPinnedMessage
+    | getCallbackQueryMessage
+    | getMessages
+    | getMessageThread
+    | getMessageViewers
+    | getFile
+    | getRemoteFile
+    | loadChats
+    | getChats
+    | searchPublicChat
+    | searchPublicChats
+    | searchChats
+    | searchChatsOnServer
+    | searchChatsNearby
+    | getTopChats
+    | removeTopChat
+    | addRecentlyFoundChat
+    | removeRecentlyFoundChat
+    | clearRecentlyFoundChats
+    | getRecentlyOpenedChats
+    | checkChatUsername
+    | getCreatedPublicChats
+    | checkCreatedPublicChatsLimit
+    | getSuitableDiscussionChats
+    | getInactiveSupergroupChats
+    | getGroupsInCommon
+    | getChatHistory
+    | getMessageThreadHistory
+    | deleteChatHistory
+    | deleteChat
+    | searchChatMessages
+    | searchMessages
+    | searchSecretMessages
+    | searchCallMessages
+    | deleteAllCallMessages
+    | searchChatRecentLocationMessages
+    | getActiveLiveLocationMessages
+    | getChatMessageByDate
+    | getChatSparseMessagePositions
+    | getChatMessageCalendar
+    | getChatMessageCount
+    | getChatScheduledMessages
+    | getMessagePublicForwards
+    | getChatSponsoredMessage
+    | removeNotification
+    | removeNotificationGroup
+    | getMessageLink
+    | getMessageEmbeddingCode
+    | getMessageLinkInfo
+    | getChatAvailableMessageSenders
+    | setChatMessageSender
+    | sendMessage
+    | sendMessageAlbum
+    | sendBotStartMessage
+    | sendInlineQueryResultMessage
+    | forwardMessages
+    | resendMessages
+    | sendChatScreenshotTakenNotification
+    | addLocalMessage
+    | deleteMessages
+    | deleteChatMessagesBySender
+    | deleteChatMessagesByDate
+    | editMessageText
+    | editMessageLiveLocation
+    | editMessageMedia
+    | editMessageCaption
+    | editMessageReplyMarkup
+    | editInlineMessageText
+    | editInlineMessageLiveLocation
+    | editInlineMessageMedia
+    | editInlineMessageCaption
+    | editInlineMessageReplyMarkup
+    | editMessageSchedulingState
+    | getTextEntities
+    | parseTextEntities
+    | parseMarkdown
+    | getMarkdownText
+    | getFileMimeType
+    | getFileExtension
+    | cleanFileName
+    | getLanguagePackString
+    | getJsonValue
+    | getJsonString
+    | setPollAnswer
+    | getPollVoters
+    | stopPoll
+    | hideSuggestedAction
+    | getLoginUrlInfo
+    | getLoginUrl
+    | getInlineQueryResults
+    | answerInlineQuery
+    | getCallbackQueryAnswer
+    | answerCallbackQuery
+    | answerShippingQuery
+    | answerPreCheckoutQuery
+    | setGameScore
+    | setInlineGameScore
+    | getGameHighScores
+    | getInlineGameHighScores
+    | deleteChatReplyMarkup
+    | sendChatAction
+    | openChat
+    | closeChat
+    | viewMessages
+    | openMessageContent
+    | clickAnimatedEmojiMessage
+    | getInternalLinkType
+    | getExternalLinkInfo
+    | getExternalLink
+    | readAllChatMentions
+    | createPrivateChat
+    | createBasicGroupChat
+    | createSupergroupChat
+    | createSecretChat
+    | createNewBasicGroupChat
+    | createNewSupergroupChat
+    | createNewSecretChat
+    | upgradeBasicGroupChatToSupergroupChat
+    | getChatListsToAddChat
+    | addChatToList
+    | getChatFilter
+    | createChatFilter
+    | editChatFilter
+    | deleteChatFilter
+    | reorderChatFilters
+    | getRecommendedChatFilters
+    | getChatFilterDefaultIconName
+    | setChatTitle
+    | setChatPhoto
+    | setChatMessageTtl
+    | setChatPermissions
+    | setChatTheme
+    | setChatDraftMessage
+    | setChatNotificationSettings
+    | toggleChatHasProtectedContent
+    | toggleChatIsMarkedAsUnread
+    | toggleChatDefaultDisableNotification
+    | setChatClientData
+    | setChatDescription
+    | setChatDiscussionGroup
+    | setChatLocation
+    | setChatSlowModeDelay
+    | pinChatMessage
+    | unpinChatMessage
+    | unpinAllChatMessages
+    | joinChat
+    | leaveChat
+    | addChatMember
+    | addChatMembers
+    | setChatMemberStatus
+    | banChatMember
+    | canTransferOwnership
+    | transferChatOwnership
+    | getChatMember
+    | searchChatMembers
+    | getChatAdministrators
+    | clearAllDraftMessages
+    | getChatNotificationSettingsExceptions
+    | getScopeNotificationSettings
+    | setScopeNotificationSettings
+    | resetAllNotificationSettings
+    | toggleChatIsPinned
+    | setPinnedChats
+    | downloadFile
+    | getFileDownloadedPrefixSize
+    | cancelDownloadFile
+    | getSuggestedFileName
+    | uploadFile
+    | cancelUploadFile
+    | writeGeneratedFilePart
+    | setFileGenerationProgress
+    | finishFileGeneration
+    | readFilePart
+    | deleteFile
+    | getMessageFileType
+    | getMessageImportConfirmationText
+    | importMessages
+    | replacePrimaryChatInviteLink
+    | createChatInviteLink
+    | editChatInviteLink
+    | getChatInviteLink
+    | getChatInviteLinkCounts
+    | getChatInviteLinks
+    | getChatInviteLinkMembers
+    | revokeChatInviteLink
+    | deleteRevokedChatInviteLink
+    | deleteAllRevokedChatInviteLinks
+    | checkChatInviteLink
+    | joinChatByInviteLink
+    | getChatJoinRequests
+    | processChatJoinRequest
+    | processChatJoinRequests
+    | createCall
+    | acceptCall
+    | sendCallSignalingData
+    | discardCall
+    | sendCallRating
+    | sendCallDebugInformation
+    | getVideoChatAvailableParticipants
+    | setVideoChatDefaultParticipant
+    | createVideoChat
+    | getGroupCall
+    | startScheduledGroupCall
+    | toggleGroupCallEnabledStartNotification
+    | joinGroupCall
+    | startGroupCallScreenSharing
+    | toggleGroupCallScreenSharingIsPaused
+    | endGroupCallScreenSharing
+    | setGroupCallTitle
+    | toggleGroupCallMuteNewParticipants
+    | inviteGroupCallParticipants
+    | getGroupCallInviteLink
+    | revokeGroupCallInviteLink
+    | startGroupCallRecording
+    | endGroupCallRecording
+    | toggleGroupCallIsMyVideoPaused
+    | toggleGroupCallIsMyVideoEnabled
+    | setGroupCallParticipantIsSpeaking
+    | toggleGroupCallParticipantIsMuted
+    | setGroupCallParticipantVolumeLevel
+    | toggleGroupCallParticipantIsHandRaised
+    | loadGroupCallParticipants
+    | leaveGroupCall
+    | endGroupCall
+    | getGroupCallStreamSegment
+    | toggleMessageSenderIsBlocked
+    | blockMessageSenderFromReplies
+    | getBlockedMessageSenders
+    | addContact
+    | importContacts
+    | getContacts
+    | searchContacts
+    | removeContacts
+    | getImportedContactCount
+    | changeImportedContacts
+    | clearImportedContacts
+    | sharePhoneNumber
+    | getUserProfilePhotos
+    | getStickers
+    | searchStickers
+    | getInstalledStickerSets
+    | getArchivedStickerSets
+    | getTrendingStickerSets
+    | getAttachedStickerSets
+    | getStickerSet
+    | searchStickerSet
+    | searchInstalledStickerSets
+    | searchStickerSets
+    | changeStickerSet
+    | viewTrendingStickerSets
+    | reorderInstalledStickerSets
+    | getRecentStickers
+    | addRecentSticker
+    | removeRecentSticker
+    | clearRecentStickers
+    | getFavoriteStickers
+    | addFavoriteSticker
+    | removeFavoriteSticker
+    | getStickerEmojis
+    | searchEmojis
+    | getAnimatedEmoji
+    | getEmojiSuggestionsUrl
+    | getSavedAnimations
+    | addSavedAnimation
+    | removeSavedAnimation
+    | getRecentInlineBots
+    | searchHashtags
+    | removeRecentHashtag
+    | getWebPagePreview
+    | getWebPageInstantView
+    | setProfilePhoto
+    | deleteProfilePhoto
+    | setName
+    | setBio
+    | setUsername
+    | setLocation
+    | changePhoneNumber
+    | resendChangePhoneNumberCode
+    | checkChangePhoneNumberCode
+    | setCommands
+    | deleteCommands
+    | getCommands
+    | getActiveSessions
+    | terminateSession
+    | terminateAllOtherSessions
+    | toggleSessionCanAcceptCalls
+    | toggleSessionCanAcceptSecretChats
+    | setInactiveSessionTtl
+    | getConnectedWebsites
+    | disconnectWebsite
+    | disconnectAllWebsites
+    | setSupergroupUsername
+    | setSupergroupStickerSet
+    | toggleSupergroupSignMessages
+    | toggleSupergroupIsAllHistoryAvailable
+    | toggleSupergroupIsBroadcastGroup
+    | reportSupergroupSpam
+    | getSupergroupMembers
+    | closeSecretChat
+    | getChatEventLog
+    | getPaymentForm
+    | validateOrderInfo
+    | sendPaymentForm
+    | getPaymentReceipt
+    | getSavedOrderInfo
+    | deleteSavedOrderInfo
+    | deleteSavedCredentials
+    | getSupportUser
+    | getBackgrounds
+    | getBackgroundUrl
+    | searchBackground
+    | setBackground
+    | removeBackground
+    | resetBackgrounds
+    | getLocalizationTargetInfo
+    | getLanguagePackInfo
+    | getLanguagePackStrings
+    | synchronizeLanguagePack
+    | addCustomServerLanguagePack
+    | setCustomLanguagePack
+    | editCustomLanguagePackInfo
+    | setCustomLanguagePackString
+    | deleteLanguagePack
+    | registerDevice
+    | processPushNotification
+    | getPushReceiverId
+    | getRecentlyVisitedTMeUrls
+    | setUserPrivacySettingRules
+    | getUserPrivacySettingRules
+    | getOption
+    | setOption
+    | setAccountTtl
+    | getAccountTtl
+    | deleteAccount
+    | removeChatActionBar
+    | reportChat
+    | reportChatPhoto
+    | getChatStatistics
+    | getMessageStatistics
+    | getStatisticalGraph
+    | getStorageStatistics
+    | getStorageStatisticsFast
+    | getDatabaseStatistics
+    | optimizeStorage
+    | setNetworkType
+    | getNetworkStatistics
+    | addNetworkStatistics
+    | resetNetworkStatistics
+    | getAutoDownloadSettingsPresets
+    | setAutoDownloadSettings
+    | getBankCardInfo
+    | getPassportElement
+    | getAllPassportElements
+    | setPassportElement
+    | deletePassportElement
+    | setPassportElementErrors
+    | getPreferredCountryLanguage
+    | sendPhoneNumberVerificationCode
+    | resendPhoneNumberVerificationCode
+    | checkPhoneNumberVerificationCode
+    | sendEmailAddressVerificationCode
+    | resendEmailAddressVerificationCode
+    | checkEmailAddressVerificationCode
+    | getPassportAuthorizationForm
+    | getPassportAuthorizationFormAvailableElements
+    | sendPassportAuthorizationForm
+    | sendPhoneNumberConfirmationCode
+    | resendPhoneNumberConfirmationCode
+    | checkPhoneNumberConfirmationCode
+    | setBotUpdatesStatus
+    | uploadStickerFile
+    | getSuggestedStickerSetName
+    | checkStickerSetName
+    | createNewStickerSet
+    | addStickerToSet
+    | setStickerSetThumbnail
+    | setStickerPositionInSet
+    | removeStickerFromSet
+    | getMapThumbnailFile
+    | acceptTermsOfService
+    | sendCustomRequest
+    | answerCustomQuery
+    | setAlarm
+    | getCountries
+    | getCountryCode
+    | getPhoneNumberInfo
+    | getPhoneNumberInfoSync
+    | getApplicationDownloadLink
+    | getDeepLinkInfo
+    | getApplicationConfig
+    | saveApplicationLogEvent
+    | addProxy
+    | editProxy
+    | enableProxy
+    | disableProxy
+    | removeProxy
+    | getProxies
+    | getProxyLink
+    | pingProxy
+    | setLogStream
+    | getLogStream
+    | setLogVerbosityLevel
+    | getLogVerbosityLevel
+    | getLogTags
+    | setLogTagVerbosityLevel
+    | getLogTagVerbosityLevel
+    | addLogMessage
+    | testCallEmpty
+    | testCallString
+    | testCallBytes
+    | testCallVectorInt
+    | testCallVectorIntObject
+    | testCallVectorString
+    | testCallVectorStringObject
+    | testSquareInt
+    | testNetwork
+    | testProxy
+    | testGetDifference
+    | testUseUpdate
+    | testReturnError
 }
 "
 `;

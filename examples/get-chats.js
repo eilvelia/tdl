@@ -1,5 +1,7 @@
 const tdl = require('tdl')
 
+tdl.configure({ verbosityLevel: 1 })
+
 const client = tdl.createClient({
   apiId: 2222, // Your api_id
   apiHash: 'YOUR_API_HASH'

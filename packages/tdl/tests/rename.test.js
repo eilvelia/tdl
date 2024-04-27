@@ -1,5 +1,3 @@
-// @flow
-
 /* eslint-disable quotes, semi, comma-dangle */
 
 const { deepRenameKey } = require("../dist/util");

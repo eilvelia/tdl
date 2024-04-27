@@ -1,7 +1,5 @@
 const tdl = require('tdl')
 
-tdl.configure({ useNewTdjsonInterface: true })
-
 const API_ID = 2222 // Your api_id
 const API_HASH = '0123456789abcdef0123456789abcdef' // Your api_hash
 
@@ -19,8 +17,13 @@ const client2 = tdl.createClient({
   filesDirectory: '_td_files2'
 })
 
-client1.on('error', e => console.error('Client1 error', e))
-client2.on('error', e => console.error('Client2 error', e))
+client1
+  .on('error', e => console.error('Client1 error:', e))
+  .on('update', u => console.log('Client1 update:', u))
+
+client2
+  .on('error', e => console.error('Client2 error:', e))
+  .on('update', u => console.log('Client2 update:', u))
 
 async function main() {
   await client1.login()

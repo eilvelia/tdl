@@ -11,7 +11,7 @@ const addIndent = (n/*: number */, str/*: string */) => str
   .map(l => l.length > 0 ? ' '.repeat(n) + l : l)
   .join(EOL)
 
-function formatDesc (desc/*: string */, indent = 0) {
+function formatDesc (desc/*: string */, indent/*: number */ = 0) {
   const space = ' '.repeat(indent)
   let length = 0
   const lines = ['']
@@ -50,7 +50,7 @@ function generate (
 
   // console.log(JSON.stringify(tldoc(source), null, '  '))
 
-  function genParameter (p/*: Parameter */, input = false) {
+  function genParameter (p/*: Parameter */, input/*: boolean */ = false) {
     let typ = (() => {
       switch (p.type) {
         case 'double': return 'number'
@@ -78,7 +78,7 @@ function generate (
     ].join(EOL)
   }
 
-  function genTdClass (c/*: TdClass */, input = false, preserveName = false) {
+  function genTdClass (c/*: TdClass */, input/*: boolean */ = false, preserveName/*: boolean */ = false) {
     const typeName = input && !preserveName ? c.name + INPUT_SUFFIX : c.name
     const readonly = input ? READONLY : ''
     return [
@@ -90,7 +90,12 @@ function generate (
     ].filter(x => x.length > 0).join(EOL)
   }
 
-  function genTdBaseClass (name/*: string */, children/*: TdClass[] */, description/*: ?string */, input = false) {
+  function genTdBaseClass (
+    name/*: string */,
+    children/*: TdClass[] */,
+    description/*: ?string */,
+    input/*: boolean */ = false
+  ) {
     const typeName = input ? name + INPUT_SUFFIX : name
     const childSuffix = input ? INPUT_SUFFIX : ''
     if (children.length === 1) {
@@ -109,13 +114,13 @@ function generate (
 
   const { baseClasses, classes } = tldoc(source)
 
-  const baseClassesNameLookup = new Map()
+  const baseClassesNameLookup/*: Map<string, BaseClass> */ = new Map()
   for (const c of baseClasses) baseClassesNameLookup.set(c.name, c)
 
-  const classesNameLookup = new Map()
+  const classesNameLookup/*: Map<string, TdClass> */ = new Map()
   for (const c of classes) classesNameLookup.set(c.name, c)
 
-  const baseClassChildren = new Map()
+  const baseClassChildren/*: Map<string, TdClass[]> */ = new Map()
   for (const c of classes) {
     if (c.kind !== 'constructor') continue
     const arr = baseClassChildren.get(c.result)
@@ -126,7 +131,7 @@ function generate (
   }
 
   function getAllDeps (stack/*: string[] */)/*: Set<string> */ {
-    const set = new Set()
+    const set/*: Set<string> */ = new Set()
     while (stack.length > 0) {
       const typ = stack.pop()
       if (set.has(typ)) continue
@@ -147,6 +152,9 @@ function generate (
   }
 
   const funcs = classes.filter(e => e.kind === 'function')
+
+  const syncFuncs =
+    funcs.filter(e => e.description.includes('Can be called synchronously'))
 
   const inputTypes = getAllDeps(funcs.flatMap(f => f.parameters.map(p => p.type)))
   const outputTypes = getAllDeps(['Update', 'Error', ...funcs.map(f => f.result)])
@@ -225,15 +233,20 @@ function generate (
     ].join(EOL)
     execute = [
       `${EXPORT} type Execute = <T>(query: { readonly _: T } & (`,
-      '  ' + funcs.map(c => c.name).join(`${EOL}  | `),
-      ')) => null | error | (',
-      ...funcs.map(c => `  T extends '${c.name}' ? ${c.result} :`),
+      '  ' + syncFuncs.map(c => c.name).join(`${EOL}  | `),
+      ')) => error | (',
+      ...syncFuncs.map(c => `  T extends '${c.name}' ? ${c.result} :`),
       'never)'
     ].join(EOL)
   } else {
     invoke = genFunctionIntersection('Invoke', t => `Promise<${t}>`, funcs)
-    execute = genFunctionIntersection('Execute', t => `${t} | error | null`, funcs)
+    execute = genFunctionIntersection('Execute', t => `${t} | error`, syncFuncs)
   }
+
+  const functionType = [
+    'type $Function =',
+    funcs.map(c => '  | ' + c.name).join(EOL)
+  ].join(EOL)
 
   return [
     TS ? null : '// @flow',
@@ -242,15 +255,17 @@ function generate (
     addIndent(2, [
       objectTypes,
       '',
-      '// ----',
+      '// --- ---',
       '',
       unionTypes,
       '',
-      '// ----',
+      '// --- Special types ---',
       '',
       invoke,
       '',
-      execute
+      execute,
+      '',
+      functionType
     ].join(EOL)),
     '}',
     ''

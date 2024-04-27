@@ -4,7 +4,7 @@
 const path = require('path')
 const fs = require('fs')
 
-function checkExists (pathparts) {
+function checkExists (pathparts/*: string[] */) {
   const p = path.join(__dirname, 'prebuilds', ...pathparts)
   if (fs.existsSync(p)) return
   console.error(`'${p}' does not exist`)

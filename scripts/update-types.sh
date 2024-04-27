@@ -7,4 +7,4 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-npx tdl-install-types --flow $1
+npx tdl-install-types -o typings/tdlib-types.d.ts --flow $1

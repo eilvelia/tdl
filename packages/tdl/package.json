@@ -1,14 +1,14 @@
 {
   "name": "tdl",
-  "version": "7.4.1",
+  "version": "8.0.0-dev",
   "description": "Node.js bindings to TDLib (Telegram Database library)",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "build:babel": "babel src/ -d dist/ --root-mode upward",
-    "build:gyp": "node-gyp rebuild",
-    "build": "npm run build:babel && node scripts/copy-readme.js && node scripts/generate-ts.js && node-gyp rebuild",
-    "make-prebuild": "prebuildify --napi -t 18.16.0 --strip",
+    "build:lib": "tsc",
+    "build:addon": "node-gyp rebuild",
+    "build": "tsc && node scripts/copy-readme.js && node scripts/generate-flow.js && node-gyp rebuild",
+    "make-prebuild": "prebuildify --napi -t 18.20.2 --strip",
     "clean": "node-gyp clean",
     "install": "node-gyp-build"
   },
@@ -17,8 +17,6 @@
     "index.js.flow",
     "index.d.ts",
     "dist",
-    "vendor",
-    "types",
     "addon",
     "binding.gyp",
     "prebuilds",
@@ -27,12 +25,14 @@
   ],
   "dependencies": {
     "debug": "^4.3.4",
-    "eventemitter3": "^4.0.7",
-    "node-addon-api": "^6.0.0",
+    "node-addon-api": "^7.1.0",
     "node-gyp-build": "^4.8.0"
   },
   "devDependencies": {
     "node-gyp": "^10.0.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   },
   "author": "Bannerets <comonoid@protonmail.com> (https://github.com/Bannerets)",
   "license": "MIT",
@@ -40,9 +40,8 @@
     "telegram",
     "telegram-api",
     "tdlib",
-    "bindings",
-    "mtproto",
     "tglib",
+    "bindings",
     "node-addon"
   ],
   "repository": {

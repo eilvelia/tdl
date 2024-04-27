@@ -1,9 +1,7 @@
-// @flow
-
-import path from 'path'
+import path from 'node:path'
 import Debug from 'debug'
-import { Client, TdlError, type Tdjson } from './client'
-import { loadAddon } from './addon'
+import { Client, TDLibError, UnknownError, type ClientOptions } from './client'
+import { loadAddon, type Tdjson } from './addon'
 import { deepRenameKey } from './util'
 import type { Execute } from 'tdlib-types'
 
@@ -11,15 +9,11 @@ const debug = Debug('tdl')
 
 let tdjsonAddon: Tdjson | null = null
 
-// TODO: Should we export this?
 const defaultLibraryFile = (() => {
   switch (process.platform) {
-    case 'win32':
-      return 'tdjson.dll'
-    case 'darwin':
-      return 'libtdjson.dylib'
-    default:
-      return 'libtdjson.so'
+    case 'win32': return 'tdjson.dll'
+    case 'darwin': return 'libtdjson.dylib'
+    default: return 'libtdjson.so'
   }
 })()
 
@@ -28,26 +22,15 @@ export type TDLibConfiguration = {
   libdir?: string,
   verbosityLevel?: number | 'default',
   receiveTimeout?: number,
-  useNewTdjsonInterface?: boolean
+  useOldTdjsonInterface?: boolean
 }
 
-// TODO: Use Required<T> from new Flow versions
-type StrictTDLibConfiguration = {
-  tdjson: string,
-  libdir: string,
-  verbosityLevel: number | 'default',
-  receiveTimeout: number,
-  useNewTdjsonInterface: boolean
-}
-
-const defaultReceiveTimeout = 10
-
-const cfg: StrictTDLibConfiguration = {
+const cfg: Required<TDLibConfiguration> = {
   tdjson: defaultLibraryFile,
   libdir: '',
   verbosityLevel: 2,
-  receiveTimeout: defaultReceiveTimeout,
-  useNewTdjsonInterface: false
+  receiveTimeout: 10,
+  useOldTdjsonInterface: false
 }
 
 export function configure (opts: TDLibConfiguration = {}): void {
@@ -57,11 +40,11 @@ export function configure (opts: TDLibConfiguration = {}): void {
   if (opts.libdir != null) cfg.libdir = opts.libdir
   if (opts.verbosityLevel != null) cfg.verbosityLevel = opts.verbosityLevel
   if (opts.receiveTimeout != null) cfg.receiveTimeout = opts.receiveTimeout
-  if (opts.useNewTdjsonInterface != null) cfg.useNewTdjsonInterface = opts.useNewTdjsonInterface
+  if (opts.useOldTdjsonInterface != null) cfg.useOldTdjsonInterface = opts.useOldTdjsonInterface
 }
 
 export function init (): void {
-  if (tdjsonAddon) return
+  if (tdjsonAddon != null) return
   debug('Initializing the node addon')
   const lib = path.join(cfg.libdir, cfg.tdjson)
   tdjsonAddon = loadAddon(lib)
@@ -71,22 +54,23 @@ export function init (): void {
       '@type': 'setLogVerbosityLevel',
       new_verbosity_level: cfg.verbosityLevel
     })
-    if (cfg.useNewTdjsonInterface) tdjsonAddon.tdn.execute(request)
-    else tdjsonAddon.execute(null, request)
+    const response = !cfg.useOldTdjsonInterface
+      ? tdjsonAddon.tdnew.execute(request)
+      : tdjsonAddon.tdold.execute(null, request)
+    debug('setLogVerbosityLevel response:', response)
   }
 }
 
-export const execute: Execute = function execute (request: any) {
-  if (!tdjsonAddon) {
+export const execute: Execute = function execute (request: any): any {
+  if (tdjsonAddon == null) {
     init()
-    if (!tdjsonAddon) throw Error('TDLib is uninitialized')
+    if (tdjsonAddon == null) throw Error('TDLib is uninitialized')
   }
   debug('execute', request)
   request = JSON.stringify(deepRenameKey('_', '@type', request))
-  const response = cfg.useNewTdjsonInterface
-    ? tdjsonAddon.tdn.execute(request)
-    : tdjsonAddon.execute(null, request)
-  if (response == null) return null
+  const response = !cfg.useOldTdjsonInterface
+    ? tdjsonAddon.tdnew.execute(request)
+    : tdjsonAddon.tdold.execute(null, request)
   return deepRenameKey('@type', '_', JSON.parse(response))
 }
 
@@ -94,11 +78,22 @@ export function setLogMessageCallback (
   maxVerbosityLevel: number,
   callback: null | ((verbosityLevel: number, message: string) => void)
 ): void {
-  if (!tdjsonAddon) {
+  if (tdjsonAddon == null) {
     init()
-    if (!tdjsonAddon) throw Error('TDLib is uninitialized')
+    if (tdjsonAddon == null) throw Error('TDLib is uninitialized')
   }
   tdjsonAddon.setLogMessageCallback(maxVerbosityLevel, callback)
+}
+
+/** @deprecated Deprecated in TDLib v1.8.0. */
+export function setLogFatalErrorCallback (
+  callback: null | ((message: string) => void)
+): void {
+  if (tdjsonAddon == null) {
+    init()
+    if (tdjsonAddon == null) throw Error('TDLib is uninitialized')
+  }
+  tdjsonAddon.setLogFatalErrorCallback(callback)
 }
 
 const clientMap: Map<number, Client> = new Map()
@@ -107,7 +102,8 @@ let runningReceiveLoop = false
 
 // Loop for the new tdjson interface
 async function receiveLoop () {
-  debug('Starting receive loop')
+  debug('Starting tdn receive loop')
+  if (tdjsonAddon == null) throw new Error('TDLib is uninitialized')
   runningReceiveLoop = true
   try {
     while (true) {
@@ -115,8 +111,7 @@ async function receiveLoop () {
         debug('Stopping receive loop')
         break
       }
-      // $FlowIgnore[incompatible-use]
-      const responseString = await tdjsonAddon.tdn.receive()
+      const responseString = await tdjsonAddon.tdnew.receive()
       if (responseString == null) {
         debug('Receive loop: got empty response')
         continue
@@ -136,36 +131,46 @@ async function receiveLoop () {
   }
 }
 
-export function createClient (opts: any): Client {
-  if (!tdjsonAddon) {
+function createAnyClient (opts: ClientOptions, bare = false): Client {
+  if (tdjsonAddon == null) {
     init()
-    if (!tdjsonAddon) throw Error('TDLib is uninitialized')
+    if (tdjsonAddon == null) throw Error('TDLib is uninitialized')
   }
-  if (cfg.useNewTdjsonInterface) {
+  const managingOpts = {
+    bare,
+    receiveTimeout: cfg.receiveTimeout,
+    executeFunc: execute
+  }
+  if (!cfg.useOldTdjsonInterface) {
     if (!tdnInitialized) {
-      tdjsonAddon.tdn.init(cfg.receiveTimeout)
+      tdjsonAddon.tdnew.init(cfg.receiveTimeout)
       tdnInitialized = true
     }
-    const onClose = () => {
-      debug(`Deleting client_id ${clientId}`)
-      clientMap.delete(clientId)
-    }
-    const client = new Client(tdjsonAddon, opts, { useTdn: true, onClose })
+    const tdnManaging = { ...managingOpts, useOldTdjsonInterface: false }
+    const client = new Client(tdjsonAddon, tdnManaging, opts)
     const clientId = client.getClientId()
     clientMap.set(clientId, client)
+    client.once('close', () => {
+      debug(`Deleting client_id ${clientId}`)
+      clientMap.delete(clientId)
+    })
     if (!runningReceiveLoop)
       receiveLoop()
     return client
   }
-  if (cfg.receiveTimeout !== defaultReceiveTimeout)
-    return new Client(tdjsonAddon, { ...opts, receiveTimeout: cfg.receiveTimeout })
-  return new Client(tdjsonAddon, opts)
+  const tdoManaging = { ...managingOpts, useOldTdjsonInterface: true }
+  return new Client(tdjsonAddon, tdoManaging, opts)
 }
+
+export function createClient (opts: ClientOptions): Client {
+  return createAnyClient(opts)
+}
+
+export function createBareClient (): Client {
+  return createAnyClient({}, true)
+}
+
+export { TDLibError, UnknownError }
 
 // TODO: We could possibly export an unsafe/unstable getRawTdjson() : Tdjson
 // function that allows to access underlying tdjson functions
-
-export { TdlError }
-
-// For backward compatibility only.
-export { Client, Client as TDL, Client as Tdl }

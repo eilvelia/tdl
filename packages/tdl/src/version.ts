@@ -1,9 +1,7 @@
-// @flow
-
 export class Version {
-  +_major: number;
-  +_minor: number;
-  +_patch: number;
+  private readonly _major: number
+  private readonly _minor: number
+  private readonly _patch: number
 
   /** Parse version from a string */
   constructor (ver: string) {

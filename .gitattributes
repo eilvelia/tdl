@@ -2,5 +2,5 @@
 *.h linguist-language=C++
 *.snap linguist-generated=true
 *.shot linguist-generated=true
-tdlib-types.d.ts linguist-vendored=true
-flow-typed/*.js linguist-vendored=true
+tdlib-types.d.ts linguist-generated=true
+flow-typed/*.js linguist-generated=true

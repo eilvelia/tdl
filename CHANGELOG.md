@@ -2,6 +2,44 @@
 
 <!-- Hi! -->
 
+## Unreleased tdl@8.0.0
+
+- The compatibility with `tdl-tdlib-addon` is removed. The `Client` constructor
+  is no longer exported. The non-deprecated API mostly remains the same.
+- TDLib < v1.8.0 is no longer supported.
+- Node.js < v16.0.0 is no longer supported.
+- The new tdjson interface is now used by default. The `useNewTdjsonInterface`
+  option in `tdl.configure` is removed; `useOldTdjsonInterface` is added
+  instead.
+- Added `client.iterUpdates()` to receive updates via async iterators as an
+  alternative to `client.on('update', ...)`. Example:
+  ```javascript
+  for await (const update of client.iterUpdates()) {
+    if (update._ === 'updateOption' && update.name === 'my_id') {
+      console.log(`My ID is ${update.value.value}!`)
+      break
+    }
+  }
+  ```
+- The semantics of `client.login` are slightly changed and simplified.
+  `client.login()` can now accept the object directly besides a function
+  returning the object.
+- The TDLib errors are now wrapped in a new `TDLibError` class; `TdlError`
+  is removed and replaced with `UnknownError`.
+- Removed deprecated client options: `receiveTimeout`, `useDefaultVerbosityLevel`,
+  `disableAuth`, `useMutableRename`, `verbosityLevel`.
+- Removed the `bare` client option. `tdl.createBareClient(): Client` is added
+  instead.
+- Removed deprecated client methods: `destroy`, `pause`, `resume`, `connect`,
+  `connectAndLogin`, `getBackendName`, `setLogFatalErrorCallback`
+  (`tdl.setLogFatalErrorCallback` is added instead, though still deprecated).
+- Removed deprecated exports: `TDL`, `Tdl`.
+- Removed deprecated events: `response`, `auth-needed`, `auth-not-needed`. The
+  `destroy` event is renamed to `close`.
+- `client.off` now returns `boolean` instead of `void`; the `once` parameter is
+  removed. (The `eventemitter3` dependency is also dropped.)
+- Internal: The `tdl` client code was rewritten to TypeScript.
+
 ## Unreleased tdl-install-types@0.2.0
 
 - Added a `--github-repo` CLI option.
@@ -9,6 +47,9 @@
 - The generator now indicates that the `bytes` parameters are base64.
 - The version of `tdl-install-types` is now included in the header of the
   generated files.
+- No longer generates `null` for return types of `Execute`.
+- Functions not marked as synchronous are no longer generated in `Execute`.
+- Added `$Function`.
 
 ## tdl@7.4.1 (2024-02-16)
 

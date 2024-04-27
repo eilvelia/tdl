@@ -3,7 +3,7 @@
 `tdl` is a fairly simple JavaScript wrapper for [TDLib][] (Telegram Database library),
 a library to create [Telegram][] clients or bots.
 
-TDLib version 1.5.0 or newer is required.
+TDLib version 1.8.0 or newer is required.
 
 [TDLib]: https://github.com/tdlib/td
 [Telegram]: https://telegram.org/
@@ -19,7 +19,7 @@ TDLib version 1.5.0 or newer is required.
 <a name="requirements"></a>
 ## Requirements
 
-- Node.js v12.11.0 or newer (>= v16 recommended)
+- Node.js v16 or newer
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
 - In some cases, a C++ compiler and Python installed to build the node addon[^1]
 
@@ -76,9 +76,9 @@ const client = tdl.createClient({
 client.on('error', console.error)
 
 // Aside of receiving responses to your requests, the server can push to you
-// events called "updates" which ar received as follows:
+// events called "updates" which can be received as follows:
 client.on('update', update => {
-  console.log('Got update:', update)
+  console.log('Received update:', update)
 })
 
 async function main () {
@@ -100,12 +100,18 @@ async function main () {
   })
   console.log('A part of my chat list:', chats)
 
-  // Close the instance so that TDLib exits gracefully and the JS runtime can finish the process.
+  // Close the instance so that TDLib exits gracefully and the JS runtime can
+  // finish the process.
   await client.close()
 }
 
 main().catch(console.error)
 ```
+
+Instead of using CommonJS (`require('tdl')`), one can import `tdl` in an
+EcmaScript module through the interoperability with CommonJS:
+`import * as tdl from 'tdl'`. Or alternatively import specific functions
+using `import { createClient } from 'tdl'`.
 
 The API list of TDLib methods, which are called using `client.invoke`, can be found at, e.g.:
 - https://core.telegram.org/tdlib/docs/annotated.html (possibly outdated)
@@ -141,29 +147,33 @@ Some short examples are available in the [examples/](examples/) directory.
 Configure several parameters such as libtdjson name or verbosity level. This
 function should be called before `tdl.createClient` or `tdl.execute`.
 
+The possible parameters are:
+
 ```javascript
 tdl.configure({
   // Path to the library. By default, it is 'tdjson.dll' on Windows,
   // 'libtdjson.dylib' on macOS, or 'libtdjson.so' otherwise.
   tdjson: 'libtdjson.so',
-  // Path to the library directory. By default, it is empty string.
+  // Path to the library directory. Defaults to the empty string.
   libdir: '/usr/local/lib',
-  // Verbosity level of TDLib. By default, it is 2.
+  // Set the verbosity level of TDLib. Defaults to 2.
   verbosityLevel: 3,
-  // Experimental option. Disabled by default.
-  useNewTdjsonInterface: false
+  // Advanced options:
+  useOldTdjsonInterface: false,
+  receiveTimeout: 10,
 })
 ```
 
 Some examples:
 - `tdl.configure({ tdjson: '/root/libtdjson.so', verbosityLevel: 5 })`
-- `tdl.configure({ tdjson: 'libtdjson.dylib.1.8.6', libdir: '/usr/local/lib' })`
-- `tdl.configure({ libdir: __dirname })`
-- `tdl.configure({ tdjson: require('prebuilt-tdlib').getTdjson() })`
+- `tdl.configure({ libdir: '/usr/local/lib', tdjson: 'libtdjson.dylib.1.8.6' })`
+- `tdl.configure({ libdir: __dirname })` (use libtdjson from the directory of the current script, in CJS)
+- `tdl.configure({ tdjson: require('prebuilt-tdlib').getTdjson() })` (use prebuilt-tdlib)
 
 The path concatenation of `libdir` + `tdjson` is directly passed to
-[`dlopen`][dlopen] (Unix) or [`LoadLibrary`][LoadLibraryW] (Windows). Check your
-OS documentation to find out where the shared library will be searched for.
+[`dlopen`][dlopen] (Unix) or [`LoadLibrary`][LoadLibraryW] (Windows). Check
+documentation of your OS to find out where the shared library will be searched
+for.
 
 #### `tdl.createClient(options: ClientOptions) => Client`
 
@@ -188,9 +198,7 @@ type ClientOptions = {
   databaseEncryptionKey: string, // Optional key for database encryption
   useTestDc: boolean, // Use test telegram server (defaults to false)
   tdlibParameters: Object, // Raw TDLib parameters
-  // Advanced options:
-  bare: boolean,
-  skipOldUpdates: boolean
+  skipOldUpdates: boolean // Advanced option.
 }
 ```
 
@@ -222,9 +230,9 @@ tdlibParameters: {
 In a real application, you probably want to change `device_model` and other
 parameters.
 
-#### `client.login(fn?: () => LoginDetails) => Promise<void>`
+#### `client.login(arg?: LoginDetails | (() => LoginDetails)) => Promise<void>`
 
-Log in to your Telegram account.
+Attach an update handler to log you in to your Telegram account.
 
 ```javascript
 await client.login()
@@ -232,36 +240,41 @@ await client.login()
 
 By default, `tdl` asks the user for the phone number, auth code, and 2FA
 password (if needed) in the console. You can override the defaults with custom
-functions, for example:
+functions that return promises, for example:
 
 ```javascript
 // Example
-await client.login(() => ({
-  getPhoneNumber: retry => retry
-    ? Promise.reject('Invalid phone number')
-    : Promise.resolve('+9996620001'),
-  getAuthCode: retry => retry
-    ? Promise.reject('Invalid auth code')
-    : Promise.resolve('22222'),
-  getPassword: (passwordHint, retry) => retry
-    ? Promise.reject('Invalid password')
-    : Promise.resolve('abcdef'),
-  getName: () => Promise.resolve({ firstName: 'John', lastName: 'Doe' })
-}))
+await client.login({
+  async getPhoneNumber(retry) {
+    if (retry) throw new Error('Invalid phone number')
+    return '+9996620001'
+  },
+  async getAuthCode(retry) {
+    if (retry) throw new Error('Invalid auth code')
+    return '22222'
+  },
+  async getPassword(passwordHint, retry) {
+    if (retry) throw new Error('Invalid password')
+    return 'mypassword'
+  },
+  async getName() {
+    return { firstName: 'John', lastName: 'Doe' }
+  }
+})
 ```
 
-The `getName` function is called if the user is not signed up.
+`getName` is called if the user is not signed up.
 
-`client.login` supports only a subset of authentication methods available on
-Telegram. It is possible (and advisable for larger apps) not to use the
-`client.login` helper and implement the authorization process manually, handling
-`authorizationStateWaitPhoneNumber` and other updates.
+`client.login` is a pretty basic function that supports only a subset of
+authentication methods available on Telegram. It is possible (and advisable for
+larger apps) not to use the `client.login` helper and implement the
+authorization process manually, handling `authorizationStateWaitPhoneNumber` and
+other updates.
 
 This function accepts the following interface:
 
 ```typescript
-type LoginDetails = {
-  type?: 'user',
+interface LoginDetails {
   getPhoneNumber?: (retry?: boolean) => Promise<string>,
   getEmailAddress?: () => Promise<string>,
   getEmailCode?: () => Promise<string>,
@@ -269,14 +282,8 @@ type LoginDetails = {
   getAuthCode?: (retry?: boolean) => Promise<string>,
   getPassword?: (passwordHint: string, retry?: boolean) => Promise<string>,
   getName?: () => Promise<{ firstName: string, lastName?: string }>
-} | {
-  type: 'bot',
-  getToken: (retry?: boolean) => Promise<string>
 }
-// Note that client.login accepts a function that returns the object, not the
-// object directly. The function will not be called if the client is already
-// authorized.
-declare function login (fn?: () => LoginDetails): Promise<void>
+declare function login(details?: LoginDetails | (() => LoginDetails)): Promise<void>
 ```
 
 `getEmailAddress` and `getEmailCode` are called in TDLib >= v1.8.6 only.
@@ -291,7 +298,8 @@ await client.loginAsBot('YOUR_BOT_TOKEN') // Enter your token from @BotFather
 
 #### `client.on(event: string, callback: Function) => Client`
 
-Attach an event listener to receive updates and other events.
+Attach an event listener. The `'update'` event can be used to iterate through
+received updates.
 
 ```javascript
 function onUpdate (update) {
@@ -301,14 +309,18 @@ client.on('update', onUpdate)
 client.on('error', console.error)
 ```
 
-Ideally, you should always have a listener on `client.on('error')`.
-There is no default listener, all errors will be ignored otherwise.
+If an exception is thrown inside your event listener, it is emitted as the
+`'error'` event (other things like invalid client options or potential internal
+errors can also be emitted as `'error`'). Ideally, you should always have a
+listener on `client.on('error')`, otherwise an unhandled promise rejection will
+appear.
 
-You can consider using reactive libraries like RxJS or most.js for convenient
+The other available event is `'close'`. After `close` (the
+`authorizationStateClosed` update), it isn't possible to send requests and the
+client should not be used anymore.
+
+You may consider using reactive libraries like RxJS or most.js for convenient
 event processing.
-
-Some other rarely-used events also exist and are described in the TypeScript
-interface.
 
 `client.addListener` is an alias for `client.on`.
 
@@ -316,12 +328,12 @@ interface.
 
 Attach a one-time listener.
 
-#### `client.off(event: string, listener: Function, once?: boolean) => Client`
+#### `client.off(event: string, listener: Function) => boolean`
 
 Remove an event listener.
 
 ```javascript
-const listener = u => {
+function listener (u) {
   console.log('New update:', u)
   if (u?.authorization_state?._ === 'authorizationStateReady')
     client.off('update', listener) // Removes the listener
@@ -329,12 +341,29 @@ const listener = u => {
 client.on('update', listener)
 ```
 
+The returned value indicates whether the listener has been successfully removed.
+
 `client.removeListener` is an alias for `client.off`.
+
+#### `client.iterUpdates() => AsyncIterableIterator<Update>`
+
+An alternative approach (added in tdl v8.0.0) to get updates is to use async
+iterators instead of `client.on('update', ...)`:
+
+```javascript
+for await (const update of client.iterUpdates()) {
+  console.log('Received update:', update)
+  if (update._ === 'updateOption' && update.name === 'my_id') {
+    console.log(`My ID is ${update.value.value}!`)
+    break
+  }
+}
+```
 
 #### `client.invoke(query: Object) => Promise<Object>`
 
-Call a TDLib method asynchronously. The promise can be rejected with a TDLib
-object of type `_: 'error'`.
+Call a TDLib method asynchronously. If the request fails, the promise rejects
+with `TDLibError` containing the error code and error message.
 
 For the information regarding TDLib API list, see the "Getting started" section
 of this README.
@@ -387,7 +416,7 @@ const res = tdl.execute({
 
 Set the callback that is called when a message is added to the TDLib log. This
 corresponds to the `td_set_log_message_callback` tdjson function. The callback
-overrides previously set callbacks.
+overrides the previously set callback.
 
 <a name="types"></a>
 ## Types
@@ -486,11 +515,6 @@ The path to the directory where you execute `npm install` likely contains
 spaces, which is not supported by gyp:
 https://github.com/nodejs/node-gyp/issues/65#issuecomment-368820565.
 
-- `UPDATE_APP_TO_LOGIN`
-
-Update TDLib to v1.7.9 (v1.8.0) or newer. It is no longer possible to log in by
-phone number in older versions of TDLib.
-
 - `Error while reading RSA public key`
 
 You can get this error if libtdjson is dynamically linked against OpenSSL and
@@ -534,10 +558,10 @@ that Node.js uses.
 Another possible option is to rebuild Node.js from source, linking it
 dynamically against the same system OpenSSL. That way, there is only one
 instance of OpenSSL in the application. For example, using [nvm][], you can
-install Node.js v16 from source on GNU/Linux via this command:
+install Node.js v18 from source on GNU/Linux via this command:
 
 ```console
-$ nvm install -s 16 --shared-openssl --shared-openssl-includes=/usr/include/ --shared-openssl-libpath=/usr/lib/x86_64-linux-gnu/
+$ nvm install -s 18 --shared-openssl --shared-openssl-includes=/usr/include/ --shared-openssl-libpath=/usr/lib/x86_64-linux-gnu/
 ```
 
 [nvm]: https://github.com/nvm-sh/nvm

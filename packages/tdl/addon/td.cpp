@@ -198,7 +198,8 @@ namespace Tdo {
       TYPEFAIL("Expected second argument to be a string", Napi::Value());
     std::string request = info[1].As<Napi::String>().Utf8Value();
     const char *response = td_json_client_execute(client, request.c_str());
-    if (response == nullptr) return env.Null();
+    if (response == nullptr)
+      FAIL("td_json_client_execute returned null", Napi::Value());
     return Napi::String::New(env, response);
   }
 
@@ -225,7 +226,7 @@ namespace Tdn {
     if (worker != nullptr)
       FAIL("The worker is already initialized");
     if (!info[0].IsNumber())
-      TYPEFAIL("Expected first argument to be a number");
+      TYPEFAIL("Expected first argument (timeout) to be a number");
     double timeout = info[0].As<Napi::Number>().DoubleValue();
     worker = new ReceiveWorker(env, nullptr, timeout);
   }
@@ -258,13 +259,12 @@ namespace Tdn {
 
   Napi::Value Execute(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
-    if (td_execute == nullptr)
-      FAIL("td_execute is not available", Napi::Value());
     if (!info[0].IsString())
       TYPEFAIL("Expected first argument to be a string", Napi::Value());
     std::string request = info[0].As<Napi::String>().Utf8Value();
     const char *response = td_execute(request.c_str());
-    if (response == nullptr) return env.Null();
+    if (response == nullptr)
+      FAIL("td_execute returned null", Napi::Value());
     return Napi::String::New(env, response);
   }
 
@@ -295,21 +295,23 @@ namespace TdCallbacks {
   Tsfn tsfn = nullptr;
   std::mutex tsfn_mutex;
 
+  // NOTE: If TDLib exits with SIGABRT right after the verbosity_level=0 message,
+  // we won't actually have a chance to pass the message to the main thread.
   extern "C" void c_message_callback (int verbosity_level, const char *message) {
     std::lock_guard<std::mutex> lock(tsfn_mutex);
     if (tsfn == nullptr) return;
     auto *data = new TsfnData { verbosity_level, std::string(message) };
     tsfn.NonBlockingCall(data);
     if (verbosity_level == 0) {
-      // See below.
+      // Hack for the aforementioned issue. Note that there is still no guarantee
+      // that the callback will be executed. For example, td_execute(addLogMessage)
+      // with verbosity_level=0 runs this function on the main thread.
       std::this_thread::sleep_for(std::chrono::seconds(5));
     }
   }
 
   void SetLogMessageCallback(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
-    if (td_set_log_message_callback == nullptr)
-      FAIL("td_set_log_message_callback is not available");
     if (info.Length() < 2)
       TYPEFAIL("Expected two arguments");
     if (!info[0].IsNumber())
@@ -336,8 +338,6 @@ namespace TdCallbacks {
 
   Napi::ThreadSafeFunction fatal_callback_tsfn = nullptr;
 
-  // NOTE: If TDLib exits with SIGABRT right after the verbosity_level=0 message,
-  // we won't actually have a chance to pass the message to the main thread.
   extern "C" void c_fatal_callback (const char *error_message) {
     if (fatal_callback_tsfn == nullptr) return;
     std::string message_str(error_message);
@@ -345,9 +345,7 @@ namespace TdCallbacks {
       js_callback.Call({ Napi::String::New(env, message_str) });
     };
     fatal_callback_tsfn.NonBlockingCall(callback);
-    // Hack for the aforementioned issue. Note that there is still no guarantee
-    // that the callback will be executed. For example, td_execute(addLogMessage)
-    // with verbosity_level=0 runs this function on the main thread.
+    // See above.
     std::this_thread::sleep_for(std::chrono::seconds(5));
   }
 
@@ -382,9 +380,9 @@ namespace TdCallbacks {
     FAIL("Failed to get " #F " (null)"); \
   }
 
-#define FINDFUNC_OPT(F) \
-  F = (F##_t) dlsym(handle, #F); \
-  dlerror();
+// #define FINDFUNC_OPT(F) \
+//   F = (F##_t) dlsym(handle, #F); \
+//   dlerror();
 
 void LoadTdjson(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
@@ -403,19 +401,19 @@ void LoadTdjson(const Napi::CallbackInfo& info) {
   FINDFUNC(td_json_client_execute);
   FINDFUNC(td_json_client_destroy);
   FINDFUNC(td_set_log_fatal_error_callback);
-  FINDFUNC_OPT(td_set_log_message_callback);
-  FINDFUNC_OPT(td_create_client_id);
-  FINDFUNC_OPT(td_send);
-  FINDFUNC_OPT(td_receive);
-  FINDFUNC_OPT(td_execute);
+  FINDFUNC(td_set_log_message_callback);
+  FINDFUNC(td_create_client_id);
+  FINDFUNC(td_send);
+  FINDFUNC(td_receive);
+  FINDFUNC(td_execute);
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
-  exports["create"] = Napi::Function::New(env, Tdo::ClientCreate, "create");
-  exports["send"] = Napi::Function::New(env, Tdo::ClientSend, "send");
-  exports["receive"] = Napi::Function::New(env, Tdo::ClientReceive, "receive");
-  exports["execute"] = Napi::Function::New(env, Tdo::ClientExecute, "execute");
-  exports["destroy"] = Napi::Function::New(env, Tdo::ClientDestroy, "destroy");
+  exports["tdoCreate"] = Napi::Function::New(env, Tdo::ClientCreate, "create");
+  exports["tdoSend"] = Napi::Function::New(env, Tdo::ClientSend, "send");
+  exports["tdoReceive"] = Napi::Function::New(env, Tdo::ClientReceive, "receive");
+  exports["tdoExecute"] = Napi::Function::New(env, Tdo::ClientExecute, "execute");
+  exports["tdoDestroy"] = Napi::Function::New(env, Tdo::ClientDestroy, "destroy");
   exports["setLogFatalErrorCallback"] =
     Napi::Function::New(env, TdCallbacks::SetLogFatalErrorCallback, "setLogFatalErrorCallback");
   exports["setLogMessageCallback"] =
