@@ -61,10 +61,10 @@ export const execute: Execute
  * setting a callback overrides the previous callback. Pass null to remove the
  * callback.
  */
-export const setLogMessageCallback: (
+export function setLogMessageCallback(
   maxVerbosityLevel: number,
   callback: null | ((verbosityLevel: number, message: string) => void)
-) => void
+): void
 
 /** Create a TDLib client. */
 export function createClient(opts: ClientOptions): Client
@@ -78,7 +78,7 @@ export interface Client {
    * available authentication methods. If a function is passed as
    * `loginDetails`, it will not be called unless any of the handlers trigger.
    */
-  login: (loginDetails?: LoginDetails | (() => LoginDetails)) => Promise<void>;
+  login(loginDetails?: LoginDetails | (() => LoginDetails)): Promise<void>;
   /**
    * Log in as a bot. You can get the token from `@BotFather`.
    * If the client is already logged in as a user, it will not be relogged
@@ -94,7 +94,7 @@ export interface Client {
    * })
    * ```
    */
-  loginAsBot: (token: string | (() => string | Promise<string>)) => Promise<void>;
+  loginAsBot(token: string | (() => string | Promise<string>)): Promise<void>;
   /**
    * Call a TDLib method. Example:
    * ```
@@ -139,19 +139,19 @@ export interface Client {
    * }
    * ```
    */
-  iterUpdates: () => AsyncIterableIterator<Td$Update>;
+  iterUpdates(): AsyncIterableIterator<Td$Update>;
   /** Alias for `tdl.execute`. */
   execute: Execute;
   /**
    * Close the client. This sends `{ _: 'close' }` and waits for
    * `authorizationStateClosed`.
    */
-  close: () => Promise<void>;
+  close(): Promise<void>;
   /**
    * Get the TDLib version in the `major.minor.patch` format. Can throw an
    * exception if the version (the `updateOption` update) is not (yet) received.
    */
-  getVersion: () => string;
+  getVersion(): string;
   /** Emit an event. For advanced use only. */
   emit: Emit;
 }
@@ -277,6 +277,6 @@ export function init(): void
  * @deprecated Deprecated in TDLib v1.8.0. Use `setLogMessageCallback`
  * with verbosity level 0 instead. This function is semver-unstable.
  */
-export const setLogFatalErrorCallback: (
+export function setLogFatalErrorCallback(
   callback: null | ((message: string) => void)
-) => void
+): void
