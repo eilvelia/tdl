@@ -226,6 +226,9 @@ jobs:
     needs: [test]
     if: "${{ inputs.npm-version != '' }}"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     env:
       TEST_PREBUILT: 1
     steps:
@@ -256,7 +259,7 @@ jobs:
         run: npm version ${{ inputs.npm-version }} --no-git-tag-version -w prebuilt-tdlib
       - name: Publish
         run: |
-          npm publish --tag ${{ inputs.npm-tag }} -w prebuilt-tdlib
+          npm publish --provenance --access public --tag ${{ inputs.npm-tag }} -w prebuilt-tdlib
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Set the td- tag

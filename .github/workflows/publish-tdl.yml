@@ -76,6 +76,9 @@ jobs:
     name: 'Publish to npm'
     needs: [build-and-test]
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -99,6 +102,6 @@ jobs:
         run: npm test
       - name: Publish
         if: "${{ inputs.npm-tag != '' }}"
-        run: npm publish --tag ${{ inputs.npm-tag }} -w tdl
+        run: npm publish --provenance --access public --tag ${{ inputs.npm-tag }} -w tdl
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
