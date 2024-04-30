@@ -32037,1537 +32037,7 @@ declare module 'tdlib-types' {
 
   // --- Special types ---
 
-  export type Invoke = <T>(query: { readonly _: T } & (
-    getAuthorizationState
-    | setTdlibParameters
-    | setAuthenticationPhoneNumber
-    | setAuthenticationEmailAddress
-    | resendAuthenticationCode
-    | checkAuthenticationEmailCode
-    | checkAuthenticationCode
-    | requestQrCodeAuthentication
-    | registerUser
-    | resetAuthenticationEmailAddress
-    | checkAuthenticationPassword
-    | requestAuthenticationPasswordRecovery
-    | checkAuthenticationPasswordRecoveryCode
-    | recoverAuthenticationPassword
-    | sendAuthenticationFirebaseSms
-    | checkAuthenticationBotToken
-    | logOut
-    | close
-    | destroy
-    | confirmQrCodeAuthentication
-    | getCurrentState
-    | setDatabaseEncryptionKey
-    | getPasswordState
-    | setPassword
-    | setLoginEmailAddress
-    | resendLoginEmailAddressCode
-    | checkLoginEmailAddressCode
-    | getRecoveryEmailAddress
-    | setRecoveryEmailAddress
-    | checkRecoveryEmailAddressCode
-    | resendRecoveryEmailAddressCode
-    | cancelRecoveryEmailAddressVerification
-    | requestPasswordRecovery
-    | checkPasswordRecoveryCode
-    | recoverPassword
-    | resetPassword
-    | cancelPasswordReset
-    | createTemporaryPassword
-    | getTemporaryPasswordState
-    | getMe
-    | getUser
-    | getUserFullInfo
-    | getBasicGroup
-    | getBasicGroupFullInfo
-    | getSupergroup
-    | getSupergroupFullInfo
-    | getSecretChat
-    | getChat
-    | getMessage
-    | getMessageLocally
-    | getRepliedMessage
-    | getChatPinnedMessage
-    | getCallbackQueryMessage
-    | getMessages
-    | getMessageThread
-    | getMessageReadDate
-    | getMessageViewers
-    | getFile
-    | getRemoteFile
-    | loadChats
-    | getChats
-    | searchPublicChat
-    | searchPublicChats
-    | searchChats
-    | searchChatsOnServer
-    | searchChatsNearby
-    | getChatSimilarChats
-    | getChatSimilarChatCount
-    | openChatSimilarChat
-    | getTopChats
-    | removeTopChat
-    | searchRecentlyFoundChats
-    | addRecentlyFoundChat
-    | removeRecentlyFoundChat
-    | clearRecentlyFoundChats
-    | getRecentlyOpenedChats
-    | checkChatUsername
-    | getCreatedPublicChats
-    | checkCreatedPublicChatsLimit
-    | getSuitableDiscussionChats
-    | getInactiveSupergroupChats
-    | getSuitablePersonalChats
-    | loadSavedMessagesTopics
-    | getSavedMessagesTopicHistory
-    | getSavedMessagesTopicMessageByDate
-    | deleteSavedMessagesTopicHistory
-    | deleteSavedMessagesTopicMessagesByDate
-    | toggleSavedMessagesTopicIsPinned
-    | setPinnedSavedMessagesTopics
-    | getGroupsInCommon
-    | getChatHistory
-    | getMessageThreadHistory
-    | deleteChatHistory
-    | deleteChat
-    | searchChatMessages
-    | searchMessages
-    | searchSecretMessages
-    | searchSavedMessages
-    | searchCallMessages
-    | searchOutgoingDocumentMessages
-    | deleteAllCallMessages
-    | searchChatRecentLocationMessages
-    | getActiveLiveLocationMessages
-    | getChatMessageByDate
-    | getChatSparseMessagePositions
-    | getChatMessageCalendar
-    | getChatMessageCount
-    | getChatMessagePosition
-    | getChatScheduledMessages
-    | getChatSponsoredMessages
-    | clickChatSponsoredMessage
-    | reportChatSponsoredMessage
-    | removeNotification
-    | removeNotificationGroup
-    | getMessageLink
-    | getMessageEmbeddingCode
-    | getMessageLinkInfo
-    | translateText
-    | translateMessageText
-    | recognizeSpeech
-    | rateSpeechRecognition
-    | getChatAvailableMessageSenders
-    | setChatMessageSender
-    | sendMessage
-    | sendMessageAlbum
-    | sendBotStartMessage
-    | sendInlineQueryResultMessage
-    | forwardMessages
-    | sendQuickReplyShortcutMessages
-    | resendMessages
-    | addLocalMessage
-    | deleteMessages
-    | deleteChatMessagesBySender
-    | deleteChatMessagesByDate
-    | editMessageText
-    | editMessageLiveLocation
-    | editMessageMedia
-    | editMessageCaption
-    | editMessageReplyMarkup
-    | editInlineMessageText
-    | editInlineMessageLiveLocation
-    | editInlineMessageMedia
-    | editInlineMessageCaption
-    | editInlineMessageReplyMarkup
-    | editMessageSchedulingState
-    | sendBusinessMessage
-    | sendBusinessMessageAlbum
-    | checkQuickReplyShortcutName
-    | loadQuickReplyShortcuts
-    | setQuickReplyShortcutName
-    | deleteQuickReplyShortcut
-    | reorderQuickReplyShortcuts
-    | loadQuickReplyShortcutMessages
-    | deleteQuickReplyShortcutMessages
-    | addQuickReplyShortcutMessage
-    | addQuickReplyShortcutInlineQueryResultMessage
-    | readdQuickReplyShortcutMessages
-    | editQuickReplyMessage
-    | getForumTopicDefaultIcons
-    | createForumTopic
-    | editForumTopic
-    | getForumTopic
-    | getForumTopicLink
-    | getForumTopics
-    | setForumTopicNotificationSettings
-    | toggleForumTopicIsClosed
-    | toggleGeneralForumTopicIsHidden
-    | toggleForumTopicIsPinned
-    | setPinnedForumTopics
-    | deleteForumTopic
-    | getEmojiReaction
-    | getCustomEmojiReactionAnimations
-    | getMessageAvailableReactions
-    | clearRecentReactions
-    | addMessageReaction
-    | removeMessageReaction
-    | setMessageReactions
-    | getMessageAddedReactions
-    | setDefaultReactionType
-    | getSavedMessagesTags
-    | setSavedMessagesTagLabel
-    | searchQuote
-    | getTextEntities
-    | parseTextEntities
-    | parseMarkdown
-    | getMarkdownText
-    | getCountryFlagEmoji
-    | getFileMimeType
-    | getFileExtension
-    | cleanFileName
-    | getLanguagePackString
-    | getJsonValue
-    | getJsonString
-    | getThemeParametersJsonString
-    | setPollAnswer
-    | getPollVoters
-    | stopPoll
-    | hideSuggestedAction
-    | getBusinessConnection
-    | getLoginUrlInfo
-    | getLoginUrl
-    | shareUsersWithBot
-    | shareChatWithBot
-    | getInlineQueryResults
-    | answerInlineQuery
-    | searchWebApp
-    | getWebAppLinkUrl
-    | getWebAppUrl
-    | sendWebAppData
-    | openWebApp
-    | closeWebApp
-    | answerWebAppQuery
-    | getCallbackQueryAnswer
-    | answerCallbackQuery
-    | answerShippingQuery
-    | answerPreCheckoutQuery
-    | setGameScore
-    | setInlineGameScore
-    | getGameHighScores
-    | getInlineGameHighScores
-    | deleteChatReplyMarkup
-    | sendChatAction
-    | openChat
-    | closeChat
-    | viewMessages
-    | openMessageContent
-    | clickAnimatedEmojiMessage
-    | getInternalLink
-    | getInternalLinkType
-    | getExternalLinkInfo
-    | getExternalLink
-    | readAllChatMentions
-    | readAllMessageThreadMentions
-    | readAllChatReactions
-    | readAllMessageThreadReactions
-    | createPrivateChat
-    | createBasicGroupChat
-    | createSupergroupChat
-    | createSecretChat
-    | createNewBasicGroupChat
-    | createNewSupergroupChat
-    | createNewSecretChat
-    | upgradeBasicGroupChatToSupergroupChat
-    | getChatListsToAddChat
-    | addChatToList
-    | getChatFolder
-    | createChatFolder
-    | editChatFolder
-    | deleteChatFolder
-    | getChatFolderChatsToLeave
-    | getChatFolderChatCount
-    | reorderChatFolders
-    | toggleChatFolderTags
-    | getRecommendedChatFolders
-    | getChatFolderDefaultIconName
-    | getChatsForChatFolderInviteLink
-    | createChatFolderInviteLink
-    | getChatFolderInviteLinks
-    | editChatFolderInviteLink
-    | deleteChatFolderInviteLink
-    | checkChatFolderInviteLink
-    | addChatFolderByInviteLink
-    | getChatFolderNewChats
-    | processChatFolderNewChats
-    | getArchiveChatListSettings
-    | setArchiveChatListSettings
-    | setChatTitle
-    | setChatPhoto
-    | setChatAccentColor
-    | setChatProfileAccentColor
-    | setChatMessageAutoDeleteTime
-    | setChatEmojiStatus
-    | setChatPermissions
-    | setChatBackground
-    | deleteChatBackground
-    | setChatTheme
-    | setChatDraftMessage
-    | setChatNotificationSettings
-    | toggleChatHasProtectedContent
-    | toggleChatViewAsTopics
-    | toggleChatIsTranslatable
-    | toggleChatIsMarkedAsUnread
-    | toggleChatDefaultDisableNotification
-    | setChatAvailableReactions
-    | setChatClientData
-    | setChatDescription
-    | setChatDiscussionGroup
-    | setChatLocation
-    | setChatSlowModeDelay
-    | pinChatMessage
-    | unpinChatMessage
-    | unpinAllChatMessages
-    | unpinAllMessageThreadMessages
-    | joinChat
-    | leaveChat
-    | addChatMember
-    | addChatMembers
-    | setChatMemberStatus
-    | banChatMember
-    | canTransferOwnership
-    | transferChatOwnership
-    | getChatMember
-    | searchChatMembers
-    | getChatAdministrators
-    | clearAllDraftMessages
-    | getSavedNotificationSound
-    | getSavedNotificationSounds
-    | addSavedNotificationSound
-    | removeSavedNotificationSound
-    | getChatNotificationSettingsExceptions
-    | getScopeNotificationSettings
-    | setScopeNotificationSettings
-    | resetAllNotificationSettings
-    | toggleChatIsPinned
-    | setPinnedChats
-    | readChatList
-    | getStory
-    | getChatsToSendStories
-    | canSendStory
-    | sendStory
-    | editStory
-    | setStoryPrivacySettings
-    | toggleStoryIsPinned
-    | deleteStory
-    | getStoryNotificationSettingsExceptions
-    | loadActiveStories
-    | setChatActiveStoriesList
-    | getChatActiveStories
-    | getChatPinnedStories
-    | getChatArchivedStories
-    | openStory
-    | closeStory
-    | getStoryAvailableReactions
-    | setStoryReaction
-    | getStoryInteractions
-    | getChatStoryInteractions
-    | reportStory
-    | activateStoryStealthMode
-    | getStoryPublicForwards
-    | getChatBoostLevelFeatures
-    | getChatBoostFeatures
-    | getAvailableChatBoostSlots
-    | getChatBoostStatus
-    | boostChat
-    | getChatBoostLink
-    | getChatBoostLinkInfo
-    | getChatBoosts
-    | getUserChatBoosts
-    | getAttachmentMenuBot
-    | toggleBotIsAddedToAttachmentMenu
-    | getThemedEmojiStatuses
-    | getRecentEmojiStatuses
-    | getDefaultEmojiStatuses
-    | clearRecentEmojiStatuses
-    | getThemedChatEmojiStatuses
-    | getDefaultChatEmojiStatuses
-    | getDisallowedChatEmojiStatuses
-    | downloadFile
-    | getFileDownloadedPrefixSize
-    | cancelDownloadFile
-    | getSuggestedFileName
-    | preliminaryUploadFile
-    | cancelPreliminaryUploadFile
-    | writeGeneratedFilePart
-    | setFileGenerationProgress
-    | finishFileGeneration
-    | readFilePart
-    | deleteFile
-    | addFileToDownloads
-    | toggleDownloadIsPaused
-    | toggleAllDownloadsArePaused
-    | removeFileFromDownloads
-    | removeAllFilesFromDownloads
-    | searchFileDownloads
-    | getMessageFileType
-    | getMessageImportConfirmationText
-    | importMessages
-    | replacePrimaryChatInviteLink
-    | createChatInviteLink
-    | editChatInviteLink
-    | getChatInviteLink
-    | getChatInviteLinkCounts
-    | getChatInviteLinks
-    | getChatInviteLinkMembers
-    | revokeChatInviteLink
-    | deleteRevokedChatInviteLink
-    | deleteAllRevokedChatInviteLinks
-    | checkChatInviteLink
-    | joinChatByInviteLink
-    | getChatJoinRequests
-    | processChatJoinRequest
-    | processChatJoinRequests
-    | createCall
-    | acceptCall
-    | sendCallSignalingData
-    | discardCall
-    | sendCallRating
-    | sendCallDebugInformation
-    | sendCallLog
-    | getVideoChatAvailableParticipants
-    | setVideoChatDefaultParticipant
-    | createVideoChat
-    | getVideoChatRtmpUrl
-    | replaceVideoChatRtmpUrl
-    | getGroupCall
-    | startScheduledGroupCall
-    | toggleGroupCallEnabledStartNotification
-    | joinGroupCall
-    | startGroupCallScreenSharing
-    | toggleGroupCallScreenSharingIsPaused
-    | endGroupCallScreenSharing
-    | setGroupCallTitle
-    | toggleGroupCallMuteNewParticipants
-    | inviteGroupCallParticipants
-    | getGroupCallInviteLink
-    | revokeGroupCallInviteLink
-    | startGroupCallRecording
-    | endGroupCallRecording
-    | toggleGroupCallIsMyVideoPaused
-    | toggleGroupCallIsMyVideoEnabled
-    | setGroupCallParticipantIsSpeaking
-    | toggleGroupCallParticipantIsMuted
-    | setGroupCallParticipantVolumeLevel
-    | toggleGroupCallParticipantIsHandRaised
-    | loadGroupCallParticipants
-    | leaveGroupCall
-    | endGroupCall
-    | getGroupCallStreams
-    | getGroupCallStreamSegment
-    | setMessageSenderBlockList
-    | blockMessageSenderFromReplies
-    | getBlockedMessageSenders
-    | addContact
-    | importContacts
-    | getContacts
-    | searchContacts
-    | removeContacts
-    | getImportedContactCount
-    | changeImportedContacts
-    | clearImportedContacts
-    | setCloseFriends
-    | getCloseFriends
-    | setUserPersonalProfilePhoto
-    | suggestUserProfilePhoto
-    | searchUserByPhoneNumber
-    | sharePhoneNumber
-    | getUserProfilePhotos
-    | getStickers
-    | getAllStickerEmojis
-    | searchStickers
-    | getGreetingStickers
-    | getPremiumStickers
-    | getInstalledStickerSets
-    | getArchivedStickerSets
-    | getTrendingStickerSets
-    | getAttachedStickerSets
-    | getStickerSet
-    | searchStickerSet
-    | searchInstalledStickerSets
-    | searchStickerSets
-    | changeStickerSet
-    | viewTrendingStickerSets
-    | reorderInstalledStickerSets
-    | getRecentStickers
-    | addRecentSticker
-    | removeRecentSticker
-    | clearRecentStickers
-    | getFavoriteStickers
-    | addFavoriteSticker
-    | removeFavoriteSticker
-    | getStickerEmojis
-    | searchEmojis
-    | getKeywordEmojis
-    | getEmojiCategories
-    | getAnimatedEmoji
-    | getEmojiSuggestionsUrl
-    | getCustomEmojiStickers
-    | getDefaultChatPhotoCustomEmojiStickers
-    | getDefaultProfilePhotoCustomEmojiStickers
-    | getDefaultBackgroundCustomEmojiStickers
-    | getSavedAnimations
-    | addSavedAnimation
-    | removeSavedAnimation
-    | getRecentInlineBots
-    | searchHashtags
-    | removeRecentHashtag
-    | getWebPagePreview
-    | getWebPageInstantView
-    | setProfilePhoto
-    | deleteProfilePhoto
-    | setAccentColor
-    | setProfileAccentColor
-    | setName
-    | setBio
-    | setUsername
-    | toggleUsernameIsActive
-    | reorderActiveUsernames
-    | setBirthdate
-    | setPersonalChat
-    | setEmojiStatus
-    | setLocation
-    | setBusinessLocation
-    | setBusinessOpeningHours
-    | setBusinessGreetingMessageSettings
-    | setBusinessAwayMessageSettings
-    | setBusinessStartPage
-    | sendPhoneNumberCode
-    | sendPhoneNumberFirebaseSms
-    | resendPhoneNumberCode
-    | checkPhoneNumberCode
-    | getBusinessConnectedBot
-    | setBusinessConnectedBot
-    | deleteBusinessConnectedBot
-    | toggleBusinessConnectedBotChatIsPaused
-    | removeBusinessConnectedBotFromChat
-    | getBusinessChatLinks
-    | createBusinessChatLink
-    | editBusinessChatLink
-    | deleteBusinessChatLink
-    | getBusinessChatLinkInfo
-    | getUserLink
-    | searchUserByToken
-    | setCommands
-    | deleteCommands
-    | getCommands
-    | setMenuButton
-    | getMenuButton
-    | setDefaultGroupAdministratorRights
-    | setDefaultChannelAdministratorRights
-    | canBotSendMessages
-    | allowBotToSendMessages
-    | sendWebAppCustomRequest
-    | setBotName
-    | getBotName
-    | setBotProfilePhoto
-    | toggleBotUsernameIsActive
-    | reorderBotActiveUsernames
-    | setBotInfoDescription
-    | getBotInfoDescription
-    | setBotInfoShortDescription
-    | getBotInfoShortDescription
-    | getActiveSessions
-    | terminateSession
-    | terminateAllOtherSessions
-    | confirmSession
-    | toggleSessionCanAcceptCalls
-    | toggleSessionCanAcceptSecretChats
-    | setInactiveSessionTtl
-    | getConnectedWebsites
-    | disconnectWebsite
-    | disconnectAllWebsites
-    | setSupergroupUsername
-    | toggleSupergroupUsernameIsActive
-    | disableAllSupergroupUsernames
-    | reorderSupergroupActiveUsernames
-    | setSupergroupStickerSet
-    | setSupergroupCustomEmojiStickerSet
-    | setSupergroupUnrestrictBoostCount
-    | toggleSupergroupSignMessages
-    | toggleSupergroupJoinToSendMessages
-    | toggleSupergroupJoinByRequest
-    | toggleSupergroupIsAllHistoryAvailable
-    | toggleSupergroupCanHaveSponsoredMessages
-    | toggleSupergroupHasHiddenMembers
-    | toggleSupergroupHasAggressiveAntiSpamEnabled
-    | toggleSupergroupIsForum
-    | toggleSupergroupIsBroadcastGroup
-    | reportSupergroupSpam
-    | reportSupergroupAntiSpamFalsePositive
-    | getSupergroupMembers
-    | closeSecretChat
-    | getChatEventLog
-    | getTimeZones
-    | getPaymentForm
-    | validateOrderInfo
-    | sendPaymentForm
-    | getPaymentReceipt
-    | getSavedOrderInfo
-    | deleteSavedOrderInfo
-    | deleteSavedCredentials
-    | createInvoiceLink
-    | getSupportUser
-    | getBackgroundUrl
-    | searchBackground
-    | setDefaultBackground
-    | deleteDefaultBackground
-    | getInstalledBackgrounds
-    | removeInstalledBackground
-    | resetInstalledBackgrounds
-    | getLocalizationTargetInfo
-    | getLanguagePackInfo
-    | getLanguagePackStrings
-    | synchronizeLanguagePack
-    | addCustomServerLanguagePack
-    | setCustomLanguagePack
-    | editCustomLanguagePackInfo
-    | setCustomLanguagePackString
-    | deleteLanguagePack
-    | registerDevice
-    | processPushNotification
-    | getPushReceiverId
-    | getRecentlyVisitedTMeUrls
-    | setUserPrivacySettingRules
-    | getUserPrivacySettingRules
-    | setReadDatePrivacySettings
-    | getReadDatePrivacySettings
-    | setNewChatPrivacySettings
-    | getNewChatPrivacySettings
-    | canSendMessageToUser
-    | getOption
-    | setOption
-    | setAccountTtl
-    | getAccountTtl
-    | deleteAccount
-    | setDefaultMessageAutoDeleteTime
-    | getDefaultMessageAutoDeleteTime
-    | removeChatActionBar
-    | reportChat
-    | reportChatPhoto
-    | reportMessageReactions
-    | getChatRevenueStatistics
-    | getChatRevenueWithdrawalUrl
-    | getChatRevenueTransactions
-    | getChatStatistics
-    | getMessageStatistics
-    | getMessagePublicForwards
-    | getStoryStatistics
-    | getStatisticalGraph
-    | getStorageStatistics
-    | getStorageStatisticsFast
-    | getDatabaseStatistics
-    | optimizeStorage
-    | setNetworkType
-    | getNetworkStatistics
-    | addNetworkStatistics
-    | resetNetworkStatistics
-    | getAutoDownloadSettingsPresets
-    | setAutoDownloadSettings
-    | getAutosaveSettings
-    | setAutosaveSettings
-    | clearAutosaveSettingsExceptions
-    | getBankCardInfo
-    | getPassportElement
-    | getAllPassportElements
-    | setPassportElement
-    | deletePassportElement
-    | setPassportElementErrors
-    | getPreferredCountryLanguage
-    | sendEmailAddressVerificationCode
-    | resendEmailAddressVerificationCode
-    | checkEmailAddressVerificationCode
-    | getPassportAuthorizationForm
-    | getPassportAuthorizationFormAvailableElements
-    | sendPassportAuthorizationForm
-    | setBotUpdatesStatus
-    | uploadStickerFile
-    | getSuggestedStickerSetName
-    | checkStickerSetName
-    | createNewStickerSet
-    | addStickerToSet
-    | replaceStickerInSet
-    | setStickerSetThumbnail
-    | setCustomEmojiStickerSetThumbnail
-    | setStickerSetTitle
-    | deleteStickerSet
-    | setStickerPositionInSet
-    | removeStickerFromSet
-    | setStickerEmojis
-    | setStickerKeywords
-    | setStickerMaskPosition
-    | getOwnedStickerSets
-    | getMapThumbnailFile
-    | getPremiumLimit
-    | getPremiumFeatures
-    | getPremiumStickerExamples
-    | viewPremiumFeature
-    | clickPremiumSubscriptionButton
-    | getPremiumState
-    | getPremiumGiftCodePaymentOptions
-    | checkPremiumGiftCode
-    | applyPremiumGiftCode
-    | launchPrepaidPremiumGiveaway
-    | getPremiumGiveawayInfo
-    | canPurchasePremium
-    | assignAppStoreTransaction
-    | assignGooglePlayTransaction
-    | getBusinessFeatures
-    | acceptTermsOfService
-    | searchStringsByPrefix
-    | sendCustomRequest
-    | answerCustomQuery
-    | setAlarm
-    | getCountries
-    | getCountryCode
-    | getPhoneNumberInfo
-    | getPhoneNumberInfoSync
-    | getCollectibleItemInfo
-    | getDeepLinkInfo
-    | getApplicationConfig
-    | saveApplicationLogEvent
-    | getApplicationDownloadLink
-    | addProxy
-    | editProxy
-    | enableProxy
-    | disableProxy
-    | removeProxy
-    | getProxies
-    | getProxyLink
-    | pingProxy
-    | setLogStream
-    | getLogStream
-    | setLogVerbosityLevel
-    | getLogVerbosityLevel
-    | getLogTags
-    | setLogTagVerbosityLevel
-    | getLogTagVerbosityLevel
-    | addLogMessage
-    | getUserSupportInfo
-    | setUserSupportInfo
-    | getSupportName
-    | testCallEmpty
-    | testCallString
-    | testCallBytes
-    | testCallVectorInt
-    | testCallVectorIntObject
-    | testCallVectorString
-    | testCallVectorStringObject
-    | testSquareInt
-    | testNetwork
-    | testProxy
-    | testGetDifference
-    | testUseUpdate
-    | testReturnError
-  )) => Promise<
-    T extends 'getAuthorizationState' ? AuthorizationState :
-    T extends 'setTdlibParameters' ? Ok :
-    T extends 'setAuthenticationPhoneNumber' ? Ok :
-    T extends 'setAuthenticationEmailAddress' ? Ok :
-    T extends 'resendAuthenticationCode' ? Ok :
-    T extends 'checkAuthenticationEmailCode' ? Ok :
-    T extends 'checkAuthenticationCode' ? Ok :
-    T extends 'requestQrCodeAuthentication' ? Ok :
-    T extends 'registerUser' ? Ok :
-    T extends 'resetAuthenticationEmailAddress' ? Ok :
-    T extends 'checkAuthenticationPassword' ? Ok :
-    T extends 'requestAuthenticationPasswordRecovery' ? Ok :
-    T extends 'checkAuthenticationPasswordRecoveryCode' ? Ok :
-    T extends 'recoverAuthenticationPassword' ? Ok :
-    T extends 'sendAuthenticationFirebaseSms' ? Ok :
-    T extends 'checkAuthenticationBotToken' ? Ok :
-    T extends 'logOut' ? Ok :
-    T extends 'close' ? Ok :
-    T extends 'destroy' ? Ok :
-    T extends 'confirmQrCodeAuthentication' ? Session :
-    T extends 'getCurrentState' ? Updates :
-    T extends 'setDatabaseEncryptionKey' ? Ok :
-    T extends 'getPasswordState' ? PasswordState :
-    T extends 'setPassword' ? PasswordState :
-    T extends 'setLoginEmailAddress' ? EmailAddressAuthenticationCodeInfo :
-    T extends 'resendLoginEmailAddressCode' ? EmailAddressAuthenticationCodeInfo :
-    T extends 'checkLoginEmailAddressCode' ? Ok :
-    T extends 'getRecoveryEmailAddress' ? RecoveryEmailAddress :
-    T extends 'setRecoveryEmailAddress' ? PasswordState :
-    T extends 'checkRecoveryEmailAddressCode' ? PasswordState :
-    T extends 'resendRecoveryEmailAddressCode' ? PasswordState :
-    T extends 'cancelRecoveryEmailAddressVerification' ? PasswordState :
-    T extends 'requestPasswordRecovery' ? EmailAddressAuthenticationCodeInfo :
-    T extends 'checkPasswordRecoveryCode' ? Ok :
-    T extends 'recoverPassword' ? PasswordState :
-    T extends 'resetPassword' ? ResetPasswordResult :
-    T extends 'cancelPasswordReset' ? Ok :
-    T extends 'createTemporaryPassword' ? TemporaryPasswordState :
-    T extends 'getTemporaryPasswordState' ? TemporaryPasswordState :
-    T extends 'getMe' ? User :
-    T extends 'getUser' ? User :
-    T extends 'getUserFullInfo' ? UserFullInfo :
-    T extends 'getBasicGroup' ? BasicGroup :
-    T extends 'getBasicGroupFullInfo' ? BasicGroupFullInfo :
-    T extends 'getSupergroup' ? Supergroup :
-    T extends 'getSupergroupFullInfo' ? SupergroupFullInfo :
-    T extends 'getSecretChat' ? SecretChat :
-    T extends 'getChat' ? Chat :
-    T extends 'getMessage' ? Message :
-    T extends 'getMessageLocally' ? Message :
-    T extends 'getRepliedMessage' ? Message :
-    T extends 'getChatPinnedMessage' ? Message :
-    T extends 'getCallbackQueryMessage' ? Message :
-    T extends 'getMessages' ? Messages :
-    T extends 'getMessageThread' ? MessageThreadInfo :
-    T extends 'getMessageReadDate' ? MessageReadDate :
-    T extends 'getMessageViewers' ? MessageViewers :
-    T extends 'getFile' ? File :
-    T extends 'getRemoteFile' ? File :
-    T extends 'loadChats' ? Ok :
-    T extends 'getChats' ? Chats :
-    T extends 'searchPublicChat' ? Chat :
-    T extends 'searchPublicChats' ? Chats :
-    T extends 'searchChats' ? Chats :
-    T extends 'searchChatsOnServer' ? Chats :
-    T extends 'searchChatsNearby' ? ChatsNearby :
-    T extends 'getChatSimilarChats' ? Chats :
-    T extends 'getChatSimilarChatCount' ? Count :
-    T extends 'openChatSimilarChat' ? Ok :
-    T extends 'getTopChats' ? Chats :
-    T extends 'removeTopChat' ? Ok :
-    T extends 'searchRecentlyFoundChats' ? Chats :
-    T extends 'addRecentlyFoundChat' ? Ok :
-    T extends 'removeRecentlyFoundChat' ? Ok :
-    T extends 'clearRecentlyFoundChats' ? Ok :
-    T extends 'getRecentlyOpenedChats' ? Chats :
-    T extends 'checkChatUsername' ? CheckChatUsernameResult :
-    T extends 'getCreatedPublicChats' ? Chats :
-    T extends 'checkCreatedPublicChatsLimit' ? Ok :
-    T extends 'getSuitableDiscussionChats' ? Chats :
-    T extends 'getInactiveSupergroupChats' ? Chats :
-    T extends 'getSuitablePersonalChats' ? Chats :
-    T extends 'loadSavedMessagesTopics' ? Ok :
-    T extends 'getSavedMessagesTopicHistory' ? Messages :
-    T extends 'getSavedMessagesTopicMessageByDate' ? Message :
-    T extends 'deleteSavedMessagesTopicHistory' ? Ok :
-    T extends 'deleteSavedMessagesTopicMessagesByDate' ? Ok :
-    T extends 'toggleSavedMessagesTopicIsPinned' ? Ok :
-    T extends 'setPinnedSavedMessagesTopics' ? Ok :
-    T extends 'getGroupsInCommon' ? Chats :
-    T extends 'getChatHistory' ? Messages :
-    T extends 'getMessageThreadHistory' ? Messages :
-    T extends 'deleteChatHistory' ? Ok :
-    T extends 'deleteChat' ? Ok :
-    T extends 'searchChatMessages' ? FoundChatMessages :
-    T extends 'searchMessages' ? FoundMessages :
-    T extends 'searchSecretMessages' ? FoundMessages :
-    T extends 'searchSavedMessages' ? FoundChatMessages :
-    T extends 'searchCallMessages' ? FoundMessages :
-    T extends 'searchOutgoingDocumentMessages' ? FoundMessages :
-    T extends 'deleteAllCallMessages' ? Ok :
-    T extends 'searchChatRecentLocationMessages' ? Messages :
-    T extends 'getActiveLiveLocationMessages' ? Messages :
-    T extends 'getChatMessageByDate' ? Message :
-    T extends 'getChatSparseMessagePositions' ? MessagePositions :
-    T extends 'getChatMessageCalendar' ? MessageCalendar :
-    T extends 'getChatMessageCount' ? Count :
-    T extends 'getChatMessagePosition' ? Count :
-    T extends 'getChatScheduledMessages' ? Messages :
-    T extends 'getChatSponsoredMessages' ? SponsoredMessages :
-    T extends 'clickChatSponsoredMessage' ? Ok :
-    T extends 'reportChatSponsoredMessage' ? ReportChatSponsoredMessageResult :
-    T extends 'removeNotification' ? Ok :
-    T extends 'removeNotificationGroup' ? Ok :
-    T extends 'getMessageLink' ? MessageLink :
-    T extends 'getMessageEmbeddingCode' ? Text :
-    T extends 'getMessageLinkInfo' ? MessageLinkInfo :
-    T extends 'translateText' ? FormattedText :
-    T extends 'translateMessageText' ? FormattedText :
-    T extends 'recognizeSpeech' ? Ok :
-    T extends 'rateSpeechRecognition' ? Ok :
-    T extends 'getChatAvailableMessageSenders' ? ChatMessageSenders :
-    T extends 'setChatMessageSender' ? Ok :
-    T extends 'sendMessage' ? Message :
-    T extends 'sendMessageAlbum' ? Messages :
-    T extends 'sendBotStartMessage' ? Message :
-    T extends 'sendInlineQueryResultMessage' ? Message :
-    T extends 'forwardMessages' ? Messages :
-    T extends 'sendQuickReplyShortcutMessages' ? Messages :
-    T extends 'resendMessages' ? Messages :
-    T extends 'addLocalMessage' ? Message :
-    T extends 'deleteMessages' ? Ok :
-    T extends 'deleteChatMessagesBySender' ? Ok :
-    T extends 'deleteChatMessagesByDate' ? Ok :
-    T extends 'editMessageText' ? Message :
-    T extends 'editMessageLiveLocation' ? Message :
-    T extends 'editMessageMedia' ? Message :
-    T extends 'editMessageCaption' ? Message :
-    T extends 'editMessageReplyMarkup' ? Message :
-    T extends 'editInlineMessageText' ? Ok :
-    T extends 'editInlineMessageLiveLocation' ? Ok :
-    T extends 'editInlineMessageMedia' ? Ok :
-    T extends 'editInlineMessageCaption' ? Ok :
-    T extends 'editInlineMessageReplyMarkup' ? Ok :
-    T extends 'editMessageSchedulingState' ? Ok :
-    T extends 'sendBusinessMessage' ? BusinessMessage :
-    T extends 'sendBusinessMessageAlbum' ? BusinessMessages :
-    T extends 'checkQuickReplyShortcutName' ? Ok :
-    T extends 'loadQuickReplyShortcuts' ? Ok :
-    T extends 'setQuickReplyShortcutName' ? Ok :
-    T extends 'deleteQuickReplyShortcut' ? Ok :
-    T extends 'reorderQuickReplyShortcuts' ? Ok :
-    T extends 'loadQuickReplyShortcutMessages' ? Ok :
-    T extends 'deleteQuickReplyShortcutMessages' ? Ok :
-    T extends 'addQuickReplyShortcutMessage' ? QuickReplyMessage :
-    T extends 'addQuickReplyShortcutInlineQueryResultMessage' ? QuickReplyMessage :
-    T extends 'readdQuickReplyShortcutMessages' ? QuickReplyMessages :
-    T extends 'editQuickReplyMessage' ? Ok :
-    T extends 'getForumTopicDefaultIcons' ? Stickers :
-    T extends 'createForumTopic' ? ForumTopicInfo :
-    T extends 'editForumTopic' ? Ok :
-    T extends 'getForumTopic' ? ForumTopic :
-    T extends 'getForumTopicLink' ? MessageLink :
-    T extends 'getForumTopics' ? ForumTopics :
-    T extends 'setForumTopicNotificationSettings' ? Ok :
-    T extends 'toggleForumTopicIsClosed' ? Ok :
-    T extends 'toggleGeneralForumTopicIsHidden' ? Ok :
-    T extends 'toggleForumTopicIsPinned' ? Ok :
-    T extends 'setPinnedForumTopics' ? Ok :
-    T extends 'deleteForumTopic' ? Ok :
-    T extends 'getEmojiReaction' ? EmojiReaction :
-    T extends 'getCustomEmojiReactionAnimations' ? Stickers :
-    T extends 'getMessageAvailableReactions' ? AvailableReactions :
-    T extends 'clearRecentReactions' ? Ok :
-    T extends 'addMessageReaction' ? Ok :
-    T extends 'removeMessageReaction' ? Ok :
-    T extends 'setMessageReactions' ? Ok :
-    T extends 'getMessageAddedReactions' ? AddedReactions :
-    T extends 'setDefaultReactionType' ? Ok :
-    T extends 'getSavedMessagesTags' ? SavedMessagesTags :
-    T extends 'setSavedMessagesTagLabel' ? Ok :
-    T extends 'searchQuote' ? FoundPosition :
-    T extends 'getTextEntities' ? TextEntities :
-    T extends 'parseTextEntities' ? FormattedText :
-    T extends 'parseMarkdown' ? FormattedText :
-    T extends 'getMarkdownText' ? FormattedText :
-    T extends 'getCountryFlagEmoji' ? Text :
-    T extends 'getFileMimeType' ? Text :
-    T extends 'getFileExtension' ? Text :
-    T extends 'cleanFileName' ? Text :
-    T extends 'getLanguagePackString' ? LanguagePackStringValue :
-    T extends 'getJsonValue' ? JsonValue :
-    T extends 'getJsonString' ? Text :
-    T extends 'getThemeParametersJsonString' ? Text :
-    T extends 'setPollAnswer' ? Ok :
-    T extends 'getPollVoters' ? MessageSenders :
-    T extends 'stopPoll' ? Ok :
-    T extends 'hideSuggestedAction' ? Ok :
-    T extends 'getBusinessConnection' ? BusinessConnection :
-    T extends 'getLoginUrlInfo' ? LoginUrlInfo :
-    T extends 'getLoginUrl' ? HttpUrl :
-    T extends 'shareUsersWithBot' ? Ok :
-    T extends 'shareChatWithBot' ? Ok :
-    T extends 'getInlineQueryResults' ? InlineQueryResults :
-    T extends 'answerInlineQuery' ? Ok :
-    T extends 'searchWebApp' ? FoundWebApp :
-    T extends 'getWebAppLinkUrl' ? HttpUrl :
-    T extends 'getWebAppUrl' ? HttpUrl :
-    T extends 'sendWebAppData' ? Ok :
-    T extends 'openWebApp' ? WebAppInfo :
-    T extends 'closeWebApp' ? Ok :
-    T extends 'answerWebAppQuery' ? SentWebAppMessage :
-    T extends 'getCallbackQueryAnswer' ? CallbackQueryAnswer :
-    T extends 'answerCallbackQuery' ? Ok :
-    T extends 'answerShippingQuery' ? Ok :
-    T extends 'answerPreCheckoutQuery' ? Ok :
-    T extends 'setGameScore' ? Message :
-    T extends 'setInlineGameScore' ? Ok :
-    T extends 'getGameHighScores' ? GameHighScores :
-    T extends 'getInlineGameHighScores' ? GameHighScores :
-    T extends 'deleteChatReplyMarkup' ? Ok :
-    T extends 'sendChatAction' ? Ok :
-    T extends 'openChat' ? Ok :
-    T extends 'closeChat' ? Ok :
-    T extends 'viewMessages' ? Ok :
-    T extends 'openMessageContent' ? Ok :
-    T extends 'clickAnimatedEmojiMessage' ? Sticker :
-    T extends 'getInternalLink' ? HttpUrl :
-    T extends 'getInternalLinkType' ? InternalLinkType :
-    T extends 'getExternalLinkInfo' ? LoginUrlInfo :
-    T extends 'getExternalLink' ? HttpUrl :
-    T extends 'readAllChatMentions' ? Ok :
-    T extends 'readAllMessageThreadMentions' ? Ok :
-    T extends 'readAllChatReactions' ? Ok :
-    T extends 'readAllMessageThreadReactions' ? Ok :
-    T extends 'createPrivateChat' ? Chat :
-    T extends 'createBasicGroupChat' ? Chat :
-    T extends 'createSupergroupChat' ? Chat :
-    T extends 'createSecretChat' ? Chat :
-    T extends 'createNewBasicGroupChat' ? CreatedBasicGroupChat :
-    T extends 'createNewSupergroupChat' ? Chat :
-    T extends 'createNewSecretChat' ? Chat :
-    T extends 'upgradeBasicGroupChatToSupergroupChat' ? Chat :
-    T extends 'getChatListsToAddChat' ? ChatLists :
-    T extends 'addChatToList' ? Ok :
-    T extends 'getChatFolder' ? ChatFolder :
-    T extends 'createChatFolder' ? ChatFolderInfo :
-    T extends 'editChatFolder' ? ChatFolderInfo :
-    T extends 'deleteChatFolder' ? Ok :
-    T extends 'getChatFolderChatsToLeave' ? Chats :
-    T extends 'getChatFolderChatCount' ? Count :
-    T extends 'reorderChatFolders' ? Ok :
-    T extends 'toggleChatFolderTags' ? Ok :
-    T extends 'getRecommendedChatFolders' ? RecommendedChatFolders :
-    T extends 'getChatFolderDefaultIconName' ? ChatFolderIcon :
-    T extends 'getChatsForChatFolderInviteLink' ? Chats :
-    T extends 'createChatFolderInviteLink' ? ChatFolderInviteLink :
-    T extends 'getChatFolderInviteLinks' ? ChatFolderInviteLinks :
-    T extends 'editChatFolderInviteLink' ? ChatFolderInviteLink :
-    T extends 'deleteChatFolderInviteLink' ? Ok :
-    T extends 'checkChatFolderInviteLink' ? ChatFolderInviteLinkInfo :
-    T extends 'addChatFolderByInviteLink' ? Ok :
-    T extends 'getChatFolderNewChats' ? Chats :
-    T extends 'processChatFolderNewChats' ? Ok :
-    T extends 'getArchiveChatListSettings' ? ArchiveChatListSettings :
-    T extends 'setArchiveChatListSettings' ? Ok :
-    T extends 'setChatTitle' ? Ok :
-    T extends 'setChatPhoto' ? Ok :
-    T extends 'setChatAccentColor' ? Ok :
-    T extends 'setChatProfileAccentColor' ? Ok :
-    T extends 'setChatMessageAutoDeleteTime' ? Ok :
-    T extends 'setChatEmojiStatus' ? Ok :
-    T extends 'setChatPermissions' ? Ok :
-    T extends 'setChatBackground' ? Ok :
-    T extends 'deleteChatBackground' ? Ok :
-    T extends 'setChatTheme' ? Ok :
-    T extends 'setChatDraftMessage' ? Ok :
-    T extends 'setChatNotificationSettings' ? Ok :
-    T extends 'toggleChatHasProtectedContent' ? Ok :
-    T extends 'toggleChatViewAsTopics' ? Ok :
-    T extends 'toggleChatIsTranslatable' ? Ok :
-    T extends 'toggleChatIsMarkedAsUnread' ? Ok :
-    T extends 'toggleChatDefaultDisableNotification' ? Ok :
-    T extends 'setChatAvailableReactions' ? Ok :
-    T extends 'setChatClientData' ? Ok :
-    T extends 'setChatDescription' ? Ok :
-    T extends 'setChatDiscussionGroup' ? Ok :
-    T extends 'setChatLocation' ? Ok :
-    T extends 'setChatSlowModeDelay' ? Ok :
-    T extends 'pinChatMessage' ? Ok :
-    T extends 'unpinChatMessage' ? Ok :
-    T extends 'unpinAllChatMessages' ? Ok :
-    T extends 'unpinAllMessageThreadMessages' ? Ok :
-    T extends 'joinChat' ? Ok :
-    T extends 'leaveChat' ? Ok :
-    T extends 'addChatMember' ? FailedToAddMembers :
-    T extends 'addChatMembers' ? FailedToAddMembers :
-    T extends 'setChatMemberStatus' ? Ok :
-    T extends 'banChatMember' ? Ok :
-    T extends 'canTransferOwnership' ? CanTransferOwnershipResult :
-    T extends 'transferChatOwnership' ? Ok :
-    T extends 'getChatMember' ? ChatMember :
-    T extends 'searchChatMembers' ? ChatMembers :
-    T extends 'getChatAdministrators' ? ChatAdministrators :
-    T extends 'clearAllDraftMessages' ? Ok :
-    T extends 'getSavedNotificationSound' ? NotificationSounds :
-    T extends 'getSavedNotificationSounds' ? NotificationSounds :
-    T extends 'addSavedNotificationSound' ? NotificationSound :
-    T extends 'removeSavedNotificationSound' ? Ok :
-    T extends 'getChatNotificationSettingsExceptions' ? Chats :
-    T extends 'getScopeNotificationSettings' ? ScopeNotificationSettings :
-    T extends 'setScopeNotificationSettings' ? Ok :
-    T extends 'resetAllNotificationSettings' ? Ok :
-    T extends 'toggleChatIsPinned' ? Ok :
-    T extends 'setPinnedChats' ? Ok :
-    T extends 'readChatList' ? Ok :
-    T extends 'getStory' ? Story :
-    T extends 'getChatsToSendStories' ? Chats :
-    T extends 'canSendStory' ? CanSendStoryResult :
-    T extends 'sendStory' ? Story :
-    T extends 'editStory' ? Ok :
-    T extends 'setStoryPrivacySettings' ? Ok :
-    T extends 'toggleStoryIsPinned' ? Ok :
-    T extends 'deleteStory' ? Ok :
-    T extends 'getStoryNotificationSettingsExceptions' ? Chats :
-    T extends 'loadActiveStories' ? Ok :
-    T extends 'setChatActiveStoriesList' ? Ok :
-    T extends 'getChatActiveStories' ? ChatActiveStories :
-    T extends 'getChatPinnedStories' ? Stories :
-    T extends 'getChatArchivedStories' ? Stories :
-    T extends 'openStory' ? Ok :
-    T extends 'closeStory' ? Ok :
-    T extends 'getStoryAvailableReactions' ? AvailableReactions :
-    T extends 'setStoryReaction' ? Ok :
-    T extends 'getStoryInteractions' ? StoryInteractions :
-    T extends 'getChatStoryInteractions' ? StoryInteractions :
-    T extends 'reportStory' ? Ok :
-    T extends 'activateStoryStealthMode' ? Ok :
-    T extends 'getStoryPublicForwards' ? PublicForwards :
-    T extends 'getChatBoostLevelFeatures' ? ChatBoostLevelFeatures :
-    T extends 'getChatBoostFeatures' ? ChatBoostFeatures :
-    T extends 'getAvailableChatBoostSlots' ? ChatBoostSlots :
-    T extends 'getChatBoostStatus' ? ChatBoostStatus :
-    T extends 'boostChat' ? ChatBoostSlots :
-    T extends 'getChatBoostLink' ? ChatBoostLink :
-    T extends 'getChatBoostLinkInfo' ? ChatBoostLinkInfo :
-    T extends 'getChatBoosts' ? FoundChatBoosts :
-    T extends 'getUserChatBoosts' ? FoundChatBoosts :
-    T extends 'getAttachmentMenuBot' ? AttachmentMenuBot :
-    T extends 'toggleBotIsAddedToAttachmentMenu' ? Ok :
-    T extends 'getThemedEmojiStatuses' ? EmojiStatuses :
-    T extends 'getRecentEmojiStatuses' ? EmojiStatuses :
-    T extends 'getDefaultEmojiStatuses' ? EmojiStatuses :
-    T extends 'clearRecentEmojiStatuses' ? Ok :
-    T extends 'getThemedChatEmojiStatuses' ? EmojiStatuses :
-    T extends 'getDefaultChatEmojiStatuses' ? EmojiStatuses :
-    T extends 'getDisallowedChatEmojiStatuses' ? EmojiStatuses :
-    T extends 'downloadFile' ? File :
-    T extends 'getFileDownloadedPrefixSize' ? FileDownloadedPrefixSize :
-    T extends 'cancelDownloadFile' ? Ok :
-    T extends 'getSuggestedFileName' ? Text :
-    T extends 'preliminaryUploadFile' ? File :
-    T extends 'cancelPreliminaryUploadFile' ? Ok :
-    T extends 'writeGeneratedFilePart' ? Ok :
-    T extends 'setFileGenerationProgress' ? Ok :
-    T extends 'finishFileGeneration' ? Ok :
-    T extends 'readFilePart' ? FilePart :
-    T extends 'deleteFile' ? Ok :
-    T extends 'addFileToDownloads' ? File :
-    T extends 'toggleDownloadIsPaused' ? Ok :
-    T extends 'toggleAllDownloadsArePaused' ? Ok :
-    T extends 'removeFileFromDownloads' ? Ok :
-    T extends 'removeAllFilesFromDownloads' ? Ok :
-    T extends 'searchFileDownloads' ? FoundFileDownloads :
-    T extends 'getMessageFileType' ? MessageFileType :
-    T extends 'getMessageImportConfirmationText' ? Text :
-    T extends 'importMessages' ? Ok :
-    T extends 'replacePrimaryChatInviteLink' ? ChatInviteLink :
-    T extends 'createChatInviteLink' ? ChatInviteLink :
-    T extends 'editChatInviteLink' ? ChatInviteLink :
-    T extends 'getChatInviteLink' ? ChatInviteLink :
-    T extends 'getChatInviteLinkCounts' ? ChatInviteLinkCounts :
-    T extends 'getChatInviteLinks' ? ChatInviteLinks :
-    T extends 'getChatInviteLinkMembers' ? ChatInviteLinkMembers :
-    T extends 'revokeChatInviteLink' ? ChatInviteLinks :
-    T extends 'deleteRevokedChatInviteLink' ? Ok :
-    T extends 'deleteAllRevokedChatInviteLinks' ? Ok :
-    T extends 'checkChatInviteLink' ? ChatInviteLinkInfo :
-    T extends 'joinChatByInviteLink' ? Chat :
-    T extends 'getChatJoinRequests' ? ChatJoinRequests :
-    T extends 'processChatJoinRequest' ? Ok :
-    T extends 'processChatJoinRequests' ? Ok :
-    T extends 'createCall' ? CallId :
-    T extends 'acceptCall' ? Ok :
-    T extends 'sendCallSignalingData' ? Ok :
-    T extends 'discardCall' ? Ok :
-    T extends 'sendCallRating' ? Ok :
-    T extends 'sendCallDebugInformation' ? Ok :
-    T extends 'sendCallLog' ? Ok :
-    T extends 'getVideoChatAvailableParticipants' ? MessageSenders :
-    T extends 'setVideoChatDefaultParticipant' ? Ok :
-    T extends 'createVideoChat' ? GroupCallId :
-    T extends 'getVideoChatRtmpUrl' ? RtmpUrl :
-    T extends 'replaceVideoChatRtmpUrl' ? RtmpUrl :
-    T extends 'getGroupCall' ? GroupCall :
-    T extends 'startScheduledGroupCall' ? Ok :
-    T extends 'toggleGroupCallEnabledStartNotification' ? Ok :
-    T extends 'joinGroupCall' ? Text :
-    T extends 'startGroupCallScreenSharing' ? Text :
-    T extends 'toggleGroupCallScreenSharingIsPaused' ? Ok :
-    T extends 'endGroupCallScreenSharing' ? Ok :
-    T extends 'setGroupCallTitle' ? Ok :
-    T extends 'toggleGroupCallMuteNewParticipants' ? Ok :
-    T extends 'inviteGroupCallParticipants' ? Ok :
-    T extends 'getGroupCallInviteLink' ? HttpUrl :
-    T extends 'revokeGroupCallInviteLink' ? Ok :
-    T extends 'startGroupCallRecording' ? Ok :
-    T extends 'endGroupCallRecording' ? Ok :
-    T extends 'toggleGroupCallIsMyVideoPaused' ? Ok :
-    T extends 'toggleGroupCallIsMyVideoEnabled' ? Ok :
-    T extends 'setGroupCallParticipantIsSpeaking' ? Ok :
-    T extends 'toggleGroupCallParticipantIsMuted' ? Ok :
-    T extends 'setGroupCallParticipantVolumeLevel' ? Ok :
-    T extends 'toggleGroupCallParticipantIsHandRaised' ? Ok :
-    T extends 'loadGroupCallParticipants' ? Ok :
-    T extends 'leaveGroupCall' ? Ok :
-    T extends 'endGroupCall' ? Ok :
-    T extends 'getGroupCallStreams' ? GroupCallStreams :
-    T extends 'getGroupCallStreamSegment' ? FilePart :
-    T extends 'setMessageSenderBlockList' ? Ok :
-    T extends 'blockMessageSenderFromReplies' ? Ok :
-    T extends 'getBlockedMessageSenders' ? MessageSenders :
-    T extends 'addContact' ? Ok :
-    T extends 'importContacts' ? ImportedContacts :
-    T extends 'getContacts' ? Users :
-    T extends 'searchContacts' ? Users :
-    T extends 'removeContacts' ? Ok :
-    T extends 'getImportedContactCount' ? Count :
-    T extends 'changeImportedContacts' ? ImportedContacts :
-    T extends 'clearImportedContacts' ? Ok :
-    T extends 'setCloseFriends' ? Ok :
-    T extends 'getCloseFriends' ? Users :
-    T extends 'setUserPersonalProfilePhoto' ? Ok :
-    T extends 'suggestUserProfilePhoto' ? Ok :
-    T extends 'searchUserByPhoneNumber' ? User :
-    T extends 'sharePhoneNumber' ? Ok :
-    T extends 'getUserProfilePhotos' ? ChatPhotos :
-    T extends 'getStickers' ? Stickers :
-    T extends 'getAllStickerEmojis' ? Emojis :
-    T extends 'searchStickers' ? Stickers :
-    T extends 'getGreetingStickers' ? Stickers :
-    T extends 'getPremiumStickers' ? Stickers :
-    T extends 'getInstalledStickerSets' ? StickerSets :
-    T extends 'getArchivedStickerSets' ? StickerSets :
-    T extends 'getTrendingStickerSets' ? TrendingStickerSets :
-    T extends 'getAttachedStickerSets' ? StickerSets :
-    T extends 'getStickerSet' ? StickerSet :
-    T extends 'searchStickerSet' ? StickerSet :
-    T extends 'searchInstalledStickerSets' ? StickerSets :
-    T extends 'searchStickerSets' ? StickerSets :
-    T extends 'changeStickerSet' ? Ok :
-    T extends 'viewTrendingStickerSets' ? Ok :
-    T extends 'reorderInstalledStickerSets' ? Ok :
-    T extends 'getRecentStickers' ? Stickers :
-    T extends 'addRecentSticker' ? Stickers :
-    T extends 'removeRecentSticker' ? Ok :
-    T extends 'clearRecentStickers' ? Ok :
-    T extends 'getFavoriteStickers' ? Stickers :
-    T extends 'addFavoriteSticker' ? Ok :
-    T extends 'removeFavoriteSticker' ? Ok :
-    T extends 'getStickerEmojis' ? Emojis :
-    T extends 'searchEmojis' ? EmojiKeywords :
-    T extends 'getKeywordEmojis' ? Emojis :
-    T extends 'getEmojiCategories' ? EmojiCategories :
-    T extends 'getAnimatedEmoji' ? AnimatedEmoji :
-    T extends 'getEmojiSuggestionsUrl' ? HttpUrl :
-    T extends 'getCustomEmojiStickers' ? Stickers :
-    T extends 'getDefaultChatPhotoCustomEmojiStickers' ? Stickers :
-    T extends 'getDefaultProfilePhotoCustomEmojiStickers' ? Stickers :
-    T extends 'getDefaultBackgroundCustomEmojiStickers' ? Stickers :
-    T extends 'getSavedAnimations' ? Animations :
-    T extends 'addSavedAnimation' ? Ok :
-    T extends 'removeSavedAnimation' ? Ok :
-    T extends 'getRecentInlineBots' ? Users :
-    T extends 'searchHashtags' ? Hashtags :
-    T extends 'removeRecentHashtag' ? Ok :
-    T extends 'getWebPagePreview' ? WebPage :
-    T extends 'getWebPageInstantView' ? WebPageInstantView :
-    T extends 'setProfilePhoto' ? Ok :
-    T extends 'deleteProfilePhoto' ? Ok :
-    T extends 'setAccentColor' ? Ok :
-    T extends 'setProfileAccentColor' ? Ok :
-    T extends 'setName' ? Ok :
-    T extends 'setBio' ? Ok :
-    T extends 'setUsername' ? Ok :
-    T extends 'toggleUsernameIsActive' ? Ok :
-    T extends 'reorderActiveUsernames' ? Ok :
-    T extends 'setBirthdate' ? Ok :
-    T extends 'setPersonalChat' ? Ok :
-    T extends 'setEmojiStatus' ? Ok :
-    T extends 'setLocation' ? Ok :
-    T extends 'setBusinessLocation' ? Ok :
-    T extends 'setBusinessOpeningHours' ? Ok :
-    T extends 'setBusinessGreetingMessageSettings' ? Ok :
-    T extends 'setBusinessAwayMessageSettings' ? Ok :
-    T extends 'setBusinessStartPage' ? Ok :
-    T extends 'sendPhoneNumberCode' ? AuthenticationCodeInfo :
-    T extends 'sendPhoneNumberFirebaseSms' ? Ok :
-    T extends 'resendPhoneNumberCode' ? AuthenticationCodeInfo :
-    T extends 'checkPhoneNumberCode' ? Ok :
-    T extends 'getBusinessConnectedBot' ? BusinessConnectedBot :
-    T extends 'setBusinessConnectedBot' ? Ok :
-    T extends 'deleteBusinessConnectedBot' ? Ok :
-    T extends 'toggleBusinessConnectedBotChatIsPaused' ? Ok :
-    T extends 'removeBusinessConnectedBotFromChat' ? Ok :
-    T extends 'getBusinessChatLinks' ? BusinessChatLinks :
-    T extends 'createBusinessChatLink' ? BusinessChatLink :
-    T extends 'editBusinessChatLink' ? BusinessChatLink :
-    T extends 'deleteBusinessChatLink' ? Ok :
-    T extends 'getBusinessChatLinkInfo' ? BusinessChatLinkInfo :
-    T extends 'getUserLink' ? UserLink :
-    T extends 'searchUserByToken' ? User :
-    T extends 'setCommands' ? Ok :
-    T extends 'deleteCommands' ? Ok :
-    T extends 'getCommands' ? BotCommands :
-    T extends 'setMenuButton' ? Ok :
-    T extends 'getMenuButton' ? BotMenuButton :
-    T extends 'setDefaultGroupAdministratorRights' ? Ok :
-    T extends 'setDefaultChannelAdministratorRights' ? Ok :
-    T extends 'canBotSendMessages' ? Ok :
-    T extends 'allowBotToSendMessages' ? Ok :
-    T extends 'sendWebAppCustomRequest' ? CustomRequestResult :
-    T extends 'setBotName' ? Ok :
-    T extends 'getBotName' ? Text :
-    T extends 'setBotProfilePhoto' ? Ok :
-    T extends 'toggleBotUsernameIsActive' ? Ok :
-    T extends 'reorderBotActiveUsernames' ? Ok :
-    T extends 'setBotInfoDescription' ? Ok :
-    T extends 'getBotInfoDescription' ? Text :
-    T extends 'setBotInfoShortDescription' ? Ok :
-    T extends 'getBotInfoShortDescription' ? Text :
-    T extends 'getActiveSessions' ? Sessions :
-    T extends 'terminateSession' ? Ok :
-    T extends 'terminateAllOtherSessions' ? Ok :
-    T extends 'confirmSession' ? Ok :
-    T extends 'toggleSessionCanAcceptCalls' ? Ok :
-    T extends 'toggleSessionCanAcceptSecretChats' ? Ok :
-    T extends 'setInactiveSessionTtl' ? Ok :
-    T extends 'getConnectedWebsites' ? ConnectedWebsites :
-    T extends 'disconnectWebsite' ? Ok :
-    T extends 'disconnectAllWebsites' ? Ok :
-    T extends 'setSupergroupUsername' ? Ok :
-    T extends 'toggleSupergroupUsernameIsActive' ? Ok :
-    T extends 'disableAllSupergroupUsernames' ? Ok :
-    T extends 'reorderSupergroupActiveUsernames' ? Ok :
-    T extends 'setSupergroupStickerSet' ? Ok :
-    T extends 'setSupergroupCustomEmojiStickerSet' ? Ok :
-    T extends 'setSupergroupUnrestrictBoostCount' ? Ok :
-    T extends 'toggleSupergroupSignMessages' ? Ok :
-    T extends 'toggleSupergroupJoinToSendMessages' ? Ok :
-    T extends 'toggleSupergroupJoinByRequest' ? Ok :
-    T extends 'toggleSupergroupIsAllHistoryAvailable' ? Ok :
-    T extends 'toggleSupergroupCanHaveSponsoredMessages' ? Ok :
-    T extends 'toggleSupergroupHasHiddenMembers' ? Ok :
-    T extends 'toggleSupergroupHasAggressiveAntiSpamEnabled' ? Ok :
-    T extends 'toggleSupergroupIsForum' ? Ok :
-    T extends 'toggleSupergroupIsBroadcastGroup' ? Ok :
-    T extends 'reportSupergroupSpam' ? Ok :
-    T extends 'reportSupergroupAntiSpamFalsePositive' ? Ok :
-    T extends 'getSupergroupMembers' ? ChatMembers :
-    T extends 'closeSecretChat' ? Ok :
-    T extends 'getChatEventLog' ? ChatEvents :
-    T extends 'getTimeZones' ? TimeZones :
-    T extends 'getPaymentForm' ? PaymentForm :
-    T extends 'validateOrderInfo' ? ValidatedOrderInfo :
-    T extends 'sendPaymentForm' ? PaymentResult :
-    T extends 'getPaymentReceipt' ? PaymentReceipt :
-    T extends 'getSavedOrderInfo' ? OrderInfo :
-    T extends 'deleteSavedOrderInfo' ? Ok :
-    T extends 'deleteSavedCredentials' ? Ok :
-    T extends 'createInvoiceLink' ? HttpUrl :
-    T extends 'getSupportUser' ? User :
-    T extends 'getBackgroundUrl' ? HttpUrl :
-    T extends 'searchBackground' ? Background :
-    T extends 'setDefaultBackground' ? Background :
-    T extends 'deleteDefaultBackground' ? Ok :
-    T extends 'getInstalledBackgrounds' ? Backgrounds :
-    T extends 'removeInstalledBackground' ? Ok :
-    T extends 'resetInstalledBackgrounds' ? Ok :
-    T extends 'getLocalizationTargetInfo' ? LocalizationTargetInfo :
-    T extends 'getLanguagePackInfo' ? LanguagePackInfo :
-    T extends 'getLanguagePackStrings' ? LanguagePackStrings :
-    T extends 'synchronizeLanguagePack' ? Ok :
-    T extends 'addCustomServerLanguagePack' ? Ok :
-    T extends 'setCustomLanguagePack' ? Ok :
-    T extends 'editCustomLanguagePackInfo' ? Ok :
-    T extends 'setCustomLanguagePackString' ? Ok :
-    T extends 'deleteLanguagePack' ? Ok :
-    T extends 'registerDevice' ? PushReceiverId :
-    T extends 'processPushNotification' ? Ok :
-    T extends 'getPushReceiverId' ? PushReceiverId :
-    T extends 'getRecentlyVisitedTMeUrls' ? TMeUrls :
-    T extends 'setUserPrivacySettingRules' ? Ok :
-    T extends 'getUserPrivacySettingRules' ? UserPrivacySettingRules :
-    T extends 'setReadDatePrivacySettings' ? Ok :
-    T extends 'getReadDatePrivacySettings' ? ReadDatePrivacySettings :
-    T extends 'setNewChatPrivacySettings' ? Ok :
-    T extends 'getNewChatPrivacySettings' ? NewChatPrivacySettings :
-    T extends 'canSendMessageToUser' ? CanSendMessageToUserResult :
-    T extends 'getOption' ? OptionValue :
-    T extends 'setOption' ? Ok :
-    T extends 'setAccountTtl' ? Ok :
-    T extends 'getAccountTtl' ? AccountTtl :
-    T extends 'deleteAccount' ? Ok :
-    T extends 'setDefaultMessageAutoDeleteTime' ? Ok :
-    T extends 'getDefaultMessageAutoDeleteTime' ? MessageAutoDeleteTime :
-    T extends 'removeChatActionBar' ? Ok :
-    T extends 'reportChat' ? Ok :
-    T extends 'reportChatPhoto' ? Ok :
-    T extends 'reportMessageReactions' ? Ok :
-    T extends 'getChatRevenueStatistics' ? ChatRevenueStatistics :
-    T extends 'getChatRevenueWithdrawalUrl' ? HttpUrl :
-    T extends 'getChatRevenueTransactions' ? ChatRevenueTransactions :
-    T extends 'getChatStatistics' ? ChatStatistics :
-    T extends 'getMessageStatistics' ? MessageStatistics :
-    T extends 'getMessagePublicForwards' ? PublicForwards :
-    T extends 'getStoryStatistics' ? StoryStatistics :
-    T extends 'getStatisticalGraph' ? StatisticalGraph :
-    T extends 'getStorageStatistics' ? StorageStatistics :
-    T extends 'getStorageStatisticsFast' ? StorageStatisticsFast :
-    T extends 'getDatabaseStatistics' ? DatabaseStatistics :
-    T extends 'optimizeStorage' ? StorageStatistics :
-    T extends 'setNetworkType' ? Ok :
-    T extends 'getNetworkStatistics' ? NetworkStatistics :
-    T extends 'addNetworkStatistics' ? Ok :
-    T extends 'resetNetworkStatistics' ? Ok :
-    T extends 'getAutoDownloadSettingsPresets' ? AutoDownloadSettingsPresets :
-    T extends 'setAutoDownloadSettings' ? Ok :
-    T extends 'getAutosaveSettings' ? AutosaveSettings :
-    T extends 'setAutosaveSettings' ? Ok :
-    T extends 'clearAutosaveSettingsExceptions' ? Ok :
-    T extends 'getBankCardInfo' ? BankCardInfo :
-    T extends 'getPassportElement' ? PassportElement :
-    T extends 'getAllPassportElements' ? PassportElements :
-    T extends 'setPassportElement' ? PassportElement :
-    T extends 'deletePassportElement' ? Ok :
-    T extends 'setPassportElementErrors' ? Ok :
-    T extends 'getPreferredCountryLanguage' ? Text :
-    T extends 'sendEmailAddressVerificationCode' ? EmailAddressAuthenticationCodeInfo :
-    T extends 'resendEmailAddressVerificationCode' ? EmailAddressAuthenticationCodeInfo :
-    T extends 'checkEmailAddressVerificationCode' ? Ok :
-    T extends 'getPassportAuthorizationForm' ? PassportAuthorizationForm :
-    T extends 'getPassportAuthorizationFormAvailableElements' ? PassportElementsWithErrors :
-    T extends 'sendPassportAuthorizationForm' ? Ok :
-    T extends 'setBotUpdatesStatus' ? Ok :
-    T extends 'uploadStickerFile' ? File :
-    T extends 'getSuggestedStickerSetName' ? Text :
-    T extends 'checkStickerSetName' ? CheckStickerSetNameResult :
-    T extends 'createNewStickerSet' ? StickerSet :
-    T extends 'addStickerToSet' ? Ok :
-    T extends 'replaceStickerInSet' ? Ok :
-    T extends 'setStickerSetThumbnail' ? Ok :
-    T extends 'setCustomEmojiStickerSetThumbnail' ? Ok :
-    T extends 'setStickerSetTitle' ? Ok :
-    T extends 'deleteStickerSet' ? Ok :
-    T extends 'setStickerPositionInSet' ? Ok :
-    T extends 'removeStickerFromSet' ? Ok :
-    T extends 'setStickerEmojis' ? Ok :
-    T extends 'setStickerKeywords' ? Ok :
-    T extends 'setStickerMaskPosition' ? Ok :
-    T extends 'getOwnedStickerSets' ? StickerSets :
-    T extends 'getMapThumbnailFile' ? File :
-    T extends 'getPremiumLimit' ? PremiumLimit :
-    T extends 'getPremiumFeatures' ? PremiumFeatures :
-    T extends 'getPremiumStickerExamples' ? Stickers :
-    T extends 'viewPremiumFeature' ? Ok :
-    T extends 'clickPremiumSubscriptionButton' ? Ok :
-    T extends 'getPremiumState' ? PremiumState :
-    T extends 'getPremiumGiftCodePaymentOptions' ? PremiumGiftCodePaymentOptions :
-    T extends 'checkPremiumGiftCode' ? PremiumGiftCodeInfo :
-    T extends 'applyPremiumGiftCode' ? Ok :
-    T extends 'launchPrepaidPremiumGiveaway' ? Ok :
-    T extends 'getPremiumGiveawayInfo' ? PremiumGiveawayInfo :
-    T extends 'canPurchasePremium' ? Ok :
-    T extends 'assignAppStoreTransaction' ? Ok :
-    T extends 'assignGooglePlayTransaction' ? Ok :
-    T extends 'getBusinessFeatures' ? BusinessFeatures :
-    T extends 'acceptTermsOfService' ? Ok :
-    T extends 'searchStringsByPrefix' ? FoundPositions :
-    T extends 'sendCustomRequest' ? CustomRequestResult :
-    T extends 'answerCustomQuery' ? Ok :
-    T extends 'setAlarm' ? Ok :
-    T extends 'getCountries' ? Countries :
-    T extends 'getCountryCode' ? Text :
-    T extends 'getPhoneNumberInfo' ? PhoneNumberInfo :
-    T extends 'getPhoneNumberInfoSync' ? PhoneNumberInfo :
-    T extends 'getCollectibleItemInfo' ? CollectibleItemInfo :
-    T extends 'getDeepLinkInfo' ? DeepLinkInfo :
-    T extends 'getApplicationConfig' ? JsonValue :
-    T extends 'saveApplicationLogEvent' ? Ok :
-    T extends 'getApplicationDownloadLink' ? HttpUrl :
-    T extends 'addProxy' ? Proxy :
-    T extends 'editProxy' ? Proxy :
-    T extends 'enableProxy' ? Ok :
-    T extends 'disableProxy' ? Ok :
-    T extends 'removeProxy' ? Ok :
-    T extends 'getProxies' ? Proxies :
-    T extends 'getProxyLink' ? HttpUrl :
-    T extends 'pingProxy' ? Seconds :
-    T extends 'setLogStream' ? Ok :
-    T extends 'getLogStream' ? LogStream :
-    T extends 'setLogVerbosityLevel' ? Ok :
-    T extends 'getLogVerbosityLevel' ? LogVerbosityLevel :
-    T extends 'getLogTags' ? LogTags :
-    T extends 'setLogTagVerbosityLevel' ? Ok :
-    T extends 'getLogTagVerbosityLevel' ? LogVerbosityLevel :
-    T extends 'addLogMessage' ? Ok :
-    T extends 'getUserSupportInfo' ? UserSupportInfo :
-    T extends 'setUserSupportInfo' ? UserSupportInfo :
-    T extends 'getSupportName' ? Text :
-    T extends 'testCallEmpty' ? Ok :
-    T extends 'testCallString' ? TestString :
-    T extends 'testCallBytes' ? TestBytes :
-    T extends 'testCallVectorInt' ? TestVectorInt :
-    T extends 'testCallVectorIntObject' ? TestVectorIntObject :
-    T extends 'testCallVectorString' ? TestVectorString :
-    T extends 'testCallVectorStringObject' ? TestVectorStringObject :
-    T extends 'testSquareInt' ? TestInt :
-    T extends 'testNetwork' ? Ok :
-    T extends 'testProxy' ? Ok :
-    T extends 'testGetDifference' ? Ok :
-    T extends 'testUseUpdate' ? Update :
-    T extends 'testReturnError' ? Error :
-  never>
-
-  export type Execute = <T>(query: { readonly _: T } & (
-    checkQuickReplyShortcutName
-    | searchQuote
-    | getTextEntities
-    | parseTextEntities
-    | parseMarkdown
-    | getMarkdownText
-    | getCountryFlagEmoji
-    | getFileMimeType
-    | getFileExtension
-    | cleanFileName
-    | getLanguagePackString
-    | getJsonValue
-    | getJsonString
-    | getThemeParametersJsonString
-    | getChatFolderDefaultIconName
-    | getPushReceiverId
-    | getOption
-    | searchStringsByPrefix
-    | getPhoneNumberInfoSync
-    | setLogStream
-    | getLogStream
-    | setLogVerbosityLevel
-    | getLogVerbosityLevel
-    | getLogTags
-    | setLogTagVerbosityLevel
-    | getLogTagVerbosityLevel
-    | addLogMessage
-    | testReturnError
-  )) => error | (
-    T extends 'checkQuickReplyShortcutName' ? Ok :
-    T extends 'searchQuote' ? FoundPosition :
-    T extends 'getTextEntities' ? TextEntities :
-    T extends 'parseTextEntities' ? FormattedText :
-    T extends 'parseMarkdown' ? FormattedText :
-    T extends 'getMarkdownText' ? FormattedText :
-    T extends 'getCountryFlagEmoji' ? Text :
-    T extends 'getFileMimeType' ? Text :
-    T extends 'getFileExtension' ? Text :
-    T extends 'cleanFileName' ? Text :
-    T extends 'getLanguagePackString' ? LanguagePackStringValue :
-    T extends 'getJsonValue' ? JsonValue :
-    T extends 'getJsonString' ? Text :
-    T extends 'getThemeParametersJsonString' ? Text :
-    T extends 'getChatFolderDefaultIconName' ? ChatFolderIcon :
-    T extends 'getPushReceiverId' ? PushReceiverId :
-    T extends 'getOption' ? OptionValue :
-    T extends 'searchStringsByPrefix' ? FoundPositions :
-    T extends 'getPhoneNumberInfoSync' ? PhoneNumberInfo :
-    T extends 'setLogStream' ? Ok :
-    T extends 'getLogStream' ? LogStream :
-    T extends 'setLogVerbosityLevel' ? Ok :
-    T extends 'getLogVerbosityLevel' ? LogVerbosityLevel :
-    T extends 'getLogTags' ? LogTags :
-    T extends 'setLogTagVerbosityLevel' ? Ok :
-    T extends 'getLogTagVerbosityLevel' ? LogVerbosityLevel :
-    T extends 'addLogMessage' ? Ok :
-    T extends 'testReturnError' ? Error :
-  never)
-
-  type $Function =
+  export type $Function =
     | getAuthorizationState
     | setTdlibParameters
     | setAuthenticationPhoneNumber
@@ -34301,4 +32771,1516 @@ declare module 'tdlib-types' {
     | testGetDifference
     | testUseUpdate
     | testReturnError
+
+  export type $FunctionResultByName = {
+    getAuthorizationState: AuthorizationState,
+    setTdlibParameters: Ok,
+    setAuthenticationPhoneNumber: Ok,
+    setAuthenticationEmailAddress: Ok,
+    resendAuthenticationCode: Ok,
+    checkAuthenticationEmailCode: Ok,
+    checkAuthenticationCode: Ok,
+    requestQrCodeAuthentication: Ok,
+    registerUser: Ok,
+    resetAuthenticationEmailAddress: Ok,
+    checkAuthenticationPassword: Ok,
+    requestAuthenticationPasswordRecovery: Ok,
+    checkAuthenticationPasswordRecoveryCode: Ok,
+    recoverAuthenticationPassword: Ok,
+    sendAuthenticationFirebaseSms: Ok,
+    checkAuthenticationBotToken: Ok,
+    logOut: Ok,
+    close: Ok,
+    destroy: Ok,
+    confirmQrCodeAuthentication: Session,
+    getCurrentState: Updates,
+    setDatabaseEncryptionKey: Ok,
+    getPasswordState: PasswordState,
+    setPassword: PasswordState,
+    setLoginEmailAddress: EmailAddressAuthenticationCodeInfo,
+    resendLoginEmailAddressCode: EmailAddressAuthenticationCodeInfo,
+    checkLoginEmailAddressCode: Ok,
+    getRecoveryEmailAddress: RecoveryEmailAddress,
+    setRecoveryEmailAddress: PasswordState,
+    checkRecoveryEmailAddressCode: PasswordState,
+    resendRecoveryEmailAddressCode: PasswordState,
+    cancelRecoveryEmailAddressVerification: PasswordState,
+    requestPasswordRecovery: EmailAddressAuthenticationCodeInfo,
+    checkPasswordRecoveryCode: Ok,
+    recoverPassword: PasswordState,
+    resetPassword: ResetPasswordResult,
+    cancelPasswordReset: Ok,
+    createTemporaryPassword: TemporaryPasswordState,
+    getTemporaryPasswordState: TemporaryPasswordState,
+    getMe: User,
+    getUser: User,
+    getUserFullInfo: UserFullInfo,
+    getBasicGroup: BasicGroup,
+    getBasicGroupFullInfo: BasicGroupFullInfo,
+    getSupergroup: Supergroup,
+    getSupergroupFullInfo: SupergroupFullInfo,
+    getSecretChat: SecretChat,
+    getChat: Chat,
+    getMessage: Message,
+    getMessageLocally: Message,
+    getRepliedMessage: Message,
+    getChatPinnedMessage: Message,
+    getCallbackQueryMessage: Message,
+    getMessages: Messages,
+    getMessageThread: MessageThreadInfo,
+    getMessageReadDate: MessageReadDate,
+    getMessageViewers: MessageViewers,
+    getFile: File,
+    getRemoteFile: File,
+    loadChats: Ok,
+    getChats: Chats,
+    searchPublicChat: Chat,
+    searchPublicChats: Chats,
+    searchChats: Chats,
+    searchChatsOnServer: Chats,
+    searchChatsNearby: ChatsNearby,
+    getChatSimilarChats: Chats,
+    getChatSimilarChatCount: Count,
+    openChatSimilarChat: Ok,
+    getTopChats: Chats,
+    removeTopChat: Ok,
+    searchRecentlyFoundChats: Chats,
+    addRecentlyFoundChat: Ok,
+    removeRecentlyFoundChat: Ok,
+    clearRecentlyFoundChats: Ok,
+    getRecentlyOpenedChats: Chats,
+    checkChatUsername: CheckChatUsernameResult,
+    getCreatedPublicChats: Chats,
+    checkCreatedPublicChatsLimit: Ok,
+    getSuitableDiscussionChats: Chats,
+    getInactiveSupergroupChats: Chats,
+    getSuitablePersonalChats: Chats,
+    loadSavedMessagesTopics: Ok,
+    getSavedMessagesTopicHistory: Messages,
+    getSavedMessagesTopicMessageByDate: Message,
+    deleteSavedMessagesTopicHistory: Ok,
+    deleteSavedMessagesTopicMessagesByDate: Ok,
+    toggleSavedMessagesTopicIsPinned: Ok,
+    setPinnedSavedMessagesTopics: Ok,
+    getGroupsInCommon: Chats,
+    getChatHistory: Messages,
+    getMessageThreadHistory: Messages,
+    deleteChatHistory: Ok,
+    deleteChat: Ok,
+    searchChatMessages: FoundChatMessages,
+    searchMessages: FoundMessages,
+    searchSecretMessages: FoundMessages,
+    searchSavedMessages: FoundChatMessages,
+    searchCallMessages: FoundMessages,
+    searchOutgoingDocumentMessages: FoundMessages,
+    deleteAllCallMessages: Ok,
+    searchChatRecentLocationMessages: Messages,
+    getActiveLiveLocationMessages: Messages,
+    getChatMessageByDate: Message,
+    getChatSparseMessagePositions: MessagePositions,
+    getChatMessageCalendar: MessageCalendar,
+    getChatMessageCount: Count,
+    getChatMessagePosition: Count,
+    getChatScheduledMessages: Messages,
+    getChatSponsoredMessages: SponsoredMessages,
+    clickChatSponsoredMessage: Ok,
+    reportChatSponsoredMessage: ReportChatSponsoredMessageResult,
+    removeNotification: Ok,
+    removeNotificationGroup: Ok,
+    getMessageLink: MessageLink,
+    getMessageEmbeddingCode: Text,
+    getMessageLinkInfo: MessageLinkInfo,
+    translateText: FormattedText,
+    translateMessageText: FormattedText,
+    recognizeSpeech: Ok,
+    rateSpeechRecognition: Ok,
+    getChatAvailableMessageSenders: ChatMessageSenders,
+    setChatMessageSender: Ok,
+    sendMessage: Message,
+    sendMessageAlbum: Messages,
+    sendBotStartMessage: Message,
+    sendInlineQueryResultMessage: Message,
+    forwardMessages: Messages,
+    sendQuickReplyShortcutMessages: Messages,
+    resendMessages: Messages,
+    addLocalMessage: Message,
+    deleteMessages: Ok,
+    deleteChatMessagesBySender: Ok,
+    deleteChatMessagesByDate: Ok,
+    editMessageText: Message,
+    editMessageLiveLocation: Message,
+    editMessageMedia: Message,
+    editMessageCaption: Message,
+    editMessageReplyMarkup: Message,
+    editInlineMessageText: Ok,
+    editInlineMessageLiveLocation: Ok,
+    editInlineMessageMedia: Ok,
+    editInlineMessageCaption: Ok,
+    editInlineMessageReplyMarkup: Ok,
+    editMessageSchedulingState: Ok,
+    sendBusinessMessage: BusinessMessage,
+    sendBusinessMessageAlbum: BusinessMessages,
+    checkQuickReplyShortcutName: Ok,
+    loadQuickReplyShortcuts: Ok,
+    setQuickReplyShortcutName: Ok,
+    deleteQuickReplyShortcut: Ok,
+    reorderQuickReplyShortcuts: Ok,
+    loadQuickReplyShortcutMessages: Ok,
+    deleteQuickReplyShortcutMessages: Ok,
+    addQuickReplyShortcutMessage: QuickReplyMessage,
+    addQuickReplyShortcutInlineQueryResultMessage: QuickReplyMessage,
+    readdQuickReplyShortcutMessages: QuickReplyMessages,
+    editQuickReplyMessage: Ok,
+    getForumTopicDefaultIcons: Stickers,
+    createForumTopic: ForumTopicInfo,
+    editForumTopic: Ok,
+    getForumTopic: ForumTopic,
+    getForumTopicLink: MessageLink,
+    getForumTopics: ForumTopics,
+    setForumTopicNotificationSettings: Ok,
+    toggleForumTopicIsClosed: Ok,
+    toggleGeneralForumTopicIsHidden: Ok,
+    toggleForumTopicIsPinned: Ok,
+    setPinnedForumTopics: Ok,
+    deleteForumTopic: Ok,
+    getEmojiReaction: EmojiReaction,
+    getCustomEmojiReactionAnimations: Stickers,
+    getMessageAvailableReactions: AvailableReactions,
+    clearRecentReactions: Ok,
+    addMessageReaction: Ok,
+    removeMessageReaction: Ok,
+    setMessageReactions: Ok,
+    getMessageAddedReactions: AddedReactions,
+    setDefaultReactionType: Ok,
+    getSavedMessagesTags: SavedMessagesTags,
+    setSavedMessagesTagLabel: Ok,
+    searchQuote: FoundPosition,
+    getTextEntities: TextEntities,
+    parseTextEntities: FormattedText,
+    parseMarkdown: FormattedText,
+    getMarkdownText: FormattedText,
+    getCountryFlagEmoji: Text,
+    getFileMimeType: Text,
+    getFileExtension: Text,
+    cleanFileName: Text,
+    getLanguagePackString: LanguagePackStringValue,
+    getJsonValue: JsonValue,
+    getJsonString: Text,
+    getThemeParametersJsonString: Text,
+    setPollAnswer: Ok,
+    getPollVoters: MessageSenders,
+    stopPoll: Ok,
+    hideSuggestedAction: Ok,
+    getBusinessConnection: BusinessConnection,
+    getLoginUrlInfo: LoginUrlInfo,
+    getLoginUrl: HttpUrl,
+    shareUsersWithBot: Ok,
+    shareChatWithBot: Ok,
+    getInlineQueryResults: InlineQueryResults,
+    answerInlineQuery: Ok,
+    searchWebApp: FoundWebApp,
+    getWebAppLinkUrl: HttpUrl,
+    getWebAppUrl: HttpUrl,
+    sendWebAppData: Ok,
+    openWebApp: WebAppInfo,
+    closeWebApp: Ok,
+    answerWebAppQuery: SentWebAppMessage,
+    getCallbackQueryAnswer: CallbackQueryAnswer,
+    answerCallbackQuery: Ok,
+    answerShippingQuery: Ok,
+    answerPreCheckoutQuery: Ok,
+    setGameScore: Message,
+    setInlineGameScore: Ok,
+    getGameHighScores: GameHighScores,
+    getInlineGameHighScores: GameHighScores,
+    deleteChatReplyMarkup: Ok,
+    sendChatAction: Ok,
+    openChat: Ok,
+    closeChat: Ok,
+    viewMessages: Ok,
+    openMessageContent: Ok,
+    clickAnimatedEmojiMessage: Sticker,
+    getInternalLink: HttpUrl,
+    getInternalLinkType: InternalLinkType,
+    getExternalLinkInfo: LoginUrlInfo,
+    getExternalLink: HttpUrl,
+    readAllChatMentions: Ok,
+    readAllMessageThreadMentions: Ok,
+    readAllChatReactions: Ok,
+    readAllMessageThreadReactions: Ok,
+    createPrivateChat: Chat,
+    createBasicGroupChat: Chat,
+    createSupergroupChat: Chat,
+    createSecretChat: Chat,
+    createNewBasicGroupChat: CreatedBasicGroupChat,
+    createNewSupergroupChat: Chat,
+    createNewSecretChat: Chat,
+    upgradeBasicGroupChatToSupergroupChat: Chat,
+    getChatListsToAddChat: ChatLists,
+    addChatToList: Ok,
+    getChatFolder: ChatFolder,
+    createChatFolder: ChatFolderInfo,
+    editChatFolder: ChatFolderInfo,
+    deleteChatFolder: Ok,
+    getChatFolderChatsToLeave: Chats,
+    getChatFolderChatCount: Count,
+    reorderChatFolders: Ok,
+    toggleChatFolderTags: Ok,
+    getRecommendedChatFolders: RecommendedChatFolders,
+    getChatFolderDefaultIconName: ChatFolderIcon,
+    getChatsForChatFolderInviteLink: Chats,
+    createChatFolderInviteLink: ChatFolderInviteLink,
+    getChatFolderInviteLinks: ChatFolderInviteLinks,
+    editChatFolderInviteLink: ChatFolderInviteLink,
+    deleteChatFolderInviteLink: Ok,
+    checkChatFolderInviteLink: ChatFolderInviteLinkInfo,
+    addChatFolderByInviteLink: Ok,
+    getChatFolderNewChats: Chats,
+    processChatFolderNewChats: Ok,
+    getArchiveChatListSettings: ArchiveChatListSettings,
+    setArchiveChatListSettings: Ok,
+    setChatTitle: Ok,
+    setChatPhoto: Ok,
+    setChatAccentColor: Ok,
+    setChatProfileAccentColor: Ok,
+    setChatMessageAutoDeleteTime: Ok,
+    setChatEmojiStatus: Ok,
+    setChatPermissions: Ok,
+    setChatBackground: Ok,
+    deleteChatBackground: Ok,
+    setChatTheme: Ok,
+    setChatDraftMessage: Ok,
+    setChatNotificationSettings: Ok,
+    toggleChatHasProtectedContent: Ok,
+    toggleChatViewAsTopics: Ok,
+    toggleChatIsTranslatable: Ok,
+    toggleChatIsMarkedAsUnread: Ok,
+    toggleChatDefaultDisableNotification: Ok,
+    setChatAvailableReactions: Ok,
+    setChatClientData: Ok,
+    setChatDescription: Ok,
+    setChatDiscussionGroup: Ok,
+    setChatLocation: Ok,
+    setChatSlowModeDelay: Ok,
+    pinChatMessage: Ok,
+    unpinChatMessage: Ok,
+    unpinAllChatMessages: Ok,
+    unpinAllMessageThreadMessages: Ok,
+    joinChat: Ok,
+    leaveChat: Ok,
+    addChatMember: FailedToAddMembers,
+    addChatMembers: FailedToAddMembers,
+    setChatMemberStatus: Ok,
+    banChatMember: Ok,
+    canTransferOwnership: CanTransferOwnershipResult,
+    transferChatOwnership: Ok,
+    getChatMember: ChatMember,
+    searchChatMembers: ChatMembers,
+    getChatAdministrators: ChatAdministrators,
+    clearAllDraftMessages: Ok,
+    getSavedNotificationSound: NotificationSounds,
+    getSavedNotificationSounds: NotificationSounds,
+    addSavedNotificationSound: NotificationSound,
+    removeSavedNotificationSound: Ok,
+    getChatNotificationSettingsExceptions: Chats,
+    getScopeNotificationSettings: ScopeNotificationSettings,
+    setScopeNotificationSettings: Ok,
+    resetAllNotificationSettings: Ok,
+    toggleChatIsPinned: Ok,
+    setPinnedChats: Ok,
+    readChatList: Ok,
+    getStory: Story,
+    getChatsToSendStories: Chats,
+    canSendStory: CanSendStoryResult,
+    sendStory: Story,
+    editStory: Ok,
+    setStoryPrivacySettings: Ok,
+    toggleStoryIsPinned: Ok,
+    deleteStory: Ok,
+    getStoryNotificationSettingsExceptions: Chats,
+    loadActiveStories: Ok,
+    setChatActiveStoriesList: Ok,
+    getChatActiveStories: ChatActiveStories,
+    getChatPinnedStories: Stories,
+    getChatArchivedStories: Stories,
+    openStory: Ok,
+    closeStory: Ok,
+    getStoryAvailableReactions: AvailableReactions,
+    setStoryReaction: Ok,
+    getStoryInteractions: StoryInteractions,
+    getChatStoryInteractions: StoryInteractions,
+    reportStory: Ok,
+    activateStoryStealthMode: Ok,
+    getStoryPublicForwards: PublicForwards,
+    getChatBoostLevelFeatures: ChatBoostLevelFeatures,
+    getChatBoostFeatures: ChatBoostFeatures,
+    getAvailableChatBoostSlots: ChatBoostSlots,
+    getChatBoostStatus: ChatBoostStatus,
+    boostChat: ChatBoostSlots,
+    getChatBoostLink: ChatBoostLink,
+    getChatBoostLinkInfo: ChatBoostLinkInfo,
+    getChatBoosts: FoundChatBoosts,
+    getUserChatBoosts: FoundChatBoosts,
+    getAttachmentMenuBot: AttachmentMenuBot,
+    toggleBotIsAddedToAttachmentMenu: Ok,
+    getThemedEmojiStatuses: EmojiStatuses,
+    getRecentEmojiStatuses: EmojiStatuses,
+    getDefaultEmojiStatuses: EmojiStatuses,
+    clearRecentEmojiStatuses: Ok,
+    getThemedChatEmojiStatuses: EmojiStatuses,
+    getDefaultChatEmojiStatuses: EmojiStatuses,
+    getDisallowedChatEmojiStatuses: EmojiStatuses,
+    downloadFile: File,
+    getFileDownloadedPrefixSize: FileDownloadedPrefixSize,
+    cancelDownloadFile: Ok,
+    getSuggestedFileName: Text,
+    preliminaryUploadFile: File,
+    cancelPreliminaryUploadFile: Ok,
+    writeGeneratedFilePart: Ok,
+    setFileGenerationProgress: Ok,
+    finishFileGeneration: Ok,
+    readFilePart: FilePart,
+    deleteFile: Ok,
+    addFileToDownloads: File,
+    toggleDownloadIsPaused: Ok,
+    toggleAllDownloadsArePaused: Ok,
+    removeFileFromDownloads: Ok,
+    removeAllFilesFromDownloads: Ok,
+    searchFileDownloads: FoundFileDownloads,
+    getMessageFileType: MessageFileType,
+    getMessageImportConfirmationText: Text,
+    importMessages: Ok,
+    replacePrimaryChatInviteLink: ChatInviteLink,
+    createChatInviteLink: ChatInviteLink,
+    editChatInviteLink: ChatInviteLink,
+    getChatInviteLink: ChatInviteLink,
+    getChatInviteLinkCounts: ChatInviteLinkCounts,
+    getChatInviteLinks: ChatInviteLinks,
+    getChatInviteLinkMembers: ChatInviteLinkMembers,
+    revokeChatInviteLink: ChatInviteLinks,
+    deleteRevokedChatInviteLink: Ok,
+    deleteAllRevokedChatInviteLinks: Ok,
+    checkChatInviteLink: ChatInviteLinkInfo,
+    joinChatByInviteLink: Chat,
+    getChatJoinRequests: ChatJoinRequests,
+    processChatJoinRequest: Ok,
+    processChatJoinRequests: Ok,
+    createCall: CallId,
+    acceptCall: Ok,
+    sendCallSignalingData: Ok,
+    discardCall: Ok,
+    sendCallRating: Ok,
+    sendCallDebugInformation: Ok,
+    sendCallLog: Ok,
+    getVideoChatAvailableParticipants: MessageSenders,
+    setVideoChatDefaultParticipant: Ok,
+    createVideoChat: GroupCallId,
+    getVideoChatRtmpUrl: RtmpUrl,
+    replaceVideoChatRtmpUrl: RtmpUrl,
+    getGroupCall: GroupCall,
+    startScheduledGroupCall: Ok,
+    toggleGroupCallEnabledStartNotification: Ok,
+    joinGroupCall: Text,
+    startGroupCallScreenSharing: Text,
+    toggleGroupCallScreenSharingIsPaused: Ok,
+    endGroupCallScreenSharing: Ok,
+    setGroupCallTitle: Ok,
+    toggleGroupCallMuteNewParticipants: Ok,
+    inviteGroupCallParticipants: Ok,
+    getGroupCallInviteLink: HttpUrl,
+    revokeGroupCallInviteLink: Ok,
+    startGroupCallRecording: Ok,
+    endGroupCallRecording: Ok,
+    toggleGroupCallIsMyVideoPaused: Ok,
+    toggleGroupCallIsMyVideoEnabled: Ok,
+    setGroupCallParticipantIsSpeaking: Ok,
+    toggleGroupCallParticipantIsMuted: Ok,
+    setGroupCallParticipantVolumeLevel: Ok,
+    toggleGroupCallParticipantIsHandRaised: Ok,
+    loadGroupCallParticipants: Ok,
+    leaveGroupCall: Ok,
+    endGroupCall: Ok,
+    getGroupCallStreams: GroupCallStreams,
+    getGroupCallStreamSegment: FilePart,
+    setMessageSenderBlockList: Ok,
+    blockMessageSenderFromReplies: Ok,
+    getBlockedMessageSenders: MessageSenders,
+    addContact: Ok,
+    importContacts: ImportedContacts,
+    getContacts: Users,
+    searchContacts: Users,
+    removeContacts: Ok,
+    getImportedContactCount: Count,
+    changeImportedContacts: ImportedContacts,
+    clearImportedContacts: Ok,
+    setCloseFriends: Ok,
+    getCloseFriends: Users,
+    setUserPersonalProfilePhoto: Ok,
+    suggestUserProfilePhoto: Ok,
+    searchUserByPhoneNumber: User,
+    sharePhoneNumber: Ok,
+    getUserProfilePhotos: ChatPhotos,
+    getStickers: Stickers,
+    getAllStickerEmojis: Emojis,
+    searchStickers: Stickers,
+    getGreetingStickers: Stickers,
+    getPremiumStickers: Stickers,
+    getInstalledStickerSets: StickerSets,
+    getArchivedStickerSets: StickerSets,
+    getTrendingStickerSets: TrendingStickerSets,
+    getAttachedStickerSets: StickerSets,
+    getStickerSet: StickerSet,
+    searchStickerSet: StickerSet,
+    searchInstalledStickerSets: StickerSets,
+    searchStickerSets: StickerSets,
+    changeStickerSet: Ok,
+    viewTrendingStickerSets: Ok,
+    reorderInstalledStickerSets: Ok,
+    getRecentStickers: Stickers,
+    addRecentSticker: Stickers,
+    removeRecentSticker: Ok,
+    clearRecentStickers: Ok,
+    getFavoriteStickers: Stickers,
+    addFavoriteSticker: Ok,
+    removeFavoriteSticker: Ok,
+    getStickerEmojis: Emojis,
+    searchEmojis: EmojiKeywords,
+    getKeywordEmojis: Emojis,
+    getEmojiCategories: EmojiCategories,
+    getAnimatedEmoji: AnimatedEmoji,
+    getEmojiSuggestionsUrl: HttpUrl,
+    getCustomEmojiStickers: Stickers,
+    getDefaultChatPhotoCustomEmojiStickers: Stickers,
+    getDefaultProfilePhotoCustomEmojiStickers: Stickers,
+    getDefaultBackgroundCustomEmojiStickers: Stickers,
+    getSavedAnimations: Animations,
+    addSavedAnimation: Ok,
+    removeSavedAnimation: Ok,
+    getRecentInlineBots: Users,
+    searchHashtags: Hashtags,
+    removeRecentHashtag: Ok,
+    getWebPagePreview: WebPage,
+    getWebPageInstantView: WebPageInstantView,
+    setProfilePhoto: Ok,
+    deleteProfilePhoto: Ok,
+    setAccentColor: Ok,
+    setProfileAccentColor: Ok,
+    setName: Ok,
+    setBio: Ok,
+    setUsername: Ok,
+    toggleUsernameIsActive: Ok,
+    reorderActiveUsernames: Ok,
+    setBirthdate: Ok,
+    setPersonalChat: Ok,
+    setEmojiStatus: Ok,
+    setLocation: Ok,
+    setBusinessLocation: Ok,
+    setBusinessOpeningHours: Ok,
+    setBusinessGreetingMessageSettings: Ok,
+    setBusinessAwayMessageSettings: Ok,
+    setBusinessStartPage: Ok,
+    sendPhoneNumberCode: AuthenticationCodeInfo,
+    sendPhoneNumberFirebaseSms: Ok,
+    resendPhoneNumberCode: AuthenticationCodeInfo,
+    checkPhoneNumberCode: Ok,
+    getBusinessConnectedBot: BusinessConnectedBot,
+    setBusinessConnectedBot: Ok,
+    deleteBusinessConnectedBot: Ok,
+    toggleBusinessConnectedBotChatIsPaused: Ok,
+    removeBusinessConnectedBotFromChat: Ok,
+    getBusinessChatLinks: BusinessChatLinks,
+    createBusinessChatLink: BusinessChatLink,
+    editBusinessChatLink: BusinessChatLink,
+    deleteBusinessChatLink: Ok,
+    getBusinessChatLinkInfo: BusinessChatLinkInfo,
+    getUserLink: UserLink,
+    searchUserByToken: User,
+    setCommands: Ok,
+    deleteCommands: Ok,
+    getCommands: BotCommands,
+    setMenuButton: Ok,
+    getMenuButton: BotMenuButton,
+    setDefaultGroupAdministratorRights: Ok,
+    setDefaultChannelAdministratorRights: Ok,
+    canBotSendMessages: Ok,
+    allowBotToSendMessages: Ok,
+    sendWebAppCustomRequest: CustomRequestResult,
+    setBotName: Ok,
+    getBotName: Text,
+    setBotProfilePhoto: Ok,
+    toggleBotUsernameIsActive: Ok,
+    reorderBotActiveUsernames: Ok,
+    setBotInfoDescription: Ok,
+    getBotInfoDescription: Text,
+    setBotInfoShortDescription: Ok,
+    getBotInfoShortDescription: Text,
+    getActiveSessions: Sessions,
+    terminateSession: Ok,
+    terminateAllOtherSessions: Ok,
+    confirmSession: Ok,
+    toggleSessionCanAcceptCalls: Ok,
+    toggleSessionCanAcceptSecretChats: Ok,
+    setInactiveSessionTtl: Ok,
+    getConnectedWebsites: ConnectedWebsites,
+    disconnectWebsite: Ok,
+    disconnectAllWebsites: Ok,
+    setSupergroupUsername: Ok,
+    toggleSupergroupUsernameIsActive: Ok,
+    disableAllSupergroupUsernames: Ok,
+    reorderSupergroupActiveUsernames: Ok,
+    setSupergroupStickerSet: Ok,
+    setSupergroupCustomEmojiStickerSet: Ok,
+    setSupergroupUnrestrictBoostCount: Ok,
+    toggleSupergroupSignMessages: Ok,
+    toggleSupergroupJoinToSendMessages: Ok,
+    toggleSupergroupJoinByRequest: Ok,
+    toggleSupergroupIsAllHistoryAvailable: Ok,
+    toggleSupergroupCanHaveSponsoredMessages: Ok,
+    toggleSupergroupHasHiddenMembers: Ok,
+    toggleSupergroupHasAggressiveAntiSpamEnabled: Ok,
+    toggleSupergroupIsForum: Ok,
+    toggleSupergroupIsBroadcastGroup: Ok,
+    reportSupergroupSpam: Ok,
+    reportSupergroupAntiSpamFalsePositive: Ok,
+    getSupergroupMembers: ChatMembers,
+    closeSecretChat: Ok,
+    getChatEventLog: ChatEvents,
+    getTimeZones: TimeZones,
+    getPaymentForm: PaymentForm,
+    validateOrderInfo: ValidatedOrderInfo,
+    sendPaymentForm: PaymentResult,
+    getPaymentReceipt: PaymentReceipt,
+    getSavedOrderInfo: OrderInfo,
+    deleteSavedOrderInfo: Ok,
+    deleteSavedCredentials: Ok,
+    createInvoiceLink: HttpUrl,
+    getSupportUser: User,
+    getBackgroundUrl: HttpUrl,
+    searchBackground: Background,
+    setDefaultBackground: Background,
+    deleteDefaultBackground: Ok,
+    getInstalledBackgrounds: Backgrounds,
+    removeInstalledBackground: Ok,
+    resetInstalledBackgrounds: Ok,
+    getLocalizationTargetInfo: LocalizationTargetInfo,
+    getLanguagePackInfo: LanguagePackInfo,
+    getLanguagePackStrings: LanguagePackStrings,
+    synchronizeLanguagePack: Ok,
+    addCustomServerLanguagePack: Ok,
+    setCustomLanguagePack: Ok,
+    editCustomLanguagePackInfo: Ok,
+    setCustomLanguagePackString: Ok,
+    deleteLanguagePack: Ok,
+    registerDevice: PushReceiverId,
+    processPushNotification: Ok,
+    getPushReceiverId: PushReceiverId,
+    getRecentlyVisitedTMeUrls: TMeUrls,
+    setUserPrivacySettingRules: Ok,
+    getUserPrivacySettingRules: UserPrivacySettingRules,
+    setReadDatePrivacySettings: Ok,
+    getReadDatePrivacySettings: ReadDatePrivacySettings,
+    setNewChatPrivacySettings: Ok,
+    getNewChatPrivacySettings: NewChatPrivacySettings,
+    canSendMessageToUser: CanSendMessageToUserResult,
+    getOption: OptionValue,
+    setOption: Ok,
+    setAccountTtl: Ok,
+    getAccountTtl: AccountTtl,
+    deleteAccount: Ok,
+    setDefaultMessageAutoDeleteTime: Ok,
+    getDefaultMessageAutoDeleteTime: MessageAutoDeleteTime,
+    removeChatActionBar: Ok,
+    reportChat: Ok,
+    reportChatPhoto: Ok,
+    reportMessageReactions: Ok,
+    getChatRevenueStatistics: ChatRevenueStatistics,
+    getChatRevenueWithdrawalUrl: HttpUrl,
+    getChatRevenueTransactions: ChatRevenueTransactions,
+    getChatStatistics: ChatStatistics,
+    getMessageStatistics: MessageStatistics,
+    getMessagePublicForwards: PublicForwards,
+    getStoryStatistics: StoryStatistics,
+    getStatisticalGraph: StatisticalGraph,
+    getStorageStatistics: StorageStatistics,
+    getStorageStatisticsFast: StorageStatisticsFast,
+    getDatabaseStatistics: DatabaseStatistics,
+    optimizeStorage: StorageStatistics,
+    setNetworkType: Ok,
+    getNetworkStatistics: NetworkStatistics,
+    addNetworkStatistics: Ok,
+    resetNetworkStatistics: Ok,
+    getAutoDownloadSettingsPresets: AutoDownloadSettingsPresets,
+    setAutoDownloadSettings: Ok,
+    getAutosaveSettings: AutosaveSettings,
+    setAutosaveSettings: Ok,
+    clearAutosaveSettingsExceptions: Ok,
+    getBankCardInfo: BankCardInfo,
+    getPassportElement: PassportElement,
+    getAllPassportElements: PassportElements,
+    setPassportElement: PassportElement,
+    deletePassportElement: Ok,
+    setPassportElementErrors: Ok,
+    getPreferredCountryLanguage: Text,
+    sendEmailAddressVerificationCode: EmailAddressAuthenticationCodeInfo,
+    resendEmailAddressVerificationCode: EmailAddressAuthenticationCodeInfo,
+    checkEmailAddressVerificationCode: Ok,
+    getPassportAuthorizationForm: PassportAuthorizationForm,
+    getPassportAuthorizationFormAvailableElements: PassportElementsWithErrors,
+    sendPassportAuthorizationForm: Ok,
+    setBotUpdatesStatus: Ok,
+    uploadStickerFile: File,
+    getSuggestedStickerSetName: Text,
+    checkStickerSetName: CheckStickerSetNameResult,
+    createNewStickerSet: StickerSet,
+    addStickerToSet: Ok,
+    replaceStickerInSet: Ok,
+    setStickerSetThumbnail: Ok,
+    setCustomEmojiStickerSetThumbnail: Ok,
+    setStickerSetTitle: Ok,
+    deleteStickerSet: Ok,
+    setStickerPositionInSet: Ok,
+    removeStickerFromSet: Ok,
+    setStickerEmojis: Ok,
+    setStickerKeywords: Ok,
+    setStickerMaskPosition: Ok,
+    getOwnedStickerSets: StickerSets,
+    getMapThumbnailFile: File,
+    getPremiumLimit: PremiumLimit,
+    getPremiumFeatures: PremiumFeatures,
+    getPremiumStickerExamples: Stickers,
+    viewPremiumFeature: Ok,
+    clickPremiumSubscriptionButton: Ok,
+    getPremiumState: PremiumState,
+    getPremiumGiftCodePaymentOptions: PremiumGiftCodePaymentOptions,
+    checkPremiumGiftCode: PremiumGiftCodeInfo,
+    applyPremiumGiftCode: Ok,
+    launchPrepaidPremiumGiveaway: Ok,
+    getPremiumGiveawayInfo: PremiumGiveawayInfo,
+    canPurchasePremium: Ok,
+    assignAppStoreTransaction: Ok,
+    assignGooglePlayTransaction: Ok,
+    getBusinessFeatures: BusinessFeatures,
+    acceptTermsOfService: Ok,
+    searchStringsByPrefix: FoundPositions,
+    sendCustomRequest: CustomRequestResult,
+    answerCustomQuery: Ok,
+    setAlarm: Ok,
+    getCountries: Countries,
+    getCountryCode: Text,
+    getPhoneNumberInfo: PhoneNumberInfo,
+    getPhoneNumberInfoSync: PhoneNumberInfo,
+    getCollectibleItemInfo: CollectibleItemInfo,
+    getDeepLinkInfo: DeepLinkInfo,
+    getApplicationConfig: JsonValue,
+    saveApplicationLogEvent: Ok,
+    getApplicationDownloadLink: HttpUrl,
+    addProxy: Proxy,
+    editProxy: Proxy,
+    enableProxy: Ok,
+    disableProxy: Ok,
+    removeProxy: Ok,
+    getProxies: Proxies,
+    getProxyLink: HttpUrl,
+    pingProxy: Seconds,
+    setLogStream: Ok,
+    getLogStream: LogStream,
+    setLogVerbosityLevel: Ok,
+    getLogVerbosityLevel: LogVerbosityLevel,
+    getLogTags: LogTags,
+    setLogTagVerbosityLevel: Ok,
+    getLogTagVerbosityLevel: LogVerbosityLevel,
+    addLogMessage: Ok,
+    getUserSupportInfo: UserSupportInfo,
+    setUserSupportInfo: UserSupportInfo,
+    getSupportName: Text,
+    testCallEmpty: Ok,
+    testCallString: TestString,
+    testCallBytes: TestBytes,
+    testCallVectorInt: TestVectorInt,
+    testCallVectorIntObject: TestVectorIntObject,
+    testCallVectorString: TestVectorString,
+    testCallVectorStringObject: TestVectorStringObject,
+    testSquareInt: TestInt,
+    testNetwork: Ok,
+    testProxy: Ok,
+    testGetDifference: Ok,
+    testUseUpdate: Update,
+    testReturnError: Error,
+  }
+
+  export type $FunctionInputByName = {
+    getAuthorizationState: getAuthorizationState,
+    setTdlibParameters: setTdlibParameters,
+    setAuthenticationPhoneNumber: setAuthenticationPhoneNumber,
+    setAuthenticationEmailAddress: setAuthenticationEmailAddress,
+    resendAuthenticationCode: resendAuthenticationCode,
+    checkAuthenticationEmailCode: checkAuthenticationEmailCode,
+    checkAuthenticationCode: checkAuthenticationCode,
+    requestQrCodeAuthentication: requestQrCodeAuthentication,
+    registerUser: registerUser,
+    resetAuthenticationEmailAddress: resetAuthenticationEmailAddress,
+    checkAuthenticationPassword: checkAuthenticationPassword,
+    requestAuthenticationPasswordRecovery: requestAuthenticationPasswordRecovery,
+    checkAuthenticationPasswordRecoveryCode: checkAuthenticationPasswordRecoveryCode,
+    recoverAuthenticationPassword: recoverAuthenticationPassword,
+    sendAuthenticationFirebaseSms: sendAuthenticationFirebaseSms,
+    checkAuthenticationBotToken: checkAuthenticationBotToken,
+    logOut: logOut,
+    close: close,
+    destroy: destroy,
+    confirmQrCodeAuthentication: confirmQrCodeAuthentication,
+    getCurrentState: getCurrentState,
+    setDatabaseEncryptionKey: setDatabaseEncryptionKey,
+    getPasswordState: getPasswordState,
+    setPassword: setPassword,
+    setLoginEmailAddress: setLoginEmailAddress,
+    resendLoginEmailAddressCode: resendLoginEmailAddressCode,
+    checkLoginEmailAddressCode: checkLoginEmailAddressCode,
+    getRecoveryEmailAddress: getRecoveryEmailAddress,
+    setRecoveryEmailAddress: setRecoveryEmailAddress,
+    checkRecoveryEmailAddressCode: checkRecoveryEmailAddressCode,
+    resendRecoveryEmailAddressCode: resendRecoveryEmailAddressCode,
+    cancelRecoveryEmailAddressVerification: cancelRecoveryEmailAddressVerification,
+    requestPasswordRecovery: requestPasswordRecovery,
+    checkPasswordRecoveryCode: checkPasswordRecoveryCode,
+    recoverPassword: recoverPassword,
+    resetPassword: resetPassword,
+    cancelPasswordReset: cancelPasswordReset,
+    createTemporaryPassword: createTemporaryPassword,
+    getTemporaryPasswordState: getTemporaryPasswordState,
+    getMe: getMe,
+    getUser: getUser,
+    getUserFullInfo: getUserFullInfo,
+    getBasicGroup: getBasicGroup,
+    getBasicGroupFullInfo: getBasicGroupFullInfo,
+    getSupergroup: getSupergroup,
+    getSupergroupFullInfo: getSupergroupFullInfo,
+    getSecretChat: getSecretChat,
+    getChat: getChat,
+    getMessage: getMessage,
+    getMessageLocally: getMessageLocally,
+    getRepliedMessage: getRepliedMessage,
+    getChatPinnedMessage: getChatPinnedMessage,
+    getCallbackQueryMessage: getCallbackQueryMessage,
+    getMessages: getMessages,
+    getMessageThread: getMessageThread,
+    getMessageReadDate: getMessageReadDate,
+    getMessageViewers: getMessageViewers,
+    getFile: getFile,
+    getRemoteFile: getRemoteFile,
+    loadChats: loadChats,
+    getChats: getChats,
+    searchPublicChat: searchPublicChat,
+    searchPublicChats: searchPublicChats,
+    searchChats: searchChats,
+    searchChatsOnServer: searchChatsOnServer,
+    searchChatsNearby: searchChatsNearby,
+    getChatSimilarChats: getChatSimilarChats,
+    getChatSimilarChatCount: getChatSimilarChatCount,
+    openChatSimilarChat: openChatSimilarChat,
+    getTopChats: getTopChats,
+    removeTopChat: removeTopChat,
+    searchRecentlyFoundChats: searchRecentlyFoundChats,
+    addRecentlyFoundChat: addRecentlyFoundChat,
+    removeRecentlyFoundChat: removeRecentlyFoundChat,
+    clearRecentlyFoundChats: clearRecentlyFoundChats,
+    getRecentlyOpenedChats: getRecentlyOpenedChats,
+    checkChatUsername: checkChatUsername,
+    getCreatedPublicChats: getCreatedPublicChats,
+    checkCreatedPublicChatsLimit: checkCreatedPublicChatsLimit,
+    getSuitableDiscussionChats: getSuitableDiscussionChats,
+    getInactiveSupergroupChats: getInactiveSupergroupChats,
+    getSuitablePersonalChats: getSuitablePersonalChats,
+    loadSavedMessagesTopics: loadSavedMessagesTopics,
+    getSavedMessagesTopicHistory: getSavedMessagesTopicHistory,
+    getSavedMessagesTopicMessageByDate: getSavedMessagesTopicMessageByDate,
+    deleteSavedMessagesTopicHistory: deleteSavedMessagesTopicHistory,
+    deleteSavedMessagesTopicMessagesByDate: deleteSavedMessagesTopicMessagesByDate,
+    toggleSavedMessagesTopicIsPinned: toggleSavedMessagesTopicIsPinned,
+    setPinnedSavedMessagesTopics: setPinnedSavedMessagesTopics,
+    getGroupsInCommon: getGroupsInCommon,
+    getChatHistory: getChatHistory,
+    getMessageThreadHistory: getMessageThreadHistory,
+    deleteChatHistory: deleteChatHistory,
+    deleteChat: deleteChat,
+    searchChatMessages: searchChatMessages,
+    searchMessages: searchMessages,
+    searchSecretMessages: searchSecretMessages,
+    searchSavedMessages: searchSavedMessages,
+    searchCallMessages: searchCallMessages,
+    searchOutgoingDocumentMessages: searchOutgoingDocumentMessages,
+    deleteAllCallMessages: deleteAllCallMessages,
+    searchChatRecentLocationMessages: searchChatRecentLocationMessages,
+    getActiveLiveLocationMessages: getActiveLiveLocationMessages,
+    getChatMessageByDate: getChatMessageByDate,
+    getChatSparseMessagePositions: getChatSparseMessagePositions,
+    getChatMessageCalendar: getChatMessageCalendar,
+    getChatMessageCount: getChatMessageCount,
+    getChatMessagePosition: getChatMessagePosition,
+    getChatScheduledMessages: getChatScheduledMessages,
+    getChatSponsoredMessages: getChatSponsoredMessages,
+    clickChatSponsoredMessage: clickChatSponsoredMessage,
+    reportChatSponsoredMessage: reportChatSponsoredMessage,
+    removeNotification: removeNotification,
+    removeNotificationGroup: removeNotificationGroup,
+    getMessageLink: getMessageLink,
+    getMessageEmbeddingCode: getMessageEmbeddingCode,
+    getMessageLinkInfo: getMessageLinkInfo,
+    translateText: translateText,
+    translateMessageText: translateMessageText,
+    recognizeSpeech: recognizeSpeech,
+    rateSpeechRecognition: rateSpeechRecognition,
+    getChatAvailableMessageSenders: getChatAvailableMessageSenders,
+    setChatMessageSender: setChatMessageSender,
+    sendMessage: sendMessage,
+    sendMessageAlbum: sendMessageAlbum,
+    sendBotStartMessage: sendBotStartMessage,
+    sendInlineQueryResultMessage: sendInlineQueryResultMessage,
+    forwardMessages: forwardMessages,
+    sendQuickReplyShortcutMessages: sendQuickReplyShortcutMessages,
+    resendMessages: resendMessages,
+    addLocalMessage: addLocalMessage,
+    deleteMessages: deleteMessages,
+    deleteChatMessagesBySender: deleteChatMessagesBySender,
+    deleteChatMessagesByDate: deleteChatMessagesByDate,
+    editMessageText: editMessageText,
+    editMessageLiveLocation: editMessageLiveLocation,
+    editMessageMedia: editMessageMedia,
+    editMessageCaption: editMessageCaption,
+    editMessageReplyMarkup: editMessageReplyMarkup,
+    editInlineMessageText: editInlineMessageText,
+    editInlineMessageLiveLocation: editInlineMessageLiveLocation,
+    editInlineMessageMedia: editInlineMessageMedia,
+    editInlineMessageCaption: editInlineMessageCaption,
+    editInlineMessageReplyMarkup: editInlineMessageReplyMarkup,
+    editMessageSchedulingState: editMessageSchedulingState,
+    sendBusinessMessage: sendBusinessMessage,
+    sendBusinessMessageAlbum: sendBusinessMessageAlbum,
+    checkQuickReplyShortcutName: checkQuickReplyShortcutName,
+    loadQuickReplyShortcuts: loadQuickReplyShortcuts,
+    setQuickReplyShortcutName: setQuickReplyShortcutName,
+    deleteQuickReplyShortcut: deleteQuickReplyShortcut,
+    reorderQuickReplyShortcuts: reorderQuickReplyShortcuts,
+    loadQuickReplyShortcutMessages: loadQuickReplyShortcutMessages,
+    deleteQuickReplyShortcutMessages: deleteQuickReplyShortcutMessages,
+    addQuickReplyShortcutMessage: addQuickReplyShortcutMessage,
+    addQuickReplyShortcutInlineQueryResultMessage: addQuickReplyShortcutInlineQueryResultMessage,
+    readdQuickReplyShortcutMessages: readdQuickReplyShortcutMessages,
+    editQuickReplyMessage: editQuickReplyMessage,
+    getForumTopicDefaultIcons: getForumTopicDefaultIcons,
+    createForumTopic: createForumTopic,
+    editForumTopic: editForumTopic,
+    getForumTopic: getForumTopic,
+    getForumTopicLink: getForumTopicLink,
+    getForumTopics: getForumTopics,
+    setForumTopicNotificationSettings: setForumTopicNotificationSettings,
+    toggleForumTopicIsClosed: toggleForumTopicIsClosed,
+    toggleGeneralForumTopicIsHidden: toggleGeneralForumTopicIsHidden,
+    toggleForumTopicIsPinned: toggleForumTopicIsPinned,
+    setPinnedForumTopics: setPinnedForumTopics,
+    deleteForumTopic: deleteForumTopic,
+    getEmojiReaction: getEmojiReaction,
+    getCustomEmojiReactionAnimations: getCustomEmojiReactionAnimations,
+    getMessageAvailableReactions: getMessageAvailableReactions,
+    clearRecentReactions: clearRecentReactions,
+    addMessageReaction: addMessageReaction,
+    removeMessageReaction: removeMessageReaction,
+    setMessageReactions: setMessageReactions,
+    getMessageAddedReactions: getMessageAddedReactions,
+    setDefaultReactionType: setDefaultReactionType,
+    getSavedMessagesTags: getSavedMessagesTags,
+    setSavedMessagesTagLabel: setSavedMessagesTagLabel,
+    searchQuote: searchQuote,
+    getTextEntities: getTextEntities,
+    parseTextEntities: parseTextEntities,
+    parseMarkdown: parseMarkdown,
+    getMarkdownText: getMarkdownText,
+    getCountryFlagEmoji: getCountryFlagEmoji,
+    getFileMimeType: getFileMimeType,
+    getFileExtension: getFileExtension,
+    cleanFileName: cleanFileName,
+    getLanguagePackString: getLanguagePackString,
+    getJsonValue: getJsonValue,
+    getJsonString: getJsonString,
+    getThemeParametersJsonString: getThemeParametersJsonString,
+    setPollAnswer: setPollAnswer,
+    getPollVoters: getPollVoters,
+    stopPoll: stopPoll,
+    hideSuggestedAction: hideSuggestedAction,
+    getBusinessConnection: getBusinessConnection,
+    getLoginUrlInfo: getLoginUrlInfo,
+    getLoginUrl: getLoginUrl,
+    shareUsersWithBot: shareUsersWithBot,
+    shareChatWithBot: shareChatWithBot,
+    getInlineQueryResults: getInlineQueryResults,
+    answerInlineQuery: answerInlineQuery,
+    searchWebApp: searchWebApp,
+    getWebAppLinkUrl: getWebAppLinkUrl,
+    getWebAppUrl: getWebAppUrl,
+    sendWebAppData: sendWebAppData,
+    openWebApp: openWebApp,
+    closeWebApp: closeWebApp,
+    answerWebAppQuery: answerWebAppQuery,
+    getCallbackQueryAnswer: getCallbackQueryAnswer,
+    answerCallbackQuery: answerCallbackQuery,
+    answerShippingQuery: answerShippingQuery,
+    answerPreCheckoutQuery: answerPreCheckoutQuery,
+    setGameScore: setGameScore,
+    setInlineGameScore: setInlineGameScore,
+    getGameHighScores: getGameHighScores,
+    getInlineGameHighScores: getInlineGameHighScores,
+    deleteChatReplyMarkup: deleteChatReplyMarkup,
+    sendChatAction: sendChatAction,
+    openChat: openChat,
+    closeChat: closeChat,
+    viewMessages: viewMessages,
+    openMessageContent: openMessageContent,
+    clickAnimatedEmojiMessage: clickAnimatedEmojiMessage,
+    getInternalLink: getInternalLink,
+    getInternalLinkType: getInternalLinkType,
+    getExternalLinkInfo: getExternalLinkInfo,
+    getExternalLink: getExternalLink,
+    readAllChatMentions: readAllChatMentions,
+    readAllMessageThreadMentions: readAllMessageThreadMentions,
+    readAllChatReactions: readAllChatReactions,
+    readAllMessageThreadReactions: readAllMessageThreadReactions,
+    createPrivateChat: createPrivateChat,
+    createBasicGroupChat: createBasicGroupChat,
+    createSupergroupChat: createSupergroupChat,
+    createSecretChat: createSecretChat,
+    createNewBasicGroupChat: createNewBasicGroupChat,
+    createNewSupergroupChat: createNewSupergroupChat,
+    createNewSecretChat: createNewSecretChat,
+    upgradeBasicGroupChatToSupergroupChat: upgradeBasicGroupChatToSupergroupChat,
+    getChatListsToAddChat: getChatListsToAddChat,
+    addChatToList: addChatToList,
+    getChatFolder: getChatFolder,
+    createChatFolder: createChatFolder,
+    editChatFolder: editChatFolder,
+    deleteChatFolder: deleteChatFolder,
+    getChatFolderChatsToLeave: getChatFolderChatsToLeave,
+    getChatFolderChatCount: getChatFolderChatCount,
+    reorderChatFolders: reorderChatFolders,
+    toggleChatFolderTags: toggleChatFolderTags,
+    getRecommendedChatFolders: getRecommendedChatFolders,
+    getChatFolderDefaultIconName: getChatFolderDefaultIconName,
+    getChatsForChatFolderInviteLink: getChatsForChatFolderInviteLink,
+    createChatFolderInviteLink: createChatFolderInviteLink,
+    getChatFolderInviteLinks: getChatFolderInviteLinks,
+    editChatFolderInviteLink: editChatFolderInviteLink,
+    deleteChatFolderInviteLink: deleteChatFolderInviteLink,
+    checkChatFolderInviteLink: checkChatFolderInviteLink,
+    addChatFolderByInviteLink: addChatFolderByInviteLink,
+    getChatFolderNewChats: getChatFolderNewChats,
+    processChatFolderNewChats: processChatFolderNewChats,
+    getArchiveChatListSettings: getArchiveChatListSettings,
+    setArchiveChatListSettings: setArchiveChatListSettings,
+    setChatTitle: setChatTitle,
+    setChatPhoto: setChatPhoto,
+    setChatAccentColor: setChatAccentColor,
+    setChatProfileAccentColor: setChatProfileAccentColor,
+    setChatMessageAutoDeleteTime: setChatMessageAutoDeleteTime,
+    setChatEmojiStatus: setChatEmojiStatus,
+    setChatPermissions: setChatPermissions,
+    setChatBackground: setChatBackground,
+    deleteChatBackground: deleteChatBackground,
+    setChatTheme: setChatTheme,
+    setChatDraftMessage: setChatDraftMessage,
+    setChatNotificationSettings: setChatNotificationSettings,
+    toggleChatHasProtectedContent: toggleChatHasProtectedContent,
+    toggleChatViewAsTopics: toggleChatViewAsTopics,
+    toggleChatIsTranslatable: toggleChatIsTranslatable,
+    toggleChatIsMarkedAsUnread: toggleChatIsMarkedAsUnread,
+    toggleChatDefaultDisableNotification: toggleChatDefaultDisableNotification,
+    setChatAvailableReactions: setChatAvailableReactions,
+    setChatClientData: setChatClientData,
+    setChatDescription: setChatDescription,
+    setChatDiscussionGroup: setChatDiscussionGroup,
+    setChatLocation: setChatLocation,
+    setChatSlowModeDelay: setChatSlowModeDelay,
+    pinChatMessage: pinChatMessage,
+    unpinChatMessage: unpinChatMessage,
+    unpinAllChatMessages: unpinAllChatMessages,
+    unpinAllMessageThreadMessages: unpinAllMessageThreadMessages,
+    joinChat: joinChat,
+    leaveChat: leaveChat,
+    addChatMember: addChatMember,
+    addChatMembers: addChatMembers,
+    setChatMemberStatus: setChatMemberStatus,
+    banChatMember: banChatMember,
+    canTransferOwnership: canTransferOwnership,
+    transferChatOwnership: transferChatOwnership,
+    getChatMember: getChatMember,
+    searchChatMembers: searchChatMembers,
+    getChatAdministrators: getChatAdministrators,
+    clearAllDraftMessages: clearAllDraftMessages,
+    getSavedNotificationSound: getSavedNotificationSound,
+    getSavedNotificationSounds: getSavedNotificationSounds,
+    addSavedNotificationSound: addSavedNotificationSound,
+    removeSavedNotificationSound: removeSavedNotificationSound,
+    getChatNotificationSettingsExceptions: getChatNotificationSettingsExceptions,
+    getScopeNotificationSettings: getScopeNotificationSettings,
+    setScopeNotificationSettings: setScopeNotificationSettings,
+    resetAllNotificationSettings: resetAllNotificationSettings,
+    toggleChatIsPinned: toggleChatIsPinned,
+    setPinnedChats: setPinnedChats,
+    readChatList: readChatList,
+    getStory: getStory,
+    getChatsToSendStories: getChatsToSendStories,
+    canSendStory: canSendStory,
+    sendStory: sendStory,
+    editStory: editStory,
+    setStoryPrivacySettings: setStoryPrivacySettings,
+    toggleStoryIsPinned: toggleStoryIsPinned,
+    deleteStory: deleteStory,
+    getStoryNotificationSettingsExceptions: getStoryNotificationSettingsExceptions,
+    loadActiveStories: loadActiveStories,
+    setChatActiveStoriesList: setChatActiveStoriesList,
+    getChatActiveStories: getChatActiveStories,
+    getChatPinnedStories: getChatPinnedStories,
+    getChatArchivedStories: getChatArchivedStories,
+    openStory: openStory,
+    closeStory: closeStory,
+    getStoryAvailableReactions: getStoryAvailableReactions,
+    setStoryReaction: setStoryReaction,
+    getStoryInteractions: getStoryInteractions,
+    getChatStoryInteractions: getChatStoryInteractions,
+    reportStory: reportStory,
+    activateStoryStealthMode: activateStoryStealthMode,
+    getStoryPublicForwards: getStoryPublicForwards,
+    getChatBoostLevelFeatures: getChatBoostLevelFeatures,
+    getChatBoostFeatures: getChatBoostFeatures,
+    getAvailableChatBoostSlots: getAvailableChatBoostSlots,
+    getChatBoostStatus: getChatBoostStatus,
+    boostChat: boostChat,
+    getChatBoostLink: getChatBoostLink,
+    getChatBoostLinkInfo: getChatBoostLinkInfo,
+    getChatBoosts: getChatBoosts,
+    getUserChatBoosts: getUserChatBoosts,
+    getAttachmentMenuBot: getAttachmentMenuBot,
+    toggleBotIsAddedToAttachmentMenu: toggleBotIsAddedToAttachmentMenu,
+    getThemedEmojiStatuses: getThemedEmojiStatuses,
+    getRecentEmojiStatuses: getRecentEmojiStatuses,
+    getDefaultEmojiStatuses: getDefaultEmojiStatuses,
+    clearRecentEmojiStatuses: clearRecentEmojiStatuses,
+    getThemedChatEmojiStatuses: getThemedChatEmojiStatuses,
+    getDefaultChatEmojiStatuses: getDefaultChatEmojiStatuses,
+    getDisallowedChatEmojiStatuses: getDisallowedChatEmojiStatuses,
+    downloadFile: downloadFile,
+    getFileDownloadedPrefixSize: getFileDownloadedPrefixSize,
+    cancelDownloadFile: cancelDownloadFile,
+    getSuggestedFileName: getSuggestedFileName,
+    preliminaryUploadFile: preliminaryUploadFile,
+    cancelPreliminaryUploadFile: cancelPreliminaryUploadFile,
+    writeGeneratedFilePart: writeGeneratedFilePart,
+    setFileGenerationProgress: setFileGenerationProgress,
+    finishFileGeneration: finishFileGeneration,
+    readFilePart: readFilePart,
+    deleteFile: deleteFile,
+    addFileToDownloads: addFileToDownloads,
+    toggleDownloadIsPaused: toggleDownloadIsPaused,
+    toggleAllDownloadsArePaused: toggleAllDownloadsArePaused,
+    removeFileFromDownloads: removeFileFromDownloads,
+    removeAllFilesFromDownloads: removeAllFilesFromDownloads,
+    searchFileDownloads: searchFileDownloads,
+    getMessageFileType: getMessageFileType,
+    getMessageImportConfirmationText: getMessageImportConfirmationText,
+    importMessages: importMessages,
+    replacePrimaryChatInviteLink: replacePrimaryChatInviteLink,
+    createChatInviteLink: createChatInviteLink,
+    editChatInviteLink: editChatInviteLink,
+    getChatInviteLink: getChatInviteLink,
+    getChatInviteLinkCounts: getChatInviteLinkCounts,
+    getChatInviteLinks: getChatInviteLinks,
+    getChatInviteLinkMembers: getChatInviteLinkMembers,
+    revokeChatInviteLink: revokeChatInviteLink,
+    deleteRevokedChatInviteLink: deleteRevokedChatInviteLink,
+    deleteAllRevokedChatInviteLinks: deleteAllRevokedChatInviteLinks,
+    checkChatInviteLink: checkChatInviteLink,
+    joinChatByInviteLink: joinChatByInviteLink,
+    getChatJoinRequests: getChatJoinRequests,
+    processChatJoinRequest: processChatJoinRequest,
+    processChatJoinRequests: processChatJoinRequests,
+    createCall: createCall,
+    acceptCall: acceptCall,
+    sendCallSignalingData: sendCallSignalingData,
+    discardCall: discardCall,
+    sendCallRating: sendCallRating,
+    sendCallDebugInformation: sendCallDebugInformation,
+    sendCallLog: sendCallLog,
+    getVideoChatAvailableParticipants: getVideoChatAvailableParticipants,
+    setVideoChatDefaultParticipant: setVideoChatDefaultParticipant,
+    createVideoChat: createVideoChat,
+    getVideoChatRtmpUrl: getVideoChatRtmpUrl,
+    replaceVideoChatRtmpUrl: replaceVideoChatRtmpUrl,
+    getGroupCall: getGroupCall,
+    startScheduledGroupCall: startScheduledGroupCall,
+    toggleGroupCallEnabledStartNotification: toggleGroupCallEnabledStartNotification,
+    joinGroupCall: joinGroupCall,
+    startGroupCallScreenSharing: startGroupCallScreenSharing,
+    toggleGroupCallScreenSharingIsPaused: toggleGroupCallScreenSharingIsPaused,
+    endGroupCallScreenSharing: endGroupCallScreenSharing,
+    setGroupCallTitle: setGroupCallTitle,
+    toggleGroupCallMuteNewParticipants: toggleGroupCallMuteNewParticipants,
+    inviteGroupCallParticipants: inviteGroupCallParticipants,
+    getGroupCallInviteLink: getGroupCallInviteLink,
+    revokeGroupCallInviteLink: revokeGroupCallInviteLink,
+    startGroupCallRecording: startGroupCallRecording,
+    endGroupCallRecording: endGroupCallRecording,
+    toggleGroupCallIsMyVideoPaused: toggleGroupCallIsMyVideoPaused,
+    toggleGroupCallIsMyVideoEnabled: toggleGroupCallIsMyVideoEnabled,
+    setGroupCallParticipantIsSpeaking: setGroupCallParticipantIsSpeaking,
+    toggleGroupCallParticipantIsMuted: toggleGroupCallParticipantIsMuted,
+    setGroupCallParticipantVolumeLevel: setGroupCallParticipantVolumeLevel,
+    toggleGroupCallParticipantIsHandRaised: toggleGroupCallParticipantIsHandRaised,
+    loadGroupCallParticipants: loadGroupCallParticipants,
+    leaveGroupCall: leaveGroupCall,
+    endGroupCall: endGroupCall,
+    getGroupCallStreams: getGroupCallStreams,
+    getGroupCallStreamSegment: getGroupCallStreamSegment,
+    setMessageSenderBlockList: setMessageSenderBlockList,
+    blockMessageSenderFromReplies: blockMessageSenderFromReplies,
+    getBlockedMessageSenders: getBlockedMessageSenders,
+    addContact: addContact,
+    importContacts: importContacts,
+    getContacts: getContacts,
+    searchContacts: searchContacts,
+    removeContacts: removeContacts,
+    getImportedContactCount: getImportedContactCount,
+    changeImportedContacts: changeImportedContacts,
+    clearImportedContacts: clearImportedContacts,
+    setCloseFriends: setCloseFriends,
+    getCloseFriends: getCloseFriends,
+    setUserPersonalProfilePhoto: setUserPersonalProfilePhoto,
+    suggestUserProfilePhoto: suggestUserProfilePhoto,
+    searchUserByPhoneNumber: searchUserByPhoneNumber,
+    sharePhoneNumber: sharePhoneNumber,
+    getUserProfilePhotos: getUserProfilePhotos,
+    getStickers: getStickers,
+    getAllStickerEmojis: getAllStickerEmojis,
+    searchStickers: searchStickers,
+    getGreetingStickers: getGreetingStickers,
+    getPremiumStickers: getPremiumStickers,
+    getInstalledStickerSets: getInstalledStickerSets,
+    getArchivedStickerSets: getArchivedStickerSets,
+    getTrendingStickerSets: getTrendingStickerSets,
+    getAttachedStickerSets: getAttachedStickerSets,
+    getStickerSet: getStickerSet,
+    searchStickerSet: searchStickerSet,
+    searchInstalledStickerSets: searchInstalledStickerSets,
+    searchStickerSets: searchStickerSets,
+    changeStickerSet: changeStickerSet,
+    viewTrendingStickerSets: viewTrendingStickerSets,
+    reorderInstalledStickerSets: reorderInstalledStickerSets,
+    getRecentStickers: getRecentStickers,
+    addRecentSticker: addRecentSticker,
+    removeRecentSticker: removeRecentSticker,
+    clearRecentStickers: clearRecentStickers,
+    getFavoriteStickers: getFavoriteStickers,
+    addFavoriteSticker: addFavoriteSticker,
+    removeFavoriteSticker: removeFavoriteSticker,
+    getStickerEmojis: getStickerEmojis,
+    searchEmojis: searchEmojis,
+    getKeywordEmojis: getKeywordEmojis,
+    getEmojiCategories: getEmojiCategories,
+    getAnimatedEmoji: getAnimatedEmoji,
+    getEmojiSuggestionsUrl: getEmojiSuggestionsUrl,
+    getCustomEmojiStickers: getCustomEmojiStickers,
+    getDefaultChatPhotoCustomEmojiStickers: getDefaultChatPhotoCustomEmojiStickers,
+    getDefaultProfilePhotoCustomEmojiStickers: getDefaultProfilePhotoCustomEmojiStickers,
+    getDefaultBackgroundCustomEmojiStickers: getDefaultBackgroundCustomEmojiStickers,
+    getSavedAnimations: getSavedAnimations,
+    addSavedAnimation: addSavedAnimation,
+    removeSavedAnimation: removeSavedAnimation,
+    getRecentInlineBots: getRecentInlineBots,
+    searchHashtags: searchHashtags,
+    removeRecentHashtag: removeRecentHashtag,
+    getWebPagePreview: getWebPagePreview,
+    getWebPageInstantView: getWebPageInstantView,
+    setProfilePhoto: setProfilePhoto,
+    deleteProfilePhoto: deleteProfilePhoto,
+    setAccentColor: setAccentColor,
+    setProfileAccentColor: setProfileAccentColor,
+    setName: setName,
+    setBio: setBio,
+    setUsername: setUsername,
+    toggleUsernameIsActive: toggleUsernameIsActive,
+    reorderActiveUsernames: reorderActiveUsernames,
+    setBirthdate: setBirthdate,
+    setPersonalChat: setPersonalChat,
+    setEmojiStatus: setEmojiStatus,
+    setLocation: setLocation,
+    setBusinessLocation: setBusinessLocation,
+    setBusinessOpeningHours: setBusinessOpeningHours,
+    setBusinessGreetingMessageSettings: setBusinessGreetingMessageSettings,
+    setBusinessAwayMessageSettings: setBusinessAwayMessageSettings,
+    setBusinessStartPage: setBusinessStartPage,
+    sendPhoneNumberCode: sendPhoneNumberCode,
+    sendPhoneNumberFirebaseSms: sendPhoneNumberFirebaseSms,
+    resendPhoneNumberCode: resendPhoneNumberCode,
+    checkPhoneNumberCode: checkPhoneNumberCode,
+    getBusinessConnectedBot: getBusinessConnectedBot,
+    setBusinessConnectedBot: setBusinessConnectedBot,
+    deleteBusinessConnectedBot: deleteBusinessConnectedBot,
+    toggleBusinessConnectedBotChatIsPaused: toggleBusinessConnectedBotChatIsPaused,
+    removeBusinessConnectedBotFromChat: removeBusinessConnectedBotFromChat,
+    getBusinessChatLinks: getBusinessChatLinks,
+    createBusinessChatLink: createBusinessChatLink,
+    editBusinessChatLink: editBusinessChatLink,
+    deleteBusinessChatLink: deleteBusinessChatLink,
+    getBusinessChatLinkInfo: getBusinessChatLinkInfo,
+    getUserLink: getUserLink,
+    searchUserByToken: searchUserByToken,
+    setCommands: setCommands,
+    deleteCommands: deleteCommands,
+    getCommands: getCommands,
+    setMenuButton: setMenuButton,
+    getMenuButton: getMenuButton,
+    setDefaultGroupAdministratorRights: setDefaultGroupAdministratorRights,
+    setDefaultChannelAdministratorRights: setDefaultChannelAdministratorRights,
+    canBotSendMessages: canBotSendMessages,
+    allowBotToSendMessages: allowBotToSendMessages,
+    sendWebAppCustomRequest: sendWebAppCustomRequest,
+    setBotName: setBotName,
+    getBotName: getBotName,
+    setBotProfilePhoto: setBotProfilePhoto,
+    toggleBotUsernameIsActive: toggleBotUsernameIsActive,
+    reorderBotActiveUsernames: reorderBotActiveUsernames,
+    setBotInfoDescription: setBotInfoDescription,
+    getBotInfoDescription: getBotInfoDescription,
+    setBotInfoShortDescription: setBotInfoShortDescription,
+    getBotInfoShortDescription: getBotInfoShortDescription,
+    getActiveSessions: getActiveSessions,
+    terminateSession: terminateSession,
+    terminateAllOtherSessions: terminateAllOtherSessions,
+    confirmSession: confirmSession,
+    toggleSessionCanAcceptCalls: toggleSessionCanAcceptCalls,
+    toggleSessionCanAcceptSecretChats: toggleSessionCanAcceptSecretChats,
+    setInactiveSessionTtl: setInactiveSessionTtl,
+    getConnectedWebsites: getConnectedWebsites,
+    disconnectWebsite: disconnectWebsite,
+    disconnectAllWebsites: disconnectAllWebsites,
+    setSupergroupUsername: setSupergroupUsername,
+    toggleSupergroupUsernameIsActive: toggleSupergroupUsernameIsActive,
+    disableAllSupergroupUsernames: disableAllSupergroupUsernames,
+    reorderSupergroupActiveUsernames: reorderSupergroupActiveUsernames,
+    setSupergroupStickerSet: setSupergroupStickerSet,
+    setSupergroupCustomEmojiStickerSet: setSupergroupCustomEmojiStickerSet,
+    setSupergroupUnrestrictBoostCount: setSupergroupUnrestrictBoostCount,
+    toggleSupergroupSignMessages: toggleSupergroupSignMessages,
+    toggleSupergroupJoinToSendMessages: toggleSupergroupJoinToSendMessages,
+    toggleSupergroupJoinByRequest: toggleSupergroupJoinByRequest,
+    toggleSupergroupIsAllHistoryAvailable: toggleSupergroupIsAllHistoryAvailable,
+    toggleSupergroupCanHaveSponsoredMessages: toggleSupergroupCanHaveSponsoredMessages,
+    toggleSupergroupHasHiddenMembers: toggleSupergroupHasHiddenMembers,
+    toggleSupergroupHasAggressiveAntiSpamEnabled: toggleSupergroupHasAggressiveAntiSpamEnabled,
+    toggleSupergroupIsForum: toggleSupergroupIsForum,
+    toggleSupergroupIsBroadcastGroup: toggleSupergroupIsBroadcastGroup,
+    reportSupergroupSpam: reportSupergroupSpam,
+    reportSupergroupAntiSpamFalsePositive: reportSupergroupAntiSpamFalsePositive,
+    getSupergroupMembers: getSupergroupMembers,
+    closeSecretChat: closeSecretChat,
+    getChatEventLog: getChatEventLog,
+    getTimeZones: getTimeZones,
+    getPaymentForm: getPaymentForm,
+    validateOrderInfo: validateOrderInfo,
+    sendPaymentForm: sendPaymentForm,
+    getPaymentReceipt: getPaymentReceipt,
+    getSavedOrderInfo: getSavedOrderInfo,
+    deleteSavedOrderInfo: deleteSavedOrderInfo,
+    deleteSavedCredentials: deleteSavedCredentials,
+    createInvoiceLink: createInvoiceLink,
+    getSupportUser: getSupportUser,
+    getBackgroundUrl: getBackgroundUrl,
+    searchBackground: searchBackground,
+    setDefaultBackground: setDefaultBackground,
+    deleteDefaultBackground: deleteDefaultBackground,
+    getInstalledBackgrounds: getInstalledBackgrounds,
+    removeInstalledBackground: removeInstalledBackground,
+    resetInstalledBackgrounds: resetInstalledBackgrounds,
+    getLocalizationTargetInfo: getLocalizationTargetInfo,
+    getLanguagePackInfo: getLanguagePackInfo,
+    getLanguagePackStrings: getLanguagePackStrings,
+    synchronizeLanguagePack: synchronizeLanguagePack,
+    addCustomServerLanguagePack: addCustomServerLanguagePack,
+    setCustomLanguagePack: setCustomLanguagePack,
+    editCustomLanguagePackInfo: editCustomLanguagePackInfo,
+    setCustomLanguagePackString: setCustomLanguagePackString,
+    deleteLanguagePack: deleteLanguagePack,
+    registerDevice: registerDevice,
+    processPushNotification: processPushNotification,
+    getPushReceiverId: getPushReceiverId,
+    getRecentlyVisitedTMeUrls: getRecentlyVisitedTMeUrls,
+    setUserPrivacySettingRules: setUserPrivacySettingRules,
+    getUserPrivacySettingRules: getUserPrivacySettingRules,
+    setReadDatePrivacySettings: setReadDatePrivacySettings,
+    getReadDatePrivacySettings: getReadDatePrivacySettings,
+    setNewChatPrivacySettings: setNewChatPrivacySettings,
+    getNewChatPrivacySettings: getNewChatPrivacySettings,
+    canSendMessageToUser: canSendMessageToUser,
+    getOption: getOption,
+    setOption: setOption,
+    setAccountTtl: setAccountTtl,
+    getAccountTtl: getAccountTtl,
+    deleteAccount: deleteAccount,
+    setDefaultMessageAutoDeleteTime: setDefaultMessageAutoDeleteTime,
+    getDefaultMessageAutoDeleteTime: getDefaultMessageAutoDeleteTime,
+    removeChatActionBar: removeChatActionBar,
+    reportChat: reportChat,
+    reportChatPhoto: reportChatPhoto,
+    reportMessageReactions: reportMessageReactions,
+    getChatRevenueStatistics: getChatRevenueStatistics,
+    getChatRevenueWithdrawalUrl: getChatRevenueWithdrawalUrl,
+    getChatRevenueTransactions: getChatRevenueTransactions,
+    getChatStatistics: getChatStatistics,
+    getMessageStatistics: getMessageStatistics,
+    getMessagePublicForwards: getMessagePublicForwards,
+    getStoryStatistics: getStoryStatistics,
+    getStatisticalGraph: getStatisticalGraph,
+    getStorageStatistics: getStorageStatistics,
+    getStorageStatisticsFast: getStorageStatisticsFast,
+    getDatabaseStatistics: getDatabaseStatistics,
+    optimizeStorage: optimizeStorage,
+    setNetworkType: setNetworkType,
+    getNetworkStatistics: getNetworkStatistics,
+    addNetworkStatistics: addNetworkStatistics,
+    resetNetworkStatistics: resetNetworkStatistics,
+    getAutoDownloadSettingsPresets: getAutoDownloadSettingsPresets,
+    setAutoDownloadSettings: setAutoDownloadSettings,
+    getAutosaveSettings: getAutosaveSettings,
+    setAutosaveSettings: setAutosaveSettings,
+    clearAutosaveSettingsExceptions: clearAutosaveSettingsExceptions,
+    getBankCardInfo: getBankCardInfo,
+    getPassportElement: getPassportElement,
+    getAllPassportElements: getAllPassportElements,
+    setPassportElement: setPassportElement,
+    deletePassportElement: deletePassportElement,
+    setPassportElementErrors: setPassportElementErrors,
+    getPreferredCountryLanguage: getPreferredCountryLanguage,
+    sendEmailAddressVerificationCode: sendEmailAddressVerificationCode,
+    resendEmailAddressVerificationCode: resendEmailAddressVerificationCode,
+    checkEmailAddressVerificationCode: checkEmailAddressVerificationCode,
+    getPassportAuthorizationForm: getPassportAuthorizationForm,
+    getPassportAuthorizationFormAvailableElements: getPassportAuthorizationFormAvailableElements,
+    sendPassportAuthorizationForm: sendPassportAuthorizationForm,
+    setBotUpdatesStatus: setBotUpdatesStatus,
+    uploadStickerFile: uploadStickerFile,
+    getSuggestedStickerSetName: getSuggestedStickerSetName,
+    checkStickerSetName: checkStickerSetName,
+    createNewStickerSet: createNewStickerSet,
+    addStickerToSet: addStickerToSet,
+    replaceStickerInSet: replaceStickerInSet,
+    setStickerSetThumbnail: setStickerSetThumbnail,
+    setCustomEmojiStickerSetThumbnail: setCustomEmojiStickerSetThumbnail,
+    setStickerSetTitle: setStickerSetTitle,
+    deleteStickerSet: deleteStickerSet,
+    setStickerPositionInSet: setStickerPositionInSet,
+    removeStickerFromSet: removeStickerFromSet,
+    setStickerEmojis: setStickerEmojis,
+    setStickerKeywords: setStickerKeywords,
+    setStickerMaskPosition: setStickerMaskPosition,
+    getOwnedStickerSets: getOwnedStickerSets,
+    getMapThumbnailFile: getMapThumbnailFile,
+    getPremiumLimit: getPremiumLimit,
+    getPremiumFeatures: getPremiumFeatures,
+    getPremiumStickerExamples: getPremiumStickerExamples,
+    viewPremiumFeature: viewPremiumFeature,
+    clickPremiumSubscriptionButton: clickPremiumSubscriptionButton,
+    getPremiumState: getPremiumState,
+    getPremiumGiftCodePaymentOptions: getPremiumGiftCodePaymentOptions,
+    checkPremiumGiftCode: checkPremiumGiftCode,
+    applyPremiumGiftCode: applyPremiumGiftCode,
+    launchPrepaidPremiumGiveaway: launchPrepaidPremiumGiveaway,
+    getPremiumGiveawayInfo: getPremiumGiveawayInfo,
+    canPurchasePremium: canPurchasePremium,
+    assignAppStoreTransaction: assignAppStoreTransaction,
+    assignGooglePlayTransaction: assignGooglePlayTransaction,
+    getBusinessFeatures: getBusinessFeatures,
+    acceptTermsOfService: acceptTermsOfService,
+    searchStringsByPrefix: searchStringsByPrefix,
+    sendCustomRequest: sendCustomRequest,
+    answerCustomQuery: answerCustomQuery,
+    setAlarm: setAlarm,
+    getCountries: getCountries,
+    getCountryCode: getCountryCode,
+    getPhoneNumberInfo: getPhoneNumberInfo,
+    getPhoneNumberInfoSync: getPhoneNumberInfoSync,
+    getCollectibleItemInfo: getCollectibleItemInfo,
+    getDeepLinkInfo: getDeepLinkInfo,
+    getApplicationConfig: getApplicationConfig,
+    saveApplicationLogEvent: saveApplicationLogEvent,
+    getApplicationDownloadLink: getApplicationDownloadLink,
+    addProxy: addProxy,
+    editProxy: editProxy,
+    enableProxy: enableProxy,
+    disableProxy: disableProxy,
+    removeProxy: removeProxy,
+    getProxies: getProxies,
+    getProxyLink: getProxyLink,
+    pingProxy: pingProxy,
+    setLogStream: setLogStream,
+    getLogStream: getLogStream,
+    setLogVerbosityLevel: setLogVerbosityLevel,
+    getLogVerbosityLevel: getLogVerbosityLevel,
+    getLogTags: getLogTags,
+    setLogTagVerbosityLevel: setLogTagVerbosityLevel,
+    getLogTagVerbosityLevel: getLogTagVerbosityLevel,
+    addLogMessage: addLogMessage,
+    getUserSupportInfo: getUserSupportInfo,
+    setUserSupportInfo: setUserSupportInfo,
+    getSupportName: getSupportName,
+    testCallEmpty: testCallEmpty,
+    testCallString: testCallString,
+    testCallBytes: testCallBytes,
+    testCallVectorInt: testCallVectorInt,
+    testCallVectorIntObject: testCallVectorIntObject,
+    testCallVectorString: testCallVectorString,
+    testCallVectorStringObject: testCallVectorStringObject,
+    testSquareInt: testSquareInt,
+    testNetwork: testNetwork,
+    testProxy: testProxy,
+    testGetDifference: testGetDifference,
+    testUseUpdate: testUseUpdate,
+    testReturnError: testReturnError,
+  }
+
+  export type $FunctionName = keyof $FunctionResultByName
+
+  export type Invoke = <T extends $FunctionName>(
+    query: { readonly _: T } & $FunctionInputByName[T]
+  ) => Promise<$FunctionResultByName[T]>
+
+  export type $SyncFunctionName =
+    | 'checkQuickReplyShortcutName'
+    | 'searchQuote'
+    | 'getTextEntities'
+    | 'parseTextEntities'
+    | 'parseMarkdown'
+    | 'getMarkdownText'
+    | 'getCountryFlagEmoji'
+    | 'getFileMimeType'
+    | 'getFileExtension'
+    | 'cleanFileName'
+    | 'getLanguagePackString'
+    | 'getJsonValue'
+    | 'getJsonString'
+    | 'getThemeParametersJsonString'
+    | 'getChatFolderDefaultIconName'
+    | 'getPushReceiverId'
+    | 'getOption'
+    | 'searchStringsByPrefix'
+    | 'getPhoneNumberInfoSync'
+    | 'setLogStream'
+    | 'getLogStream'
+    | 'setLogVerbosityLevel'
+    | 'getLogVerbosityLevel'
+    | 'getLogTags'
+    | 'setLogTagVerbosityLevel'
+    | 'getLogTagVerbosityLevel'
+    | 'addLogMessage'
+    | 'testReturnError'
+
+  export type Execute = <T extends $SyncFunctionName>(
+    query: { readonly _: T } & $FunctionInputByName[T]
+  ) => error | $FunctionResultByName[T]
 }

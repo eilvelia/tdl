@@ -32038,772 +32038,7 @@ declare module 'tdlib-types' {
 
   // --- Special types ---
 
-  declare export type Invoke =
-    & ((query: getAuthorizationState) => Promise<AuthorizationState>)
-    & ((query: setTdlibParameters) => Promise<Ok>)
-    & ((query: setAuthenticationPhoneNumber) => Promise<Ok>)
-    & ((query: setAuthenticationEmailAddress) => Promise<Ok>)
-    & ((query: resendAuthenticationCode) => Promise<Ok>)
-    & ((query: checkAuthenticationEmailCode) => Promise<Ok>)
-    & ((query: checkAuthenticationCode) => Promise<Ok>)
-    & ((query: requestQrCodeAuthentication) => Promise<Ok>)
-    & ((query: registerUser) => Promise<Ok>)
-    & ((query: resetAuthenticationEmailAddress) => Promise<Ok>)
-    & ((query: checkAuthenticationPassword) => Promise<Ok>)
-    & ((query: requestAuthenticationPasswordRecovery) => Promise<Ok>)
-    & ((query: checkAuthenticationPasswordRecoveryCode) => Promise<Ok>)
-    & ((query: recoverAuthenticationPassword) => Promise<Ok>)
-    & ((query: sendAuthenticationFirebaseSms) => Promise<Ok>)
-    & ((query: checkAuthenticationBotToken) => Promise<Ok>)
-    & ((query: logOut) => Promise<Ok>)
-    & ((query: close) => Promise<Ok>)
-    & ((query: destroy) => Promise<Ok>)
-    & ((query: confirmQrCodeAuthentication) => Promise<Session>)
-    & ((query: getCurrentState) => Promise<Updates>)
-    & ((query: setDatabaseEncryptionKey) => Promise<Ok>)
-    & ((query: getPasswordState) => Promise<PasswordState>)
-    & ((query: setPassword) => Promise<PasswordState>)
-    & ((query: setLoginEmailAddress) => Promise<EmailAddressAuthenticationCodeInfo>)
-    & ((query: resendLoginEmailAddressCode) => Promise<EmailAddressAuthenticationCodeInfo>)
-    & ((query: checkLoginEmailAddressCode) => Promise<Ok>)
-    & ((query: getRecoveryEmailAddress) => Promise<RecoveryEmailAddress>)
-    & ((query: setRecoveryEmailAddress) => Promise<PasswordState>)
-    & ((query: checkRecoveryEmailAddressCode) => Promise<PasswordState>)
-    & ((query: resendRecoveryEmailAddressCode) => Promise<PasswordState>)
-    & ((query: cancelRecoveryEmailAddressVerification) => Promise<PasswordState>)
-    & ((query: requestPasswordRecovery) => Promise<EmailAddressAuthenticationCodeInfo>)
-    & ((query: checkPasswordRecoveryCode) => Promise<Ok>)
-    & ((query: recoverPassword) => Promise<PasswordState>)
-    & ((query: resetPassword) => Promise<ResetPasswordResult>)
-    & ((query: cancelPasswordReset) => Promise<Ok>)
-    & ((query: createTemporaryPassword) => Promise<TemporaryPasswordState>)
-    & ((query: getTemporaryPasswordState) => Promise<TemporaryPasswordState>)
-    & ((query: getMe) => Promise<User>)
-    & ((query: getUser) => Promise<User>)
-    & ((query: getUserFullInfo) => Promise<UserFullInfo>)
-    & ((query: getBasicGroup) => Promise<BasicGroup>)
-    & ((query: getBasicGroupFullInfo) => Promise<BasicGroupFullInfo>)
-    & ((query: getSupergroup) => Promise<Supergroup>)
-    & ((query: getSupergroupFullInfo) => Promise<SupergroupFullInfo>)
-    & ((query: getSecretChat) => Promise<SecretChat>)
-    & ((query: getChat) => Promise<Chat>)
-    & ((query: getMessage) => Promise<Message>)
-    & ((query: getMessageLocally) => Promise<Message>)
-    & ((query: getRepliedMessage) => Promise<Message>)
-    & ((query: getChatPinnedMessage) => Promise<Message>)
-    & ((query: getCallbackQueryMessage) => Promise<Message>)
-    & ((query: getMessages) => Promise<Messages>)
-    & ((query: getMessageThread) => Promise<MessageThreadInfo>)
-    & ((query: getMessageReadDate) => Promise<MessageReadDate>)
-    & ((query: getMessageViewers) => Promise<MessageViewers>)
-    & ((query: getFile) => Promise<File>)
-    & ((query: getRemoteFile) => Promise<File>)
-    & ((query: loadChats) => Promise<Ok>)
-    & ((query: getChats) => Promise<Chats>)
-    & ((query: searchPublicChat) => Promise<Chat>)
-    & ((query: searchPublicChats) => Promise<Chats>)
-    & ((query: searchChats) => Promise<Chats>)
-    & ((query: searchChatsOnServer) => Promise<Chats>)
-    & ((query: searchChatsNearby) => Promise<ChatsNearby>)
-    & ((query: getChatSimilarChats) => Promise<Chats>)
-    & ((query: getChatSimilarChatCount) => Promise<Count>)
-    & ((query: openChatSimilarChat) => Promise<Ok>)
-    & ((query: getTopChats) => Promise<Chats>)
-    & ((query: removeTopChat) => Promise<Ok>)
-    & ((query: searchRecentlyFoundChats) => Promise<Chats>)
-    & ((query: addRecentlyFoundChat) => Promise<Ok>)
-    & ((query: removeRecentlyFoundChat) => Promise<Ok>)
-    & ((query: clearRecentlyFoundChats) => Promise<Ok>)
-    & ((query: getRecentlyOpenedChats) => Promise<Chats>)
-    & ((query: checkChatUsername) => Promise<CheckChatUsernameResult>)
-    & ((query: getCreatedPublicChats) => Promise<Chats>)
-    & ((query: checkCreatedPublicChatsLimit) => Promise<Ok>)
-    & ((query: getSuitableDiscussionChats) => Promise<Chats>)
-    & ((query: getInactiveSupergroupChats) => Promise<Chats>)
-    & ((query: getSuitablePersonalChats) => Promise<Chats>)
-    & ((query: loadSavedMessagesTopics) => Promise<Ok>)
-    & ((query: getSavedMessagesTopicHistory) => Promise<Messages>)
-    & ((query: getSavedMessagesTopicMessageByDate) => Promise<Message>)
-    & ((query: deleteSavedMessagesTopicHistory) => Promise<Ok>)
-    & ((query: deleteSavedMessagesTopicMessagesByDate) => Promise<Ok>)
-    & ((query: toggleSavedMessagesTopicIsPinned) => Promise<Ok>)
-    & ((query: setPinnedSavedMessagesTopics) => Promise<Ok>)
-    & ((query: getGroupsInCommon) => Promise<Chats>)
-    & ((query: getChatHistory) => Promise<Messages>)
-    & ((query: getMessageThreadHistory) => Promise<Messages>)
-    & ((query: deleteChatHistory) => Promise<Ok>)
-    & ((query: deleteChat) => Promise<Ok>)
-    & ((query: searchChatMessages) => Promise<FoundChatMessages>)
-    & ((query: searchMessages) => Promise<FoundMessages>)
-    & ((query: searchSecretMessages) => Promise<FoundMessages>)
-    & ((query: searchSavedMessages) => Promise<FoundChatMessages>)
-    & ((query: searchCallMessages) => Promise<FoundMessages>)
-    & ((query: searchOutgoingDocumentMessages) => Promise<FoundMessages>)
-    & ((query: deleteAllCallMessages) => Promise<Ok>)
-    & ((query: searchChatRecentLocationMessages) => Promise<Messages>)
-    & ((query: getActiveLiveLocationMessages) => Promise<Messages>)
-    & ((query: getChatMessageByDate) => Promise<Message>)
-    & ((query: getChatSparseMessagePositions) => Promise<MessagePositions>)
-    & ((query: getChatMessageCalendar) => Promise<MessageCalendar>)
-    & ((query: getChatMessageCount) => Promise<Count>)
-    & ((query: getChatMessagePosition) => Promise<Count>)
-    & ((query: getChatScheduledMessages) => Promise<Messages>)
-    & ((query: getChatSponsoredMessages) => Promise<SponsoredMessages>)
-    & ((query: clickChatSponsoredMessage) => Promise<Ok>)
-    & ((query: reportChatSponsoredMessage) => Promise<ReportChatSponsoredMessageResult>)
-    & ((query: removeNotification) => Promise<Ok>)
-    & ((query: removeNotificationGroup) => Promise<Ok>)
-    & ((query: getMessageLink) => Promise<MessageLink>)
-    & ((query: getMessageEmbeddingCode) => Promise<Text>)
-    & ((query: getMessageLinkInfo) => Promise<MessageLinkInfo>)
-    & ((query: translateText) => Promise<FormattedText>)
-    & ((query: translateMessageText) => Promise<FormattedText>)
-    & ((query: recognizeSpeech) => Promise<Ok>)
-    & ((query: rateSpeechRecognition) => Promise<Ok>)
-    & ((query: getChatAvailableMessageSenders) => Promise<ChatMessageSenders>)
-    & ((query: setChatMessageSender) => Promise<Ok>)
-    & ((query: sendMessage) => Promise<Message>)
-    & ((query: sendMessageAlbum) => Promise<Messages>)
-    & ((query: sendBotStartMessage) => Promise<Message>)
-    & ((query: sendInlineQueryResultMessage) => Promise<Message>)
-    & ((query: forwardMessages) => Promise<Messages>)
-    & ((query: sendQuickReplyShortcutMessages) => Promise<Messages>)
-    & ((query: resendMessages) => Promise<Messages>)
-    & ((query: addLocalMessage) => Promise<Message>)
-    & ((query: deleteMessages) => Promise<Ok>)
-    & ((query: deleteChatMessagesBySender) => Promise<Ok>)
-    & ((query: deleteChatMessagesByDate) => Promise<Ok>)
-    & ((query: editMessageText) => Promise<Message>)
-    & ((query: editMessageLiveLocation) => Promise<Message>)
-    & ((query: editMessageMedia) => Promise<Message>)
-    & ((query: editMessageCaption) => Promise<Message>)
-    & ((query: editMessageReplyMarkup) => Promise<Message>)
-    & ((query: editInlineMessageText) => Promise<Ok>)
-    & ((query: editInlineMessageLiveLocation) => Promise<Ok>)
-    & ((query: editInlineMessageMedia) => Promise<Ok>)
-    & ((query: editInlineMessageCaption) => Promise<Ok>)
-    & ((query: editInlineMessageReplyMarkup) => Promise<Ok>)
-    & ((query: editMessageSchedulingState) => Promise<Ok>)
-    & ((query: sendBusinessMessage) => Promise<BusinessMessage>)
-    & ((query: sendBusinessMessageAlbum) => Promise<BusinessMessages>)
-    & ((query: checkQuickReplyShortcutName) => Promise<Ok>)
-    & ((query: loadQuickReplyShortcuts) => Promise<Ok>)
-    & ((query: setQuickReplyShortcutName) => Promise<Ok>)
-    & ((query: deleteQuickReplyShortcut) => Promise<Ok>)
-    & ((query: reorderQuickReplyShortcuts) => Promise<Ok>)
-    & ((query: loadQuickReplyShortcutMessages) => Promise<Ok>)
-    & ((query: deleteQuickReplyShortcutMessages) => Promise<Ok>)
-    & ((query: addQuickReplyShortcutMessage) => Promise<QuickReplyMessage>)
-    & ((query: addQuickReplyShortcutInlineQueryResultMessage) => Promise<QuickReplyMessage>)
-    & ((query: readdQuickReplyShortcutMessages) => Promise<QuickReplyMessages>)
-    & ((query: editQuickReplyMessage) => Promise<Ok>)
-    & ((query: getForumTopicDefaultIcons) => Promise<Stickers>)
-    & ((query: createForumTopic) => Promise<ForumTopicInfo>)
-    & ((query: editForumTopic) => Promise<Ok>)
-    & ((query: getForumTopic) => Promise<ForumTopic>)
-    & ((query: getForumTopicLink) => Promise<MessageLink>)
-    & ((query: getForumTopics) => Promise<ForumTopics>)
-    & ((query: setForumTopicNotificationSettings) => Promise<Ok>)
-    & ((query: toggleForumTopicIsClosed) => Promise<Ok>)
-    & ((query: toggleGeneralForumTopicIsHidden) => Promise<Ok>)
-    & ((query: toggleForumTopicIsPinned) => Promise<Ok>)
-    & ((query: setPinnedForumTopics) => Promise<Ok>)
-    & ((query: deleteForumTopic) => Promise<Ok>)
-    & ((query: getEmojiReaction) => Promise<EmojiReaction>)
-    & ((query: getCustomEmojiReactionAnimations) => Promise<Stickers>)
-    & ((query: getMessageAvailableReactions) => Promise<AvailableReactions>)
-    & ((query: clearRecentReactions) => Promise<Ok>)
-    & ((query: addMessageReaction) => Promise<Ok>)
-    & ((query: removeMessageReaction) => Promise<Ok>)
-    & ((query: setMessageReactions) => Promise<Ok>)
-    & ((query: getMessageAddedReactions) => Promise<AddedReactions>)
-    & ((query: setDefaultReactionType) => Promise<Ok>)
-    & ((query: getSavedMessagesTags) => Promise<SavedMessagesTags>)
-    & ((query: setSavedMessagesTagLabel) => Promise<Ok>)
-    & ((query: searchQuote) => Promise<FoundPosition>)
-    & ((query: getTextEntities) => Promise<TextEntities>)
-    & ((query: parseTextEntities) => Promise<FormattedText>)
-    & ((query: parseMarkdown) => Promise<FormattedText>)
-    & ((query: getMarkdownText) => Promise<FormattedText>)
-    & ((query: getCountryFlagEmoji) => Promise<Text>)
-    & ((query: getFileMimeType) => Promise<Text>)
-    & ((query: getFileExtension) => Promise<Text>)
-    & ((query: cleanFileName) => Promise<Text>)
-    & ((query: getLanguagePackString) => Promise<LanguagePackStringValue>)
-    & ((query: getJsonValue) => Promise<JsonValue>)
-    & ((query: getJsonString) => Promise<Text>)
-    & ((query: getThemeParametersJsonString) => Promise<Text>)
-    & ((query: setPollAnswer) => Promise<Ok>)
-    & ((query: getPollVoters) => Promise<MessageSenders>)
-    & ((query: stopPoll) => Promise<Ok>)
-    & ((query: hideSuggestedAction) => Promise<Ok>)
-    & ((query: getBusinessConnection) => Promise<BusinessConnection>)
-    & ((query: getLoginUrlInfo) => Promise<LoginUrlInfo>)
-    & ((query: getLoginUrl) => Promise<HttpUrl>)
-    & ((query: shareUsersWithBot) => Promise<Ok>)
-    & ((query: shareChatWithBot) => Promise<Ok>)
-    & ((query: getInlineQueryResults) => Promise<InlineQueryResults>)
-    & ((query: answerInlineQuery) => Promise<Ok>)
-    & ((query: searchWebApp) => Promise<FoundWebApp>)
-    & ((query: getWebAppLinkUrl) => Promise<HttpUrl>)
-    & ((query: getWebAppUrl) => Promise<HttpUrl>)
-    & ((query: sendWebAppData) => Promise<Ok>)
-    & ((query: openWebApp) => Promise<WebAppInfo>)
-    & ((query: closeWebApp) => Promise<Ok>)
-    & ((query: answerWebAppQuery) => Promise<SentWebAppMessage>)
-    & ((query: getCallbackQueryAnswer) => Promise<CallbackQueryAnswer>)
-    & ((query: answerCallbackQuery) => Promise<Ok>)
-    & ((query: answerShippingQuery) => Promise<Ok>)
-    & ((query: answerPreCheckoutQuery) => Promise<Ok>)
-    & ((query: setGameScore) => Promise<Message>)
-    & ((query: setInlineGameScore) => Promise<Ok>)
-    & ((query: getGameHighScores) => Promise<GameHighScores>)
-    & ((query: getInlineGameHighScores) => Promise<GameHighScores>)
-    & ((query: deleteChatReplyMarkup) => Promise<Ok>)
-    & ((query: sendChatAction) => Promise<Ok>)
-    & ((query: openChat) => Promise<Ok>)
-    & ((query: closeChat) => Promise<Ok>)
-    & ((query: viewMessages) => Promise<Ok>)
-    & ((query: openMessageContent) => Promise<Ok>)
-    & ((query: clickAnimatedEmojiMessage) => Promise<Sticker>)
-    & ((query: getInternalLink) => Promise<HttpUrl>)
-    & ((query: getInternalLinkType) => Promise<InternalLinkType>)
-    & ((query: getExternalLinkInfo) => Promise<LoginUrlInfo>)
-    & ((query: getExternalLink) => Promise<HttpUrl>)
-    & ((query: readAllChatMentions) => Promise<Ok>)
-    & ((query: readAllMessageThreadMentions) => Promise<Ok>)
-    & ((query: readAllChatReactions) => Promise<Ok>)
-    & ((query: readAllMessageThreadReactions) => Promise<Ok>)
-    & ((query: createPrivateChat) => Promise<Chat>)
-    & ((query: createBasicGroupChat) => Promise<Chat>)
-    & ((query: createSupergroupChat) => Promise<Chat>)
-    & ((query: createSecretChat) => Promise<Chat>)
-    & ((query: createNewBasicGroupChat) => Promise<CreatedBasicGroupChat>)
-    & ((query: createNewSupergroupChat) => Promise<Chat>)
-    & ((query: createNewSecretChat) => Promise<Chat>)
-    & ((query: upgradeBasicGroupChatToSupergroupChat) => Promise<Chat>)
-    & ((query: getChatListsToAddChat) => Promise<ChatLists>)
-    & ((query: addChatToList) => Promise<Ok>)
-    & ((query: getChatFolder) => Promise<ChatFolder>)
-    & ((query: createChatFolder) => Promise<ChatFolderInfo>)
-    & ((query: editChatFolder) => Promise<ChatFolderInfo>)
-    & ((query: deleteChatFolder) => Promise<Ok>)
-    & ((query: getChatFolderChatsToLeave) => Promise<Chats>)
-    & ((query: getChatFolderChatCount) => Promise<Count>)
-    & ((query: reorderChatFolders) => Promise<Ok>)
-    & ((query: toggleChatFolderTags) => Promise<Ok>)
-    & ((query: getRecommendedChatFolders) => Promise<RecommendedChatFolders>)
-    & ((query: getChatFolderDefaultIconName) => Promise<ChatFolderIcon>)
-    & ((query: getChatsForChatFolderInviteLink) => Promise<Chats>)
-    & ((query: createChatFolderInviteLink) => Promise<ChatFolderInviteLink>)
-    & ((query: getChatFolderInviteLinks) => Promise<ChatFolderInviteLinks>)
-    & ((query: editChatFolderInviteLink) => Promise<ChatFolderInviteLink>)
-    & ((query: deleteChatFolderInviteLink) => Promise<Ok>)
-    & ((query: checkChatFolderInviteLink) => Promise<ChatFolderInviteLinkInfo>)
-    & ((query: addChatFolderByInviteLink) => Promise<Ok>)
-    & ((query: getChatFolderNewChats) => Promise<Chats>)
-    & ((query: processChatFolderNewChats) => Promise<Ok>)
-    & ((query: getArchiveChatListSettings) => Promise<ArchiveChatListSettings>)
-    & ((query: setArchiveChatListSettings) => Promise<Ok>)
-    & ((query: setChatTitle) => Promise<Ok>)
-    & ((query: setChatPhoto) => Promise<Ok>)
-    & ((query: setChatAccentColor) => Promise<Ok>)
-    & ((query: setChatProfileAccentColor) => Promise<Ok>)
-    & ((query: setChatMessageAutoDeleteTime) => Promise<Ok>)
-    & ((query: setChatEmojiStatus) => Promise<Ok>)
-    & ((query: setChatPermissions) => Promise<Ok>)
-    & ((query: setChatBackground) => Promise<Ok>)
-    & ((query: deleteChatBackground) => Promise<Ok>)
-    & ((query: setChatTheme) => Promise<Ok>)
-    & ((query: setChatDraftMessage) => Promise<Ok>)
-    & ((query: setChatNotificationSettings) => Promise<Ok>)
-    & ((query: toggleChatHasProtectedContent) => Promise<Ok>)
-    & ((query: toggleChatViewAsTopics) => Promise<Ok>)
-    & ((query: toggleChatIsTranslatable) => Promise<Ok>)
-    & ((query: toggleChatIsMarkedAsUnread) => Promise<Ok>)
-    & ((query: toggleChatDefaultDisableNotification) => Promise<Ok>)
-    & ((query: setChatAvailableReactions) => Promise<Ok>)
-    & ((query: setChatClientData) => Promise<Ok>)
-    & ((query: setChatDescription) => Promise<Ok>)
-    & ((query: setChatDiscussionGroup) => Promise<Ok>)
-    & ((query: setChatLocation) => Promise<Ok>)
-    & ((query: setChatSlowModeDelay) => Promise<Ok>)
-    & ((query: pinChatMessage) => Promise<Ok>)
-    & ((query: unpinChatMessage) => Promise<Ok>)
-    & ((query: unpinAllChatMessages) => Promise<Ok>)
-    & ((query: unpinAllMessageThreadMessages) => Promise<Ok>)
-    & ((query: joinChat) => Promise<Ok>)
-    & ((query: leaveChat) => Promise<Ok>)
-    & ((query: addChatMember) => Promise<FailedToAddMembers>)
-    & ((query: addChatMembers) => Promise<FailedToAddMembers>)
-    & ((query: setChatMemberStatus) => Promise<Ok>)
-    & ((query: banChatMember) => Promise<Ok>)
-    & ((query: canTransferOwnership) => Promise<CanTransferOwnershipResult>)
-    & ((query: transferChatOwnership) => Promise<Ok>)
-    & ((query: getChatMember) => Promise<ChatMember>)
-    & ((query: searchChatMembers) => Promise<ChatMembers>)
-    & ((query: getChatAdministrators) => Promise<ChatAdministrators>)
-    & ((query: clearAllDraftMessages) => Promise<Ok>)
-    & ((query: getSavedNotificationSound) => Promise<NotificationSounds>)
-    & ((query: getSavedNotificationSounds) => Promise<NotificationSounds>)
-    & ((query: addSavedNotificationSound) => Promise<NotificationSound>)
-    & ((query: removeSavedNotificationSound) => Promise<Ok>)
-    & ((query: getChatNotificationSettingsExceptions) => Promise<Chats>)
-    & ((query: getScopeNotificationSettings) => Promise<ScopeNotificationSettings>)
-    & ((query: setScopeNotificationSettings) => Promise<Ok>)
-    & ((query: resetAllNotificationSettings) => Promise<Ok>)
-    & ((query: toggleChatIsPinned) => Promise<Ok>)
-    & ((query: setPinnedChats) => Promise<Ok>)
-    & ((query: readChatList) => Promise<Ok>)
-    & ((query: getStory) => Promise<Story>)
-    & ((query: getChatsToSendStories) => Promise<Chats>)
-    & ((query: canSendStory) => Promise<CanSendStoryResult>)
-    & ((query: sendStory) => Promise<Story>)
-    & ((query: editStory) => Promise<Ok>)
-    & ((query: setStoryPrivacySettings) => Promise<Ok>)
-    & ((query: toggleStoryIsPinned) => Promise<Ok>)
-    & ((query: deleteStory) => Promise<Ok>)
-    & ((query: getStoryNotificationSettingsExceptions) => Promise<Chats>)
-    & ((query: loadActiveStories) => Promise<Ok>)
-    & ((query: setChatActiveStoriesList) => Promise<Ok>)
-    & ((query: getChatActiveStories) => Promise<ChatActiveStories>)
-    & ((query: getChatPinnedStories) => Promise<Stories>)
-    & ((query: getChatArchivedStories) => Promise<Stories>)
-    & ((query: openStory) => Promise<Ok>)
-    & ((query: closeStory) => Promise<Ok>)
-    & ((query: getStoryAvailableReactions) => Promise<AvailableReactions>)
-    & ((query: setStoryReaction) => Promise<Ok>)
-    & ((query: getStoryInteractions) => Promise<StoryInteractions>)
-    & ((query: getChatStoryInteractions) => Promise<StoryInteractions>)
-    & ((query: reportStory) => Promise<Ok>)
-    & ((query: activateStoryStealthMode) => Promise<Ok>)
-    & ((query: getStoryPublicForwards) => Promise<PublicForwards>)
-    & ((query: getChatBoostLevelFeatures) => Promise<ChatBoostLevelFeatures>)
-    & ((query: getChatBoostFeatures) => Promise<ChatBoostFeatures>)
-    & ((query: getAvailableChatBoostSlots) => Promise<ChatBoostSlots>)
-    & ((query: getChatBoostStatus) => Promise<ChatBoostStatus>)
-    & ((query: boostChat) => Promise<ChatBoostSlots>)
-    & ((query: getChatBoostLink) => Promise<ChatBoostLink>)
-    & ((query: getChatBoostLinkInfo) => Promise<ChatBoostLinkInfo>)
-    & ((query: getChatBoosts) => Promise<FoundChatBoosts>)
-    & ((query: getUserChatBoosts) => Promise<FoundChatBoosts>)
-    & ((query: getAttachmentMenuBot) => Promise<AttachmentMenuBot>)
-    & ((query: toggleBotIsAddedToAttachmentMenu) => Promise<Ok>)
-    & ((query: getThemedEmojiStatuses) => Promise<EmojiStatuses>)
-    & ((query: getRecentEmojiStatuses) => Promise<EmojiStatuses>)
-    & ((query: getDefaultEmojiStatuses) => Promise<EmojiStatuses>)
-    & ((query: clearRecentEmojiStatuses) => Promise<Ok>)
-    & ((query: getThemedChatEmojiStatuses) => Promise<EmojiStatuses>)
-    & ((query: getDefaultChatEmojiStatuses) => Promise<EmojiStatuses>)
-    & ((query: getDisallowedChatEmojiStatuses) => Promise<EmojiStatuses>)
-    & ((query: downloadFile) => Promise<File>)
-    & ((query: getFileDownloadedPrefixSize) => Promise<FileDownloadedPrefixSize>)
-    & ((query: cancelDownloadFile) => Promise<Ok>)
-    & ((query: getSuggestedFileName) => Promise<Text>)
-    & ((query: preliminaryUploadFile) => Promise<File>)
-    & ((query: cancelPreliminaryUploadFile) => Promise<Ok>)
-    & ((query: writeGeneratedFilePart) => Promise<Ok>)
-    & ((query: setFileGenerationProgress) => Promise<Ok>)
-    & ((query: finishFileGeneration) => Promise<Ok>)
-    & ((query: readFilePart) => Promise<FilePart>)
-    & ((query: deleteFile) => Promise<Ok>)
-    & ((query: addFileToDownloads) => Promise<File>)
-    & ((query: toggleDownloadIsPaused) => Promise<Ok>)
-    & ((query: toggleAllDownloadsArePaused) => Promise<Ok>)
-    & ((query: removeFileFromDownloads) => Promise<Ok>)
-    & ((query: removeAllFilesFromDownloads) => Promise<Ok>)
-    & ((query: searchFileDownloads) => Promise<FoundFileDownloads>)
-    & ((query: getMessageFileType) => Promise<MessageFileType>)
-    & ((query: getMessageImportConfirmationText) => Promise<Text>)
-    & ((query: importMessages) => Promise<Ok>)
-    & ((query: replacePrimaryChatInviteLink) => Promise<ChatInviteLink>)
-    & ((query: createChatInviteLink) => Promise<ChatInviteLink>)
-    & ((query: editChatInviteLink) => Promise<ChatInviteLink>)
-    & ((query: getChatInviteLink) => Promise<ChatInviteLink>)
-    & ((query: getChatInviteLinkCounts) => Promise<ChatInviteLinkCounts>)
-    & ((query: getChatInviteLinks) => Promise<ChatInviteLinks>)
-    & ((query: getChatInviteLinkMembers) => Promise<ChatInviteLinkMembers>)
-    & ((query: revokeChatInviteLink) => Promise<ChatInviteLinks>)
-    & ((query: deleteRevokedChatInviteLink) => Promise<Ok>)
-    & ((query: deleteAllRevokedChatInviteLinks) => Promise<Ok>)
-    & ((query: checkChatInviteLink) => Promise<ChatInviteLinkInfo>)
-    & ((query: joinChatByInviteLink) => Promise<Chat>)
-    & ((query: getChatJoinRequests) => Promise<ChatJoinRequests>)
-    & ((query: processChatJoinRequest) => Promise<Ok>)
-    & ((query: processChatJoinRequests) => Promise<Ok>)
-    & ((query: createCall) => Promise<CallId>)
-    & ((query: acceptCall) => Promise<Ok>)
-    & ((query: sendCallSignalingData) => Promise<Ok>)
-    & ((query: discardCall) => Promise<Ok>)
-    & ((query: sendCallRating) => Promise<Ok>)
-    & ((query: sendCallDebugInformation) => Promise<Ok>)
-    & ((query: sendCallLog) => Promise<Ok>)
-    & ((query: getVideoChatAvailableParticipants) => Promise<MessageSenders>)
-    & ((query: setVideoChatDefaultParticipant) => Promise<Ok>)
-    & ((query: createVideoChat) => Promise<GroupCallId>)
-    & ((query: getVideoChatRtmpUrl) => Promise<RtmpUrl>)
-    & ((query: replaceVideoChatRtmpUrl) => Promise<RtmpUrl>)
-    & ((query: getGroupCall) => Promise<GroupCall>)
-    & ((query: startScheduledGroupCall) => Promise<Ok>)
-    & ((query: toggleGroupCallEnabledStartNotification) => Promise<Ok>)
-    & ((query: joinGroupCall) => Promise<Text>)
-    & ((query: startGroupCallScreenSharing) => Promise<Text>)
-    & ((query: toggleGroupCallScreenSharingIsPaused) => Promise<Ok>)
-    & ((query: endGroupCallScreenSharing) => Promise<Ok>)
-    & ((query: setGroupCallTitle) => Promise<Ok>)
-    & ((query: toggleGroupCallMuteNewParticipants) => Promise<Ok>)
-    & ((query: inviteGroupCallParticipants) => Promise<Ok>)
-    & ((query: getGroupCallInviteLink) => Promise<HttpUrl>)
-    & ((query: revokeGroupCallInviteLink) => Promise<Ok>)
-    & ((query: startGroupCallRecording) => Promise<Ok>)
-    & ((query: endGroupCallRecording) => Promise<Ok>)
-    & ((query: toggleGroupCallIsMyVideoPaused) => Promise<Ok>)
-    & ((query: toggleGroupCallIsMyVideoEnabled) => Promise<Ok>)
-    & ((query: setGroupCallParticipantIsSpeaking) => Promise<Ok>)
-    & ((query: toggleGroupCallParticipantIsMuted) => Promise<Ok>)
-    & ((query: setGroupCallParticipantVolumeLevel) => Promise<Ok>)
-    & ((query: toggleGroupCallParticipantIsHandRaised) => Promise<Ok>)
-    & ((query: loadGroupCallParticipants) => Promise<Ok>)
-    & ((query: leaveGroupCall) => Promise<Ok>)
-    & ((query: endGroupCall) => Promise<Ok>)
-    & ((query: getGroupCallStreams) => Promise<GroupCallStreams>)
-    & ((query: getGroupCallStreamSegment) => Promise<FilePart>)
-    & ((query: setMessageSenderBlockList) => Promise<Ok>)
-    & ((query: blockMessageSenderFromReplies) => Promise<Ok>)
-    & ((query: getBlockedMessageSenders) => Promise<MessageSenders>)
-    & ((query: addContact) => Promise<Ok>)
-    & ((query: importContacts) => Promise<ImportedContacts>)
-    & ((query: getContacts) => Promise<Users>)
-    & ((query: searchContacts) => Promise<Users>)
-    & ((query: removeContacts) => Promise<Ok>)
-    & ((query: getImportedContactCount) => Promise<Count>)
-    & ((query: changeImportedContacts) => Promise<ImportedContacts>)
-    & ((query: clearImportedContacts) => Promise<Ok>)
-    & ((query: setCloseFriends) => Promise<Ok>)
-    & ((query: getCloseFriends) => Promise<Users>)
-    & ((query: setUserPersonalProfilePhoto) => Promise<Ok>)
-    & ((query: suggestUserProfilePhoto) => Promise<Ok>)
-    & ((query: searchUserByPhoneNumber) => Promise<User>)
-    & ((query: sharePhoneNumber) => Promise<Ok>)
-    & ((query: getUserProfilePhotos) => Promise<ChatPhotos>)
-    & ((query: getStickers) => Promise<Stickers>)
-    & ((query: getAllStickerEmojis) => Promise<Emojis>)
-    & ((query: searchStickers) => Promise<Stickers>)
-    & ((query: getGreetingStickers) => Promise<Stickers>)
-    & ((query: getPremiumStickers) => Promise<Stickers>)
-    & ((query: getInstalledStickerSets) => Promise<StickerSets>)
-    & ((query: getArchivedStickerSets) => Promise<StickerSets>)
-    & ((query: getTrendingStickerSets) => Promise<TrendingStickerSets>)
-    & ((query: getAttachedStickerSets) => Promise<StickerSets>)
-    & ((query: getStickerSet) => Promise<StickerSet>)
-    & ((query: searchStickerSet) => Promise<StickerSet>)
-    & ((query: searchInstalledStickerSets) => Promise<StickerSets>)
-    & ((query: searchStickerSets) => Promise<StickerSets>)
-    & ((query: changeStickerSet) => Promise<Ok>)
-    & ((query: viewTrendingStickerSets) => Promise<Ok>)
-    & ((query: reorderInstalledStickerSets) => Promise<Ok>)
-    & ((query: getRecentStickers) => Promise<Stickers>)
-    & ((query: addRecentSticker) => Promise<Stickers>)
-    & ((query: removeRecentSticker) => Promise<Ok>)
-    & ((query: clearRecentStickers) => Promise<Ok>)
-    & ((query: getFavoriteStickers) => Promise<Stickers>)
-    & ((query: addFavoriteSticker) => Promise<Ok>)
-    & ((query: removeFavoriteSticker) => Promise<Ok>)
-    & ((query: getStickerEmojis) => Promise<Emojis>)
-    & ((query: searchEmojis) => Promise<EmojiKeywords>)
-    & ((query: getKeywordEmojis) => Promise<Emojis>)
-    & ((query: getEmojiCategories) => Promise<EmojiCategories>)
-    & ((query: getAnimatedEmoji) => Promise<AnimatedEmoji>)
-    & ((query: getEmojiSuggestionsUrl) => Promise<HttpUrl>)
-    & ((query: getCustomEmojiStickers) => Promise<Stickers>)
-    & ((query: getDefaultChatPhotoCustomEmojiStickers) => Promise<Stickers>)
-    & ((query: getDefaultProfilePhotoCustomEmojiStickers) => Promise<Stickers>)
-    & ((query: getDefaultBackgroundCustomEmojiStickers) => Promise<Stickers>)
-    & ((query: getSavedAnimations) => Promise<Animations>)
-    & ((query: addSavedAnimation) => Promise<Ok>)
-    & ((query: removeSavedAnimation) => Promise<Ok>)
-    & ((query: getRecentInlineBots) => Promise<Users>)
-    & ((query: searchHashtags) => Promise<Hashtags>)
-    & ((query: removeRecentHashtag) => Promise<Ok>)
-    & ((query: getWebPagePreview) => Promise<WebPage>)
-    & ((query: getWebPageInstantView) => Promise<WebPageInstantView>)
-    & ((query: setProfilePhoto) => Promise<Ok>)
-    & ((query: deleteProfilePhoto) => Promise<Ok>)
-    & ((query: setAccentColor) => Promise<Ok>)
-    & ((query: setProfileAccentColor) => Promise<Ok>)
-    & ((query: setName) => Promise<Ok>)
-    & ((query: setBio) => Promise<Ok>)
-    & ((query: setUsername) => Promise<Ok>)
-    & ((query: toggleUsernameIsActive) => Promise<Ok>)
-    & ((query: reorderActiveUsernames) => Promise<Ok>)
-    & ((query: setBirthdate) => Promise<Ok>)
-    & ((query: setPersonalChat) => Promise<Ok>)
-    & ((query: setEmojiStatus) => Promise<Ok>)
-    & ((query: setLocation) => Promise<Ok>)
-    & ((query: setBusinessLocation) => Promise<Ok>)
-    & ((query: setBusinessOpeningHours) => Promise<Ok>)
-    & ((query: setBusinessGreetingMessageSettings) => Promise<Ok>)
-    & ((query: setBusinessAwayMessageSettings) => Promise<Ok>)
-    & ((query: setBusinessStartPage) => Promise<Ok>)
-    & ((query: sendPhoneNumberCode) => Promise<AuthenticationCodeInfo>)
-    & ((query: sendPhoneNumberFirebaseSms) => Promise<Ok>)
-    & ((query: resendPhoneNumberCode) => Promise<AuthenticationCodeInfo>)
-    & ((query: checkPhoneNumberCode) => Promise<Ok>)
-    & ((query: getBusinessConnectedBot) => Promise<BusinessConnectedBot>)
-    & ((query: setBusinessConnectedBot) => Promise<Ok>)
-    & ((query: deleteBusinessConnectedBot) => Promise<Ok>)
-    & ((query: toggleBusinessConnectedBotChatIsPaused) => Promise<Ok>)
-    & ((query: removeBusinessConnectedBotFromChat) => Promise<Ok>)
-    & ((query: getBusinessChatLinks) => Promise<BusinessChatLinks>)
-    & ((query: createBusinessChatLink) => Promise<BusinessChatLink>)
-    & ((query: editBusinessChatLink) => Promise<BusinessChatLink>)
-    & ((query: deleteBusinessChatLink) => Promise<Ok>)
-    & ((query: getBusinessChatLinkInfo) => Promise<BusinessChatLinkInfo>)
-    & ((query: getUserLink) => Promise<UserLink>)
-    & ((query: searchUserByToken) => Promise<User>)
-    & ((query: setCommands) => Promise<Ok>)
-    & ((query: deleteCommands) => Promise<Ok>)
-    & ((query: getCommands) => Promise<BotCommands>)
-    & ((query: setMenuButton) => Promise<Ok>)
-    & ((query: getMenuButton) => Promise<BotMenuButton>)
-    & ((query: setDefaultGroupAdministratorRights) => Promise<Ok>)
-    & ((query: setDefaultChannelAdministratorRights) => Promise<Ok>)
-    & ((query: canBotSendMessages) => Promise<Ok>)
-    & ((query: allowBotToSendMessages) => Promise<Ok>)
-    & ((query: sendWebAppCustomRequest) => Promise<CustomRequestResult>)
-    & ((query: setBotName) => Promise<Ok>)
-    & ((query: getBotName) => Promise<Text>)
-    & ((query: setBotProfilePhoto) => Promise<Ok>)
-    & ((query: toggleBotUsernameIsActive) => Promise<Ok>)
-    & ((query: reorderBotActiveUsernames) => Promise<Ok>)
-    & ((query: setBotInfoDescription) => Promise<Ok>)
-    & ((query: getBotInfoDescription) => Promise<Text>)
-    & ((query: setBotInfoShortDescription) => Promise<Ok>)
-    & ((query: getBotInfoShortDescription) => Promise<Text>)
-    & ((query: getActiveSessions) => Promise<Sessions>)
-    & ((query: terminateSession) => Promise<Ok>)
-    & ((query: terminateAllOtherSessions) => Promise<Ok>)
-    & ((query: confirmSession) => Promise<Ok>)
-    & ((query: toggleSessionCanAcceptCalls) => Promise<Ok>)
-    & ((query: toggleSessionCanAcceptSecretChats) => Promise<Ok>)
-    & ((query: setInactiveSessionTtl) => Promise<Ok>)
-    & ((query: getConnectedWebsites) => Promise<ConnectedWebsites>)
-    & ((query: disconnectWebsite) => Promise<Ok>)
-    & ((query: disconnectAllWebsites) => Promise<Ok>)
-    & ((query: setSupergroupUsername) => Promise<Ok>)
-    & ((query: toggleSupergroupUsernameIsActive) => Promise<Ok>)
-    & ((query: disableAllSupergroupUsernames) => Promise<Ok>)
-    & ((query: reorderSupergroupActiveUsernames) => Promise<Ok>)
-    & ((query: setSupergroupStickerSet) => Promise<Ok>)
-    & ((query: setSupergroupCustomEmojiStickerSet) => Promise<Ok>)
-    & ((query: setSupergroupUnrestrictBoostCount) => Promise<Ok>)
-    & ((query: toggleSupergroupSignMessages) => Promise<Ok>)
-    & ((query: toggleSupergroupJoinToSendMessages) => Promise<Ok>)
-    & ((query: toggleSupergroupJoinByRequest) => Promise<Ok>)
-    & ((query: toggleSupergroupIsAllHistoryAvailable) => Promise<Ok>)
-    & ((query: toggleSupergroupCanHaveSponsoredMessages) => Promise<Ok>)
-    & ((query: toggleSupergroupHasHiddenMembers) => Promise<Ok>)
-    & ((query: toggleSupergroupHasAggressiveAntiSpamEnabled) => Promise<Ok>)
-    & ((query: toggleSupergroupIsForum) => Promise<Ok>)
-    & ((query: toggleSupergroupIsBroadcastGroup) => Promise<Ok>)
-    & ((query: reportSupergroupSpam) => Promise<Ok>)
-    & ((query: reportSupergroupAntiSpamFalsePositive) => Promise<Ok>)
-    & ((query: getSupergroupMembers) => Promise<ChatMembers>)
-    & ((query: closeSecretChat) => Promise<Ok>)
-    & ((query: getChatEventLog) => Promise<ChatEvents>)
-    & ((query: getTimeZones) => Promise<TimeZones>)
-    & ((query: getPaymentForm) => Promise<PaymentForm>)
-    & ((query: validateOrderInfo) => Promise<ValidatedOrderInfo>)
-    & ((query: sendPaymentForm) => Promise<PaymentResult>)
-    & ((query: getPaymentReceipt) => Promise<PaymentReceipt>)
-    & ((query: getSavedOrderInfo) => Promise<OrderInfo>)
-    & ((query: deleteSavedOrderInfo) => Promise<Ok>)
-    & ((query: deleteSavedCredentials) => Promise<Ok>)
-    & ((query: createInvoiceLink) => Promise<HttpUrl>)
-    & ((query: getSupportUser) => Promise<User>)
-    & ((query: getBackgroundUrl) => Promise<HttpUrl>)
-    & ((query: searchBackground) => Promise<Background>)
-    & ((query: setDefaultBackground) => Promise<Background>)
-    & ((query: deleteDefaultBackground) => Promise<Ok>)
-    & ((query: getInstalledBackgrounds) => Promise<Backgrounds>)
-    & ((query: removeInstalledBackground) => Promise<Ok>)
-    & ((query: resetInstalledBackgrounds) => Promise<Ok>)
-    & ((query: getLocalizationTargetInfo) => Promise<LocalizationTargetInfo>)
-    & ((query: getLanguagePackInfo) => Promise<LanguagePackInfo>)
-    & ((query: getLanguagePackStrings) => Promise<LanguagePackStrings>)
-    & ((query: synchronizeLanguagePack) => Promise<Ok>)
-    & ((query: addCustomServerLanguagePack) => Promise<Ok>)
-    & ((query: setCustomLanguagePack) => Promise<Ok>)
-    & ((query: editCustomLanguagePackInfo) => Promise<Ok>)
-    & ((query: setCustomLanguagePackString) => Promise<Ok>)
-    & ((query: deleteLanguagePack) => Promise<Ok>)
-    & ((query: registerDevice) => Promise<PushReceiverId>)
-    & ((query: processPushNotification) => Promise<Ok>)
-    & ((query: getPushReceiverId) => Promise<PushReceiverId>)
-    & ((query: getRecentlyVisitedTMeUrls) => Promise<TMeUrls>)
-    & ((query: setUserPrivacySettingRules) => Promise<Ok>)
-    & ((query: getUserPrivacySettingRules) => Promise<UserPrivacySettingRules>)
-    & ((query: setReadDatePrivacySettings) => Promise<Ok>)
-    & ((query: getReadDatePrivacySettings) => Promise<ReadDatePrivacySettings>)
-    & ((query: setNewChatPrivacySettings) => Promise<Ok>)
-    & ((query: getNewChatPrivacySettings) => Promise<NewChatPrivacySettings>)
-    & ((query: canSendMessageToUser) => Promise<CanSendMessageToUserResult>)
-    & ((query: getOption) => Promise<OptionValue>)
-    & ((query: setOption) => Promise<Ok>)
-    & ((query: setAccountTtl) => Promise<Ok>)
-    & ((query: getAccountTtl) => Promise<AccountTtl>)
-    & ((query: deleteAccount) => Promise<Ok>)
-    & ((query: setDefaultMessageAutoDeleteTime) => Promise<Ok>)
-    & ((query: getDefaultMessageAutoDeleteTime) => Promise<MessageAutoDeleteTime>)
-    & ((query: removeChatActionBar) => Promise<Ok>)
-    & ((query: reportChat) => Promise<Ok>)
-    & ((query: reportChatPhoto) => Promise<Ok>)
-    & ((query: reportMessageReactions) => Promise<Ok>)
-    & ((query: getChatRevenueStatistics) => Promise<ChatRevenueStatistics>)
-    & ((query: getChatRevenueWithdrawalUrl) => Promise<HttpUrl>)
-    & ((query: getChatRevenueTransactions) => Promise<ChatRevenueTransactions>)
-    & ((query: getChatStatistics) => Promise<ChatStatistics>)
-    & ((query: getMessageStatistics) => Promise<MessageStatistics>)
-    & ((query: getMessagePublicForwards) => Promise<PublicForwards>)
-    & ((query: getStoryStatistics) => Promise<StoryStatistics>)
-    & ((query: getStatisticalGraph) => Promise<StatisticalGraph>)
-    & ((query: getStorageStatistics) => Promise<StorageStatistics>)
-    & ((query: getStorageStatisticsFast) => Promise<StorageStatisticsFast>)
-    & ((query: getDatabaseStatistics) => Promise<DatabaseStatistics>)
-    & ((query: optimizeStorage) => Promise<StorageStatistics>)
-    & ((query: setNetworkType) => Promise<Ok>)
-    & ((query: getNetworkStatistics) => Promise<NetworkStatistics>)
-    & ((query: addNetworkStatistics) => Promise<Ok>)
-    & ((query: resetNetworkStatistics) => Promise<Ok>)
-    & ((query: getAutoDownloadSettingsPresets) => Promise<AutoDownloadSettingsPresets>)
-    & ((query: setAutoDownloadSettings) => Promise<Ok>)
-    & ((query: getAutosaveSettings) => Promise<AutosaveSettings>)
-    & ((query: setAutosaveSettings) => Promise<Ok>)
-    & ((query: clearAutosaveSettingsExceptions) => Promise<Ok>)
-    & ((query: getBankCardInfo) => Promise<BankCardInfo>)
-    & ((query: getPassportElement) => Promise<PassportElement>)
-    & ((query: getAllPassportElements) => Promise<PassportElements>)
-    & ((query: setPassportElement) => Promise<PassportElement>)
-    & ((query: deletePassportElement) => Promise<Ok>)
-    & ((query: setPassportElementErrors) => Promise<Ok>)
-    & ((query: getPreferredCountryLanguage) => Promise<Text>)
-    & ((query: sendEmailAddressVerificationCode) => Promise<EmailAddressAuthenticationCodeInfo>)
-    & ((query: resendEmailAddressVerificationCode) => Promise<EmailAddressAuthenticationCodeInfo>)
-    & ((query: checkEmailAddressVerificationCode) => Promise<Ok>)
-    & ((query: getPassportAuthorizationForm) => Promise<PassportAuthorizationForm>)
-    & ((query: getPassportAuthorizationFormAvailableElements) => Promise<PassportElementsWithErrors>)
-    & ((query: sendPassportAuthorizationForm) => Promise<Ok>)
-    & ((query: setBotUpdatesStatus) => Promise<Ok>)
-    & ((query: uploadStickerFile) => Promise<File>)
-    & ((query: getSuggestedStickerSetName) => Promise<Text>)
-    & ((query: checkStickerSetName) => Promise<CheckStickerSetNameResult>)
-    & ((query: createNewStickerSet) => Promise<StickerSet>)
-    & ((query: addStickerToSet) => Promise<Ok>)
-    & ((query: replaceStickerInSet) => Promise<Ok>)
-    & ((query: setStickerSetThumbnail) => Promise<Ok>)
-    & ((query: setCustomEmojiStickerSetThumbnail) => Promise<Ok>)
-    & ((query: setStickerSetTitle) => Promise<Ok>)
-    & ((query: deleteStickerSet) => Promise<Ok>)
-    & ((query: setStickerPositionInSet) => Promise<Ok>)
-    & ((query: removeStickerFromSet) => Promise<Ok>)
-    & ((query: setStickerEmojis) => Promise<Ok>)
-    & ((query: setStickerKeywords) => Promise<Ok>)
-    & ((query: setStickerMaskPosition) => Promise<Ok>)
-    & ((query: getOwnedStickerSets) => Promise<StickerSets>)
-    & ((query: getMapThumbnailFile) => Promise<File>)
-    & ((query: getPremiumLimit) => Promise<PremiumLimit>)
-    & ((query: getPremiumFeatures) => Promise<PremiumFeatures>)
-    & ((query: getPremiumStickerExamples) => Promise<Stickers>)
-    & ((query: viewPremiumFeature) => Promise<Ok>)
-    & ((query: clickPremiumSubscriptionButton) => Promise<Ok>)
-    & ((query: getPremiumState) => Promise<PremiumState>)
-    & ((query: getPremiumGiftCodePaymentOptions) => Promise<PremiumGiftCodePaymentOptions>)
-    & ((query: checkPremiumGiftCode) => Promise<PremiumGiftCodeInfo>)
-    & ((query: applyPremiumGiftCode) => Promise<Ok>)
-    & ((query: launchPrepaidPremiumGiveaway) => Promise<Ok>)
-    & ((query: getPremiumGiveawayInfo) => Promise<PremiumGiveawayInfo>)
-    & ((query: canPurchasePremium) => Promise<Ok>)
-    & ((query: assignAppStoreTransaction) => Promise<Ok>)
-    & ((query: assignGooglePlayTransaction) => Promise<Ok>)
-    & ((query: getBusinessFeatures) => Promise<BusinessFeatures>)
-    & ((query: acceptTermsOfService) => Promise<Ok>)
-    & ((query: searchStringsByPrefix) => Promise<FoundPositions>)
-    & ((query: sendCustomRequest) => Promise<CustomRequestResult>)
-    & ((query: answerCustomQuery) => Promise<Ok>)
-    & ((query: setAlarm) => Promise<Ok>)
-    & ((query: getCountries) => Promise<Countries>)
-    & ((query: getCountryCode) => Promise<Text>)
-    & ((query: getPhoneNumberInfo) => Promise<PhoneNumberInfo>)
-    & ((query: getPhoneNumberInfoSync) => Promise<PhoneNumberInfo>)
-    & ((query: getCollectibleItemInfo) => Promise<CollectibleItemInfo>)
-    & ((query: getDeepLinkInfo) => Promise<DeepLinkInfo>)
-    & ((query: getApplicationConfig) => Promise<JsonValue>)
-    & ((query: saveApplicationLogEvent) => Promise<Ok>)
-    & ((query: getApplicationDownloadLink) => Promise<HttpUrl>)
-    & ((query: addProxy) => Promise<Proxy>)
-    & ((query: editProxy) => Promise<Proxy>)
-    & ((query: enableProxy) => Promise<Ok>)
-    & ((query: disableProxy) => Promise<Ok>)
-    & ((query: removeProxy) => Promise<Ok>)
-    & ((query: getProxies) => Promise<Proxies>)
-    & ((query: getProxyLink) => Promise<HttpUrl>)
-    & ((query: pingProxy) => Promise<Seconds>)
-    & ((query: setLogStream) => Promise<Ok>)
-    & ((query: getLogStream) => Promise<LogStream>)
-    & ((query: setLogVerbosityLevel) => Promise<Ok>)
-    & ((query: getLogVerbosityLevel) => Promise<LogVerbosityLevel>)
-    & ((query: getLogTags) => Promise<LogTags>)
-    & ((query: setLogTagVerbosityLevel) => Promise<Ok>)
-    & ((query: getLogTagVerbosityLevel) => Promise<LogVerbosityLevel>)
-    & ((query: addLogMessage) => Promise<Ok>)
-    & ((query: getUserSupportInfo) => Promise<UserSupportInfo>)
-    & ((query: setUserSupportInfo) => Promise<UserSupportInfo>)
-    & ((query: getSupportName) => Promise<Text>)
-    & ((query: testCallEmpty) => Promise<Ok>)
-    & ((query: testCallString) => Promise<TestString>)
-    & ((query: testCallBytes) => Promise<TestBytes>)
-    & ((query: testCallVectorInt) => Promise<TestVectorInt>)
-    & ((query: testCallVectorIntObject) => Promise<TestVectorIntObject>)
-    & ((query: testCallVectorString) => Promise<TestVectorString>)
-    & ((query: testCallVectorStringObject) => Promise<TestVectorStringObject>)
-    & ((query: testSquareInt) => Promise<TestInt>)
-    & ((query: testNetwork) => Promise<Ok>)
-    & ((query: testProxy) => Promise<Ok>)
-    & ((query: testGetDifference) => Promise<Ok>)
-    & ((query: testUseUpdate) => Promise<Update>)
-    & ((query: testReturnError) => Promise<Error>)
-
-  declare export type Execute =
-    & ((query: checkQuickReplyShortcutName) => Ok | error)
-    & ((query: searchQuote) => FoundPosition | error)
-    & ((query: getTextEntities) => TextEntities | error)
-    & ((query: parseTextEntities) => FormattedText | error)
-    & ((query: parseMarkdown) => FormattedText | error)
-    & ((query: getMarkdownText) => FormattedText | error)
-    & ((query: getCountryFlagEmoji) => Text | error)
-    & ((query: getFileMimeType) => Text | error)
-    & ((query: getFileExtension) => Text | error)
-    & ((query: cleanFileName) => Text | error)
-    & ((query: getLanguagePackString) => LanguagePackStringValue | error)
-    & ((query: getJsonValue) => JsonValue | error)
-    & ((query: getJsonString) => Text | error)
-    & ((query: getThemeParametersJsonString) => Text | error)
-    & ((query: getChatFolderDefaultIconName) => ChatFolderIcon | error)
-    & ((query: getPushReceiverId) => PushReceiverId | error)
-    & ((query: getOption) => OptionValue | error)
-    & ((query: searchStringsByPrefix) => FoundPositions | error)
-    & ((query: getPhoneNumberInfoSync) => PhoneNumberInfo | error)
-    & ((query: setLogStream) => Ok | error)
-    & ((query: getLogStream) => LogStream | error)
-    & ((query: setLogVerbosityLevel) => Ok | error)
-    & ((query: getLogVerbosityLevel) => LogVerbosityLevel | error)
-    & ((query: getLogTags) => LogTags | error)
-    & ((query: setLogTagVerbosityLevel) => Ok | error)
-    & ((query: getLogTagVerbosityLevel) => LogVerbosityLevel | error)
-    & ((query: addLogMessage) => Ok | error)
-    & ((query: testReturnError) => Error | error)
-
-  type $Function =
+  declare export type $Function =
     | getAuthorizationState
     | setTdlibParameters
     | setAuthenticationPhoneNumber
@@ -33537,4 +32772,1516 @@ declare module 'tdlib-types' {
     | testGetDifference
     | testUseUpdate
     | testReturnError
+
+  declare export type $FunctionResultByName = {
+    getAuthorizationState: AuthorizationState,
+    setTdlibParameters: Ok,
+    setAuthenticationPhoneNumber: Ok,
+    setAuthenticationEmailAddress: Ok,
+    resendAuthenticationCode: Ok,
+    checkAuthenticationEmailCode: Ok,
+    checkAuthenticationCode: Ok,
+    requestQrCodeAuthentication: Ok,
+    registerUser: Ok,
+    resetAuthenticationEmailAddress: Ok,
+    checkAuthenticationPassword: Ok,
+    requestAuthenticationPasswordRecovery: Ok,
+    checkAuthenticationPasswordRecoveryCode: Ok,
+    recoverAuthenticationPassword: Ok,
+    sendAuthenticationFirebaseSms: Ok,
+    checkAuthenticationBotToken: Ok,
+    logOut: Ok,
+    close: Ok,
+    destroy: Ok,
+    confirmQrCodeAuthentication: Session,
+    getCurrentState: Updates,
+    setDatabaseEncryptionKey: Ok,
+    getPasswordState: PasswordState,
+    setPassword: PasswordState,
+    setLoginEmailAddress: EmailAddressAuthenticationCodeInfo,
+    resendLoginEmailAddressCode: EmailAddressAuthenticationCodeInfo,
+    checkLoginEmailAddressCode: Ok,
+    getRecoveryEmailAddress: RecoveryEmailAddress,
+    setRecoveryEmailAddress: PasswordState,
+    checkRecoveryEmailAddressCode: PasswordState,
+    resendRecoveryEmailAddressCode: PasswordState,
+    cancelRecoveryEmailAddressVerification: PasswordState,
+    requestPasswordRecovery: EmailAddressAuthenticationCodeInfo,
+    checkPasswordRecoveryCode: Ok,
+    recoverPassword: PasswordState,
+    resetPassword: ResetPasswordResult,
+    cancelPasswordReset: Ok,
+    createTemporaryPassword: TemporaryPasswordState,
+    getTemporaryPasswordState: TemporaryPasswordState,
+    getMe: User,
+    getUser: User,
+    getUserFullInfo: UserFullInfo,
+    getBasicGroup: BasicGroup,
+    getBasicGroupFullInfo: BasicGroupFullInfo,
+    getSupergroup: Supergroup,
+    getSupergroupFullInfo: SupergroupFullInfo,
+    getSecretChat: SecretChat,
+    getChat: Chat,
+    getMessage: Message,
+    getMessageLocally: Message,
+    getRepliedMessage: Message,
+    getChatPinnedMessage: Message,
+    getCallbackQueryMessage: Message,
+    getMessages: Messages,
+    getMessageThread: MessageThreadInfo,
+    getMessageReadDate: MessageReadDate,
+    getMessageViewers: MessageViewers,
+    getFile: File,
+    getRemoteFile: File,
+    loadChats: Ok,
+    getChats: Chats,
+    searchPublicChat: Chat,
+    searchPublicChats: Chats,
+    searchChats: Chats,
+    searchChatsOnServer: Chats,
+    searchChatsNearby: ChatsNearby,
+    getChatSimilarChats: Chats,
+    getChatSimilarChatCount: Count,
+    openChatSimilarChat: Ok,
+    getTopChats: Chats,
+    removeTopChat: Ok,
+    searchRecentlyFoundChats: Chats,
+    addRecentlyFoundChat: Ok,
+    removeRecentlyFoundChat: Ok,
+    clearRecentlyFoundChats: Ok,
+    getRecentlyOpenedChats: Chats,
+    checkChatUsername: CheckChatUsernameResult,
+    getCreatedPublicChats: Chats,
+    checkCreatedPublicChatsLimit: Ok,
+    getSuitableDiscussionChats: Chats,
+    getInactiveSupergroupChats: Chats,
+    getSuitablePersonalChats: Chats,
+    loadSavedMessagesTopics: Ok,
+    getSavedMessagesTopicHistory: Messages,
+    getSavedMessagesTopicMessageByDate: Message,
+    deleteSavedMessagesTopicHistory: Ok,
+    deleteSavedMessagesTopicMessagesByDate: Ok,
+    toggleSavedMessagesTopicIsPinned: Ok,
+    setPinnedSavedMessagesTopics: Ok,
+    getGroupsInCommon: Chats,
+    getChatHistory: Messages,
+    getMessageThreadHistory: Messages,
+    deleteChatHistory: Ok,
+    deleteChat: Ok,
+    searchChatMessages: FoundChatMessages,
+    searchMessages: FoundMessages,
+    searchSecretMessages: FoundMessages,
+    searchSavedMessages: FoundChatMessages,
+    searchCallMessages: FoundMessages,
+    searchOutgoingDocumentMessages: FoundMessages,
+    deleteAllCallMessages: Ok,
+    searchChatRecentLocationMessages: Messages,
+    getActiveLiveLocationMessages: Messages,
+    getChatMessageByDate: Message,
+    getChatSparseMessagePositions: MessagePositions,
+    getChatMessageCalendar: MessageCalendar,
+    getChatMessageCount: Count,
+    getChatMessagePosition: Count,
+    getChatScheduledMessages: Messages,
+    getChatSponsoredMessages: SponsoredMessages,
+    clickChatSponsoredMessage: Ok,
+    reportChatSponsoredMessage: ReportChatSponsoredMessageResult,
+    removeNotification: Ok,
+    removeNotificationGroup: Ok,
+    getMessageLink: MessageLink,
+    getMessageEmbeddingCode: Text,
+    getMessageLinkInfo: MessageLinkInfo,
+    translateText: FormattedText,
+    translateMessageText: FormattedText,
+    recognizeSpeech: Ok,
+    rateSpeechRecognition: Ok,
+    getChatAvailableMessageSenders: ChatMessageSenders,
+    setChatMessageSender: Ok,
+    sendMessage: Message,
+    sendMessageAlbum: Messages,
+    sendBotStartMessage: Message,
+    sendInlineQueryResultMessage: Message,
+    forwardMessages: Messages,
+    sendQuickReplyShortcutMessages: Messages,
+    resendMessages: Messages,
+    addLocalMessage: Message,
+    deleteMessages: Ok,
+    deleteChatMessagesBySender: Ok,
+    deleteChatMessagesByDate: Ok,
+    editMessageText: Message,
+    editMessageLiveLocation: Message,
+    editMessageMedia: Message,
+    editMessageCaption: Message,
+    editMessageReplyMarkup: Message,
+    editInlineMessageText: Ok,
+    editInlineMessageLiveLocation: Ok,
+    editInlineMessageMedia: Ok,
+    editInlineMessageCaption: Ok,
+    editInlineMessageReplyMarkup: Ok,
+    editMessageSchedulingState: Ok,
+    sendBusinessMessage: BusinessMessage,
+    sendBusinessMessageAlbum: BusinessMessages,
+    checkQuickReplyShortcutName: Ok,
+    loadQuickReplyShortcuts: Ok,
+    setQuickReplyShortcutName: Ok,
+    deleteQuickReplyShortcut: Ok,
+    reorderQuickReplyShortcuts: Ok,
+    loadQuickReplyShortcutMessages: Ok,
+    deleteQuickReplyShortcutMessages: Ok,
+    addQuickReplyShortcutMessage: QuickReplyMessage,
+    addQuickReplyShortcutInlineQueryResultMessage: QuickReplyMessage,
+    readdQuickReplyShortcutMessages: QuickReplyMessages,
+    editQuickReplyMessage: Ok,
+    getForumTopicDefaultIcons: Stickers,
+    createForumTopic: ForumTopicInfo,
+    editForumTopic: Ok,
+    getForumTopic: ForumTopic,
+    getForumTopicLink: MessageLink,
+    getForumTopics: ForumTopics,
+    setForumTopicNotificationSettings: Ok,
+    toggleForumTopicIsClosed: Ok,
+    toggleGeneralForumTopicIsHidden: Ok,
+    toggleForumTopicIsPinned: Ok,
+    setPinnedForumTopics: Ok,
+    deleteForumTopic: Ok,
+    getEmojiReaction: EmojiReaction,
+    getCustomEmojiReactionAnimations: Stickers,
+    getMessageAvailableReactions: AvailableReactions,
+    clearRecentReactions: Ok,
+    addMessageReaction: Ok,
+    removeMessageReaction: Ok,
+    setMessageReactions: Ok,
+    getMessageAddedReactions: AddedReactions,
+    setDefaultReactionType: Ok,
+    getSavedMessagesTags: SavedMessagesTags,
+    setSavedMessagesTagLabel: Ok,
+    searchQuote: FoundPosition,
+    getTextEntities: TextEntities,
+    parseTextEntities: FormattedText,
+    parseMarkdown: FormattedText,
+    getMarkdownText: FormattedText,
+    getCountryFlagEmoji: Text,
+    getFileMimeType: Text,
+    getFileExtension: Text,
+    cleanFileName: Text,
+    getLanguagePackString: LanguagePackStringValue,
+    getJsonValue: JsonValue,
+    getJsonString: Text,
+    getThemeParametersJsonString: Text,
+    setPollAnswer: Ok,
+    getPollVoters: MessageSenders,
+    stopPoll: Ok,
+    hideSuggestedAction: Ok,
+    getBusinessConnection: BusinessConnection,
+    getLoginUrlInfo: LoginUrlInfo,
+    getLoginUrl: HttpUrl,
+    shareUsersWithBot: Ok,
+    shareChatWithBot: Ok,
+    getInlineQueryResults: InlineQueryResults,
+    answerInlineQuery: Ok,
+    searchWebApp: FoundWebApp,
+    getWebAppLinkUrl: HttpUrl,
+    getWebAppUrl: HttpUrl,
+    sendWebAppData: Ok,
+    openWebApp: WebAppInfo,
+    closeWebApp: Ok,
+    answerWebAppQuery: SentWebAppMessage,
+    getCallbackQueryAnswer: CallbackQueryAnswer,
+    answerCallbackQuery: Ok,
+    answerShippingQuery: Ok,
+    answerPreCheckoutQuery: Ok,
+    setGameScore: Message,
+    setInlineGameScore: Ok,
+    getGameHighScores: GameHighScores,
+    getInlineGameHighScores: GameHighScores,
+    deleteChatReplyMarkup: Ok,
+    sendChatAction: Ok,
+    openChat: Ok,
+    closeChat: Ok,
+    viewMessages: Ok,
+    openMessageContent: Ok,
+    clickAnimatedEmojiMessage: Sticker,
+    getInternalLink: HttpUrl,
+    getInternalLinkType: InternalLinkType,
+    getExternalLinkInfo: LoginUrlInfo,
+    getExternalLink: HttpUrl,
+    readAllChatMentions: Ok,
+    readAllMessageThreadMentions: Ok,
+    readAllChatReactions: Ok,
+    readAllMessageThreadReactions: Ok,
+    createPrivateChat: Chat,
+    createBasicGroupChat: Chat,
+    createSupergroupChat: Chat,
+    createSecretChat: Chat,
+    createNewBasicGroupChat: CreatedBasicGroupChat,
+    createNewSupergroupChat: Chat,
+    createNewSecretChat: Chat,
+    upgradeBasicGroupChatToSupergroupChat: Chat,
+    getChatListsToAddChat: ChatLists,
+    addChatToList: Ok,
+    getChatFolder: ChatFolder,
+    createChatFolder: ChatFolderInfo,
+    editChatFolder: ChatFolderInfo,
+    deleteChatFolder: Ok,
+    getChatFolderChatsToLeave: Chats,
+    getChatFolderChatCount: Count,
+    reorderChatFolders: Ok,
+    toggleChatFolderTags: Ok,
+    getRecommendedChatFolders: RecommendedChatFolders,
+    getChatFolderDefaultIconName: ChatFolderIcon,
+    getChatsForChatFolderInviteLink: Chats,
+    createChatFolderInviteLink: ChatFolderInviteLink,
+    getChatFolderInviteLinks: ChatFolderInviteLinks,
+    editChatFolderInviteLink: ChatFolderInviteLink,
+    deleteChatFolderInviteLink: Ok,
+    checkChatFolderInviteLink: ChatFolderInviteLinkInfo,
+    addChatFolderByInviteLink: Ok,
+    getChatFolderNewChats: Chats,
+    processChatFolderNewChats: Ok,
+    getArchiveChatListSettings: ArchiveChatListSettings,
+    setArchiveChatListSettings: Ok,
+    setChatTitle: Ok,
+    setChatPhoto: Ok,
+    setChatAccentColor: Ok,
+    setChatProfileAccentColor: Ok,
+    setChatMessageAutoDeleteTime: Ok,
+    setChatEmojiStatus: Ok,
+    setChatPermissions: Ok,
+    setChatBackground: Ok,
+    deleteChatBackground: Ok,
+    setChatTheme: Ok,
+    setChatDraftMessage: Ok,
+    setChatNotificationSettings: Ok,
+    toggleChatHasProtectedContent: Ok,
+    toggleChatViewAsTopics: Ok,
+    toggleChatIsTranslatable: Ok,
+    toggleChatIsMarkedAsUnread: Ok,
+    toggleChatDefaultDisableNotification: Ok,
+    setChatAvailableReactions: Ok,
+    setChatClientData: Ok,
+    setChatDescription: Ok,
+    setChatDiscussionGroup: Ok,
+    setChatLocation: Ok,
+    setChatSlowModeDelay: Ok,
+    pinChatMessage: Ok,
+    unpinChatMessage: Ok,
+    unpinAllChatMessages: Ok,
+    unpinAllMessageThreadMessages: Ok,
+    joinChat: Ok,
+    leaveChat: Ok,
+    addChatMember: FailedToAddMembers,
+    addChatMembers: FailedToAddMembers,
+    setChatMemberStatus: Ok,
+    banChatMember: Ok,
+    canTransferOwnership: CanTransferOwnershipResult,
+    transferChatOwnership: Ok,
+    getChatMember: ChatMember,
+    searchChatMembers: ChatMembers,
+    getChatAdministrators: ChatAdministrators,
+    clearAllDraftMessages: Ok,
+    getSavedNotificationSound: NotificationSounds,
+    getSavedNotificationSounds: NotificationSounds,
+    addSavedNotificationSound: NotificationSound,
+    removeSavedNotificationSound: Ok,
+    getChatNotificationSettingsExceptions: Chats,
+    getScopeNotificationSettings: ScopeNotificationSettings,
+    setScopeNotificationSettings: Ok,
+    resetAllNotificationSettings: Ok,
+    toggleChatIsPinned: Ok,
+    setPinnedChats: Ok,
+    readChatList: Ok,
+    getStory: Story,
+    getChatsToSendStories: Chats,
+    canSendStory: CanSendStoryResult,
+    sendStory: Story,
+    editStory: Ok,
+    setStoryPrivacySettings: Ok,
+    toggleStoryIsPinned: Ok,
+    deleteStory: Ok,
+    getStoryNotificationSettingsExceptions: Chats,
+    loadActiveStories: Ok,
+    setChatActiveStoriesList: Ok,
+    getChatActiveStories: ChatActiveStories,
+    getChatPinnedStories: Stories,
+    getChatArchivedStories: Stories,
+    openStory: Ok,
+    closeStory: Ok,
+    getStoryAvailableReactions: AvailableReactions,
+    setStoryReaction: Ok,
+    getStoryInteractions: StoryInteractions,
+    getChatStoryInteractions: StoryInteractions,
+    reportStory: Ok,
+    activateStoryStealthMode: Ok,
+    getStoryPublicForwards: PublicForwards,
+    getChatBoostLevelFeatures: ChatBoostLevelFeatures,
+    getChatBoostFeatures: ChatBoostFeatures,
+    getAvailableChatBoostSlots: ChatBoostSlots,
+    getChatBoostStatus: ChatBoostStatus,
+    boostChat: ChatBoostSlots,
+    getChatBoostLink: ChatBoostLink,
+    getChatBoostLinkInfo: ChatBoostLinkInfo,
+    getChatBoosts: FoundChatBoosts,
+    getUserChatBoosts: FoundChatBoosts,
+    getAttachmentMenuBot: AttachmentMenuBot,
+    toggleBotIsAddedToAttachmentMenu: Ok,
+    getThemedEmojiStatuses: EmojiStatuses,
+    getRecentEmojiStatuses: EmojiStatuses,
+    getDefaultEmojiStatuses: EmojiStatuses,
+    clearRecentEmojiStatuses: Ok,
+    getThemedChatEmojiStatuses: EmojiStatuses,
+    getDefaultChatEmojiStatuses: EmojiStatuses,
+    getDisallowedChatEmojiStatuses: EmojiStatuses,
+    downloadFile: File,
+    getFileDownloadedPrefixSize: FileDownloadedPrefixSize,
+    cancelDownloadFile: Ok,
+    getSuggestedFileName: Text,
+    preliminaryUploadFile: File,
+    cancelPreliminaryUploadFile: Ok,
+    writeGeneratedFilePart: Ok,
+    setFileGenerationProgress: Ok,
+    finishFileGeneration: Ok,
+    readFilePart: FilePart,
+    deleteFile: Ok,
+    addFileToDownloads: File,
+    toggleDownloadIsPaused: Ok,
+    toggleAllDownloadsArePaused: Ok,
+    removeFileFromDownloads: Ok,
+    removeAllFilesFromDownloads: Ok,
+    searchFileDownloads: FoundFileDownloads,
+    getMessageFileType: MessageFileType,
+    getMessageImportConfirmationText: Text,
+    importMessages: Ok,
+    replacePrimaryChatInviteLink: ChatInviteLink,
+    createChatInviteLink: ChatInviteLink,
+    editChatInviteLink: ChatInviteLink,
+    getChatInviteLink: ChatInviteLink,
+    getChatInviteLinkCounts: ChatInviteLinkCounts,
+    getChatInviteLinks: ChatInviteLinks,
+    getChatInviteLinkMembers: ChatInviteLinkMembers,
+    revokeChatInviteLink: ChatInviteLinks,
+    deleteRevokedChatInviteLink: Ok,
+    deleteAllRevokedChatInviteLinks: Ok,
+    checkChatInviteLink: ChatInviteLinkInfo,
+    joinChatByInviteLink: Chat,
+    getChatJoinRequests: ChatJoinRequests,
+    processChatJoinRequest: Ok,
+    processChatJoinRequests: Ok,
+    createCall: CallId,
+    acceptCall: Ok,
+    sendCallSignalingData: Ok,
+    discardCall: Ok,
+    sendCallRating: Ok,
+    sendCallDebugInformation: Ok,
+    sendCallLog: Ok,
+    getVideoChatAvailableParticipants: MessageSenders,
+    setVideoChatDefaultParticipant: Ok,
+    createVideoChat: GroupCallId,
+    getVideoChatRtmpUrl: RtmpUrl,
+    replaceVideoChatRtmpUrl: RtmpUrl,
+    getGroupCall: GroupCall,
+    startScheduledGroupCall: Ok,
+    toggleGroupCallEnabledStartNotification: Ok,
+    joinGroupCall: Text,
+    startGroupCallScreenSharing: Text,
+    toggleGroupCallScreenSharingIsPaused: Ok,
+    endGroupCallScreenSharing: Ok,
+    setGroupCallTitle: Ok,
+    toggleGroupCallMuteNewParticipants: Ok,
+    inviteGroupCallParticipants: Ok,
+    getGroupCallInviteLink: HttpUrl,
+    revokeGroupCallInviteLink: Ok,
+    startGroupCallRecording: Ok,
+    endGroupCallRecording: Ok,
+    toggleGroupCallIsMyVideoPaused: Ok,
+    toggleGroupCallIsMyVideoEnabled: Ok,
+    setGroupCallParticipantIsSpeaking: Ok,
+    toggleGroupCallParticipantIsMuted: Ok,
+    setGroupCallParticipantVolumeLevel: Ok,
+    toggleGroupCallParticipantIsHandRaised: Ok,
+    loadGroupCallParticipants: Ok,
+    leaveGroupCall: Ok,
+    endGroupCall: Ok,
+    getGroupCallStreams: GroupCallStreams,
+    getGroupCallStreamSegment: FilePart,
+    setMessageSenderBlockList: Ok,
+    blockMessageSenderFromReplies: Ok,
+    getBlockedMessageSenders: MessageSenders,
+    addContact: Ok,
+    importContacts: ImportedContacts,
+    getContacts: Users,
+    searchContacts: Users,
+    removeContacts: Ok,
+    getImportedContactCount: Count,
+    changeImportedContacts: ImportedContacts,
+    clearImportedContacts: Ok,
+    setCloseFriends: Ok,
+    getCloseFriends: Users,
+    setUserPersonalProfilePhoto: Ok,
+    suggestUserProfilePhoto: Ok,
+    searchUserByPhoneNumber: User,
+    sharePhoneNumber: Ok,
+    getUserProfilePhotos: ChatPhotos,
+    getStickers: Stickers,
+    getAllStickerEmojis: Emojis,
+    searchStickers: Stickers,
+    getGreetingStickers: Stickers,
+    getPremiumStickers: Stickers,
+    getInstalledStickerSets: StickerSets,
+    getArchivedStickerSets: StickerSets,
+    getTrendingStickerSets: TrendingStickerSets,
+    getAttachedStickerSets: StickerSets,
+    getStickerSet: StickerSet,
+    searchStickerSet: StickerSet,
+    searchInstalledStickerSets: StickerSets,
+    searchStickerSets: StickerSets,
+    changeStickerSet: Ok,
+    viewTrendingStickerSets: Ok,
+    reorderInstalledStickerSets: Ok,
+    getRecentStickers: Stickers,
+    addRecentSticker: Stickers,
+    removeRecentSticker: Ok,
+    clearRecentStickers: Ok,
+    getFavoriteStickers: Stickers,
+    addFavoriteSticker: Ok,
+    removeFavoriteSticker: Ok,
+    getStickerEmojis: Emojis,
+    searchEmojis: EmojiKeywords,
+    getKeywordEmojis: Emojis,
+    getEmojiCategories: EmojiCategories,
+    getAnimatedEmoji: AnimatedEmoji,
+    getEmojiSuggestionsUrl: HttpUrl,
+    getCustomEmojiStickers: Stickers,
+    getDefaultChatPhotoCustomEmojiStickers: Stickers,
+    getDefaultProfilePhotoCustomEmojiStickers: Stickers,
+    getDefaultBackgroundCustomEmojiStickers: Stickers,
+    getSavedAnimations: Animations,
+    addSavedAnimation: Ok,
+    removeSavedAnimation: Ok,
+    getRecentInlineBots: Users,
+    searchHashtags: Hashtags,
+    removeRecentHashtag: Ok,
+    getWebPagePreview: WebPage,
+    getWebPageInstantView: WebPageInstantView,
+    setProfilePhoto: Ok,
+    deleteProfilePhoto: Ok,
+    setAccentColor: Ok,
+    setProfileAccentColor: Ok,
+    setName: Ok,
+    setBio: Ok,
+    setUsername: Ok,
+    toggleUsernameIsActive: Ok,
+    reorderActiveUsernames: Ok,
+    setBirthdate: Ok,
+    setPersonalChat: Ok,
+    setEmojiStatus: Ok,
+    setLocation: Ok,
+    setBusinessLocation: Ok,
+    setBusinessOpeningHours: Ok,
+    setBusinessGreetingMessageSettings: Ok,
+    setBusinessAwayMessageSettings: Ok,
+    setBusinessStartPage: Ok,
+    sendPhoneNumberCode: AuthenticationCodeInfo,
+    sendPhoneNumberFirebaseSms: Ok,
+    resendPhoneNumberCode: AuthenticationCodeInfo,
+    checkPhoneNumberCode: Ok,
+    getBusinessConnectedBot: BusinessConnectedBot,
+    setBusinessConnectedBot: Ok,
+    deleteBusinessConnectedBot: Ok,
+    toggleBusinessConnectedBotChatIsPaused: Ok,
+    removeBusinessConnectedBotFromChat: Ok,
+    getBusinessChatLinks: BusinessChatLinks,
+    createBusinessChatLink: BusinessChatLink,
+    editBusinessChatLink: BusinessChatLink,
+    deleteBusinessChatLink: Ok,
+    getBusinessChatLinkInfo: BusinessChatLinkInfo,
+    getUserLink: UserLink,
+    searchUserByToken: User,
+    setCommands: Ok,
+    deleteCommands: Ok,
+    getCommands: BotCommands,
+    setMenuButton: Ok,
+    getMenuButton: BotMenuButton,
+    setDefaultGroupAdministratorRights: Ok,
+    setDefaultChannelAdministratorRights: Ok,
+    canBotSendMessages: Ok,
+    allowBotToSendMessages: Ok,
+    sendWebAppCustomRequest: CustomRequestResult,
+    setBotName: Ok,
+    getBotName: Text,
+    setBotProfilePhoto: Ok,
+    toggleBotUsernameIsActive: Ok,
+    reorderBotActiveUsernames: Ok,
+    setBotInfoDescription: Ok,
+    getBotInfoDescription: Text,
+    setBotInfoShortDescription: Ok,
+    getBotInfoShortDescription: Text,
+    getActiveSessions: Sessions,
+    terminateSession: Ok,
+    terminateAllOtherSessions: Ok,
+    confirmSession: Ok,
+    toggleSessionCanAcceptCalls: Ok,
+    toggleSessionCanAcceptSecretChats: Ok,
+    setInactiveSessionTtl: Ok,
+    getConnectedWebsites: ConnectedWebsites,
+    disconnectWebsite: Ok,
+    disconnectAllWebsites: Ok,
+    setSupergroupUsername: Ok,
+    toggleSupergroupUsernameIsActive: Ok,
+    disableAllSupergroupUsernames: Ok,
+    reorderSupergroupActiveUsernames: Ok,
+    setSupergroupStickerSet: Ok,
+    setSupergroupCustomEmojiStickerSet: Ok,
+    setSupergroupUnrestrictBoostCount: Ok,
+    toggleSupergroupSignMessages: Ok,
+    toggleSupergroupJoinToSendMessages: Ok,
+    toggleSupergroupJoinByRequest: Ok,
+    toggleSupergroupIsAllHistoryAvailable: Ok,
+    toggleSupergroupCanHaveSponsoredMessages: Ok,
+    toggleSupergroupHasHiddenMembers: Ok,
+    toggleSupergroupHasAggressiveAntiSpamEnabled: Ok,
+    toggleSupergroupIsForum: Ok,
+    toggleSupergroupIsBroadcastGroup: Ok,
+    reportSupergroupSpam: Ok,
+    reportSupergroupAntiSpamFalsePositive: Ok,
+    getSupergroupMembers: ChatMembers,
+    closeSecretChat: Ok,
+    getChatEventLog: ChatEvents,
+    getTimeZones: TimeZones,
+    getPaymentForm: PaymentForm,
+    validateOrderInfo: ValidatedOrderInfo,
+    sendPaymentForm: PaymentResult,
+    getPaymentReceipt: PaymentReceipt,
+    getSavedOrderInfo: OrderInfo,
+    deleteSavedOrderInfo: Ok,
+    deleteSavedCredentials: Ok,
+    createInvoiceLink: HttpUrl,
+    getSupportUser: User,
+    getBackgroundUrl: HttpUrl,
+    searchBackground: Background,
+    setDefaultBackground: Background,
+    deleteDefaultBackground: Ok,
+    getInstalledBackgrounds: Backgrounds,
+    removeInstalledBackground: Ok,
+    resetInstalledBackgrounds: Ok,
+    getLocalizationTargetInfo: LocalizationTargetInfo,
+    getLanguagePackInfo: LanguagePackInfo,
+    getLanguagePackStrings: LanguagePackStrings,
+    synchronizeLanguagePack: Ok,
+    addCustomServerLanguagePack: Ok,
+    setCustomLanguagePack: Ok,
+    editCustomLanguagePackInfo: Ok,
+    setCustomLanguagePackString: Ok,
+    deleteLanguagePack: Ok,
+    registerDevice: PushReceiverId,
+    processPushNotification: Ok,
+    getPushReceiverId: PushReceiverId,
+    getRecentlyVisitedTMeUrls: TMeUrls,
+    setUserPrivacySettingRules: Ok,
+    getUserPrivacySettingRules: UserPrivacySettingRules,
+    setReadDatePrivacySettings: Ok,
+    getReadDatePrivacySettings: ReadDatePrivacySettings,
+    setNewChatPrivacySettings: Ok,
+    getNewChatPrivacySettings: NewChatPrivacySettings,
+    canSendMessageToUser: CanSendMessageToUserResult,
+    getOption: OptionValue,
+    setOption: Ok,
+    setAccountTtl: Ok,
+    getAccountTtl: AccountTtl,
+    deleteAccount: Ok,
+    setDefaultMessageAutoDeleteTime: Ok,
+    getDefaultMessageAutoDeleteTime: MessageAutoDeleteTime,
+    removeChatActionBar: Ok,
+    reportChat: Ok,
+    reportChatPhoto: Ok,
+    reportMessageReactions: Ok,
+    getChatRevenueStatistics: ChatRevenueStatistics,
+    getChatRevenueWithdrawalUrl: HttpUrl,
+    getChatRevenueTransactions: ChatRevenueTransactions,
+    getChatStatistics: ChatStatistics,
+    getMessageStatistics: MessageStatistics,
+    getMessagePublicForwards: PublicForwards,
+    getStoryStatistics: StoryStatistics,
+    getStatisticalGraph: StatisticalGraph,
+    getStorageStatistics: StorageStatistics,
+    getStorageStatisticsFast: StorageStatisticsFast,
+    getDatabaseStatistics: DatabaseStatistics,
+    optimizeStorage: StorageStatistics,
+    setNetworkType: Ok,
+    getNetworkStatistics: NetworkStatistics,
+    addNetworkStatistics: Ok,
+    resetNetworkStatistics: Ok,
+    getAutoDownloadSettingsPresets: AutoDownloadSettingsPresets,
+    setAutoDownloadSettings: Ok,
+    getAutosaveSettings: AutosaveSettings,
+    setAutosaveSettings: Ok,
+    clearAutosaveSettingsExceptions: Ok,
+    getBankCardInfo: BankCardInfo,
+    getPassportElement: PassportElement,
+    getAllPassportElements: PassportElements,
+    setPassportElement: PassportElement,
+    deletePassportElement: Ok,
+    setPassportElementErrors: Ok,
+    getPreferredCountryLanguage: Text,
+    sendEmailAddressVerificationCode: EmailAddressAuthenticationCodeInfo,
+    resendEmailAddressVerificationCode: EmailAddressAuthenticationCodeInfo,
+    checkEmailAddressVerificationCode: Ok,
+    getPassportAuthorizationForm: PassportAuthorizationForm,
+    getPassportAuthorizationFormAvailableElements: PassportElementsWithErrors,
+    sendPassportAuthorizationForm: Ok,
+    setBotUpdatesStatus: Ok,
+    uploadStickerFile: File,
+    getSuggestedStickerSetName: Text,
+    checkStickerSetName: CheckStickerSetNameResult,
+    createNewStickerSet: StickerSet,
+    addStickerToSet: Ok,
+    replaceStickerInSet: Ok,
+    setStickerSetThumbnail: Ok,
+    setCustomEmojiStickerSetThumbnail: Ok,
+    setStickerSetTitle: Ok,
+    deleteStickerSet: Ok,
+    setStickerPositionInSet: Ok,
+    removeStickerFromSet: Ok,
+    setStickerEmojis: Ok,
+    setStickerKeywords: Ok,
+    setStickerMaskPosition: Ok,
+    getOwnedStickerSets: StickerSets,
+    getMapThumbnailFile: File,
+    getPremiumLimit: PremiumLimit,
+    getPremiumFeatures: PremiumFeatures,
+    getPremiumStickerExamples: Stickers,
+    viewPremiumFeature: Ok,
+    clickPremiumSubscriptionButton: Ok,
+    getPremiumState: PremiumState,
+    getPremiumGiftCodePaymentOptions: PremiumGiftCodePaymentOptions,
+    checkPremiumGiftCode: PremiumGiftCodeInfo,
+    applyPremiumGiftCode: Ok,
+    launchPrepaidPremiumGiveaway: Ok,
+    getPremiumGiveawayInfo: PremiumGiveawayInfo,
+    canPurchasePremium: Ok,
+    assignAppStoreTransaction: Ok,
+    assignGooglePlayTransaction: Ok,
+    getBusinessFeatures: BusinessFeatures,
+    acceptTermsOfService: Ok,
+    searchStringsByPrefix: FoundPositions,
+    sendCustomRequest: CustomRequestResult,
+    answerCustomQuery: Ok,
+    setAlarm: Ok,
+    getCountries: Countries,
+    getCountryCode: Text,
+    getPhoneNumberInfo: PhoneNumberInfo,
+    getPhoneNumberInfoSync: PhoneNumberInfo,
+    getCollectibleItemInfo: CollectibleItemInfo,
+    getDeepLinkInfo: DeepLinkInfo,
+    getApplicationConfig: JsonValue,
+    saveApplicationLogEvent: Ok,
+    getApplicationDownloadLink: HttpUrl,
+    addProxy: Proxy,
+    editProxy: Proxy,
+    enableProxy: Ok,
+    disableProxy: Ok,
+    removeProxy: Ok,
+    getProxies: Proxies,
+    getProxyLink: HttpUrl,
+    pingProxy: Seconds,
+    setLogStream: Ok,
+    getLogStream: LogStream,
+    setLogVerbosityLevel: Ok,
+    getLogVerbosityLevel: LogVerbosityLevel,
+    getLogTags: LogTags,
+    setLogTagVerbosityLevel: Ok,
+    getLogTagVerbosityLevel: LogVerbosityLevel,
+    addLogMessage: Ok,
+    getUserSupportInfo: UserSupportInfo,
+    setUserSupportInfo: UserSupportInfo,
+    getSupportName: Text,
+    testCallEmpty: Ok,
+    testCallString: TestString,
+    testCallBytes: TestBytes,
+    testCallVectorInt: TestVectorInt,
+    testCallVectorIntObject: TestVectorIntObject,
+    testCallVectorString: TestVectorString,
+    testCallVectorStringObject: TestVectorStringObject,
+    testSquareInt: TestInt,
+    testNetwork: Ok,
+    testProxy: Ok,
+    testGetDifference: Ok,
+    testUseUpdate: Update,
+    testReturnError: Error,
+  }
+
+  declare export type $FunctionInputByName = {
+    getAuthorizationState: getAuthorizationState,
+    setTdlibParameters: setTdlibParameters,
+    setAuthenticationPhoneNumber: setAuthenticationPhoneNumber,
+    setAuthenticationEmailAddress: setAuthenticationEmailAddress,
+    resendAuthenticationCode: resendAuthenticationCode,
+    checkAuthenticationEmailCode: checkAuthenticationEmailCode,
+    checkAuthenticationCode: checkAuthenticationCode,
+    requestQrCodeAuthentication: requestQrCodeAuthentication,
+    registerUser: registerUser,
+    resetAuthenticationEmailAddress: resetAuthenticationEmailAddress,
+    checkAuthenticationPassword: checkAuthenticationPassword,
+    requestAuthenticationPasswordRecovery: requestAuthenticationPasswordRecovery,
+    checkAuthenticationPasswordRecoveryCode: checkAuthenticationPasswordRecoveryCode,
+    recoverAuthenticationPassword: recoverAuthenticationPassword,
+    sendAuthenticationFirebaseSms: sendAuthenticationFirebaseSms,
+    checkAuthenticationBotToken: checkAuthenticationBotToken,
+    logOut: logOut,
+    close: close,
+    destroy: destroy,
+    confirmQrCodeAuthentication: confirmQrCodeAuthentication,
+    getCurrentState: getCurrentState,
+    setDatabaseEncryptionKey: setDatabaseEncryptionKey,
+    getPasswordState: getPasswordState,
+    setPassword: setPassword,
+    setLoginEmailAddress: setLoginEmailAddress,
+    resendLoginEmailAddressCode: resendLoginEmailAddressCode,
+    checkLoginEmailAddressCode: checkLoginEmailAddressCode,
+    getRecoveryEmailAddress: getRecoveryEmailAddress,
+    setRecoveryEmailAddress: setRecoveryEmailAddress,
+    checkRecoveryEmailAddressCode: checkRecoveryEmailAddressCode,
+    resendRecoveryEmailAddressCode: resendRecoveryEmailAddressCode,
+    cancelRecoveryEmailAddressVerification: cancelRecoveryEmailAddressVerification,
+    requestPasswordRecovery: requestPasswordRecovery,
+    checkPasswordRecoveryCode: checkPasswordRecoveryCode,
+    recoverPassword: recoverPassword,
+    resetPassword: resetPassword,
+    cancelPasswordReset: cancelPasswordReset,
+    createTemporaryPassword: createTemporaryPassword,
+    getTemporaryPasswordState: getTemporaryPasswordState,
+    getMe: getMe,
+    getUser: getUser,
+    getUserFullInfo: getUserFullInfo,
+    getBasicGroup: getBasicGroup,
+    getBasicGroupFullInfo: getBasicGroupFullInfo,
+    getSupergroup: getSupergroup,
+    getSupergroupFullInfo: getSupergroupFullInfo,
+    getSecretChat: getSecretChat,
+    getChat: getChat,
+    getMessage: getMessage,
+    getMessageLocally: getMessageLocally,
+    getRepliedMessage: getRepliedMessage,
+    getChatPinnedMessage: getChatPinnedMessage,
+    getCallbackQueryMessage: getCallbackQueryMessage,
+    getMessages: getMessages,
+    getMessageThread: getMessageThread,
+    getMessageReadDate: getMessageReadDate,
+    getMessageViewers: getMessageViewers,
+    getFile: getFile,
+    getRemoteFile: getRemoteFile,
+    loadChats: loadChats,
+    getChats: getChats,
+    searchPublicChat: searchPublicChat,
+    searchPublicChats: searchPublicChats,
+    searchChats: searchChats,
+    searchChatsOnServer: searchChatsOnServer,
+    searchChatsNearby: searchChatsNearby,
+    getChatSimilarChats: getChatSimilarChats,
+    getChatSimilarChatCount: getChatSimilarChatCount,
+    openChatSimilarChat: openChatSimilarChat,
+    getTopChats: getTopChats,
+    removeTopChat: removeTopChat,
+    searchRecentlyFoundChats: searchRecentlyFoundChats,
+    addRecentlyFoundChat: addRecentlyFoundChat,
+    removeRecentlyFoundChat: removeRecentlyFoundChat,
+    clearRecentlyFoundChats: clearRecentlyFoundChats,
+    getRecentlyOpenedChats: getRecentlyOpenedChats,
+    checkChatUsername: checkChatUsername,
+    getCreatedPublicChats: getCreatedPublicChats,
+    checkCreatedPublicChatsLimit: checkCreatedPublicChatsLimit,
+    getSuitableDiscussionChats: getSuitableDiscussionChats,
+    getInactiveSupergroupChats: getInactiveSupergroupChats,
+    getSuitablePersonalChats: getSuitablePersonalChats,
+    loadSavedMessagesTopics: loadSavedMessagesTopics,
+    getSavedMessagesTopicHistory: getSavedMessagesTopicHistory,
+    getSavedMessagesTopicMessageByDate: getSavedMessagesTopicMessageByDate,
+    deleteSavedMessagesTopicHistory: deleteSavedMessagesTopicHistory,
+    deleteSavedMessagesTopicMessagesByDate: deleteSavedMessagesTopicMessagesByDate,
+    toggleSavedMessagesTopicIsPinned: toggleSavedMessagesTopicIsPinned,
+    setPinnedSavedMessagesTopics: setPinnedSavedMessagesTopics,
+    getGroupsInCommon: getGroupsInCommon,
+    getChatHistory: getChatHistory,
+    getMessageThreadHistory: getMessageThreadHistory,
+    deleteChatHistory: deleteChatHistory,
+    deleteChat: deleteChat,
+    searchChatMessages: searchChatMessages,
+    searchMessages: searchMessages,
+    searchSecretMessages: searchSecretMessages,
+    searchSavedMessages: searchSavedMessages,
+    searchCallMessages: searchCallMessages,
+    searchOutgoingDocumentMessages: searchOutgoingDocumentMessages,
+    deleteAllCallMessages: deleteAllCallMessages,
+    searchChatRecentLocationMessages: searchChatRecentLocationMessages,
+    getActiveLiveLocationMessages: getActiveLiveLocationMessages,
+    getChatMessageByDate: getChatMessageByDate,
+    getChatSparseMessagePositions: getChatSparseMessagePositions,
+    getChatMessageCalendar: getChatMessageCalendar,
+    getChatMessageCount: getChatMessageCount,
+    getChatMessagePosition: getChatMessagePosition,
+    getChatScheduledMessages: getChatScheduledMessages,
+    getChatSponsoredMessages: getChatSponsoredMessages,
+    clickChatSponsoredMessage: clickChatSponsoredMessage,
+    reportChatSponsoredMessage: reportChatSponsoredMessage,
+    removeNotification: removeNotification,
+    removeNotificationGroup: removeNotificationGroup,
+    getMessageLink: getMessageLink,
+    getMessageEmbeddingCode: getMessageEmbeddingCode,
+    getMessageLinkInfo: getMessageLinkInfo,
+    translateText: translateText,
+    translateMessageText: translateMessageText,
+    recognizeSpeech: recognizeSpeech,
+    rateSpeechRecognition: rateSpeechRecognition,
+    getChatAvailableMessageSenders: getChatAvailableMessageSenders,
+    setChatMessageSender: setChatMessageSender,
+    sendMessage: sendMessage,
+    sendMessageAlbum: sendMessageAlbum,
+    sendBotStartMessage: sendBotStartMessage,
+    sendInlineQueryResultMessage: sendInlineQueryResultMessage,
+    forwardMessages: forwardMessages,
+    sendQuickReplyShortcutMessages: sendQuickReplyShortcutMessages,
+    resendMessages: resendMessages,
+    addLocalMessage: addLocalMessage,
+    deleteMessages: deleteMessages,
+    deleteChatMessagesBySender: deleteChatMessagesBySender,
+    deleteChatMessagesByDate: deleteChatMessagesByDate,
+    editMessageText: editMessageText,
+    editMessageLiveLocation: editMessageLiveLocation,
+    editMessageMedia: editMessageMedia,
+    editMessageCaption: editMessageCaption,
+    editMessageReplyMarkup: editMessageReplyMarkup,
+    editInlineMessageText: editInlineMessageText,
+    editInlineMessageLiveLocation: editInlineMessageLiveLocation,
+    editInlineMessageMedia: editInlineMessageMedia,
+    editInlineMessageCaption: editInlineMessageCaption,
+    editInlineMessageReplyMarkup: editInlineMessageReplyMarkup,
+    editMessageSchedulingState: editMessageSchedulingState,
+    sendBusinessMessage: sendBusinessMessage,
+    sendBusinessMessageAlbum: sendBusinessMessageAlbum,
+    checkQuickReplyShortcutName: checkQuickReplyShortcutName,
+    loadQuickReplyShortcuts: loadQuickReplyShortcuts,
+    setQuickReplyShortcutName: setQuickReplyShortcutName,
+    deleteQuickReplyShortcut: deleteQuickReplyShortcut,
+    reorderQuickReplyShortcuts: reorderQuickReplyShortcuts,
+    loadQuickReplyShortcutMessages: loadQuickReplyShortcutMessages,
+    deleteQuickReplyShortcutMessages: deleteQuickReplyShortcutMessages,
+    addQuickReplyShortcutMessage: addQuickReplyShortcutMessage,
+    addQuickReplyShortcutInlineQueryResultMessage: addQuickReplyShortcutInlineQueryResultMessage,
+    readdQuickReplyShortcutMessages: readdQuickReplyShortcutMessages,
+    editQuickReplyMessage: editQuickReplyMessage,
+    getForumTopicDefaultIcons: getForumTopicDefaultIcons,
+    createForumTopic: createForumTopic,
+    editForumTopic: editForumTopic,
+    getForumTopic: getForumTopic,
+    getForumTopicLink: getForumTopicLink,
+    getForumTopics: getForumTopics,
+    setForumTopicNotificationSettings: setForumTopicNotificationSettings,
+    toggleForumTopicIsClosed: toggleForumTopicIsClosed,
+    toggleGeneralForumTopicIsHidden: toggleGeneralForumTopicIsHidden,
+    toggleForumTopicIsPinned: toggleForumTopicIsPinned,
+    setPinnedForumTopics: setPinnedForumTopics,
+    deleteForumTopic: deleteForumTopic,
+    getEmojiReaction: getEmojiReaction,
+    getCustomEmojiReactionAnimations: getCustomEmojiReactionAnimations,
+    getMessageAvailableReactions: getMessageAvailableReactions,
+    clearRecentReactions: clearRecentReactions,
+    addMessageReaction: addMessageReaction,
+    removeMessageReaction: removeMessageReaction,
+    setMessageReactions: setMessageReactions,
+    getMessageAddedReactions: getMessageAddedReactions,
+    setDefaultReactionType: setDefaultReactionType,
+    getSavedMessagesTags: getSavedMessagesTags,
+    setSavedMessagesTagLabel: setSavedMessagesTagLabel,
+    searchQuote: searchQuote,
+    getTextEntities: getTextEntities,
+    parseTextEntities: parseTextEntities,
+    parseMarkdown: parseMarkdown,
+    getMarkdownText: getMarkdownText,
+    getCountryFlagEmoji: getCountryFlagEmoji,
+    getFileMimeType: getFileMimeType,
+    getFileExtension: getFileExtension,
+    cleanFileName: cleanFileName,
+    getLanguagePackString: getLanguagePackString,
+    getJsonValue: getJsonValue,
+    getJsonString: getJsonString,
+    getThemeParametersJsonString: getThemeParametersJsonString,
+    setPollAnswer: setPollAnswer,
+    getPollVoters: getPollVoters,
+    stopPoll: stopPoll,
+    hideSuggestedAction: hideSuggestedAction,
+    getBusinessConnection: getBusinessConnection,
+    getLoginUrlInfo: getLoginUrlInfo,
+    getLoginUrl: getLoginUrl,
+    shareUsersWithBot: shareUsersWithBot,
+    shareChatWithBot: shareChatWithBot,
+    getInlineQueryResults: getInlineQueryResults,
+    answerInlineQuery: answerInlineQuery,
+    searchWebApp: searchWebApp,
+    getWebAppLinkUrl: getWebAppLinkUrl,
+    getWebAppUrl: getWebAppUrl,
+    sendWebAppData: sendWebAppData,
+    openWebApp: openWebApp,
+    closeWebApp: closeWebApp,
+    answerWebAppQuery: answerWebAppQuery,
+    getCallbackQueryAnswer: getCallbackQueryAnswer,
+    answerCallbackQuery: answerCallbackQuery,
+    answerShippingQuery: answerShippingQuery,
+    answerPreCheckoutQuery: answerPreCheckoutQuery,
+    setGameScore: setGameScore,
+    setInlineGameScore: setInlineGameScore,
+    getGameHighScores: getGameHighScores,
+    getInlineGameHighScores: getInlineGameHighScores,
+    deleteChatReplyMarkup: deleteChatReplyMarkup,
+    sendChatAction: sendChatAction,
+    openChat: openChat,
+    closeChat: closeChat,
+    viewMessages: viewMessages,
+    openMessageContent: openMessageContent,
+    clickAnimatedEmojiMessage: clickAnimatedEmojiMessage,
+    getInternalLink: getInternalLink,
+    getInternalLinkType: getInternalLinkType,
+    getExternalLinkInfo: getExternalLinkInfo,
+    getExternalLink: getExternalLink,
+    readAllChatMentions: readAllChatMentions,
+    readAllMessageThreadMentions: readAllMessageThreadMentions,
+    readAllChatReactions: readAllChatReactions,
+    readAllMessageThreadReactions: readAllMessageThreadReactions,
+    createPrivateChat: createPrivateChat,
+    createBasicGroupChat: createBasicGroupChat,
+    createSupergroupChat: createSupergroupChat,
+    createSecretChat: createSecretChat,
+    createNewBasicGroupChat: createNewBasicGroupChat,
+    createNewSupergroupChat: createNewSupergroupChat,
+    createNewSecretChat: createNewSecretChat,
+    upgradeBasicGroupChatToSupergroupChat: upgradeBasicGroupChatToSupergroupChat,
+    getChatListsToAddChat: getChatListsToAddChat,
+    addChatToList: addChatToList,
+    getChatFolder: getChatFolder,
+    createChatFolder: createChatFolder,
+    editChatFolder: editChatFolder,
+    deleteChatFolder: deleteChatFolder,
+    getChatFolderChatsToLeave: getChatFolderChatsToLeave,
+    getChatFolderChatCount: getChatFolderChatCount,
+    reorderChatFolders: reorderChatFolders,
+    toggleChatFolderTags: toggleChatFolderTags,
+    getRecommendedChatFolders: getRecommendedChatFolders,
+    getChatFolderDefaultIconName: getChatFolderDefaultIconName,
+    getChatsForChatFolderInviteLink: getChatsForChatFolderInviteLink,
+    createChatFolderInviteLink: createChatFolderInviteLink,
+    getChatFolderInviteLinks: getChatFolderInviteLinks,
+    editChatFolderInviteLink: editChatFolderInviteLink,
+    deleteChatFolderInviteLink: deleteChatFolderInviteLink,
+    checkChatFolderInviteLink: checkChatFolderInviteLink,
+    addChatFolderByInviteLink: addChatFolderByInviteLink,
+    getChatFolderNewChats: getChatFolderNewChats,
+    processChatFolderNewChats: processChatFolderNewChats,
+    getArchiveChatListSettings: getArchiveChatListSettings,
+    setArchiveChatListSettings: setArchiveChatListSettings,
+    setChatTitle: setChatTitle,
+    setChatPhoto: setChatPhoto,
+    setChatAccentColor: setChatAccentColor,
+    setChatProfileAccentColor: setChatProfileAccentColor,
+    setChatMessageAutoDeleteTime: setChatMessageAutoDeleteTime,
+    setChatEmojiStatus: setChatEmojiStatus,
+    setChatPermissions: setChatPermissions,
+    setChatBackground: setChatBackground,
+    deleteChatBackground: deleteChatBackground,
+    setChatTheme: setChatTheme,
+    setChatDraftMessage: setChatDraftMessage,
+    setChatNotificationSettings: setChatNotificationSettings,
+    toggleChatHasProtectedContent: toggleChatHasProtectedContent,
+    toggleChatViewAsTopics: toggleChatViewAsTopics,
+    toggleChatIsTranslatable: toggleChatIsTranslatable,
+    toggleChatIsMarkedAsUnread: toggleChatIsMarkedAsUnread,
+    toggleChatDefaultDisableNotification: toggleChatDefaultDisableNotification,
+    setChatAvailableReactions: setChatAvailableReactions,
+    setChatClientData: setChatClientData,
+    setChatDescription: setChatDescription,
+    setChatDiscussionGroup: setChatDiscussionGroup,
+    setChatLocation: setChatLocation,
+    setChatSlowModeDelay: setChatSlowModeDelay,
+    pinChatMessage: pinChatMessage,
+    unpinChatMessage: unpinChatMessage,
+    unpinAllChatMessages: unpinAllChatMessages,
+    unpinAllMessageThreadMessages: unpinAllMessageThreadMessages,
+    joinChat: joinChat,
+    leaveChat: leaveChat,
+    addChatMember: addChatMember,
+    addChatMembers: addChatMembers,
+    setChatMemberStatus: setChatMemberStatus,
+    banChatMember: banChatMember,
+    canTransferOwnership: canTransferOwnership,
+    transferChatOwnership: transferChatOwnership,
+    getChatMember: getChatMember,
+    searchChatMembers: searchChatMembers,
+    getChatAdministrators: getChatAdministrators,
+    clearAllDraftMessages: clearAllDraftMessages,
+    getSavedNotificationSound: getSavedNotificationSound,
+    getSavedNotificationSounds: getSavedNotificationSounds,
+    addSavedNotificationSound: addSavedNotificationSound,
+    removeSavedNotificationSound: removeSavedNotificationSound,
+    getChatNotificationSettingsExceptions: getChatNotificationSettingsExceptions,
+    getScopeNotificationSettings: getScopeNotificationSettings,
+    setScopeNotificationSettings: setScopeNotificationSettings,
+    resetAllNotificationSettings: resetAllNotificationSettings,
+    toggleChatIsPinned: toggleChatIsPinned,
+    setPinnedChats: setPinnedChats,
+    readChatList: readChatList,
+    getStory: getStory,
+    getChatsToSendStories: getChatsToSendStories,
+    canSendStory: canSendStory,
+    sendStory: sendStory,
+    editStory: editStory,
+    setStoryPrivacySettings: setStoryPrivacySettings,
+    toggleStoryIsPinned: toggleStoryIsPinned,
+    deleteStory: deleteStory,
+    getStoryNotificationSettingsExceptions: getStoryNotificationSettingsExceptions,
+    loadActiveStories: loadActiveStories,
+    setChatActiveStoriesList: setChatActiveStoriesList,
+    getChatActiveStories: getChatActiveStories,
+    getChatPinnedStories: getChatPinnedStories,
+    getChatArchivedStories: getChatArchivedStories,
+    openStory: openStory,
+    closeStory: closeStory,
+    getStoryAvailableReactions: getStoryAvailableReactions,
+    setStoryReaction: setStoryReaction,
+    getStoryInteractions: getStoryInteractions,
+    getChatStoryInteractions: getChatStoryInteractions,
+    reportStory: reportStory,
+    activateStoryStealthMode: activateStoryStealthMode,
+    getStoryPublicForwards: getStoryPublicForwards,
+    getChatBoostLevelFeatures: getChatBoostLevelFeatures,
+    getChatBoostFeatures: getChatBoostFeatures,
+    getAvailableChatBoostSlots: getAvailableChatBoostSlots,
+    getChatBoostStatus: getChatBoostStatus,
+    boostChat: boostChat,
+    getChatBoostLink: getChatBoostLink,
+    getChatBoostLinkInfo: getChatBoostLinkInfo,
+    getChatBoosts: getChatBoosts,
+    getUserChatBoosts: getUserChatBoosts,
+    getAttachmentMenuBot: getAttachmentMenuBot,
+    toggleBotIsAddedToAttachmentMenu: toggleBotIsAddedToAttachmentMenu,
+    getThemedEmojiStatuses: getThemedEmojiStatuses,
+    getRecentEmojiStatuses: getRecentEmojiStatuses,
+    getDefaultEmojiStatuses: getDefaultEmojiStatuses,
+    clearRecentEmojiStatuses: clearRecentEmojiStatuses,
+    getThemedChatEmojiStatuses: getThemedChatEmojiStatuses,
+    getDefaultChatEmojiStatuses: getDefaultChatEmojiStatuses,
+    getDisallowedChatEmojiStatuses: getDisallowedChatEmojiStatuses,
+    downloadFile: downloadFile,
+    getFileDownloadedPrefixSize: getFileDownloadedPrefixSize,
+    cancelDownloadFile: cancelDownloadFile,
+    getSuggestedFileName: getSuggestedFileName,
+    preliminaryUploadFile: preliminaryUploadFile,
+    cancelPreliminaryUploadFile: cancelPreliminaryUploadFile,
+    writeGeneratedFilePart: writeGeneratedFilePart,
+    setFileGenerationProgress: setFileGenerationProgress,
+    finishFileGeneration: finishFileGeneration,
+    readFilePart: readFilePart,
+    deleteFile: deleteFile,
+    addFileToDownloads: addFileToDownloads,
+    toggleDownloadIsPaused: toggleDownloadIsPaused,
+    toggleAllDownloadsArePaused: toggleAllDownloadsArePaused,
+    removeFileFromDownloads: removeFileFromDownloads,
+    removeAllFilesFromDownloads: removeAllFilesFromDownloads,
+    searchFileDownloads: searchFileDownloads,
+    getMessageFileType: getMessageFileType,
+    getMessageImportConfirmationText: getMessageImportConfirmationText,
+    importMessages: importMessages,
+    replacePrimaryChatInviteLink: replacePrimaryChatInviteLink,
+    createChatInviteLink: createChatInviteLink,
+    editChatInviteLink: editChatInviteLink,
+    getChatInviteLink: getChatInviteLink,
+    getChatInviteLinkCounts: getChatInviteLinkCounts,
+    getChatInviteLinks: getChatInviteLinks,
+    getChatInviteLinkMembers: getChatInviteLinkMembers,
+    revokeChatInviteLink: revokeChatInviteLink,
+    deleteRevokedChatInviteLink: deleteRevokedChatInviteLink,
+    deleteAllRevokedChatInviteLinks: deleteAllRevokedChatInviteLinks,
+    checkChatInviteLink: checkChatInviteLink,
+    joinChatByInviteLink: joinChatByInviteLink,
+    getChatJoinRequests: getChatJoinRequests,
+    processChatJoinRequest: processChatJoinRequest,
+    processChatJoinRequests: processChatJoinRequests,
+    createCall: createCall,
+    acceptCall: acceptCall,
+    sendCallSignalingData: sendCallSignalingData,
+    discardCall: discardCall,
+    sendCallRating: sendCallRating,
+    sendCallDebugInformation: sendCallDebugInformation,
+    sendCallLog: sendCallLog,
+    getVideoChatAvailableParticipants: getVideoChatAvailableParticipants,
+    setVideoChatDefaultParticipant: setVideoChatDefaultParticipant,
+    createVideoChat: createVideoChat,
+    getVideoChatRtmpUrl: getVideoChatRtmpUrl,
+    replaceVideoChatRtmpUrl: replaceVideoChatRtmpUrl,
+    getGroupCall: getGroupCall,
+    startScheduledGroupCall: startScheduledGroupCall,
+    toggleGroupCallEnabledStartNotification: toggleGroupCallEnabledStartNotification,
+    joinGroupCall: joinGroupCall,
+    startGroupCallScreenSharing: startGroupCallScreenSharing,
+    toggleGroupCallScreenSharingIsPaused: toggleGroupCallScreenSharingIsPaused,
+    endGroupCallScreenSharing: endGroupCallScreenSharing,
+    setGroupCallTitle: setGroupCallTitle,
+    toggleGroupCallMuteNewParticipants: toggleGroupCallMuteNewParticipants,
+    inviteGroupCallParticipants: inviteGroupCallParticipants,
+    getGroupCallInviteLink: getGroupCallInviteLink,
+    revokeGroupCallInviteLink: revokeGroupCallInviteLink,
+    startGroupCallRecording: startGroupCallRecording,
+    endGroupCallRecording: endGroupCallRecording,
+    toggleGroupCallIsMyVideoPaused: toggleGroupCallIsMyVideoPaused,
+    toggleGroupCallIsMyVideoEnabled: toggleGroupCallIsMyVideoEnabled,
+    setGroupCallParticipantIsSpeaking: setGroupCallParticipantIsSpeaking,
+    toggleGroupCallParticipantIsMuted: toggleGroupCallParticipantIsMuted,
+    setGroupCallParticipantVolumeLevel: setGroupCallParticipantVolumeLevel,
+    toggleGroupCallParticipantIsHandRaised: toggleGroupCallParticipantIsHandRaised,
+    loadGroupCallParticipants: loadGroupCallParticipants,
+    leaveGroupCall: leaveGroupCall,
+    endGroupCall: endGroupCall,
+    getGroupCallStreams: getGroupCallStreams,
+    getGroupCallStreamSegment: getGroupCallStreamSegment,
+    setMessageSenderBlockList: setMessageSenderBlockList,
+    blockMessageSenderFromReplies: blockMessageSenderFromReplies,
+    getBlockedMessageSenders: getBlockedMessageSenders,
+    addContact: addContact,
+    importContacts: importContacts,
+    getContacts: getContacts,
+    searchContacts: searchContacts,
+    removeContacts: removeContacts,
+    getImportedContactCount: getImportedContactCount,
+    changeImportedContacts: changeImportedContacts,
+    clearImportedContacts: clearImportedContacts,
+    setCloseFriends: setCloseFriends,
+    getCloseFriends: getCloseFriends,
+    setUserPersonalProfilePhoto: setUserPersonalProfilePhoto,
+    suggestUserProfilePhoto: suggestUserProfilePhoto,
+    searchUserByPhoneNumber: searchUserByPhoneNumber,
+    sharePhoneNumber: sharePhoneNumber,
+    getUserProfilePhotos: getUserProfilePhotos,
+    getStickers: getStickers,
+    getAllStickerEmojis: getAllStickerEmojis,
+    searchStickers: searchStickers,
+    getGreetingStickers: getGreetingStickers,
+    getPremiumStickers: getPremiumStickers,
+    getInstalledStickerSets: getInstalledStickerSets,
+    getArchivedStickerSets: getArchivedStickerSets,
+    getTrendingStickerSets: getTrendingStickerSets,
+    getAttachedStickerSets: getAttachedStickerSets,
+    getStickerSet: getStickerSet,
+    searchStickerSet: searchStickerSet,
+    searchInstalledStickerSets: searchInstalledStickerSets,
+    searchStickerSets: searchStickerSets,
+    changeStickerSet: changeStickerSet,
+    viewTrendingStickerSets: viewTrendingStickerSets,
+    reorderInstalledStickerSets: reorderInstalledStickerSets,
+    getRecentStickers: getRecentStickers,
+    addRecentSticker: addRecentSticker,
+    removeRecentSticker: removeRecentSticker,
+    clearRecentStickers: clearRecentStickers,
+    getFavoriteStickers: getFavoriteStickers,
+    addFavoriteSticker: addFavoriteSticker,
+    removeFavoriteSticker: removeFavoriteSticker,
+    getStickerEmojis: getStickerEmojis,
+    searchEmojis: searchEmojis,
+    getKeywordEmojis: getKeywordEmojis,
+    getEmojiCategories: getEmojiCategories,
+    getAnimatedEmoji: getAnimatedEmoji,
+    getEmojiSuggestionsUrl: getEmojiSuggestionsUrl,
+    getCustomEmojiStickers: getCustomEmojiStickers,
+    getDefaultChatPhotoCustomEmojiStickers: getDefaultChatPhotoCustomEmojiStickers,
+    getDefaultProfilePhotoCustomEmojiStickers: getDefaultProfilePhotoCustomEmojiStickers,
+    getDefaultBackgroundCustomEmojiStickers: getDefaultBackgroundCustomEmojiStickers,
+    getSavedAnimations: getSavedAnimations,
+    addSavedAnimation: addSavedAnimation,
+    removeSavedAnimation: removeSavedAnimation,
+    getRecentInlineBots: getRecentInlineBots,
+    searchHashtags: searchHashtags,
+    removeRecentHashtag: removeRecentHashtag,
+    getWebPagePreview: getWebPagePreview,
+    getWebPageInstantView: getWebPageInstantView,
+    setProfilePhoto: setProfilePhoto,
+    deleteProfilePhoto: deleteProfilePhoto,
+    setAccentColor: setAccentColor,
+    setProfileAccentColor: setProfileAccentColor,
+    setName: setName,
+    setBio: setBio,
+    setUsername: setUsername,
+    toggleUsernameIsActive: toggleUsernameIsActive,
+    reorderActiveUsernames: reorderActiveUsernames,
+    setBirthdate: setBirthdate,
+    setPersonalChat: setPersonalChat,
+    setEmojiStatus: setEmojiStatus,
+    setLocation: setLocation,
+    setBusinessLocation: setBusinessLocation,
+    setBusinessOpeningHours: setBusinessOpeningHours,
+    setBusinessGreetingMessageSettings: setBusinessGreetingMessageSettings,
+    setBusinessAwayMessageSettings: setBusinessAwayMessageSettings,
+    setBusinessStartPage: setBusinessStartPage,
+    sendPhoneNumberCode: sendPhoneNumberCode,
+    sendPhoneNumberFirebaseSms: sendPhoneNumberFirebaseSms,
+    resendPhoneNumberCode: resendPhoneNumberCode,
+    checkPhoneNumberCode: checkPhoneNumberCode,
+    getBusinessConnectedBot: getBusinessConnectedBot,
+    setBusinessConnectedBot: setBusinessConnectedBot,
+    deleteBusinessConnectedBot: deleteBusinessConnectedBot,
+    toggleBusinessConnectedBotChatIsPaused: toggleBusinessConnectedBotChatIsPaused,
+    removeBusinessConnectedBotFromChat: removeBusinessConnectedBotFromChat,
+    getBusinessChatLinks: getBusinessChatLinks,
+    createBusinessChatLink: createBusinessChatLink,
+    editBusinessChatLink: editBusinessChatLink,
+    deleteBusinessChatLink: deleteBusinessChatLink,
+    getBusinessChatLinkInfo: getBusinessChatLinkInfo,
+    getUserLink: getUserLink,
+    searchUserByToken: searchUserByToken,
+    setCommands: setCommands,
+    deleteCommands: deleteCommands,
+    getCommands: getCommands,
+    setMenuButton: setMenuButton,
+    getMenuButton: getMenuButton,
+    setDefaultGroupAdministratorRights: setDefaultGroupAdministratorRights,
+    setDefaultChannelAdministratorRights: setDefaultChannelAdministratorRights,
+    canBotSendMessages: canBotSendMessages,
+    allowBotToSendMessages: allowBotToSendMessages,
+    sendWebAppCustomRequest: sendWebAppCustomRequest,
+    setBotName: setBotName,
+    getBotName: getBotName,
+    setBotProfilePhoto: setBotProfilePhoto,
+    toggleBotUsernameIsActive: toggleBotUsernameIsActive,
+    reorderBotActiveUsernames: reorderBotActiveUsernames,
+    setBotInfoDescription: setBotInfoDescription,
+    getBotInfoDescription: getBotInfoDescription,
+    setBotInfoShortDescription: setBotInfoShortDescription,
+    getBotInfoShortDescription: getBotInfoShortDescription,
+    getActiveSessions: getActiveSessions,
+    terminateSession: terminateSession,
+    terminateAllOtherSessions: terminateAllOtherSessions,
+    confirmSession: confirmSession,
+    toggleSessionCanAcceptCalls: toggleSessionCanAcceptCalls,
+    toggleSessionCanAcceptSecretChats: toggleSessionCanAcceptSecretChats,
+    setInactiveSessionTtl: setInactiveSessionTtl,
+    getConnectedWebsites: getConnectedWebsites,
+    disconnectWebsite: disconnectWebsite,
+    disconnectAllWebsites: disconnectAllWebsites,
+    setSupergroupUsername: setSupergroupUsername,
+    toggleSupergroupUsernameIsActive: toggleSupergroupUsernameIsActive,
+    disableAllSupergroupUsernames: disableAllSupergroupUsernames,
+    reorderSupergroupActiveUsernames: reorderSupergroupActiveUsernames,
+    setSupergroupStickerSet: setSupergroupStickerSet,
+    setSupergroupCustomEmojiStickerSet: setSupergroupCustomEmojiStickerSet,
+    setSupergroupUnrestrictBoostCount: setSupergroupUnrestrictBoostCount,
+    toggleSupergroupSignMessages: toggleSupergroupSignMessages,
+    toggleSupergroupJoinToSendMessages: toggleSupergroupJoinToSendMessages,
+    toggleSupergroupJoinByRequest: toggleSupergroupJoinByRequest,
+    toggleSupergroupIsAllHistoryAvailable: toggleSupergroupIsAllHistoryAvailable,
+    toggleSupergroupCanHaveSponsoredMessages: toggleSupergroupCanHaveSponsoredMessages,
+    toggleSupergroupHasHiddenMembers: toggleSupergroupHasHiddenMembers,
+    toggleSupergroupHasAggressiveAntiSpamEnabled: toggleSupergroupHasAggressiveAntiSpamEnabled,
+    toggleSupergroupIsForum: toggleSupergroupIsForum,
+    toggleSupergroupIsBroadcastGroup: toggleSupergroupIsBroadcastGroup,
+    reportSupergroupSpam: reportSupergroupSpam,
+    reportSupergroupAntiSpamFalsePositive: reportSupergroupAntiSpamFalsePositive,
+    getSupergroupMembers: getSupergroupMembers,
+    closeSecretChat: closeSecretChat,
+    getChatEventLog: getChatEventLog,
+    getTimeZones: getTimeZones,
+    getPaymentForm: getPaymentForm,
+    validateOrderInfo: validateOrderInfo,
+    sendPaymentForm: sendPaymentForm,
+    getPaymentReceipt: getPaymentReceipt,
+    getSavedOrderInfo: getSavedOrderInfo,
+    deleteSavedOrderInfo: deleteSavedOrderInfo,
+    deleteSavedCredentials: deleteSavedCredentials,
+    createInvoiceLink: createInvoiceLink,
+    getSupportUser: getSupportUser,
+    getBackgroundUrl: getBackgroundUrl,
+    searchBackground: searchBackground,
+    setDefaultBackground: setDefaultBackground,
+    deleteDefaultBackground: deleteDefaultBackground,
+    getInstalledBackgrounds: getInstalledBackgrounds,
+    removeInstalledBackground: removeInstalledBackground,
+    resetInstalledBackgrounds: resetInstalledBackgrounds,
+    getLocalizationTargetInfo: getLocalizationTargetInfo,
+    getLanguagePackInfo: getLanguagePackInfo,
+    getLanguagePackStrings: getLanguagePackStrings,
+    synchronizeLanguagePack: synchronizeLanguagePack,
+    addCustomServerLanguagePack: addCustomServerLanguagePack,
+    setCustomLanguagePack: setCustomLanguagePack,
+    editCustomLanguagePackInfo: editCustomLanguagePackInfo,
+    setCustomLanguagePackString: setCustomLanguagePackString,
+    deleteLanguagePack: deleteLanguagePack,
+    registerDevice: registerDevice,
+    processPushNotification: processPushNotification,
+    getPushReceiverId: getPushReceiverId,
+    getRecentlyVisitedTMeUrls: getRecentlyVisitedTMeUrls,
+    setUserPrivacySettingRules: setUserPrivacySettingRules,
+    getUserPrivacySettingRules: getUserPrivacySettingRules,
+    setReadDatePrivacySettings: setReadDatePrivacySettings,
+    getReadDatePrivacySettings: getReadDatePrivacySettings,
+    setNewChatPrivacySettings: setNewChatPrivacySettings,
+    getNewChatPrivacySettings: getNewChatPrivacySettings,
+    canSendMessageToUser: canSendMessageToUser,
+    getOption: getOption,
+    setOption: setOption,
+    setAccountTtl: setAccountTtl,
+    getAccountTtl: getAccountTtl,
+    deleteAccount: deleteAccount,
+    setDefaultMessageAutoDeleteTime: setDefaultMessageAutoDeleteTime,
+    getDefaultMessageAutoDeleteTime: getDefaultMessageAutoDeleteTime,
+    removeChatActionBar: removeChatActionBar,
+    reportChat: reportChat,
+    reportChatPhoto: reportChatPhoto,
+    reportMessageReactions: reportMessageReactions,
+    getChatRevenueStatistics: getChatRevenueStatistics,
+    getChatRevenueWithdrawalUrl: getChatRevenueWithdrawalUrl,
+    getChatRevenueTransactions: getChatRevenueTransactions,
+    getChatStatistics: getChatStatistics,
+    getMessageStatistics: getMessageStatistics,
+    getMessagePublicForwards: getMessagePublicForwards,
+    getStoryStatistics: getStoryStatistics,
+    getStatisticalGraph: getStatisticalGraph,
+    getStorageStatistics: getStorageStatistics,
+    getStorageStatisticsFast: getStorageStatisticsFast,
+    getDatabaseStatistics: getDatabaseStatistics,
+    optimizeStorage: optimizeStorage,
+    setNetworkType: setNetworkType,
+    getNetworkStatistics: getNetworkStatistics,
+    addNetworkStatistics: addNetworkStatistics,
+    resetNetworkStatistics: resetNetworkStatistics,
+    getAutoDownloadSettingsPresets: getAutoDownloadSettingsPresets,
+    setAutoDownloadSettings: setAutoDownloadSettings,
+    getAutosaveSettings: getAutosaveSettings,
+    setAutosaveSettings: setAutosaveSettings,
+    clearAutosaveSettingsExceptions: clearAutosaveSettingsExceptions,
+    getBankCardInfo: getBankCardInfo,
+    getPassportElement: getPassportElement,
+    getAllPassportElements: getAllPassportElements,
+    setPassportElement: setPassportElement,
+    deletePassportElement: deletePassportElement,
+    setPassportElementErrors: setPassportElementErrors,
+    getPreferredCountryLanguage: getPreferredCountryLanguage,
+    sendEmailAddressVerificationCode: sendEmailAddressVerificationCode,
+    resendEmailAddressVerificationCode: resendEmailAddressVerificationCode,
+    checkEmailAddressVerificationCode: checkEmailAddressVerificationCode,
+    getPassportAuthorizationForm: getPassportAuthorizationForm,
+    getPassportAuthorizationFormAvailableElements: getPassportAuthorizationFormAvailableElements,
+    sendPassportAuthorizationForm: sendPassportAuthorizationForm,
+    setBotUpdatesStatus: setBotUpdatesStatus,
+    uploadStickerFile: uploadStickerFile,
+    getSuggestedStickerSetName: getSuggestedStickerSetName,
+    checkStickerSetName: checkStickerSetName,
+    createNewStickerSet: createNewStickerSet,
+    addStickerToSet: addStickerToSet,
+    replaceStickerInSet: replaceStickerInSet,
+    setStickerSetThumbnail: setStickerSetThumbnail,
+    setCustomEmojiStickerSetThumbnail: setCustomEmojiStickerSetThumbnail,
+    setStickerSetTitle: setStickerSetTitle,
+    deleteStickerSet: deleteStickerSet,
+    setStickerPositionInSet: setStickerPositionInSet,
+    removeStickerFromSet: removeStickerFromSet,
+    setStickerEmojis: setStickerEmojis,
+    setStickerKeywords: setStickerKeywords,
+    setStickerMaskPosition: setStickerMaskPosition,
+    getOwnedStickerSets: getOwnedStickerSets,
+    getMapThumbnailFile: getMapThumbnailFile,
+    getPremiumLimit: getPremiumLimit,
+    getPremiumFeatures: getPremiumFeatures,
+    getPremiumStickerExamples: getPremiumStickerExamples,
+    viewPremiumFeature: viewPremiumFeature,
+    clickPremiumSubscriptionButton: clickPremiumSubscriptionButton,
+    getPremiumState: getPremiumState,
+    getPremiumGiftCodePaymentOptions: getPremiumGiftCodePaymentOptions,
+    checkPremiumGiftCode: checkPremiumGiftCode,
+    applyPremiumGiftCode: applyPremiumGiftCode,
+    launchPrepaidPremiumGiveaway: launchPrepaidPremiumGiveaway,
+    getPremiumGiveawayInfo: getPremiumGiveawayInfo,
+    canPurchasePremium: canPurchasePremium,
+    assignAppStoreTransaction: assignAppStoreTransaction,
+    assignGooglePlayTransaction: assignGooglePlayTransaction,
+    getBusinessFeatures: getBusinessFeatures,
+    acceptTermsOfService: acceptTermsOfService,
+    searchStringsByPrefix: searchStringsByPrefix,
+    sendCustomRequest: sendCustomRequest,
+    answerCustomQuery: answerCustomQuery,
+    setAlarm: setAlarm,
+    getCountries: getCountries,
+    getCountryCode: getCountryCode,
+    getPhoneNumberInfo: getPhoneNumberInfo,
+    getPhoneNumberInfoSync: getPhoneNumberInfoSync,
+    getCollectibleItemInfo: getCollectibleItemInfo,
+    getDeepLinkInfo: getDeepLinkInfo,
+    getApplicationConfig: getApplicationConfig,
+    saveApplicationLogEvent: saveApplicationLogEvent,
+    getApplicationDownloadLink: getApplicationDownloadLink,
+    addProxy: addProxy,
+    editProxy: editProxy,
+    enableProxy: enableProxy,
+    disableProxy: disableProxy,
+    removeProxy: removeProxy,
+    getProxies: getProxies,
+    getProxyLink: getProxyLink,
+    pingProxy: pingProxy,
+    setLogStream: setLogStream,
+    getLogStream: getLogStream,
+    setLogVerbosityLevel: setLogVerbosityLevel,
+    getLogVerbosityLevel: getLogVerbosityLevel,
+    getLogTags: getLogTags,
+    setLogTagVerbosityLevel: setLogTagVerbosityLevel,
+    getLogTagVerbosityLevel: getLogTagVerbosityLevel,
+    addLogMessage: addLogMessage,
+    getUserSupportInfo: getUserSupportInfo,
+    setUserSupportInfo: setUserSupportInfo,
+    getSupportName: getSupportName,
+    testCallEmpty: testCallEmpty,
+    testCallString: testCallString,
+    testCallBytes: testCallBytes,
+    testCallVectorInt: testCallVectorInt,
+    testCallVectorIntObject: testCallVectorIntObject,
+    testCallVectorString: testCallVectorString,
+    testCallVectorStringObject: testCallVectorStringObject,
+    testSquareInt: testSquareInt,
+    testNetwork: testNetwork,
+    testProxy: testProxy,
+    testGetDifference: testGetDifference,
+    testUseUpdate: testUseUpdate,
+    testReturnError: testReturnError,
+  }
+
+  declare export type $FunctionName = $Keys<$FunctionResultByName>
+
+  declare export type Invoke = <T: $FunctionName>(
+    query: { +_: T, ... } & $FunctionInputByName[T]
+  ) => Promise<$FunctionResultByName[T]>
+
+  declare export type $SyncFunctionName =
+    | 'checkQuickReplyShortcutName'
+    | 'searchQuote'
+    | 'getTextEntities'
+    | 'parseTextEntities'
+    | 'parseMarkdown'
+    | 'getMarkdownText'
+    | 'getCountryFlagEmoji'
+    | 'getFileMimeType'
+    | 'getFileExtension'
+    | 'cleanFileName'
+    | 'getLanguagePackString'
+    | 'getJsonValue'
+    | 'getJsonString'
+    | 'getThemeParametersJsonString'
+    | 'getChatFolderDefaultIconName'
+    | 'getPushReceiverId'
+    | 'getOption'
+    | 'searchStringsByPrefix'
+    | 'getPhoneNumberInfoSync'
+    | 'setLogStream'
+    | 'getLogStream'
+    | 'setLogVerbosityLevel'
+    | 'getLogVerbosityLevel'
+    | 'getLogTags'
+    | 'setLogTagVerbosityLevel'
+    | 'getLogTagVerbosityLevel'
+    | 'addLogMessage'
+    | 'testReturnError'
+
+  declare export type Execute = <T: $SyncFunctionName>(
+    query: { +_: T, ... } & $FunctionInputByName[T]
+  ) => error | $FunctionResultByName[T]
 }

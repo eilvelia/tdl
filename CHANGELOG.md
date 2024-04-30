@@ -49,7 +49,10 @@
   generated files.
 - No longer generates `null` for return types of `Execute`.
 - Functions not marked as synchronous are no longer generated in `Execute`.
-- Added `$Function`.
+- Added some special types: `$Function`, `$FunctionResultByName`,
+  `$FunctionInputByName`, `$FunctionName`, `$SyncFunctionName`. `Invoke` and
+  `Execute` are implemented in terms of these types and may be somewhat faster
+  now (in typecheck time).
 
 ## tdl@7.4.1 (2024-02-16)
 

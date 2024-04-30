@@ -36,10 +36,12 @@ tdl.createBareClient()
 
 tdl.init()
 
-tdl.execute({
+const execRes = tdl.execute({
   _: 'getTextEntities',
   text: '@telegram /test_command https://telegram.org telegram.me'
 })
+
+;(execRes: Td.error | Td.textEntities)
 
 tdl.setLogMessageCallback(4, a => console.log(a))
 tdl.setLogMessageCallback(4, null)

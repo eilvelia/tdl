@@ -45,8 +45,9 @@ function generate (
   const READONLY_ARRAY = TS ? 'ReadonlyArray' : '$ReadOnlyArray'
   const READONLY = TS ? 'readonly ' : '+'
   const EXACT = TS ? '' : '|'
+  const INEXACT = TS ? '' : ', ...'
   const EXPORT = TS ? 'export' : 'declare export'
-  // const EMPTY_OBJ = TS ? '{}' : '{...}'
+  const EXTENDS = TS ? ' extends' : ':'
 
   // console.log(JSON.stringify(tldoc(source), null, '  '))
 
@@ -192,18 +193,6 @@ function generate (
     .filter(x => x != null)
     .join(EOL + EOL)
 
-  function genFunctionIntersection (
-    name/*: string */,
-    getReturnType/*: (name: string) => string */,
-    classes/*: TdClass[] */
-  ) {
-    return [
-      `${EXPORT} type ${name} =`,
-      ...classes
-        .map(c => `  & ((query: ${c.name}) => ${getReturnType(c.result)})`)
-    ].join(EOL)
-  }
-
   // function genApiObjectFunction (c/*: TdClass */) {
   //   const param = c.parameters.length < 1
   //     ? `params?: ${EMPTY_OBJ}`
@@ -213,39 +202,48 @@ function generate (
   //     `  ${c.name}(${param}): Promise<${c.result}>,`
   //   ].join(EOL)
   // }
-
   // const apiObject = [
   //   `${EXPORT} type ApiObject = {${EXACT}`,
   //   ...funcs.map(genApiObjectFunction),
   //   `${EXACT}}`
   // ].join(EOL)
 
-  let invoke
-  let execute
-
-  if (TS) {
-    invoke = [
-      `${EXPORT} type Invoke = <T>(query: { readonly _: T } & (`,
-      '  ' + funcs.map(c => c.name).join(`${EOL}  | `),
-      ')) => Promise<',
-      ...funcs.map(c => `  T extends '${c.name}' ? ${c.result} :`),
-      'never>'
-    ].join(EOL)
-    execute = [
-      `${EXPORT} type Execute = <T>(query: { readonly _: T } & (`,
-      '  ' + syncFuncs.map(c => c.name).join(`${EOL}  | `),
-      ')) => error | (',
-      ...syncFuncs.map(c => `  T extends '${c.name}' ? ${c.result} :`),
-      'never)'
-    ].join(EOL)
-  } else {
-    invoke = genFunctionIntersection('Invoke', t => `Promise<${t}>`, funcs)
-    execute = genFunctionIntersection('Execute', t => `${t} | error`, syncFuncs)
-  }
-
-  const functionType = [
-    'type $Function =',
+  const functionUnionType = [
+    `${EXPORT} type $Function =`,
     funcs.map(c => '  | ' + c.name).join(EOL)
+  ].join(EOL)
+
+  const nameToResultTable = [
+    `${EXPORT} type $FunctionResultByName = {`,
+    funcs.map(c => `  ${c.name}: ${c.result},`).join(EOL),
+    '}'
+  ].join(EOL)
+
+  const nameToInputTable = [
+    `${EXPORT} type $FunctionInputByName = {`,
+    funcs.map(c => `  ${c.name}: ${c.name},`).join(EOL),
+    '}'
+  ].join(EOL)
+
+  const funName = TS
+    ? `${EXPORT} type $FunctionName = keyof $FunctionResultByName`
+    : `${EXPORT} type $FunctionName = $Keys<$FunctionResultByName>`
+
+  const invoke = [
+    `${EXPORT} type Invoke = <T${EXTENDS} $FunctionName>(`,
+    `  query: { ${READONLY}_: T${INEXACT} } & $FunctionInputByName[T]`,
+    ') => Promise<$FunctionResultByName[T]>'
+  ].join(EOL)
+
+  const syncFuncName = [
+    `${EXPORT} type $SyncFunctionName =`,
+    syncFuncs.map(c => `  | '${c.name}'`).join(EOL)
+  ].join(EOL)
+
+  const execute = [
+    `${EXPORT} type Execute = <T${EXTENDS} $SyncFunctionName>(`,
+    `  query: { ${READONLY}_: T${INEXACT} } & $FunctionInputByName[T]`,
+    ') => error | $FunctionResultByName[T]'
   ].join(EOL)
 
   return [
@@ -260,12 +258,15 @@ function generate (
       unionTypes,
       '',
       '// --- Special types ---',
-      '',
-      invoke,
-      '',
-      execute,
-      '',
-      functionType
+      ...[
+        functionUnionType,
+        nameToResultTable,
+        nameToInputTable,
+        funName,
+        invoke,
+        syncFuncName,
+        execute
+      ].flatMap(x => ['', x])
     ].join(EOL)),
     '}',
     ''
