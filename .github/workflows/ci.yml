@@ -9,10 +9,10 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          # Weird, arm64 macos-14 doesn't really work because typescript fails with
+          # Weirdly arm64 macos-14 doesn't really work because typescript fails with
           # RangeError: Maximum call stack size exceeded at getOuterTypeParameters
           - macos-13
-          # - windows-latest
+          - windows-latest
         node:
           - 20
         include:
@@ -20,9 +20,6 @@ jobs:
             os: ubuntu-latest
           - node: 18
             os: ubuntu-latest
-          # node-gyp-build currently fails on node 18/20 with spawn EINVAL
-          - node: 16
-            os: windows-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
