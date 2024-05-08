@@ -93,8 +93,7 @@ not have a specific git-tagged release. Most `prebuilt-tdlib` releases are not
 connected to a tag release in the TDLib repository. Usually, the prebuilt
 packages are generated based on the "Update version to x.y.z." TDLib commits
 ([example][commit-example]). Otherwise, the commit hash is indicated in the list
-below. Since `prebuilt-tdlib@td-1.8.19` (2023-09-26), the packages include a
-`prebuilds/tdlib.json` file specifying the commit hash and version of TDLib.
+below.
 
 [commit-example]: https://github.com/tdlib/td/commit/b3b63bbdc14dc377d2de6b78e5844fec1564f95d
 
@@ -123,10 +122,14 @@ versions):
 
 Changes to the building process of `prebuilt-tdlib` are noted below.
 
-### 2024-04-30
+### 2024-05-08
 
 First published as `prebuil-tdlib@td-1.8.29`.
 
+- Added a `tdlib: { commit: ..., version: ... }` field to `package.json`. This
+  allows to query information using `npm info prebuilt-tdlib tdlib.commit`, for
+  example.
+- Added `commit` as an alias for `ref` to `tdlib.json`.
 - The packages are now published with `--provenance`.
 
 ### 2023-09-26

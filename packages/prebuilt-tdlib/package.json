@@ -1,7 +1,7 @@
 {
-  "name": "prebuilt-tdlib",
-  "version": "0.0.1",
-  "description": "Prebuilt TDLib libraries",
+  "name": "prebuilt-tdlib-dev",
+  "version": "0.0.0",
+  "description": "Pre-built TDLib libraries",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
@@ -17,7 +17,8 @@
   "keywords": [
     "telegram",
     "telegram-api",
-    "tdlib"
+    "tdlib",
+    "prebuilt"
   ],
   "repository": {
     "type": "git",
@@ -26,5 +27,6 @@
   "bugs": {
     "url": "https://github.com/Bannerets/tdl/issues"
   },
-  "homepage": "https://github.com/Bannerets/tdl/tree/main/packages/prebuilt-tdlib#readme"
+  "homepage": "https://github.com/Bannerets/tdl/tree/main/packages/prebuilt-tdlib#readme",
+  "private": true
 }

@@ -1,4 +1,4 @@
-name: Prebuild TDLib
+name: Pre-built TDLib
 # This workflow can be executed using a command like this:
 # gh workflow run prebuilt-tdlib.yml --ref develop -f tdlib=v1.8.0 \
 # -f npm-version=0.1008000.0 -f npm-tag=latest
@@ -9,8 +9,8 @@ on:
         description: 'TDLib git ref (e.g. v1.8.0 or a commit hash)'
         type: string
         required: true
-      npm-version:
-        description: 'prebuilt-tdlib version to publish on npm (required to publish)'
+      npm-patch:
+        description: 'prebuilt-tdlib patch version, required to publish (e.g. 0, 1)'
         type: string
         required: false
       npm-tag:
@@ -204,9 +204,9 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - [ubuntu-latest, tdlib-linux-x64, libtdjson.so]
-          - [macos-latest, tdlib-macos, libtdjson.dylib]
-          - [windows-2019, tdlib-windows-x64, tdjson.dll]
+          - [ubuntu-latest, tdlib-linux-x64]
+          - [macos-latest, tdlib-macos]
+          - [windows-2019, tdlib-windows-x64]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -218,13 +218,10 @@ jobs:
         with:
           name: ${{ matrix.os[1] }}
       - run: npm run integration-tests
-        env:
-          LIBTDJSON_PATH: ${{ matrix.os[2] }}
 
   publish:
     name: 'Publish to npm'
     needs: [test]
-    if: "${{ inputs.npm-version != '' }}"
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -252,20 +249,9 @@ jobs:
           echo "TDLIB_COMMIT_HASH=$(git rev-parse ${{ inputs.tdlib }})" >> "$GITHUB_ENV"
           __ver=`grep -Po "(?<=TDLib VERSION )\d+\.\d+\.\d+" ./CMakeLists.txt`
           echo "TDLIB_VERSION=$__ver" >> "$GITHUB_ENV"
-      - run: node packages/prebuilt-tdlib/check-prebuilds.js
-      - run: node packages/prebuilt-tdlib/write-tdlib-json.js $TDLIB_COMMIT_HASH $TDLIB_VERSION
-      - run: cat packages/prebuilt-tdlib/prebuilds/tdlib.json
-      - name: Update version
-        run: npm version ${{ inputs.npm-version }} --no-git-tag-version -w prebuilt-tdlib
+          echo NPM_TAG=${{ inputs.npm-tag }} >> "$GITHUB_ENV"
       - name: Publish
-        run: |
-          npm publish --provenance --access public --tag ${{ inputs.npm-tag }} -w prebuilt-tdlib
+        run: node packages/prebuilt-tdlib/publish.js ${{ inputs.npm-patch }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Set the td- tag
-        run: |
-          npm dist-tag add \
-            prebuilt-tdlib@${{ inputs.npm-version }} td-$TDLIB_VERSION \
-            -w prebuilt-tdlib
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        if: "${{ inputs.npm-patch != '' }}"
