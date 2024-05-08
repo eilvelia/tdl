@@ -49,7 +49,7 @@ jobs:
               tar xzvf $_.FullName --directory=$td
             }
             rm $td/package/package.json
-            $env:USE_PREBUILT="$td/package/index.js"
+            $env:PREBUILT_PATH="$td/package/index.js"
             npm run integration-tests
             if ($LastExitCode -ne 0) {
               exit $LastExitCode

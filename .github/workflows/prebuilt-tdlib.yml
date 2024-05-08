@@ -207,8 +207,6 @@ jobs:
           - [ubuntu-latest, tdlib-linux-x64, libtdjson.so]
           - [macos-latest, tdlib-macos, libtdjson.dylib]
           - [windows-2019, tdlib-windows-x64, tdjson.dll]
-    env:
-      LIBTDJSON_PATH: ${{ matrix.os[2] }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -220,6 +218,8 @@ jobs:
         with:
           name: ${{ matrix.os[1] }}
       - run: npm run integration-tests
+        env:
+          LIBTDJSON_PATH: ${{ matrix.os[2] }}
 
   publish:
     name: 'Publish to npm'
@@ -229,8 +229,6 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    env:
-      TEST_PREBUILT: 1
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -245,6 +243,8 @@ jobs:
           path: packages/prebuilt-tdlib/prebuilds/
       - run: tree packages/prebuilt-tdlib
       - run: npm run integration-tests
+        env:
+          PREBUILT_PATH: packages/prebuilt-tdlib
       - run: |
           git clone https://github.com/tdlib/td td
           cd td

@@ -139,27 +139,28 @@ function createAnyClient (opts: ClientOptions, bare = false): Client {
   const managingOpts = {
     bare,
     receiveTimeout: cfg.receiveTimeout,
-    executeFunc: execute
+    executeFunc: execute,
+    useOldTdjsonInterface: false
   }
-  if (!cfg.useOldTdjsonInterface) {
-    if (!tdnInitialized) {
-      tdjsonAddon.tdnew.init(cfg.receiveTimeout)
-      tdnInitialized = true
-    }
-    const tdnManaging = { ...managingOpts, useOldTdjsonInterface: false }
-    const client = new Client(tdjsonAddon, tdnManaging, opts)
-    const clientId = client.getClientId()
-    clientMap.set(clientId, client)
-    client.once('close', () => {
-      debug(`Deleting client_id ${clientId}`)
-      clientMap.delete(clientId)
-    })
-    if (!runningReceiveLoop)
-      receiveLoop()
-    return client
+  if (cfg.useOldTdjsonInterface) {
+    const tdoManaging = { ...managingOpts, useOldTdjsonInterface: true }
+    return new Client(tdjsonAddon, tdoManaging, opts)
   }
-  const tdoManaging = { ...managingOpts, useOldTdjsonInterface: true }
-  return new Client(tdjsonAddon, tdoManaging, opts)
+  if (!tdnInitialized) {
+    tdjsonAddon.tdnew.init(cfg.receiveTimeout)
+    tdnInitialized = true
+  }
+  const tdnManaging = { ...managingOpts, useOldTdjsonInterface: false }
+  const client = new Client(tdjsonAddon, tdnManaging, opts)
+  const clientId = client.getClientId()
+  clientMap.set(clientId, client)
+  client.once('close', () => {
+    debug(`Deleting client_id ${clientId}`)
+    clientMap.delete(clientId)
+  })
+  if (!runningReceiveLoop)
+    receiveLoop()
+  return client
 }
 
 export function createClient (opts: ClientOptions): Client {
