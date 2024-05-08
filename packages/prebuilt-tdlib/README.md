@@ -21,23 +21,18 @@ supports, run:
 $ npm install prebuilt-tdlib
 ```
 
-To install `prebuilt-tdlib` for a specific TDLib version, e.g. TDLib v1.8.27,
+To install `prebuilt-tdlib` for a specific TDLib version, e.g. TDLib v1.8.29,
 run:
 
 ```console
-$ npm install prebuilt-tdlib@td-1.8.27
+$ npm install prebuilt-tdlib@td-1.8.29
 ```
 
 `prebuilt-tdlib` can be installed for other TDLib versions, execute
 `$ npm info prebuilt-tdlib dist-tags` to get the list of available versions.
 
 The TDLib version is important: there is no backward compatibility and the
-interface you use can completely change.
-
-> **Note**: Before `prebuilt-tdlib@td-1.8.14` (2023-06-26), the Linux binary was
-> built on Ubuntu 20.04 requiring glibc >= 2.31, and macOS arm64 was not
-> supported. Currently, the Linux build environment is based on CentOS 7. The
-> macOS arm64 binary isn't tested in the CI.
+interface you use can considerably change after an update.
 
 ## Usage
 
@@ -124,8 +119,15 @@ versions):
 | [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.7.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.7) | [tdlib [de5379f00b6af7686f197037ca3b494e6277e523](https://github.com/tdlib/td/commit/de5379f00b6af7686f197037ca3b494e6277e523)] |
 | [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.0.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.0) | [last released 2023-10-10] |
 
-<!--
 ## Changes
+
+Changes to the building process of `prebuilt-tdlib` are noted below.
+
+### 2024-04-30
+
+First published as `prebuil-tdlib@td-1.8.29`.
+
+- The packages are now published with `--provenance`.
 
 ### 2023-09-26
 
@@ -138,7 +140,10 @@ First published as `prebuilt-tdlib@td-1.8.19`.
 
 First published as `prebuilt-tdlib@td-1.8.14`.
 
-- The macOS binaries now support Apple silicon (universal binary)
-- The Linux binaries now require glibc 2.17 instead of glibc 2.31
-- Restored support for older macOS versions (>= 10.14 is supported)
--->
+- Added support for macOS arm64 (M1 / Apple silicon); a universal binary is
+  shipped. However, the arm64 binary is not tested in the CI.
+- The Linux binaries are now built on environment with glibc 2.17 instead of
+  2.31 and work on older Linux distributions. Some cloud environments such as
+  Amazon Linux 2 or Google Cloud Functions (nodejs <= 16) use older glibc,
+  `prebuilt-tdlib` should run out of the box on these systems now.
+- Restored support for older versions of macOS, >= 10.14 is now supported.

@@ -88,18 +88,6 @@ were also made to the generator to make the autocompletion faster.
 - Fixed `Symbol not found: node_register_module_v…` errors on some platforms.
 - Fixed passing falsy values to `tdl.configure`.
 
-## prebuilt-tdlib@td-1.8.14 (2023-06-26)
-
-Changes were made to the building process of `prebuilt-tdlib`:
-
-- Added support for macOS arm64 (M1 / Apple silicon); a universal binary is
-  shipped.
-- The linux binaries are now built on environment with glibc 2.17 instead of
-  2.31 and work on older Linux distributions. Some cloud environments such as
-  Amazon Linux 2 or Google Cloud Functions (nodejs <= 16) use older glibc,
-  `prebuilt-tdlib` should run out of the box on these systems now.
-- Restored support for older versions of macOS, >= 10.14 is currently supported.
-
 ## tdl@7.3.1 (2023-06-22)
 
 This update introduces some significant and long-planned changes to the
