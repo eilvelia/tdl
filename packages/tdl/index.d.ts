@@ -20,13 +20,19 @@ export type TDLibConfiguration = {
    */
   libdir?: string,
   /**
-   * Set the verbosity level of TDLib. From the TDLib documentation: "value 0
-   * corresponds to fatal errors, value 1 corresponds to errors, value 2
-   * corresponds to warnings and debug warnings, value 3 corresponds to
-   * informational, value 4 corresponds to debug, value 5 corresponds to verbose
-   * debug, value greater than 5 and up to 1024 can be used to enable even more
-   * logging". Another possible option is `'default'`, `tdl` will then not send
-   * any verbosity level to TDLib. Defaults to `2`.
+   * Set the verbosity level of TDLib. Defaults to `1`. From the TDLib
+   * documentation:
+   * - 0 corresponds to fatal errors,
+   * - 1 corresponds to errors,
+   * - 2 corresponds to warnings and debug warnings,
+   * - 3 corresponds to informational,
+   * - 4 corresponds to debug,
+   * - 5 corresponds to verbose deubg,
+   * - value greater than 5 and up to 1024 can be used to enable even more
+   *   logging.
+   *
+   * Another possible option is `'default'`, `tdl` then won't send any
+   * verbosity level to TDLib.
    */
   verbosityLevel?: number | 'default',
   /**

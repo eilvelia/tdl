@@ -144,7 +144,7 @@ Some short examples are available in the [examples/](examples/) directory.
 
 #### `tdl.configure(options: TDLibConfiguration) => void`
 
-Configure several parameters such as libtdjson name or verbosity level. This
+Configure several parameters such as libtdjson filename or verbosity level. This
 function should be called before `tdl.createClient` or `tdl.execute`.
 
 The possible parameters are:
@@ -156,8 +156,8 @@ tdl.configure({
   tdjson: 'libtdjson.so',
   // Path to the library directory. Defaults to the empty string.
   libdir: '/usr/local/lib',
-  // Set the verbosity level of TDLib. Defaults to 2.
-  verbosityLevel: 3,
+  // Set the verbosity level of TDLib. Defaults to 1.
+  verbosityLevel: 1,
   // Advanced options:
   useOldTdjsonInterface: false,
   receiveTimeout: 10,

@@ -28,7 +28,7 @@ export type TDLibConfiguration = {
 const cfg: Required<TDLibConfiguration> = {
   tdjson: defaultLibraryFile,
   libdir: '',
-  verbosityLevel: 2,
+  verbosityLevel: 1,
   receiveTimeout: 10,
   useOldTdjsonInterface: false
 }
