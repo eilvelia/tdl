@@ -206,7 +206,7 @@ jobs:
         os:
           - [ubuntu-latest, tdlib-linux-x64]
           - [macos-latest, tdlib-macos]
-          - [windows-2019, tdlib-windows-x64]
+          - [windows-latest, tdlib-windows-x64]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
