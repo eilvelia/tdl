@@ -47,13 +47,6 @@ describe(testName, () => {
       if (pred(u)) return
   }
 
-  // function versionGte (minMajor/*: number */, minMinor/*: number */) {
-  //   const [major, minor] = client.getVersion().split('.').map(Number)
-  //   if (major < minMajor) return false
-  //   if (major > minMajor) return true
-  //   return minor >= minMinor
-  // }
-
   beforeAll(() => {
     return expectUpdate(u => u._ === 'updateOption' && u.name === 'version')
   }, 2000)
@@ -64,6 +57,12 @@ describe(testName, () => {
     return expectUpdate(u => u._ === 'updateAuthorizationState'
       && u?.authorization_state._ === 'authorizationStateWaitTdlibParameters')
   }, 2000)
+
+  test('getVersion() returns a version string', () => {
+    const version = client.getVersion()
+    expect(version).toBeString()
+    expect(version).toStartWith('1.')
+  })
 
   test('invoke(testCallString) should respond with the same value', async () => {
     const response = await client.invoke({ _: 'testCallString', x: 'hi' })
