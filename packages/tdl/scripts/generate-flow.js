@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path')
 
 const inputFile = path.join(__dirname, '..', 'index.d.ts')
-const outputFile = path.join(__dirname, '..', 'index.js.flow')
+const outputFile = path.join(__dirname, '..', 'dist', 'index.js.flow')
 
 const inputStr = fs.readFileSync(inputFile).toString()
 

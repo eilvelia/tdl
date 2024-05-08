@@ -2,7 +2,7 @@
   "name": "tdl",
   "version": "8.0.0-dev",
   "description": "Node.js bindings to TDLib (Telegram Database library)",
-  "main": "index.js",
+  "main": "dist/index.js",
   "types": "index.d.ts",
   "scripts": {
     "build:lib": "tsc",
@@ -13,8 +13,6 @@
     "install": "node-gyp-build"
   },
   "files": [
-    "index.js",
-    "index.js.flow",
     "index.d.ts",
     "dist",
     "addon",
