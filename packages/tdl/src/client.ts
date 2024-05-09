@@ -104,23 +104,20 @@ type DeferredPromise<R, E> = {
 
 type PendingRequest = DeferredPromise<unknown, TDLibError>
 
-type On =
+export type On =
   & ((event: 'update', listener: (update: Td.Update) => void) => Client)
   & ((event: 'error', listener: (err: Error) => void) => Client)
   & ((event: 'close', listener: () => void) => Client)
-  & ((event: '_init', listener: () => void) => Client)
 
-type Emit =
+export type Emit =
   & ((event: 'update', update: Td.Update) => void)
   & ((event: 'error', err: Error) => void)
   & ((event: 'close') => void)
-  & ((event: '_init') => void)
 
-type Off =
+export type Off =
   & ((event: 'update', listener: (...args: any[]) => any) => boolean)
   & ((event: 'error', listener: (...args: any[]) => any) => boolean)
   & ((event: 'close', listener: (...args: any[]) => any) => boolean)
-  & ((event: '_init', listener: (...args: any[]) => any) => boolean)
 
 export type ManagingOptions = {
   useOldTdjsonInterface: boolean,
@@ -149,17 +146,17 @@ export class Client {
   private readonly _tdjson: Tdjson
   private readonly _options: StrictClientOptions
   private readonly _pending: Map<number, PendingRequest> = new Map()
-  private _client: TdjsonAnyClient
+  private readonly _client: TdjsonAnyClient
   private _requestId: number = 0
   private _initialized: boolean = false
+  private _preinitRequests: Array<[request: any, extra: unknown]> = []
   private _version: Version = TDLIB_DEFAULT
   private _connectionStateName: Td.ConnectionState['_'] = 'connectionStateWaitingForNetwork'
   private _authorizationState: Td.AuthorizationState | null = null
   private _events: Events = {
     update: new Set(),
     error: new Set(),
-    close: new Set(),
-    _init: new Set()
+    close: new Set()
   }
 
   public execute: Td.Execute
@@ -272,7 +269,7 @@ export class Client {
     const finish = () => {
       this.off('update', onUpdate)
       finished = true
-      debug('Finished async iterator')
+      debug('Finished an async iterator')
     }
 
     function onUpdate (update: Td.Update) {
@@ -320,28 +317,26 @@ export class Client {
     return iterator
   }
 
-  private _waitInit (): Promise<void> {
-    debug('Waiting for initialization')
-    if (this._initialized) return Promise.resolve()
-    return new Promise(resolve => this.once('_init', () => resolve()))
-  }
-
   private _finishInit (): void {
     debug('Finished initialization')
     this._initialized = true
-    this.emit('_init')
+    for (const [request, id] of this._preinitRequests)
+      this._send(request, id)
+    this._preinitRequests = []
   }
 
-  invoke: Td.Invoke = async (request: any): Promise<any> => {
-    if (!this._initialized)
-      await this._waitInit()
+  invoke: Td.Invoke = (request: any): Promise<any> => {
     const id = this._requestId
     this._requestId++
-    if (this._requestId >= Number.MAX_SAFE_INTEGER)
+    if (id >= Number.MAX_SAFE_INTEGER)
       throw new Error('Too large request id')
     const responsePromise = new Promise((resolve, reject) => {
       this._pending.set(id, { resolve, reject })
     })
+    if (this._initialized === false) {
+      this._preinitRequests.push([request, id])
+      return responsePromise
+    }
     this._send(request, id)
     return responsePromise
   }
@@ -472,9 +467,10 @@ export class Client {
     // are always emitted, even with skipOldUpdates set to true
     switch (update._) {
       case 'updateOption':
-        debug('New option:', update)
-        if (update.name === 'version' && update.value._ === 'optionValueString')
+        if (update.name === 'version' && update.value._ === 'optionValueString') {
+          debug('Received version:', update.value.value)
           this._version = new Version(update.value.value)
+        }
         break
 
       case 'updateConnectionState':

@@ -150,8 +150,7 @@ function createAnyClient (opts: ClientOptions, bare = false): Client {
     tdjsonAddon.tdnew.init(cfg.receiveTimeout)
     tdnInitialized = true
   }
-  const tdnManaging = { ...managingOpts, useOldTdjsonInterface: false }
-  const client = new Client(tdjsonAddon, tdnManaging, opts)
+  const client = new Client(tdjsonAddon, managingOpts, opts)
   const clientId = client.getClientId()
   clientMap.set(clientId, client)
   client.once('close', () => {
