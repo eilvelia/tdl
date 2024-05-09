@@ -339,11 +339,10 @@ export class Client {
     this._requestId++
     if (this._requestId >= Number.MAX_SAFE_INTEGER)
       throw new Error('Too large request id')
-    request['@extra'] = id
     const responsePromise = new Promise((resolve, reject) => {
       this._pending.set(id, { resolve, reject })
     })
-    this._send(request)
+    this._send(request, id)
     return responsePromise
   }
 
@@ -367,9 +366,11 @@ export class Client {
   // if (o['@type'] === '...'). Funny, other JS TDLib libraries also followed
   // with this renaming to _.
 
-  private _send (request: { readonly _: string, readonly [key: string]: any }): void {
+  private _send (request: Td.$Function, extra: unknown): void {
     debugReq('send', request)
-    const tdRequest = JSON.stringify(deepRenameKey('_', '@type', request))
+    const renamedRequest = deepRenameKey('_', '@type', request)
+    renamedRequest['@extra'] = extra
+    const tdRequest = JSON.stringify(renamedRequest)
     if (this._client.val == null)
       throw new Error('A closed client cannot be reused, create a new client')
     this._client.isTdn
@@ -378,7 +379,7 @@ export class Client {
   }
 
   private _sendTdl (request: Td.$Function): void {
-    this._send({ ...request, '@extra': TDL_MAGIC })
+    this._send(request, TDL_MAGIC)
   }
 
   private _handleClose (): void {
@@ -453,7 +454,7 @@ export class Client {
     }
 
     if (id === TDL_MAGIC) {
-      // a response to a request sent by tdl itself
+      // a response to a request sent by tdl itself (during initialization)
       // it's irrelevant, just ignoring it (it's most likely `{ _: 'ok' }`)
       debug('(TDL_MAGIC) Not emitting response', res)
       return

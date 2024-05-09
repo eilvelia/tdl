@@ -58,7 +58,7 @@ describe(testName, () => {
       && u?.authorization_state._ === 'authorizationStateWaitTdlibParameters')
   }, 2000)
 
-  test('getVersion() returns a version string', () => {
+  test('getVersion() should return a version string', () => {
     const version = client.getVersion()
     expect(version).toBeString()
     expect(version).toStartWith('1.')
