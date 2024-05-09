@@ -1,4 +1,4 @@
-import path from 'node:path'
+import * as path from 'node:path'
 import nodeGypBuild from 'node-gyp-build'
 
 const packageDir = path.join(__dirname, '..')

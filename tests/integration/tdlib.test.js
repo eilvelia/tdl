@@ -5,28 +5,28 @@ const tdl = require('../../packages/tdl')
 
 const projectRoot = path.join(__dirname, '..', '..')
 
-let tdjson = null
-
 if (process.env.PREBUILT_PATH) {
   const prebuiltPath = process.env.PREBUILT_PATH
   console.log(`Testing prebuilt-tdlib from '${prebuiltPath}'`)
   // $FlowIgnore[unsupported-syntax]
-  tdjson = require(path.join(projectRoot, prebuiltPath)).getTdjson()
+  const prebuiltTdlib = require(path.join(projectRoot, prebuiltPath))
+  tdl.configure({ tdjson: prebuiltTdlib.getTdjson() })
 } else if (process.env.LIBTDJSON_PATH) {
   const tdjsonPath = process.env.LIBTDJSON_PATH
   console.log(`Testing tdjson from ${tdjsonPath}`)
-  tdjson = path.isAbsolute(tdjsonPath) ? tdjsonPath : path.join(projectRoot, tdjsonPath)
+  tdl.configure({ tdjson: path.resolve(projectRoot, tdjsonPath) })
+} else if (process.env.LIBDIR_PATH) {
+  const libdirPath = process.env.LIBDIR_PATH
+  console.log(`Testing tdjson from the ${libdirPath} directory`)
+  tdl.configure({ libdir: path.resolve(projectRoot, libdirPath) })
 } else {
-  console.log('Testing tdjson from the project root')
-  tdl.configure({ libdir: projectRoot })
+  tdl.configure({ tdjson: require('prebuilt-tdlib').getTdjson() })
 }
 
-if (tdjson) tdl.configure({ tdjson })
-
-let testName = 'tdl'
+let testName = 'tdl + tdjson'
 
 if (process.env.TEST_OLD_TDJSON === '1') {
-  testName += ' with useOldTdjsonInterface'
+  testName += ' (useOldTdjsonInterface = true)'
   tdl.configure({ useOldTdjsonInterface: true })
 }
 

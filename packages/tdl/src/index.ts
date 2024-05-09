@@ -1,4 +1,4 @@
-import path from 'node:path'
+import * as path from 'node:path'
 import Debug from 'debug'
 import { Client, TDLibError, UnknownError, type ClientOptions } from './client'
 import { loadAddon, type Tdjson } from './addon'

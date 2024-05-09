@@ -50,7 +50,7 @@ jobs:
             }
             rm $td/package/package.json
             $env:PREBUILT_PATH="$td/package/index.js"
-            npm run integration-tests
+            npm run test:integration
             if ($LastExitCode -ne 0) {
               exit $LastExitCode
             }

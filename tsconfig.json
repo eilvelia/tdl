@@ -8,6 +8,7 @@
     "strictNullChecks": true,
     "alwaysStrict": true,
     "types": ["node"],
+    "esModuleInterop": true,
     "noEmit": true,
     "outDir": "dist"
   },

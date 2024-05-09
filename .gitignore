@@ -8,6 +8,7 @@ flow-typed/npm/
 /*.txt
 _td_database/
 _td_files/
+/test.cfg
 /tdlib/
 *.dylib
 *.so

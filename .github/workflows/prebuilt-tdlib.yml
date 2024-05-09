@@ -217,7 +217,9 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: ${{ matrix.os[1] }}
-      - run: npm run integration-tests
+      - run: npm run test:integration
+        env:
+          LIBDIR_PATH: '.'
 
   publish:
     name: 'Publish to npm'
@@ -239,7 +241,7 @@ jobs:
         with:
           path: packages/prebuilt-tdlib/prebuilds/
       - run: tree packages/prebuilt-tdlib
-      - run: npm run integration-tests
+      - run: npm run test:integration
         env:
           PREBUILT_PATH: packages/prebuilt-tdlib
       - run: |

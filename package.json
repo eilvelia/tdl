@@ -8,16 +8,16 @@
     "clean-modules": "rm -rf node_modules/ && rm -rf packages/node_modules/",
     "clean-all": "npm run clean && npm run clean-modules",
     "build": "npm run build -ws",
-    "lint": "eslint . --max-warnings 0",
-    "jest-tests": "jest --testPathIgnorePatterns tests/integration",
-    "test": "npm run flow:check && npm run ts:check && npm run lint && npm run jest-tests",
-    "integration-tests": "jest tests/integration && cross-env TEST_OLD_TDJSON=1 jest tests/integration",
-    "test:all": "npm run test && npm run integration-tests",
-    "coverage": "jest --coverage",
-    "prepare": "npm run build",
-    "prepack": "npm test",
     "ts:check": "tsc --noEmit",
-    "flow:check": "flow check --include-warnings --max-warnings 0"
+    "flow:check": "flow check --max-warnings 0",
+    "lint": "eslint . --max-warnings 0",
+    "test:unit": "jest --testPathIgnorePatterns 'tests/integration|tests/auth-only'",
+    "test": "npm run flow:check && tsc --noEmit && npm run lint && npm run test:unit",
+    "test:integration": "jest tests/integration && cross-env TEST_OLD_TDJSON=1 jest tests/integration",
+    "test:all": "npm run test && npm run test:integration",
+    "test:auth-only": "jest tests/auth-only",
+    "prepare": "npm run build",
+    "prepack": "npm test"
   },
   "workspaces": [
     "packages/tdl",
@@ -26,6 +26,7 @@
   ],
   "devDependencies": {
     "@types/debug": "^4.1.12",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.12.7",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
@@ -37,7 +38,9 @@
     "jest-specific-snapshot": "^8.0.0",
     "node-gyp": "^10.1.0",
     "prebuildify": "^6.0.1",
+    "prebuilt-tdlib": "^0.1008029.1",
     "rimraf": "^5.0.5",
+    "ts-jest": "~29.1.2",
     "typescript": "^5.4.5"
   },
   "author": "Bannerets <comonoid@protonmail.com>",

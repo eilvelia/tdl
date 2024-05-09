@@ -249,9 +249,9 @@ export class Client {
     }
     if (listeners == null) return
     for (const listener of listeners) {
-      listener(value)
       if (listener.once === true)
         listeners.delete(listener)
+      listener(value)
     }
   }
 
