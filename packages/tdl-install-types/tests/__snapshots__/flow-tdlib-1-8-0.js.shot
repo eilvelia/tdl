@@ -1,7 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`types generator should generate Flow types for TDLib v1.8.0 1`] = `
-"// @flow
+// @flow
 // TDLib v1.8.0
 declare module 'tdlib-types' {
   declare export type error = {|
@@ -263,8 +260,8 @@ declare module 'tdlib-types' {
 
   declare export type authorizationStateWaitPhoneNumber = {|
     /**
-     * TDLib needs the user's phone number to authorize. Call \`setAuthenticationPhoneNumber\`
-     * to provide the phone number, or use \`requestQrCodeAuthentication\`, or \`checkAuthenticationBotToken\`
+     * TDLib needs the user's phone number to authorize. Call `setAuthenticationPhoneNumber`
+     * to provide the phone number, or use `requestQrCodeAuthentication`, or `checkAuthenticationBotToken`
      * for other authentication options
      */
     _: 'authorizationStateWaitPhoneNumber',
@@ -14286,8 +14283,8 @@ declare module 'tdlib-types' {
      */
     +_: 'parseMarkdown',
     /**
-     * The text to parse. For example, "__italic__ ~~strikethrough~~ **bold** \`code\`
-     * \`\`\`pre\`\`\` __[italic__ text_url](telegram.org) __italic**bold italic__bold**"
+     * The text to parse. For example, "__italic__ ~~strikethrough~~ **bold** `code`
+     * ```pre``` __[italic__ text_url](telegram.org) __italic**bold italic__bold**"
      */
     +text?: formattedText$Input,
   |}
@@ -21197,5 +21194,3 @@ declare module 'tdlib-types' {
     query: { +_: T, ... } & $FunctionInputByName[T]
   ) => error | $FunctionResultByName[T]
 }
-"
-`;

@@ -2,8 +2,7 @@
 // database creation). It takes API_ID, API_HASH, and the bot token from the
 // test.cfg file. These tests are run manually only.
 
-/// <reference types="jest" />
-
+import { describe, test, expect, beforeEach, afterEach } from 'vitest'
 import * as path from 'node:path'
 import * as fs from 'node:fs'
 import * as fsp from 'node:fs/promises'
@@ -100,7 +99,6 @@ describe('tdl with an authenticated client', () => {
         try {
           expect(e).toBeInstanceOf(Error)
           expect(e.message).toBe('##TEST##')
-          console.log('RESOLVING')
           resolve(undefined)
         } catch (err) {
           reject(err)

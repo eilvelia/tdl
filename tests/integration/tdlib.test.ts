@@ -1,7 +1,7 @@
-// @flow
-
-const path = require('path')
-const tdl = require('../../packages/tdl')
+import { describe, expect, test, beforeAll, afterAll } from 'vitest'
+import * as path from 'path'
+import * as tdl from '../../packages/tdl'
+import type * as Td from 'tdlib-types'
 
 const projectRoot = path.join(__dirname, '..', '..')
 
@@ -32,7 +32,7 @@ if (process.env.TEST_OLD_TDJSON === '1') {
 
 describe(testName, () => {
   const client = tdl.createBareClient()
-  const updates = []
+  const updates: Td.Update[] = []
 
   client.on('error', e => console.error('error', e))
   client.on('update', u => {
@@ -40,7 +40,7 @@ describe(testName, () => {
     updates.push(u)
   })
 
-  async function expectUpdate (pred/*: Function */) {
+  async function expectUpdate (pred: (u: Td.Update) => boolean) {
     for (const u of updates)
       if (pred(u)) return
     for await (const u of client.iterUpdates())
@@ -60,17 +60,17 @@ describe(testName, () => {
 
   test('getVersion() should return a version string', () => {
     const version = client.getVersion()
-    expect(version).toBeString()
-    expect(version).toStartWith('1.')
+    expect(version).toBeTypeOf('string')
+    expect(version).toMatch(/^1\./)
   })
 
   test('invoke(testCallString) should respond with the same value', async () => {
     const response = await client.invoke({ _: 'testCallString', x: 'hi' })
-    await expect(response).toStrictEqual({ _: 'testString', value: 'hi' })
+    expect(response).toStrictEqual({ _: 'testString', value: 'hi' })
   })
 
   test('invoke(testReturnError) should fail with the same error', async () => {
-    const error = { _: 'error', code: 222, message: 'hi-error' }
+    const error = { _: 'error', code: 222, message: 'hi-error' } as const
     const responseP = client.invoke({ _: 'testReturnError', error })
     await expect(responseP).rejects.toBeInstanceOf(tdl.TDLibError)
     return expect(responseP).rejects.toMatchObject(error)
@@ -78,37 +78,37 @@ describe(testName, () => {
 
   test('tdl.execute(getTextEntities) should synchronously return a textEntities object', () => {
     const response = tdl.execute({ _: 'getTextEntities', text: 'hi @mybot' })
-    expect(response).toBeObject()
-    expect(response).toContainEntry(['_', 'textEntities'])
+    expect(response).toMatchObject({ _: 'textEntities' })
   })
 
-  test('tdl.setLogMessageCallback should set the callback', done => {
-    let receivedSpecial = 0
-    tdl.setLogMessageCallback(5, (verbosityLevel, message) => {
-      try {
-        // console.log(verbosityLevel, 'Received message:', message)
-        expect(verbosityLevel).toBeNumber()
-        expect(message).toBeString()
-        if (message.includes('TDL-SPECIAL')) receivedSpecial++
-        if (receivedSpecial >= 3) {
-          tdl.setLogMessageCallback(5, null)
-          // The process should exit with the callback attached
-          tdl.setLogMessageCallback(1, () => {})
-          done()
+  test('tdl.setLogMessageCallback should set the callback', () => {
+    return new Promise((resolve, reject) => {
+      let receivedSpecial = 0
+      tdl.setLogMessageCallback(5, (verbosityLevel, message) => {
+        try {
+          // console.log(verbosityLevel, 'Received message:', message)
+          expect(verbosityLevel).toBeTypeOf('number')
+          expect(message).toBeTypeOf('string')
+          if (message.includes('TDL-SPECIAL')) receivedSpecial++
+          if (receivedSpecial >= 3) {
+            tdl.setLogMessageCallback(5, null)
+            // The process should exit with the callback attached
+            tdl.setLogMessageCallback(1, () => {})
+            resolve(undefined)
+          }
+        } catch (err) {
+          reject(err)
         }
-      } catch (err) {
-        done(err)
-      }
+      })
+      tdl.execute({ _: 'addLogMessage', verbosity_level: 1, text: 'TDL-SPECIAL 1' })
+      tdl.execute({ _: 'addLogMessage', verbosity_level: 1, text: 'TDL-SPECIAL 2' })
+      tdl.execute({ _: 'addLogMessage', verbosity_level: 1, text: 'TDL-SPECIAL 3' })
+      // client.invoke({ _: 'addLogMessage', verbosity_level: 0, text: 'TDL-SPECIAL 3' })
     })
-    tdl.execute({ _: 'addLogMessage', verbosity_level: 1, text: 'TDL-SPECIAL 1' })
-    tdl.execute({ _: 'addLogMessage', verbosity_level: 1, text: 'TDL-SPECIAL 2' })
-    tdl.execute({ _: 'addLogMessage', verbosity_level: 1, text: 'TDL-SPECIAL 3' })
-    // client.invoke({ _: 'addLogMessage', verbosity_level: 0, text: 'TDL-SPECIAL 3' })
   }, 2000)
 
   test('client.execute(getTextEntities) should synchronously return a textEntities object', () => {
     const response = client.execute({ _: 'getTextEntities', text: 'hi @mybot' })
-    expect(response).toBeObject()
-    expect(response).toContainEntry(['_', 'textEntities'])
+    expect(response).toMatchObject({ _: 'textEntities' })
   })
 })

@@ -1,5 +1,3 @@
-// @flow
-
 import * as tdl from '../../packages/tdl'
 import { getTdjson } from '../../packages/prebuilt-tdlib'
 import type * as Td from 'tdlib-types'
