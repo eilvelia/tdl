@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeAll, afterAll } from 'vitest'
-import * as path from 'path'
+import * as path from 'node:path'
 import * as tdl from '../../packages/tdl'
 import type * as Td from 'tdlib-types'
 
@@ -8,7 +8,6 @@ const projectRoot = path.join(__dirname, '..', '..')
 if (process.env.PREBUILT_PATH) {
   const prebuiltPath = process.env.PREBUILT_PATH
   console.log(`Testing prebuilt-tdlib from '${prebuiltPath}'`)
-  // $FlowIgnore[unsupported-syntax]
   const prebuiltTdlib = require(path.join(projectRoot, prebuiltPath))
   tdl.configure({ tdjson: prebuiltTdlib.getTdjson() })
 } else if (process.env.LIBTDJSON_PATH) {
