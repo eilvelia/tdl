@@ -18,6 +18,9 @@ export type TdjsonOld = {
 /** New tdjson interface */
 export type TdjsonNew = {
   init(receiveTimeout: number): void,
+  ref(): void,
+  /** Allow the process to exit. */
+  unref(): void,
   createClientId(): number,
   send(clientId: number, request: string): void,
   /** Do not call receive again until the promise is completed. */
@@ -53,6 +56,8 @@ export function loadAddon (libraryFile: string): Tdjson {
     },
     tdnew: {
       init: addon.tdnInit,
+      ref: addon.tdnRef,
+      unref: addon.tdnUnref,
       createClientId: addon.tdnCreateClientId,
       send: addon.tdnSend,
       receive: addon.tdnReceive,

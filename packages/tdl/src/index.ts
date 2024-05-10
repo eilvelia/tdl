@@ -106,6 +106,7 @@ async function receiveLoop () {
   if (tdjsonAddon == null) throw new Error('TDLib is uninitialized')
   runningReceiveLoop = true
   try {
+    tdjsonAddon.tdnew.ref()
     while (true) {
       if (clientMap.size < 1) {
         debug('Stopping receive loop')
@@ -128,6 +129,7 @@ async function receiveLoop () {
     }
   } finally {
     runningReceiveLoop = false
+    tdjsonAddon.tdnew.unref()
   }
 }
 

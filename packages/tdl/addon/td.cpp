@@ -66,10 +66,8 @@ public:
       tsfn(Tsfn::New(env, "ReceiveTSFN", 0, 1, this)),
       thread(&ReceiveWorker::loop, this)
     {
-      if (client == nullptr) {
+      if (client == nullptr) // New tdjson interface
         thread.detach();
-        tsfn.Unref(env);
-      }
     }
   ~ReceiveWorker() {
     {
@@ -93,13 +91,14 @@ public:
     working = true;
     {
       std::lock_guard<std::mutex> lock(mutex);
-      // We cycle TSFN refs in case the new tdjson interface is used
-      if (client == nullptr) tsfn.Ref(env);
       deferred = std::move(new_deferred);
     }
     cv.notify_all();
     return promise;
   }
+
+  void Ref(const Napi::Env& env) { tsfn.Ref(env); }
+  void Unref(const Napi::Env& env) { tsfn.Unref(env); }
 private:
   using TsfnCtx = ReceiveWorker;
   struct TsfnData {
@@ -113,10 +112,8 @@ private:
       auto val = data->response == nullptr
         ? env.Null()
         : Napi::String::New(env, data->response);
-      if (ctx != nullptr) {
+      if (ctx != nullptr)
         ctx->working = false;
-        if (ctx->client == nullptr) ctx->tsfn.Unref(env);
-      }
       // Note that this can potentially yield to the JS code (it does in deno)
       data->deferred->Resolve(val);
       // ctx may not exist anymore
@@ -228,6 +225,18 @@ namespace Tdn {
       TYPEFAIL("Expected first argument (timeout) to be a number");
     double timeout = info[0].As<Napi::Number>().DoubleValue();
     worker = new ReceiveWorker(env, nullptr, timeout);
+  }
+
+  void Ref(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    if (worker == nullptr) FAIL("The worker is uninitialized");
+    worker->Ref(env);
+  }
+
+  void Unref(const Napi::CallbackInfo& info) {
+    Napi::Env env = info.Env();
+    if (worker == nullptr) FAIL("The worker is uninitialized");
+    worker->Unref(env);
   }
 
   Napi::Value CreateClientId(const Napi::CallbackInfo& info) {
@@ -418,6 +427,8 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
   exports["setLogMessageCallback"] =
     Napi::Function::New(env, TdCallbacks::SetLogMessageCallback, "setLogMessageCallback");
   exports["tdnInit"] = Napi::Function::New(env, Tdn::Init, "init");
+  exports["tdnRef"] = Napi::Function::New(env, Tdn::Ref, "ref");
+  exports["tdnUnref"] = Napi::Function::New(env, Tdn::Unref, "unref");
   exports["tdnCreateClientId"] =
     Napi::Function::New(env, Tdn::CreateClientId, "createClientId");
   exports["tdnSend"] = Napi::Function::New(env, Tdn::Send, "send");
