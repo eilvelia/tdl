@@ -106,6 +106,7 @@ private:
     std::unique_ptr<Napi::Promise::Deferred> deferred;
     const char *response; // can be nullptr
   };
+  // Called on the main thread
   static void CallJs(Napi::Env env, Napi::Function, TsfnCtx *ctx, TsfnData *data) {
     if (data == nullptr) return;
     if (env != nullptr) {
@@ -138,10 +139,8 @@ private:
       auto data = new TsfnData { std::move(deferred), response };
       deferred = nullptr;
       auto status = tsfn.NonBlockingCall(data);
-      if (status != napi_ok) {
+      if (status != napi_ok)
         delete data;
-        working = false;
-      }
     }
     tsfn.Release();
     // NOTE: If this thread is not calling receive anymore, the last response
@@ -151,7 +150,7 @@ private:
   void *client;
   double timeout;
   Tsfn tsfn;
-  std::atomic_bool working {false};
+  bool working {false};
   std::unique_ptr<Napi::Promise::Deferred> deferred;
   bool stop {false};
   std::mutex mutex;
