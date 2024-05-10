@@ -393,18 +393,23 @@ export class Client {
   private async _loop (): Promise<void> {
     if (this._client.isTdn)
       throw new Error('Can start the loop in the old tdjson interface only')
-    while (true) {
-      if (this._client.val === null) {
-        debug('receive loop: destroyed client')
-        break
+    try {
+      while (true) {
+        if (this._client.val === null) {
+          debug('receive loop: destroyed client')
+          break
+        }
+        const responseString = await this._tdjson.tdold.receive(this._client.val)
+        if (responseString == null) {
+          debug('receive loop: response is empty')
+          continue
+        }
+        const res = JSON.parse(responseString)
+        this.handleReceive(res)
       }
-      const responseString = await this._tdjson.tdold.receive(this._client.val)
-      if (responseString == null) {
-        debug('receive loop: response is empty')
-        continue
-      }
-      const res = JSON.parse(responseString)
-      this.handleReceive(res)
+    } catch (e) {
+      this._handleClose()
+      throw e
     }
   }
 
