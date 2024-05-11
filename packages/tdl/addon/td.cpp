@@ -394,6 +394,8 @@ namespace TdCallbacks {
 
 void LoadTdjson(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
+  if (td_create_client_id != nullptr)
+    FAIL("tdjson is already loaded")
   std::string library_file = info[0].As<Napi::String>().Utf8Value();
   dlerror(); // Clear errors
   void *handle = DLOPEN(library_file.c_str());

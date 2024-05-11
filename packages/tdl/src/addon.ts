@@ -39,13 +39,9 @@ export type Tdjson = {
   setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): void
 }
 
-let loaded = false
-
 export function loadAddon (libraryFile: string): Tdjson {
-  if (loaded) throw Error('The node addon is already loaded')
   const addon: any = nodeGypBuild(packageDir)
   addon.loadTdjson(libraryFile)
-  loaded = true
   return {
     tdold: {
       create: addon.tdoCreate,
