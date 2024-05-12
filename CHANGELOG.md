@@ -32,8 +32,7 @@
 - Removed the `bare` client option. `tdl.createBareClient(): Client` is added
   instead.
 - Removed deprecated client methods: `destroy`, `pause`, `resume`, `connect`,
-  `connectAndLogin`, `getBackendName`, `setLogFatalErrorCallback`
-  (`tdl.setLogFatalErrorCallback` is added instead, though still deprecated).
+  `connectAndLogin`, `getBackendName`, `setLogFatalErrorCallback`.
 - Removed deprecated exports: `TDL`, `Tdl`.
 - Removed deprecated events: `response`, `auth-needed`, `auth-not-needed`. The
   `destroy` event is renamed to `close`.

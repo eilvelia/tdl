@@ -278,11 +278,3 @@ export type Off =
  * `createClient`, `execute`, or `setLogMessageCallback`, etc.
  */
 export function init(): void
-
-/**
- * @deprecated Deprecated in TDLib v1.8.0. Use `setLogMessageCallback`
- * with verbosity level 0 instead. This function is semver-unstable.
- */
-export function setLogFatalErrorCallback(
-  callback: null | ((message: string) => void)
-): void

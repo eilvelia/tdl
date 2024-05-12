@@ -34,9 +34,7 @@ export type Tdjson = {
   setLogMessageCallback(
     maxVerbosityLevel: number,
     callback: null | ((verbosityLevel: number, message: string) => void)
-  ): void,
-  /** td_set_log_fatal_error_callback is deprecated in TDLib v1.8.0. */
-  setLogFatalErrorCallback(fn: null | ((errorMessage: string) => void)): void
+  ): void
 }
 
 export function loadAddon (libraryFile: string): Tdjson {
@@ -59,7 +57,6 @@ export function loadAddon (libraryFile: string): Tdjson {
       receive: addon.tdnReceive,
       execute: addon.tdnExecute
     },
-    setLogMessageCallback: addon.setLogMessageCallback,
-    setLogFatalErrorCallback: addon.setLogFatalErrorCallback
+    setLogMessageCallback: addon.setLogMessageCallback
   }
 }

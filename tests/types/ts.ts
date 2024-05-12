@@ -35,8 +35,8 @@ tdl.execute({
   text: '@telegram /test_command https://telegram.org telegram.me'
 })
 
-tdl.setLogFatalErrorCallback(a => console.log(a))
-tdl.setLogFatalErrorCallback(null)
+tdl.setLogMessageCallback(2, a => console.log(a))
+tdl.setLogMessageCallback(3, null)
 
 async function main () {
   await client.login(() => ({

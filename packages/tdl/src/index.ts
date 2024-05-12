@@ -85,17 +85,6 @@ export function setLogMessageCallback (
   tdjsonAddon.setLogMessageCallback(maxVerbosityLevel, callback)
 }
 
-/** @deprecated Deprecated in TDLib v1.8.0. */
-export function setLogFatalErrorCallback (
-  callback: null | ((message: string) => void)
-): void {
-  if (tdjsonAddon == null) {
-    init()
-    if (tdjsonAddon == null) throw Error('TDLib is uninitialized')
-  }
-  tdjsonAddon.setLogFatalErrorCallback(callback)
-}
-
 const clientMap: Map<number, Client> = new Map()
 let tdnInitialized = false
 let runningReceiveLoop = false

@@ -29,29 +29,25 @@ typedef const char * (*td_json_client_receive_t)(void *client, double timeout);
 typedef const char * (*td_json_client_execute_t)(void *client, const char *request);
 typedef void (*td_json_client_destroy_t)(void *client);
 
-typedef void (*td_log_fatal_error_callback_ptr)(const char *error_message);
-typedef void (*td_set_log_fatal_error_callback_t)(td_log_fatal_error_callback_ptr callback);
-
-typedef void (*td_log_message_callback_ptr)(int verbosity_level, const char *message);
-typedef void (*td_set_log_message_callback_t)(int max_verbosity_level, td_log_message_callback_ptr callback);
-
 // New tdjson interface
 typedef int (*td_create_client_id_t)();
 typedef void (*td_send_t)(int client_id, const char *request);
 typedef const char * (*td_receive_t)(double timeout);
 typedef const char * (*td_execute_t)(const char *request);
 
+typedef void (*td_log_message_callback_ptr)(int verbosity_level, const char *message);
+typedef void (*td_set_log_message_callback_t)(int max_verbosity_level, td_log_message_callback_ptr callback);
+
 td_json_client_create_t td_json_client_create;
 td_json_client_send_t td_json_client_send;
 td_json_client_receive_t td_json_client_receive;
 td_json_client_execute_t td_json_client_execute;
 td_json_client_destroy_t td_json_client_destroy;
-td_set_log_fatal_error_callback_t td_set_log_fatal_error_callback;
-td_set_log_message_callback_t td_set_log_message_callback;
 td_create_client_id_t td_create_client_id;
 td_send_t td_send;
 td_receive_t td_receive;
 td_execute_t td_execute;
+td_set_log_message_callback_t td_set_log_message_callback;
 
 #define FAIL(MSG, ...) \
   NAPI_THROW(Napi::Error::New(env, MSG), __VA_ARGS__);
@@ -336,39 +332,6 @@ namespace TdCallbacks {
     tsfn.Unref(env);
     td_set_log_message_callback(max_verbosity_level, &c_message_callback);
   }
-
-  static Napi::ThreadSafeFunction fatal_callback_tsfn = nullptr;
-
-  extern "C" void c_fatal_callback (const char *error_message) {
-    if (fatal_callback_tsfn == nullptr) return;
-    std::string message_str(error_message);
-    auto callback = [=](Napi::Env env, Napi::Function js_callback) {
-      js_callback.Call({ Napi::String::New(env, message_str) });
-    };
-    fatal_callback_tsfn.NonBlockingCall(callback);
-    // See above.
-    std::this_thread::sleep_for(std::chrono::seconds(5));
-  }
-
-  void SetLogFatalErrorCallback(const Napi::CallbackInfo& info) {
-    Napi::Env env = info.Env();
-    if (info[0].IsNull() || info[0].IsUndefined()) {
-      td_set_log_fatal_error_callback(nullptr);
-      if (fatal_callback_tsfn != nullptr) {
-        fatal_callback_tsfn.Release();
-        fatal_callback_tsfn = nullptr;
-      }
-      return;
-    }
-    if (!info[0].IsFunction())
-      TYPEFAIL("Expected first argument to be one of: a function, null, undefined");
-    if (fatal_callback_tsfn != nullptr)
-      fatal_callback_tsfn.Release();
-    fatal_callback_tsfn = Napi::ThreadSafeFunction::New(
-      env, info[0].As<Napi::Function>(), "FatalCallbackTSFN", 0, 1);
-    fatal_callback_tsfn.Unref(env);
-    td_set_log_fatal_error_callback(&c_fatal_callback);
-  }
 }
 
 #define FINDFUNC(F) \
@@ -403,7 +366,6 @@ void LoadTdjson(const Napi::CallbackInfo& info) {
   FINDFUNC(td_json_client_receive);
   FINDFUNC(td_json_client_execute);
   FINDFUNC(td_json_client_destroy);
-  FINDFUNC(td_set_log_fatal_error_callback);
   FINDFUNC(td_set_log_message_callback);
   FINDFUNC(td_create_client_id);
   FINDFUNC(td_send);
@@ -417,10 +379,6 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
   exports["tdoReceive"] = Napi::Function::New(env, Tdo::ClientReceive, "receive");
   exports["tdoExecute"] = Napi::Function::New(env, Tdo::ClientExecute, "execute");
   exports["tdoDestroy"] = Napi::Function::New(env, Tdo::ClientDestroy, "destroy");
-  exports["setLogFatalErrorCallback"] =
-    Napi::Function::New(env, TdCallbacks::SetLogFatalErrorCallback, "setLogFatalErrorCallback");
-  exports["setLogMessageCallback"] =
-    Napi::Function::New(env, TdCallbacks::SetLogMessageCallback, "setLogMessageCallback");
   exports["tdnInit"] = Napi::Function::New(env, Tdn::Init, "init");
   exports["tdnRef"] = Napi::Function::New(env, Tdn::Ref, "ref");
   exports["tdnUnref"] = Napi::Function::New(env, Tdn::Unref, "unref");
@@ -429,6 +387,8 @@ Napi::Object Init(Napi::Env env, Napi::Object exports) {
   exports["tdnSend"] = Napi::Function::New(env, Tdn::Send, "send");
   exports["tdnReceive"] = Napi::Function::New(env, Tdn::Receive, "receive");
   exports["tdnExecute"] = Napi::Function::New(env, Tdn::Execute, "execute");
+  exports["setLogMessageCallback"] =
+    Napi::Function::New(env, TdCallbacks::SetLogMessageCallback, "setLogMessageCallback");
   exports["loadTdjson"] = Napi::Function::New(env, LoadTdjson, "loadTdjson");
   return exports;
 }
