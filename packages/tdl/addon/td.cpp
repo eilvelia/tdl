@@ -7,7 +7,6 @@
 #include <atomic>
 #include <mutex>
 #include <condition_variable>
-#include <unordered_map>
 #include <memory>
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)
@@ -75,6 +74,8 @@ public:
       stop = true;
     }
     cv.notify_all();
+    if (client != nullptr)
+      td_json_client_destroy(client);
     if (thread.joinable())
       thread.join();
   }
@@ -99,6 +100,7 @@ public:
 
   void Ref(const Napi::Env& env) { tsfn.Ref(env); }
   void Unref(const Napi::Env& env) { tsfn.Unref(env); }
+  inline void * GetClient() { return client; }
 private:
   using TsfnCtx = ReceiveWorker;
   struct TsfnData {
@@ -157,8 +159,6 @@ private:
 
 // Old tdjson interface
 namespace Tdo {
-  std::unordered_map<void *, ReceiveWorker *> client_workers;
-
   Napi::Value ClientCreate(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
     if (!info[0].IsNumber())
@@ -167,21 +167,20 @@ namespace Tdo {
     void *client = td_json_client_create();
     if (client == nullptr)
       FAIL("td_json_client_create returned NULL", Napi::Value());
-    client_workers.insert({ client, new ReceiveWorker(env, client, timeout) });
-    return Napi::External<void>::New(env, client);
+    auto worker = new ReceiveWorker(env, client, timeout);
+    return Napi::External<ReceiveWorker>::New(env, worker);
   }
 
   void ClientSend(const Napi::CallbackInfo& info) {
-    void *client = info[0].As<Napi::External<void>>().Data();
+    auto *worker = info[0].As<Napi::External<ReceiveWorker>>().Data();
     std::string request = info[1].As<Napi::String>().Utf8Value();
-    td_json_client_send(client, request.c_str());
+    td_json_client_send(worker->GetClient(), request.c_str());
   }
 
   // Do not call again until the promise is resolved/rejected.
   Napi::Value ClientReceive(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
-    void *client = info[0].As<Napi::External<void>>().Data();
-    auto& worker = client_workers[client];
+    auto *worker = info[0].As<Napi::External<ReceiveWorker>>().Data();
     return worker->NewTask(env);
   }
 
@@ -189,7 +188,7 @@ namespace Tdo {
     Napi::Env env = info.Env();
     void *client = info[0].IsNull() || info[0].IsUndefined()
       ? nullptr
-      : info[0].As<Napi::External<void>>().Data();
+      : info[0].As<Napi::External<ReceiveWorker>>().Data()->GetClient();
     if (!info[1].IsString())
       TYPEFAIL("Expected second argument to be a string", Napi::Value());
     std::string request = info[1].As<Napi::String>().Utf8Value();
@@ -199,22 +198,16 @@ namespace Tdo {
     return Napi::String::New(env, response);
   }
 
-  // Do not call if the receive promise is pending.
+  // Preferably do not call this if the receive promise is pending.
   void ClientDestroy(const Napi::CallbackInfo& info) {
-    void *client = info[0].As<Napi::External<void>>().Data();
-    if (client_workers.count(client) < 1) {
-      Napi::Env env = info.Env();
-      FAIL("Could not find the client");
-    }
-    td_json_client_destroy(client);
-    delete client_workers[client];
-    client_workers.erase(client);
+    auto *worker = info[0].As<Napi::External<ReceiveWorker>>().Data();
+    delete worker;
   }
 }
 
 // New tdjson interface
 namespace Tdn {
-  ReceiveWorker *worker = nullptr;
+  static ReceiveWorker *worker = nullptr;
 
   // Set the receive timeout explicitly.
   void Init(const Napi::CallbackInfo& info) {
@@ -300,8 +293,8 @@ namespace TdCallbacks {
   }
   using Tsfn = Napi::TypedThreadSafeFunction<TsfnCtx, TsfnData, CallJs>;
 
-  Tsfn tsfn = nullptr;
-  std::mutex tsfn_mutex;
+  static Tsfn tsfn = nullptr;
+  static std::mutex tsfn_mutex;
 
   // NOTE: If TDLib exits with SIGABRT right after the verbosity_level=0 message,
   // we won't actually have a chance to pass the message to the main thread.
@@ -344,7 +337,7 @@ namespace TdCallbacks {
     td_set_log_message_callback(max_verbosity_level, &c_message_callback);
   }
 
-  Napi::ThreadSafeFunction fatal_callback_tsfn = nullptr;
+  static Napi::ThreadSafeFunction fatal_callback_tsfn = nullptr;
 
   extern "C" void c_fatal_callback (const char *error_message) {
     if (fatal_callback_tsfn == nullptr) return;
