@@ -236,9 +236,9 @@ namespace Tdn {
       FAIL("td_send is not available", Napi::Value());
     if (td_receive == nullptr)
       FAIL("td_receive is not available", Napi::Value());
-    int client_id = td_create_client_id();
     if (worker == nullptr)
-      worker = new ReceiveWorker(env, nullptr, 10.0);
+      FAIL("The worker is uninitialized", Napi::Value());
+    int client_id = td_create_client_id();
     return Napi::Number::New(env, client_id);
   }
 
