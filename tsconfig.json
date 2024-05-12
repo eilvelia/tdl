@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2021",
-    "module": "NodeNext",
+    "module": "Node16",
     "lib": ["ES2021"],
     "strict": true,
     "noImplicitAny": true,
@@ -20,6 +20,8 @@
     "examples/with-typescript.ts"
   ],
   "exclude": [
-    "examples/deno-example.ts"
+    "examples/deno-example.ts",
+    "node_modules",
+    "**/node_modules/*"
   ]
 }
