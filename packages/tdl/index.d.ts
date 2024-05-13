@@ -275,6 +275,6 @@ export type Off =
 /**
  * Initialize the node addon explicitly. This function is entirely optional to
  * call, TDLib will be initialized automatically on the first call of
- * `createClient`, `execute`, or `setLogMessageCallback`, etc.
+ * `createClient`, `execute`, `setLogMessageCallback`, or `createBareClient`.
  */
 export function init(): void
