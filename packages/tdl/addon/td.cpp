@@ -162,7 +162,7 @@ namespace Tdo {
     double timeout = info[0].As<Napi::Number>().DoubleValue();
     void *client = td_json_client_create();
     if (client == nullptr)
-      FAIL("td_json_client_create returned NULL", Napi::Value());
+      FAIL("td_json_client_create returned null", Napi::Value());
     auto worker = new ReceiveWorker(env, client, timeout);
     return Napi::External<ReceiveWorker>::New(env, worker);
   }
@@ -295,10 +295,12 @@ namespace TdCallbacks {
   // NOTE: If TDLib exits with SIGABRT right after the verbosity_level=0 message,
   // we won't actually have a chance to pass the message to the main thread.
   extern "C" void c_message_callback (int verbosity_level, const char *message) {
-    std::lock_guard<std::mutex> lock(tsfn_mutex);
-    if (tsfn == nullptr) return;
-    auto *data = new TsfnData { verbosity_level, std::string(message) };
-    tsfn.NonBlockingCall(data);
+    {
+      std::lock_guard<std::mutex> lock(tsfn_mutex);
+      if (tsfn == nullptr) return;
+      auto *data = new TsfnData { verbosity_level, std::string(message) };
+      tsfn.NonBlockingCall(data);
+    }
     if (verbosity_level == 0) {
       // Hack for the aforementioned issue. Note that there is still no guarantee
       // that the callback will be executed. For example, td_execute(addLogMessage)
@@ -328,7 +330,7 @@ namespace TdCallbacks {
     std::lock_guard<std::mutex> lock(tsfn_mutex);
     if (tsfn != nullptr)
       tsfn.Release();
-    tsfn = Tsfn::New(env, info[1].As<Napi::Function>(), "CallbackTSFN", 0, 1);
+    tsfn = Tsfn::New(env, info[1].As<Napi::Function>(), "TdCallbackTSFN", 0, 1);
     tsfn.Unref(env);
     td_set_log_message_callback(max_verbosity_level, &c_message_callback);
   }
