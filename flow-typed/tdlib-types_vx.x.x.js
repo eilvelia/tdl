@@ -1,5 +1,5 @@
 // @flow
-// Types for TDLib v1.8.28 (38d31da77a72619cf7ec5d479338a48274cc7446)
+// Types for TDLib v1.8.29 (af69dd4397b6dc1bf23ba0fd0bf429fcba6454f6)
 // Generated using tdl-install-types v0.2.0-dev
 declare module 'tdlib-types' {
   declare export type error = {|
@@ -42,8 +42,8 @@ declare module 'tdlib-types' {
 
   declare export type authenticationCodeTypeTelegramMessage = {|
     /**
-     * An authentication code is delivered via a private Telegram message, which can
-     * be viewed from another active session
+     * A digit-only authentication code is delivered via a private Telegram message,
+     * which can be viewed from another active session
      */
     _: 'authenticationCodeTypeTelegramMessage',
     /** Length of the code */
@@ -52,18 +52,39 @@ declare module 'tdlib-types' {
 
   declare export type authenticationCodeTypeSms = {|
     /**
-     * An authentication code is delivered via an SMS message to the specified phone
-     * number; applications may not receive this type of code
+     * A digit-only authentication code is delivered via an SMS message to the specified
+     * phone number; non-official applications may not receive this type of code
      */
     _: 'authenticationCodeTypeSms',
     /** Length of the code */
     length: number,
   |}
 
+  declare export type authenticationCodeTypeSmsWord = {|
+    /**
+     * An authentication code is a word delivered via an SMS message to the specified
+     * phone number; non-official applications may not receive this type of code
+     */
+    _: 'authenticationCodeTypeSmsWord',
+    /** The first letters of the word if known */
+    first_letter: string,
+  |}
+
+  declare export type authenticationCodeTypeSmsPhrase = {|
+    /**
+     * An authentication code is a phrase from multiple words delivered via an SMS
+     * message to the specified phone number; non-official applications may not receive
+     * this type of code
+     */
+    _: 'authenticationCodeTypeSmsPhrase',
+    /** The first word of the phrase if known */
+    first_word: string,
+  |}
+
   declare export type authenticationCodeTypeCall = {|
     /**
-     * An authentication code is delivered via a phone call to the specified phone
-     * number
+     * A digit-only authentication code is delivered via a phone call to the specified
+     * phone number
      */
     _: 'authenticationCodeTypeCall',
     /** Length of the code */
@@ -95,8 +116,8 @@ declare module 'tdlib-types' {
 
   declare export type authenticationCodeTypeFragment = {|
     /**
-     * An authentication code is delivered to https://fragment.com. The user must be
-     * logged in there via a wallet owning the phone number's NFT
+     * A digit-only authentication code is delivered to https://fragment.com. The user
+     * must be logged in there via a wallet owning the phone number's NFT
      */
     _: 'authenticationCodeTypeFragment',
     /** URL to open to receive the code */
@@ -107,8 +128,8 @@ declare module 'tdlib-types' {
 
   declare export type authenticationCodeTypeFirebaseAndroid = {|
     /**
-     * An authentication code is delivered via Firebase Authentication to the official
-     * Android application
+     * A digit-only authentication code is delivered via Firebase Authentication to
+     * the official Android application
      */
     _: 'authenticationCodeTypeFirebaseAndroid',
     /** Nonce to pass to the SafetyNet Attestation API */
@@ -119,8 +140,8 @@ declare module 'tdlib-types' {
 
   declare export type authenticationCodeTypeFirebaseIos = {|
     /**
-     * An authentication code is delivered via Firebase Authentication to the official
-     * iOS application
+     * A digit-only authentication code is delivered via Firebase Authentication to
+     * the official iOS application
      */
     _: 'authenticationCodeTypeFirebaseIos',
     /**
@@ -900,8 +921,8 @@ declare module 'tdlib-types' {
   declare export type pollOption = {|
     /** Describes one answer option of a poll */
     _: 'pollOption',
-    /** Option text; 1-100 characters */
-    text: string,
+    /** Option text; 1-100 characters. Only custom emoji entities are allowed */
+    text: formattedText,
     /** Number of voters for this option, available only for closed or voted polls */
     voter_count: number,
     /** The percentage of votes for this option; 0-100 */
@@ -1128,17 +1149,17 @@ declare module 'tdlib-types' {
   |}
 
   declare export type voiceNote = {|
-    /**
-     * Describes a voice note. The voice note must be encoded with the Opus codec,
-     * and stored inside an OGG container. Voice notes can have only a single audio
-     * channel
-     */
+    /** Describes a voice note */
     _: 'voiceNote',
     /** Duration of the voice note, in seconds; as defined by the sender */
     duration: number,
     /** A waveform representation of the voice note in 5-bit format */
     waveform: string /* base64 */,
-    /** MIME type of the file; as defined by the sender */
+    /**
+     * MIME type of the file; as defined by the sender. Usually, one of "audio/ogg"
+     * for Opus in an OGG container, "audio/mpeg" for an MP3 audio, or "audio/mp4"
+     * for an M4A audio
+     */
     mime_type: string,
     /** Result of speech recognition in the voice note; may be null */
     speech_recognition_result?: SpeechRecognitionResult,
@@ -1310,8 +1331,8 @@ declare module 'tdlib-types' {
     _: 'poll',
     /** Unique poll identifier */
     id: number | string,
-    /** Poll question; 1-300 characters */
-    question: string,
+    /** Poll question; 1-300 characters. Only custom emoji entities are allowed */
+    question: formattedText,
     /** List of poll answer options */
     options: Array<pollOption>,
     /** Total number of voters, participating in the poll */
@@ -1800,18 +1821,30 @@ declare module 'tdlib-types' {
   declare export type businessOpeningHoursInterval = {|
     /** Describes an interval of time when the business is open */
     _: 'businessOpeningHoursInterval',
-    /** The first minute of the interval since start of the week; 0-7*24*60 */
+    /**
+     * The minute's sequence number in a week, starting on Monday, marking the start
+     * of the time interval during which the business is open; 0-7*24*60
+     */
     start_minute: number,
-    /** The first minute after the end of the interval since start of the week; 1-8*24*60 */
+    /**
+     * The minute's sequence number in a week, starting on Monday, marking the end
+     * of the time interval during which the business is open; 1-8*24*60
+     */
     end_minute: number,
   |}
 
   declare export type businessOpeningHoursInterval$Input = {|
     /** Describes an interval of time when the business is open */
     +_: 'businessOpeningHoursInterval',
-    /** The first minute of the interval since start of the week; 0-7*24*60 */
+    /**
+     * The minute's sequence number in a week, starting on Monday, marking the start
+     * of the time interval during which the business is open; 0-7*24*60
+     */
     +start_minute?: number,
-    /** The first minute after the end of the interval since start of the week; 1-8*24*60 */
+    /**
+     * The minute's sequence number in a week, starting on Monday, marking the end
+     * of the time interval during which the business is open; 1-8*24*60
+     */
     +end_minute?: number,
   |}
 
@@ -1843,6 +1876,23 @@ declare module 'tdlib-types' {
      * to be valid and has already been split by week days
      */
     opening_hours?: businessOpeningHours,
+    /**
+     * Opening hours of the business in the local time; may be null if none. The hours
+     * are guaranteed to be valid and has already been split by week days. Local time
+     * zone identifier will be empty. An updateUserFullInfo update is not triggered
+     * when value of this field changes
+     */
+    local_opening_hours?: businessOpeningHours,
+    /**
+     * Time left before the business will open the next time, in seconds; 0 if unknown.
+     * An updateUserFullInfo update is not triggered when value of this field changes
+     */
+    next_open_in: number,
+    /**
+     * Time left before the business will close the next time, in seconds; 0 if unknown.
+     * An updateUserFullInfo update is not triggered when value of this field changes
+     */
+    next_close_in: number,
     /**
      * The greeting message; may be null if none or the Business account is not of
      * the current user
@@ -2174,8 +2224,9 @@ declare module 'tdlib-types' {
      */
     can_post_stories: boolean,
     /**
-     * True, if the administrator can edit stories posted by other users, pin stories
-     * and access story archive; applicable to supergroups and channels only
+     * True, if the administrator can edit stories posted by other users, post stories
+     * to the chat page, pin chat stories, and access story archive; applicable to
+     * supergroups and channels only
      */
     can_edit_stories: boolean,
     /**
@@ -2245,8 +2296,9 @@ declare module 'tdlib-types' {
      */
     +can_post_stories?: boolean,
     /**
-     * True, if the administrator can edit stories posted by other users, pin stories
-     * and access story archive; applicable to supergroups and channels only
+     * True, if the administrator can edit stories posted by other users, post stories
+     * to the chat page, pin chat stories, and access story archive; applicable to
+     * supergroups and channels only
      */
     +can_edit_stories?: boolean,
     /**
@@ -2710,8 +2762,13 @@ declare module 'tdlib-types' {
     has_private_forwards: boolean,
     /** True, if voice and video notes can't be sent or forwarded to the user */
     has_restricted_voice_and_video_note_messages: boolean,
-    /** True, if the user has pinned stories */
-    has_pinned_stories: boolean,
+    /** True, if the user has posted to profile stories */
+    has_posted_to_profile_stories: boolean,
+    /**
+     * True, if the user always enabled sponsored messages; known only for the current
+     * user
+     */
+    has_sponsored_messages_enabled: boolean,
     /**
      * True, if the current user needs to explicitly allow to share their phone number
      * with the user when the method addContact is used
@@ -4354,61 +4411,13 @@ declare module 'tdlib-types' {
     +_: 'messageSourceOther',
   |}
 
-  declare export type messageSponsorTypeBot = {|
-    /** The sponsor is a bot */
-    _: 'messageSponsorTypeBot',
-    /** User identifier of the bot */
-    bot_user_id: number,
-    /** An internal link to be opened when the sponsored message is clicked */
-    link: InternalLinkType,
-  |}
-
-  declare export type messageSponsorTypeWebApp = {|
-    /** The sponsor is a web app */
-    _: 'messageSponsorTypeWebApp',
-    /** Web App title */
-    web_app_title: string,
-    /** An internal link to be opened when the sponsored message is clicked */
-    link: InternalLinkType,
-  |}
-
-  declare export type messageSponsorTypePublicChannel = {|
-    /** The sponsor is a public channel chat */
-    _: 'messageSponsorTypePublicChannel',
-    /** Sponsor chat identifier */
-    chat_id: number,
-    /**
-     * An internal link to be opened when the sponsored message is clicked; may be
-     * null if the sponsor chat needs to be opened instead
-     */
-    link?: InternalLinkType,
-  |}
-
-  declare export type messageSponsorTypePrivateChannel = {|
-    /** The sponsor is a private channel chat */
-    _: 'messageSponsorTypePrivateChannel',
-    /** Title of the chat */
-    title: string,
-    /** Invite link for the channel */
-    invite_link: string,
-  |}
-
-  declare export type messageSponsorTypeWebsite = {|
-    /** The sponsor is a website */
-    _: 'messageSponsorTypeWebsite',
-    /** URL of the website */
-    url: string,
-    /** Name of the website */
-    name: string,
-  |}
-
   declare export type messageSponsor = {|
     /** Information about the sponsor of a message */
     _: 'messageSponsor',
-    /** Type of the sponsor */
-    type: MessageSponsorType,
+    /** URL of the sponsor to be opened when the message is clicked */
+    url: string,
     /** Photo of the sponsor; may be null if must not be shown */
-    photo?: chatPhotoInfo,
+    photo?: photo,
     /**
      * Additional optional information about the sponsor to be shown along with the
      * message
@@ -4432,8 +4441,14 @@ declare module 'tdlib-types' {
     content: MessageContent,
     /** Information about the sponsor of the message */
     sponsor: messageSponsor,
-    /** If non-empty, text for the message action button */
+    /** Title of the sponsored message */
+    title: string,
+    /** Text for the message action button */
     button_text: string,
+    /** Identifier of the accent color for title, button text and message background */
+    accent_color_id: number,
+    /** Identifier of a custom emoji to be shown on the message background; 0 if none */
+    background_custom_emoji_id: number | string,
     /**
      * If non-empty, additional information about the sponsored message to be shown
      * along with the message
@@ -4781,6 +4796,62 @@ declare module 'tdlib-types' {
      * ordinary unread message
      */
     +disable_mention_notifications?: boolean,
+  |}
+
+  declare export type reactionNotificationSourceNone = {|
+    /** Notifications for reactions are disabled */
+    _: 'reactionNotificationSourceNone',
+  |}
+
+  declare export type reactionNotificationSourceNone$Input = {|
+    /** Notifications for reactions are disabled */
+    +_: 'reactionNotificationSourceNone',
+  |}
+
+  declare export type reactionNotificationSourceContacts = {|
+    /** Notifications for reactions are shown only for reactions from contacts */
+    _: 'reactionNotificationSourceContacts',
+  |}
+
+  declare export type reactionNotificationSourceContacts$Input = {|
+    /** Notifications for reactions are shown only for reactions from contacts */
+    +_: 'reactionNotificationSourceContacts',
+  |}
+
+  declare export type reactionNotificationSourceAll = {|
+    /** Notifications for reactions are shown for all reactions */
+    _: 'reactionNotificationSourceAll',
+  |}
+
+  declare export type reactionNotificationSourceAll$Input = {|
+    /** Notifications for reactions are shown for all reactions */
+    +_: 'reactionNotificationSourceAll',
+  |}
+
+  declare export type reactionNotificationSettings = {|
+    /** Contains information about notification settings for reactions */
+    _: 'reactionNotificationSettings',
+    /** Source of message reactions for which notifications are shown */
+    message_reaction_source: ReactionNotificationSource,
+    /** Source of story reactions for which notifications are shown */
+    story_reaction_source: ReactionNotificationSource,
+    /** Identifier of the notification sound to be played; 0 if sound is disabled */
+    sound_id: number | string,
+    /** True, if reaction sender and emoji must be displayed in notifications */
+    show_preview: boolean,
+  |}
+
+  declare export type reactionNotificationSettings$Input = {|
+    /** Contains information about notification settings for reactions */
+    +_: 'reactionNotificationSettings',
+    /** Source of message reactions for which notifications are shown */
+    +message_reaction_source?: ReactionNotificationSource$Input,
+    /** Source of story reactions for which notifications are shown */
+    +story_reaction_source?: ReactionNotificationSource$Input,
+    /** Identifier of the notification sound to be played; 0 if sound is disabled */
+    +sound_id?: number | string,
+    /** True, if reaction sender and emoji must be displayed in notifications */
+    +show_preview?: boolean,
   |}
 
   declare export type draftMessage = {|
@@ -5187,11 +5258,15 @@ declare module 'tdlib-types' {
   declare export type chatAvailableReactionsAll = {|
     /** All reactions are available in the chat */
     _: 'chatAvailableReactionsAll',
+    /** The maximum allowed number of reactions per message; 1-11 */
+    max_reaction_count: number,
   |}
 
   declare export type chatAvailableReactionsAll$Input = {|
     /** All reactions are available in the chat */
     +_: 'chatAvailableReactionsAll',
+    /** The maximum allowed number of reactions per message; 1-11 */
+    +max_reaction_count?: number,
   |}
 
   declare export type chatAvailableReactionsSome = {|
@@ -5199,6 +5274,8 @@ declare module 'tdlib-types' {
     _: 'chatAvailableReactionsSome',
     /** The list of reactions */
     reactions: Array<ReactionType>,
+    /** The maximum allowed number of reactions per message; 1-11 */
+    max_reaction_count: number,
   |}
 
   declare export type chatAvailableReactionsSome$Input = {|
@@ -5206,6 +5283,8 @@ declare module 'tdlib-types' {
     +_: 'chatAvailableReactionsSome',
     /** The list of reactions */
     +reactions?: $ReadOnlyArray<ReactionType$Input>,
+    /** The maximum allowed number of reactions per message; 1-11 */
+    +max_reaction_count?: number,
   |}
 
   declare export type savedMessagesTag = {|
@@ -6987,6 +7066,8 @@ declare module 'tdlib-types' {
     story_sender_chat_id: number,
     /** The identifier of the previewed story; 0 if none */
     story_id: number,
+    /** Up to 4 stickers from the sticker set available via the link */
+    stickers: Array<sticker>,
     /** Version of web page instant view (currently, can be 1 or 2); 0 if none */
     instant_view_version: number,
   |}
@@ -8473,12 +8554,13 @@ declare module 'tdlib-types' {
     location: location,
     /**
      * Time relative to the message send date, for which the location can be updated,
-     * in seconds
+     * in seconds; if 0x7FFFFFFF, then location can be updated forever
      */
     live_period: number,
     /**
-     * Left time for which the location can be updated, in seconds. updateMessageContent
-     * is not sent when this field changes
+     * Left time for which the location can be updated, in seconds. If 0, then the
+     * location can't be updated anymore. The update updateMessageContent is not sent
+     * when this field changes
      */
     expires_in: number,
     /**
@@ -8522,12 +8604,12 @@ declare module 'tdlib-types' {
     _: 'messageDice',
     /**
      * The animated stickers with the initial dice animation; may be null if unknown.
-     * updateMessageContent will be sent when the sticker became known
+     * The update updateMessageContent will be sent when the sticker became known
      */
     initial_state?: DiceStickers,
     /**
      * The animated stickers with the final dice animation; may be null if unknown.
-     * updateMessageContent will be sent when the sticker became known
+     * The update updateMessageContent will be sent when the sticker became known
      */
     final_state?: DiceStickers,
     /** Emoji on which the dice throw animation is based */
@@ -9905,7 +9987,11 @@ declare module 'tdlib-types' {
   declare export type inputMessageVoiceNote = {|
     /** A voice note message */
     _: 'inputMessageVoiceNote',
-    /** Voice note to be sent */
+    /**
+     * Voice note to be sent. The voice note must be encoded with the Opus codec and
+     * stored inside an OGG container with a single audio channel, or be in MP3 or
+     * M4A format as regular audio
+     */
     voice_note: InputFile,
     /** Duration of the voice note, in seconds */
     duration: number,
@@ -9926,7 +10012,11 @@ declare module 'tdlib-types' {
   declare export type inputMessageVoiceNote$Input = {|
     /** A voice note message */
     +_: 'inputMessageVoiceNote',
-    /** Voice note to be sent */
+    /**
+     * Voice note to be sent. The voice note must be encoded with the Opus codec and
+     * stored inside an OGG container with a single audio channel, or be in MP3 or
+     * M4A format as regular audio
+     */
     +voice_note?: InputFile$Input,
     /** Duration of the voice note, in seconds */
     +duration?: number,
@@ -9951,7 +10041,8 @@ declare module 'tdlib-types' {
     location: location,
     /**
      * Period for which the location can be updated, in seconds; must be between 60
-     * and 86400 for a live location and 0 otherwise
+     * and 86400 for a temporary live location, 0x7FFFFFFF for permanent live location,
+     * and 0 otherwise
      */
     live_period: number,
     /**
@@ -9974,7 +10065,8 @@ declare module 'tdlib-types' {
     +location?: location$Input,
     /**
      * Period for which the location can be updated, in seconds; must be between 60
-     * and 86400 for a live location and 0 otherwise
+     * and 86400 for a temporary live location, 0x7FFFFFFF for permanent live location,
+     * and 0 otherwise
      */
     +live_period?: number,
     /**
@@ -10130,10 +10222,16 @@ declare module 'tdlib-types' {
      * only to a private chat with a bot
      */
     _: 'inputMessagePoll',
-    /** Poll question; 1-255 characters (up to 300 characters for bots) */
-    question: string,
-    /** List of poll answer options, 2-10 strings 1-100 characters each */
-    options: Array<string>,
+    /**
+     * Poll question; 1-255 characters (up to 300 characters for bots). Only custom
+     * emoji entities are allowed to be added and only by Premium users
+     */
+    question: formattedText,
+    /**
+     * List of poll answer options, 2-10 strings 1-100 characters each. Only custom
+     * emoji entities are allowed to be added and only by Premium users
+     */
+    options: Array<formattedText>,
     /**
      * True, if the poll voters are anonymous. Non-anonymous polls can't be sent or
      * forwarded to channels
@@ -10161,10 +10259,16 @@ declare module 'tdlib-types' {
      * only to a private chat with a bot
      */
     +_: 'inputMessagePoll',
-    /** Poll question; 1-255 characters (up to 300 characters for bots) */
-    +question?: string,
-    /** List of poll answer options, 2-10 strings 1-100 characters each */
-    +options?: $ReadOnlyArray<string>,
+    /**
+     * Poll question; 1-255 characters (up to 300 characters for bots). Only custom
+     * emoji entities are allowed to be added and only by Premium users
+     */
+    +question?: formattedText$Input,
+    /**
+     * List of poll answer options, 2-10 strings 1-100 characters each. Only custom
+     * emoji entities are allowed to be added and only by Premium users
+     */
+    +options?: $ReadOnlyArray<formattedText$Input>,
     /**
      * True, if the poll voters are anonymous. Non-anonymous polls can't be sent or
      * forwarded to channels
@@ -10733,15 +10837,36 @@ declare module 'tdlib-types' {
     is_premium: boolean,
   |}
 
+  declare export type emojiCategorySourceSearch = {|
+    /**
+     * The category contains a list of similar emoji to search for in getStickers and
+     * searchStickers for stickers, or getInlineQueryResults with the bot getOption("animation_search_bot_username")
+     * for animations
+     */
+    _: 'emojiCategorySourceSearch',
+    /** List of emojis for search for */
+    emojis: Array<string>,
+  |}
+
+  declare export type emojiCategorySourcePremium = {|
+    /** The category contains Premium stickers that must be found by getPremiumStickers */
+    _: 'emojiCategorySourcePremium',
+  |}
+
   declare export type emojiCategory = {|
-    /** Contains a list of similar emoji to search for in getStickers and searchStickers */
+    /** Describes an emoji category */
     _: 'emojiCategory',
     /** Name of the category */
     name: string,
     /** Custom emoji sticker, which represents icon of the category */
     icon: sticker,
-    /** List of emojis in the category */
-    emojis: Array<string>,
+    /** Source of stickers for the emoji category */
+    source: EmojiCategorySource,
+    /**
+     * True, if the category must be shown first when choosing a sticker for the start
+     * page
+     */
+    is_greeting: boolean,
   |}
 
   declare export type emojiCategories = {|
@@ -10752,8 +10877,16 @@ declare module 'tdlib-types' {
   |}
 
   declare export type emojiCategoryTypeDefault$Input = {|
-    /** The category must be used by default */
+    /** The category must be used by default (e.g., for custom emoji or animation search) */
     +_: 'emojiCategoryTypeDefault',
+  |}
+
+  declare export type emojiCategoryTypeRegularStickers$Input = {|
+    /**
+     * The category must be used by default for regular sticker selection. It may contain
+     * greeting emoji category and Premium stickers
+     */
+    +_: 'emojiCategoryTypeRegularStickers',
   |}
 
   declare export type emojiCategoryTypeEmojiStatus$Input = {|
@@ -11080,7 +11213,7 @@ declare module 'tdlib-types' {
      * True, if the story is saved in the sender's profile and will be available there
      * after expiration
      */
-    is_pinned: boolean,
+    is_posted_to_chat_page: boolean,
     /** True, if the story is visible only for the current user */
     is_visible_only_for_self: boolean,
     /** True, if the story can be deleted */
@@ -11094,8 +11227,8 @@ declare module 'tdlib-types' {
     can_be_forwarded: boolean,
     /** True, if the story can be replied in the chat with the story sender */
     can_be_replied: boolean,
-    /** True, if the story's is_pinned value can be changed */
-    can_toggle_is_pinned: boolean,
+    /** True, if the story's is_posted_to_chat_page value can be changed */
+    can_toggle_is_posted_to_chat_page: boolean,
     /** True, if the story statistics are available through getStoryStatistics */
     can_get_statistics: boolean,
     /** True, if interactions with the story can be received through getStoryInteractions */
@@ -11131,6 +11264,11 @@ declare module 'tdlib-types' {
     total_count: number,
     /** The list of stories */
     stories: Array<story>,
+    /**
+     * Identifiers of the pinned stories; returned only in getChatPostedToChatPageStories
+     * with from_story_id == 0
+     */
+    pinned_story_ids: Array<number>,
   |}
 
   declare export type storyFullId$Input = {|
@@ -11985,6 +12123,11 @@ declare module 'tdlib-types' {
     +allow_missed_call?: boolean,
     /** Pass true if the authenticated phone number is used on the current device */
     +is_current_phone_number?: boolean,
+    /**
+     * Pass true if there is a SIM card in the current device, but it is not possible
+     * to check whether phone number matches
+     */
+    +has_unknown_phone_number?: boolean,
     /**
      * For official applications only. True, if the application can use Android SMS
      * Retriever API (requires Google Play Services >= 10.2) to automatically receive
@@ -14581,14 +14724,14 @@ declare module 'tdlib-types' {
   declare export type backgroundFillFreeformGradient = {|
     /** Describes a freeform gradient fill of a background */
     _: 'backgroundFillFreeformGradient',
-    /** A list of 3 or 4 colors of the freeform gradients in the RGB24 format */
+    /** A list of 3 or 4 colors of the freeform gradient in the RGB24 format */
     colors: Array<number>,
   |}
 
   declare export type backgroundFillFreeformGradient$Input = {|
     /** Describes a freeform gradient fill of a background */
     +_: 'backgroundFillFreeformGradient',
-    /** A list of 3 or 4 colors of the freeform gradients in the RGB24 format */
+    /** A list of 3 or 4 colors of the freeform gradient in the RGB24 format */
     +colors?: $ReadOnlyArray<number>,
   |}
 
@@ -18244,6 +18387,20 @@ declare module 'tdlib-types' {
     +_: 'suggestedActionSetBirthdate',
   |}
 
+  declare export type suggestedActionExtendPremium = {|
+    /** Suggests the user to extend their expiring Telegram Premium subscription */
+    _: 'suggestedActionExtendPremium',
+    /** A URL for managing Telegram Premium subscription */
+    manage_premium_subscription_url: string,
+  |}
+
+  declare export type suggestedActionExtendPremium$Input = {|
+    /** Suggests the user to extend their expiring Telegram Premium subscription */
+    +_: 'suggestedActionExtendPremium',
+    /** A URL for managing Telegram Premium subscription */
+    +manage_premium_subscription_url?: string,
+  |}
+
   declare export type count = {|
     /** Contains a counter */
     _: 'count',
@@ -18601,6 +18758,25 @@ declare module 'tdlib-types' {
     recent_interactions: Array<chatStatisticsInteractionInfo>,
   |}
 
+  declare export type chatRevenueAmount = {|
+    /** Contains information about revenue earned from sponsored messages in a chat */
+    _: 'chatRevenueAmount',
+    /** Cryptocurrency in which revenue is calculated */
+    cryptocurrency: string,
+    /** Total amount of the cryptocurrency earned, in the smallest units of the cryptocurrency */
+    total_amount: number | string,
+    /**
+     * Amount of the cryptocurrency that isn't withdrawn yet, in the smallest units
+     * of the cryptocurrency
+     */
+    balance_amount: number | string,
+    /**
+     * Amount of the cryptocurrency available for withdrawal, in the smallest units
+     * of the cryptocurrency
+     */
+    available_amount: number | string,
+  |}
+
   declare export type chatRevenueStatistics = {|
     /** A detailed statistics about revenue earned from sponsored messages in a chat */
     _: 'chatRevenueStatistics',
@@ -18608,21 +18784,12 @@ declare module 'tdlib-types' {
     revenue_by_hour_graph: StatisticalGraph,
     /** A graph containing amount of revenue */
     revenue_graph: StatisticalGraph,
-    /** Cryptocurrency in which revenue is calculated */
-    cryptocurrency: string,
-    /** Total amount of the cryptocurrency earned, in the smallest units of the cryptocurrency */
-    cryptocurrency_total_amount: number | string,
+    /** Amount of earned revenue */
+    revenue_amount: chatRevenueAmount,
     /**
-     * Amount of the cryptocurrency that isn't withdrawn yet, in the smallest units
-     * of the cryptocurrency
+     * Current conversion rate of the cryptocurrency in which revenue is calculated
+     * to USD
      */
-    cryptocurrency_balance_amount: number | string,
-    /**
-     * Amount of the cryptocurrency available for withdrawal, in the smallest units
-     * of the cryptocurrency
-     */
-    cryptocurrency_available_amount: number | string,
-    /** Current conversion rate of the cryptocurrency to USD */
     usd_rate: number,
   |}
 
@@ -19396,6 +19563,13 @@ declare module 'tdlib-types' {
     notification_settings: scopeNotificationSettings,
   |}
 
+  declare export type updateReactionNotificationSettings = {|
+    /** Notification settings for reactions were updated */
+    _: 'updateReactionNotificationSettings',
+    /** The new notification settings */
+    notification_settings: reactionNotificationSettings,
+  |}
+
   declare export type updateNotification = {|
     /** A notification was changed */
     _: 'updateNotification',
@@ -20019,6 +20193,15 @@ declare module 'tdlib-types' {
     tags: savedMessagesTags,
   |}
 
+  declare export type updateChatRevenueAmount = {|
+    /**
+     * The revenue earned from sponsored messages in a chat has changed. If chat revenue
+     * screen is opened, then getChatRevenueTransactions may be called to fetch new
+     * transactions
+     */
+    _: 'updateChatRevenueAmount',
+  |}
+
   declare export type updateSpeechRecognitionTrial = {|
     /**
      * The parameters of speech recognition without Telegram Premium subscription has
@@ -20301,6 +20484,11 @@ declare module 'tdlib-types' {
     date: number,
     /** If user has joined the chat using an invite link, the invite link; may be null */
     invite_link?: chatInviteLink,
+    /**
+     * True, if the user has joined the chat after sending a join request and being
+     * approved by an administrator
+     */
+    via_join_request: boolean,
     /** True, if the user has joined the chat using an invite link for a chat folder */
     via_chat_folder_invite_link: boolean,
     /** Previous chat member */
@@ -20619,7 +20807,7 @@ declare module 'tdlib-types' {
 
   declare export type checkAuthenticationEmailCode = {|
     /**
-     * Checks the authentication of a email address. Works only when the current authorization
+     * Checks the authentication of an email address. Works only when the current authorization
      * state is authorizationStateWaitEmailCode
      */
     +_: 'checkAuthenticationEmailCode',
@@ -20735,6 +20923,16 @@ declare module 'tdlib-types' {
     +token?: string,
   |}
 
+  declare export type reportAuthenticationCodeMissing = {|
+    /**
+     * Reports that authentication code wasn't delivered via SMS; for official mobile
+     * apps only. Works only when the current authorization state is authorizationStateWaitCode
+     */
+    +_: 'reportAuthenticationCodeMissing',
+    /** Current mobile network code */
+    +mobile_network_code?: string,
+  |}
+
   declare export type checkAuthenticationBotToken = {|
     /**
      * Checks the authentication token of a bot; to log in as a bot. Works only when
@@ -20834,7 +21032,7 @@ declare module 'tdlib-types' {
      * only if the current user already has login email and passwordState.login_email_address_pattern
      * is non-empty. The change will not be applied until the new login email address
      * is confirmed with checkLoginEmailAddressCode. To use Apple ID/Google ID instead
-     * of a email address, call checkLoginEmailAddressCode directly
+     * of an email address, call checkLoginEmailAddressCode directly
      */
     +_: 'setLoginEmailAddress',
     /** New login email address */
@@ -21271,6 +21469,11 @@ declare module 'tdlib-types' {
     +location?: location$Input,
   |}
 
+  declare export type getRecommendedChats = {|
+    /** Returns a list of channel chats recommended to the current user */
+    +_: 'getRecommendedChats',
+  |}
+
   declare export type getChatSimilarChats = {|
     /** Returns a list of chats similar to the given chat */
     +_: 'getChatSimilarChats',
@@ -21686,6 +21889,8 @@ declare module 'tdlib-types' {
      * of their chat list. Only Main and Archive chat lists are supported
      */
     +chat_list?: ChatList$Input,
+    /** Pass true to search only for messages in channels */
+    +only_in_channels?: boolean,
     /** Query to search for */
     +query?: string,
     /**
@@ -22148,7 +22353,7 @@ declare module 'tdlib-types' {
 
   declare export type getChatAvailableMessageSenders = {|
     /**
-     * Returns list of message sender identifiers, which can be used to send messages
+     * Returns the list of message sender identifiers, which can be used to send messages
      * in a chat
      */
     +_: 'getChatAvailableMessageSenders',
@@ -22416,6 +22621,14 @@ declare module 'tdlib-types' {
     /** New location content of the message; pass null to stop sharing the live location */
     +location?: location$Input,
     /**
+     * New time relative to the message send date, for which the location can be updated,
+     * in seconds. If 0x7FFFFFFF specified, then the location can be updated forever.
+     * Otherwise, must not exceed the current live_period by more than a day, and the
+     * live location expiration date must remain in the next 90 days. Pass 0 to keep
+     * the current live_period
+     */
+    +live_period?: number,
+    /**
      * The new direction in which the location moves, in degrees; 1-360. Pass 0 if
      * unknown
      */
@@ -22507,6 +22720,14 @@ declare module 'tdlib-types' {
     +reply_markup?: ReplyMarkup$Input,
     /** New location content of the message; pass null to stop sharing the live location */
     +location?: location$Input,
+    /**
+     * New time relative to the message send date, for which the location can be updated,
+     * in seconds. If 0x7FFFFFFF specified, then the location can be updated forever.
+     * Otherwise, must not exceed the current live_period by more than a day, and the
+     * live location expiration date must remain in the next 90 days. Pass 0 to keep
+     * the current live_period
+     */
+    +live_period?: number,
     /**
      * The new direction in which the location moves, in degrees; 1-360. Pass 0 if
      * unknown
@@ -22730,6 +22951,25 @@ declare module 'tdlib-types' {
     +hide_via_bot?: boolean,
   |}
 
+  declare export type addQuickReplyShortcutMessageAlbum = {|
+    /**
+     * Adds 2-10 messages grouped together into an album to a quick reply shortcut.
+     * Currently, only audio, document, photo and video messages can be grouped into
+     * an album. Documents and audio files can be only grouped in an album with messages
+     * of the same type. Returns sent messages
+     */
+    +_: 'addQuickReplyShortcutMessageAlbum',
+    /** Name of the target shortcut */
+    +shortcut_name?: string,
+    /**
+     * Identifier of a quick reply message in the same shortcut to be replied; pass
+     * 0 if none
+     */
+    +reply_to_message_id?: number,
+    /** Contents of messages to be sent. At most 10 messages can be added to an album */
+    +input_message_contents?: $ReadOnlyArray<InputMessageContent$Input>,
+  |}
+
   declare export type readdQuickReplyShortcutMessages = {|
     /**
      * Readds quick reply messages which failed to add. Can be called only for messages
@@ -22772,8 +23012,8 @@ declare module 'tdlib-types' {
 
   declare export type getForumTopicDefaultIcons = {|
     /**
-     * Returns list of custom emojis, which can be used as forum topic icon by all
-     * users
+     * Returns the list of custom emojis, which can be used as forum topic icon by
+     * all users
      */
     +_: 'getForumTopicDefaultIcons',
   |}
@@ -23288,6 +23528,11 @@ declare module 'tdlib-types' {
     +_: 'hideSuggestedAction',
     /** Suggested action to hide */
     +action?: SuggestedAction$Input,
+  |}
+
+  declare export type hideContactCloseBirthdays = {|
+    /** Hides the list of contacts that have close birthdays for 24 hours */
+    +_: 'hideContactCloseBirthdays',
   |}
 
   declare export type getBusinessConnection = {|
@@ -24756,8 +25001,8 @@ declare module 'tdlib-types' {
 
   declare export type getSavedNotificationSounds = {|
     /**
-     * Returns list of saved notification sounds. If a sound isn't in the list, then
-     * default sound needs to be used
+     * Returns the list of saved notification sounds. If a sound isn't in the list,
+     * then default sound needs to be used
      */
     +_: 'getSavedNotificationSounds',
   |}
@@ -24781,7 +25026,7 @@ declare module 'tdlib-types' {
   |}
 
   declare export type getChatNotificationSettingsExceptions = {|
-    /** Returns list of chats with non-default notification settings for new messages */
+    /** Returns the list of chats with non-default notification settings for new messages */
     +_: 'getChatNotificationSettingsExceptions',
     /**
      * If specified, only chats from the scope will be returned; pass null to return
@@ -24808,10 +25053,17 @@ declare module 'tdlib-types' {
     +notification_settings?: scopeNotificationSettings$Input,
   |}
 
+  declare export type setReactionNotificationSettings = {|
+    /** Changes notification settings for reactions */
+    +_: 'setReactionNotificationSettings',
+    /** The new notification settings for reactions */
+    +notification_settings?: reactionNotificationSettings$Input,
+  |}
+
   declare export type resetAllNotificationSettings = {|
     /**
-     * Resets all notification settings to their default values. By default, all chats
-     * are unmuted and message previews are shown
+     * Resets all chat and scope notification settings to their default values. By
+     * default, all chats are unmuted and message previews are shown
      */
     +_: 'resetAllNotificationSettings',
   |}
@@ -24914,7 +25166,7 @@ declare module 'tdlib-types' {
      */
     +from_story_full_id?: storyFullId$Input,
     /** Pass true to keep the story accessible after expiration */
-    +is_pinned?: boolean,
+    +is_posted_to_chat_page?: boolean,
     /**
      * Pass true if the content of the story must be protected from forwarding and
      * screenshotting
@@ -24955,12 +25207,12 @@ declare module 'tdlib-types' {
     +privacy_settings?: StoryPrivacySettings$Input,
   |}
 
-  declare export type toggleStoryIsPinned = {|
+  declare export type toggleStoryIsPostedToChatPage = {|
     /**
      * Toggles whether a story is accessible after expiration. Can be called only if
-     * story.can_toggle_is_pinned == true
+     * story.can_toggle_is_posted_to_chat_page == true
      */
-    +_: 'toggleStoryIsPinned',
+    +_: 'toggleStoryIsPostedToChatPage',
     /** Identifier of the chat that posted the story */
     +story_sender_chat_id?: number,
     /** Identifier of the story */
@@ -24969,7 +25221,7 @@ declare module 'tdlib-types' {
      * Pass true to make the story accessible after expiration; pass false to make
      * it private
      */
-    +is_pinned?: boolean,
+    +is_posted_to_chat_page?: boolean,
   |}
 
   declare export type deleteStory = {|
@@ -24985,7 +25237,7 @@ declare module 'tdlib-types' {
   |}
 
   declare export type getStoryNotificationSettingsExceptions = {|
-    /** Returns list of chats with non-default notification settings for stories */
+    /** Returns the list of chats with non-default notification settings for stories */
     +_: 'getStoryNotificationSettingsExceptions',
   |}
 
@@ -25017,18 +25269,20 @@ declare module 'tdlib-types' {
     +chat_id?: number,
   |}
 
-  declare export type getChatPinnedStories = {|
+  declare export type getChatPostedToChatPageStories = {|
     /**
-     * Returns the list of pinned stories posted by the given chat. The stories are
-     * returned in a reverse chronological order (i.e., in order of decreasing story_id).
-     * For optimal performance, the number of returned stories is chosen by TDLib
+     * Returns the list of stories that posted by the given chat to its chat page.
+     * If from_story_id == 0, then pinned stories are returned first. Then, stories
+     * are returned in a reverse chronological order (i.e., in order of decreasing
+     * story_id). For optimal performance, the number of returned stories is chosen
+     * by TDLib
      */
-    +_: 'getChatPinnedStories',
+    +_: 'getChatPostedToChatPageStories',
     /** Chat identifier */
     +chat_id?: number,
     /**
      * Identifier of the story starting from which stories must be returned; use 0
-     * to get results from the last story
+     * to get results from pinned and the newest story
      */
     +from_story_id?: number,
     /**
@@ -25060,6 +25314,22 @@ declare module 'tdlib-types' {
      * limit
      */
     +limit?: number,
+  |}
+
+  declare export type setChatPinnedStories = {|
+    /**
+     * Changes the list of pinned stories on a chat page; requires can_edit_stories
+     * right in the chat
+     */
+    +_: 'setChatPinnedStories',
+    /** Identifier of the chat that posted the stories */
+    +chat_id?: number,
+    /**
+     * New list of pinned stories. All stories must be posted to the chat page first.
+     * There can be up to getOption("pinned_story_count_max") pinned stories on a chat
+     * page
+     */
+    +story_ids?: $ReadOnlyArray<number>,
   |}
 
   declare export type openStory = {|
@@ -25219,8 +25489,8 @@ declare module 'tdlib-types' {
 
   declare export type getChatBoostLevelFeatures = {|
     /**
-     * Returns list of features available on the specific chat boost level; this is
-     * an offline request
+     * Returns the list of features available on the specific chat boost level; this
+     * is an offline request
      */
     +_: 'getChatBoostLevelFeatures',
     /**
@@ -25234,8 +25504,8 @@ declare module 'tdlib-types' {
 
   declare export type getChatBoostFeatures = {|
     /**
-     * Returns list of features available for different chat boost levels; this is
-     * an offline request
+     * Returns the list of features available for different chat boost levels; this
+     * is an offline request
      */
     +_: 'getChatBoostFeatures',
     /**
@@ -25291,8 +25561,8 @@ declare module 'tdlib-types' {
 
   declare export type getChatBoosts = {|
     /**
-     * Returns list of boosts applied to a chat; requires administrator rights in the
-     * chat
+     * Returns the list of boosts applied to a chat; requires administrator rights
+     * in the chat
      */
     +_: 'getChatBoosts',
     /** Identifier of the chat */
@@ -25316,7 +25586,7 @@ declare module 'tdlib-types' {
 
   declare export type getUserChatBoosts = {|
     /**
-     * Returns list of boosts applied to a chat by a given user; requires administrator
+     * Returns the list of boosts applied to a chat by a given user; requires administrator
      * rights in the chat; for bots only
      */
     +_: 'getUserChatBoosts',
@@ -25465,10 +25735,10 @@ declare module 'tdlib-types' {
   declare export type preliminaryUploadFile = {|
     /**
      * Preliminary uploads a file to the cloud before sending it in a message, which
-     * can be useful for uploading of being recorded voice and video notes. Updates
-     * updateFile will be used to notify about upload progress and successful completion
-     * of the upload. The file will not have a persistent remote identifier until it
-     * is sent in a message
+     * can be useful for uploading of being recorded voice and video notes. In all
+     * other cases there is no need to preliminary upload a file. Updates updateFile
+     * will be used to notify about upload progress. The upload will not be completed
+     * until the file is sent in a message
      */
     +_: 'preliminaryUploadFile',
     /** File to upload */
@@ -25760,7 +26030,7 @@ declare module 'tdlib-types' {
 
   declare export type getChatInviteLinkCounts = {|
     /**
-     * Returns list of chat administrators with number of their invite links. Requires
+     * Returns the list of chat administrators with number of their invite links. Requires
      * owner privileges in the chat
      */
     +_: 'getChatInviteLinkCounts',
@@ -26008,8 +26278,8 @@ declare module 'tdlib-types' {
 
   declare export type getVideoChatAvailableParticipants = {|
     /**
-     * Returns list of participant identifiers, on whose behalf a video chat in the
-     * chat can be joined
+     * Returns the list of participant identifiers, on whose behalf a video chat in
+     * the chat can be joined
      */
     +_: 'getVideoChatAvailableParticipants',
     /** Chat identifier */
@@ -26886,8 +27156,8 @@ declare module 'tdlib-types' {
 
   declare export type getCustomEmojiStickers = {|
     /**
-     * Returns list of custom emoji stickers by their identifiers. Stickers are returned
-     * in arbitrary order. Only found stickers are returned
+     * Returns the list of custom emoji stickers by their identifiers. Stickers are
+     * returned in arbitrary order. Only found stickers are returned
      */
     +_: 'getCustomEmojiStickers',
     /**
@@ -27121,6 +27391,20 @@ declare module 'tdlib-types' {
     +location?: location$Input,
   |}
 
+  declare export type toggleHasSponsoredMessagesEnabled = {|
+    /**
+     * Toggles whether the current user has sponsored messages enabled. The setting
+     * has no effect for users without Telegram Premium for which sponsored messages
+     * are always enabled
+     */
+    +_: 'toggleHasSponsoredMessagesEnabled',
+    /**
+     * Pass true to enable sponsored messages for the current user; false to disable
+     * them
+     */
+    +has_sponsored_messages_enabled?: boolean,
+  |}
+
   declare export type setBusinessLocation = {|
     /**
      * Changes the business location of the current user. Requires Telegram Business
@@ -27208,6 +27492,16 @@ declare module 'tdlib-types' {
      * push notification for the iOS application
      */
     +token?: string,
+  |}
+
+  declare export type reportPhoneNumberCodeMissing = {|
+    /**
+     * Reports that authentication code wasn't delivered via SMS to the specified phone
+     * number; for official mobile apps only
+     */
+    +_: 'reportPhoneNumberCodeMissing',
+    /** Current mobile network code */
+    +mobile_network_code?: string,
   |}
 
   declare export type resendPhoneNumberCode = {|
@@ -27365,8 +27659,8 @@ declare module 'tdlib-types' {
 
   declare export type getCommands = {|
     /**
-     * Returns list of commands supported by the bot for the given user scope and language;
-     * for bots only
+     * Returns the list of commands supported by the bot for the given user scope and
+     * language; for bots only
      */
     +_: 'getCommands',
     /**
@@ -28332,8 +28626,9 @@ declare module 'tdlib-types' {
     /** The reason why the account was deleted; optional */
     +reason?: string,
     /**
-     * The 2-step verification password of the current user. If not specified, account
-     * deletion can be canceled within one week
+     * The 2-step verification password of the current user. If the current user isn't
+     * authorized, then an empty string can be passed and account deletion can be canceled
+     * within one week
      */
     +password?: string,
   |}
@@ -28434,9 +28729,9 @@ declare module 'tdlib-types' {
 
   declare export type getChatRevenueTransactions = {|
     /**
-     * Returns list of revenue transactions for a chat. Currently, this method can
-     * be used only for channels if supergroupFullInfo.can_get_revenue_statistics ==
-     * true
+     * Returns the list of revenue transactions for a chat. Currently, this method
+     * can be used only for channels if supergroupFullInfo.can_get_revenue_statistics
+     * == true
      */
     +_: 'getChatRevenueTransactions',
     /** Chat identifier */
@@ -29361,7 +29656,10 @@ declare module 'tdlib-types' {
   |}
 
   declare export type getProxies = {|
-    /** Returns list of proxies that are currently set up. Can be called before authorization */
+    /**
+     * Returns the list of proxies that are currently set up. Can be called before
+     * authorization
+     */
     +_: 'getProxies',
   |}
 
@@ -29423,8 +29721,8 @@ declare module 'tdlib-types' {
 
   declare export type getLogTags = {|
     /**
-     * Returns list of available TDLib internal log tags, for example, ["actor", "binlog",
-     * "connections", "notifications", "proxy"]. Can be called synchronously
+     * Returns the list of available TDLib internal log tags, for example, ["actor",
+     * "binlog", "connections", "notifications", "proxy"]. Can be called synchronously
      */
     +_: 'getLogTags',
   |}
@@ -29621,6 +29919,8 @@ declare module 'tdlib-types' {
   declare export type AuthenticationCodeType =
     | authenticationCodeTypeTelegramMessage
     | authenticationCodeTypeSms
+    | authenticationCodeTypeSmsWord
+    | authenticationCodeTypeSmsPhrase
     | authenticationCodeTypeCall
     | authenticationCodeTypeFlashCall
     | authenticationCodeTypeMissedCall
@@ -29632,13 +29932,13 @@ declare module 'tdlib-types' {
 
   declare export type EmailAddressAuthenticationCodeInfo = emailAddressAuthenticationCodeInfo
 
-  /** Contains authentication data for a email address */
+  /** Contains authentication data for an email address */
   declare export type EmailAddressAuthentication$Input =
     | emailAddressAuthenticationCode$Input
     | emailAddressAuthenticationAppleId$Input
     | emailAddressAuthenticationGoogleId$Input
 
-  /** Describes reset state of a email address */
+  /** Describes reset state of an email address */
   declare export type EmailAddressResetState =
     | emailAddressResetStateAvailable
     | emailAddressResetStatePending
@@ -30003,14 +30303,6 @@ declare module 'tdlib-types' {
     | messageSourceScreenshot$Input
     | messageSourceOther$Input
 
-  /** Describes type of message sponsor */
-  declare export type MessageSponsorType =
-    | messageSponsorTypeBot
-    | messageSponsorTypeWebApp
-    | messageSponsorTypePublicChannel
-    | messageSponsorTypePrivateChannel
-    | messageSponsorTypeWebsite
-
   declare export type SponsoredMessages = sponsoredMessages
 
   /** Describes result of sponsored message report */
@@ -30036,6 +30328,18 @@ declare module 'tdlib-types' {
     | notificationSettingsScopeChannelChats$Input
 
   declare export type ScopeNotificationSettings = scopeNotificationSettings
+
+  /** Describes sources of reactions for which notifications will be shown */
+  declare export type ReactionNotificationSource =
+    | reactionNotificationSourceNone
+    | reactionNotificationSourceContacts
+    | reactionNotificationSourceAll
+
+  /** Describes sources of reactions for which notifications will be shown */
+  declare export type ReactionNotificationSource$Input =
+    | reactionNotificationSourceNone$Input
+    | reactionNotificationSourceContacts$Input
+    | reactionNotificationSourceAll$Input
 
   /** Describes the type of chat */
   declare export type ChatType =
@@ -30676,11 +30980,17 @@ declare module 'tdlib-types' {
 
   declare export type TrendingStickerSets = trendingStickerSets
 
+  /** Describes source of stickers for an emoji category */
+  declare export type EmojiCategorySource =
+    | emojiCategorySourceSearch
+    | emojiCategorySourcePremium
+
   declare export type EmojiCategories = emojiCategories
 
   /** Describes type of emoji category */
   declare export type EmojiCategoryType$Input =
     | emojiCategoryTypeDefault$Input
+    | emojiCategoryTypeRegularStickers$Input
     | emojiCategoryTypeEmojiStatus$Input
     | emojiCategoryTypeChatPhoto$Input
 
@@ -31752,6 +32062,7 @@ declare module 'tdlib-types' {
     | suggestedActionSubscribeToAnnualPremium
     | suggestedActionGiftPremiumForChristmas
     | suggestedActionSetBirthdate
+    | suggestedActionExtendPremium
 
   /** Describes an action suggested to the current user */
   declare export type SuggestedAction$Input =
@@ -31766,6 +32077,7 @@ declare module 'tdlib-types' {
     | suggestedActionSubscribeToAnnualPremium$Input
     | suggestedActionGiftPremiumForChristmas$Input
     | suggestedActionSetBirthdate$Input
+    | suggestedActionExtendPremium$Input
 
   declare export type Count = count
 
@@ -31916,6 +32228,7 @@ declare module 'tdlib-types' {
     | updateQuickReplyShortcutMessages
     | updateForumTopicInfo
     | updateScopeNotificationSettings
+    | updateReactionNotificationSettings
     | updateNotification
     | updateNotificationGroup
     | updateActiveNotifications
@@ -31974,6 +32287,7 @@ declare module 'tdlib-types' {
     | updateActiveEmojiReactions
     | updateDefaultReactionType
     | updateSavedMessagesTags
+    | updateChatRevenueAmount
     | updateSpeechRecognitionTrial
     | updateDiceEmojis
     | updateAnimatedEmojiMessageClicked
@@ -32054,6 +32368,7 @@ declare module 'tdlib-types' {
     | checkAuthenticationPasswordRecoveryCode
     | recoverAuthenticationPassword
     | sendAuthenticationFirebaseSms
+    | reportAuthenticationCodeMissing
     | checkAuthenticationBotToken
     | logOut
     | close
@@ -32105,6 +32420,7 @@ declare module 'tdlib-types' {
     | searchChats
     | searchChatsOnServer
     | searchChatsNearby
+    | getRecommendedChats
     | getChatSimilarChats
     | getChatSimilarChatCount
     | openChatSimilarChat
@@ -32195,6 +32511,7 @@ declare module 'tdlib-types' {
     | deleteQuickReplyShortcutMessages
     | addQuickReplyShortcutMessage
     | addQuickReplyShortcutInlineQueryResultMessage
+    | addQuickReplyShortcutMessageAlbum
     | readdQuickReplyShortcutMessages
     | editQuickReplyMessage
     | getForumTopicDefaultIcons
@@ -32237,6 +32554,7 @@ declare module 'tdlib-types' {
     | getPollVoters
     | stopPoll
     | hideSuggestedAction
+    | hideContactCloseBirthdays
     | getBusinessConnection
     | getLoginUrlInfo
     | getLoginUrl
@@ -32351,6 +32669,7 @@ declare module 'tdlib-types' {
     | getChatNotificationSettingsExceptions
     | getScopeNotificationSettings
     | setScopeNotificationSettings
+    | setReactionNotificationSettings
     | resetAllNotificationSettings
     | toggleChatIsPinned
     | setPinnedChats
@@ -32361,14 +32680,15 @@ declare module 'tdlib-types' {
     | sendStory
     | editStory
     | setStoryPrivacySettings
-    | toggleStoryIsPinned
+    | toggleStoryIsPostedToChatPage
     | deleteStory
     | getStoryNotificationSettingsExceptions
     | loadActiveStories
     | setChatActiveStoriesList
     | getChatActiveStories
-    | getChatPinnedStories
+    | getChatPostedToChatPageStories
     | getChatArchivedStories
+    | setChatPinnedStories
     | openStory
     | closeStory
     | getStoryAvailableReactions
@@ -32540,6 +32860,7 @@ declare module 'tdlib-types' {
     | setPersonalChat
     | setEmojiStatus
     | setLocation
+    | toggleHasSponsoredMessagesEnabled
     | setBusinessLocation
     | setBusinessOpeningHours
     | setBusinessGreetingMessageSettings
@@ -32547,6 +32868,7 @@ declare module 'tdlib-types' {
     | setBusinessStartPage
     | sendPhoneNumberCode
     | sendPhoneNumberFirebaseSms
+    | reportPhoneNumberCodeMissing
     | resendPhoneNumberCode
     | checkPhoneNumberCode
     | getBusinessConnectedBot
@@ -32789,6 +33111,7 @@ declare module 'tdlib-types' {
     checkAuthenticationPasswordRecoveryCode: Ok,
     recoverAuthenticationPassword: Ok,
     sendAuthenticationFirebaseSms: Ok,
+    reportAuthenticationCodeMissing: Ok,
     checkAuthenticationBotToken: Ok,
     logOut: Ok,
     close: Ok,
@@ -32840,6 +33163,7 @@ declare module 'tdlib-types' {
     searchChats: Chats,
     searchChatsOnServer: Chats,
     searchChatsNearby: ChatsNearby,
+    getRecommendedChats: Chats,
     getChatSimilarChats: Chats,
     getChatSimilarChatCount: Count,
     openChatSimilarChat: Ok,
@@ -32930,6 +33254,7 @@ declare module 'tdlib-types' {
     deleteQuickReplyShortcutMessages: Ok,
     addQuickReplyShortcutMessage: QuickReplyMessage,
     addQuickReplyShortcutInlineQueryResultMessage: QuickReplyMessage,
+    addQuickReplyShortcutMessageAlbum: QuickReplyMessages,
     readdQuickReplyShortcutMessages: QuickReplyMessages,
     editQuickReplyMessage: Ok,
     getForumTopicDefaultIcons: Stickers,
@@ -32972,6 +33297,7 @@ declare module 'tdlib-types' {
     getPollVoters: MessageSenders,
     stopPoll: Ok,
     hideSuggestedAction: Ok,
+    hideContactCloseBirthdays: Ok,
     getBusinessConnection: BusinessConnection,
     getLoginUrlInfo: LoginUrlInfo,
     getLoginUrl: HttpUrl,
@@ -33086,6 +33412,7 @@ declare module 'tdlib-types' {
     getChatNotificationSettingsExceptions: Chats,
     getScopeNotificationSettings: ScopeNotificationSettings,
     setScopeNotificationSettings: Ok,
+    setReactionNotificationSettings: Ok,
     resetAllNotificationSettings: Ok,
     toggleChatIsPinned: Ok,
     setPinnedChats: Ok,
@@ -33096,14 +33423,15 @@ declare module 'tdlib-types' {
     sendStory: Story,
     editStory: Ok,
     setStoryPrivacySettings: Ok,
-    toggleStoryIsPinned: Ok,
+    toggleStoryIsPostedToChatPage: Ok,
     deleteStory: Ok,
     getStoryNotificationSettingsExceptions: Chats,
     loadActiveStories: Ok,
     setChatActiveStoriesList: Ok,
     getChatActiveStories: ChatActiveStories,
-    getChatPinnedStories: Stories,
+    getChatPostedToChatPageStories: Stories,
     getChatArchivedStories: Stories,
+    setChatPinnedStories: Ok,
     openStory: Ok,
     closeStory: Ok,
     getStoryAvailableReactions: AvailableReactions,
@@ -33275,6 +33603,7 @@ declare module 'tdlib-types' {
     setPersonalChat: Ok,
     setEmojiStatus: Ok,
     setLocation: Ok,
+    toggleHasSponsoredMessagesEnabled: Ok,
     setBusinessLocation: Ok,
     setBusinessOpeningHours: Ok,
     setBusinessGreetingMessageSettings: Ok,
@@ -33282,6 +33611,7 @@ declare module 'tdlib-types' {
     setBusinessStartPage: Ok,
     sendPhoneNumberCode: AuthenticationCodeInfo,
     sendPhoneNumberFirebaseSms: Ok,
+    reportPhoneNumberCodeMissing: Ok,
     resendPhoneNumberCode: AuthenticationCodeInfo,
     checkPhoneNumberCode: Ok,
     getBusinessConnectedBot: BusinessConnectedBot,
@@ -33525,6 +33855,7 @@ declare module 'tdlib-types' {
     checkAuthenticationPasswordRecoveryCode: checkAuthenticationPasswordRecoveryCode,
     recoverAuthenticationPassword: recoverAuthenticationPassword,
     sendAuthenticationFirebaseSms: sendAuthenticationFirebaseSms,
+    reportAuthenticationCodeMissing: reportAuthenticationCodeMissing,
     checkAuthenticationBotToken: checkAuthenticationBotToken,
     logOut: logOut,
     close: close,
@@ -33576,6 +33907,7 @@ declare module 'tdlib-types' {
     searchChats: searchChats,
     searchChatsOnServer: searchChatsOnServer,
     searchChatsNearby: searchChatsNearby,
+    getRecommendedChats: getRecommendedChats,
     getChatSimilarChats: getChatSimilarChats,
     getChatSimilarChatCount: getChatSimilarChatCount,
     openChatSimilarChat: openChatSimilarChat,
@@ -33666,6 +33998,7 @@ declare module 'tdlib-types' {
     deleteQuickReplyShortcutMessages: deleteQuickReplyShortcutMessages,
     addQuickReplyShortcutMessage: addQuickReplyShortcutMessage,
     addQuickReplyShortcutInlineQueryResultMessage: addQuickReplyShortcutInlineQueryResultMessage,
+    addQuickReplyShortcutMessageAlbum: addQuickReplyShortcutMessageAlbum,
     readdQuickReplyShortcutMessages: readdQuickReplyShortcutMessages,
     editQuickReplyMessage: editQuickReplyMessage,
     getForumTopicDefaultIcons: getForumTopicDefaultIcons,
@@ -33708,6 +34041,7 @@ declare module 'tdlib-types' {
     getPollVoters: getPollVoters,
     stopPoll: stopPoll,
     hideSuggestedAction: hideSuggestedAction,
+    hideContactCloseBirthdays: hideContactCloseBirthdays,
     getBusinessConnection: getBusinessConnection,
     getLoginUrlInfo: getLoginUrlInfo,
     getLoginUrl: getLoginUrl,
@@ -33822,6 +34156,7 @@ declare module 'tdlib-types' {
     getChatNotificationSettingsExceptions: getChatNotificationSettingsExceptions,
     getScopeNotificationSettings: getScopeNotificationSettings,
     setScopeNotificationSettings: setScopeNotificationSettings,
+    setReactionNotificationSettings: setReactionNotificationSettings,
     resetAllNotificationSettings: resetAllNotificationSettings,
     toggleChatIsPinned: toggleChatIsPinned,
     setPinnedChats: setPinnedChats,
@@ -33832,14 +34167,15 @@ declare module 'tdlib-types' {
     sendStory: sendStory,
     editStory: editStory,
     setStoryPrivacySettings: setStoryPrivacySettings,
-    toggleStoryIsPinned: toggleStoryIsPinned,
+    toggleStoryIsPostedToChatPage: toggleStoryIsPostedToChatPage,
     deleteStory: deleteStory,
     getStoryNotificationSettingsExceptions: getStoryNotificationSettingsExceptions,
     loadActiveStories: loadActiveStories,
     setChatActiveStoriesList: setChatActiveStoriesList,
     getChatActiveStories: getChatActiveStories,
-    getChatPinnedStories: getChatPinnedStories,
+    getChatPostedToChatPageStories: getChatPostedToChatPageStories,
     getChatArchivedStories: getChatArchivedStories,
+    setChatPinnedStories: setChatPinnedStories,
     openStory: openStory,
     closeStory: closeStory,
     getStoryAvailableReactions: getStoryAvailableReactions,
@@ -34011,6 +34347,7 @@ declare module 'tdlib-types' {
     setPersonalChat: setPersonalChat,
     setEmojiStatus: setEmojiStatus,
     setLocation: setLocation,
+    toggleHasSponsoredMessagesEnabled: toggleHasSponsoredMessagesEnabled,
     setBusinessLocation: setBusinessLocation,
     setBusinessOpeningHours: setBusinessOpeningHours,
     setBusinessGreetingMessageSettings: setBusinessGreetingMessageSettings,
@@ -34018,6 +34355,7 @@ declare module 'tdlib-types' {
     setBusinessStartPage: setBusinessStartPage,
     sendPhoneNumberCode: sendPhoneNumberCode,
     sendPhoneNumberFirebaseSms: sendPhoneNumberFirebaseSms,
+    reportPhoneNumberCodeMissing: reportPhoneNumberCodeMissing,
     resendPhoneNumberCode: resendPhoneNumberCode,
     checkPhoneNumberCode: checkPhoneNumberCode,
     getBusinessConnectedBot: getBusinessConnectedBot,
