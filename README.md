@@ -14,7 +14,7 @@ TDLib version 1.8.0 or newer is required.
 - [API](#api)
 - [Types](#types)
 - [Other JavaScript runtimes](#other-javascript-runtimes)
-- [Possible errors](#possible-errors)
+- [Troubleshooting](#troubleshooting)
 
 <a name="requirements"></a>
 ## Requirements
@@ -485,8 +485,12 @@ implemented basic browser support as well, but the idea has been dropped.
 [deno]: https://deno.com/
 [tdweb]: https://www.npmjs.com/package/tdweb
 
-<a name="possible-errors"></a>
-## Possible errors
+<a name="troubleshooting"></a>
+## Troubleshooting
+
+Some of the possible errors include:
+
+<div align="right"><a name="not-found-error" href="#not-found-error">#</a></div>
 
 - `Dynamic Loading Error: Win32 error 126` (Windows)
 - `Dynamic Loading Error: dlopen(…) image not found` (macOS)
@@ -502,11 +506,16 @@ Recheck the documentation of [dlopen][] (Linux), [dlopen][dlopen-macos] (macOS),
 library is present in the search paths. By default, Linux does not search in the
 current working directory, while macOS does.
 
+With `prebuilt-tdlib`, everything should work out of the box (on supported
+systems).
+
 [dllso]: https://docs.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-search-order#standard-search-order-for-desktop-applications
 [dlopen-macos]: https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/dlopen.3.html
 
 [dlopen]: https://www.man7.org/linux/man-pages/man3/dlopen.3.html
 [LoadLibraryW]: https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryw
+
+<div align="right"><a name="filepath-spaces-error" href="#filepath-spaces-error">#</a></div>
 
 - `fatal error: napi.h: no such file or directory`
 - `error: no such file or directory: …/node-modules/node-addon-api`
@@ -514,6 +523,20 @@ current working directory, while macOS does.
 The path to the directory where you execute `npm install` likely contains
 spaces, which is not supported by gyp:
 https://github.com/nodejs/node-gyp/issues/65#issuecomment-368820565.
+
+<div align="right"><a name="tdjson-already-loaded-error" href="#tdjson-already-loaded-error">#</a></div>
+
+- `tdjson is already loaded`
+
+If you use `node:worker_threads`, there are some caveats. `tdl` with the new
+tdjson interface can be used in only one thread. With the old tdjson interface,
+i.e. `tdl.configure({ useOldTdjsonInterface: true })`, it is indeed possible to
+use `tdl` in multiple worker threads, however `tdjson` and `libdir` options of
+`tdl.configure` will be ignored on subsequent tdl initializations. You might
+also want to set `tdl.configure({ verbosityLevel: 'default' })` so the verbosity
+level is set only once. The client should not be shared to other threads.
+
+<div align="right"><a name="openssl-symbols-error" href="#openssl-symbols-error">#</a></div>
 
 - `Error while reading RSA public key`
 
@@ -578,17 +601,9 @@ time Node.js updates the OpenSSL dependency.
 This issue doesn't apply to Electron because it doesn't export the OpenSSL
 symbols.
 
+<div align="right"><a name="segfault-error" href="#segfault-error">#</a></div>
+
 - Segmentation fault
 
 The cause of the segfault might be the same as above. If you get segmentation
 faults, open an issue.
-
-- tdjson is already loaded
-
-If you use `node:worker_threads`, there are some caveats. `tdl` with the new
-tdjson interface can be used in only one thread. With the old tdjson interface,
-i.e. `tdl.configure({ useOldTdjsonInterface: true })`, it is indeed possible to
-use `tdl` in multiple worker threads, however `tdjson` and `libdir` options of
-`tdl.configure` will be ignored on subsequent tdl initializations. You might
-also want to set `tdl.configure({ verbosityLevel: 'default' })` so the verbosity
-level is set only once. The client should not be shared to other threads.
