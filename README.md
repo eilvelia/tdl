@@ -398,7 +398,7 @@ Close the TDLib client.
 await client.close()
 ```
 
-#### `tdl.execute(query: Object) => (Object | null)`
+#### `tdl.execute(query: Object) => Object`
 
 Call a TDLib method synchronously. This function can be used only with the
 methods marked as "can be called synchronously" in the TDLib documentation.
