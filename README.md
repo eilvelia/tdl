@@ -582,3 +582,13 @@ symbols.
 
 The cause of the segfault might be the same as above. If you get segmentation
 faults, open an issue.
+
+- tdjson is already loaded
+
+If you use `node:worker_threads`, there are some caveats. `tdl` with the new
+tdjson interface can be used in only one thread. With the old tdjson interface,
+i.e. `tdl.configure({ useOldTdjsonInterface: true })`, it is indeed possible to
+use `tdl` in multiple worker threads, however `tdjson` and `libdir` options of
+`tdl.configure` will be ignored on subsequent tdl initializations. You might
+also want to set `tdl.configure({ verbosityLevel: 'default' })` so the verbosity
+level is set only once. The client should not be shared to other threads.

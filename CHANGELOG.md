@@ -38,6 +38,8 @@
   `destroy` event is renamed to `close`.
 - `client.off` now returns `boolean` instead of `void`; the `once` parameter is
   removed. (The `eventemitter3` dependency is also dropped.)
+- The old tdjson interface should work in multiple threads
+  of `node:worker_threads` now.
 - Internal: The `tdl` client code was rewritten to TypeScript.
 
 ## Unreleased tdl-install-types@0.2.0

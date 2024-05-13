@@ -17,10 +17,10 @@
 
 #ifdef RTLD_DEEPBIND
 #  pragma message("Using RTLD_DEEPBIND")
-#  define DLOPEN(FILE) dlopen(FILE, RTLD_LAZY | RTLD_LOCAL | RTLD_DEEPBIND);
+#  define DLOPEN(FILE) dlopen(FILE, RTLD_LAZY | RTLD_LOCAL | RTLD_DEEPBIND)
 #else
 #  pragma message("Using standard dlopen")
-#  define DLOPEN(FILE) dlopen(FILE, RTLD_LAZY | RTLD_LOCAL);
+#  define DLOPEN(FILE) dlopen(FILE, RTLD_LAZY | RTLD_LOCAL)
 #endif
 
 typedef void * (*td_json_client_create_t)();
@@ -205,7 +205,7 @@ namespace Tdo {
 namespace Tdn {
   static ReceiveWorker *worker = nullptr;
 
-  // Set the receive timeout explicitly.
+  // Create the worker and set the receive timeout explicitly.
   void Init(const Napi::CallbackInfo& info) {
     Napi::Env env = info.Env();
     if (worker != nullptr)
@@ -340,27 +340,27 @@ namespace TdCallbacks {
   F = (F##_t) dlsym(handle, #F); \
   if ((dlsym_err_cstr = dlerror()) != nullptr) { \
     std::string dlsym_err(dlsym_err_cstr); \
-    FAIL("Failed to get " #F ": " + dlsym_err); \
+    FAIL("Failed to get " #F ": " + dlsym_err, Napi::Value()); \
   } \
   if (F == nullptr) { \
-    FAIL("Failed to get " #F " (null)"); \
+    FAIL("Failed to get " #F " (null)", Napi::Value()); \
   }
 
 // #define FINDFUNC_OPT(F) \
 //   F = (F##_t) dlsym(handle, #F); \
 //   dlerror();
 
-void LoadTdjson(const Napi::CallbackInfo& info) {
+Napi::Value LoadTdjson(const Napi::CallbackInfo& info) {
   Napi::Env env = info.Env();
-  if (td_create_client_id != nullptr)
-    FAIL("tdjson is already loaded")
+  if (td_create_client_id != nullptr) // Already loaded
+    return Napi::Boolean::New(env, false);
   std::string library_file = info[0].As<Napi::String>().Utf8Value();
   dlerror(); // Clear errors
   void *handle = DLOPEN(library_file.c_str());
   char *dlopen_err_cstr = dlerror();
   if (handle == nullptr) {
     std::string dlopen_err(dlopen_err_cstr == nullptr ? "NULL" : dlopen_err_cstr);
-    FAIL("Dynamic Loading Error: " + dlopen_err);
+    FAIL("Dynamic Loading Error: " + dlopen_err, Napi::Value());
   }
   char *dlsym_err_cstr;
   FINDFUNC(td_json_client_create);
@@ -368,11 +368,12 @@ void LoadTdjson(const Napi::CallbackInfo& info) {
   FINDFUNC(td_json_client_receive);
   FINDFUNC(td_json_client_execute);
   FINDFUNC(td_json_client_destroy);
-  FINDFUNC(td_set_log_message_callback);
   FINDFUNC(td_create_client_id);
   FINDFUNC(td_send);
   FINDFUNC(td_receive);
   FINDFUNC(td_execute);
+  FINDFUNC(td_set_log_message_callback);
+  return Napi::Boolean::New(env, true);
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {

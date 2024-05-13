@@ -37,9 +37,11 @@ export type Tdjson = {
   ): void
 }
 
-export function loadAddon (libraryFile: string): Tdjson {
+export function loadAddon (libraryFile: string, ignoreAlreadyLoaded = false): Tdjson {
   const addon: any = nodeGypBuild(packageDir)
-  addon.loadTdjson(libraryFile)
+  const success = addon.loadTdjson(libraryFile)
+  if (!success && !ignoreAlreadyLoaded)
+    throw new Error('tdjson is already loaded')
   return {
     tdold: {
       create: addon.tdoCreate,

@@ -47,7 +47,7 @@ export function init (): void {
   if (tdjsonAddon != null) return
   debug('Initializing the node addon')
   const lib = path.join(cfg.libdir, cfg.tdjson)
-  tdjsonAddon = loadAddon(lib)
+  tdjsonAddon = loadAddon(lib, cfg.useOldTdjsonInterface)
   if (cfg.verbosityLevel !== 'default') {
     debug('Executing setLogVerbosityLevel', cfg.verbosityLevel)
     const request = JSON.stringify({
