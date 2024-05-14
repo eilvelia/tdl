@@ -32,7 +32,7 @@ $ npm install prebuilt-tdlib@td-1.8.29
 `$ npm info prebuilt-tdlib dist-tags` to get the list of available versions.
 
 The TDLib version is important: there is no backward compatibility and the
-interface you use can considerably change after an update.
+interface you use may significantly change after an update.
 
 ## Usage
 
@@ -64,7 +64,7 @@ or programming language.
 ## Versioning conventions
 
 > This information is present mostly for maintaining `prebuilt-tdlib`,
-> it is not necessary for using this package.
+> it is not strictly necessary for using this package.
 
 Because TDLib does not follow SemVer, not to require the users to manually
 specify the exact version of `prebuilt-tdlib` in their `package.json`, the TDLib
@@ -88,26 +88,25 @@ install the needed version of `prebuilt-tdlib`.
 
 The releases of the `prebuilt-tdlib` npm package are not git-tagged.
 
-Additionaly, TDLib's releasing process is unusual, and the updates generally do
-not have a specific git-tagged release. Most `prebuilt-tdlib` releases are not
-connected to a tag release in the TDLib repository. Usually, the prebuilt
-packages are generated based on the "Update version to x.y.z." TDLib commits
-([example][commit-example]). Otherwise, the commit hash is indicated in the list
-below.
+Additionally, TDLib's releasing process is [unusual][], and most
+`prebuilt-tdlib` releases are not connected to any tag release in the TDLib
+repository. Usually, the prebuilt packages are generated based on the "Update
+version to x.y.z." TDLib commits ([example][commit-example]). Otherwise, the
+commit hash is indicated in the table below.
 
+[unusual]: https://github.com/tdlib/td/issues/2215
 [commit-example]: https://github.com/tdlib/td/commit/b3b63bbdc14dc377d2de6b78e5844fec1564f95d
 
 ## prebuilt-tdlib versions
 
 - [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/latest.svg)](https://www.npmjs.com/package/prebuilt-tdlib)
-- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/stable.svg)](https://www.npmjs.com/package/prebuilt-tdlib)
+- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/tagged.svg)](https://www.npmjs.com/package/prebuilt-tdlib)
 
 For the always up-to-date list, check `npm info prebuilt-tdlib dist-tags`.
 
 Or, for all ever published versions, see `npm info prebuilt-tdlib versions`.
 
-An incomplete list is available below (mostly exceptions or "stable" / notable
-versions):
+An incomplete list is available below (mostly exceptions or "notable" versions):
 
 | npm tag | notes |
 | ------- | ----- |
@@ -124,7 +123,7 @@ Changes to the building process of `prebuilt-tdlib` are noted below.
 
 ### 2024-05-08
 
-First published as `prebuil-tdlib@td-1.8.29`.
+First published as `prebuilt-tdlib@td-1.8.29`.
 
 - Added a `tdlib: { commit: ..., version: ... }` field to `package.json`. This
   allows to query information using `npm info prebuilt-tdlib tdlib.commit`, for
