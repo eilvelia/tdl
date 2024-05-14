@@ -68,6 +68,7 @@ public:
     {
       std::lock_guard<std::mutex> lock(mutex);
       stop = true;
+      ready = true;
     }
     cv.notify_all();
     if (client != nullptr)
@@ -76,22 +77,21 @@ public:
       thread.join();
   }
 
+  // A task can be added only after the previous task is finished.
   Napi::Promise NewTask(const Napi::Env& env) {
-    // A task can be added only after the previous task is finished.
-    auto new_deferred = std::make_unique<Napi::Promise::Deferred>(env);
-    auto promise = new_deferred->Promise();
-    if (working) {
+    if (deferred != nullptr) {
       auto error = Napi::Error::New(env, "receive is not finished yet");
-      new_deferred->Reject(error.Value());
-      return promise;
+      auto fail_deferred = Napi::Promise::Deferred::New(env);
+      fail_deferred.Reject(error.Value());
+      return fail_deferred.Promise();
     }
-    working = true;
+    deferred = std::make_unique<Napi::Promise::Deferred>(env);
     {
       std::lock_guard<std::mutex> lock(mutex);
-      deferred = std::move(new_deferred);
+      ready = true;
     }
     cv.notify_all();
-    return promise;
+    return deferred->Promise();
   }
 
   void Ref(const Napi::Env& env) { tsfn.Ref(env); }
@@ -99,54 +99,45 @@ public:
   inline void * GetClient() { return client; }
 private:
   using TsfnCtx = ReceiveWorker;
-  struct TsfnData {
-    std::unique_ptr<Napi::Promise::Deferred> deferred;
-    const char *response; // can be nullptr
-  };
   // Called on the main thread
-  static void CallJs(Napi::Env env, Napi::Function, TsfnCtx *ctx, TsfnData *data) {
-    if (data == nullptr) return;
-    if (env != nullptr) {
-      auto val = data->response == nullptr
-        ? env.Null()
-        : Napi::String::New(env, data->response);
-      if (ctx != nullptr)
-        ctx->working = false;
-      // Note that this can potentially yield to the JS code (it does in deno)
-      data->deferred->Resolve(val);
+  static void CallJs(Napi::Env env, Napi::Function, TsfnCtx *ctx, char *data) {
+    if (env != nullptr && ctx != nullptr) {
+      const char *res = data;
+      auto val = res == nullptr ? env.Null() : Napi::String::New(env, res);
+      auto deferred = std::move(ctx->deferred);
+      // Note that this can potentially execute the JS code (it does in deno)
+      deferred->Resolve(val);
       // ctx may not exist anymore
     }
-    delete data;
   }
-  using Tsfn = Napi::TypedThreadSafeFunction<TsfnCtx, TsfnData, CallJs>;
+  using Tsfn = Napi::TypedThreadSafeFunction<TsfnCtx, char, CallJs>;
 
   void loop() {
     while (true) {
       std::unique_lock<std::mutex> lock(mutex);
-      cv.wait(lock, [this] { return deferred != nullptr || stop; });
+      cv.wait(lock, [this] { return ready; });
       if (stop) break;
+      ready = false;
+      lock.unlock();
       const char *response = client == nullptr
         ? td_receive(timeout)
         : td_json_client_receive(client, timeout);
       // TDLib stores the response in thread-local storage that is deallocated
       // on execute() and receive(). Since we never call execute() in this
       // thread, it should be safe not to copy the response here.
-      auto data = new TsfnData { std::move(deferred), response };
-      deferred = nullptr;
-      auto status = tsfn.NonBlockingCall(data);
-      if (status != napi_ok)
-        delete data;
+      tsfn.NonBlockingCall(const_cast<char *>(response));
     }
     tsfn.Release();
-    // NOTE: If this thread is not calling receive anymore, the last response
-    // (if not null) probably will stay to be allocated forever.
+    // NOTE: Given that this thread is not calling receive anymore, the last
+    // response (if not null) probably will stay to be allocated forever. That
+    // should not be a big deal.
   }
 
   void *client;
   double timeout;
   Tsfn tsfn;
-  bool working {false};
   std::unique_ptr<Napi::Promise::Deferred> deferred;
+  bool ready {false};
   bool stop {false};
   std::mutex mutex;
   std::condition_variable cv;
