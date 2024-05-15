@@ -113,8 +113,8 @@ private:
   using Tsfn = Napi::TypedThreadSafeFunction<TsfnCtx, char, CallJs>;
 
   void loop() {
+    std::unique_lock<std::mutex> lock(mutex);
     while (true) {
-      std::unique_lock<std::mutex> lock(mutex);
       cv.wait(lock, [this] { return ready; });
       if (stop) break;
       ready = false;
@@ -125,6 +125,7 @@ private:
       // TDLib stores the response in thread-local storage that is deallocated
       // on execute() and receive(). Since we never call execute() in this
       // thread, it should be safe not to copy the response here.
+      lock.lock();
       tsfn.NonBlockingCall(const_cast<char *>(response));
     }
     tsfn.Release();
