@@ -1,6 +1,6 @@
-import { describe, expect, test, beforeAll, afterAll } from 'vitest'
+import { expect, test, beforeAll, afterAll } from 'vitest'
 import * as path from 'node:path'
-import * as tdl from '../../packages/tdl'
+import * as tdl from 'tdl'
 import type * as Td from 'tdlib-types'
 
 const projectRoot = path.join(__dirname, '..', '..')
@@ -22,14 +22,10 @@ if (process.env.PREBUILT_PATH) {
   tdl.configure({ tdjson: require('prebuilt-tdlib').getTdjson() })
 }
 
-let testName = 'tdl + tdjson'
+export function addTests (oldTdjson: boolean = false) {
+  if (oldTdjson)
+    tdl.configure({ useOldTdjsonInterface: true })
 
-if (process.env.TEST_OLD_TDJSON === '1') {
-  testName += ' (useOldTdjsonInterface = true)'
-  tdl.configure({ useOldTdjsonInterface: true })
-}
-
-describe(testName, () => {
   const client = tdl.createBareClient()
   const updates: Td.Update[] = []
 
@@ -110,4 +106,4 @@ describe(testName, () => {
     const response = client.execute({ _: 'getTextEntities', text: 'hi @mybot' })
     expect(response).toMatchObject({ _: 'textEntities' })
   })
-})
+}
