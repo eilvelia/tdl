@@ -544,6 +544,8 @@ export class Client {
 
   login = (arg: LoginDetails | (() => LoginDetails) = {}): Promise<void> => {
     return new Promise((resolve, reject) => {
+      if (this._client.val == null)
+        return reject(new Error('The client is closed'))
       let loginDetails: StrictLoginDetails | null = null
       function needLoginDetails (l: StrictLoginDetails | null): asserts l is StrictLoginDetails {
         if (l == null && loginDetails == null) {
