@@ -30,7 +30,7 @@
     "node-gyp": "^10.0.1"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=16.14.0"
   },
   "author": "Bannerets <comonoid@protonmail.com> (https://github.com/Bannerets)",
   "license": "MIT",
