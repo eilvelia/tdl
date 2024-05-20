@@ -26,9 +26,6 @@
     "node-addon-api": "^7.1.0",
     "node-gyp-build": "^4.8.1"
   },
-  "devDependencies": {
-    "node-gyp": "^10.0.1"
-  },
   "engines": {
     "node": ">=16.14.0"
   },
