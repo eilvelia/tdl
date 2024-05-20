@@ -80,9 +80,9 @@ export interface Client {
    * Set up an update handler that will log you in to your Telegram account. The
    * promise resolves in case the account is successfully authenticated. By
    * default, this asks for the credentials in the console; that can be
-   * overrided by passing the callbacks. `login` supports only a subset of
-   * available authentication methods. If a function is passed as
+   * overrided by passing the callbacks. If a function is passed as
    * `loginDetails`, it will not be called unless any of the handlers trigger.
+   * `login` supports only a subset of available authentication methods.
    */
   login(loginDetails?: LoginDetails | (() => LoginDetails)): Promise<void>;
   /**
@@ -113,15 +113,16 @@ export interface Client {
    * Attach an event listener. This function can be used to iterate through
    * updates. Possible events: `update`, `error`, `close`.
    *
-   * The `error` event can fire if exceptions were thrown in the `on` handlers,
-   * an error occured during the initialization `setTdlibParameters` phase
-   * (e.g. if some of the options are incorrect), or potentially in case of an
-   * internal tdl error.
+   * The `error` event fires in case an exception is thrown in the `update` or
+   * `close` handlers, an error occured during the initialization
+   * `setTdlibParameters` phase (e.g. if some of the client options are
+   * incorrect), or potentially in case of some internal tdl error.
    */
   on: On;
   /**
-   * Attach a one-time event listener. The listener is removed after it is
-   * called. A single function cannot be reused for both `on` and `once`.
+   * Same as `client.on`, but attaches a one-time event listener instead. The
+   * listener is removed after it is called. A single function cannot be reused
+   * for both `on` and `once`.
    */
   once: On;
   /**
@@ -151,6 +152,9 @@ export interface Client {
   /**
    * Close the client. This sends `{ _: 'close' }` and waits for
    * `authorizationStateClosed`.
+   *
+   * There are also other methods to close the TDLib instance, namely
+   * `client.invoke({ _: 'logOut' })` and `client.invoke({ _: 'destroy' })`.
    */
   close(): Promise<void>;
   /**
