@@ -119,7 +119,7 @@ export type Off =
   & ((event: 'error', listener: (...args: any[]) => any) => boolean)
   & ((event: 'close', listener: (...args: any[]) => any) => boolean)
 
-export type ManagingOptions = {
+export type ManagingParameters = {
   useOldTdjsonInterface: boolean,
   receiveTimeout: number,
   bare: boolean,
@@ -163,7 +163,7 @@ export class Client {
 
   constructor (
     tdjson: Tdjson,
-    managing: ManagingOptions,
+    managing: ManagingParameters,
     options: ClientOptions = {},
   ) {
     this._options = mergeDeepRight(defaultOptions, options)
