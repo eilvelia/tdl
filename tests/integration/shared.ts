@@ -46,7 +46,14 @@ export function addTests (oldTdjson: boolean = false) {
     return expectUpdate(u => u._ === 'updateOption' && u.name === 'version')
   }, 2000)
 
-  afterAll(() => client.close())
+  afterAll(async () => {
+    await client.close()
+    expect(client.isClosed()).toBe(true)
+  })
+
+  test('The client should not be closed', () => {
+    expect(client.isClosed()).toBe(false)
+  })
 
   test('authorizationStateWaitTdlibParameters has been received', () => {
     return expectUpdate(u => u._ === 'updateAuthorizationState'

@@ -716,4 +716,8 @@ export class Client {
         : Promise.resolve(typeof token === 'string' ? token : token())
     })
   }
+
+  isClosed = (): boolean => {
+    return this._client.val == null
+  }
 }

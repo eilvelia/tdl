@@ -162,6 +162,12 @@ export interface Client {
    * exception if the version (the `updateOption` update) is not (yet) received.
    */
   getVersion(): string;
+  /**
+   * Test whether the client is closed (that is, `authorizationStateClosed` has
+   * been received, and the TDLib client does not exist anymore). When true,
+   * it is no longer possible to send requests or receive updates.
+   */
+  isClosed(): boolean;
   /** Emit an event. For advanced use only. */
   emit: Emit;
 }

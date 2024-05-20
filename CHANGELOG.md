@@ -26,6 +26,7 @@
 - The TDLib errors are now wrapped in a new `TDLibError` class; `TdlError`
   is removed and replaced with `UnknownError`.
 - Changed the default verbosity level from 2 to 1.
+- Added `client.isClosed()`.
 - Removed deprecated client options: `receiveTimeout`, `useDefaultVerbosityLevel`,
   `disableAuth`, `useMutableRename`, `verbosityLevel`.
 - Removed the `bare` client option. `tdl.createBareClient(): Client` is added
