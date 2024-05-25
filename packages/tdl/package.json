@@ -37,7 +37,8 @@
     "tdlib",
     "tglib",
     "bindings",
-    "node-addon"
+    "node-addon",
+    "backend"
   ],
   "repository": {
     "type": "git",
