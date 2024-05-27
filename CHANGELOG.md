@@ -40,6 +40,7 @@
   removed. (The `eventemitter3` dependency is also dropped.)
 - The old tdjson interface should work in multiple threads of
   `node:worker_threads` now.
+- Now published with `--provenance`.
 - Internal: The `tdl` client code was rewritten in TypeScript.
 
 ## Unreleased tdl-install-types@0.2.0

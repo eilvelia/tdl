@@ -23,9 +23,6 @@ jobs:
         with:
           node-version: lts/*
           cache: npm
-      - name: Python dependencies
-        # need distutils
-        run: python3 -m pip install packaging
       - name: Install dependencies
         run: npm install
       - name: Clean old binaries
@@ -58,15 +55,10 @@ jobs:
       - name: "Prebuildify: Crosscompile to arm64 Apple Silicon"
         if: runner.os == 'macOS'
         run: npm run make-prebuild -w tdl -- --arch arm64
-      - name: Download prebuilt-tdlib
-        run: |
-          npm pack prebuilt-tdlib@0.1008000.1
-          tar -xzvf prebuilt-tdlib-0.1008000.1.tgz
-          rm package/package.json
+      - name: Install prebuilt-tdlib for TDLib v1.8.0
+        run: npm i -D prebuilt-tdlib@td-1.8.0
       - name: Run tests
         run: npm run test:all
-        env:
-          PREBUILT_PATH: package/index.js
       - uses: actions/upload-artifact@v3
         with:
           name: tdl-prebuilds
