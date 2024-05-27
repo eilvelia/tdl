@@ -27,6 +27,7 @@
   is removed and replaced with `UnknownError`.
 - Changed the default verbosity level from 2 to 1.
 - Added `client.isClosed()`.
+- Pre-built node addons now support aarch64 GNU/Linux.
 - Removed deprecated client options: `receiveTimeout`, `useDefaultVerbosityLevel`,
   `disableAuth`, `useMutableRename`, `verbosityLevel`.
 - Removed the `bare` client option. `tdl.createBareClient(): Client` is added

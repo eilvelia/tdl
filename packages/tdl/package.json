@@ -8,7 +8,7 @@
     "build:lib": "tsc",
     "build:addon": "node-gyp rebuild",
     "build": "tsc && node scripts/copy-readme.js && node scripts/generate-flow.js && node-gyp rebuild",
-    "make-prebuild": "prebuildify --napi -t 18.20.2 --strip",
+    "make-prebuild": "prebuildify --napi -t 18.20.2",
     "clean": "node-gyp clean",
     "install": "node-gyp-build"
   },

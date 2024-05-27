@@ -23,45 +23,36 @@ jobs:
         with:
           node-version: lts/*
           cache: npm
+      - uses: goto-bus-stop/setup-zig@v2
+        if: runner.os == 'Linux'
       - name: Install dependencies
         run: npm install
       - name: Clean old binaries
         run: npm run clean -w tdl
-      - name: Prebuildify in docker
+      - name: Prebuildify (Linux via zig)
         if: runner.os == 'Linux'
         run: |
-          # docker run -u root -v $(pwd):/app ghcr.io/prebuild/centos7-devtoolset7:2 \
-          #  npm run make-prebuild -w tdl -- --tag-libc
-          cat > prebuilt-node-addon.sh <<EOF
-          set -ex
-          yum update -y
-          yum install -y centos-release-scl
-          yum install -y devtoolset-9 make python3
-          yum install https://rpm.nodesource.com/pub_16.x/nodistro/repo/nodesource-release-nodistro-1.noarch.rpm -y
-          yum install nodejs -y --setopt=nodesource-nodejs.module_hotfixes=1
-          source /opt/rh/devtoolset-9/enable
-          gcc --version
-          ldd --version
-          cd /app
-          npm run make-prebuild -w tdl -- --tag-libc
-          EOF
-          docker run -v $(pwd):/app centos:7 \
-            bash /app/prebuilt-node-addon.sh
-          ldd packages/tdl/prebuilds/*/*.node
-          du -hs packages/tdl/prebuilds/*/*.node
-      - name: Prebuildify
+          CC="zig cc -target x86_64-linux-gnu.2.17" CXX="zig c++ -target x86_64-linux-gnu.2.17 -s" \
+            npm run make-prebuild -w tdl -- --arch x64 --tag-libc --strip
+          CC="zig cc -target aarch64-linux-gnu.2.17" CXX="zig c++ -target aarch64-linux-gnu.2.17 -s" \
+            npm run make-prebuild -w tdl -- --arch arm64 --armv 8 --tag-armv --tag-libc
+          ldd packages/tdl/prebuilds/*-x64/*.node
+          file packages/tdl/prebuilds/*/*.node
+          du -hsc packages/tdl/prebuilds/*/*.node
+      - name: Prebuildify (x86_64 only)
         if: runner.os != 'Linux'
-        run: npm run make-prebuild -w tdl
+        run: npm run make-prebuild -w tdl -- --arch x64 --strip
       - name: "Prebuildify: Crosscompile to arm64 Apple Silicon"
         if: runner.os == 'macOS'
-        run: npm run make-prebuild -w tdl -- --arch arm64
-      - name: Install prebuilt-tdlib for TDLib v1.8.0
-        run: npm i -D prebuilt-tdlib@td-1.8.0
-      - name: Run tests
+        run: |
+          npm run make-prebuild -w tdl -- --arch arm64 --strip
+          file packages/tdl/prebuilds/*/*.node
+          du -hsc packages/tdl/prebuilds/*/*.node
+      - name: Run tests (unit tests + integration tests)
         run: npm run test:all
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          name: tdl-prebuilds
+          name: tdl-prebuilds-${{ matrix.os }}
           path: packages/tdl/prebuilds
 
   publish:
@@ -83,10 +74,11 @@ jobs:
         run: python3 -m pip install packaging
       - name: Install dependencies
         run: npm install
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
-          name: tdl-prebuilds
+          pattern: tdl-prebuilds-*
           path: packages/tdl/prebuilds
+          merge-multiple: true
       - run: tree packages/tdl/prebuilds
       - name: Ensure prebuilts exist
         run: (( $(ls packages/tdl/prebuilds | wc -l) > 3 ))
