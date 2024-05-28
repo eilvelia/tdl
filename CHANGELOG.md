@@ -44,7 +44,7 @@
 - Now published with `--provenance`.
 - Internal: The `tdl` client code was rewritten in TypeScript.
 
-## Unreleased tdl-install-types@0.2.0
+## tdl-install-types@0.2.0 (2024-05-28)
 
 - Added a `--github-repo` CLI option.
 - Added `-h` and `--version` aliases.
