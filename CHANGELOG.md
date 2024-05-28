@@ -2,7 +2,7 @@
 
 <!-- Hi! -->
 
-## Unreleased tdl@8.0.0
+## tdl@8.0.0 (2024-05-28)
 
 - The compatibility with `tdl-tdlib-addon` is removed. The `Client` constructor
   is no longer exported. The non-deprecated API mostly remains the same.

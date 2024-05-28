@@ -1,6 +1,6 @@
 {
   "name": "tdl",
-  "version": "8.0.0-dev",
+  "version": "8.0.0",
   "description": "Node.js bindings to TDLib (Telegram Database library)",
   "main": "dist/index.js",
   "types": "index.d.ts",
