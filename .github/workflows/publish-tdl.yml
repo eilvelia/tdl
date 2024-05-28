@@ -32,9 +32,9 @@ jobs:
       - name: Prebuildify (Linux via zig)
         if: runner.os == 'Linux'
         run: |
-          CC="zig cc -target x86_64-linux-gnu.2.17" CXX="zig c++ -target x86_64-linux-gnu.2.17 -s" \
+          CC="zig cc -target x86_64-linux-gnu.2.22" CXX="zig c++ -target x86_64-linux-gnu.2.22 -s" \
             npm run make-prebuild -w tdl -- --arch x64 --tag-libc --strip
-          CC="zig cc -target aarch64-linux-gnu.2.17" CXX="zig c++ -target aarch64-linux-gnu.2.17 -s" \
+          CC="zig cc -target aarch64-linux-gnu.2.22" CXX="zig c++ -target aarch64-linux-gnu.2.22 -s" \
             npm run make-prebuild -w tdl -- --arch arm64 --armv 8 --tag-armv --tag-libc
           ldd packages/tdl/prebuilds/*-x64/*.node
           file packages/tdl/prebuilds/*/*.node
