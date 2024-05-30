@@ -1,7 +1,6 @@
 name: Pre-built TDLib
 # This workflow can be executed using a command like this:
-# gh workflow run prebuilt-tdlib.yml --ref develop -f tdlib=v1.8.0 \
-# -f npm-version=0.1008000.0 -f npm-tag=latest
+# gh workflow run prebuilt-tdlib.yml --ref develop -f tdlib=v1.8.0 -f npm-patch=0
 on:
   workflow_dispatch:
     inputs:
@@ -69,7 +68,7 @@ jobs:
           echo "-----"
           du -hs libtdjson.so
           ldd libtdjson.so
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: tdlib-linux-x64
           path: to-upload
@@ -151,7 +150,7 @@ jobs:
           otool -arch x86_64 -l libtdjson.dylib
           echo "---"
           otool -arch arm64 -l libtdjson.dylib
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: tdlib-macos
           path: to-upload
@@ -191,7 +190,7 @@ jobs:
         run: |
           vcpkg list | Select-String openssl,zlib > to-upload\info.txt
           cat to-upload\info.txt
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: tdlib-windows-x64
           path: to-upload
@@ -214,9 +213,12 @@ jobs:
           node-version: lts/*
           cache: npm
       - run: npm install
-      - uses: actions/download-artifact@v3
+      - name: Uninstall the prebuilt-tdlib dev dependency
+        run: npm uninstall -D prebuilt-tdlib # just in case
+      - uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.os[1] }}
+          merge-multiple: true
       - run: npm run test:integration
         env:
           LIBDIR_PATH: '.'
@@ -237,9 +239,12 @@ jobs:
           # registry-url is mandatory here
           registry-url: 'https://registry.npmjs.org'
       - run: npm install
-      - uses: actions/download-artifact@v3
+      - run: npm uninstall -D prebuilt-tdlib
+      - uses: actions/download-artifact@v4
         with:
-          path: packages/prebuilt-tdlib/prebuilds/
+          pattern: tdlib-*
+          path: packages/prebuilt-tdlib/prebuilds
+          merge-multiple: true
       - run: tree packages/prebuilt-tdlib
       - run: npm run test:integration
         env:
