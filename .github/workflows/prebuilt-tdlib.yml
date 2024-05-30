@@ -244,7 +244,6 @@ jobs:
         with:
           pattern: tdlib-*
           path: packages/prebuilt-tdlib/prebuilds
-          merge-multiple: true
       - run: tree packages/prebuilt-tdlib
       - run: npm run test:integration
         env:
