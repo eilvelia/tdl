@@ -21,11 +21,11 @@ supports, run:
 $ npm install prebuilt-tdlib
 ```
 
-To install `prebuilt-tdlib` for a specific TDLib version, e.g. TDLib v1.8.29,
+To install `prebuilt-tdlib` for a specific TDLib version, e.g. TDLib v1.8.30,
 run:
 
 ```console
-$ npm install prebuilt-tdlib@td-1.8.29
+$ npm install prebuilt-tdlib@td-1.8.30
 ```
 
 `prebuilt-tdlib` can be installed for other TDLib versions, execute

@@ -34,6 +34,7 @@
   "keywords": [
     "telegram",
     "telegram-api",
+    "telegram-client-api",
     "tdlib",
     "tglib",
     "bindings",

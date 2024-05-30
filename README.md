@@ -3,8 +3,6 @@
 `tdl` is a fairly simple JavaScript wrapper for [TDLib][] (Telegram Database library),
 a library to create [Telegram][] clients or bots.
 
-TDLib version 1.8.0 or newer is required.
-
 [TDLib]: https://github.com/tdlib/td
 [Telegram]: https://telegram.org/
 
@@ -15,37 +13,47 @@ TDLib version 1.8.0 or newer is required.
 - [Types](#types)
 - [Other JavaScript runtimes](#other-javascript-runtimes)
 - [Troubleshooting](#troubleshooting)
+- [Issue tracker](#issue-tracker)
 
 <a name="requirements"></a>
 ## Requirements
 
 - Node.js v16 or newer
-- The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows)
-- In some cases, a C++ compiler and Python installed to build the node addon[^1]
+- The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows), of TDLib version 1.8.0 or newer
+- In rare cases, a C++ compiler and Python installed to build the node addon[^1]
 
 [^1]: `tdl` is packaged with pre-built addons for Windows (x86_64), GNU/Linux (x86_64, arm64; glibc >= 2.22), and macOS (x86_64, arm64; v10.14+). If a pre-built binary is not available for your system, then the node addon will be built using node-gyp, requiring Python and a C++ toolchain (C++14 is required) to be installed (on Windows, MSVS or Build Tools). Pass `--build-from-source` to never use the pre-built binaries. arm64 binaries are not tested in the CI. Only Linux binaries are statically linked against libstdc++.
 
 <a name="installation"></a>
 ## Installation
 
-1. Build TDLib (https://github.com/tdlib/td#building) or install pre-built
-   libraries
-2. Run `npm install tdl`
-3. (optional) If you use TypeScript, types for TDLib are installed separately,
+1. Install tdl: `npm install tdl`
+2. [Build][tdlib-building] TDLib or install pre-built TDLib libraries
+   (`npm install prebuilt-tdlib`)
+3. If you use TypeScript, types for TDLib are installed separately,
    see the [Types](#types) section
 
-To use `tdl`, you need to get TDLib first. The tdjson shared library should be
-present in the system search paths (otherwise the path to libtdjson can be
-specified manually).
+To use `tdl`, you need to get TDLib first, which is dynamically loaded by `tdl`.
+The tdjson shared library should be present in the system search paths
+(otherwise the path to libtdjson can be specified manually in `tdl.configure`).
 
 > **Tip**: When building TDLib, the libraries can be installed into the system
 > using `cmake --install .` (optionally specify the `--prefix` option, the
 > default is `/usr/local`) after TDLib has been built successfully. This command
 > may require `sudo`.
 
+[tdlib-building]: https://github.com/tdlib/td#building
+
 ### prebuilt-tdlib
 
-Instead of building TDLib from source, you can possibly install pre-built TDLib libraries distributed through the `prebuilt-tdlib` npm package (`npm install prebult-tdlib`). To install `prebuilt-tdlib` for a specific TDLib version, for example v1.8.26, run `npm install prebuilt-tdlib@td-1.8.26`. The available versions of `prebuilt-tdlib` can be found by running `npm info prebuilt-tdlib dist-tags`. An example of using libraries from `prebuilt-tdlib` is present in the section below. The supported systems are x86_64 GNU/Linux, x86_64 & arm64 macOS, and x86_64 Windows. See the README of [prebuilt-tdlib][] for additional information.
+Instead of building TDLib from source, you can possibly install pre-built TDLib
+libraries distributed through the `prebuilt-tdlib` npm package. An example of
+using libraries from `prebuilt-tdlib` is present in the section below. The
+supported systems are x86_64 GNU/Linux, x86_64 & arm64 macOS, and x86_64
+Windows. To install `prebuilt-tdlib` for a specific TDLib version, for example
+v1.8.30, run `npm install prebuilt-tdlib@td-1.8.30`. The available versions of
+`prebuilt-tdlib` can be found by running `npm info prebuilt-tdlib dist-tags`.
+See the README of [prebuilt-tdlib][] for additional information.
 
 [prebuilt-tdlib]: packages/prebuilt-tdlib/README.md
 
@@ -62,7 +70,8 @@ const tdl = require('tdl')
 // example to search for libtdjson in the directory of the current script:
 //   tdl.configure({ libdir: __dirname })
 
-// Instead of building TDLib yourself, the aforementioned prebuilt-tdlib can be used as follows:
+// Instead of building TDLib yourself, the aforementioned prebuilt-tdlib can be
+// used as follows:
 //   const { getTdjson } = require('prebuilt-tdlib')
 //   tdl.configure({ tdjson: getTdjson() })
 
@@ -145,7 +154,8 @@ Some short examples are available in the [examples/](examples/) directory.
 #### `tdl.configure(options: TDLibConfiguration) => void`
 
 Configure several parameters such as libtdjson filename or verbosity level. This
-function should be called before `tdl.createClient` or `tdl.execute`.
+function should be called before `tdl.createClient` or `tdl.execute`. Can be
+called multiple times.
 
 The possible parameters are:
 
@@ -168,7 +178,7 @@ Some examples:
 - `tdl.configure({ tdjson: '/root/libtdjson.so', verbosityLevel: 5 })`
 - `tdl.configure({ libdir: '/usr/local/lib', tdjson: 'libtdjson.dylib.1.8.6' })`
 - `tdl.configure({ libdir: __dirname })` (use libtdjson from the directory of the current script, in CJS)
-- `tdl.configure({ tdjson: require('prebuilt-tdlib').getTdjson() })` (use prebuilt-tdlib)
+- `tdl.configure({ tdjson: require('prebuilt-tdlib').getTdjson() })` (use libtdjson from prebuilt-tdlib)
 
 The path concatenation of `libdir` + `tdjson` is directly passed to
 [`dlopen`][dlopen] (Unix) or [`LoadLibrary`][LoadLibraryW] (Windows). Check
@@ -345,7 +355,7 @@ The returned value indicates whether the listener has been successfully removed.
 
 `client.removeListener` is an alias for `client.off`.
 
-#### `client.iterUpdates() => AsyncIterableIterator<Update>`
+#### `client.iterUpdates() => AsyncIterableIterator<Td.Update>`
 
 An alternative approach (added in tdl v8.0.0) to get updates is to use async
 iterators instead of `client.on('update', ...)`:
@@ -360,7 +370,7 @@ for await (const update of client.iterUpdates()) {
 }
 ```
 
-#### `client.invoke(query: Object) => Promise<Object>`
+#### `client.invoke(query: Request) => Promise<Reponse>`
 
 Call a TDLib method asynchronously. If the request fails, the promise rejects
 with `TDLibError` containing the error code and error message.
@@ -398,7 +408,7 @@ Close the TDLib client.
 await client.close()
 ```
 
-#### `tdl.execute(query: Object) => Object`
+#### `tdl.execute(query: Request) => Td.error | Response`
 
 Call a TDLib method synchronously. This function can be used only with the
 methods marked as "can be called synchronously" in the TDLib documentation.
@@ -439,7 +449,10 @@ $ npx tdl-install-types [<options>] [<target>]
 
 The utility can generate types given a tdjson library file (e.g. `npx tdl-install-types ./libtdjson.so`), a TDLib git ref (examples: `npx tdl-install-types v1.8.0`, `npx tdl-install-types master`, `npx tdl-install-types 2de39ffffe71dc41c538e66085658d21cecbae08`), or a td_api.tl file (`npx tdl-install-types td_api.tl`). When called without arguments, it will try to use `require('prebuilt-tdlib').getTdjson()` as the tdjson library, generating types for the installed version of `prebuilt-tdlib`.
 
-By default, the types are generated into a `tdlib-types.d.ts` file that you can git-commit. The declaration file should be inside your project to work. When you update the version of TDLib, don't forget to also update the types: it's important to keep the types in sync with the interface TDLib actually uses.
+By default, the types are generated into a `tdlib-types.d.ts` file that you can
+git-commit. The declaration file should be inside your project to work. When you
+update the version of TDLib, don't forget to also update the types: it's
+important to keep the types in sync with the interface TDLib actually uses.
 
 ```console
 $ # Various examples:
@@ -460,9 +473,10 @@ import type * as Td from 'tdlib-types'
 
 That is, a package named `tdlib-types` does not need to be installed separately.
 
-Note that when using `npx`, the version of `tdl-install-types` might be cached and outdated if you are not appending the `@latest` tag (`npx tdl-install-types@latest --help`). You can also install the utility globally or per-project as a dev dependency.
-
-If you encounter any issues, create a new issue in the tdl's GitHub tracker.
+Note that when using `npx`, the version of `tdl-install-types` might be cached
+and outdated if you are not appending the `@latest` tag
+(`npx tdl-install-types@latest --help`). You can also install the utility
+globally or per-project as a dev dependency.
 
 <a name="other-javascript-runtimes"></a>
 ## Other JavaScript runtimes
@@ -575,8 +589,8 @@ break set -r . -s libssl.so.1.1
 ```
 
 To solve this issue, try to link TDLib statically against OpenSSL (the
-`OPENSSL_USE_STATIC_LIBS` option in cmake) or link it against the OpenSSL version
-that Node.js uses.
+`OPENSSL_USE_STATIC_LIBS` option in cmake) or link it against the OpenSSL
+version that Node.js uses.
 
 Another possible option is to rebuild Node.js from source, linking it
 dynamically against the same system OpenSSL. That way, there is only one
@@ -607,3 +621,12 @@ symbols.
 
 The cause of the segfault might be the same as above. If you get segmentation
 faults, open an issue.
+
+<a name="issue-tracker"></a>
+## Issue tracker
+
+Reporting bugs (besides feature requests and other stuff) is very welcome in the
+tdl's GitHub issue tracker. However, while I can answer some questions on how to
+use TDLib itself, I do not know the entirety of TDLib API, and it may be
+better (and faster to get the response) to ask questions related to TDLib
+specifics in the `t.me/tdlibchat` group.
