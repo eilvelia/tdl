@@ -70,8 +70,6 @@ jobs:
           cache: npm
           # registry-url is mandatory here
           registry-url: 'https://registry.npmjs.org'
-      - name: Python dependencies
-        run: python3 -m pip install packaging
       - name: Install dependencies
         run: npm install
       - uses: actions/download-artifact@v4
