@@ -1,4 +1,4 @@
-# tdl-install-types
+# tdl-install-types &nbsp; [![npm](https://img.shields.io/npm/v/tdl-install-types.svg)](https://www.npmjs.com/package/tdl-install-types)
 
 A cli utility that generates TypeScript (and optionally Flow) types for TDLib,
 potentially fetching the needed schema from the TDLib's GitHub repository.

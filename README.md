@@ -478,6 +478,8 @@ and outdated if you are not appending the `@latest` tag
 (`npx tdl-install-types@latest --help`). You can also install the utility
 globally or per-project as a dev dependency.
 
+[![npm](https://img.shields.io/npm/v/tdl-install-types.svg?label=tdl-install-types)](https://www.npmjs.com/package/tdl-install-types)
+
 <a name="other-javascript-runtimes"></a>
 ## Other JavaScript runtimes
 
