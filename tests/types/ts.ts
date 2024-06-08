@@ -134,3 +134,23 @@ main().catch(console.error)
 // Td.formattedText <: Td.formattedText$Input
 declare var fmt: Td.formattedText
 const fmtInp: Td.formattedText$Input = fmt
+
+const invoke: <T extends Td.$FunctionName>(
+  query: { readonly _: T } & Td.$FunctionInputByName[T]
+) => Promise<Td.$FunctionResultByName[T] | Td.error> = (
+  req: any
+): any =>
+  client.invoke(req).catch(e => {
+    if (e instanceof tdl.TDLibError)
+      return { _: e._, code: e.code, message: e.message }
+    throw e
+  })
+
+async function test () {
+  const res = await invoke({ _: 'getMe' })
+  if (res._ === 'error') {
+    console.error('Error', res.code, res.message)
+    return
+  }
+  console.log('Id:', res.id)
+}
