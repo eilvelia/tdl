@@ -418,7 +418,7 @@ export class Client {
     try {
       this._handleReceive(deepRenameKey('@type', '_', res))
     } catch (e: unknown) {
-      debug('Catched error', e)
+      debug('handleReceive: caught error', e)
       const error = e instanceof Error ? e : new UnknownError(e)
       this.emit('error', error)
     }
