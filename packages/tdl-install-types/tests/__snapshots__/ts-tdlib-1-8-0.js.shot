@@ -21161,10 +21161,6 @@ declare module 'tdlib-types' {
 
   export type $FunctionName = keyof $FunctionResultByName
 
-  export type Invoke = <T extends $FunctionName>(
-    query: { readonly _: T } & $FunctionInputByName[T]
-  ) => Promise<$FunctionResultByName[T]>
-
   export type $SyncFunctionName =
     | 'getTextEntities'
     | 'parseTextEntities'
@@ -21188,6 +21184,10 @@ declare module 'tdlib-types' {
     | 'getLogTagVerbosityLevel'
     | 'addLogMessage'
     | 'testReturnError'
+
+  export type Invoke = <T extends $FunctionName>(
+    query: { readonly _: T } & $FunctionInputByName[T]
+  ) => Promise<$FunctionResultByName[T]>
 
   export type Execute = <T extends $SyncFunctionName>(
     query: { readonly _: T } & $FunctionInputByName[T]

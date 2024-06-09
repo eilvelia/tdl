@@ -229,15 +229,15 @@ function generate (
     ? `${EXPORT} type $FunctionName = keyof $FunctionResultByName`
     : `${EXPORT} type $FunctionName = $Keys<$FunctionResultByName>`
 
+  const syncFuncName = [
+    `${EXPORT} type $SyncFunctionName =`,
+    syncFuncs.map(c => `  | '${c.name}'`).join(EOL)
+  ].join(EOL)
+
   const invoke = [
     `${EXPORT} type Invoke = <T${EXTENDS} $FunctionName>(`,
     `  query: { ${READONLY}_: T${INEXACT} } & $FunctionInputByName[T]`,
     ') => Promise<$FunctionResultByName[T]>'
-  ].join(EOL)
-
-  const syncFuncName = [
-    `${EXPORT} type $SyncFunctionName =`,
-    syncFuncs.map(c => `  | '${c.name}'`).join(EOL)
   ].join(EOL)
 
   const execute = [
@@ -263,8 +263,8 @@ function generate (
         nameToResultTable,
         nameToInputTable,
         funName,
-        invoke,
         syncFuncName,
+        invoke,
         execute
       ].flatMap(x => ['', x])
     ].join(EOL)),

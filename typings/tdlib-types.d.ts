@@ -1,5 +1,5 @@
 // Types for TDLib v1.8.30 (fab354add5a257a8121a4a7f1ff6b1b9fa9a9073)
-// Generated using tdl-install-types v0.2.0
+// Generated using tdl-install-types v0.2.0-dev
 declare module 'tdlib-types' {
   export type error = {
     /**
@@ -35159,10 +35159,6 @@ declare module 'tdlib-types' {
 
   export type $FunctionName = keyof $FunctionResultByName
 
-  export type Invoke = <T extends $FunctionName>(
-    query: { readonly _: T } & $FunctionInputByName[T]
-  ) => Promise<$FunctionResultByName[T]>
-
   export type $SyncFunctionName =
     | 'checkQuickReplyShortcutName'
     | 'searchQuote'
@@ -35192,6 +35188,10 @@ declare module 'tdlib-types' {
     | 'getLogTagVerbosityLevel'
     | 'addLogMessage'
     | 'testReturnError'
+
+  export type Invoke = <T extends $FunctionName>(
+    query: { readonly _: T } & $FunctionInputByName[T]
+  ) => Promise<$FunctionResultByName[T]>
 
   export type Execute = <T extends $SyncFunctionName>(
     query: { readonly _: T } & $FunctionInputByName[T]
