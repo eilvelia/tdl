@@ -203,8 +203,8 @@ The options that can be passed here have the following interface:
 type ClientOptions = {
   apiId: number, // Can be obtained at https://my.telegram.org
   apiHash: string, // Can be obtained at https://my.telegram.org
-  databaseDirectory: string, // Relative path (defaults to '_td_database')
-  filesDirectory: string, // Relative path (defaults to '_td_files')
+  databaseDirectory: string, // Path, relative to cwd (defaults to '_td_database')
+  filesDirectory: string, // Path, relative to cwd (defaults to '_td_files')
   databaseEncryptionKey: string, // Optional key for database encryption
   useTestDc: boolean, // Use test telegram server (defaults to false)
   tdlibParameters: Object, // Raw TDLib parameters

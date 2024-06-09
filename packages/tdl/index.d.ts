@@ -177,9 +177,15 @@ export type ClientOptions = {
   apiId: number,
   /** Required. Can be obtained at https://my.telegram.org/ */
   apiHash: string,
-  /** A (relative) path to the database directory. Defaults to `'_td_database'`. */
+  /**
+   * Path to the TDLib's database directory (relative to the current working
+   * directory). Defaults to `'_td_database'`.
+   */
   databaseDirectory?: string,
-  /** A (relative) path to the files directory. Defaults to `'_td_files'`. */
+  /**
+   * Path to the TDLib's files directory (relative to the current working
+   * directory). Defaults to `'_td_files'`.
+   */
   filesDirectory?: string,
   /** An optional key for database encryption. */
   databaseEncryptionKey?: string,
