@@ -448,7 +448,7 @@ $ npx tdl-install-types [<options>] [<target>]
 
 (Type "y" in case it asks to install the `tdl-install-types` package.)
 
-The utility can generate types given a tdjson library file (e.g. `npx tdl-install-types ./libtdjson.so`), a TDLib git ref (examples: `npx tdl-install-types v1.8.0`, `npx tdl-install-types master`, `npx tdl-install-types 2de39ffffe71dc41c538e66085658d21cecbae08`), or a td_api.tl file (`npx tdl-install-types td_api.tl`). When called without arguments, it will try to use `require('prebuilt-tdlib').getTdjson()` as the tdjson library, generating types for the installed version of `prebuilt-tdlib`.
+The utility can generate types given a tdjson library file (e.g. `npx tdl-install-types ./libtdjson.so`), a TDLib git ref (examples: `npx tdl-install-types v1.8.0`, `npx tdl-install-types master`, `npx tdl-install-types 2de39ffffe71dc41c538e66085658d21cecbae08`), or a td_api.tl file (`npx tdl-install-types td_api.tl`). When called without arguments or with the `prebuilt-tdlib` argument, it will generate types for the installed version of `prebuilt-tdlib`.
 
 By default, the types are generated into a `tdlib-types.d.ts` file that you can
 git-commit. The declaration file should be inside your project to work. When you
@@ -458,8 +458,9 @@ important to keep the types in sync with the interface TDLib actually uses.
 ```console
 $ # Various examples:
 $ npx tdl-install-types libtdjson.so # generate types for this shared library in the cwd
-$ npx tdl-install-types 0ada45c3618108a62806ce7d9ab435a18dac1aab # types for the TDLib commit
+$ npx tdl-install-types 0ada45c3618108a62806ce7d9ab435a18dac1aab # types for this TDLib commit
 $ npx tdl-install-types # tries to use prebult-tdlib
+$ npx tdl-install-types prebuilt-tdlib # same as the above one
 $ npx tdl-install-types v1.8.0 # types for the git tag in the TDLib repository
 ```
 

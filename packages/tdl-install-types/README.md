@@ -18,6 +18,7 @@ Examples:
 
 ```console
 $ npx tdl-install-types  # tries to use prebult-tdlib
+$ npx tdl-install-types prebuilt-tdlib  # same as above
 $ npx tdl-install-types ./libtdjson.so  # generate types for this shared library
 $ npx tdl-install-types 0ada45c3618108a62806ce7d9ab435a18dac1aab  # commit hash
 $ npx tdl-install-types v1.8.0  # git tag in the TDLib repository

@@ -18,12 +18,17 @@ const help = `\
 
   By default, a tdlib-types.d.ts file is created that you can git-commit.
 
-  <target> can be a path to a .so/.dylib/.dll library, a git ref in the TDLib
-  repository (e.g. v1.8.0 or a commit hash), or a path to the td_api.tl file.
+  <target> can be one of:
+    - a file path to the .so/.dylib/.dll tdjson shared library file
+    - a file path to the td_api.tl file
+    - a git ref in the TDLib repository
+    - "prebuilt-tdlib": special value to generate types for the installed
+      version of prebuilt-tdlib (this is the default)
 
   Examples:
-    tdl-install-types  # tries to use tdlib from prebult-tdlib
     tdl-install-types ./libtdjson.so  # generate types for this shared library
+    tdl-install-types prebuilt-tdlib  # use version of installed prebuilt-tdlib
+    tdl-install-types  # similar to above: try to use prebuilt-tdlib
     tdl-install-types 0ada45c3618108a62806ce7d9ab435a18dac1aab  # commit hash
     tdl-install-types v1.8.0  # git tag in the TDLib repository
     tdl-install-types td_api.tl  # generate directly from the tl file
@@ -44,12 +49,7 @@ const help = `\
     --git-ref
       Interpret <target> as a git ref (e.g., a commit hash or a git tag or a
       branch name) in the TDLib repository. This is the default behavior if
-      neither of the above conditions is met.
-
-    --prebuilt-tdlib
-      Try to use require('prebuilt-tdlib').getTdjson() as the <target> for
-      --lib. Implies --lib. If this option is set, <target> is ignored.
-      This is the default behavior if <target> is omitted.
+      neither of the above conditions is met and <target> is not prebuilt-tdlib.
 
     -o <path>
       Output generated TypeScript types to <path>.
@@ -67,13 +67,15 @@ const help = `\
       Can be set, for example, to the tdlight's repository.
       Defaults to tdlib/td.
 
-    -h, --help            Print this text and exit.
-    -v, --version         Print version and exit.`
+    --prebuilt-tdlib     Deprecated. Same as setting <target> to prebuilt-tdlib.
+
+    -h, --help           Print this text and exit.
+    -v, --version        Print version and exit.`
 
 const LIB = 'lib'
 const GIT_REF = 'git-ref'
 const TL = 'tl'
-const PREBUILT_TDLIB_TARGET = '<prebuilt-tdlib>'
+const PREBUILT_TDLIB = 'prebuilt-tdlib'
 
 let target
 let type
@@ -105,8 +107,8 @@ function parseArgs () {
         type = GIT_REF
         break
       case '--prebuilt-tdlib':
-        type = LIB
-        target = PREBUILT_TDLIB_TARGET
+        type = PREBUILT_TDLIB
+        target = 'prebuilt-tdlib'
         break
       case '-o':
         if (!argv[i + 1]) {
@@ -143,10 +145,15 @@ function parseArgs () {
           console.error(`WARN Unrecognized option ${arg}`)
           break
         }
-        if (target === PREBUILT_TDLIB_TARGET) break
+        if (target) {
+          console.error('Too many arguments')
+          return false
+        }
         target = arg
         if (type != null) break
-        if (target.endsWith('.so') || target.endsWith('.dylib') || target.endsWith('.dll'))
+        if (target == 'prebuilt-tdlib')
+          type = PREBUILT_TDLIB
+        else if (target.endsWith('.so') || target.endsWith('.dylib') || target.endsWith('.dll'))
           type = LIB
         else if (target.endsWith('.tl'))
           type = TL
@@ -155,8 +162,7 @@ function parseArgs () {
     }
   }
   if (!target) {
-    type = LIB
-    target = PREBUILT_TDLIB_TARGET
+    type = PREBUILT_TDLIB
     defaultTarget = true
   }
   return true
@@ -185,25 +191,27 @@ function fromSchema (schema, { ver, hash } = {}) {
 
 async function fetchTdVersion (ref) {
   try {
-    const res = await fetch(`https://raw.githubusercontent.com/${githubRepo}/${ref}/CMakeLists.txt`)
+    const url = `https://raw.githubusercontent.com/${githubRepo}/${ref}/CMakeLists.txt`
+    const res = await fetch(url)
     const text = await res.text()
-    if (text.includes('404: Not Found')) throw Error('Not found')
+    if (text.includes('404: Not Found')) throw Error('404 Not found')
     const version = text.match(/TDLib VERSION ([\w.]+) /)?.[1]
-    if (!version) throw Error('Could not find version')
+    if (!version) throw Error('Could not find version in CMakeLists.txt')
     return version
   } catch (e) {
-    console.error(`WARN Failed to fetch TDLib version: ${e?.message || String(e)}`)
+    console.error(`WARN Failed to get TDLib version: ${e?.message || String(e)}`)
     return '<unknown>'
   }
 }
 
-async function fromGitRef (ref, ver) {
-  const res = await fetch(`https://raw.githubusercontent.com/${githubRepo}/${ref}/td/generate/scheme/td_api.tl`)
+async function fromGitRef (ref, ver = null) {
+  const url = `https://raw.githubusercontent.com/${githubRepo}/${ref}/td/generate/scheme/td_api.tl`
+  const res = await fetch(url)
   const schema = await res.text()
   if (schema.length < 2000)
-    throw Error(`Failed to fetch schema: ${schema}`)
+    throw Error(`Failed to fetch schema from ${url}\n  ${schema}`)
   ver ||= await fetchTdVersion(ref)
-  const hash = ref.length >= 30 && ref !== ver ? ref : null
+  const hash = (ref.length >= 30 && ref !== ver) ? ref : null
   fromSchema(schema, { ver, hash })
 }
 
@@ -217,7 +225,7 @@ function fromDynamicLib (lib) {
   const version = data.match(/\W([1234]\.\d{1,2}\.\d{1,3})\W/)?.[1]
   // console.log('hash', hash)
   // console.log('version', version)
-  if (version?.endsWith('.0')) {
+  if (version?.endsWith?.('.0')) {
     const parsed = version.split('.').map(Number)
     const useVersionRef = (parsed?.[0] === 1 && parsed?.[1] < 8)
       || (!hash && parsed.every(x => !Number.isNaN(x)))
@@ -231,33 +239,33 @@ function fromDynamicLib (lib) {
   throw Error('Could not determine TDLib commit hash')
 }
 
-async function getPrebuiltLibPath () {
-  // return new Promise((resolve, reject) => {
-  //   const node = spawn('node', ['-e', 'console.log(require("prebuilt-tdlib").getTdjson())'])
-  //   if (!defaultTarget) node.stderr.pipe(process.stderr)
-  //   let output = ''
-  //   node.stdout.on('data', data => {
-  //     output += data.toString()
-  //   })
-  //   node.on('close', code => {
-  //     if (code !== 0)
-  //       return reject(Error(`node exited with code ${code}`))
-  //     resolve(output)
-  //   })
-  // })
-  const cwdRequire = createRequire(path.resolve('index.js'))
-  return cwdRequire('prebuilt-tdlib').getTdjson()
-}
-
 async function fromPrebuiltTdlib () {
   try {
-    const lib = await getPrebuiltLibPath()
-    fromDynamicLib(lib)
+    // Find path of the prebuilt-tdlib module
+    const cwdRequire = createRequire(path.resolve('index.js'))
+    const prebuiltTdlib = path.dirname(cwdRequire.resolve('prebuilt-tdlib'))
+
+    // Try to use the tdlib.commit and tdlib.version fields in package.json
+    const packageJsonPath = path.join(prebuiltTdlib, 'package.json')
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath).toString())
+    const tdlibCommit = packageJson?.tdlib?.commit
+    const tdlibVersion = packageJson?.tdlib?.version
+    if (typeof tdlibCommit === 'string' && typeof tdlibVersion === 'string') {
+      await fromGitRef(tdlibCommit, tdlibVersion)
+      return
+    }
+
+    // If not existent, fallback to executing getTdjson() and extracting tdlib
+    // commit from the shared library
+    const tdjsonFile = cwdRequire('prebuilt-tdlib').getTdjson()
+    await fromDynamicLib(tdjsonFile)
   } catch (e) {
-    if (defaultTarget) {
+    if (defaultTarget && e?.code === 'MODULE_NOT_FOUND') {
+      console.error('Error: Cannot find prebuilt-tdlib. Help:')
+      console.error(help)
+    } else if (defaultTarget) {
       console.error('Could not generate types for prebuilt-tdlib:')
       console.error(e?.message || String(e))
-      console.error('Help:')
       console.error(help)
     } else {
       console.error(String(e))
@@ -270,14 +278,13 @@ const shouldContinue = parseArgs()
 
 if (!shouldContinue) {
   // Nothing, exit
+} else if (type === PREBUILT_TDLIB) {
+  fromPrebuiltTdlib()
 } else if (type === TL) {
   const schema = fs.readFileSync(target).toString()
   fromSchema(schema)
 } else if (type === GIT_REF) {
-  fromGitRef(target)
-    .catch(console.error)
-} else if (type === LIB && target === PREBUILT_TDLIB_TARGET) {
-  fromPrebuiltTdlib()
+  fromGitRef(target).catch(console.error)
 } else if (type === LIB) {
   fromDynamicLib(target)
 }

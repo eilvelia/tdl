@@ -7,6 +7,10 @@
 
 - No longer generates `number | string` instead of `string` for `int64` types
   in output positions (the input int64 is still `number | string`).
+- Better detection of `prebuilt-tdlib`: can now use TDLib commit and version
+  from `prebuilt-tdlib/package.json` instead of always extracting the commit
+  hash from the library file. The `--prebuilt-tdlib` option is replaced with the
+  `prebuilt-tdlib` argument (`--prebuilt-tdlib` is deprecated).
 -->
 
 ## tdl@8.0.1 (2024-06-18)
