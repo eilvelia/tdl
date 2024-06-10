@@ -2,6 +2,13 @@
 
 <!-- Hi! -->
 
+<!--
+## tdl-install-types@0.3.0 (unreleased)
+
+- No longer generates `number | string` instead of `string` for `int64` types
+  in output positions (the input int64 is still `number | string`).
+-->
+
 ## tdl@8.0.0 (2024-05-28)
 
 - The compatibility with `tdl-tdlib-addon` is removed. The `Client` constructor

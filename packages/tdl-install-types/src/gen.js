@@ -58,7 +58,7 @@ function generate (
         case 'string': return 'string'
         case 'int32': return 'number'
         case 'int53': return 'number'
-        case 'int64': return 'number | string'
+        case 'int64': return input ? 'number | string' : 'string'
         case 'Bool': return 'boolean'
         case 'bytes': return 'string /* base64 */'
         default: return input ? p.type + INPUT_SUFFIX : p.type

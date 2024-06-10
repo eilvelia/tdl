@@ -903,7 +903,7 @@ declare module 'tdlib-types' {
      */
     _: 'stickerFullTypeCustomEmoji',
     /** Identifier of the custom emoji */
-    custom_emoji_id: number | string,
+    custom_emoji_id: string,
     /**
      * True, if the sticker must be repainted to a text color in messages, the color
      * of the Telegram Premium badge in emoji status, white color on chat photos, or
@@ -1075,9 +1075,9 @@ declare module 'tdlib-types' {
     /** Describes a sticker */
     _: 'sticker',
     /** Unique sticker identifier within the set; 0 if none */
-    id: number | string,
+    id: string,
     /** Identifier of the sticker set to which the sticker belongs; 0 if none */
-    set_id: number | string,
+    set_id: string,
     /** Sticker width; as defined by the sender */
     width: number,
     /** Sticker height; as defined by the sender */
@@ -1297,7 +1297,7 @@ declare module 'tdlib-types' {
      */
     _: 'game',
     /** Unique game identifier */
-    id: number | string,
+    id: string,
     /** Game short name */
     short_name: string,
     /** Game title */
@@ -1334,7 +1334,7 @@ declare module 'tdlib-types' {
     /** Describes a poll */
     _: 'poll',
     /** Unique poll identifier */
-    id: number | string,
+    id: string,
     /** Poll question; 1-300 characters. Only custom emoji entities are allowed */
     question: formattedText,
     /** List of poll answer options */
@@ -1359,7 +1359,7 @@ declare module 'tdlib-types' {
     /** Describes a chat background */
     _: 'background',
     /** Unique background identifier */
-    id: number | string,
+    id: string,
     /** True, if this is one of default backgrounds */
     is_default: boolean,
     /** True, if the background is dark and is recommended to be used with dark theme */
@@ -1401,7 +1401,7 @@ declare module 'tdlib-types' {
      * Photo identifier; 0 for an empty photo. Can be used to find a photo in a list
      * of user profile photos
      */
-    id: number | string,
+    id: string,
     /**
      * A small (160x160) user profile photo. The file can be downloaded only before
      * the photo is changed
@@ -1953,9 +1953,9 @@ declare module 'tdlib-types' {
     /** Information about the sticker, which was used to create the chat photo */
     _: 'chatPhotoStickerTypeRegularOrMask',
     /** Sticker set identifier */
-    sticker_set_id: number | string,
+    sticker_set_id: string,
     /** Identifier of the sticker in the set */
-    sticker_id: number | string,
+    sticker_id: string,
   }
 
   export type chatPhotoStickerTypeRegularOrMask$Input = {
@@ -1971,7 +1971,7 @@ declare module 'tdlib-types' {
     /** Information about the custom emoji, which was used to create the chat photo */
     _: 'chatPhotoStickerTypeCustomEmoji',
     /** Identifier of the custom emoji */
-    custom_emoji_id: number | string,
+    custom_emoji_id: string,
   }
 
   export type chatPhotoStickerTypeCustomEmoji$Input = {
@@ -2026,7 +2026,7 @@ declare module 'tdlib-types' {
     /** Describes a chat or user profile photo */
     _: 'chatPhoto',
     /** Unique photo identifier */
-    id: number | string,
+    id: string,
     /** Point in time (Unix timestamp) when the photo has been added */
     added_date: number,
     /** Photo minithumbnail; may be null */
@@ -2658,7 +2658,7 @@ declare module 'tdlib-types' {
     /** Describes a custom emoji to be shown instead of the Telegram Premium badge */
     _: 'emojiStatus',
     /** Identifier of the custom emoji in stickerFormatTgs format */
-    custom_emoji_id: number | string,
+    custom_emoji_id: string,
     /** Point in time (Unix timestamp) when the status will expire; 0 if never */
     expiration_date: number,
   }
@@ -2676,7 +2676,7 @@ declare module 'tdlib-types' {
     /** Contains a list of custom emoji identifiers for emoji statuses */
     _: 'emojiStatuses',
     /** The list of custom emoji identifiers */
-    custom_emoji_ids: Array<number | string>,
+    custom_emoji_ids: Array<string>,
   }
 
   export type usernames = {
@@ -2726,7 +2726,7 @@ declare module 'tdlib-types' {
      * Identifier of a custom emoji to be shown on the reply header and link preview
      * background; 0 if none. For Telegram Premium users only
      */
-    background_custom_emoji_id: number | string,
+    background_custom_emoji_id: string,
     /**
      * Identifier of the accent color for the user's profile; -1 if none. For Telegram
      * Premium users only
@@ -2736,7 +2736,7 @@ declare module 'tdlib-types' {
      * Identifier of a custom emoji to be shown on the background of the user's profile;
      * 0 if none. For Telegram Premium users only
      */
-    profile_background_custom_emoji_id: number | string,
+    profile_background_custom_emoji_id: string,
     /**
      * Emoji status to be shown instead of the default Telegram Premium badge; may
      * be null. For Telegram Premium users only
@@ -3669,12 +3669,12 @@ declare module 'tdlib-types' {
      * Identifier of the supergroup sticker set that must be shown before user sticker
      * sets; 0 if none
      */
-    sticker_set_id: number | string,
+    sticker_set_id: string,
     /**
      * Identifier of the custom emoji sticker set that can be used in the supergroup
      * without Telegram Premium subscription; 0 if none
      */
-    custom_emoji_sticker_set_id: number | string,
+    custom_emoji_sticker_set_id: string,
     /** Location to which the supergroup is connected; may be null if none */
     location?: chatLocation,
     /**
@@ -3926,7 +3926,7 @@ declare module 'tdlib-types' {
     /** A reaction with a custom emoji */
     _: 'reactionTypeCustomEmoji',
     /** Unique identifier of the custom emoji */
-    custom_emoji_id: number | string,
+    custom_emoji_id: string,
   }
 
   export type reactionTypeCustomEmoji$Input = {
@@ -4063,7 +4063,7 @@ declare module 'tdlib-types' {
     /** Contains information about an effect added to a message */
     _: 'messageEffect',
     /** Unique identifier of the effect */
-    id: number | string,
+    id: string,
     /** Static icon for the effect in WEBP format; may be null if none */
     static_icon?: sticker,
     /** Emoji corresponding to the effect that can be used if static icon isn't available */
@@ -4409,9 +4409,9 @@ declare module 'tdlib-types' {
      * Unique identifier of an album this message belongs to; 0 if none. Only audios,
      * documents, photos and videos can be grouped together in albums
      */
-    media_album_id: number | string,
+    media_album_id: string,
     /** Unique identifier of the effect added to the message; 0 if none */
-    effect_id: number | string,
+    effect_id: string,
     /**
      * If non-empty, contains a human-readable description of the reason why access
      * to this message must be restricted
@@ -4604,7 +4604,7 @@ declare module 'tdlib-types' {
     /** Identifier of the accent color for title, button text and message background */
     accent_color_id: number,
     /** Identifier of a custom emoji to be shown on the message background; 0 if none */
-    background_custom_emoji_id: number | string,
+    background_custom_emoji_id: string,
     /**
      * If non-empty, additional information about the sponsored message to be shown
      * along with the message
@@ -4775,7 +4775,7 @@ declare module 'tdlib-types' {
      * Identifier of the notification sound to be played for messages; 0 if sound is
      * disabled
      */
-    sound_id: number | string,
+    sound_id: string,
     /**
      * If true, the value for the relevant type of chat or the forum chat is used instead
      * of show_preview
@@ -4793,7 +4793,7 @@ declare module 'tdlib-types' {
      * Identifier of the notification sound to be played for stories; 0 if sound is
      * disabled
      */
-    story_sound_id: number | string,
+    story_sound_id: string,
     /** If true, the value for the relevant type of chat is used instead of show_story_sender */
     use_default_show_story_sender: boolean,
     /** True, if the sender of stories must be displayed in notifications */
@@ -4890,7 +4890,7 @@ declare module 'tdlib-types' {
     /** Time left before notifications will be unmuted, in seconds */
     mute_for: number,
     /** Identifier of the notification sound to be played; 0 if sound is disabled */
-    sound_id: number | string,
+    sound_id: string,
     /** True, if message content must be displayed in notifications */
     show_preview: boolean,
     /**
@@ -4904,7 +4904,7 @@ declare module 'tdlib-types' {
      * Identifier of the notification sound to be played for stories; 0 if sound is
      * disabled
      */
-    story_sound_id: number | string,
+    story_sound_id: string,
     /** True, if the sender of stories must be displayed in notifications */
     show_story_sender: boolean,
     /**
@@ -4992,7 +4992,7 @@ declare module 'tdlib-types' {
     /** Source of story reactions for which notifications are shown */
     story_reaction_source: ReactionNotificationSource,
     /** Identifier of the notification sound to be played; 0 if sound is disabled */
-    sound_id: number | string,
+    sound_id: string,
     /** True, if reaction sender and emoji must be displayed in notifications */
     show_preview: boolean,
   }
@@ -5404,7 +5404,7 @@ declare module 'tdlib-types' {
      * A parameter used to determine order of the chat in the chat list. Chats must
      * be sorted by the pair (order, chat.id) in descending order
      */
-    order: number | string,
+    order: string,
     /** True, if the chat is pinned in the chat list */
     is_pinned: boolean,
     /** Source of the chat in the chat list; may be null */
@@ -5514,14 +5514,14 @@ declare module 'tdlib-types' {
      * Identifier of a custom emoji to be shown on the reply header and link preview
      * background for messages sent by the chat; 0 if none
      */
-    background_custom_emoji_id: number | string,
+    background_custom_emoji_id: string,
     /** Identifier of the profile accent color for the chat's profile; -1 if none */
     profile_accent_color_id: number,
     /**
      * Identifier of a custom emoji to be shown on the background of the chat's profile;
      * 0 if none
      */
-    profile_background_custom_emoji_id: number | string,
+    profile_background_custom_emoji_id: string,
     /** Actions that non-administrator chat members are allowed to take in the chat */
     permissions: chatPermissions,
     /** Last message in the chat; may be null if none or unknown */
@@ -6390,7 +6390,7 @@ declare module 'tdlib-types' {
     /** Contains information about a Web App */
     _: 'webAppInfo',
     /** Unique identifier for the Web App launch */
-    launch_id: number | string,
+    launch_id: string,
     /** A Web App URL to open in a web view */
     url: string,
   }
@@ -6448,7 +6448,7 @@ declare module 'tdlib-types' {
      * A parameter used to determine order of the topic in the topic list. Topics must
      * be sorted by the order in descending order
      */
-    order: number | string,
+    order: string,
     /** Last message in the topic; may be null if none or unknown */
     last_message?: message,
     /** A draft of a message in the topic; may be null if none */
@@ -6461,7 +6461,7 @@ declare module 'tdlib-types' {
     /** Color of the topic icon in RGB format */
     color: number,
     /** Unique identifier of the custom emoji shown on the topic icon; 0 if none */
-    custom_emoji_id: number | string,
+    custom_emoji_id: string,
   }
 
   export type forumTopicIcon$Input = {
@@ -7296,7 +7296,7 @@ declare module 'tdlib-types' {
     /** Cryptocurrency used to pay for the item */
     cryptocurrency: string,
     /** The paid amount, in the smallest units of the cryptocurrency */
-    cryptocurrency_amount: number | string,
+    cryptocurrency_amount: string,
     /** Individual URL for the item on https://fragment.com */
     url: string,
   }
@@ -7645,7 +7645,7 @@ declare module 'tdlib-types' {
     /** Contains information about an invoice payment form */
     _: 'paymentForm',
     /** The payment form identifier */
-    id: number | string,
+    id: string,
     /** Type of the payment form */
     type: PaymentFormType,
     /** User identifier of the seller bot */
@@ -9070,7 +9070,7 @@ declare module 'tdlib-types' {
      * New unique identifier of the custom emoji shown on the topic icon; 0 if none.
      * Must be ignored if edit_icon_custom_emoji_id is false
      */
-    icon_custom_emoji_id: number | string,
+    icon_custom_emoji_id: string,
   }
 
   export type messageForumTopicIsClosedToggled = {
@@ -9113,7 +9113,7 @@ declare module 'tdlib-types' {
      * Identifier of the game; may be different from the games presented in the message
      * with the game
      */
-    game_id: number | string,
+    game_id: string,
     /** New score */
     score: number,
   }
@@ -9175,7 +9175,7 @@ declare module 'tdlib-types' {
     /** Cryptocurrency used to pay for the gift; may be empty if none */
     cryptocurrency: string,
     /** The paid amount, in the smallest units of the cryptocurrency; 0 if none */
-    cryptocurrency_amount: number | string,
+    cryptocurrency_amount: string,
     /** Number of months the Telegram Premium subscription will be active */
     month_count: number,
     /** A sticker to be shown in the message; may be null if unknown */
@@ -9201,7 +9201,7 @@ declare module 'tdlib-types' {
     /** Cryptocurrency used to pay for the gift; may be empty if none or unknown */
     cryptocurrency: string,
     /** The paid amount, in the smallest units of the cryptocurrency; 0 if unknown */
-    cryptocurrency_amount: number | string,
+    cryptocurrency_amount: string,
     /**
      * Number of months the Telegram Premium subscription will be active after code
      * activation
@@ -9613,7 +9613,7 @@ declare module 'tdlib-types' {
      */
     _: 'textEntityTypeCustomEmoji',
     /** Unique identifier of the custom emoji */
-    custom_emoji_id: number | string,
+    custom_emoji_id: string,
   }
 
   export type textEntityTypeCustomEmoji$Input = {
@@ -10974,7 +10974,7 @@ declare module 'tdlib-types' {
     /** Represents a sticker set */
     _: 'stickerSet',
     /** Identifier of the sticker set */
-    id: number | string,
+    id: string,
     /** Title of the sticker set */
     title: string,
     /** Name of the sticker set */
@@ -11028,7 +11028,7 @@ declare module 'tdlib-types' {
     /** Represents short information about a sticker set */
     _: 'stickerSetInfo',
     /** Identifier of the sticker set */
-    id: number | string,
+    id: string,
     /** Title of the sticker set */
     title: string,
     /** Name of the sticker set */
@@ -11649,7 +11649,7 @@ declare module 'tdlib-types' {
      * Unique identifier of an album this message belongs to; 0 if none. Only audios,
      * documents, photos and videos can be grouped together in albums
      */
-    media_album_id: number | string,
+    media_album_id: string,
     /** Content of the message */
     content: MessageContent,
     /** Inline keyboard reply markup for the message; may be null if none */
@@ -11829,7 +11829,7 @@ declare module 'tdlib-types' {
     /** Describes a prepaid Telegram Premium giveaway */
     _: 'prepaidPremiumGiveaway',
     /** Unique identifier of the prepaid giveaway */
-    id: number | string,
+    id: string,
     /** Number of users which will receive Telegram Premium subscription gift codes */
     winner_count: number,
     /**
@@ -12032,7 +12032,7 @@ declare module 'tdlib-types' {
     /** Describes a server for relaying call data */
     _: 'callServer',
     /** Server identifier */
-    id: number | string,
+    id: string,
     /** Server IPv4 address */
     ip_address: string,
     /** Server IPv6 address */
@@ -13289,7 +13289,7 @@ declare module 'tdlib-types' {
      */
     _: 'inlineQueryResults',
     /** Unique identifier of the inline query */
-    inline_query_id: number | string,
+    inline_query_id: string,
     /** Button to be shown above inline query results; may be null */
     button?: inlineQueryResultsButton,
     /** Results of the query */
@@ -13578,18 +13578,18 @@ declare module 'tdlib-types' {
     /** The supergroup sticker set was changed */
     _: 'chatEventStickerSetChanged',
     /** Previous identifier of the chat sticker set; 0 if none */
-    old_sticker_set_id: number | string,
+    old_sticker_set_id: string,
     /** New identifier of the chat sticker set; 0 if none */
-    new_sticker_set_id: number | string,
+    new_sticker_set_id: string,
   }
 
   export type chatEventCustomEmojiStickerSetChanged = {
     /** The supergroup sticker set with allowed custom emoji was changed */
     _: 'chatEventCustomEmojiStickerSetChanged',
     /** Previous identifier of the chat sticker set; 0 if none */
-    old_sticker_set_id: number | string,
+    old_sticker_set_id: string,
     /** New identifier of the chat sticker set; 0 if none */
-    new_sticker_set_id: number | string,
+    new_sticker_set_id: string,
   }
 
   export type chatEventTitleChanged = {
@@ -13625,11 +13625,11 @@ declare module 'tdlib-types' {
     /** Previous identifier of chat accent color */
     old_accent_color_id: number,
     /** Previous identifier of the custom emoji; 0 if none */
-    old_background_custom_emoji_id: number | string,
+    old_background_custom_emoji_id: string,
     /** New identifier of chat accent color */
     new_accent_color_id: number,
     /** New identifier of the custom emoji; 0 if none */
-    new_background_custom_emoji_id: number | string,
+    new_background_custom_emoji_id: string,
   }
 
   export type chatEventProfileAccentColorChanged = {
@@ -13638,11 +13638,11 @@ declare module 'tdlib-types' {
     /** Previous identifier of chat's profile accent color; -1 if none */
     old_profile_accent_color_id: number,
     /** Previous identifier of the custom emoji; 0 if none */
-    old_profile_background_custom_emoji_id: number | string,
+    old_profile_background_custom_emoji_id: string,
     /** New identifier of chat's profile accent color; -1 if none */
     new_profile_accent_color_id: number,
     /** New identifier of the custom emoji; 0 if none */
-    new_profile_background_custom_emoji_id: number | string,
+    new_profile_background_custom_emoji_id: string,
   }
 
   export type chatEventHasProtectedContentToggled = {
@@ -13805,7 +13805,7 @@ declare module 'tdlib-types' {
     /** Represents a chat event */
     _: 'chatEvent',
     /** Chat event identifier */
-    id: number | string,
+    id: string,
     /** Point in time (Unix timestamp) when the event happened */
     date: number,
     /** Identifier of the user or chat who performed the action */
@@ -14973,7 +14973,7 @@ declare module 'tdlib-types' {
      */
     _: 'pushReceiverId',
     /** The globally unique identifier of push notification subscription */
-    id: number | string,
+    id: string,
   }
 
   export type backgroundFillSolid = {
@@ -15738,7 +15738,7 @@ declare module 'tdlib-types' {
     /** Describes a notification sound in MP3 format */
     _: 'notificationSound',
     /** Unique identifier of the notification sound */
-    id: number | string,
+    id: string,
     /** Duration of the sound, in seconds */
     duration: number,
     /** Point in time (Unix timestamp) when the sound was created */
@@ -15814,7 +15814,7 @@ declare module 'tdlib-types' {
     /** Represents an integer option */
     _: 'optionValueInteger',
     /** The value of the option */
-    value: number | string,
+    value: string,
   }
 
   export type optionValueInteger$Input = {
@@ -16479,7 +16479,7 @@ declare module 'tdlib-types' {
      */
     _: 'session',
     /** Session identifier */
-    id: number | string,
+    id: string,
     /** True, if this session is the current session */
     is_current: boolean,
     /**
@@ -16553,7 +16553,7 @@ declare module 'tdlib-types' {
     /** Contains information about an unconfirmed session */
     _: 'unconfirmedSession',
     /** Session identifier */
-    id: number | string,
+    id: string,
     /** Point in time (Unix timestamp) when the user has logged in */
     log_in_date: number,
     /**
@@ -16572,7 +16572,7 @@ declare module 'tdlib-types' {
     /** Contains information about one website the current user is logged in with Telegram */
     _: 'connectedWebsite',
     /** Website identifier */
-    id: number | string,
+    id: string,
     /** The domain name of the website */
     domain_name: string,
     /** User identifier of a bot linked with the website */
@@ -18505,7 +18505,7 @@ declare module 'tdlib-types' {
     /** A URL linking to a sticker set */
     _: 'tMeUrlTypeStickerSet',
     /** Identifier of the sticker set */
-    sticker_set_id: number | string,
+    sticker_set_id: string,
   }
 
   export type tMeUrl = {
@@ -19063,17 +19063,17 @@ declare module 'tdlib-types' {
     /** Cryptocurrency in which revenue is calculated */
     cryptocurrency: string,
     /** Total amount of the cryptocurrency earned, in the smallest units of the cryptocurrency */
-    total_amount: number | string,
+    total_amount: string,
     /**
      * Amount of the cryptocurrency that isn't withdrawn yet, in the smallest units
      * of the cryptocurrency
      */
-    balance_amount: number | string,
+    balance_amount: string,
     /**
      * Amount of the cryptocurrency available for withdrawal, in the smallest units
      * of the cryptocurrency
      */
-    available_amount: number | string,
+    available_amount: string,
   }
 
   export type chatRevenueStatistics = {
@@ -19164,7 +19164,7 @@ declare module 'tdlib-types' {
     /** Cryptocurrency in which revenue is calculated */
     cryptocurrency: string,
     /** The withdrawn amount, in the smallest units of the cryptocurrency */
-    cryptocurrency_amount: number | string,
+    cryptocurrency_amount: string,
     /** Type of the transaction */
     type: ChatRevenueTransactionType,
   }
@@ -19474,14 +19474,14 @@ declare module 'tdlib-types' {
      * The new identifier of a custom emoji to be shown on the reply header and link
      * preview background; 0 if none
      */
-    background_custom_emoji_id: number | string,
+    background_custom_emoji_id: string,
     /** The new chat profile accent color identifier; -1 if none */
     profile_accent_color_id: number,
     /**
      * The new identifier of a custom emoji to be shown on the profile background;
      * 0 if none
      */
-    profile_background_custom_emoji_id: number | string,
+    profile_background_custom_emoji_id: string,
   }
 
   export type updateChatPermissions = {
@@ -19901,7 +19901,7 @@ declare module 'tdlib-types' {
     /** Chat identifier, which notification settings must be applied to the added notifications */
     notification_settings_chat_id: number,
     /** Identifier of the notification sound to be played; 0 if sound is disabled */
-    notification_sound_id: number | string,
+    notification_sound_id: string,
     /**
      * Total number of unread notifications in the group, can be bigger than number
      * of active notifications
@@ -20074,7 +20074,7 @@ declare module 'tdlib-types' {
     /** The file generation process needs to be started by the application */
     _: 'updateFileGenerationStart',
     /** Unique identifier for the generation process */
-    generation_id: number | string,
+    generation_id: string,
     /** The path to a file from which a new file is generated; may be empty */
     original_path: string,
     /** The path to a file that must be created and where the new file is generated */
@@ -20091,7 +20091,7 @@ declare module 'tdlib-types' {
     /** File generation is no longer needed */
     _: 'updateFileGenerationStop',
     /** Unique identifier for the generation process */
-    generation_id: number | string,
+    generation_id: string,
   }
 
   export type updateFileDownloads = {
@@ -20333,7 +20333,7 @@ declare module 'tdlib-types' {
     /** Type of the affected stickers */
     sticker_type: StickerType,
     /** The new list of installed ordinary sticker sets */
-    sticker_set_ids: Array<number | string>,
+    sticker_set_ids: Array<string>,
   }
 
   export type updateTrendingStickerSets = {
@@ -20381,7 +20381,7 @@ declare module 'tdlib-types' {
      */
     _: 'updateSavedNotificationSounds',
     /** The new list of identifiers of saved notification sounds */
-    notification_sound_ids: Array<number | string>,
+    notification_sound_ids: Array<string>,
   }
 
   export type updateDefaultBackground = {
@@ -20491,7 +20491,7 @@ declare module 'tdlib-types' {
     /** A message was sent by an opened Web App, so the Web App needs to be closed */
     _: 'updateWebAppMessageSent',
     /** Identifier of Web App launch */
-    web_app_launch_id: number | string,
+    web_app_launch_id: string,
   }
 
   export type updateActiveEmojiReactions = {
@@ -20505,9 +20505,9 @@ declare module 'tdlib-types' {
     /** The list of available message effects has changed */
     _: 'updateAvailableMessageEffects',
     /** The new list of available message effects from emoji reactions */
-    reaction_effect_ids: Array<number | string>,
+    reaction_effect_ids: Array<string>,
     /** The new list of available message effects from Premium stickers */
-    sticker_effect_ids: Array<number | string>,
+    sticker_effect_ids: Array<string>,
   }
 
   export type updateDefaultReactionType = {
@@ -20686,7 +20686,7 @@ declare module 'tdlib-types' {
     /** A new incoming inline query; for bots only */
     _: 'updateNewInlineQuery',
     /** Unique query identifier */
-    id: number | string,
+    id: string,
     /** Identifier of the user who sent the query */
     sender_user_id: number,
     /** User location; may be null */
@@ -20718,7 +20718,7 @@ declare module 'tdlib-types' {
     /** A new incoming callback query; for bots only */
     _: 'updateNewCallbackQuery',
     /** Unique query identifier */
-    id: number | string,
+    id: string,
     /** Identifier of the user who sent the query */
     sender_user_id: number,
     /** Identifier of the chat where the query was sent */
@@ -20726,7 +20726,7 @@ declare module 'tdlib-types' {
     /** Identifier of the message from which the query originated */
     message_id: number,
     /** Identifier that uniquely corresponds to the chat to which the message was sent */
-    chat_instance: number | string,
+    chat_instance: string,
     /** Query payload */
     payload: CallbackQueryPayload,
   }
@@ -20735,13 +20735,13 @@ declare module 'tdlib-types' {
     /** A new incoming callback query from a message sent via a bot; for bots only */
     _: 'updateNewInlineCallbackQuery',
     /** Unique query identifier */
-    id: number | string,
+    id: string,
     /** Identifier of the user who sent the query */
     sender_user_id: number,
     /** Identifier of the inline message from which the query originated */
     inline_message_id: string,
     /** An identifier uniquely corresponding to the chat a message was sent to */
-    chat_instance: number | string,
+    chat_instance: string,
     /** Query payload */
     payload: CallbackQueryPayload,
   }
@@ -20753,7 +20753,7 @@ declare module 'tdlib-types' {
      */
     _: 'updateNewShippingQuery',
     /** Unique query identifier */
-    id: number | string,
+    id: string,
     /** Identifier of the user who sent the query */
     sender_user_id: number,
     /** Invoice payload */
@@ -20769,7 +20769,7 @@ declare module 'tdlib-types' {
      */
     _: 'updateNewPreCheckoutQuery',
     /** Unique query identifier */
-    id: number | string,
+    id: string,
     /** Identifier of the user who sent the query */
     sender_user_id: number,
     /** Currency for the product price */
@@ -20795,7 +20795,7 @@ declare module 'tdlib-types' {
     /** A new incoming query; for bots only */
     _: 'updateNewCustomQuery',
     /** The query identifier */
-    id: number | string,
+    id: string,
     /** JSON-serialized query data */
     data: string,
     /** Query timeout */
@@ -20813,7 +20813,7 @@ declare module 'tdlib-types' {
     /** A user changed the answer to a poll; for bots only */
     _: 'updatePollAnswer',
     /** Unique poll identifier */
-    poll_id: number | string,
+    poll_id: string,
     /** Identifier of the message sender that changed the answer to the poll */
     voter_id: MessageSender,
     /** 0-based identifiers of answer options, chosen by the user */

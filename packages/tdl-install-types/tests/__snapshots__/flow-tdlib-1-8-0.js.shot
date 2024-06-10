@@ -875,7 +875,7 @@ declare module 'tdlib-types' {
     /** Describes a sticker */
     _: 'sticker',
     /** The identifier of the sticker set to which the sticker belongs; 0 if none */
-    set_id: number | string,
+    set_id: string,
     /** Sticker width; as defined by the sender */
     width: number,
     /** Sticker height; as defined by the sender */
@@ -1079,7 +1079,7 @@ declare module 'tdlib-types' {
     /** Describes a game */
     _: 'game',
     /** Game ID */
-    id: number | string,
+    id: string,
     /** Game short name. To share a game use the URL https://t.me/{bot_username}?game={game_short_name} */
     short_name: string,
     /** Game title */
@@ -1098,7 +1098,7 @@ declare module 'tdlib-types' {
     /** Describes a poll */
     _: 'poll',
     /** Unique poll identifier */
-    id: number | string,
+    id: string,
     /** Poll question; 1-300 characters */
     question: string,
     /** List of poll answer options */
@@ -1126,7 +1126,7 @@ declare module 'tdlib-types' {
      * Photo identifier; 0 for an empty photo. Can be used to find a photo in a list
      * of user profile photos
      */
-    id: number | string,
+    id: string,
     /**
      * A small (160x160) user profile photo. The file can be downloaded only before
      * the photo is changed
@@ -1268,7 +1268,7 @@ declare module 'tdlib-types' {
     /** Describes a chat or user profile photo */
     _: 'chatPhoto',
     /** Unique photo identifier */
-    id: number | string,
+    id: string,
     /** Point in time (Unix timestamp) when the photo has been added */
     added_date: number,
     /** Photo minithumbnail; may be null */
@@ -2206,7 +2206,7 @@ declare module 'tdlib-types' {
      */
     is_all_history_available: boolean,
     /** Identifier of the supergroup sticker set; 0 if none */
-    sticker_set_id: number | string,
+    sticker_set_id: string,
     /** Location to which the supergroup is connected; may be null */
     location?: chatLocation,
     /**
@@ -2533,7 +2533,7 @@ declare module 'tdlib-types' {
      * Unique identifier of an album this message belongs to. Only audios, documents,
      * photos and videos can be grouped together in albums
      */
-    media_album_id: number | string,
+    media_album_id: string,
     /**
      * If non-empty, contains a human-readable description of the reason why access
      * to this message must be restricted
@@ -3051,7 +3051,7 @@ declare module 'tdlib-types' {
      * A parameter used to determine order of the chat in the chat list. Chats must
      * be sorted by the pair (order, chat.id) in descending order
      */
-    order: number | string,
+    order: string,
     /** True, if the chat is pinned in the chat list */
     is_pinned: boolean,
     /** Source of the chat in the chat list; may be null */
@@ -4573,7 +4573,7 @@ declare module 'tdlib-types' {
     /** Contains information about an invoice payment form */
     _: 'paymentForm',
     /** The payment form identifier */
-    id: number | string,
+    id: string,
     /** Full information of the invoice */
     invoice: invoice,
     /** Payment form URL */
@@ -5785,7 +5785,7 @@ declare module 'tdlib-types' {
      * Identifier of the game; may be different from the games presented in the message
      * with the game
      */
-    game_id: number | string,
+    game_id: string,
     /** New score */
     score: number,
   |}
@@ -7161,7 +7161,7 @@ declare module 'tdlib-types' {
     /** Represents a sticker set */
     _: 'stickerSet',
     /** Identifier of the sticker set */
-    id: number | string,
+    id: string,
     /** Title of the sticker set */
     title: string,
     /** Name of the sticker set */
@@ -7205,7 +7205,7 @@ declare module 'tdlib-types' {
     /** Represents short information about a sticker set */
     _: 'stickerSetInfo',
     /** Identifier of the sticker set */
-    id: number | string,
+    id: string,
     /** Title of the sticker set */
     title: string,
     /** Name of the sticker set */
@@ -7338,7 +7338,7 @@ declare module 'tdlib-types' {
     /** Describes a server for relaying call data */
     _: 'callServer',
     /** Server identifier */
-    id: number | string,
+    id: string,
     /** Server IPv4 address */
     ip_address: string,
     /** Server IPv6 address */
@@ -8218,7 +8218,7 @@ declare module 'tdlib-types' {
      */
     _: 'inlineQueryResults',
     /** Unique identifier of the inline query */
-    inline_query_id: number | string,
+    inline_query_id: string,
     /** The offset for the next request. If empty, there are no more results */
     next_offset: string,
     /** Results of the query */
@@ -8511,9 +8511,9 @@ declare module 'tdlib-types' {
     /** The supergroup sticker set was changed */
     _: 'chatEventStickerSetChanged',
     /** Previous identifier of the chat sticker set; 0 if none */
-    old_sticker_set_id: number | string,
+    old_sticker_set_id: string,
     /** New identifier of the chat sticker set; 0 if none */
-    new_sticker_set_id: number | string,
+    new_sticker_set_id: string,
   |}
 
   declare export type chatEventLocationChanged = {|
@@ -8604,7 +8604,7 @@ declare module 'tdlib-types' {
     /** Represents a chat event */
     _: 'chatEvent',
     /** Chat event identifier */
-    id: number | string,
+    id: string,
     /** Point in time (Unix timestamp) when the event happened */
     date: number,
     /** Identifier of the user or chat who performed the action */
@@ -8940,7 +8940,7 @@ declare module 'tdlib-types' {
      */
     _: 'pushReceiverId',
     /** The globally unique identifier of push notification subscription */
-    id: number | string,
+    id: string,
   |}
 
   declare export type backgroundFillSolid = {|
@@ -9079,7 +9079,7 @@ declare module 'tdlib-types' {
     /** Describes a chat background */
     _: 'background',
     /** Unique background identifier */
-    id: number | string,
+    id: string,
     /** True, if this is one of default backgrounds */
     is_default: boolean,
     /** True, if the background is dark and is recommended to be used with dark theme */
@@ -9632,7 +9632,7 @@ declare module 'tdlib-types' {
     /** Represents an integer option */
     _: 'optionValueInteger',
     /** The value of the option */
-    value: number | string,
+    value: string,
   |}
 
   declare export type optionValueInteger$Input = {|
@@ -10017,7 +10017,7 @@ declare module 'tdlib-types' {
      */
     _: 'session',
     /** Session identifier */
-    id: number | string,
+    id: string,
     /** True, if this session is the current session */
     is_current: boolean,
     /** True, if a password is needed to complete authorization of the session */
@@ -10083,7 +10083,7 @@ declare module 'tdlib-types' {
     /** Contains information about one website the current user is logged in with Telegram */
     _: 'connectedWebsite',
     /** Website identifier */
-    id: number | string,
+    id: string,
     /** The domain name of the website */
     domain_name: string,
     /** User identifier of a bot linked with the website */
@@ -10958,7 +10958,7 @@ declare module 'tdlib-types' {
     /** A URL linking to a sticker set */
     _: 'tMeUrlTypeStickerSet',
     /** Identifier of the sticker set */
-    sticker_set_id: number | string,
+    sticker_set_id: string,
   |}
 
   declare export type tMeUrl = {|
@@ -12082,7 +12082,7 @@ declare module 'tdlib-types' {
     /** The file generation process needs to be started by the application */
     _: 'updateFileGenerationStart',
     /** Unique identifier for the generation process */
-    generation_id: number | string,
+    generation_id: string,
     /** The path to a file from which a new file is generated; may be empty */
     original_path: string,
     /** The path to a file that must be created and where the new file is generated */
@@ -12099,7 +12099,7 @@ declare module 'tdlib-types' {
     /** File generation is no longer needed */
     _: 'updateFileGenerationStop',
     /** Unique identifier for the generation process */
-    generation_id: number | string,
+    generation_id: string,
   |}
 
   declare export type updateCall = {|
@@ -12203,7 +12203,7 @@ declare module 'tdlib-types' {
     /** True, if the list of installed mask sticker sets was updated */
     is_masks: boolean,
     /** The new list of installed ordinary sticker sets */
-    sticker_set_ids: Array<number | string>,
+    sticker_set_ids: Array<string>,
   |}
 
   declare export type updateTrendingStickerSets = {|
@@ -12349,7 +12349,7 @@ declare module 'tdlib-types' {
     /** A new incoming inline query; for bots only */
     _: 'updateNewInlineQuery',
     /** Unique query identifier */
-    id: number | string,
+    id: string,
     /** Identifier of the user who sent the query */
     sender_user_id: number,
     /** User location; may be null */
@@ -12381,7 +12381,7 @@ declare module 'tdlib-types' {
     /** A new incoming callback query; for bots only */
     _: 'updateNewCallbackQuery',
     /** Unique query identifier */
-    id: number | string,
+    id: string,
     /** Identifier of the user who sent the query */
     sender_user_id: number,
     /** Identifier of the chat where the query was sent */
@@ -12389,7 +12389,7 @@ declare module 'tdlib-types' {
     /** Identifier of the message, from which the query originated */
     message_id: number,
     /** Identifier that uniquely corresponds to the chat to which the message was sent */
-    chat_instance: number | string,
+    chat_instance: string,
     /** Query payload */
     payload: CallbackQueryPayload,
   |}
@@ -12398,13 +12398,13 @@ declare module 'tdlib-types' {
     /** A new incoming callback query from a message sent via a bot; for bots only */
     _: 'updateNewInlineCallbackQuery',
     /** Unique query identifier */
-    id: number | string,
+    id: string,
     /** Identifier of the user who sent the query */
     sender_user_id: number,
     /** Identifier of the inline message, from which the query originated */
     inline_message_id: string,
     /** An identifier uniquely corresponding to the chat a message was sent to */
-    chat_instance: number | string,
+    chat_instance: string,
     /** Query payload */
     payload: CallbackQueryPayload,
   |}
@@ -12416,7 +12416,7 @@ declare module 'tdlib-types' {
      */
     _: 'updateNewShippingQuery',
     /** Unique query identifier */
-    id: number | string,
+    id: string,
     /** Identifier of the user who sent the query */
     sender_user_id: number,
     /** Invoice payload */
@@ -12432,7 +12432,7 @@ declare module 'tdlib-types' {
      */
     _: 'updateNewPreCheckoutQuery',
     /** Unique query identifier */
-    id: number | string,
+    id: string,
     /** Identifier of the user who sent the query */
     sender_user_id: number,
     /** Currency for the product price */
@@ -12458,7 +12458,7 @@ declare module 'tdlib-types' {
     /** A new incoming query; for bots only */
     _: 'updateNewCustomQuery',
     /** The query identifier */
-    id: number | string,
+    id: string,
     /** JSON-serialized query data */
     data: string,
     /** Query timeout */
@@ -12476,7 +12476,7 @@ declare module 'tdlib-types' {
     /** A user changed the answer to a poll; for bots only */
     _: 'updatePollAnswer',
     /** Unique poll identifier */
-    poll_id: number | string,
+    poll_id: string,
     /** The user, who changed the answer to the poll */
     user_id: number,
     /** 0-based identifiers of answer options, chosen by the user */
