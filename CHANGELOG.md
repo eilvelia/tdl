@@ -9,7 +9,7 @@
   in output positions (the input int64 is still `number | string`).
 -->
 
-## tdl@8.0.1 (unreleased)
+## tdl@8.0.1 (2024-06-18)
 
 - In bun (instead of Node.js), fixed updates/responses stop being received if
   none of those have been received in the last 10 (`receiveTimeout`) seconds.
