@@ -487,9 +487,10 @@ Since [bun][] is Node.js-compatible and [supports Node-API][bun-napi], `tdl`
 should work out of the box, however the stability may not be the best yet.
 
 [deno][] can also import `tdl` through the node compatibility via
-`import * as tdl from 'npm:tdl'`. Currently, the Node-API implementation in deno
-is incorrect and race conditions leading to random segfaults sometimes occur.
-Not recommended to use `tdl` in deno.
+`import * as tdl from 'npm:tdl'`. To use tdl in deno, you must ensure that your
+deno version is 1.44.2 (2024-06-13) or greater. The Node-API implementation was
+broken in older deno versions and can easily result in segfaults. There's a
+small example in `examples/deno-example.ts`.
 
 `tdl` depends on native libraries and cannot be used in the browser. However,
 TDLib itself can possibly work in the browser by compiling it to WebAssembly.

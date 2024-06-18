@@ -1,9 +1,9 @@
-// Simple deno example. Requires --allow-read --allow-env --allow-ffi.
-// WARNING: May be unstable.
+// Simple deno example.
+// $ deno run --allow-read --allow-env --allow-ffi deno-example.ts
 
 import * as tdl from 'npm:tdl@8'
 // Also use prebuilt TDLib:
-import { getTdjson } from 'npm:prebuilt-tdlib@td-1.8.27'
+import { getTdjson } from 'npm:prebuilt-tdlib@td-1.8.30'
 
 tdl.configure({ tdjson: getTdjson() })
 
