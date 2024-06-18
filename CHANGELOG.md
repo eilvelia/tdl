@@ -9,6 +9,12 @@
   in output positions (the input int64 is still `number | string`).
 -->
 
+## tdl@8.0.1 (unreleased)
+
+- In bun (instead of Node.js), fixed updates/responses stop being received if
+  none of those have been received in the last 10 (`receiveTimeout`) seconds.
+- In bun, fixed the old tdjson interface exiting the process instantly.
+
 ## tdl@8.0.0 (2024-05-28)
 
 - The compatibility with `tdl-tdlib-addon` is removed. The `Client` constructor

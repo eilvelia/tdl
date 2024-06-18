@@ -54,6 +54,8 @@ td_set_log_message_callback_t td_set_log_message_callback;
 #define TYPEFAIL(MSG, ...) \
   NAPI_THROW(Napi::TypeError::New(env, MSG), __VA_ARGS__);
 
+static const char empty_str[] = "";
+
 class ReceiveWorker {
 public:
   ReceiveWorker(const Napi::Env& env, void *client, double timeout)
@@ -63,6 +65,7 @@ public:
     {
       if (client == nullptr) // New tdjson interface
         thread.detach();
+      tsfn.Ref(env); // bun does not ref by default
     }
   ~ReceiveWorker() {
     {
@@ -103,7 +106,7 @@ private:
   static void CallJs(Napi::Env env, Napi::Function, TsfnCtx *ctx, char *data) {
     if (env != nullptr && ctx != nullptr) {
       const char *res = data;
-      auto val = res == nullptr ? env.Null() : Napi::String::New(env, res);
+      auto val = res == nullptr || *res == '\0' ? env.Null() : Napi::String::New(env, res);
       auto deferred = std::move(ctx->deferred);
       // Note that this can potentially execute the JS code (it does in deno)
       deferred->Resolve(val);
@@ -126,7 +129,10 @@ private:
       // on execute() and receive(). Since we never call execute() in this
       // thread, it should be safe not to copy the response here.
       lock.lock();
-      tsfn.NonBlockingCall(const_cast<char *>(response));
+      // bun doesn't call the callback if data is nullptr, so pass an empty
+      // string instead
+      char *data = const_cast<char *>(response == nullptr ? empty_str : response);
+      tsfn.NonBlockingCall(data);
     }
     tsfn.Release();
     // NOTE: Given that this thread is not calling receive anymore, the last
