@@ -149,7 +149,7 @@ export class Client {
   private readonly _client: TdjsonAnyClient
   private _requestId: number = 0
   private _initialized: boolean = false
-  private _preinitRequests: Array<[request: any, extra: unknown]> = []
+  private _preinitRequests: Array<{ request: any, id: unknown }> = []
   private _version: Version = TDLIB_DEFAULT
   private _connectionStateName: Td.ConnectionState['_'] = 'connectionStateWaitingForNetwork'
   private _authorizationState: Td.AuthorizationState | null = null
@@ -320,8 +320,8 @@ export class Client {
   private _finishInit (): void {
     debug('Finished initialization')
     this._initialized = true
-    for (const [request, id] of this._preinitRequests)
-      this._send(request, id)
+    for (const r of this._preinitRequests)
+      this._send(r.request, r.id)
     this._preinitRequests = []
   }
 
@@ -334,7 +334,7 @@ export class Client {
       this._pending.set(id, { resolve, reject })
     })
     if (this._initialized === false) {
-      this._preinitRequests.push([request, id])
+      this._preinitRequests.push({ request, id })
       return responsePromise
     }
     this._send(request, id)
