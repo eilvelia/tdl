@@ -15,6 +15,8 @@
   none of those have been received in the last 10 (`receiveTimeout`) seconds.
 - In bun, fixed the old tdjson interface exiting the process instantly.
 
+Update: this is related to bun < v1.1.14 only.
+
 ## tdl@8.0.0 (2024-05-28)
 
 - The compatibility with `tdl-tdlib-addon` is removed. The `Client` constructor

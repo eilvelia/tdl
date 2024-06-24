@@ -65,7 +65,7 @@ public:
     {
       if (client == nullptr) // New tdjson interface
         thread.detach();
-      tsfn.Ref(env); // bun does not ref by default
+      tsfn.Ref(env); // note: bun (<v1.1.14) does not ref by default
     }
   ~ReceiveWorker() {
     {
@@ -129,8 +129,8 @@ private:
       // on execute() and receive(). Since we never call execute() in this
       // thread, it should be safe not to copy the response here.
       lock.lock();
-      // bun doesn't call the callback if data is nullptr, so pass an empty
-      // string instead
+      // note: bun (<v1.1.14) doesn't call the callback if the data is nullptr
+      // passing an empty string if response is null
       char *data = const_cast<char *>(response == nullptr ? empty_str : response);
       tsfn.NonBlockingCall(data);
     }
