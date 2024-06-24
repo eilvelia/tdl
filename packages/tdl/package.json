@@ -22,7 +22,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "debug": "^4.3.4",
+    "debug": "^4.3.5",
     "node-addon-api": "^7.1.0",
     "node-gyp-build": "^4.8.1"
   },
