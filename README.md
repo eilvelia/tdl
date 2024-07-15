@@ -541,6 +541,17 @@ The path to the directory where you execute `npm install` likely contains
 spaces, which is not supported by gyp:
 https://github.com/nodejs/node-gyp/issues/65#issuecomment-368820565.
 
+<div align="right"><a name="no-native-build" href="#no-native-build">#</a></div>
+
+- `No native build was found for platform=…`
+
+A pre-built node addon is not available for your system[^1], and the node addon has
+not been built from source. gcc, g++, python3, make should be available on your
+system to build the tdl's node addon; `npm install` (or `npm ci` or similar)
+should be run to execute the building. Also note that, for example, when
+building a Docker container, you can't generally just copy the node modules from
+the host system.
+
 <div align="right"><a name="tdjson-already-loaded-error" href="#tdjson-already-loaded-error">#</a></div>
 
 - `tdjson is already loaded`
