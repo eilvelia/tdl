@@ -1,0 +1,16 @@
+diff --git a/CMake/TdSetUpCompiler.cmake b/CMake/TdSetUpCompiler.cmake
+index ff5991cfb..e1f7ea28b 100644
+--- a/CMake/TdSetUpCompiler.cmake
++++ b/CMake/TdSetUpCompiler.cmake
+@@ -63,9 +63,9 @@ function(td_set_up_compiler)
+       elseif (EMSCRIPTEN)
+         set(TD_LINKER_FLAGS "-Wl,--gc-sections")
+       elseif (ANDROID)
+-        set(TD_LINKER_FLAGS "-Wl,--gc-sections -Wl,--exclude-libs,ALL -Wl,--icf=safe")
++        set(TD_LINKER_FLAGS "-Wl,--gc-sections -Wl,--icf=safe")
+       else()
+-        set(TD_LINKER_FLAGS "-Wl,--gc-sections -Wl,--exclude-libs,ALL")
++        set(TD_LINKER_FLAGS "-Wl,--gc-sections")
+       endif()
+     endif()
+     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${TD_LINKER_FLAGS}")

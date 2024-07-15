@@ -24,6 +24,8 @@ jobs:
           node-version: lts/*
           cache: npm
       - uses: goto-bus-stop/setup-zig@v2
+        with:
+          version: '0.13.0'
         if: runner.os == 'Linux'
       - name: Install dependencies
         run: npm install

@@ -20,142 +20,77 @@ on:
 # NOTE: The ZLIB_USE_STATIC_LIBS option requires CMake >= 3.24
 jobs:
   build-linux-x64:
-    name: Build TDLib (GNU/Linux x86_64)
-    runs-on: ubuntu-latest
+    name: 'Build TDLib / Linux x86_64 glibc'
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v27
         with:
-          repository: 'tdlib/td'
-          ref: ${{ inputs.tdlib }}
-      - name: Create a build script
+          nix_path: nixpkgs=channel:nixos-unstable
+      - name: Build TDLib
         run: |
-          cat > prebuilt-tdlib-docker.sh <<EOF
-          set -e
-          source /hbb_shlib/activate
-          set -x
-          yum install -y gperf
-          cd /td
-          mkdir -p build && cd build
-          cmake --version
-          # Currently, cmake in this image should be 3.22.2
-          cmake \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DOPENSSL_USE_STATIC_LIBS=TRUE \
-            -DZLIB_LIBRARY=/hbb_shlib/lib/libz.a \
-            -DZLIB_INCLUDE_DIR=/hbb_shlib/include \
-            ..
-          cmake --build . --target tdjson -- -j 2
-          strip libtdjson.so
-          cd ..
-          cp -L build/libtdjson.so to-upload/libtdjson.so
-          cd to-upload
-          ldd libtdjson.so
-          touch info.txt
-          gcc --version | grep -i gcc >> info.txt
-          ldd --version | grep ldd >> info.txt
-          openssl version >> info.txt
-          sed -n 's/#define ZLIB_VERSION "\([^"]*\)"/zlib version: \1/p' /hbb_shlib/include/zlib.h >> info.txt
-          EOF
-      - name: Build in docker
-        run: |
-          mkdir to-upload
-          docker run -v $(pwd):/td ghcr.io/phusion/holy-build-box/hbb-64 \
-            bash /td/prebuilt-tdlib-docker.sh
-      - name: Info
-        working-directory: to-upload
-        run: |
-          cat info.txt
-          echo "-----"
-          du -hs libtdjson.so
-          ldd libtdjson.so
+          cd packages/prebuilt-tdlib/ci
+          ./build-linux.sh ${{ inputs.tdlib }} x86_64-linux-gnu.2.22
       - uses: actions/upload-artifact@v4
         with:
           name: tdlib-linux-x64
-          path: to-upload
-  build-macos:
-    name: Build TDLib (macOS universal)
-    runs-on: macos-12
-    env:
-      openssl_dir: /usr/local/opt/custom_openssl
-      openssl_tag: '1.1.2100' # OpenSSL 1.1.1u
-      zlib_ver: '1.2.13'
-      zlib_dir: /usr/local/opt/custom_zlib
+          path: ${{ env.TO_UPLOAD }}
+  build-macos-x64:
+    name: 'Build TDLib / macOS x86_64'
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v27
         with:
-          repository: 'tdlib/td'
-          ref: ${{ inputs.tdlib }}
-      - name: Install gperf via homebrew
-        run: HOMEBREW_NO_INSTALL_CLEANUP=1 brew install gperf
-      - name: CMake version
-        run: cmake --version
-      # https://github.com/up9cloud/ios-libtdjson/blob/d4426dca16933b6178acb030955de92f040b7574/build.sh
-      - name: Download pre-built OpenSSL
-        run: |
-          # around 80 mb
-          curl -SL https://github.com/krzyzanowskim/OpenSSL/archive/refs/tags/${openssl_tag}.tar.gz -o OpenSSL.tar.gz
-          tar xzf OpenSSL.tar.gz
-          # As for now, MACOSX_DEPLOYMENT_TARGET in these pre-built openssl binaries should be 10.13
-          mv OpenSSL-${openssl_tag}/macosx ${openssl_dir}
-      - name: Download and build zlib
-        run: |
-          set -x
-          curl -SL https://github.com/madler/zlib/releases/download/v${zlib_ver}/zlib-${zlib_ver}.tar.gz -o zlib.tar.gz
-          tar xzf zlib.tar.gz
-          cd zlib-${zlib_ver}
-          MACOSX_DEPLOYMENT_TARGET=10.14 CFLAGS="-O2 -mmacosx-version-min=10.14 -arch x86_64" \
-            ./configure --static --prefix=${zlib_dir}
-          MACOSX_DEPLOYMENT_TARGET=10.14 make
-          make install && rm ${zlib_dir}/lib/libz.a
-          cp libz.a libz-x86_64.a
-          make clean
-          MACOSX_DEPLOYMENT_TARGET=11.0 CFLAGS="-O2 -mmacosx-version-min=11.0 -arch arm64" \
-            ./configure --static
-          MACOSX_DEPLOYMENT_TARGET=11.0 make
-          mv libz.a libz-arm64.a
-          lipo -create libz-x86_64.a libz-arm64.a -output libz.a
-          cp libz.a ${zlib_dir}/lib/libz.a
+          nix_path: nixpkgs=channel:nixpkgs-unstable
       - name: Build TDLib
         run: |
-          mkdir to-upload
-          mkdir -p build && cd build
-          MACOSX_DEPLOYMENT_TARGET=10.14 cmake \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_OSX_ARCHITECTURES='x86_64;arm64' \
-            -DOPENSSL_USE_STATIC_LIBS=TRUE -DZLIB_USE_STATIC_LIBS=TRUE \
-            -DOPENSSL_FOUND=1 \
-            -DOPENSSL_CRYPTO_LIBRARY=${openssl_dir}/lib/libcrypto.a \
-            -DOPENSSL_SSL_LIBRARY=${openssl_dir}/lib/libssl.a \
-            -DOPENSSL_LIBRARIES="${openssl_dir}/lib/libcrypto.a;${openssl_dir}/lib/libssl.a" \
-            -DOPENSSL_INCLUDE_DIR=${openssl_dir}/include \
-            -DZLIB_INCLUDE_DIR=${zlib_dir}/include \
-            -DZLIB_LIBRARY=${zlib_dir}/lib/libz.a \
-            ..
-          cmake --build . --target tdjson -- -j 3
-          cd ..
-          cp -L build/libtdjson.dylib to-upload/libtdjson.dylib
-          install_name_tool -id @rpath/libtdjson.dylib to-upload/libtdjson.dylib
-      - name: Info
-        working-directory: to-upload
+          cd packages/prebuilt-tdlib/ci && ./build-macos.sh ${{ inputs.tdlib }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: temp-macos-x64
+          path: ${{ env.TO_UPLOAD }}
+  build-macos-arm64:
+    name: 'Build TDLib / macOS arm64'
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v27
+        with:
+          nix_path: nixpkgs=channel:nixpkgs-unstable
+      - name: Build TDLib
         run: |
-          touch info.txt
-          grep OPENSSL_VERSION_TEXT ${openssl_dir}/include/openssl/opensslv.h | sed 's/.*"\([^"]*\)"/\1/' >> info.txt
-          echo "zlib version: ${zlib_ver}" >> info.txt
-          otool -L libtdjson.dylib >> info.txt
-          cat info.txt
-          echo "-----"
-          uname -a
+          cd packages/prebuilt-tdlib/ci && ./build-macos.sh ${{ inputs.tdlib }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: temp-macos-arm64
+          path: ${{ env.TO_UPLOAD }}
+  build-macos:
+    name: Create universal macOS shared library
+    needs: [build-macos-x64, build-macos-arm64]
+    runs-on: macos-13
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: temp-macos-*
+      - name: Combine shared libraries
+        run: |
+          mkdir -p to-upload
+          lipo temp-macos-x64/libtdjson.dylib temp-macos-arm64/libtdjson.dylib \
+            -output to-upload/libtdjson.dylib -create
+          cd to-upload
           file libtdjson.dylib
-          du -hs libtdjson.dylib
-          otool -arch x86_64 -l libtdjson.dylib
-          echo "---"
-          otool -arch arm64 -l libtdjson.dylib
+          otool -L libtdjson.dylib
+          # echo "--x86_64--" >> info.txt
+          # cat ../temp-macos-x64/libtdjson.dylib >> info.txt
+          # echo "--arm64--" >> info.txt
+          # cat ../temp-macos-arm64/libtdjson.dylib >> info.txt
       - uses: actions/upload-artifact@v4
         with:
           name: tdlib-macos
           path: to-upload
   build-windows-x64:
-    name: Build TDLib (Windows x86_64)
+    name: 'Build TDLib / Windows x86_64'
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v4
@@ -182,12 +117,10 @@ jobs:
             -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake `
             -DVCPKG_TARGET_TRIPLET=x64-windows-static `
             -DOPENSSL_USE_STATIC_LIBS=TRUE -DZLIB_USE_STATIC_LIBS=TRUE ..
-          cmake --build . --target tdjson --config Release --parallel 2
+          cmake --build . --target tdjson --config Release --parallel 4
           cd ..
           cp build\Release\tdjson.dll to-upload\tdjson.dll
-      - name: Info
-        # It should be possible to print the dependencies using dumpbin.exe
-        run: |
+          # It should be possible to print the dependencies using dumpbin.exe
           vcpkg list | Select-String openssl,zlib > to-upload\info.txt
           cat to-upload\info.txt
       - uses: actions/upload-artifact@v4
@@ -196,16 +129,21 @@ jobs:
           path: to-upload
 
   test:
-    name: 'Test the ${{ matrix.os[1] }} pre-built libraries'
+    name: 'Test / ${{ matrix.v.bin }} / ${{ matrix.v.os }}'
     needs: [build-linux-x64, build-macos, build-windows-x64]
-    runs-on: ${{ matrix.os[0] }}
+    runs-on: ${{ matrix.v.os }}
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - [ubuntu-latest, tdlib-linux-x64]
-          - [macos-latest, tdlib-macos]
-          - [windows-latest, tdlib-windows-x64]
+        v:
+          - os: ubuntu-latest
+            bin: tdlib-linux-x64
+          - os: macos-13
+            bin: tdlib-macos
+          - os: macos-14
+            bin: tdlib-macos
+          - os: windows-latest
+            bin: tdlib-windows-x64
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -217,7 +155,7 @@ jobs:
         run: npm uninstall -D prebuilt-tdlib # just in case
       - uses: actions/download-artifact@v4
         with:
-          name: ${{ matrix.os[1] }}
+          name: ${{ matrix.v.bin }}
           merge-multiple: true
       - run: npm run test:integration
         env:
@@ -245,6 +183,7 @@ jobs:
           pattern: tdlib-*
           path: packages/prebuilt-tdlib/prebuilds
       - run: tree packages/prebuilt-tdlib
+      - run: du -hsc packages/prebuilt-tdlib/prebuilds/*
       - run: npm run test:integration
         env:
           PREBUILT_PATH: packages/prebuilt-tdlib

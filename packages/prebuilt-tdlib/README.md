@@ -10,8 +10,8 @@ The shared libraries are statically linked against OpenSSL and zlib to prevent
 compatibility issues in Node.js.
 
 Supported systems:
-- GNU/Linux x86_64 (requires glibc >= 2.17)
-- macOS x86_64, arm64 (universal, requires macOS >= 10.14)
+- Linux x86_64 (requires glibc >= 2.22)
+- macOS x86_64, arm64 (universal, requires macOS >= 10.12)
 - Windows x86_64
 
 To install `prebuilt-tdlib` for the latest TDLib version that `prebuilt-tdlib`
@@ -120,6 +120,15 @@ An incomplete list is available below (mostly exceptions or "notable" versions):
 ## Changes
 
 Changes to the building process of `prebuilt-tdlib` are noted below.
+
+### (unreleased)
+
+The building process of Linux and macOS builds is significantly changed.
+
+- on macOS, TDLib is built using macOS SDK from nixpkgs, and the minimal
+  supported macOS version is now 10.12 instead of 10.14.
+- On Linux, TDLib is now built using zig. The minimal glibc version is 2.22
+  instead of 2.17.
 
 ### 2024-05-08
 
