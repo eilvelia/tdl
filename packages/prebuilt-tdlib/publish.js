@@ -4,8 +4,11 @@
 const path = require('path')
 const fs = require('fs')
 const { execSync } = require('child_process')
+const { prebuilds } = require('./prebuild-list')
+/*:: import type { PrebuildInfo } from './prebuild-list' */
 
-const packageName = 'prebuilt-tdlib'
+const MAIN_PACKAGE_NAME = 'prebuilt-tdlib'
+const SCOPE = '@prebuilt-tdlib'
 
 const tdlibCommit = process.env.TDLIB_COMMIT_HASH
 let tdlibVersion = process.env.TDLIB_VERSION
@@ -15,7 +18,7 @@ const patchVersion = process.argv[2]
 if (!tdlibCommit) throw new Error('Expected TDLIB_COMMIT_HASH')
 if (!tdlibVersion) throw new Error('Expected TDLIB_VERSION')
 if (!npmTag) throw new Error('Expected NPM_TAG')
-if (!patchVersion) throw new Error('Expected the patch version')
+if (!patchVersion) throw new Error('Expected the patch version argument')
 
 if (Number.isNaN(Number(patchVersion)))
   throw new Error(`Incorrect patch version: ${patchVersion}`)
@@ -34,48 +37,84 @@ tdlibPatch = tdlibPatch.padStart(3, '0')
 
 const npmVersion = `0.${tdlibMajor}${tdlibMinor}${tdlibPatch}.${patchVersion}`
 
-console.log(`Preparing to publish ${npmVersion}`)
+const prebuildPackageJson = require('./prebuild-template/package.json')
 
-const packageJson = require('./package.json')
-
-delete packageJson.private
-packageJson.name = packageName
-packageJson.version = npmVersion
-packageJson.tdlib = {
+delete prebuildPackageJson.private
+prebuildPackageJson.version = npmVersion
+prebuildPackageJson.tdlib = {
   commit: tdlibCommit,
   version: tdlibVersion
 }
 
-const tdlibJson =
-  { commit: tdlibCommit, version: tdlibVersion, ref: tdlibCommit }
+const prebuildTemplateDir = path.join(__dirname, 'prebuild-template')
 
-fs.writeFileSync(
-  path.join(__dirname, 'prebuilds', 'tdlib.json'),
-  JSON.stringify(tdlibJson) + '\n'
-)
+function publishPrebuild (info/*: PrebuildInfo */) {
+  console.log(`Preparing to publish ${SCOPE}/${info.packageName}@${npmVersion}`)
 
-fs.writeFileSync(
-  path.join(__dirname, 'package.json'),
-  JSON.stringify(packageJson, null, '  ') + '\n'
-)
+  // Writing package.json
+  const pkg = { ...prebuildPackageJson }
+  pkg.name = SCOPE + '/' + info.packageName
+  pkg.description += ' for ' + info.descr
+  pkg.files = [info.libfile, 'LICENSE.md', 'README.md']
+  for (const [k, v] of Object.entries(info.requirements))
+    pkg[k] = v
+  fs.writeFileSync(
+    path.join(prebuildTemplateDir, 'package.json'),
+    JSON.stringify(pkg, null, '  ') + '\n'
+  )
 
-// Check
+  const lib = path.join(__dirname, 'prebuilds', info.prebuildDir, info.libfile)
 
-function checkExists (pathparts/*: string[] */) {
-  const p = path.join(__dirname, 'prebuilds', ...pathparts)
-  if (fs.existsSync(p)) return
-  throw new Error(`'${p}' does not exist`)
+  if (!fs.existsSync(lib))
+    throw new Error(`'${lib}' does not exist`)
+
+  fs.copyFileSync(lib, path.join('.', info.libfile))
+
+  const files = fs.readdirSync(prebuildTemplateDir)
+
+  if (files.length < 4 || !files.includes(info.libfile))
+    throw new Error(`No shared library found (files: ${files.join()})`)
+
+  execSync('npm publish --provenance --access public', { stdio: 'inherit' })
+
+  fs.rmSync(info.libfile)
 }
 
-checkExists(['tdlib-linux-x64', 'libtdjson.so'])
-checkExists(['tdlib-macos', 'libtdjson.dylib'])
-checkExists(['tdlib-windows-x64', 'tdjson.dll'])
+const prebuildCount = fs.readdirSync(path.join(__dirname, 'prebuilds'))
+  .filter(name => name.startsWith('tdlib-'))
+  .length
 
-checkExists(['tdlib.json'])
+if (prebuildCount < prebuilds.length)
+  throw new Error(`Expected ${prebuilds.length} prebuilds, found ${prebuildCount}`)
 
 // Publish
 
 const oldCwd = process.cwd()
+
+process.chdir(prebuildTemplateDir)
+
+for (const prebuild of prebuilds)
+  publishPrebuild(prebuild)
+
+console.log(`Preparing to publish ${MAIN_PACKAGE_NAME}@${npmVersion}`)
+
+const mainPackageJson = require('./package.json')
+
+delete mainPackageJson.private
+mainPackageJson.name = MAIN_PACKAGE_NAME
+mainPackageJson.version = npmVersion
+mainPackageJson.tdlib = {
+  commit: tdlibCommit,
+  version: tdlibVersion
+}
+mainPackageJson.optionalDependencies = prebuilds.reduce((obj, info) => {
+  return { ...obj, [SCOPE + '/' + info.packageName]: npmVersion }
+}, {})
+
+fs.writeFileSync(
+  path.join(__dirname, 'package.json'),
+  JSON.stringify(mainPackageJson, null, '  ') + '\n'
+)
 
 process.chdir(__dirname)
 
@@ -83,7 +122,7 @@ const publishCommand =
   `npm publish --provenance --access public --tag ${npmTag}`
 
 const addTagCommand =
-  `npm dist-tag add ${packageName}@${npmVersion} td-${tdlibVersion}`
+  `npm dist-tag add ${MAIN_PACKAGE_NAME}@${npmVersion} td-${tdlibVersion}`
 
 execSync(publishCommand, { stdio: 'inherit' })
 execSync(addTagCommand, { stdio: 'inherit' })
@@ -91,5 +130,5 @@ execSync(addTagCommand, { stdio: 'inherit' })
 try {
   process.chdir(oldCwd)
 } catch (e) {
-  console.error(`Note: failed to chdir to ${oldCwd}: ${e && e.message}`)
+  console.error(`Note: failed to chdir to ${oldCwd}: ${e?.message}`)
 }

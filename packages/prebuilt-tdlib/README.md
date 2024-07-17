@@ -1,13 +1,15 @@
 # Prebuilt TDLib
 
 This package distributes pre-built [TDLib][] shared libraries through npm.
-The libraries are built on GitHub Actions: [prebuilt-tdlib.yml][].
+The libraries are built on GitHub Actions ([prebuilt-tdlib.yml][]) and published
+using [npm publish --provenance][provenance].
 
 [TDLib]: https://github.com/tdlib/td
 [prebuilt-tdlib.yml]: ../../.github/workflows/prebuilt-tdlib.yml
+[provenance]: https://docs.npmjs.com/generating-provenance-statements
 
-The shared libraries are statically linked against OpenSSL and zlib to prevent
-compatibility issues in Node.js.
+The shared libraries are statically linked against OpenSSL and zlib, for one, to
+prevent compatibility issues in Node.js.
 
 Supported systems:
 - Linux x86_64 (requires glibc >= 2.22)
@@ -32,7 +34,8 @@ $ npm install prebuilt-tdlib@td-1.8.30
 `$ npm info prebuilt-tdlib dist-tags` to get the list of available versions.
 
 The TDLib version is important: there is no backward compatibility and the
-interface you use may significantly change after an update.
+interface you use may significantly change after an update. It is, though,
+recommended to use the latest TDLib version.
 
 ## Usage
 
@@ -111,7 +114,6 @@ An incomplete list is available below (mostly exceptions or "notable" versions):
 | npm tag | notes |
 | ------- | ----- |
 | [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.26.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.26) | [tdlib [b1b33cf42790ca10ef34abc2ac8828ae704f1f56](https://github.com/tdlib/td/commit/b1b33cf42790ca10ef34abc2ac8828ae704f1f56)] |
-| [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.19.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.19) | |
 | [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.14.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.14) | [tdlib [66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9](https://github.com/tdlib/td/commit/66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9)] |
 | [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.12.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.12) | [tdlib [70bee089d492437ce931aa78446d89af3da182fc](https://github.com/tdlib/td/commit/70bee089d492437ce931aa78446d89af3da182fc)] |
 | [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.7.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.7) | [tdlib [de5379f00b6af7686f197037ca3b494e6277e523](https://github.com/tdlib/td/commit/de5379f00b6af7686f197037ca3b494e6277e523)] |
@@ -123,10 +125,21 @@ Changes to the building process of `prebuilt-tdlib` are noted below.
 
 ### (unreleased)
 
-The building process of Linux and macOS builds is significantly changed.
+First published as `<unpublished>`.
 
-- on macOS, TDLib is built using macOS SDK from nixpkgs, and the minimal
-  supported macOS version is now 10.12 instead of 10.14.
+The building process is significantly changed in this update.
+
+- Changed the structure of the package: instead of packing all binaries into the
+  prebuilt-tdlib package, every binary is split into a separate package, and all
+  the packages are specified in `optionalDependencies` of `prebuilt-tdlib`. The
+  same approach is used by, e.g., esbuild and swc. This installs a binary for
+  the user's system only, allowing `prebuilt-tdlib` to potentially scale for
+  more architectures and libc variants. One downside is that `node_modules`
+  can't simply be copied to a different platform anymore.
+- On macOS, TDLib is built using macOS SDK from nixpkgs, and the minimal
+  supported macOS version is now 10.12 instead of 10.14. The arm64 macOS
+  library is now tested in the CI using the macos-14 GitHub runner (and not
+  crosscompiled anymore).
 - On Linux, TDLib is now built using zig. The minimal glibc version is 2.22
   instead of 2.17.
 

@@ -1,31 +1,53 @@
 // @flow
 
 const path = require('path')
+const fs = require('fs')
+const { prebuilds } = require('./prebuild-list')
 
-// For now, the `Options` object is present for forward compatibility.
-// TODO: Add an option like "fallback"?
+const SCOPE = '@prebuilt-tdlib'
+
 /*::
 export type Options = {
-  // Can be 'glibc' | 'musl' in the future
-  libc: 'glibc'
+  +forceLibc?: 'glibc' | 'musl'
 }
 */
 
-function prebuild (pathcomps/*: string[] */) {
-  return path.resolve(__dirname, 'prebuilds', ...pathcomps)
-}
+let libcNameCache = null
 
-// eslint-disable-next-line no-unused-vars
-function getTdjson (options/*:: ?: Options */)/*: string */ {
-  const platform = process.platform + '-' + process.arch
-  switch (platform) {
-    case 'win32-x64': return prebuild(['tdlib-windows-x64', 'tdjson.dll'])
-    case 'darwin-x64': return prebuild(['tdlib-macos', 'libtdjson.dylib'])
-    case 'darwin-arm64': return prebuild(['tdlib-macos', 'libtdjson.dylib'])
-    case 'linux-x64': return prebuild(['tdlib-linux-x64', 'libtdjson.so'])
-    case 'android-x64': return prebuild(['tdlib-linux-x64', 'libtdjson.so'])
-    default: throw new Error(`The ${platform} platform is not supported`)
+function detectLibc ()/*: 'glibc' | 'musl' */ {
+  // This function can return false results: it currently only checks for
+  // Alpine Linux as a heuristic (the same approach is used by node-gyp-build).
+  if (libcNameCache != null) return libcNameCache
+  let result = 'glibc'
+  try {
+    if (fs.existsSync('/etc/alpine-release'))
+      result = 'musl'
+  } catch (e) {
+    // Intentionally empty (defaults to 'glibc')
   }
+  libcNameCache = result
+  return result
 }
 
-module.exports = { getTdjson }
+exports.getTdjson = function getTdjson (options/*:: ?: Options */)/*: string */ {
+  let { platform, arch } = process
+  if (platform === 'android') platform = 'linux'
+  const libc = options?.forceLibc || (platform === 'linux' ? detectLibc() : null)
+  for (const prebuild of prebuilds) {
+    if (prebuild.requirements.os != null)
+      if (!prebuild.requirements.os.includes(platform)) continue
+    if (prebuild.requirements.cpu != null)
+      if (!prebuild.requirements.cpu.includes(arch)) continue
+    if (prebuild.libc != null && prebuild.libc !== libc) continue
+    // Found a prebuild for the current platform
+    const pkg = `${SCOPE}/${prebuild.packageName}/${prebuild.libfile}`
+    try {
+      return require.resolve(pkg)
+    } catch (e) {
+      throw new Error(`Could not load ${pkg} (are optionalDependencies installed?): ${e?.message}`)
+    }
+  }
+  let entirePlatform = `${platform}-${arch}`
+  if (libc != null) entirePlatform += '-' + libc
+  throw new Error(`The ${entirePlatform} platform is not supported`)
+}

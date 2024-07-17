@@ -14,7 +14,7 @@ tdl.configure({ tdjson: getTdjson() })
 
 tdl.configure({ receiveTimeout: 10 })
 
-getTdjson({ libc: 'glibc' })
+getTdjson({ forceLibc: 'glibc' })
 
 const client = tdl.createClient({
   apiId: 2,

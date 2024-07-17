@@ -1,33 +1,23 @@
 {
-  "name": "prebuilt-tdlib-dev",
+  "name": "@prebuilt-tdlib/dev",
   "version": "0.0.0",
-  "description": "Pre-built TDLib libraries",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "description": "Pre-built TDLib shared library",
   "scripts": {
     "build": ""
   },
   "files": [
-    "index.js",
-    "prebuild-list.js",
-    "index.d.ts",
-    "LICENSE.md"
+    "LICENSE.md",
+    "README.md"
   ],
-  "optionalDependencies": {},
-  "author": "Bannerets <comonoid@protonmail.com>",
+  "preferUnplugged": true,
   "license": "BlueOak-1.0.0",
   "keywords": [
-    "telegram",
-    "telegram-api",
     "tdlib",
-    "prebuilt"
+    "prebuilt-tdlib"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Bannerets/tdl.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Bannerets/tdl/issues"
   },
   "homepage": "https://github.com/Bannerets/tdl/tree/main/packages/prebuilt-tdlib#readme",
   "tdlib": {

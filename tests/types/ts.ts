@@ -10,7 +10,7 @@ tdl.configure({ libdir: __dirname })
 tdl.configure({ libdir: '' })
 tdl.configure({ tdjson: getTdjson() })
 
-getTdjson({ libc: 'glibc' })
+getTdjson({ forceLibc: 'glibc' })
 
 const client = tdl.createClient({
   apiId: 2,
