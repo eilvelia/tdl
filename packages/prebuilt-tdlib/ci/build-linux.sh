@@ -17,7 +17,7 @@ cp -L ./result/lib/libtdjson.so to-upload/libtdjson.so
 cd to-upload
 
 # Info
-ldd libtdjson.so
+ldd libtdjson.so || true
 
 if [ -z "$GITHUB_ENV" ]; then
   echo "Note: GITHUB_ENV not found"

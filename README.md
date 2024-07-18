@@ -22,7 +22,7 @@ a library to create [Telegram][] clients or bots.
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows), of TDLib version 1.8.0 or newer
 - In rare cases, a C++ compiler and Python installed to build the node addon[^1]
 
-[^1]: `tdl` is packaged with pre-built addons for Windows (x86_64), GNU/Linux (x86_64, arm64; glibc >= 2.22), and macOS (x86_64, arm64; v10.14+). If a pre-built binary is not available for your system, then the node addon will be built using node-gyp, requiring Python and a C++ toolchain (C++14 is required) to be installed (on Windows, MSVS or Build Tools). Pass `--build-from-source` to never use the pre-built binaries. arm64 binaries are not tested in the CI. Only Linux binaries are statically linked against libstdc++.
+[^1]: `tdl` is packaged with pre-built addons for Windows (x86_64), GNU/Linux (x86_64, arm64; glibc >= 2.22), and macOS (x86_64, arm64; v10.14+). If a pre-built binary is not available for your system, then the node addon will be built using node-gyp, requiring Python and a C++ toolchain (C++14 is required) to be installed (on Windows, MSVS or Build Tools). Pass `--build-from-source` to never use the pre-built binaries. arm64 binaries are not tested in the CI. Linux binaries are statically linked against libstdc++.
 
 <a name="installation"></a>
 ## Installation
@@ -49,11 +49,12 @@ The tdjson shared library should be present in the system search paths
 Instead of building TDLib from source, you can possibly install pre-built TDLib
 libraries distributed through the `prebuilt-tdlib` npm package. An example of
 using libraries from `prebuilt-tdlib` is present in the section below. The
-supported systems are x86_64 GNU/Linux, x86_64 & arm64 macOS, and x86_64
-Windows. To install `prebuilt-tdlib` for a specific TDLib version, for example
-v1.8.30, run `npm install prebuilt-tdlib@td-1.8.30`. The available versions of
-`prebuilt-tdlib` can be found by running `npm info prebuilt-tdlib dist-tags`.
-See the README of [prebuilt-tdlib][] for additional information.
+supported systems are x86_64 & arm64 GNU/Linux, x86_64 & arm64 macOS, and
+x86_64s Windows. To install `prebuilt-tdlib` for a specific TDLib version
+instead of latest, for example v1.8.30, run `npm i prebuilt-tdlib@td-1.8.30`.
+The available versions of `prebuilt-tdlib` can be found by running
+`npm info prebuilt-tdlib dist-tags`. See the README of [prebuilt-tdlib][] for
+additional information.
 
 [prebuilt-tdlib]: packages/prebuilt-tdlib/README.md
 

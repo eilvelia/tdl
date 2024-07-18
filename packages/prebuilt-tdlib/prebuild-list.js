@@ -45,6 +45,17 @@ const prebuilds/*: PrebuildInfo[] */ = [
       cpu: ['x64']
     },
     libc: 'glibc'
+  },
+  {
+    packageName: 'linux-arm64-glibc',
+    prebuildDir: 'tdlib-linux-arm64-glibc',
+    libfile: SHARED_LINUX,
+    descr: 'Linux arm64 (glibc)',
+    requirements: {
+      os: ['linux'],
+      cpu: ['arm64']
+    },
+    libc: 'glibc'
   }
 ]
 

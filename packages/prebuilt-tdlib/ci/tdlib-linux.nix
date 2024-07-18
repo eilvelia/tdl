@@ -1,7 +1,10 @@
-{ pkgs ? import <nixpkgs> {}, target, rev }:
+{ target, rev }:
 let
+  pkgs = if builtins.substring 0 7 target == "aarch64"
+    then import <nixpkgs> { crossSystem.config = "aarch64-unknown-linux-gnu"; }
+    else import <nixpkgs> {};
   inherit (pkgs) lib stdenv;
-  zig-toolchain = import ./zig-toolchain.nix { inherit pkgs target; };
+  zig-toolchain = import ./zig-toolchain.nix { inherit target; pkgs = pkgs.buildPackages.buildPackages; };
   zlib = pkgs.callPackage ./zlib-zig.nix { inherit zig-toolchain; };
   openssl = pkgs.callPackage ./openssl-zig.nix { inherit zig-toolchain; };
 in
@@ -13,12 +16,16 @@ stdenv.mkDerivation {
   src = builtins.fetchTarball "https://github.com/tdlib/td/archive/${rev}.tar.gz";
 
   buildInputs = [ openssl zlib ];
-  nativeBuildInputs = with pkgs; [ cmake gperf ];
+  nativeBuildInputs = with pkgs.buildPackages; [ cmake gperf ];
 
   preConfigure = ''
+    export CC=${pkgs.buildPackages.stdenv.cc}/bin/cc
+    export CXX=${pkgs.buildPackages.stdenv.cc}/bin/c++
     mkdir native-build && cd native-build
-    cmake ..
-    cmake --build . --target prepare_cross_compiling
+    cmake -DOPENSSL_ROOT_DIR=${pkgs.buildPackages.openssl.dev} \
+      -DZLIB_ROOT=${pkgs.buildPackages.zlib.dev} \
+      ..
+    cmake --build . --target prepare_cross_compiling -j $NIX_BUILD_CORES
     cd ..
   '' + zig-toolchain.env;
 

@@ -2,17 +2,14 @@
 
 This package distributes pre-built [TDLib][] shared libraries through npm.
 The libraries are built on GitHub Actions ([prebuilt-tdlib.yml][]) and published
-using [npm publish --provenance][provenance].
+using [npm publish --provenance][npm-provenance].
 
 [TDLib]: https://github.com/tdlib/td
 [prebuilt-tdlib.yml]: ../../.github/workflows/prebuilt-tdlib.yml
-[provenance]: https://docs.npmjs.com/generating-provenance-statements
-
-The shared libraries are statically linked against OpenSSL and zlib, for one, to
-prevent compatibility issues in Node.js.
+[npm-provenance]: https://docs.npmjs.com/generating-provenance-statements
 
 Supported systems:
-- Linux x86_64 (requires glibc >= 2.22)
+- Linux x86_64, arm64 (requires glibc >= 2.22)
 - macOS x86_64, arm64 (universal, requires macOS >= 10.12)
 - Windows x86_64
 
@@ -36,6 +33,10 @@ $ npm install prebuilt-tdlib@td-1.8.30
 The TDLib version is important: there is no backward compatibility and the
 interface you use may significantly change after an update. It is, though,
 recommended to use the latest TDLib version.
+
+The shared libraries are statically linked against OpenSSL and zlib, for one, to
+prevent compatibility issues in Node.js. libstdc++ is also linked statically
+(on Linux).
 
 ## Usage
 
@@ -123,9 +124,9 @@ An incomplete list is available below (mostly exceptions or "notable" versions):
 
 Changes to the building process of `prebuilt-tdlib` are noted below.
 
-### (unreleased)
+### 2024-07-19
 
-First published as `<unpublished>`.
+First published as `prebuilt-tdlib@td-1.8.33`.
 
 The building process is significantly changed in this update.
 
@@ -142,6 +143,7 @@ The building process is significantly changed in this update.
   crosscompiled anymore).
 - On Linux, TDLib is now built using zig. The minimal glibc version is 2.22
   instead of 2.17.
+- Added a crosscompiled prebuild for Linux arm64.
 
 ### 2024-05-08
 

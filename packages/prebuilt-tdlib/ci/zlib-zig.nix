@@ -2,13 +2,4 @@
 (zlib.override { static = true; shared = false; }).overrideAttrs (final: prev: {
   preConfigure = prev.preConfigure + zig-toolchain.env;
   doCheck = false;
-  # preCheck = ''
-  #   ls
-  #   echo ---
-  #   ldd ./minigzip
-  #   ./minigzip
-  #   echo START
-  #   make check
-  #   echo FINISH
-  # '';
 })
