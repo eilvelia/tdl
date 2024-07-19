@@ -47,7 +47,7 @@ returns the path to the `tdjson` shared library.
 const { getTdjson } = require('prebuilt-tdlib')
 console.log(getTdjson())
 // Prints a path like:
-// '/home/user/proj/node_modules/prebuilt-tdlib/prebuilds/tdlib-linux-x64/libtdjson.so'
+// '/home/user/proj/node_modules/@prebuilt-tdlib/linux-x64-glibc/libtdjson.so'
 ```
 
 This package can be used with, for example, [`tdl`][tdl]. You can pass the
@@ -136,7 +136,8 @@ The building process is significantly changed in this update.
   same approach is used by, e.g., esbuild and swc. This installs a binary for
   the user's system only, allowing `prebuilt-tdlib` to potentially scale for
   more architectures and libc variants. One downside is that `node_modules`
-  can't simply be copied to a different platform anymore.
+  can't simply be copied to a different platform anymore. The `prebuilds`
+  directory in the `prebuilt-tdlib` package is removed.
 - On macOS, TDLib is built using macOS SDK from nixpkgs, and the minimal
   supported macOS version is now 10.12 instead of 10.14. The arm64 macOS
   library is now tested in the CI using the macos-14 GitHub runner (and not
