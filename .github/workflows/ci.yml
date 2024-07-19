@@ -30,11 +30,13 @@ jobs:
         run: npm install -g npm@9
       - run: npm install # also runs the `prepare` npm script, which runs `build`
       - run: npm test
+      - run: npm uninstall -D prebuilt-tdlib
       - name: Run integration tests
         shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
           $tds = @(
+            "td-1.8.33",
             "td-1.8.30",
             "td-1.8.27",
             "td-1.8.26",
@@ -45,14 +47,10 @@ jobs:
           )
           foreach ($td in $tds) {
             mkdir $td
-            npm pack prebuilt-tdlib@$td --pack-destination=$td
-            Get-ChildItem -Path $td -Filter *.tgz | ForEach-Object {
-              tar xzvf $_.FullName --directory=$td
-            }
-            rm $td/package/package.json
-            $env:PREBUILT_PATH="$td/package/index.js"
+            npm install -D prebuilt-tdlib@$td
             npm run test:integration
             if ($LastExitCode -ne 0) {
               exit $LastExitCode
             }
+            npm uninstall -D prebuilt-tdlib
           }
