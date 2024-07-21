@@ -79,6 +79,8 @@ jobs:
         run: |
           cd packages/prebuilt-tdlib/ci
           ./build-macos.sh ${{ inputs.tdlib }}
+      - name: Verify codesigning
+        run: codesign -v ${{ env.TO_UPLOAD }}/libtdjson.dylib
       - uses: actions/upload-artifact@v4
         with:
           name: temp-macos-arm64

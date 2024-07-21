@@ -146,6 +146,8 @@ The building process is significantly changed in this update.
   instead of 2.17.
 - Added a crosscompiled prebuild for Linux arm64.
 
+Fix (2024-07-21): Fixed codesigning on macOS arm64.
+
 ### 2024-05-08
 
 First published as `prebuilt-tdlib@td-1.8.29`.

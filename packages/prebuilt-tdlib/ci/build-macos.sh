@@ -21,6 +21,8 @@ install_name_tool -change \
   '/usr/lib/libc++.1.dylib' \
   libtdjson.dylib
 
+codesign -s - --force libtdjson.dylib
+
 # Info
 otool -L libtdjson.dylib
 otool -l libtdjson.dylib
