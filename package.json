@@ -34,7 +34,7 @@
     "flow-bin": "^0.238.1",
     "node-gyp": "^10.1.0",
     "prebuildify": "^6.0.1",
-    "prebuilt-tdlib": "^0.1008033.0",
+    "prebuilt-tdlib": "^0.1008033.1",
     "rimraf": "^5.0.7",
     "typescript": "^5.5.2",
     "vitest": "^1.6.0"
