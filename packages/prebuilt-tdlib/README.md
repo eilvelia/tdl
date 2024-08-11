@@ -28,15 +28,12 @@ $ npm install prebuilt-tdlib@td-1.8.33
 ```
 
 `prebuilt-tdlib` can be installed for other TDLib versions, execute
-`$ npm info prebuilt-tdlib dist-tags` to get the list of available versions.
+`$ npm info prebuilt-tdlib dist-tags`[^1] to get the list of available versions.
 
-<!--
-Or, more conveniently, with jq:
-
-```console
-$ npm info prebuilt-tdlib dist-tags --json | jq 'to_entries | sort_by(.value) | .[].key | select(startswith("td-"))'
-```
--->
+[^1]: Or, with more convenient output, using jq:
+      ```console
+      $ npm info prebuilt-tdlib dist-tags --json | jq 'to_entries | sort_by(.value) | .[].key | select(startswith("td-"))'
+      ```
 
 The TDLib version is important: there is no backward compatibility and the
 interface you use may significantly change after an update. It is, though,
