@@ -1,4 +1,4 @@
-# Prebuilt TDLib
+# Pre-built TDLib &nbsp; [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/latest.svg)](https://www.npmjs.com/package/prebuilt-tdlib) [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/tagged.svg)](https://www.npmjs.com/package/prebuilt-tdlib)
 
 This package distributes pre-built [TDLib][] shared libraries through npm.
 The libraries are built on GitHub Actions ([prebuilt-tdlib.yml][]) and published
@@ -20,23 +20,36 @@ supports, run:
 $ npm install prebuilt-tdlib
 ```
 
-To install `prebuilt-tdlib` for a specific TDLib version, e.g. TDLib v1.8.30,
+To install `prebuilt-tdlib` for a specific TDLib version, e.g. TDLib v1.8.33,
 run:
 
 ```console
-$ npm install prebuilt-tdlib@td-1.8.30
+$ npm install prebuilt-tdlib@td-1.8.33
 ```
 
 `prebuilt-tdlib` can be installed for other TDLib versions, execute
 `$ npm info prebuilt-tdlib dist-tags` to get the list of available versions.
 
+<!--
+Or, more conveniently, with jq:
+
+```console
+$ npm info prebuilt-tdlib dist-tags --json | jq 'to_entries | sort_by(.value) | .[].key | select(startswith("td-"))'
+```
+-->
+
 The TDLib version is important: there is no backward compatibility and the
 interface you use may significantly change after an update. It is, though,
 recommended to use the latest TDLib version.
 
-The shared libraries are statically linked against OpenSSL and zlib, for one, to
-prevent compatibility issues in Node.js. libstdc++ is also linked statically
-(on Linux).
+The shared libraries are statically linked against OpenSSL and zlib (for one, to
+prevent compatibility issues in Node.js). libstdc++ is also linked statically
+on Linux.
+
+For the dependencies of TDLib (zlib and openssl), except on Windows, the
+`nixpkgs-unstable` package repository is used, and the versions of those
+dependencies reflect the state of `nixpkgs-unstable` at the time of building of
+`prebuilt-tdlib`.
 
 ## Usage
 
@@ -95,30 +108,13 @@ The releases of the `prebuilt-tdlib` npm package are not git-tagged.
 Additionally, TDLib's releasing process is [unusual][], and most
 `prebuilt-tdlib` releases are not connected to any tag release in the TDLib
 repository. Usually, the prebuilt packages are generated based on the "Update
-version to x.y.z." TDLib commits ([example][commit-example]). Otherwise, the
-commit hash is indicated in the table below.
+version to x.y.z." TDLib commit ([example][commit-example]) or, if subsequent
+commits have been made before such a commit is pushed to `tdlib/td`, on the last
+pushed commit. The commit hash is indicated in the prebuilt-tdlib's
+package.json, see e.g. `npm info prebuilt-tdlib tdlib` (or `tdlib.commit`).
 
 [unusual]: https://github.com/tdlib/td/issues/2215
 [commit-example]: https://github.com/tdlib/td/commit/b3b63bbdc14dc377d2de6b78e5844fec1564f95d
-
-## prebuilt-tdlib versions
-
-- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/latest.svg)](https://www.npmjs.com/package/prebuilt-tdlib)
-- [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/tagged.svg)](https://www.npmjs.com/package/prebuilt-tdlib)
-
-For the always up-to-date list, check `npm info prebuilt-tdlib dist-tags`.
-
-Or, for all ever published versions, see `npm info prebuilt-tdlib versions`.
-
-An incomplete list is available below (mostly exceptions or "notable" versions):
-
-| npm tag | notes |
-| ------- | ----- |
-| [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.26.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.26) | [tdlib [b1b33cf42790ca10ef34abc2ac8828ae704f1f56](https://github.com/tdlib/td/commit/b1b33cf42790ca10ef34abc2ac8828ae704f1f56)] |
-| [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.14.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.14) | [tdlib [66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9](https://github.com/tdlib/td/commit/66234ae2537a99ec0eaf7b0857245a6e5c2d2bc9)] |
-| [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.12.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.12) | [tdlib [70bee089d492437ce931aa78446d89af3da182fc](https://github.com/tdlib/td/commit/70bee089d492437ce931aa78446d89af3da182fc)] |
-| [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.7.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.7) | [tdlib [de5379f00b6af7686f197037ca3b494e6277e523](https://github.com/tdlib/td/commit/de5379f00b6af7686f197037ca3b494e6277e523)] |
-| [![npm](https://img.shields.io/npm/v/prebuilt-tdlib/td-1.8.0.svg)](https://www.npmjs.com/package/prebuilt-tdlib/v/td-1.8.0) | [last released 2023-10-10] |
 
 ## Changes
 
