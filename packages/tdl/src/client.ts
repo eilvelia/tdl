@@ -1,11 +1,12 @@
-import { resolve as resolvePath } from 'node:path'
 import Debug from 'debug'
-import { deepRenameKey, mergeDeepRight } from './util'
-import * as prompt from './prompt'
-import { Version } from './version'
-import { Queue } from './queue'
-import type { Tdjson, TdjsonOldClient } from './addon'
+import { resolve as resolvePath } from 'node:path'
+import { setTimeout } from "node:timers"
 import type * as Td from 'tdlib-types'
+import type { Tdjson, TdjsonOldClient } from './addon'
+import * as prompt from './prompt'
+import { Queue } from './queue'
+import { deepRenameKey, mergeDeepRight } from './util'
+import { Version } from './version'
 
 // NOTE: if needed, this client can be abstracted into a different package later
 
@@ -288,21 +289,22 @@ export class Client {
     this.on('update', onUpdate)
 
     const iterator: AsyncIterableIterator<Td.Update> = {
-      next () {
-        if (!unconsumedEvents.isEmpty()) {
-          const update = unconsumedEvents.shift()!
-          return Promise.resolve({ done: false, value: update })
-        }
-        if (finished)
-          return Promise.resolve({ done: true, value: undefined })
-        if (defer != null) {
-          finish()
-          throw new Error('Cannot call next() twice in succession')
-        }
-        return new Promise((resolve, reject) => {
-          defer = { resolve, reject }
-        })
-      },
+      next: () =>
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (!unconsumedEvents.isEmpty()) {
+              const update = unconsumedEvents.shift()!;
+              return resolve({ done: false, value: update });
+            }
+            if (finished) return resolve({ done: true, value: undefined });
+            if (defer != null) {
+              finish();
+              return reject(new Error("Cannot call next() twice in succession"));
+            }
+
+            defer = { resolve, reject };
+          }, 0);
+        }),
 
       return () {
         finish()
