@@ -293,17 +293,17 @@ export class Client {
         new Promise((resolve, reject) => {
           setTimeout(() => {
             if (!unconsumedEvents.isEmpty()) {
-              const update = unconsumedEvents.shift()!;
-              return resolve({ done: false, value: update });
+              const update = unconsumedEvents.shift()!
+              return resolve({ done: false, value: update })
             }
-            if (finished) return resolve({ done: true, value: undefined });
+            if (finished) return resolve({ done: true, value: undefined })
             if (defer != null) {
-              finish();
-              return reject(new Error("Cannot call next() twice in succession"));
+              finish()
+              return reject(new Error("Cannot call next() twice in succession"))
             }
 
-            defer = { resolve, reject };
-          }, 0);
+            defer = { resolve, reject }
+          }, 0)
         }),
 
       return () {
