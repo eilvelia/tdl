@@ -14,7 +14,7 @@
     "LICENSE.md"
   ],
   "optionalDependencies": {},
-  "author": "Bannerets <comonoid@protonmail.com>",
+  "author": "eilvelia <hi@eilvelia.cat>",
   "license": "BlueOak-1.0.0",
   "keywords": [
     "telegram",
@@ -24,12 +24,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Bannerets/tdl.git"
+    "url": "git+https://github.com/eilvelia/tdl.git"
   },
   "bugs": {
-    "url": "https://github.com/Bannerets/tdl/issues"
+    "url": "https://github.com/eilvelia/tdl/issues"
   },
-  "homepage": "https://github.com/Bannerets/tdl/tree/main/packages/prebuilt-tdlib#readme",
+  "homepage": "https://github.com/eilvelia/tdl/tree/main/packages/prebuilt-tdlib#readme",
   "tdlib": {
     "commit": "unknown",
     "version": "unknown"

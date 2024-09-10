@@ -29,7 +29,7 @@
   "engines": {
     "node": ">=16.14.0"
   },
-  "author": "Bannerets <comonoid@protonmail.com> (https://github.com/Bannerets)",
+  "author": "eilvelia <hi@eilvelia.cat>",
   "license": "MIT",
   "keywords": [
     "telegram",
@@ -43,10 +43,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Bannerets/tdl.git"
+    "url": "git+https://github.com/eilvelia/tdl.git"
   },
   "bugs": {
-    "url": "https://github.com/Bannerets/tdl/issues"
+    "url": "https://github.com/eilvelia/tdl/issues"
   },
-  "homepage": "https://github.com/Bannerets/tdl#readme"
+  "homepage": "https://github.com/eilvelia/tdl#readme"
 }

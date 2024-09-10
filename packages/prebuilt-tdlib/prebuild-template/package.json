@@ -17,9 +17,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Bannerets/tdl.git"
+    "url": "git+https://github.com/eilvelia/tdl.git"
   },
-  "homepage": "https://github.com/Bannerets/tdl/tree/main/packages/prebuilt-tdlib#readme",
+  "homepage": "https://github.com/eilvelia/tdl/tree/main/packages/prebuilt-tdlib#readme",
   "tdlib": {
     "commit": "unknown",
     "version": "unknown"

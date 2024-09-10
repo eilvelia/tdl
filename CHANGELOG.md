@@ -283,13 +283,13 @@ This adds support for Node.js v14 and drops support for Node.js older than v10.
 - Internal:
 - - Moved the `tdlib-typings` project into this repository.
 
-[#71]: https://github.com/Bannerets/tdl/pull/71
+[#71]: https://github.com/eilvelia/tdl/pull/71
 
 ## tdl@6.0.1 (2019-05-07)
 
 - Fixed renaming of objects in an array (see [#48][]).
 
-[#48]: https://github.com/Bannerets/tdl/issues/48
+[#48]: https://github.com/eilvelia/tdl/issues/48
 
 ## v6.0.0 (2019-05-02)
 
@@ -315,14 +315,14 @@ This adds support for Node.js v14 and drops support for Node.js older than v10.
 - - Flow: Now non-input types are subtypes of input.
 - Other minor improvements.
 
-[#33]: https://github.com/Bannerets/tdl/issues/33
+[#33]: https://github.com/eilvelia/tdl/issues/33
 
 ## v5.2.0 (2018-10-24)
 
 - Added `client.connectAndLogin` method.
 - File `types/tdlib.ts` renamed to `types/tdlib.d.ts` (see [#31][]).
 
-[#31]: https://github.com/Bannerets/tdl/issues/31
+[#31]: https://github.com/eilvelia/tdl/issues/31
 
 ## v5.1.0
 
@@ -332,7 +332,7 @@ This adds support for Node.js v14 and drops support for Node.js older than v10.
 
 - Fixed [#24][].
 
-[#24]: https://github.com/Bannerets/tdl/issues/24
+[#24]: https://github.com/eilvelia/tdl/issues/24
 
 ## v5.0.0
 
@@ -373,7 +373,7 @@ This adds support for Node.js v14 and drops support for Node.js older than v10.
 
 - Now errors in `_loop` are correctly handled. See [#16][].
 
-[#16]: https://github.com/Bannerets/tdl/pull/16
+[#16]: https://github.com/eilvelia/tdl/pull/16
 
 ## v3.8.1
 
@@ -398,7 +398,7 @@ This adds support for Node.js v14 and drops support for Node.js older than v10.
 - Internal:
 - - Added `.gitattributes`.
 
-[#6]: https://github.com/Bannerets/tdl/pull/6
+[#6]: https://github.com/eilvelia/tdl/pull/6
 
 ## v3.6.2
 

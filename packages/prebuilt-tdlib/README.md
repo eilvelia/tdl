@@ -63,7 +63,7 @@ console.log(getTdjson())
 This package can be used with, for example, [`tdl`][tdl]. You can pass the
 path to `tdl.configure` (since tdl v7.3.0):
 
-[tdl]: https://github.com/Bannerets/tdl
+[tdl]: https://github.com/eilvelia/tdl
 
 ```javascript
 const tdl = require('tdl')
