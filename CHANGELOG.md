@@ -452,3 +452,9 @@ This adds support for Node.js v14 and drops support for Node.js older than v10.
 - Fixes in TDLib flow typings.
 - Internal:
 - - Flow updated to v0.69.0.
+
+…
+
+## v2.0.0 (2018-05-02)
+
+First release of tdl as a fork of [tglib](https://github.com/nodegin/tglib).
