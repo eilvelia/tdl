@@ -17,7 +17,7 @@
   none of those have been received in the last 10 (`receiveTimeout`) seconds.
 - In bun, fixed the old tdjson interface exiting the process instantly.
 
-Update: this is related to bun < v1.1.14 only.
+This is related to bun < v1.1.14 only.
 
 ## tdl@8.0.0 (2024-05-28)
 
@@ -324,17 +324,17 @@ This adds support for Node.js v14 and drops support for Node.js older than v10.
 
 [#31]: https://github.com/eilvelia/tdl/issues/31
 
-## v5.1.0
+## v5.1.0 (2018-10-13)
 
 - Added `client.pause()` and `client.resume()` functions, which allow you to pause update receiving.
 
-## v5.0.1
+## v5.0.1 (2018-10-09)
 
 - Fixed [#24][].
 
 [#24]: https://github.com/eilvelia/tdl/issues/24
 
-## v5.0.0
+## v5.0.0 (2018-09-22)
 
 - **Important**: The `client.connect` function is now splitted into two functions: `client.connect` and `client.login`. Removed `beforeAuth` argument from `client.connect` function. Removed `loginDetails` option from `Client` constructor; now `client.login` accepts a function that returns `LoginDetails`.
 - Added OS detection. Now `tdl` searches for `tdjson` on Windows and for `libtdjson` on other OSes.
@@ -352,13 +352,13 @@ This adds support for Node.js v14 and drops support for Node.js older than v10.
 - - Added [`debug`](https://github.com/visionmedia/debug#readme) namespaces: `tdl:client:emitter`, `tdl:client:response`, `tdl:client:request`.
 - - Many improvements of tests for TS / Flow typings.
 
-## v4.1.0
+## v4.1.0 (2018-07-28)
 
 - Added `client.removeListener` function.
 - Internal:
 - - Flow updated to v0.76.0.
 
-## v4.0.0
+## v4.0.0 (2018-07-19)
 
 - Added `beforeAuth` argument in `client.connect` function.
 - `dev` option renamed to `useTestDc`.
@@ -369,21 +369,21 @@ This adds support for Node.js v14 and drops support for Node.js older than v10.
 - - Now names of private fields start with `_`.
 - - Added tests for Flow typings.
 
-## v3.8.2
+## v3.8.2 (2018-07-19)
 
 - Now errors in `_loop` are correctly handled. See [#16][].
 
 [#16]: https://github.com/eilvelia/tdl/pull/16
 
-## v3.8.1
+## v3.8.1 (2018-06-27)
 
 - Some fixes in TDlib TS typings.
 
-## v3.8.0
+## v3.8.0 (2018-06-19)
 
 - Added TypeScript typings.
 
-## v3.7.0
+## v3.7.0 (2018-06-18)
 
 - Minimum Node.js version is `8.6.0`.
 - Added sign up support. Added `loginDetails.getName` function.
@@ -392,7 +392,7 @@ This adds support for Node.js v14 and drops support for Node.js older than v10.
 - - Added `client.setLogFatalErrorCallback`.
 - - Added `tdlib.setLogMaxFileSize`.
 
-## v3.6.3
+## v3.6.3 (2018-06-11)
 
 - Bugfixes. See [#6][].
 - Internal:
@@ -400,32 +400,32 @@ This adds support for Node.js v14 and drops support for Node.js older than v10.
 
 [#6]: https://github.com/eilvelia/tdl/pull/6
 
-## v3.6.2
+## v3.6.2 (2018-06-04)
 
 - Fixed value of `main` field in `package.json`.
 
-## v3.6.1
+## v3.6.1 (2018-06-04)
 
 - Some improvements of Flow typings.
 
-## v3.6.0
+## v3.6.0 (2018-06-04)
 
 - `src/tdlib-types.js` renamed to `types/tdlib.js`.
 - Added `tdlib.setLogFatalErrorCallback` method.
 - Documentation: Added 'typings' and 'examples' section in README.
 
-## v3.5.2
+## v3.5.2 (2018-05-24)
 
 - Bugfixes.
 
-## v3.5.1
+## v3.5.1 (2018-05-24)
 
 - `prepublish` script in package.json replaced with `prepare` and `prepack`.
 - Internal:
 - - Added eslint.
 - - Added `.editorconfig`.
 
-## v3.5.0
+## v3.5.0 (2018-05-23)
 
 - Added `client.invokeFuture` function.
 - Added `multiple-accounts.js` and `using-fluture.js` examples.
@@ -433,12 +433,12 @@ This adds support for Node.js v14 and drops support for Node.js older than v10.
 - Some documentation improvements.
 - Some bugfixes.
 
-## v3.4.0
+## v3.4.0 (2018-05-20)
 
 - Added event `auth-needed`.
 - Fixed arrays in TDLib flow typings.
 
-## v3.3.0
+## v3.3.0 (2018-05-19)
 
 - Added `TDLib_API.md` file.
 - `inquirer` replaced with `promptly`.
