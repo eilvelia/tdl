@@ -56,6 +56,8 @@ The available versions of `prebuilt-tdlib` can be found by running
 `npm info prebuilt-tdlib dist-tags`. See the README of [prebuilt-tdlib][] for
 additional information.
 
+[![npm](https://img.shields.io/npm/v/prebuilt-tdlib.svg?label=prebuilt-tdlib)](https://www.npmjs.com/package/prebuilt-tdlib)
+
 [prebuilt-tdlib]: packages/prebuilt-tdlib/README.md
 
 <a name="getting-started"></a>
