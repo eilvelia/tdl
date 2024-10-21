@@ -15,7 +15,7 @@
   ],
   "optionalDependencies": {},
   "author": "eilvelia <hi@eilvelia.cat>",
-  "license": "BlueOak-1.0.0",
+  "license": "MIT",
   "keywords": [
     "telegram",
     "telegram-api",

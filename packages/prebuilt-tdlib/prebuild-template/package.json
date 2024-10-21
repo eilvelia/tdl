@@ -10,7 +10,7 @@
     "README.md"
   ],
   "preferUnplugged": true,
-  "license": "BlueOak-1.0.0",
+  "license": "0BSD",
   "keywords": [
     "tdlib",
     "prebuilt-tdlib"
