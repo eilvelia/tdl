@@ -27,12 +27,23 @@ const prebuilds/*: PrebuildInfo[] */ = [
     }
   },
   {
-    packageName: 'darwin',
-    prebuildDir: 'tdlib-macos',
+    packageName: 'darwin-x64',
+    prebuildDir: 'tdlib-macos-x86_64',
     libfile: SHARED_MACOS,
-    descr: 'macOS (universal)',
+    descr: 'macOS x86_64',
     requirements: {
-      os: ['darwin']
+      os: ['darwin'],
+      cpu: ['x64']
+    }
+  },
+  {
+    packageName: 'darwin-arm64',
+    prebuildDir: 'tdlib-macos-arm64',
+    libfile: SHARED_MACOS,
+    descr: 'macOS arm64',
+    requirements: {
+      os: ['darwin'],
+      cpu: ['arm64']
     }
   },
   {

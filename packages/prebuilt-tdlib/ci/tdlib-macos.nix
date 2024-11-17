@@ -1,7 +1,7 @@
 { rev }:
 let
   pkgs = import <nixpkgs> {};
-  inherit (pkgs) lib stdenv;
+  inherit (pkgs) lib stdenv apple-sdk_11;
   zlib = pkgs.zlib.override { static = true; shared = false; };
   openssl = pkgs.openssl.override { static = true; };
 in
@@ -12,7 +12,7 @@ stdenv.mkDerivation {
 
   src = builtins.fetchTarball "https://github.com/tdlib/td/archive/${rev}.tar.gz";
 
-  buildInputs = [ openssl zlib ];
+  buildInputs = [ openssl zlib apple-sdk_11 ];
   nativeBuildInputs = with pkgs; [ cmake gperf ];
 
   cmakeFlags = [

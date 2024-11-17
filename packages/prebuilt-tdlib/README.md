@@ -10,7 +10,7 @@ using [npm publish --provenance][npm-provenance].
 
 Supported systems:
 - Linux x86_64, arm64 (requires glibc >= 2.22)
-- macOS x86_64, arm64 (universal, requires macOS >= 10.12)
+- macOS x86_64, arm64 (requires macOS >= 11.0)
 - Windows x86_64
 
 To install `prebuilt-tdlib` for the latest TDLib version that `prebuilt-tdlib`
@@ -116,6 +116,16 @@ package.json, see e.g. `npm info prebuilt-tdlib tdlib` (or `tdlib.commit`).
 ## Changes
 
 Changes to the building process of `prebuilt-tdlib` are noted below.
+
+### 2024-11-17
+
+First published as `prebuilt-tdlib@td-1.8.40`.
+
+- Minimum macOS version is now 11.0 instead of 10.12.
+- The macOS package is split into `darwin-x64` and `darwin-arm64` instead of
+  using a universal binary.
+- The Windows binary is built on the `windows-2022` GitHub Actions runner
+  instead of `windows-2019`.
 
 ### 2024-07-19
 

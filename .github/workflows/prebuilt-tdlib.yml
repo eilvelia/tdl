@@ -35,6 +35,7 @@ jobs:
         with:
           name: tdlib-linux-x86_64-glibc
           path: ${{ env.TO_UPLOAD }}
+
   build-linux-arm64:
     name: 'Build TDLib / Linux arm64 glibc (cross)'
     runs-on: ubuntu-22.04
@@ -51,6 +52,7 @@ jobs:
         with:
           name: tdlib-linux-arm64-glibc
           path: ${{ env.TO_UPLOAD }}
+
   build-macos-x86_64:
     name: 'Build TDLib / macOS x86_64'
     runs-on: macos-13
@@ -65,8 +67,9 @@ jobs:
           ./build-macos.sh ${{ inputs.tdlib }}
       - uses: actions/upload-artifact@v4
         with:
-          name: temp-macos-x86_64
+          name: tdlib-macos-x86_64
           path: ${{ env.TO_UPLOAD }}
+
   build-macos-arm64:
     name: 'Build TDLib / macOS arm64'
     runs-on: macos-14
@@ -83,31 +86,12 @@ jobs:
         run: codesign -v ${{ env.TO_UPLOAD }}/libtdjson.dylib
       - uses: actions/upload-artifact@v4
         with:
-          name: temp-macos-arm64
+          name: tdlib-macos-arm64
           path: ${{ env.TO_UPLOAD }}
-  build-macos:
-    name: Create universal macOS shared library
-    needs: [build-macos-x86_64, build-macos-arm64]
-    runs-on: macos-13
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          pattern: temp-macos-*
-      - name: Combine shared libraries
-        run: |
-          mkdir -p to-upload
-          lipo temp-macos-x86_64/libtdjson.dylib temp-macos-arm64/libtdjson.dylib \
-            -output to-upload/libtdjson.dylib -create
-          cd to-upload
-          file libtdjson.dylib
-          otool -L libtdjson.dylib
-      - uses: actions/upload-artifact@v4
-        with:
-          name: tdlib-macos
-          path: to-upload
+
   build-windows-x86_64:
     name: 'Build TDLib / Windows x86_64'
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
         with:
@@ -146,7 +130,8 @@ jobs:
     name: 'Test / ${{ matrix.v.bin }} / ${{ matrix.v.os }}'
     needs:
       - build-linux-x86_64
-      - build-macos
+      - build-macos-x86_64
+      - build-macos-arm64
       - build-windows-x86_64
     runs-on: ${{ matrix.v.os }}
     strategy:
@@ -156,9 +141,9 @@ jobs:
           - os: ubuntu-latest
             bin: tdlib-linux-x86_64-glibc
           - os: macos-13
-            bin: tdlib-macos
+            bin: tdlib-macos-x86_64
           - os: macos-14
-            bin: tdlib-macos
+            bin: tdlib-macos-arm64
           - os: windows-latest
             bin: tdlib-windows-x86_64
     steps:
