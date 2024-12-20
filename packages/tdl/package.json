@@ -1,6 +1,6 @@
 {
   "name": "tdl",
-  "version": "8.0.1",
+  "version": "8.0.2",
   "description": "Node.js bindings to TDLib (Telegram Database library)",
   "main": "dist/index.js",
   "types": "index.d.ts",
@@ -8,7 +8,6 @@
     "build:lib": "tsc",
     "build:addon": "node-gyp rebuild",
     "build": "tsc && node scripts/copy-readme.js && node scripts/generate-flow.js && node-gyp rebuild",
-    "make-prebuild": "prebuildify --napi -t 18.20.2",
     "clean": "node-gyp clean",
     "install": "node-gyp-build"
   },

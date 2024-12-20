@@ -2,7 +2,7 @@
 
 <!-- Hi! -->
 
-## tdl@8.0.2 (UNRELEASED)
+## tdl@8.0.2 (2024-12-20)
 
 - Fixed a possible `TypeError: null is not an object` error in `client.login()`
   if called from a database with an incomplete login attempt.

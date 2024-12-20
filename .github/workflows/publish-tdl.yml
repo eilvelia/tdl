@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-13, windows-2022]
+        os: [ubuntu-latest, macos-13, windows-latest]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -35,19 +35,19 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           CC="zig cc -target x86_64-linux-gnu.2.22" CXX="zig c++ -target x86_64-linux-gnu.2.22 -s" \
-            npm run make-prebuild -w tdl -- --arch x64 --tag-libc --strip
+            npm exec -w tdl -c 'prebuildify --napi -t 18.20.5 --arch x64 --tag-libc --strip'
           CC="zig cc -target aarch64-linux-gnu.2.22" CXX="zig c++ -target aarch64-linux-gnu.2.22 -s" \
-            npm run make-prebuild -w tdl -- --arch arm64 --armv 8 --tag-armv --tag-libc
+            npm exec -w tdl -c 'prebuildify --napi -t 18.20.5 --arch arm64 --armv 8 --tag-armv --tag-libc'
           ldd packages/tdl/prebuilds/*-x64/*.node
           file packages/tdl/prebuilds/*/*.node
           du -hsc packages/tdl/prebuilds/*/*.node
-      - name: Prebuildify (x86_64 only)
+      - name: Prebuildify (macOS x86_64 and Windows x86_64)
         if: runner.os != 'Linux'
-        run: npm run make-prebuild -w tdl -- --arch x64 --strip
+        run: npm exec -w tdl -c 'prebuildify --napi -t 18.20.5 --arch x64 --strip'
       - name: "Prebuildify: Crosscompile to arm64 Apple Silicon"
         if: runner.os == 'macOS'
         run: |
-          npm run make-prebuild -w tdl -- --arch arm64 --strip
+          npm exec -w tdl -c 'prebuildify --napi -t 18.20.5 --arch arm64 --strip'
           file packages/tdl/prebuilds/*/*.node
           du -hsc packages/tdl/prebuilds/*/*.node
       - name: Run tests (unit tests + integration tests)
