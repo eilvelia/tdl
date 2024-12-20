@@ -368,9 +368,10 @@ export class Client {
     const tdRequest = JSON.stringify(renamedRequest)
     if (this._client.val == null)
       throw new Error('A closed client cannot be reused, create a new client')
-    this._client.isTdn
-      ? this._tdjson.tdnew.send(this._client.val, tdRequest)
-      : this._tdjson.tdold.send(this._client.val, tdRequest)
+    if (this._client.isTdn)
+      this._tdjson.tdnew.send(this._client.val, tdRequest)
+    else
+      this._tdjson.tdold.send(this._client.val, tdRequest)
   }
 
   private _sendTdl (request: Td.$Function): void {

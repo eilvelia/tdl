@@ -25,7 +25,7 @@ fi
 message=$(echo $commit | jq -r '.[0].commit.message')
 sha=$(echo $commit | jq -r '.[0].sha')
 
-command="gh workflow run prebuilt-tdlib.yml --ref develop -f tdlib=$sha -f npm-patch=$npm_patch"
+command="gh workflow run prebuilt-tdlib.yml --ref main -f tdlib=$sha -f npm-patch=$npm_patch"
 
 echo "TDLib commit: https://github.com/tdlib/td/commit/$sha"
 echo "Message: \"$message\""

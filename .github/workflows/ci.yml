@@ -16,8 +16,8 @@ jobs:
         node:
           - 20
         include:
-          - node: 16
-            os: ubuntu-latest
+          # The packages themselves should still work with Node v16, but the
+          # dev dependencies don't support v16 anymore
           - node: 18
             os: ubuntu-latest
     steps:
