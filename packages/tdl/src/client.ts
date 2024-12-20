@@ -546,21 +546,21 @@ export class Client {
     return new Promise((resolve, reject) => {
       if (this._client.val == null)
         return reject(new Error('The client is closed'))
-      let loginDetails: StrictLoginDetails | null = null
-      function needLoginDetails (l: StrictLoginDetails | null): asserts l is StrictLoginDetails {
-        if (l == null && loginDetails == null) {
-          loginDetails = mergeDeepRight(
+      let cachedLoginDetails: StrictLoginDetails | null = null
+      function needLoginDetails (): StrictLoginDetails {
+        if (cachedLoginDetails == null) {
+          cachedLoginDetails = mergeDeepRight(
             defaultLoginDetails,
             typeof arg === 'function' ? arg() : arg
-          )
-          l = loginDetails
+          ) as StrictLoginDetails
         }
-        if (l == null) throw new Error('Invariant violation: loginDetails is null')
+        return cachedLoginDetails
       }
-      function needUserLogin (l: StrictLoginDetails | null): asserts l is LoginUser {
-        if (l == null) needLoginDetails(l)
-        if (l.type !== 'user')
+      function needUserLogin (): LoginUser {
+        const loginDetails = needLoginDetails()
+        if (loginDetails.type !== 'user')
           throw new Error('Expected to log in as a bot, received user auth update')
+        return loginDetails
       }
       const processAuthorizationState = async (authState: Td.AuthorizationState) => {
         // Note: authorizationStateWaitPhoneNumber may not be the first update
@@ -579,7 +579,7 @@ export class Client {
             }
 
             case 'authorizationStateWaitPhoneNumber': {
-              needLoginDetails(loginDetails)
+              const loginDetails = needLoginDetails()
               let retry = false
               if (loginDetails.type === 'user') {
                 while (true) {
@@ -614,7 +614,7 @@ export class Client {
 
             // TDLib >= v1.8.6 only
             case 'authorizationStateWaitEmailAddress': {
-              needUserLogin(loginDetails)
+              const loginDetails = needUserLogin()
               await this.invoke({
                 _: 'setAuthenticationEmailAddress',
                 email_address: await loginDetails.getEmailAddress()
@@ -624,7 +624,7 @@ export class Client {
 
             // TDLib >= v1.8.6 only
             case 'authorizationStateWaitEmailCode': {
-              needUserLogin(loginDetails)
+              const loginDetails = needUserLogin()
               await this.invoke({
                 _: 'checkAuthenticationEmailCode',
                 code: {
@@ -637,13 +637,13 @@ export class Client {
             }
 
             case 'authorizationStateWaitOtherDeviceConfirmation': {
-              needUserLogin(loginDetails)
+              const loginDetails = needUserLogin()
               loginDetails.confirmOnAnotherDevice(authState.link)
               return
             }
 
             case 'authorizationStateWaitCode': {
-              needUserLogin(loginDetails)
+              const loginDetails = needUserLogin()
               let retry = false
               while (true) {
                 const code = await loginDetails.getAuthCode(retry)
@@ -663,7 +663,7 @@ export class Client {
             }
 
             case 'authorizationStateWaitRegistration': {
-              needUserLogin(loginDetails)
+              const loginDetails = needUserLogin()
               const { firstName, lastName = '' } = await loginDetails.getName()
               await this.invoke({
                 _: 'registerUser',
@@ -674,7 +674,7 @@ export class Client {
             }
 
             case 'authorizationStateWaitPassword': {
-              needUserLogin(loginDetails)
+              const loginDetails = needUserLogin()
               const passwordHint = authState.password_hint
               let retry = false
               while (true) {

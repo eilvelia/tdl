@@ -2,6 +2,11 @@
 
 <!-- Hi! -->
 
+## tdl@8.0.2 (UNRELEASED)
+
+- Fixed a possible `TypeError: null is not an object` error in `client.login()`
+  if called from a database with an incomplete login attempt.
+
 ## tdl-install-types@0.3.0 (2024-07-19)
 
 - No longer generates `number | string` instead of `string` for `int64` types
