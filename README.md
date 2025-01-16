@@ -184,9 +184,7 @@ Some examples:
 - `tdl.configure({ tdjson: require('prebuilt-tdlib').getTdjson() })` (use libtdjson from prebuilt-tdlib)
 
 The path concatenation of `libdir` + `tdjson` is directly passed to
-[`dlopen`][dlopen] (Unix) or [`LoadLibrary`][LoadLibraryW] (Windows). Check
-documentation of your OS to find out where the shared library will be searched
-for.
+[`dlopen`][dlopen] (Unix) or [`LoadLibrary`][LoadLibraryW] (Windows).
 
 #### `tdl.createClient(options: ClientOptions) => Client`
 
@@ -511,7 +509,7 @@ implemented basic browser support as well, but the idea has been dropped.
 
 Some of the possible errors include:
 
-<div align="right"><a name="not-found-error" href="#not-found-error">#</a></div>
+### "Dynamic Loading Error"
 
 - `Dynamic Loading Error: Win32 error 126` (Windows)
 - `Dynamic Loading Error: dlopen(…) image not found` (macOS)
@@ -522,13 +520,13 @@ cannot be found. To troubleshoot dependency issues, try to run
 `ldd libtdjson.so` on Linux or `otool -L libtdjson.dylib` on macOS. On Windows,
 you can use an app like Dependency Walker.
 
-Recheck the documentation of [dlopen][] (Linux), [dlopen][dlopen-macos] (macOS),
+Check the documentation of [dlopen][] (Linux), [dlopen][dlopen-macos] (macOS),
 [Dynamic-Link Library Search Order][dllso] (Windows) to make sure the shared
 library is present in the search paths. By default, Linux does not search in the
 current working directory, while macOS does.
 
 With `prebuilt-tdlib`, everything should work out of the box (on supported
-systems).
+platforms).
 
 [dllso]: https://docs.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-search-order#standard-search-order-for-desktop-applications
 [dlopen-macos]: https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/dlopen.3.html
@@ -536,7 +534,7 @@ systems).
 [dlopen]: https://www.man7.org/linux/man-pages/man3/dlopen.3.html
 [LoadLibraryW]: https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryw
 
-<div align="right"><a name="filepath-spaces-error" href="#filepath-spaces-error">#</a></div>
+### "No such file or directory"
 
 - `fatal error: napi.h: no such file or directory`
 - `error: no such file or directory: …/node-modules/node-addon-api`
@@ -545,35 +543,43 @@ The path to the directory where you execute `npm install` likely contains
 spaces, which is not supported by gyp:
 https://github.com/nodejs/node-gyp/issues/65#issuecomment-368820565.
 
-<div align="right"><a name="no-native-build" href="#no-native-build">#</a></div>
+### Messages from specific chats are not received or are delayed
+
+This is likely caused by missing `openChat` calls. Call the `openChat` method
+with the chat from which you want to receive messages (can be called multiple
+times). Also ensure that you are not using a too old version of TDLib. Search
+for "openChat" in TDLib issues for more information.
+
+### "No native build was found"
 
 - `No native build was found for platform=…`
 
-A pre-built node addon is not available for your system[^1], and the node addon has
-not been built from source. gcc, g++, python3, make should be available on your
-system to build the tdl's node addon; `npm install` (or `npm ci` or similar)
-should be run to execute the building. Also note that, for example, when
-building a Docker container, you can't generally just copy the node modules from
-the host system.
+A pre-built node addon is not available for your system[^1], and the node addon
+has not been built from source. The C and C++ compilers, `python3`, `make`
+should be available on your system to build the tdl's node addon; `npm install`
+(or `npm ci` or similar) should be run to build the addon. Also note that, for
+example, when building a Docker container, you generally cannot just copy the
+node modules from the host system.
 
-<div align="right"><a name="tdjson-already-loaded-error" href="#tdjson-already-loaded-error">#</a></div>
+### "tdjson is already loaded"
 
 - `tdjson is already loaded`
 
 If you use `node:worker_threads`, there are some caveats. `tdl` with the new
 tdjson interface can be used in only one thread. With the old tdjson interface,
-i.e. `tdl.configure({ useOldTdjsonInterface: true })`, it is indeed possible to
+i.e. `tdl.configure({ useOldTdjsonInterface: true })`, it is possible to
 use `tdl` in multiple worker threads, however `tdjson` and `libdir` options of
 `tdl.configure` will be ignored on subsequent tdl initializations. You might
 also want to set `tdl.configure({ verbosityLevel: 'default' })` so the verbosity
 level is set only once. The client should not be shared to other threads.
 
-<div align="right"><a name="openssl-symbols-error" href="#openssl-symbols-error">#</a></div>
+### OpenSSL incompatibility
 
 - `Error while reading RSA public key`
 
 You can get this error if libtdjson is dynamically linked against OpenSSL and
 some of the symbols got resolved into Node.js instead of the system OpenSSL.
+This error should not occur if you use `prebuilt-tdlib`.
 
 Note that Node.js also uses OpenSSL (the distributed binaries are statically
 linked against it) and exports the OpenSSL symbols. In the result, there are
@@ -633,12 +639,10 @@ time Node.js updates the OpenSSL dependency.
 This issue doesn't apply to Electron because it doesn't export the OpenSSL
 symbols.
 
-<div align="right"><a name="segfault-error" href="#segfault-error">#</a></div>
+### Segmentation fault
 
-- Segmentation fault
-
-The cause of the segfault might be the same as above. If you get segmentation
-faults, open an issue.
+The cause of the segfault might be the same as the above one. If tdl crashes
+with segmentation fault, open an issue.
 
 <a name="issue-tracker"></a>
 ## Issue tracker
