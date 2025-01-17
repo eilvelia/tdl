@@ -1,16 +1,34 @@
 #!/usr/bin/env bash
 
-_tdlib=$1
-_target="${2:-x86_64-linux-gnu.2.22}"
+set -eo pipefail
 
-if [ -z "$_tdlib" ]; then
+tdlib=$1
+arch=$2
+abi="${3:-gnu}"
+
+if [ -z "$tdlib" ]; then
   echo "Not enough arguments: expected TDLib rev"
   exit 1
 fi
 
-set -ex
+if [ -z "$arch" ]; then
+  echo "Not enough arguments: expected arch"
+  exit 1
+fi
 
-nix-build tdlib-linux.nix -v --argstr rev "$_tdlib" --argstr target "$_target"
+if [ "$abi" = "gnu" ]; then
+  libc_version="2.22"
+else
+  libc_version=""
+fi
+
+set -x
+
+nix-build tdlib-zig-wrapper.nix -v \
+  --argstr rev "$tdlib" \
+  --argstr arch "$arch" \
+  --argstr abi "$abi" \
+  --argstr libcVersion "$libc_version"
 
 mkdir to-upload
 cp -L ./result/lib/libtdjson.so to-upload/libtdjson.so

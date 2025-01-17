@@ -17,11 +17,10 @@ on:
         type: string
         required: false
         default: 'latest'
-# NOTE: The ZLIB_USE_STATIC_LIBS option requires CMake >= 3.24
 jobs:
-  build-linux-x86_64:
+  build-linux-x86_64-glibc:
     name: 'Build TDLib / Linux x86_64 glibc'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v27
@@ -30,15 +29,15 @@ jobs:
       - name: Build TDLib
         run: |
           cd packages/prebuilt-tdlib/ci
-          ./build-linux.sh ${{ inputs.tdlib }} x86_64-linux-gnu.2.22
+          ./build-linux.sh ${{ inputs.tdlib }} x86_64 gnu
       - uses: actions/upload-artifact@v4
         with:
           name: tdlib-linux-x86_64-glibc
           path: ${{ env.TO_UPLOAD }}
 
-  build-linux-arm64:
+  build-linux-arm64-glibc:
     name: 'Build TDLib / Linux arm64 glibc (cross)'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v27
@@ -47,7 +46,7 @@ jobs:
       - name: Build TDLib
         run: |
           cd packages/prebuilt-tdlib/ci
-          ./build-linux.sh ${{ inputs.tdlib }} aarch64-linux-gnu.2.22
+          ./build-linux.sh ${{ inputs.tdlib }} aarch64 gnu
       - uses: actions/upload-artifact@v4
         with:
           name: tdlib-linux-arm64-glibc
@@ -108,6 +107,7 @@ jobs:
         run: vcpkg install gperf:x64-windows-static openssl:x64-windows-static zlib:x64-windows-static
       - name: CMake version
         run: cmake --version
+      # NOTE: The ZLIB_USE_STATIC_LIBS option requires CMake >= 3.24
       - name: Build TDLib
         run: |
           mkdir to-upload
@@ -129,7 +129,8 @@ jobs:
   test:
     name: 'Test / ${{ matrix.v.bin }} / ${{ matrix.v.os }}'
     needs:
-      - build-linux-x86_64
+      - build-linux-x86_64-glibc
+      - build-linux-arm64-glibc
       - build-macos-x86_64
       - build-macos-arm64
       - build-windows-x86_64
@@ -138,11 +139,15 @@ jobs:
       fail-fast: false
       matrix:
         v:
-          - os: ubuntu-latest
+          # use an older ubuntu version to test the library working with
+          # previous glibc version
+          - os: ubuntu-22.04
             bin: tdlib-linux-x86_64-glibc
+          - os: ubuntu-24.04-arm
+            bin: tdlib-linux-arm64-glibc
           - os: macos-13
             bin: tdlib-macos-x86_64
-          - os: macos-14
+          - os: macos-latest
             bin: tdlib-macos-arm64
           - os: windows-latest
             bin: tdlib-windows-x86_64
@@ -163,38 +168,9 @@ jobs:
         env:
           LIBDIR_PATH: '.'
 
-  test-linux-arm64:
-    name: 'Test / ${{ matrix.v.bin }} / ${{ matrix.v.os }} (docker arm64)'
-    needs: [build-linux-arm64]
-    runs-on: ${{ matrix.v.os }}
-    strategy:
-      matrix:
-        v:
-          - os: ubuntu-latest
-            bin: tdlib-linux-arm64-glibc
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
-        with:
-          name: ${{ matrix.v.bin }}
-          merge-multiple: true
-      - run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-      - name: Run in docker
-        run: |
-          cat > test-linux-aarch64.sh <<EOF
-          set -ex
-          cd /usr/src/app
-          ldd libtdjson.so # Info
-          npm install
-          npm uninstall -D prebuilt-tdlib
-          LIBDIR_PATH=. npm run test:integration
-          EOF
-          docker run -v $(pwd):/usr/src/app --platform linux/arm64 node:20 \
-            bash /usr/src/app/test-linux-aarch64.sh
-
   publish:
     name: 'Publish to npm'
-    needs: [test, test-linux-arm64]
+    needs: [test]
     runs-on: ubuntu-latest
     permissions:
       contents: read

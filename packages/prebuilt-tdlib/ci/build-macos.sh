@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 
-_tdlib=$1
+set -eo pipefail
 
-if [ -z "$_tdlib" ]; then
+tdlib=$1
+
+if [ -z "$tdlib" ]; then
   echo "Not enough arguments: expected TDLib rev"
   exit 1
 fi
 
-set -ex
+set -x
 
-nix-build tdlib-macos.nix -v --argstr rev "$_tdlib"
+nix-build -v -E "(import <nixpkgs> { }).callPackage ./tdlib.nix { rev = \"$tdlib\"; }"
 
 mkdir to-upload
 cp -L ./result/lib/libtdjson.dylib to-upload/libtdjson.dylib
