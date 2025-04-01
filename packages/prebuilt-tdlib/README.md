@@ -60,7 +60,7 @@ console.log(getTdjson())
 // '/home/user/proj/node_modules/@prebuilt-tdlib/linux-x64-glibc/libtdjson.so'
 ```
 
-This package can be used with, for example, [`tdl`][tdl]. You can pass the
+This package can be used with, for example, [tdl][]. You can pass the
 path to `tdl.configure` (since tdl v7.3.0):
 
 [tdl]: https://github.com/eilvelia/tdl

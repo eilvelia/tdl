@@ -3,7 +3,7 @@
 
 import * as tdl from 'npm:tdl@8'
 // Also use prebuilt TDLib:
-import { getTdjson } from 'npm:prebuilt-tdlib@td-1.8.30'
+import { getTdjson } from 'npm:prebuilt-tdlib@td-1.8.46'
 
 tdl.configure({ tdjson: getTdjson() })
 

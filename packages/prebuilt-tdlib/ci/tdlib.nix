@@ -30,8 +30,8 @@ stdenv.mkDerivation {
   depsBuildBuild = [ buildPackages.stdenv.cc ];
 
   # Note: Even if we compile for the same architecture, the hostPlatform
-  # compiler can be zig cc for different glibc version that doesn't produce
-  # runnable executables
+  # compiler can be zig cc targeting a different glibc version that doesn't
+  # produce runnable executables
   preConfigure = ''
     cmake -B native-build \
       -DCMAKE_C_COMPILER=$CC_FOR_BUILD \

@@ -1,7 +1,7 @@
 # tdl &nbsp; [![npm](https://img.shields.io/npm/v/tdl.svg)](https://www.npmjs.com/package/tdl) [![CI](https://github.com/eilvelia/tdl/actions/workflows/ci.yml/badge.svg)](https://github.com/eilvelia/tdl/actions/workflows/ci.yml)
 
-`tdl` is a fairly simple JavaScript wrapper for [TDLib][] (Telegram Database library),
-a library to create [Telegram][] clients or bots.
+tdl is a fairly simple JavaScript wrapper for [TDLib][] (Telegram Database library),
+a library for creating [Telegram][] clients or bots.
 
 [TDLib]: https://github.com/tdlib/td
 [Telegram]: https://telegram.org/
@@ -22,7 +22,7 @@ a library to create [Telegram][] clients or bots.
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows), of TDLib version 1.8.0 or newer
 - In rare cases, a C++ compiler and Python installed to build the node addon[^1]
 
-[^1]: `tdl` is packaged with pre-built addons for Windows (x86_64), GNU/Linux (x86_64, arm64; glibc >= 2.22), and macOS (x86_64, arm64; v10.14+). If a pre-built binary is not available for your system, then the node addon will be built using node-gyp, requiring Python and a C++ toolchain (C++14 is required) to be installed (on Windows, MSVS or Build Tools). Pass `--build-from-source` to never use the pre-built binaries. arm64 binaries are not tested in the CI. Linux binaries are statically linked against libstdc++.
+[^1]: tdl is packaged with pre-built addons for Windows (x86_64), GNU/Linux (x86_64, arm64; glibc >= 2.22), and macOS (x86_64, arm64; v10.14+). If a pre-built binary is not available for your system, then the node addon will be built using node-gyp, requiring Python and a C++ toolchain (C++14 is required) to be installed (on Windows, MSVS or Build Tools). Pass `--build-from-source` to never use the pre-built binaries. arm64 binaries are not tested in the CI. Linux binaries are statically linked against libstdc++.
 
 <a name="installation"></a>
 ## Installation
@@ -33,14 +33,15 @@ a library to create [Telegram][] clients or bots.
 3. If you use TypeScript, types for TDLib are installed separately,
    see the [Types](#types) section
 
-To use `tdl`, you need to get TDLib first, which is dynamically loaded by `tdl`.
+To use tdl, you need to get TDLib first, which is dynamically loaded by tdl.
 The tdjson shared library should be present in the system search paths
 (otherwise the path to libtdjson can be specified manually in `tdl.configure`).
 
-> **Tip**: When building TDLib, the libraries can be installed into the system
-> using `cmake --install .` (optionally specify the `--prefix` option, the
-> default is `/usr/local`) after TDLib has been built successfully. This command
-> may require `sudo`.
+> [!TIP]
+> When building TDLib, the libraries can be installed into the system using
+> `cmake --install .` (optionally specify the `--prefix` option, the default is
+> `/usr/local`) after TDLib has been built successfully. This command may
+> require `sudo`.
 
 [tdlib-building]: https://github.com/tdlib/td#building
 
@@ -49,7 +50,7 @@ The tdjson shared library should be present in the system search paths
 Instead of building TDLib from source, you can possibly install pre-built TDLib
 libraries distributed through the `prebuilt-tdlib` npm package. An example of
 using libraries from `prebuilt-tdlib` is present in the section below. The
-supported systems are x86_64 & arm64 GNU/Linux, x86_64 & arm64 macOS, and
+supported platforms are x86_64 & arm64 GNU/Linux, x86_64 & arm64 macOS, and
 x86_64 Windows. To install `prebuilt-tdlib` for a specific TDLib version
 instead of latest, for example v1.8.30, run `npm i prebuilt-tdlib@td-1.8.30`.
 The available versions of `prebuilt-tdlib` can be found by running
@@ -87,8 +88,8 @@ const client = tdl.createClient({
 
 client.on('error', console.error)
 
-// Aside of receiving responses to your requests, the server can push to you
-// events called "updates" which can be received as follows:
+// Aside of sending responses to your requests, TDLib pushes to you
+// events called "updates", which can be received as follows:
 client.on('update', update => {
   console.log('Received update:', update)
 })
@@ -120,39 +121,40 @@ async function main () {
 main().catch(console.error)
 ```
 
-Instead of using CommonJS (`require('tdl')`), one can import `tdl` in an
+Instead of using CommonJS (`require('tdl')`), one can import tdl in an
 EcmaScript module through the interoperability with CommonJS:
-`import * as tdl from 'tdl'`. Or alternatively import specific functions
+`import * as tdl from 'tdl'`. Or alternatively, import specific functions
 using `import { createClient } from 'tdl'`.
 
-The API list of TDLib methods, which are called using `client.invoke`, can be found at, e.g.:
-- https://core.telegram.org/tdlib/docs/annotated.html (possibly outdated)
-- or in the [td_api.tl][] file in the TDLib repository.
-
-[td_api.tl]: https://github.com/tdlib/td/blob/d93a99e3351db82573d765ce4f5e84714c277518/td/generate/scheme/td_api.tl
+The API reference of the TDLib methods, which are called using `client.invoke`,
+can be found at, e.g.:
+- https://core.telegram.org/tdlib/docs/annotated.html (possibly outdated),
+- in the [td_api.tl][] file in the TDLib repository,
+- if the TypeScript types for TDLib are installed, the documentation can be
+  browsed directly in the editor, using the editor's autocompletion menu or the
+  `tdlib-types.d.ts` file (the types are annotated with JSDoc comments).
 
 In the TDLib documentation, the `bytes` type means a **base64-encoded** string.
 `int64` accepts either a number or a string, pass string for large numbers.
 `int32`, `int53`, and `double` are the number JS type.
-
-If TypeScript types for TDLib are installed, note the types are annotated
-with jsdoc comments, and the documentation can also be browsed directly in the
-`.d.ts` file or in the autocompletion menu of the editor.
 
 See also https://core.telegram.org/tdlib/getting-started for some basic
 information on how to use TDLib (tdl handles the authorization part with
 `client.login`). Note that the TDLib JSON interface actually sends a `@type`
 field, but tdl renames it to `_`.
 
-<!-- TODO: Add a guide on how to read the tl schema or similar? -->
-
 Some short examples are available in the [examples/](examples/) directory.
+
+<!-- TODO: Perhaps add a guide on how to read the tl schema or similar? -->
+
+[td_api.tl]: https://github.com/tdlib/td/blob/master/td/generate/scheme/td_api.tl
 
 <a name="api"></a>
 ## API
 
-> **Note**: A more exhaustive documentation is available in the
-> [TypeScript typings](packages/tdl/index.d.ts) file.
+> [!NOTE]
+> A more exhaustive documentation is available in the
+> [TypeScript declaration file](packages/tdl/index.d.ts).
 
 #### `tdl.configure(options: TDLibConfiguration) => void`
 
@@ -186,6 +188,9 @@ Some examples:
 The path concatenation of `libdir` + `tdjson` is directly passed to
 [`dlopen`][dlopen] (Unix) or [`LoadLibrary`][LoadLibraryW] (Windows).
 
+This function must be called before TDLib is initialized, that is, before
+any of `createClient` / `execute` are called.
+
 #### `tdl.createClient(options: ClientOptions) => Client`
 
 Create a TDLib client.
@@ -198,24 +203,24 @@ const client = tdl.createClient({
 })
 ```
 
-The options that can be passed here have the following interface:
+`createClient` accepts options of the following interface:
 
 ```typescript
 type ClientOptions = {
   apiId: number, // Can be obtained at https://my.telegram.org
   apiHash: string, // Can be obtained at https://my.telegram.org
-  databaseDirectory: string, // Path, relative to cwd (defaults to '_td_database')
-  filesDirectory: string, // Path, relative to cwd (defaults to '_td_files')
-  databaseEncryptionKey: string, // Optional key for database encryption
-  useTestDc: boolean, // Use test telegram server (defaults to false)
-  tdlibParameters: Object, // Raw TDLib parameters
-  skipOldUpdates: boolean // Advanced option.
+  databaseDirectory?: string, // Path, relative to cwd (defaults to '_td_database')
+  filesDirectory?: string, // Path, relative to cwd (defaults to '_td_files')
+  databaseEncryptionKey?: string, // Optional key for database encryption
+  useTestDc?: boolean, // Use test telegram server (defaults to false)
+  tdlibParameters?: Object, // Raw TDLib parameters
+  skipOldUpdates?: boolean // Advanced option
 }
 ```
 
 Of these fields, only `apiId` and `apiHash` are required. Any other field can be
 omitted. They are more thoroughly described in the documentation comments
-of TypeScript types.
+of the TypeScript types.
 
 The `tdlibParameters` option is described in
 https://core.telegram.org/tdlib/docs/classtd_1_1td__api_1_1tdlib_parameters.html.
@@ -238,7 +243,7 @@ tdlibParameters: {
 }
 ```
 
-In a real application, you probably want to change `device_model` and other
+In a real application, you likely want to change `device_model` and other
 parameters.
 
 #### `client.login(arg?: LoginDetails | (() => LoginDetails)) => Promise<void>`
@@ -249,7 +254,7 @@ Attach an update handler to log you in to your Telegram account.
 await client.login()
 ```
 
-By default, `tdl` asks the user for the phone number, auth code, and 2FA
+By default, tdl asks the user for the phone number, auth code, and 2FA
 password (if needed) in the console. You can override the defaults with custom
 functions that return promises, for example:
 
@@ -331,13 +336,14 @@ The other available event is `'close'`. After `close` (the
 client should not be used anymore.
 
 You may consider using reactive libraries like RxJS or most.js for convenient
-event processing.
+event processing. Since tdl v8.0.0, there's an alternative method to receive
+updates using async iterators, see `iterUpdates` below.
 
 `client.addListener` is an alias for `client.on`.
 
 #### `client.once(event: string, callback: Function) => Client`
 
-Attach a one-time listener.
+Attach a one-time listener; otherwise similar to `client.on`.
 
 #### `client.off(event: string, listener: Function) => boolean`
 
@@ -352,7 +358,8 @@ function listener (u) {
 client.on('update', listener)
 ```
 
-The returned value indicates whether the listener has been successfully removed.
+The returned value indicates whether the listener has been successfully removed
+or not.
 
 `client.removeListener` is an alias for `client.off`.
 
@@ -376,8 +383,8 @@ for await (const update of client.iterUpdates()) {
 Call a TDLib method asynchronously. If the request fails, the promise rejects
 with `TDLibError` containing the error code and error message.
 
-For the information regarding TDLib API list, see the "Getting started" section
-of this README.
+For information regarding the TDLib API list, see the
+[Getting started](#getting-started) section of this README.
 
 ```javascript
 const chats = await client.invoke({
@@ -421,7 +428,7 @@ const res = tdl.execute({
 })
 ```
 
-`client.execute` is the same as `tdl.execute`.
+`client.execute` is equivalent to `tdl.execute`.
 
 #### `tdl.setLogMessageCallback(maxVerbosityLevel: number, cb: Function | null) => void`
 
@@ -432,15 +439,16 @@ overrides the previously set callback.
 <a name="types"></a>
 ## Types
 
-> **Tip**: It is considerably more convenient to use `tdl` with TypeScript,
-> which enables full autocompletion for the TDLib methods and objects along with
-> the documentation.
+> [!TIP]
+> It is generally significantly more convenient to use tdl with TypeScript,
+> which enables autocompletion along with the documentation for more than 2500
+> TDLib methods and structures.
 
-While `tdl` works with any TDLib version (above the requirement), the TypeScript
+While tdl works with any TDLib version (above the requirement), the TypeScript
 types have to be installed specifically for the TDLib version you use. This can
 be done via a small `tdl-install-types` utility, which downloads and generates
-types for you. It can be called using `npx tdl-install-types` without
-any separate installation.
+types for you. It can be called using `npx tdl-install-types` without a separate
+installation step.
 
 ```console
 $ npx tdl-install-types [<options>] [<target>]
@@ -448,21 +456,24 @@ $ npx tdl-install-types [<options>] [<target>]
 
 (Type "y" in case it asks to install the `tdl-install-types` package.)
 
-The utility can generate types given a tdjson library file (e.g. `npx tdl-install-types ./libtdjson.so`), a TDLib git ref (examples: `npx tdl-install-types v1.8.0`, `npx tdl-install-types master`, `npx tdl-install-types 2de39ffffe71dc41c538e66085658d21cecbae08`), or a td_api.tl file (`npx tdl-install-types td_api.tl`). When called without arguments or with the `prebuilt-tdlib` argument, it will generate types for the installed version of `prebuilt-tdlib`.
+This utility can generate types for a given tdjson library file, for the
+installed version of prebuilt-tdlib, for a certain TDLib git ref, or for a
+td_api.tl file. Various examples of using `tdl-install-types`:
+
+```console
+$ npx tdl-install-types prebuilt-tdlib # generate types for the installed prebuilt-tdlib
+$ npx tdl-install-types # similar to the above one, try to install types for prebuilt-tdlib
+$ npx tdl-install-types ./libtdjson.so # generate types for this shared library file in the cwd
+$ npx tdl-install-types 0ada45c3618108a62806ce7d9ab435a18dac1aab # types for this TDLib commit
+$ npx tdl-install-types master # types for this TDLib branch
+$ npx tdl-install-types v1.8.0 # types for the git tag in the TDLib repository
+$ npx tdl-install-types ./td_api.tl # generate types based on the td_api.tl file in the cwd
+```
 
 By default, the types are generated into a `tdlib-types.d.ts` file that you can
 git-commit. The declaration file should be inside your project to work. When you
 update the version of TDLib, don't forget to also update the types: it's
 important to keep the types in sync with the interface TDLib actually uses.
-
-```console
-$ # Various examples:
-$ npx tdl-install-types libtdjson.so # generate types for this shared library in the cwd
-$ npx tdl-install-types 0ada45c3618108a62806ce7d9ab435a18dac1aab # types for this TDLib commit
-$ npx tdl-install-types # tries to use prebult-tdlib
-$ npx tdl-install-types prebuilt-tdlib # same as the above one
-$ npx tdl-install-types v1.8.0 # types for the git tag in the TDLib repository
-```
 
 See `npx tdl-install-types --help` for additional information.
 
@@ -485,19 +496,19 @@ globally or per-project as a dev dependency.
 <a name="other-javascript-runtimes"></a>
 ## Other JavaScript runtimes
 
-Since [bun][] is Node.js-compatible and [supports Node-API][bun-napi], `tdl`
-should work out of the box, however the stability may not be the best yet.
+Since [bun][] is Node.js-compatible and [supports Node-API][bun-napi], tdl
+generally works out of the box, however the stability may not be the best yet.
 
-[deno][] can also import `tdl` through the node compatibility via
+[deno][] can also import tdl through the node compatibility via
 `import * as tdl from 'npm:tdl'`. To use tdl in deno, you must ensure that your
 deno version is 1.44.2 (2024-06-13) or greater. The Node-API implementation was
 broken in older deno versions and can easily result in segfaults. There's a
 small example in `examples/deno-example.ts`.
 
-`tdl` depends on native libraries and cannot be used in the browser. However,
-TDLib itself can possibly work in the browser by compiling it to WebAssembly.
-There is an outdated official [tdweb][] library, for example. Previously, `tdl`
-implemented basic browser support as well, but the idea has been dropped.
+tdl depends on native libraries and cannot be used in the browser. TDLib itself,
+however, can work in the browser if you compile it to WebAssembly. There is an
+outdated official [tdweb][] library, for example. Previously, tdl implemented
+basic browser support as well, but the idea has been dropped.
 
 [bun]: https://bun.sh/
 [bun-napi]: https://github.com/oven-sh/bun/issues/158
@@ -543,7 +554,7 @@ The path to the directory where you execute `npm install` likely contains
 spaces, which is not supported by gyp:
 https://github.com/nodejs/node-gyp/issues/65#issuecomment-368820565.
 
-### Messages from specific chats are not received or are delayed
+### Messages from certain chats are not received or are delayed
 
 This is likely caused by missing `openChat` calls. Call the `openChat` method
 with the chat from which you want to receive messages (can be called multiple
@@ -565,10 +576,10 @@ node modules from the host system.
 
 - `tdjson is already loaded`
 
-If you use `node:worker_threads`, there are some caveats. `tdl` with the new
+If you use `node:worker_threads`, there are some caveats. tdl with the new
 tdjson interface can be used in only one thread. With the old tdjson interface,
 i.e. `tdl.configure({ useOldTdjsonInterface: true })`, it is possible to
-use `tdl` in multiple worker threads, however `tdjson` and `libdir` options of
+use tdl in multiple worker threads, however `tdjson` and `libdir` options of
 `tdl.configure` will be ignored on subsequent tdl initializations. You might
 also want to set `tdl.configure({ verbosityLevel: 'default' })` so the verbosity
 level is set only once. The client should not be shared to other threads.
@@ -590,9 +601,10 @@ correctly if the versions are ABI-compatible, i.e. if TDLib is linked against an
 OpenSSL version sufficiently similar to the version that Node.js uses
 (`node -p "process.versions.openssl"`).
 
-`tdl` tries to get around the symbol conflict issues by using `RTLD_DEEPBIND`
+tdl tries to get around the symbol conflict issues by using `RTLD_DEEPBIND`
 when available, so these issues should be rare in practice (unless you use
-musl).
+musl). Additionally, `prebuilt-tdlib` links OpenSSL statically into the binary
+file.
 
 You can use `lldb` or `gdb` to check whether the symbols get resolved into
 Node.js. For example, open `lldb -- node index.js` and set these breakpoints:
@@ -632,12 +644,11 @@ However, it's inconvenient for most users to rebuild Node.js.
 Another hypothetical solution is to rebuild TDLib with the OpenSSL headers
 distributed in Node.js (`<path-to-node>/include/node/`) without linking it to
 anything, simply leaving the undefined symbols. Using this option, there is also
-only one OpenSSL. I haven't checked that this works or that Node exports all the
-symbols needed for TDLib. With this option, TDLib also should be rebuilt every
-time Node.js updates the OpenSSL dependency.
+only one OpenSSL. The author hasn't checked that this works or that Node exports
+all the symbols needed for TDLib. With this option, TDLib also should be rebuilt
+every time Node.js updates the OpenSSL dependency.
 
-This issue doesn't apply to Electron because it doesn't export the OpenSSL
-symbols.
+This issue doesn't apply to Electron because it doesn't export OpenSSL symbols.
 
 ### Segmentation fault
 
@@ -648,7 +659,11 @@ with segmentation fault, open an issue.
 ## Issue tracker
 
 Reporting bugs (besides feature requests and other stuff) is very welcome in the
-tdl's GitHub issue tracker. However, while I can answer some questions on how to
-use TDLib itself, I do not know the entirety of TDLib API, and it may be
-better (and faster to get the response) to ask questions related to TDLib
+tdl's GitHub issue tracker. However, while the author can answer some questions
+on how to use TDLib itself, they do not know the entirety of TDLib API, and it
+may be better (and faster to get the response) to ask questions related to TDLib
 specifics in the `t.me/tdlibchat` group.
+
+---
+
+[🥒](https://github.com/search?q=repo%3Atdlib%2Ftd%20cucumber&type=code)
