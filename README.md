@@ -33,9 +33,10 @@ a library for creating [Telegram][] clients or bots.
 3. If you use TypeScript, types for TDLib are installed separately,
    see the [Types](#types) section
 
-To use tdl, you need to get TDLib first, which is dynamically loaded by tdl.
-The tdjson shared library should be present in the system search paths
-(otherwise the path to libtdjson can be specified manually in `tdl.configure`).
+To use tdl, you first need to get TDLib, which is dynamically loaded by tdl.
+The tdjson shared library should be present in the system search paths (the
+path to libtdjson can also be manually specified in `tdl.configure`, which is
+how `prebuilt-tdlib` is loaded).
 
 > [!TIP]
 > When building TDLib, the libraries can be installed into the system using
@@ -153,7 +154,7 @@ Some short examples are available in the [examples/](examples/) directory.
 ## API
 
 > [!NOTE]
-> A more exhaustive documentation is available in the
+> More exhaustive documentation can be found in the
 > [TypeScript declaration file](packages/tdl/index.d.ts).
 
 #### `tdl.configure(options: TDLibConfiguration) => void`
@@ -254,8 +255,8 @@ Attach an update handler to log you in to your Telegram account.
 await client.login()
 ```
 
-By default, tdl asks the user for the phone number, auth code, and 2FA
-password (if needed) in the console. You can override the defaults with custom
+By default, tdl asks the user for their phone number, auth code, and 2FA
+password (if needed) on the terminal. You can override the defaults with custom
 functions that return promises, for example:
 
 ```javascript
@@ -327,7 +328,7 @@ client.on('error', console.error)
 
 If an exception is thrown inside your event listener, it is emitted as the
 `'error'` event (other things like invalid client options or potential internal
-errors can also be emitted as `'error`'). Ideally, you should always have a
+errors can also be emitted as `'error'`). Ideally, you should always have a
 listener on `client.on('error')`, otherwise an unhandled promise rejection will
 appear.
 
@@ -378,7 +379,7 @@ for await (const update of client.iterUpdates()) {
 }
 ```
 
-#### `client.invoke(query: Request) => Promise<Reponse>`
+#### `client.invoke(query: Request) => Promise<Response>`
 
 Call a TDLib method asynchronously. If the request fails, the promise rejects
 with `TDLibError` containing the error code and error message.
@@ -550,7 +551,7 @@ platforms).
 - `fatal error: napi.h: no such file or directory`
 - `error: no such file or directory: …/node-modules/node-addon-api`
 
-The path to the directory where you execute `npm install` likely contains
+The path to the directory in which you execute `npm install` likely contains
 spaces, which is not supported by gyp:
 https://github.com/nodejs/node-gyp/issues/65#issuecomment-368820565.
 
@@ -588,7 +589,7 @@ level is set only once. The client should not be shared to other threads.
 
 - `Error while reading RSA public key`
 
-You can get this error if libtdjson is dynamically linked against OpenSSL and
+You can get this error if libtdjson is dynamically linked against OpenSSL, and
 some of the symbols got resolved into Node.js instead of the system OpenSSL.
 This error should not occur if you use `prebuilt-tdlib`.
 
