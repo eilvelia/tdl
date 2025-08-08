@@ -20,15 +20,14 @@ supports, run:
 $ npm install prebuilt-tdlib
 ```
 
-To install `prebuilt-tdlib` for a specific TDLib version, e.g. TDLib v1.8.33,
-run:
+To install `prebuilt-tdlib` for a specific TDLib version instead of latest,
+e.g. TDLib v1.8.50, use the `td-` dist-tags:
 
 ```console
-$ npm install prebuilt-tdlib@td-1.8.33
+$ npm install prebuilt-tdlib@td-1.8.50
 ```
 
-`prebuilt-tdlib` can be installed for other TDLib versions, execute
-`$ npm info prebuilt-tdlib dist-tags`[^1] to get the list of available versions.
+To get the list of available versions, run `npm info prebuilt-tdlib dist-tags`[^1].
 
 [^1]: Or, with more convenient output, using jq:
       ```console

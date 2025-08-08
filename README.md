@@ -22,21 +22,23 @@ a library for creating [Telegram][] clients or bots.
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows), of TDLib version 1.8.0 or newer
 - In rare cases, a C++ compiler and Python installed to build the node addon[^1]
 
-[^1]: tdl is packaged with pre-built addons for Windows (x86_64), GNU/Linux (x86_64, arm64; glibc >= 2.22), and macOS (x86_64, arm64; v10.14+). If a pre-built binary is not available for your system, then the node addon will be built using node-gyp, requiring Python and a C++ toolchain (C++14 is required) to be installed (on Windows, MSVS or Build Tools). Pass `--build-from-source` to never use the pre-built binaries. arm64 binaries are not tested in the CI. Linux binaries are statically linked against libstdc++.
+[^1]: tdl is packaged with pre-built addons for Windows (x86_64), GNU/Linux (x86_64, arm64; glibc >= 2.22), and macOS (x86_64, arm64; v10.14+). If a pre-built binary is not available for your system, then the node addon will be built using node-gyp, requiring Python and a C++ toolchain (C++14 is required) to be installed (on Windows, MSVS or Build Tools). Pass `--build-from-source` to never use the pre-built binaries. arm64 binaries are not tested in CI. Linux binaries are statically linked against libstdc++.
 
 <a name="installation"></a>
 ## Installation
 
 1. Install tdl: `npm install tdl`
-2. [Build][tdlib-building] TDLib or install pre-built TDLib libraries
-   (`npm install prebuilt-tdlib`)
-3. If you use TypeScript, types for TDLib are installed separately,
+2. Additionally install pre-built TDLib libraries (`npm install prebuilt-tdlib`) or
+   [build][tdlib-building] TDLib yourself
+3. If you use TypeScript, types for TDLib are generated separately,
    see the [Types](#types) section
 
-To use tdl, you first need to get TDLib, which is dynamically loaded by tdl.
-The tdjson shared library should be present in the system search paths (the
-path to libtdjson can also be manually specified in `tdl.configure`, which is
-how `prebuilt-tdlib` is loaded).
+To use tdl, you also need to get TDLib itself, which is dynamically loaded by
+tdl. A convenient option is to use the `prebuilt-tdlib` package (which is
+currently separate from tdl). Alternatively, you can build TDLib by following
+its build instructions, for example in cases where `prebuilt-tdlib` is not
+available for your platform, does not support the desired TDLib version, you
+need a patched TDLib, or for other reasons.
 
 > [!TIP]
 > When building TDLib, the libraries can be installed into the system using
@@ -48,14 +50,9 @@ how `prebuilt-tdlib` is loaded).
 
 ### prebuilt-tdlib
 
-Instead of building TDLib from source, you can possibly install pre-built TDLib
-libraries distributed through the `prebuilt-tdlib` npm package. An example of
-using libraries from `prebuilt-tdlib` is present in the section below. The
-supported platforms are x86_64 & arm64 GNU/Linux, x86_64 & arm64 macOS, and
-x86_64 Windows. To install `prebuilt-tdlib` for a specific TDLib version
-instead of latest, for example v1.8.30, run `npm i prebuilt-tdlib@td-1.8.30`.
-The available versions of `prebuilt-tdlib` can be found by running
-`npm info prebuilt-tdlib dist-tags`. See the README of [prebuilt-tdlib][] for
+`prebuilt-tdlib` supports x86_64 & arm64 Linux (glibc only), x86_64 & arm64
+macOS, and x86_64 Windows. An example of using libraries from `prebuilt-tdlib`
+is present in the section below. See the README of [prebuilt-tdlib][] for
 additional information.
 
 [![npm](https://img.shields.io/npm/v/prebuilt-tdlib.svg?label=prebuilt-tdlib)](https://www.npmjs.com/package/prebuilt-tdlib)
@@ -68,24 +65,25 @@ additional information.
 ```javascript
 const tdl = require('tdl')
 
-// If libtdjson is not present in the system search paths, the path to the
-// libtdjson shared library can be set manually, e.g.:
+// Configure tdl to use the tdjson shared library from the prebuilt-tdlib
+// package (should be installed separately)
+const { getTdjson } = require('prebuilt-tdlib')
+tdl.configure({ tdjson: getTdjson() })
+
+// Instead of using the aforementioned prebuilt-tdlib, you can configure
+// tdl to load libtdjson from specified filename, for example:
 //   tdl.configure({ tdjson: '/usr/local/lib/libtdjson.dylib' })
+// With no configuration, tdl loads libtdjson from the system search paths.
 // The library directory can be set separate from the library name,
 // example to search for libtdjson in the directory of the current script:
 //   tdl.configure({ libdir: __dirname })
 
-// Instead of building TDLib yourself, the aforementioned prebuilt-tdlib can be
-// used as follows:
-//   const { getTdjson } = require('prebuilt-tdlib')
-//   tdl.configure({ tdjson: getTdjson() })
-
+// Create a client. It is mandatory to pass apiId and apiHash, these can be
+// obtained at https://my.telegram.org/
 const client = tdl.createClient({
-  apiId: 2222, // Your api_id
-  apiHash: '0123456789abcdef0123456789abcdef' // Your api_hash
+  apiId: 2222, // Replace with your api_id
+  apiHash: '0123456789abcdef0123456789abcdef' // Replace with your api_hash
 })
-// Passing apiId and apiHash is mandatory,
-// these values can be obtained at https://my.telegram.org/
 
 client.on('error', console.error)
 
@@ -101,7 +99,7 @@ async function main () {
   // it's also possible to log in as a bot using `client.loginAsBot('<TOKEN>')`.
   await client.login()
 
-  // Invoke a TDLib method. The information regarding TDLib method list and
+  // Call a TDLib method. The information regarding TDLib method list and
   // documentation is below this code block.
   const me = await client.invoke({ _: 'getMe' })
   console.log('My user:', me)
@@ -124,13 +122,13 @@ main().catch(console.error)
 
 Instead of using CommonJS (`require('tdl')`), one can import tdl in an
 EcmaScript module through the interoperability with CommonJS:
-`import * as tdl from 'tdl'`. Or alternatively, import specific functions
-using `import { createClient } from 'tdl'`.
+`import * as tdl from 'tdl'` (or import only some functions:
+`import { createClient } from 'tdl'`).
 
 The API reference of the TDLib methods, which are called using `client.invoke`,
 can be found at, e.g.:
-- https://core.telegram.org/tdlib/docs/annotated.html (possibly outdated),
-- in the [td_api.tl][] file in the TDLib repository,
+- https://core.telegram.org/tdlib/docs/annotated.html,
+- the [td_api.tl][] file in the TDLib repository,
 - if the TypeScript types for TDLib are installed, the documentation can be
   browsed directly in the editor, using the editor's autocompletion menu or the
   `tdlib-types.d.ts` file (the types are annotated with JSDoc comments).
@@ -659,11 +657,11 @@ with segmentation fault, open an issue.
 <a name="issue-tracker"></a>
 ## Issue tracker
 
-Reporting bugs (besides feature requests and other stuff) is very welcome in the
+Reporting bugs (besides feature requests and other stuff) is very welcome in
 tdl's GitHub issue tracker. However, while the author can answer some questions
 on how to use TDLib itself, they do not know the entirety of TDLib API, and it
-may be better (and faster to get the response) to ask questions related to TDLib
-specifics in the `t.me/tdlibchat` group.
+may be better (and faster to get the response) to ask questions related to
+TDLib specifics in the `t.me/tdlibchat` group.
 
 ---
 
