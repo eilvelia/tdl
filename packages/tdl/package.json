@@ -21,7 +21,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "debug": "^4.4.0",
+    "debug": "^4.4.1",
     "node-addon-api": "^7.1.1",
     "node-gyp-build": "^4.8.4"
   },
@@ -38,6 +38,7 @@
     "tglib",
     "bindings",
     "node-addon",
+    "cucumber",
     "backend"
   ],
   "repository": {

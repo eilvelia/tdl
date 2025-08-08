@@ -1,4 +1,4 @@
-// Types for TDLib v1.8.46 (207f3be7b58b2a2b9f0a066b5b6ef18782b8b517)
+// Types for TDLib v1.8.51 (bb474a201baa798784d696d2d9d762a9d2807f96)
 // Generated using tdl-install-types v0.3.0
 declare module 'tdlib-types' {
   export type error = {
@@ -309,6 +309,16 @@ declare module 'tdlib-types' {
      * for other authentication options
      */
     _: 'authorizationStateWaitPhoneNumber',
+  }
+
+  export type authorizationStateWaitPremiumPurchase = {
+    /**
+     * The user must buy Telegram Premium as an in-store purchase to log in. Call checkAuthenticationPremiumPurchase
+     * and then setAuthenticationPremiumPurchaseTransaction
+     */
+    _: 'authorizationStateWaitPremiumPurchase',
+    /** Identifier of the store product that must be bought */
+    store_product_id: string,
   }
 
   export type authorizationStateWaitEmailAddress = {
@@ -1012,6 +1022,114 @@ declare module 'tdlib-types' {
     readonly explanation?: formattedText$Input,
   }
 
+  export type checklistTask = {
+    /** Describes a task in a checklist */
+    _: 'checklistTask',
+    /** Unique identifier of the task */
+    id: number,
+    /**
+     * Text of the task; may contain only Bold, Italic, Underline, Strikethrough, Spoiler,
+     * CustomEmoji, Url, EmailAddress, Mention, Hashtag, Cashtag and PhoneNumber entities
+     */
+    text: formattedText,
+    /** Identifier of the user that completed the task; 0 if the task isn't completed */
+    completed_by_user_id: number,
+    /**
+     * Point in time (Unix timestamp) when the task was completed; 0 if the task isn't
+     * completed
+     */
+    completion_date: number,
+  }
+
+  export type inputChecklistTask = {
+    /** Describes a task in a checklist to be sent */
+    _: 'inputChecklistTask',
+    /** Unique identifier of the task; must be positive */
+    id: number,
+    /**
+     * Text of the task; 1-getOption("checklist_task_text_length_max") characters without
+     * line feeds. May contain only Bold, Italic, Underline, Strikethrough, Spoiler,
+     * and CustomEmoji entities
+     */
+    text: formattedText,
+  }
+
+  export type inputChecklistTask$Input = {
+    /** Describes a task in a checklist to be sent */
+    readonly _: 'inputChecklistTask',
+    /** Unique identifier of the task; must be positive */
+    readonly id?: number,
+    /**
+     * Text of the task; 1-getOption("checklist_task_text_length_max") characters without
+     * line feeds. May contain only Bold, Italic, Underline, Strikethrough, Spoiler,
+     * and CustomEmoji entities
+     */
+    readonly text?: formattedText$Input,
+  }
+
+  export type checklist = {
+    /** Describes a checklist */
+    _: 'checklist',
+    /**
+     * Title of the checklist; may contain only Bold, Italic, Underline, Strikethrough,
+     * Spoiler, and CustomEmoji entities
+     */
+    title: formattedText,
+    /** List of tasks in the checklist */
+    tasks: Array<checklistTask>,
+    /** True, if users other than creator of the list can add tasks to the list */
+    others_can_add_tasks: boolean,
+    /**
+     * True, if the current user can add tasks to the list if they have Telegram Premium
+     * subscription
+     */
+    can_add_tasks: boolean,
+    /**
+     * True, if users other than creator of the list can mark tasks as done or not
+     * done. If true, then the checklist is called "group checklist"
+     */
+    others_can_mark_tasks_as_done: boolean,
+    /**
+     * True, if the current user can mark tasks as done or not done if they have Telegram
+     * Premium subscription
+     */
+    can_mark_tasks_as_done: boolean,
+  }
+
+  export type inputChecklist = {
+    /** Describes a checklist to be sent */
+    _: 'inputChecklist',
+    /**
+     * Title of the checklist; 1-getOption("checklist_title_length_max") characters.
+     * May contain only Bold, Italic, Underline, Strikethrough, Spoiler, and CustomEmoji
+     * entities
+     */
+    title: formattedText,
+    /** List of tasks in the checklist; 1-getOption("checklist_task_count_max") tasks */
+    tasks: Array<inputChecklistTask>,
+    /** True, if other users can add tasks to the list */
+    others_can_add_tasks: boolean,
+    /** True, if other users can mark tasks as done or not done */
+    others_can_mark_tasks_as_done: boolean,
+  }
+
+  export type inputChecklist$Input = {
+    /** Describes a checklist to be sent */
+    readonly _: 'inputChecklist',
+    /**
+     * Title of the checklist; 1-getOption("checklist_title_length_max") characters.
+     * May contain only Bold, Italic, Underline, Strikethrough, Spoiler, and CustomEmoji
+     * entities
+     */
+    readonly title?: formattedText$Input,
+    /** List of tasks in the checklist; 1-getOption("checklist_task_count_max") tasks */
+    readonly tasks?: ReadonlyArray<inputChecklistTask$Input>,
+    /** True, if other users can add tasks to the list */
+    readonly others_can_add_tasks?: boolean,
+    /** True, if other users can mark tasks as done or not done */
+    readonly others_can_mark_tasks_as_done?: boolean,
+  }
+
   export type animation = {
     /** Describes an animation file. The animation must be encoded in GIF or MPEG4 format */
     _: 'animation',
@@ -1394,6 +1512,19 @@ declare module 'tdlib-types' {
     hls_file: file,
     /** File containing the video */
     video: file,
+  }
+
+  export type videoStoryboard = {
+    /** Describes a storyboard for a video */
+    _: 'videoStoryboard',
+    /** A JPEG file that contains tiled previews of video */
+    storyboard_file: file,
+    /** Width of a tile */
+    width: number,
+    /** Height of a tile */
+    height: number,
+    /** File that describes mapping of position in the video to a tile in the JPEG file */
+    map_file: file,
   }
 
   export type background = {
@@ -1868,6 +1999,90 @@ declare module 'tdlib-types' {
     readonly inactivity_days?: number,
   }
 
+  export type businessBotRights = {
+    /** Describes rights of a business bot */
+    _: 'businessBotRights',
+    /**
+     * True, if the bot can send and edit messages in the private chats that had incoming
+     * messages in the last 24 hours
+     */
+    can_reply: boolean,
+    /** True, if the bot can mark incoming private messages as read */
+    can_read_messages: boolean,
+    /** True, if the bot can delete sent messages */
+    can_delete_sent_messages: boolean,
+    /** True, if the bot can delete any message */
+    can_delete_all_messages: boolean,
+    /** True, if the bot can edit name of the business account */
+    can_edit_name: boolean,
+    /** True, if the bot can edit bio of the business account */
+    can_edit_bio: boolean,
+    /** True, if the bot can edit profile photo of the business account */
+    can_edit_profile_photo: boolean,
+    /** True, if the bot can edit username of the business account */
+    can_edit_username: boolean,
+    /**
+     * True, if the bot can view gifts and amount of Telegram Stars owned by the business
+     * account
+     */
+    can_view_gifts_and_stars: boolean,
+    /** True, if the bot can sell regular gifts received by the business account */
+    can_sell_gifts: boolean,
+    /** True, if the bot can change gift receiving settings of the business account */
+    can_change_gift_settings: boolean,
+    /** True, if the bot can transfer and upgrade gifts received by the business account */
+    can_transfer_and_upgrade_gifts: boolean,
+    /**
+     * True, if the bot can transfer Telegram Stars received by the business account
+     * to account of the bot, or use them to upgrade and transfer gifts
+     */
+    can_transfer_stars: boolean,
+    /** True, if the bot can post, edit and delete stories */
+    can_manage_stories: boolean,
+  }
+
+  export type businessBotRights$Input = {
+    /** Describes rights of a business bot */
+    readonly _: 'businessBotRights',
+    /**
+     * True, if the bot can send and edit messages in the private chats that had incoming
+     * messages in the last 24 hours
+     */
+    readonly can_reply?: boolean,
+    /** True, if the bot can mark incoming private messages as read */
+    readonly can_read_messages?: boolean,
+    /** True, if the bot can delete sent messages */
+    readonly can_delete_sent_messages?: boolean,
+    /** True, if the bot can delete any message */
+    readonly can_delete_all_messages?: boolean,
+    /** True, if the bot can edit name of the business account */
+    readonly can_edit_name?: boolean,
+    /** True, if the bot can edit bio of the business account */
+    readonly can_edit_bio?: boolean,
+    /** True, if the bot can edit profile photo of the business account */
+    readonly can_edit_profile_photo?: boolean,
+    /** True, if the bot can edit username of the business account */
+    readonly can_edit_username?: boolean,
+    /**
+     * True, if the bot can view gifts and amount of Telegram Stars owned by the business
+     * account
+     */
+    readonly can_view_gifts_and_stars?: boolean,
+    /** True, if the bot can sell regular gifts received by the business account */
+    readonly can_sell_gifts?: boolean,
+    /** True, if the bot can change gift receiving settings of the business account */
+    readonly can_change_gift_settings?: boolean,
+    /** True, if the bot can transfer and upgrade gifts received by the business account */
+    readonly can_transfer_and_upgrade_gifts?: boolean,
+    /**
+     * True, if the bot can transfer Telegram Stars received by the business account
+     * to account of the bot, or use them to upgrade and transfer gifts
+     */
+    readonly can_transfer_stars?: boolean,
+    /** True, if the bot can post, edit and delete stories */
+    readonly can_manage_stories?: boolean,
+  }
+
   export type businessConnectedBot = {
     /** Describes a bot connected to a business account */
     _: 'businessConnectedBot',
@@ -1875,8 +2090,8 @@ declare module 'tdlib-types' {
     bot_user_id: number,
     /** Private chats that will be accessible to the bot */
     recipients: businessRecipients,
-    /** True, if the bot can send messages to the private chats; false otherwise */
-    can_reply: boolean,
+    /** Rights of the bot */
+    rights: businessBotRights,
   }
 
   export type businessConnectedBot$Input = {
@@ -1886,8 +2101,8 @@ declare module 'tdlib-types' {
     readonly bot_user_id?: number,
     /** Private chats that will be accessible to the bot */
     readonly recipients?: businessRecipients$Input,
-    /** True, if the bot can send messages to the private chats; false otherwise */
-    readonly can_reply?: boolean,
+    /** Rights of the bot */
+    readonly rights?: businessBotRights$Input,
   }
 
   export type businessStartPage = {
@@ -2214,7 +2429,7 @@ declare module 'tdlib-types' {
     can_send_video_notes: boolean,
     /** True, if the user can send voice notes */
     can_send_voice_notes: boolean,
-    /** True, if the user can send polls */
+    /** True, if the user can send polls and checklists */
     can_send_polls: boolean,
     /**
      * True, if the user can send animations, games, stickers, and dice and use inline
@@ -2253,7 +2468,7 @@ declare module 'tdlib-types' {
     readonly can_send_video_notes?: boolean,
     /** True, if the user can send voice notes */
     readonly can_send_voice_notes?: boolean,
-    /** True, if the user can send polls */
+    /** True, if the user can send polls and checklists */
     readonly can_send_polls?: boolean,
     /**
      * True, if the user can send animations, games, stickers, and dice and use inline
@@ -2277,16 +2492,16 @@ declare module 'tdlib-types' {
     _: 'chatAdministratorRights',
     /**
      * True, if the administrator can access the chat event log, get boost list, see
-     * hidden supergroup and channel members, report supergroup spam messages and ignore
-     * slow mode. Implied by any other privilege; applicable to supergroups and channels
-     * only
+     * hidden supergroup and channel members, report supergroup spam messages, ignore
+     * slow mode, and send messages to the chat without paying Telegram Stars. Implied
+     * by any other privilege; applicable to supergroups and channels only
      */
     can_manage_chat: boolean,
     /** True, if the administrator can change the chat title, photo, and other settings */
     can_change_info: boolean,
     /**
-     * True, if the administrator can create channel posts or view channel statistics;
-     * applicable to channels only
+     * True, if the administrator can create channel posts, answer to channel direct
+     * messages, or view channel statistics; applicable to channels only
      */
     can_post_messages: boolean,
     /**
@@ -2349,16 +2564,16 @@ declare module 'tdlib-types' {
     readonly _: 'chatAdministratorRights',
     /**
      * True, if the administrator can access the chat event log, get boost list, see
-     * hidden supergroup and channel members, report supergroup spam messages and ignore
-     * slow mode. Implied by any other privilege; applicable to supergroups and channels
-     * only
+     * hidden supergroup and channel members, report supergroup spam messages, ignore
+     * slow mode, and send messages to the chat without paying Telegram Stars. Implied
+     * by any other privilege; applicable to supergroups and channels only
      */
     readonly can_manage_chat?: boolean,
     /** True, if the administrator can change the chat title, photo, and other settings */
     readonly can_change_info?: boolean,
     /**
-     * True, if the administrator can create channel posts or view channel statistics;
-     * applicable to channels only
+     * True, if the administrator can create channel posts, answer to channel direct
+     * messages, or view channel statistics; applicable to channels only
      */
     readonly can_post_messages?: boolean,
     /**
@@ -2889,6 +3104,62 @@ declare module 'tdlib-types' {
     options: Array<starGiveawayPaymentOption>,
   }
 
+  export type acceptedGiftTypes = {
+    /** Describes gift types that are accepted by a user */
+    _: 'acceptedGiftTypes',
+    /** True, if unlimited regular gifts are accepted */
+    unlimited_gifts: boolean,
+    /** True, if limited regular gifts are accepted */
+    limited_gifts: boolean,
+    /**
+     * True, if upgraded gifts and regular gifts that can be upgraded for free are
+     * accepted
+     */
+    upgraded_gifts: boolean,
+    /** True, if Telegram Premium subscription is accepted */
+    premium_subscription: boolean,
+  }
+
+  export type acceptedGiftTypes$Input = {
+    /** Describes gift types that are accepted by a user */
+    readonly _: 'acceptedGiftTypes',
+    /** True, if unlimited regular gifts are accepted */
+    readonly unlimited_gifts?: boolean,
+    /** True, if limited regular gifts are accepted */
+    readonly limited_gifts?: boolean,
+    /**
+     * True, if upgraded gifts and regular gifts that can be upgraded for free are
+     * accepted
+     */
+    readonly upgraded_gifts?: boolean,
+    /** True, if Telegram Premium subscription is accepted */
+    readonly premium_subscription?: boolean,
+  }
+
+  export type giftSettings = {
+    /** Contains settings for gift receiving for a user */
+    _: 'giftSettings',
+    /**
+     * True, if a button for sending a gift to the user or by the user must always
+     * be shown in the input field
+     */
+    show_gift_button: boolean,
+    /** Types of gifts accepted by the user; for Telegram Premium users only */
+    accepted_gift_types: acceptedGiftTypes,
+  }
+
+  export type giftSettings$Input = {
+    /** Contains settings for gift receiving for a user */
+    readonly _: 'giftSettings',
+    /**
+     * True, if a button for sending a gift to the user or by the user must always
+     * be shown in the input field
+     */
+    readonly show_gift_button?: boolean,
+    /** Types of gifts accepted by the user; for Telegram Premium users only */
+    readonly accepted_gift_types?: acceptedGiftTypes$Input,
+  }
+
   export type upgradedGiftModel = {
     /** Describes a model of an upgraded gift */
     _: 'upgradedGiftModel',
@@ -2896,7 +3167,7 @@ declare module 'tdlib-types' {
     name: string,
     /** The sticker representing the upgraded gift */
     sticker: sticker,
-    /** The number of upgraded gift that receive this model for each 1000 gifts upgraded */
+    /** The number of upgraded gifts that receive this model for each 1000 gifts upgraded */
     rarity_per_mille: number,
   }
 
@@ -2905,9 +3176,9 @@ declare module 'tdlib-types' {
     _: 'upgradedGiftSymbol',
     /** Name of the symbol */
     name: string,
-    /** The sticker representing the upgraded gift */
+    /** The sticker representing the symbol */
     sticker: sticker,
-    /** The number of upgraded gift that receive this symbol for each 1000 gifts upgraded */
+    /** The number of upgraded gifts that receive this symbol for each 1000 gifts upgraded */
     rarity_per_mille: number,
   }
 
@@ -2940,11 +3211,16 @@ declare module 'tdlib-types' {
   export type upgradedGiftBackdrop = {
     /** Describes a backdrop of an upgraded gift */
     _: 'upgradedGiftBackdrop',
+    /** Unique identifier of the backdrop */
+    id: number,
     /** Name of the backdrop */
     name: string,
     /** Colors of the backdrop */
     colors: upgradedGiftBackdropColors,
-    /** The number of upgraded gift that receive this backdrop for each 1000 gifts upgraded */
+    /**
+     * The number of upgraded gifts that receive this backdrop for each 1000 gifts
+     * upgraded
+     */
     rarity_per_mille: number,
   }
 
@@ -3005,13 +3281,6 @@ declare module 'tdlib-types' {
     last_send_date: number,
   }
 
-  export type gifts = {
-    /** Contains a list of gifts that can be sent to another user or channel chat */
-    _: 'gifts',
-    /** The list of gifts */
-    gifts: Array<gift>,
-  }
-
   export type upgradedGift = {
     /**
      * Describes an upgraded gift that can be transferred to another owner or transferred
@@ -3022,7 +3291,10 @@ declare module 'tdlib-types' {
     id: string,
     /** The title of the upgraded gift */
     title: string,
-    /** Unique name of the upgraded gift that can be used with internalLinkTypeUpgradedGift */
+    /**
+     * Unique name of the upgraded gift that can be used with internalLinkTypeUpgradedGift
+     * or sendResoldGift
+     */
     name: string,
     /** Unique number of the upgraded gift among gifts upgraded from the same gift */
     number: number,
@@ -3035,11 +3307,19 @@ declare module 'tdlib-types' {
      * if none or unknown
      */
     owner_id?: MessageSender,
-    /** Address of the gift NFT owner in TON blockchain; may be empty if none */
+    /**
+     * Address of the gift NFT owner in TON blockchain; may be empty if none. Append
+     * the address to getOption("ton_blockchain_explorer_url") to get a link with information
+     * about the address
+     */
     owner_address: string,
     /** Name of the owner for the case when owner identifier and address aren't known */
     owner_name: string,
-    /** Address of the gift NFT in TON blockchain; may be empty if none */
+    /**
+     * Address of the gift NFT in TON blockchain; may be empty if none. Append the
+     * address to getOption("ton_blockchain_explorer_url") to get a link with information
+     * about the address
+     */
     gift_address: string,
     /** Model of the upgraded gift */
     model: upgradedGiftModel,
@@ -3049,6 +3329,11 @@ declare module 'tdlib-types' {
     backdrop: upgradedGiftBackdrop,
     /** Information about the originally sent gift; may be null if unknown */
     original_details?: upgradedGiftOriginalDetails,
+    /**
+     * Number of Telegram Stars that must be paid to buy the gift and send it to someone
+     * else; 0 if resale isn't possible
+     */
+    resale_star_count: number,
   }
 
   export type upgradeGiftResult = {
@@ -3065,10 +3350,147 @@ declare module 'tdlib-types' {
     /** Number of Telegram Stars that must be paid to transfer the upgraded gift */
     transfer_star_count: number,
     /**
+     * Point in time (Unix timestamp) when the gift can be transferred to another owner;
+     * 0 if the gift can be transferred immediately or transfer isn't possible
+     */
+    next_transfer_date: number,
+    /**
+     * Point in time (Unix timestamp) when the gift can be resold to another user;
+     * 0 if the gift can't be resold; only for the receiver of the gift
+     */
+    next_resale_date: number,
+    /**
      * Point in time (Unix timestamp) when the gift can be transferred to the TON blockchain
      * as an NFT
      */
     export_date: number,
+  }
+
+  export type availableGift = {
+    /** Describes a gift that is available for purchase */
+    _: 'availableGift',
+    /** The gift */
+    gift: gift,
+    /** Number of gifts that are available for resale */
+    resale_count: number,
+    /**
+     * The minimum price for the gifts available for resale; 0 if there are no such
+     * gifts
+     */
+    min_resale_star_count: number,
+    /** The title of the upgraded gift; empty if the gift isn't available for resale */
+    title: string,
+  }
+
+  export type availableGifts = {
+    /** Contains a list of gifts that can be sent to another user or channel chat */
+    _: 'availableGifts',
+    /** The list of gifts */
+    gifts: Array<availableGift>,
+  }
+
+  export type upgradedGiftAttributeIdModel$Input = {
+    /** Identifier of a gift model */
+    readonly _: 'upgradedGiftAttributeIdModel',
+    /** Identifier of the sticker representing the model */
+    readonly sticker_id?: number | string,
+  }
+
+  export type upgradedGiftAttributeIdSymbol$Input = {
+    /** Identifier of a gift symbol */
+    readonly _: 'upgradedGiftAttributeIdSymbol',
+    /** Identifier of the sticker representing the symbol */
+    readonly sticker_id?: number | string,
+  }
+
+  export type upgradedGiftAttributeIdBackdrop$Input = {
+    /** Identifier of a gift backdrop */
+    readonly _: 'upgradedGiftAttributeIdBackdrop',
+    /** Identifier of the backdrop */
+    readonly backdrop_id?: number,
+  }
+
+  export type upgradedGiftModelCount = {
+    /** Describes a model of an upgraded gift with the number of gifts found */
+    _: 'upgradedGiftModelCount',
+    /** The model */
+    model: upgradedGiftModel,
+    /** Total number of gifts with the model */
+    total_count: number,
+  }
+
+  export type upgradedGiftSymbolCount = {
+    /** Describes a symbol shown on the pattern of an upgraded gift */
+    _: 'upgradedGiftSymbolCount',
+    /** The symbol */
+    symbol: upgradedGiftSymbol,
+    /** Total number of gifts with the symbol */
+    total_count: number,
+  }
+
+  export type upgradedGiftBackdropCount = {
+    /** Describes a backdrop of an upgraded gift */
+    _: 'upgradedGiftBackdropCount',
+    /** The backdrop */
+    backdrop: upgradedGiftBackdrop,
+    /** Total number of gifts with the symbol */
+    total_count: number,
+  }
+
+  export type giftForResaleOrderPrice$Input = {
+    /** The gifts will be sorted by their price from the lowest to the highest */
+    readonly _: 'giftForResaleOrderPrice',
+  }
+
+  export type giftForResaleOrderPriceChangeDate$Input = {
+    /**
+     * The gifts will be sorted by the last date when their price was changed from
+     * the newest to the oldest
+     */
+    readonly _: 'giftForResaleOrderPriceChangeDate',
+  }
+
+  export type giftForResaleOrderNumber$Input = {
+    /** The gifts will be sorted by their number from the smallest to the largest */
+    readonly _: 'giftForResaleOrderNumber',
+  }
+
+  export type giftForResale = {
+    /** Describes a gift available for resale */
+    _: 'giftForResale',
+    /** The gift */
+    gift: upgradedGift,
+    /**
+     * Unique identifier of the received gift for the current user; only for the gifts
+     * owned by the current user
+     */
+    received_gift_id: string,
+  }
+
+  export type giftsForResale = {
+    /** Describes gifts available for resale */
+    _: 'giftsForResale',
+    /** Total number of gifts found */
+    total_count: number,
+    /** The gifts */
+    gifts: Array<giftForResale>,
+    /**
+     * Available models; for searchGiftsForResale requests without offset and attributes
+     * only
+     */
+    models: Array<upgradedGiftModelCount>,
+    /**
+     * Available symbols; for searchGiftsForResale requests without offset and attributes
+     * only
+     */
+    symbols: Array<upgradedGiftSymbolCount>,
+    /**
+     * Available backdrops; for searchGiftsForResale requests without offset and attributes
+     * only
+     */
+    backdrops: Array<upgradedGiftBackdropCount>,
+    /** The offset for the next request. If empty, then there are no more results */
+    next_offset: string,
   }
 
   export type sentGiftRegular = {
@@ -3140,6 +3562,17 @@ declare module 'tdlib-types' {
      * for the receiver of the gift
      */
     transfer_star_count: number,
+    /**
+     * Point in time (Unix timestamp) when the gift can be transferred to another owner;
+     * 0 if the gift can be transferred immediately or transfer isn't possible; only
+     * for the receiver of the gift
+     */
+    next_transfer_date: number,
+    /**
+     * Point in time (Unix timestamp) when the gift can be resold to another user;
+     * 0 if the gift can't be resold; only for the receiver of the gift
+     */
+    next_resale_date: number,
     /**
      * Point in time (Unix timestamp) when the upgraded gift can be transferred to
      * the TON blockchain as an NFT; 0 if NFT export isn't possible; only for the receiver
@@ -3460,6 +3893,29 @@ declare module 'tdlib-types' {
     gift: upgradedGift,
   }
 
+  export type starTransactionTypeUpgradedGiftPurchase = {
+    /**
+     * The transaction is a purchase of an upgraded gift for some user or channel;
+     * for regular users only
+     */
+    _: 'starTransactionTypeUpgradedGiftPurchase',
+    /** Identifier of the user that sold the gift */
+    user_id: number,
+    /** The gift */
+    gift: upgradedGift,
+  }
+
+  export type starTransactionTypeUpgradedGiftSale = {
+    /** The transaction is a sale of an upgraded gift; for regular users only */
+    _: 'starTransactionTypeUpgradedGiftSale',
+    /** Identifier of the user that bought the gift */
+    user_id: number,
+    /** The gift */
+    gift: upgradedGift,
+    /** Information about commission received by Telegram from the transaction */
+    affiliate: affiliateInfo,
+  }
+
   export type starTransactionTypeChannelPaidReactionSend = {
     /**
      * The transaction is a sending of a paid reaction to a message in a channel chat
@@ -3510,8 +3966,8 @@ declare module 'tdlib-types' {
 
   export type starTransactionTypePaidMessageReceive = {
     /**
-     * The transaction is a receiving of a paid message; for regular users and supergroup
-     * chats only
+     * The transaction is a receiving of a paid message; for regular users, supergroup
+     * and channel chats only
      */
     _: 'starTransactionTypePaidMessageReceive',
     /** Identifier of the sender of the message */
@@ -3533,7 +3989,7 @@ declare module 'tdlib-types' {
   export type starTransactionTypePremiumPurchase = {
     /**
      * The transaction is a purchase of Telegram Premium subscription; for regular
-     * users only
+     * users and bots only
      */
     _: 'starTransactionTypePremiumPurchase',
     /** Identifier of the user that received the Telegram Premium subscription */
@@ -3542,6 +3998,26 @@ declare module 'tdlib-types' {
     month_count: number,
     /** A sticker to be shown in the transaction information; may be null if unknown */
     sticker?: sticker,
+  }
+
+  export type starTransactionTypeBusinessBotTransferSend = {
+    /**
+     * The transaction is a transfer of Telegram Stars to a business bot; for regular
+     * users only
+     */
+    _: 'starTransactionTypeBusinessBotTransferSend',
+    /** Identifier of the bot that received Telegram Stars */
+    user_id: number,
+  }
+
+  export type starTransactionTypeBusinessBotTransferReceive = {
+    /**
+     * The transaction is a transfer of Telegram Stars from a business account; for
+     * bots only
+     */
+    _: 'starTransactionTypeBusinessBotTransferReceive',
+    /** Identifier of the user that sent Telegram Stars */
+    user_id: number,
   }
 
   export type starTransactionTypeUnsupported = {
@@ -4084,6 +4560,8 @@ declare module 'tdlib-types' {
      * message to the user
      */
     outgoing_paid_message_star_count: number,
+    /** Settings for gift receiving for the user */
+    gift_settings: giftSettings,
     /**
      * Information about verification status of the user provided by a bot; may be
      * null if none or unknown
@@ -4754,7 +5232,7 @@ declare module 'tdlib-types' {
     /**
      * Number of members in the supergroup or channel; 0 if unknown. Currently, it
      * is guaranteed to be known only if the supergroup or channel was received through
-     * getChatSimilarChats, getChatsToSendStories, getCreatedPublicChats, getGroupsInCommon,
+     * getChatSimilarChats, getChatsToPostStories, getCreatedPublicChats, getGroupsInCommon,
      * getInactiveSupergroupChats, getRecommendedChats, getSuitableDiscussionChats,
      * getUserPrivacySettingRules, getVideoChatAvailableParticipants, searchPublicChats,
      * or in chatFolderInviteLinkInfo.missing_chat_ids, or in userFullInfo.personal_chat_id,
@@ -4763,6 +5241,8 @@ declare module 'tdlib-types' {
     member_count: number,
     /** Approximate boost level for the chat */
     boost_level: number,
+    /** True, if automatic translation of messages is enabled in the channel */
+    has_automatic_translation: boolean,
     /**
      * True, if the channel has a discussion group, or the supergroup is the designated
      * discussion group for a channel
@@ -4805,11 +5285,25 @@ declare module 'tdlib-types' {
     is_broadcast_group: boolean,
     /** True, if the supergroup is a forum with topics */
     is_forum: boolean,
+    /** True, if the supergroup is a direct message group for a channel chat */
+    is_direct_messages_group: boolean,
+    /**
+     * True, if the supergroup is a direct messages group for a channel chat that is
+     * administered by the current user
+     */
+    is_administered_direct_messages_group: boolean,
     /**
      * Information about verification status of the supergroup or channel; may be null
      * if none
      */
     verification_status?: verificationStatus,
+    /** True, if the channel has direct messages group */
+    has_direct_messages_group: boolean,
+    /**
+     * True, if the supergroup is a forum, which topics are shown in the same way as
+     * in channel direct messages groups
+     */
+    has_forum_tabs: boolean,
     /**
      * True, if content of media messages in the supergroup or channel chat must be
      * hidden with 18+ spoiler
@@ -4860,6 +5354,11 @@ declare module 'tdlib-types' {
      * the supergroup is the designated discussion group; 0 if none or unknown
      */
     linked_chat_id: number,
+    /**
+     * Chat identifier of a direct messages group for the channel, or a channel, for
+     * which the supergroup is the designated direct messages group; 0 if none
+     */
+    direct_messages_chat_id: number,
     /**
      * Delay between consecutive sent messages for non-administrator supergroup members,
      * in seconds
@@ -4943,6 +5442,11 @@ declare module 'tdlib-types' {
      * and chat permission restrictions; 0 if unspecified
      */
     unrestrict_boost_count: number,
+    /**
+     * Number of Telegram Stars that must be paid by the current user for each sent
+     * message to the supergroup
+     */
+    outgoing_paid_message_star_count: number,
     /**
      * Identifier of the supergroup sticker set that must be shown before user sticker
      * sets; 0 if none
@@ -5395,6 +5899,54 @@ declare module 'tdlib-types' {
     is_big: boolean,
   }
 
+  export type messageTopicForum = {
+    /** A topic in a forum supergroup chat */
+    _: 'messageTopicForum',
+    /**
+     * Unique identifier of the forum topic; all messages in a non-forum supergroup
+     * chats belongs to the General topic
+     */
+    forum_topic_id: number,
+  }
+
+  export type messageTopicForum$Input = {
+    /** A topic in a forum supergroup chat */
+    readonly _: 'messageTopicForum',
+    /**
+     * Unique identifier of the forum topic; all messages in a non-forum supergroup
+     * chats belongs to the General topic
+     */
+    readonly forum_topic_id?: number,
+  }
+
+  export type messageTopicDirectMessages = {
+    /** A topic in a channel direct messages chat administered by the current user */
+    _: 'messageTopicDirectMessages',
+    /** Unique identifier of the topic */
+    direct_messages_chat_topic_id: number,
+  }
+
+  export type messageTopicDirectMessages$Input = {
+    /** A topic in a channel direct messages chat administered by the current user */
+    readonly _: 'messageTopicDirectMessages',
+    /** Unique identifier of the topic */
+    readonly direct_messages_chat_topic_id?: number,
+  }
+
+  export type messageTopicSavedMessages = {
+    /** A topic in Saved Messages chat */
+    _: 'messageTopicSavedMessages',
+    /** Unique identifier of the Saved Messages topic */
+    saved_messages_topic_id: number,
+  }
+
+  export type messageTopicSavedMessages$Input = {
+    /** A topic in Saved Messages chat */
+    readonly _: 'messageTopicSavedMessages',
+    /** Unique identifier of the Saved Messages topic */
+    readonly saved_messages_topic_id?: number,
+  }
+
   export type messageEffectTypeEmojiReaction = {
     /** An effect from an emoji reaction */
     _: 'messageEffectTypeEmojiReaction',
@@ -5535,10 +6087,10 @@ declare module 'tdlib-types' {
     /**
      * Media content of the message if the message was from another chat or topic;
      * may be null for messages from the same chat and messages without media. Can
-     * be only one of the following types: messageAnimation, messageAudio, messageContact,
-     * messageDice, messageDocument, messageGame, messageGiveaway, messageGiveawayWinners,
-     * messageInvoice, messageLocation, messagePaidMedia, messagePhoto, messagePoll,
-     * messageSticker, messageStory, messageText (for link preview), messageVenue,
+     * be only one of the following types: messageAnimation, messageAudio, messageChecklist,
+     * messageContact, messageDice, messageDocument, messageGame, messageGiveaway,
+     * messageGiveawayWinners, messageInvoice, messageLocation, messagePaidMedia, messagePhoto,
+     * messagePoll, messageSticker, messageStory, messageText (for link preview), messageVenue,
      * messageVideo, messageVideoNote, or messageVoiceNote
      */
     content?: MessageContent,
@@ -5547,8 +6099,8 @@ declare module 'tdlib-types' {
   export type messageReplyToStory = {
     /** Describes a story replied by a given message */
     _: 'messageReplyToStory',
-    /** The identifier of the sender of the story */
-    story_sender_chat_id: number,
+    /** The identifier of the poster of the story */
+    story_poster_chat_id: number,
     /** The identifier of the story */
     story_id: number,
   }
@@ -5621,10 +6173,10 @@ declare module 'tdlib-types' {
     /** Describes a story to be replied */
     _: 'inputMessageReplyToStory',
     /**
-     * The identifier of the sender of the story. Currently, stories can be replied
-     * only in the sender's chat and channel stories can't be replied
+     * The identifier of the poster of the story. Currently, stories can be replied
+     * only in the chat that posted the story; channel stories can't be replied
      */
-    story_sender_chat_id: number,
+    story_poster_chat_id: number,
     /** The identifier of the story */
     story_id: number,
   }
@@ -5633,10 +6185,10 @@ declare module 'tdlib-types' {
     /** Describes a story to be replied */
     readonly _: 'inputMessageReplyToStory',
     /**
-     * The identifier of the sender of the story. Currently, stories can be replied
-     * only in the sender's chat and channel stories can't be replied
+     * The identifier of the poster of the story. Currently, stories can be replied
+     * only in the chat that posted the story; channel stories can't be replied
      */
-    readonly story_sender_chat_id?: number,
+    readonly story_poster_chat_id?: number,
     /** The identifier of the story */
     readonly story_id?: number,
   }
@@ -5678,10 +6230,7 @@ declare module 'tdlib-types' {
      * for example, as away, or greeting service message
      */
     is_from_offline: boolean,
-    /**
-     * True, if content of the message can be saved locally or copied using inputMessageForwarded
-     * or forwardMessages with copy options
-     */
+    /** True, if content of the message can be saved locally */
     can_be_saved: boolean,
     /**
      * True, if media timestamp entities refers to a media in this message as opposed
@@ -5693,8 +6242,6 @@ declare module 'tdlib-types' {
      * posts, all other messages are not channel posts
      */
     is_channel_post: boolean,
-    /** True, if the message is a forum topic message */
-    is_topic_message: boolean,
     /** True, if the message contains an unread mention for the current user */
     contains_unread_mention: boolean,
     /** Point in time (Unix timestamp) when the message was sent; 0 for scheduled messages */
@@ -5728,10 +6275,10 @@ declare module 'tdlib-types' {
      */
     message_thread_id: number,
     /**
-     * Identifier of the Saved Messages topic for the message; 0 for messages not from
-     * Saved Messages
+     * Identifier of the topic within the chat to which the message belongs; may be
+     * null if none
      */
-    saved_messages_topic_id: number,
+    topic_id?: MessageTopic,
     /** The message's self-destruct type; may be null if none */
     self_destruct_type?: MessageSelfDestructType,
     /**
@@ -5875,13 +6422,21 @@ declare module 'tdlib-types' {
   }
 
   export type messageSourceMessageThreadHistory$Input = {
-    /** The message is from a message thread history */
+    /** The message is from history of a message thread */
     readonly _: 'messageSourceMessageThreadHistory',
   }
 
   export type messageSourceForumTopicHistory$Input = {
-    /** The message is from a forum topic history */
+    /** The message is from history of a forum topic */
     readonly _: 'messageSourceForumTopicHistory',
+  }
+
+  export type messageSourceDirectMessagesChatTopicHistory$Input = {
+    /**
+     * The message is from history of a topic in a channel direct messages chat administered
+     * by the current user
+     */
+    readonly _: 'messageSourceDirectMessagesChatTopicHistory',
   }
 
   export type messageSourceHistoryPreview$Input = {
@@ -5925,16 +6480,16 @@ declare module 'tdlib-types' {
     readonly _: 'messageSourceOther',
   }
 
-  export type messageSponsor = {
-    /** Information about the sponsor of a message */
-    _: 'messageSponsor',
-    /** URL of the sponsor to be opened when the message is clicked */
+  export type advertisementSponsor = {
+    /** Information about the sponsor of an advertisement */
+    _: 'advertisementSponsor',
+    /** URL of the sponsor to be opened when the advertisement is clicked */
     url: string,
     /** Photo of the sponsor; may be null if must not be shown */
     photo?: photo,
     /**
      * Additional optional information about the sponsor to be shown along with the
-     * message
+     * advertisement
      */
     info: string,
   }
@@ -5957,7 +6512,7 @@ declare module 'tdlib-types' {
      */
     content: MessageContent,
     /** Information about the sponsor of the message */
-    sponsor: messageSponsor,
+    sponsor: advertisementSponsor,
     /** Title of the sponsored message */
     title: string,
     /** Text for the message action button */
@@ -5985,6 +6540,76 @@ declare module 'tdlib-types' {
     messages_between: number,
   }
 
+  export type sponsoredChat = {
+    /** Describes a sponsored chat */
+    _: 'sponsoredChat',
+    /** Unique identifier of this result */
+    unique_id: number,
+    /** Chat identifier */
+    chat_id: number,
+    /**
+     * Additional optional information about the sponsor to be shown along with the
+     * chat
+     */
+    sponsor_info: string,
+    /**
+     * If non-empty, additional information about the sponsored chat to be shown along
+     * with the chat
+     */
+    additional_info: string,
+  }
+
+  export type sponsoredChats = {
+    /** Contains a list of sponsored chats */
+    _: 'sponsoredChats',
+    /** List of sponsored chats */
+    chats: Array<sponsoredChat>,
+  }
+
+  export type videoMessageAdvertisement = {
+    /** Describes an advertisent to be shown while a video from a message is watched */
+    _: 'videoMessageAdvertisement',
+    /** Unique identifier of this result */
+    unique_id: number,
+    /** Text of the advertisement */
+    text: string,
+    /**
+     * The minimum amount of time the advertisement must be dispalyed before it can
+     * be hidden by the user, in seconds
+     */
+    min_display_duration: number,
+    /**
+     * The maximum amount of time the advertisement must be dispalyed before it must
+     * be automatically hidden, in seconds
+     */
+    max_display_duration: number,
+    /** True, if the advertisement can be reported to Telegram moderators through reportVideoMessageAdvertisement */
+    can_be_reported: boolean,
+    /** Information about the sponsor of the advertisement */
+    sponsor: advertisementSponsor,
+    /** Title of the sponsored message */
+    title: string,
+    /**
+     * If non-empty, additional information about the sponsored message to be shown
+     * along with the message
+     */
+    additional_info: string,
+  }
+
+  export type videoMessageAdvertisements = {
+    /**
+     * Contains a list of advertisements to be shown while a video from a message is
+     * watched
+     */
+    _: 'videoMessageAdvertisements',
+    /** List of advertisements */
+    advertisements: Array<videoMessageAdvertisement>,
+    /** Delay before the first advertisement is shown, in seconds */
+    start_delay: number,
+    /** Delay between consecutive advertisements, in seconds */
+    between_delay: number,
+  }
+
   export type reportOption = {
     /** Describes an option to report an entity to Telegram */
     _: 'reportOption',
@@ -5994,39 +6619,39 @@ declare module 'tdlib-types' {
     text: string,
   }
 
-  export type reportChatSponsoredMessageResultOk = {
+  export type reportSponsoredResultOk = {
     /** The message was reported successfully */
-    _: 'reportChatSponsoredMessageResultOk',
+    _: 'reportSponsoredResultOk',
   }
 
-  export type reportChatSponsoredMessageResultFailed = {
+  export type reportSponsoredResultFailed = {
     /** The sponsored message is too old or not found */
-    _: 'reportChatSponsoredMessageResultFailed',
+    _: 'reportSponsoredResultFailed',
   }
 
-  export type reportChatSponsoredMessageResultOptionRequired = {
+  export type reportSponsoredResultOptionRequired = {
     /**
      * The user must choose an option to report the message and repeat request with
      * the chosen option
      */
-    _: 'reportChatSponsoredMessageResultOptionRequired',
+    _: 'reportSponsoredResultOptionRequired',
     /** Title for the option choice */
     title: string,
     /** List of available options */
     options: Array<reportOption>,
   }
 
-  export type reportChatSponsoredMessageResultAdsHidden = {
+  export type reportSponsoredResultAdsHidden = {
     /** Sponsored messages were hidden for the user in all chats */
-    _: 'reportChatSponsoredMessageResultAdsHidden',
+    _: 'reportSponsoredResultAdsHidden',
   }
 
-  export type reportChatSponsoredMessageResultPremiumRequired = {
+  export type reportSponsoredResultPremiumRequired = {
     /**
      * The user asked to hide sponsored messages, but Telegram Premium is required
      * for this
      */
-    _: 'reportChatSponsoredMessageResultPremiumRequired',
+    _: 'reportSponsoredResultPremiumRequired',
   }
 
   export type fileDownload = {
@@ -6155,10 +6780,10 @@ declare module 'tdlib-types' {
      * disabled
      */
     story_sound_id: string,
-    /** If true, the value for the relevant type of chat is used instead of show_story_sender */
-    use_default_show_story_sender: boolean,
-    /** True, if the sender of stories must be displayed in notifications */
-    show_story_sender: boolean,
+    /** If true, the value for the relevant type of chat is used instead of show_story_poster */
+    use_default_show_story_poster: boolean,
+    /** True, if the chat that posted a story must be displayed in notifications */
+    show_story_poster: boolean,
     /**
      * If true, the value for the relevant type of chat or the forum chat is used instead
      * of disable_pinned_message_notifications
@@ -6219,10 +6844,10 @@ declare module 'tdlib-types' {
      * disabled
      */
     readonly story_sound_id?: number | string,
-    /** If true, the value for the relevant type of chat is used instead of show_story_sender */
-    readonly use_default_show_story_sender?: boolean,
-    /** True, if the sender of stories must be displayed in notifications */
-    readonly show_story_sender?: boolean,
+    /** If true, the value for the relevant type of chat is used instead of show_story_poster */
+    readonly use_default_show_story_poster?: boolean,
+    /** True, if the chat that posted a story must be displayed in notifications */
+    readonly show_story_poster?: boolean,
     /**
      * If true, the value for the relevant type of chat or the forum chat is used instead
      * of disable_pinned_message_notifications
@@ -6266,8 +6891,8 @@ declare module 'tdlib-types' {
      * disabled
      */
     story_sound_id: string,
-    /** True, if the sender of stories must be displayed in notifications */
-    show_story_sender: boolean,
+    /** True, if the chat that posted a story must be displayed in notifications */
+    show_story_poster: boolean,
     /**
      * True, if notifications for incoming pinned messages will be created as for an
      * ordinary unread message
@@ -6301,8 +6926,8 @@ declare module 'tdlib-types' {
      * disabled
      */
     readonly story_sound_id?: number | string,
-    /** True, if the sender of stories must be displayed in notifications */
-    readonly show_story_sender?: boolean,
+    /** True, if the chat that posted a story must be displayed in notifications */
+    readonly show_story_poster?: boolean,
     /**
      * True, if notifications for incoming pinned messages will be created as for an
      * ordinary unread message
@@ -6876,7 +7501,7 @@ declare module 'tdlib-types' {
   }
 
   export type videoChat = {
-    /** Describes a video chat */
+    /** Describes a video chat, i.e. a group call bound to a chat */
     _: 'videoChat',
     /**
      * Group call identifier of an active video chat; 0 if none. Full information about
@@ -7947,6 +8572,44 @@ declare module 'tdlib-types' {
     draft_message?: draftMessage,
   }
 
+  export type directMessagesChatTopic = {
+    /**
+     * Contains information about a topic in a channel direct messages chat administered
+     * by the current user
+     */
+    _: 'directMessagesChatTopic',
+    /** Identifier of the chat to which the topic belongs */
+    chat_id: number,
+    /** Unique topic identifier */
+    id: number,
+    /** Identifier of the user or chat that sends the messages to the topic */
+    sender_id: MessageSender,
+    /**
+     * A parameter used to determine order of the topic in the topic list. Topics must
+     * be sorted by the order in descending order
+     */
+    order: string,
+    /**
+     * True, if the other party can send unpaid messages even if the chat has paid
+     * messages enabled
+     */
+    can_send_unpaid_messages: boolean,
+    /** True, if the forum topic is marked as unread */
+    is_marked_as_unread: boolean,
+    /** Number of unread messages in the chat */
+    unread_count: number,
+    /** Identifier of the last read incoming message */
+    last_read_inbox_message_id: number,
+    /** Identifier of the last read outgoing message */
+    last_read_outbox_message_id: number,
+    /** Number of messages with unread reactions in the chat */
+    unread_reaction_count: number,
+    /** Last message in the topic; may be null if none or unknown */
+    last_message?: message,
+    /** A draft of a message in the topic; may be null if none */
+    draft_message?: draftMessage,
+  }
+
   export type forumTopicIcon = {
     /** Describes a forum topic icon */
     _: 'forumTopicIcon',
@@ -7968,6 +8631,10 @@ declare module 'tdlib-types' {
   export type forumTopicInfo = {
     /** Contains basic information about a forum topic */
     _: 'forumTopicInfo',
+    /** Identifier of the forum chat to which the topic belongs */
+    chat_id: number,
+    /** Forum topic identifier of the topic */
+    forum_topic_id: number,
     /** Message thread identifier of the topic */
     message_thread_id: number,
     /** Name of the topic */
@@ -7998,6 +8665,11 @@ declare module 'tdlib-types' {
     info: forumTopicInfo,
     /** Last message in the topic; may be null if unknown */
     last_message?: message,
+    /**
+     * A parameter used to determine order of the topic in the topic list. Topics must
+     * be sorted by the order in descending order
+     */
+    order: string,
     /** True, if the topic is pinned in the topic list */
     is_pinned: boolean,
     /** Number of unread messages in the topic */
@@ -8815,6 +9487,11 @@ declare module 'tdlib-types' {
     duration: number,
   }
 
+  export type linkPreviewTypeGroupCall = {
+    /** The link is a link to a group call that isn't bound to a chat */
+    _: 'linkPreviewTypeGroupCall',
+  }
+
   export type linkPreviewTypeInvoice = {
     /** The link is a link to an invoice */
     _: 'linkPreviewTypeInvoice',
@@ -8863,7 +9540,7 @@ declare module 'tdlib-types' {
     /** The link is a link to a story. Link preview description is unavailable */
     _: 'linkPreviewTypeStory',
     /** The identifier of the chat that posted the story */
-    story_sender_chat_id: number,
+    story_poster_chat_id: number,
     /** Story identifier */
     story_id: number,
   }
@@ -10477,6 +11154,8 @@ declare module 'tdlib-types' {
     video: video,
     /** Alternative qualities of the video */
     alternative_videos: Array<alternativeVideo>,
+    /** Available storyboards for the video */
+    storyboards: Array<videoStoryboard>,
     /** Cover of the video; may be null if none */
     cover?: photo,
     /** Timestamp from which the video playing must start, in seconds */
@@ -10636,11 +11315,18 @@ declare module 'tdlib-types' {
     /** A message with a forwarded story */
     _: 'messageStory',
     /** Identifier of the chat that posted the story */
-    story_sender_chat_id: number,
+    story_poster_chat_id: number,
     /** Story identifier */
     story_id: number,
     /** True, if the story was automatically forwarded because of a mention of the user */
     via_mention: boolean,
+  }
+
+  export type messageChecklist = {
+    /** A message with a checklist */
+    _: 'messageChecklist',
+    /** The checklist description */
+    list: checklist,
   }
 
   export type messageInvoice = {
@@ -10678,6 +11364,28 @@ declare module 'tdlib-types' {
     discard_reason: CallDiscardReason,
     /** Call duration, in seconds */
     duration: number,
+  }
+
+  export type messageGroupCall = {
+    /**
+     * A message with information about a group call not bound to a chat. If the message
+     * is incoming, the call isn't active, isn't missed, and has no duration, and getOption("can_accept_calls")
+     * is true, then incoming call screen must be shown to the user. Use getGroupCallParticipants
+     * to show current group call participants on the screen. Use joinGroupCall to
+     * accept the call or declineGroupCallInvitation to decline it. If the call become
+     * active or missed, then the call screen must be hidden
+     */
+    _: 'messageGroupCall',
+    /** True, if the call is active, i.e. the called user joined the call */
+    is_active: boolean,
+    /** True, if the called user missed or declined the call */
+    was_missed: boolean,
+    /** True, if the call is a video call */
+    is_video: boolean,
+    /** Call duration, in seconds; for left calls only */
+    duration: number,
+    /** Identifiers of some other call participants */
+    other_participant_ids: Array<MessageSender>,
   }
 
   export type messageVideoChatScheduled = {
@@ -11191,6 +11899,8 @@ declare module 'tdlib-types' {
     gift: gift,
     /** Sender of the gift */
     sender_id: MessageSender,
+    /** Receiver of the gift */
+    receiver_id: MessageSender,
     /**
      * Unique identifier of the received gift for the current user; only for the receiver
      * of the gift
@@ -11249,6 +11959,8 @@ declare module 'tdlib-types' {
     gift: upgradedGift,
     /** Sender of the gift; may be null for anonymous gifts */
     sender_id?: MessageSender,
+    /** Receiver of the gift */
+    receiver_id: MessageSender,
     /**
      * Unique identifier of the received gift for the current user; only for the receiver
      * of the gift
@@ -11256,7 +11968,7 @@ declare module 'tdlib-types' {
     received_gift_id: string,
     /**
      * True, if the gift was obtained by upgrading of a previously received gift; otherwise,
-     * this is a transferred gift
+     * this is a transferred or resold gift
      */
     is_upgrade: boolean,
     /**
@@ -11275,10 +11987,26 @@ declare module 'tdlib-types' {
      */
     was_transferred: boolean,
     /**
+     * Number of Telegram Stars that were paid by the sender for the gift; 0 if the
+     * gift was upgraded or transferred
+     */
+    last_resale_star_count: number,
+    /**
      * Number of Telegram Stars that must be paid to transfer the upgraded gift; only
      * for the receiver of the gift
      */
     transfer_star_count: number,
+    /**
+     * Point in time (Unix timestamp) when the gift can be transferred to another owner;
+     * 0 if the gift can be transferred immediately or transfer isn't possible; only
+     * for the receiver of the gift
+     */
+    next_transfer_date: number,
+    /**
+     * Point in time (Unix timestamp) when the gift can be resold to another user;
+     * 0 if the gift can't be resold; only for the receiver of the gift
+     */
+    next_resale_date: number,
     /**
      * Point in time (Unix timestamp) when the gift can be transferred to the TON blockchain
      * as an NFT; 0 if NFT export isn't possible; only for the receiver of the gift
@@ -11293,8 +12021,65 @@ declare module 'tdlib-types' {
     gift: gift,
     /** Sender of the gift */
     sender_id: MessageSender,
-    /** True, if the gift was obtained by upgrading of a previously received gift */
+    /** Receiver of the gift */
+    receiver_id: MessageSender,
+    /**
+     * True, if the gift was obtained by upgrading of a previously received gift; otherwise,
+     * this is a transferred or resold gift
+     */
     is_upgrade: boolean,
+  }
+
+  export type messagePaidMessagesRefunded = {
+    /** Paid messages were refunded */
+    _: 'messagePaidMessagesRefunded',
+    /** The number of refunded messages */
+    message_count: number,
+    /** The number of refunded Telegram Stars */
+    star_count: number,
+  }
+
+  export type messagePaidMessagePriceChanged = {
+    /** A price for paid messages was changed in the supergroup chat */
+    _: 'messagePaidMessagePriceChanged',
+    /**
+     * The new number of Telegram Stars that must be paid by non-administrator users
+     * of the supergroup chat for each sent message
+     */
+    paid_message_star_count: number,
+  }
+
+  export type messageDirectMessagePriceChanged = {
+    /** A price for direct messages was changed in the channel chat */
+    _: 'messageDirectMessagePriceChanged',
+    /** True, if direct messages group was enabled for the channel; false otherwise */
+    is_enabled: boolean,
+    /**
+     * The new number of Telegram Stars that must be paid by non-administrator users
+     * of the channel chat for each message sent to the direct messages group; 0 if
+     * the direct messages group was disabled or the messages are free
+     */
+    paid_message_star_count: number,
+  }
+
+  export type messageChecklistTasksDone = {
+    /** Some tasks from a checklist were marked as done or not done */
+    _: 'messageChecklistTasksDone',
+    /** Identifier of the message with the checklist; can be 0 if the message was deleted */
+    checklist_message_id: number,
+    /** Identifiers of tasks that were marked as done */
+    marked_as_done_task_ids: Array<number>,
+    /** Identifiers of tasks that were marked as not done */
+    marked_as_not_done_task_ids: Array<number>,
+  }
+
+  export type messageChecklistTasksAdded = {
+    /** Some tasks were added to a checklist */
+    _: 'messageChecklistTasksAdded',
+    /** Identifier of the message with the checklist; can be 0 if the message was deleted */
+    checklist_message_id: number,
+    /** List of tasks added to the checklist */
+    tasks: Array<checklistTask>,
   }
 
   export type messageContactRegistered = {
@@ -11874,6 +12659,12 @@ declare module 'tdlib-types' {
   export type messageSendOptions$Input = {
     /** Options to be used when a message is sent */
     readonly _: 'messageSendOptions',
+    /**
+     * Unique identifier of the topic in a channel direct messages chat administered
+     * by the current user; pass 0 if the chat isn't a channel direct messages chat
+     * administered by the current user
+     */
+    readonly direct_messages_chat_topic_id?: number,
     /** Pass true to disable notification for the message */
     readonly disable_notification?: boolean,
     /** Pass true if the message is sent from the background */
@@ -11897,8 +12688,8 @@ declare module 'tdlib-types' {
     readonly update_order_of_installed_sticker_sets?: boolean,
     /**
      * Message scheduling state; pass null to send message immediately. Messages sent
-     * to a secret chat, to a chat with paid messages, live location messages and self-destructing
-     * messages can't be scheduled
+     * to a secret chat, to a chat with paid messages, to a channel direct messages
+     * chat, live location messages and self-destructing messages can't be scheduled
      */
     readonly scheduling_state?: MessageSchedulingState$Input,
     /**
@@ -11926,7 +12717,7 @@ declare module 'tdlib-types' {
     /**
      * True, if content of the message needs to be copied without reference to the
      * original sender. Always true if the message is forwarded to a secret chat or
-     * is local. Use messageProperties.can_be_saved and messageProperties.can_be_copied_to_secret_chat
+     * is local. Use messageProperties.can_be_copied and messageProperties.can_be_copied_to_secret_chat
      * to check whether the message is suitable
      */
     send_copy: boolean,
@@ -11958,7 +12749,7 @@ declare module 'tdlib-types' {
     /**
      * True, if content of the message needs to be copied without reference to the
      * original sender. Always true if the message is forwarded to a secret chat or
-     * is local. Use messageProperties.can_be_saved and messageProperties.can_be_copied_to_secret_chat
+     * is local. Use messageProperties.can_be_copied and messageProperties.can_be_copied_to_secret_chat
      * to check whether the message is suitable
      */
     readonly send_copy?: boolean,
@@ -12682,8 +13473,9 @@ declare module 'tdlib-types' {
 
   export type inputMessagePoll = {
     /**
-     * A message with a poll. Polls can't be sent to secret chats. Polls can be sent
-     * only to a private chat with a bot
+     * A message with a poll. Polls can't be sent to secret chats and channel direct
+     * messages chats. Polls can be sent to a private chat only if the chat is a chat
+     * with a bot or the Saved Messages chat
      */
     _: 'inputMessagePoll',
     /**
@@ -12692,8 +13484,9 @@ declare module 'tdlib-types' {
      */
     question: formattedText,
     /**
-     * List of poll answer options, 2-10 strings 1-100 characters each. Only custom
-     * emoji entities are allowed to be added and only by Premium users
+     * List of poll answer options, 2-getOption("poll_answer_count_max") strings 1-100
+     * characters each. Only custom emoji entities are allowed to be added and only
+     * by Premium users
      */
     options: Array<formattedText>,
     /**
@@ -12719,8 +13512,9 @@ declare module 'tdlib-types' {
 
   export type inputMessagePoll$Input = {
     /**
-     * A message with a poll. Polls can't be sent to secret chats. Polls can be sent
-     * only to a private chat with a bot
+     * A message with a poll. Polls can't be sent to secret chats and channel direct
+     * messages chats. Polls can be sent to a private chat only if the chat is a chat
+     * with a bot or the Saved Messages chat
      */
     readonly _: 'inputMessagePoll',
     /**
@@ -12729,8 +13523,9 @@ declare module 'tdlib-types' {
      */
     readonly question?: formattedText$Input,
     /**
-     * List of poll answer options, 2-10 strings 1-100 characters each. Only custom
-     * emoji entities are allowed to be added and only by Premium users
+     * List of poll answer options, 2-getOption("poll_answer_count_max") strings 1-100
+     * characters each. Only custom emoji entities are allowed to be added and only
+     * by Premium users
      */
     readonly options?: ReadonlyArray<formattedText$Input>,
     /**
@@ -12756,26 +13551,46 @@ declare module 'tdlib-types' {
 
   export type inputMessageStory = {
     /**
-     * A message with a forwarded story. Stories can't be sent to secret chats. A story
-     * can be forwarded only if story.can_be_forwarded
+     * A message with a forwarded story. Stories can't be forwarded to secret chats.
+     * A story can be forwarded only if story.can_be_forwarded
      */
     _: 'inputMessageStory',
     /** Identifier of the chat that posted the story */
-    story_sender_chat_id: number,
+    story_poster_chat_id: number,
     /** Story identifier */
     story_id: number,
   }
 
   export type inputMessageStory$Input = {
     /**
-     * A message with a forwarded story. Stories can't be sent to secret chats. A story
-     * can be forwarded only if story.can_be_forwarded
+     * A message with a forwarded story. Stories can't be forwarded to secret chats.
+     * A story can be forwarded only if story.can_be_forwarded
      */
     readonly _: 'inputMessageStory',
     /** Identifier of the chat that posted the story */
-    readonly story_sender_chat_id?: number,
+    readonly story_poster_chat_id?: number,
     /** Story identifier */
     readonly story_id?: number,
+  }
+
+  export type inputMessageChecklist = {
+    /**
+     * A message with a checklist. Checklists can't be sent to secret chats, channel
+     * chats and channel direct messages chats; for Telegram Premium users only
+     */
+    _: 'inputMessageChecklist',
+    /** The checklist to send */
+    checklist: inputChecklist,
+  }
+
+  export type inputMessageChecklist$Input = {
+    /**
+     * A message with a checklist. Checklists can't be sent to secret chats, channel
+     * chats and channel direct messages chats; for Telegram Premium users only
+     */
+    readonly _: 'inputMessageChecklist',
+    /** The checklist to send */
+    readonly checklist?: inputChecklist$Input,
   }
 
   export type inputMessageForwarded = {
@@ -12831,6 +13646,16 @@ declare module 'tdlib-types' {
      */
     _: 'messageProperties',
     /**
+     * True, if tasks can be added to the message's checklist using addChecklistTasks
+     * if the current user has Telegram Premium subscription
+     */
+    can_add_tasks: boolean,
+    /**
+     * True, if content of the message can be copied using inputMessageForwarded or
+     * forwardMessages with copy options
+     */
+    can_be_copied: boolean,
+    /**
      * True, if content of the message can be copied to a secret chat using inputMessageForwarded
      * or forwardMessages with copy options
      */
@@ -12847,11 +13672,15 @@ declare module 'tdlib-types' {
     can_be_deleted_for_all_users: boolean,
     /**
      * True, if the message can be edited using the methods editMessageText, editMessageCaption,
-     * or editMessageReplyMarkup. For live location and poll messages this fields shows
-     * whether editMessageLiveLocation or stopPoll can be used with this message
+     * or editMessageReplyMarkup. For live location, poll, and checklist messages this
+     * fields shows whether editMessageLiveLocation, stopPoll, or editMessageChecklist
+     * respectively can be used with this message
      */
     can_be_edited: boolean,
-    /** True, if the message can be forwarded using inputMessageForwarded or forwardMessages */
+    /**
+     * True, if the message can be forwarded using inputMessageForwarded or forwardMessages
+     * without copy options
+     */
     can_be_forwarded: boolean,
     /** True, if the message can be paid using inputInvoiceMessage */
     can_be_paid: boolean,
@@ -12864,10 +13693,7 @@ declare module 'tdlib-types' {
     can_be_replied: boolean,
     /** True, if the message can be replied in another chat or forum topic using inputMessageReplyToExternalMessage */
     can_be_replied_in_another_chat: boolean,
-    /**
-     * True, if content of the message can be saved locally or copied using inputMessageForwarded
-     * or forwardMessages with copy options
-     */
+    /** True, if content of the message can be saved locally */
     can_be_saved: boolean,
     /** True, if the message can be shared in a story using inputStoryAreaTypeMessage */
     can_be_shared_in_story: boolean,
@@ -12875,6 +13701,11 @@ declare module 'tdlib-types' {
     can_edit_media: boolean,
     /** True, if scheduling state of the message can be edited */
     can_edit_scheduling_state: boolean,
+    /**
+     * True, if author of the message sent on behalf of a chat can be received through
+     * getMessageAuthor
+     */
+    can_get_author: boolean,
     /** True, if code for message embedding can be received using getMessageEmbeddingCode */
     can_get_embedding_code: boolean,
     /** True, if a link can be generated for the message using getMessageLink */
@@ -12896,8 +13727,15 @@ declare module 'tdlib-types' {
      * forwards can be received using getMessagePublicForwards
      */
     can_get_statistics: boolean,
+    /** True, if advertisements for video of the message can be received though getVideoMessageAdvertisements */
+    can_get_video_advertisements: boolean,
     /** True, if chat members already viewed the message can be received through getMessageViewers */
     can_get_viewers: boolean,
+    /**
+     * True, if tasks can be marked as done or not done in the message's checklist
+     * using markChecklistTasksAsDone if the current user has Telegram Premium subscription
+     */
+    can_mark_tasks_as_done: boolean,
     /** True, if speech can be recognized for the message through recognizeSpeech */
     can_recognize_speech: boolean,
     /** True, if the message can be reported using reportChat */
@@ -13689,7 +14527,7 @@ declare module 'tdlib-types' {
   }
 
   export type storyVideo = {
-    /** Describes a video file sent in a story */
+    /** Describes a video file posted as a story */
     _: 'storyVideo',
     /** Duration of the video, in seconds */
     duration: number,
@@ -13792,7 +14630,7 @@ declare module 'tdlib-types' {
   }
 
   export type storyOriginPublicStory = {
-    /** The original story was a public story with known sender */
+    /** The original story was a public story that was posted by a known chat */
     _: 'storyOriginPublicStory',
     /** Identifier of the chat that posted original story */
     chat_id: number,
@@ -13801,10 +14639,10 @@ declare module 'tdlib-types' {
   }
 
   export type storyOriginHiddenUser = {
-    /** The original story was sent by an unknown user */
+    /** The original story was posted by an unknown user */
     _: 'storyOriginHiddenUser',
-    /** Name of the story sender */
-    sender_name: string,
+    /** Name of the user or the chat that posted the story */
+    poster_name: string,
   }
 
   export type storyRepostInfo = {
@@ -13835,26 +14673,26 @@ declare module 'tdlib-types' {
   export type story = {
     /** Represents a story */
     _: 'story',
-    /** Unique story identifier among stories of the given sender */
+    /** Unique story identifier among stories posted by the given chat */
     id: number,
     /** Identifier of the chat that posted the story */
-    sender_chat_id: number,
+    poster_chat_id: number,
     /**
-     * Identifier of the sender of the story; may be null if the story is posted on
-     * behalf of the sender_chat_id
+     * Identifier of the user or chat that posted the story; may be null if the story
+     * is posted on behalf of the poster_chat_id
      */
-    sender_id?: MessageSender,
+    poster_id?: MessageSender,
     /** Point in time (Unix timestamp) when the story was published */
     date: number,
-    /** True, if the story is being sent by the current user */
-    is_being_sent: boolean,
+    /** True, if the story is being posted by the current user */
+    is_being_posted: boolean,
     /** True, if the story is being edited by the current user */
     is_being_edited: boolean,
     /** True, if the story was edited */
     is_edited: boolean,
     /**
-     * True, if the story is saved in the sender's profile and will be available there
-     * after expiration
+     * True, if the story is saved in the profile of the chat that posted it and will
+     * be available there after expiration
      */
     is_posted_to_chat_page: boolean,
     /** True, if the story is visible only for the current user */
@@ -13868,7 +14706,10 @@ declare module 'tdlib-types' {
      * saving of the story content must be also forbidden
      */
     can_be_forwarded: boolean,
-    /** True, if the story can be replied in the chat with the story sender */
+    /**
+     * True, if the story can be replied in the chat with the user that posted the
+     * story
+     */
     can_be_replied: boolean,
     /** True, if the story's is_posted_to_chat_page value can be changed */
     can_toggle_is_posted_to_chat_page: boolean,
@@ -13926,18 +14767,21 @@ declare module 'tdlib-types' {
   }
 
   export type storyFullId$Input = {
-    /** Contains identifier of a story along with identifier of its sender */
+    /**
+     * Contains identifier of a story along with identifier of the chat that posted
+     * it
+     */
     readonly _: 'storyFullId',
     /** Identifier of the chat that posted the story */
-    readonly sender_chat_id?: number,
-    /** Unique story identifier among stories of the given sender */
+    readonly poster_chat_id?: number,
+    /** Unique story identifier among stories of the chat */
     readonly story_id?: number,
   }
 
   export type storyInfo = {
     /** Contains basic information about a story */
     _: 'storyInfo',
-    /** Unique story identifier among stories of the given sender */
+    /** Unique story identifier among stories of the chat */
     story_id: number,
     /** Point in time (Unix timestamp) when the story was published */
     date: number,
@@ -13958,7 +14802,7 @@ declare module 'tdlib-types' {
     /**
      * A parameter used to determine order of the stories in the story list; 0 if the
      * stories doesn't need to be shown in the story list. Stories must be sorted by
-     * the pair (order, story_sender_chat_id) in descending order
+     * the pair (order, story_poster_chat_id) in descending order
      */
     order: number,
     /** Identifier of the last read active story */
@@ -14159,6 +15003,8 @@ declare module 'tdlib-types' {
     can_set_custom_background: boolean,
     /** True, if custom emoji sticker set can be set for the chat */
     can_set_custom_emoji_sticker_set: boolean,
+    /** True, if automatic translation of messages can be enabled in the chat */
+    can_enable_automatic_translation: boolean,
     /**
      * True, if speech recognition can be used for video note and voice note messages
      * by all users
@@ -14191,6 +15037,11 @@ declare module 'tdlib-types' {
      * for supergroup chats only
      */
     min_custom_emoji_sticker_set_boost_level: number,
+    /**
+     * The minimum boost level allowing to enable automatic translation of messages
+     * for non-Premium users; for channel chats only
+     */
+    min_automatic_translation_boost_level: number,
     /**
      * The minimum boost level allowing to recognize speech in video note and voice
      * note messages for non-Premium users; for supergroup chats only
@@ -14366,8 +15217,8 @@ declare module 'tdlib-types' {
     /** The code is re-sent, because device verification has failed */
     readonly _: 'resendCodeReasonVerificationFailed',
     /**
-     * Cause of the verification failure, for example, PLAY_SERVICES_NOT_AVAILABLE,
-     * APNS_RECEIVE_TIMEOUT, or APNS_INIT_FAILED
+     * Cause of the verification failure, for example, "PLAY_SERVICES_NOT_AVAILABLE",
+     * "APNS_RECEIVE_TIMEOUT", or "APNS_INIT_FAILED"
      */
     readonly error_message?: string,
   }
@@ -14403,17 +15254,11 @@ declare module 'tdlib-types' {
     _: 'callDiscardReasonHungUp',
   }
 
-  export type callDiscardReasonAllowGroupCall = {
-    /**
-     * The call was ended because it has been used successfully to transfer private
-     * encryption key for the associated group call
-     */
-    _: 'callDiscardReasonAllowGroupCall',
-    /**
-     * Encrypted using the call private key encryption key for the associated group
-     * call
-     */
-    encrypted_group_call_key: string /* base64 */,
+  export type callDiscardReasonUpgradeToGroupCall = {
+    /** The call was ended because it has been upgraded to a group call */
+    _: 'callDiscardReasonUpgradeToGroupCall',
+    /** Invite link for the group call */
+    invite_link: string,
   }
 
   export type callProtocol = {
@@ -14526,6 +15371,8 @@ declare module 'tdlib-types' {
     emojis: Array<string>,
     /** True, if peer-to-peer connection is allowed by users privacy settings */
     allow_p2p: boolean,
+    /** True, if the other party supports upgrading of the call to a group call */
+    is_group_call_supported: boolean,
     /** Custom JSON-encoded call parameters to be passed to tgcalls */
     custom_parameters: string,
   }
@@ -14558,6 +15405,19 @@ declare module 'tdlib-types' {
     error: error,
   }
 
+  export type groupCallJoinParameters$Input = {
+    /** Describes parameters used to join a group call */
+    readonly _: 'groupCallJoinParameters',
+    /** Audio channel synchronization source identifier; received from tgcalls */
+    readonly audio_source_id?: number,
+    /** Group call join payload; received from tgcalls */
+    readonly payload?: string,
+    /** Pass true to join the call with muted microphone */
+    readonly is_muted?: boolean,
+    /** Pass true if the user's video is enabled */
+    readonly is_my_video_enabled?: boolean,
+  }
+
   export type groupCallVideoQualityThumbnail$Input = {
     /** The worst available video quality */
     readonly _: 'groupCallVideoQualityThumbnail',
@@ -14573,9 +15433,9 @@ declare module 'tdlib-types' {
     readonly _: 'groupCallVideoQualityFull',
   }
 
-  export type groupCallStream = {
-    /** Describes an available stream in a group call */
-    _: 'groupCallStream',
+  export type videoChatStream = {
+    /** Describes an available stream in a video chat */
+    _: 'videoChatStream',
     /** Identifier of an audio/video channel */
     channel_id: number,
     /** Scale of segment durations in the stream. The duration is 1000/(2**scale) milliseconds */
@@ -14584,11 +15444,11 @@ declare module 'tdlib-types' {
     time_offset: number,
   }
 
-  export type groupCallStreams = {
-    /** Represents a list of group call streams */
-    _: 'groupCallStreams',
-    /** A list of group call streams */
-    streams: Array<groupCallStream>,
+  export type videoChatStreams = {
+    /** Represents a list of video chat streams */
+    _: 'videoChatStreams',
+    /** A list of video chat streams */
+    streams: Array<videoChatStream>,
   }
 
   export type rtmpUrl = {
@@ -14614,23 +15474,32 @@ declare module 'tdlib-types' {
     _: 'groupCall',
     /** Group call identifier */
     id: number,
-    /** Identifier of one-to-one call from which the group call was created; 0 if unknown */
-    from_call_id: number,
-    /** Group call title */
+    /** Group call title; for video chats only */
     title: string,
     /**
+     * Invite link for the group call; for group calls that aren't bound to a chat.
+     * For video chats call getVideoChatInviteLink to get the link
+     */
+    invite_link: string,
+    /**
      * Point in time (Unix timestamp) when the group call is expected to be started
-     * by an administrator; 0 if it is already active or was ended
+     * by an administrator; 0 if it is already active or was ended; for video chats
+     * only
      */
     scheduled_start_date: number,
     /**
      * True, if the group call is scheduled and the current user will receive a notification
-     * when the group call starts
+     * when the group call starts; for video chats only
      */
     enabled_start_notification: boolean,
     /** True, if the call is active */
     is_active: boolean,
-    /** True, if the chat is an RTMP stream instead of an ordinary video chat */
+    /** True, if the call is bound to a chat */
+    is_video_chat: boolean,
+    /**
+     * True, if the call is an RTMP stream instead of an ordinary video chat; for video
+     * chats only
+     */
     is_rtmp_stream: boolean,
     /** True, if the call is joined */
     is_joined: boolean,
@@ -14639,13 +15508,19 @@ declare module 'tdlib-types' {
      * needs to be rejoined
      */
     need_rejoin: boolean,
-    /** True, if the current user can manage the group call */
+    /**
+     * True, if the user is the owner of the call and can end the call, change volume
+     * level of other users, or ban users there; for group calls that aren't bound
+     * to a chat
+     */
+    is_owned: boolean,
+    /** True, if the current user can manage the group call; for video chats only */
     can_be_managed: boolean,
     /** Number of participants in the group call */
     participant_count: number,
     /**
      * True, if group call participants, which are muted, aren't returned in participant
-     * list
+     * list; for video chats only
      */
     has_hidden_listeners: boolean,
     /** True, if all group call participants are loaded */
@@ -14658,9 +15533,15 @@ declare module 'tdlib-types' {
     is_my_video_paused: boolean,
     /** True, if the current user can broadcast video or share screen */
     can_enable_video: boolean,
-    /** True, if only group call administrators can unmute new participants */
+    /**
+     * True, if only group call administrators can unmute new participants; for video
+     * chats only
+     */
     mute_new_participants: boolean,
-    /** True, if the current user can enable or disable mute_new_participants setting */
+    /**
+     * True, if the current user can enable or disable mute_new_participants setting;
+     * for video chats only
+     */
     can_toggle_mute_new_participants: boolean,
     /**
      * Duration of the ongoing group call recording, in seconds; 0 if none. An updateGroupCall
@@ -14751,6 +15632,80 @@ declare module 'tdlib-types' {
     order: string,
   }
 
+  export type groupCallParticipants = {
+    /** Contains identifiers of group call participants */
+    _: 'groupCallParticipants',
+    /** Total number of group call participants */
+    total_count: number,
+    /** Identifiers of the participants */
+    participant_ids: Array<MessageSender>,
+  }
+
+  export type groupCallInfo = {
+    /** Contains information about a just created or just joined group call */
+    _: 'groupCallInfo',
+    /** Identifier of the group call */
+    group_call_id: number,
+    /** Join response payload for tgcalls; empty if the call isn't joined */
+    join_payload: string,
+  }
+
+  export type inviteGroupCallParticipantResultUserPrivacyRestricted = {
+    /** The user can't be invited due to their privacy settings */
+    _: 'inviteGroupCallParticipantResultUserPrivacyRestricted',
+  }
+
+  export type inviteGroupCallParticipantResultUserAlreadyParticipant = {
+    /** The user can't be invited because they are already a participant of the call */
+    _: 'inviteGroupCallParticipantResultUserAlreadyParticipant',
+  }
+
+  export type inviteGroupCallParticipantResultUserWasBanned = {
+    /**
+     * The user can't be invited because they were banned by the owner of the call
+     * and can be invited back only by the owner of the group call
+     */
+    _: 'inviteGroupCallParticipantResultUserWasBanned',
+  }
+
+  export type inviteGroupCallParticipantResultSuccess = {
+    /**
+     * The user was invited and a service message of the type messageGroupCall was
+     * sent which can be used in declineGroupCallInvitation to cancel the invitation
+     */
+    _: 'inviteGroupCallParticipantResultSuccess',
+    /** Identifier of the chat with the invitation message */
+    chat_id: number,
+    /** Identifier of the message */
+    message_id: number,
+  }
+
+  export type groupCallDataChannelMain$Input = {
+    /** The main data channel for audio and video data */
+    readonly _: 'groupCallDataChannelMain',
+  }
+
+  export type groupCallDataChannelScreenSharing$Input = {
+    /** The data channel for screen sharing */
+    readonly _: 'groupCallDataChannelScreenSharing',
+  }
+
+  export type inputGroupCallLink$Input = {
+    /** The group call is accessible through a link */
+    readonly _: 'inputGroupCallLink',
+    /** The link for the group call */
+    readonly link?: string,
+  }
+
+  export type inputGroupCallMessage$Input = {
+    /** The group call is accessible through a message of the type messageGroupCall */
+    readonly _: 'inputGroupCallMessage',
+    /** Identifier of the chat with the message */
+    readonly chat_id?: number,
+    /** Identifier of the message of the type messageGroupCall */
+    readonly message_id?: number,
+  }
+
   export type callProblemEcho$Input = {
     /** The user heard their own voice */
     readonly _: 'callProblemEcho',
@@ -14809,11 +15764,6 @@ declare module 'tdlib-types' {
     is_video: boolean,
     /** Call state */
     state: CallState,
-    /**
-     * Identifier of the group call associated with the call; 0 if the group call isn't
-     * created yet. The group call can be received through the method getGroupCall
-     */
-    group_call_id: number,
   }
 
   export type firebaseAuthenticationSettingsAndroid$Input = {
@@ -14864,7 +15814,7 @@ declare module 'tdlib-types' {
     readonly firebase_authentication_settings?: FirebaseAuthenticationSettings$Input,
     /**
      * List of up to 20 authentication tokens, recently received in updateOption("authentication_token")
-     * in previously logged out sessions
+     * in previously logged out sessions; for setAuthenticationPhoneNumber only
      */
     readonly authentication_tokens?: ReadonlyArray<string>,
   }
@@ -15048,8 +15998,8 @@ declare module 'tdlib-types' {
     user_chat_id: number,
     /** Point in time (Unix timestamp) when the connection was established */
     date: number,
-    /** True, if the bot can send messages to the connected user; false otherwise */
-    can_reply: boolean,
+    /** Rights of the bot; may be null if the connection was disabled */
+    rights?: businessBotRights,
     /** True, if the connection is enabled; false otherwise */
     is_enabled: boolean,
   }
@@ -16228,6 +17178,13 @@ declare module 'tdlib-types' {
     show_message_sender: boolean,
   }
 
+  export type chatEventAutomaticTranslationToggled = {
+    /** The has_automatic_translation setting of a channel was toggled */
+    _: 'chatEventAutomaticTranslationToggled',
+    /** New value of has_automatic_translation */
+    has_automatic_translation: boolean,
+  }
+
   export type chatEventInviteLinkEdited = {
     /** A chat invite link was edited */
     _: 'chatEventInviteLinkEdited',
@@ -16734,33 +17691,33 @@ declare module 'tdlib-types' {
     readonly _: 'premiumLimitTypeActiveStoryCount',
   }
 
-  export type premiumLimitTypeWeeklySentStoryCount = {
-    /** The maximum number of stories sent per week */
-    _: 'premiumLimitTypeWeeklySentStoryCount',
+  export type premiumLimitTypeWeeklyPostedStoryCount = {
+    /** The maximum number of stories posted per week */
+    _: 'premiumLimitTypeWeeklyPostedStoryCount',
   }
 
-  export type premiumLimitTypeWeeklySentStoryCount$Input = {
-    /** The maximum number of stories sent per week */
-    readonly _: 'premiumLimitTypeWeeklySentStoryCount',
+  export type premiumLimitTypeWeeklyPostedStoryCount$Input = {
+    /** The maximum number of stories posted per week */
+    readonly _: 'premiumLimitTypeWeeklyPostedStoryCount',
   }
 
-  export type premiumLimitTypeMonthlySentStoryCount = {
-    /** The maximum number of stories sent per month */
-    _: 'premiumLimitTypeMonthlySentStoryCount',
+  export type premiumLimitTypeMonthlyPostedStoryCount = {
+    /** The maximum number of stories posted per month */
+    _: 'premiumLimitTypeMonthlyPostedStoryCount',
   }
 
-  export type premiumLimitTypeMonthlySentStoryCount$Input = {
-    /** The maximum number of stories sent per month */
-    readonly _: 'premiumLimitTypeMonthlySentStoryCount',
+  export type premiumLimitTypeMonthlyPostedStoryCount$Input = {
+    /** The maximum number of stories posted per month */
+    readonly _: 'premiumLimitTypeMonthlyPostedStoryCount',
   }
 
   export type premiumLimitTypeStoryCaptionLength = {
-    /** The maximum length of captions of sent stories */
+    /** The maximum length of captions of posted stories */
     _: 'premiumLimitTypeStoryCaptionLength',
   }
 
   export type premiumLimitTypeStoryCaptionLength$Input = {
-    /** The maximum length of captions of sent stories */
+    /** The maximum length of captions of posted stories */
     readonly _: 'premiumLimitTypeStoryCaptionLength',
   }
 
@@ -17044,6 +18001,16 @@ declare module 'tdlib-types' {
   export type premiumFeatureMessageEffects$Input = {
     /** The ability to use all available message effects */
     readonly _: 'premiumFeatureMessageEffects',
+  }
+
+  export type premiumFeatureChecklists = {
+    /** The ability to create and use checklist messages */
+    _: 'premiumFeatureChecklists',
+  }
+
+  export type premiumFeatureChecklists$Input = {
+    /** The ability to create and use checklist messages */
+    readonly _: 'premiumFeatureChecklists',
   }
 
   export type businessFeatureLocation = {
@@ -17417,10 +18384,31 @@ declare module 'tdlib-types' {
     readonly star_count?: number,
   }
 
+  export type storeTransactionAppStore$Input = {
+    /** A purchase through App Store */
+    readonly _: 'storeTransactionAppStore',
+    /** App Store receipt */
+    readonly receipt?: string /* base64 */,
+  }
+
+  export type storeTransactionGooglePlay$Input = {
+    /** A purchase through Google Play */
+    readonly _: 'storeTransactionGooglePlay',
+    /** Application package name */
+    readonly package_name?: string,
+    /** Identifier of the purchased store product */
+    readonly store_product_id?: string,
+    /** Google Play purchase token */
+    readonly purchase_token?: string,
+  }
+
   export type telegramPaymentPurposePremiumGift$Input = {
     /** The user gifting Telegram Premium to another user */
     readonly _: 'telegramPaymentPurposePremiumGift',
-    /** ISO 4217 currency code of the payment currency */
+    /**
+     * ISO 4217 currency code of the payment currency, or "XTR" for payments in Telegram
+     * Stars
+     */
     readonly currency?: string,
     /** Paid amount, in the smallest units of the currency */
     readonly amount?: number,
@@ -17845,49 +18833,51 @@ declare module 'tdlib-types' {
     hashtags: Array<string>,
   }
 
-  export type canSendStoryResultOk = {
+  export type canPostStoryResultOk = {
     /** A story can be sent */
-    _: 'canSendStoryResultOk',
+    _: 'canPostStoryResultOk',
+    /** Number of stories that can be posted by the user */
+    story_count: number,
   }
 
-  export type canSendStoryResultPremiumNeeded = {
+  export type canPostStoryResultPremiumNeeded = {
     /** The user must subscribe to Telegram Premium to be able to post stories */
-    _: 'canSendStoryResultPremiumNeeded',
+    _: 'canPostStoryResultPremiumNeeded',
   }
 
-  export type canSendStoryResultBoostNeeded = {
+  export type canPostStoryResultBoostNeeded = {
     /**
      * The chat must be boosted first by Telegram Premium subscribers to post more
      * stories. Call getChatBoostStatus to get current boost status of the chat
      */
-    _: 'canSendStoryResultBoostNeeded',
+    _: 'canPostStoryResultBoostNeeded',
   }
 
-  export type canSendStoryResultActiveStoryLimitExceeded = {
+  export type canPostStoryResultActiveStoryLimitExceeded = {
     /**
      * The limit for the number of active stories exceeded. The user can buy Telegram
      * Premium, delete an active story, or wait for the oldest story to expire
      */
-    _: 'canSendStoryResultActiveStoryLimitExceeded',
+    _: 'canPostStoryResultActiveStoryLimitExceeded',
   }
 
-  export type canSendStoryResultWeeklyLimitExceeded = {
+  export type canPostStoryResultWeeklyLimitExceeded = {
     /**
      * The weekly limit for the number of posted stories exceeded. The user needs to
      * buy Telegram Premium or wait specified time
      */
-    _: 'canSendStoryResultWeeklyLimitExceeded',
-    /** Time left before the user can send the next story */
+    _: 'canPostStoryResultWeeklyLimitExceeded',
+    /** Time left before the user can post the next story */
     retry_after: number,
   }
 
-  export type canSendStoryResultMonthlyLimitExceeded = {
+  export type canPostStoryResultMonthlyLimitExceeded = {
     /**
      * The monthly limit for the number of posted stories exceeded. The user needs
      * to buy Telegram Premium or wait specified time
      */
-    _: 'canSendStoryResultMonthlyLimitExceeded',
-    /** Time left before the user can send the next story */
+    _: 'canPostStoryResultMonthlyLimitExceeded',
+    /** Time left before the user can post the next story */
     retry_after: number,
   }
 
@@ -18170,7 +19160,7 @@ declare module 'tdlib-types' {
     _: 'pushMessageContentUpgradedGift',
     /**
      * True, if the gift was obtained by upgrading of a previously received gift; otherwise,
-     * this is a transferred gift
+     * this is a transferred or resold gift
      */
     is_upgrade: boolean,
   }
@@ -18205,6 +19195,15 @@ declare module 'tdlib-types' {
     _: 'pushMessageContentText',
     /** Message text */
     text: string,
+    /** True, if the message is a pinned message with the specified content */
+    is_pinned: boolean,
+  }
+
+  export type pushMessageContentChecklist = {
+    /** A message with a checklist */
+    _: 'pushMessageContentChecklist',
+    /** Checklist title */
+    title: string,
     /** True, if the message is a pinned message with the specified content */
     is_pinned: boolean,
   }
@@ -18340,6 +19339,20 @@ declare module 'tdlib-types' {
     _: 'pushMessageContentProximityAlertTriggered',
     /** The distance to the user */
     distance: number,
+  }
+
+  export type pushMessageContentChecklistTasksAdded = {
+    /** Some tasks were added to a checklist */
+    _: 'pushMessageContentChecklistTasksAdded',
+    /** Number of added tasks */
+    task_count: number,
+  }
+
+  export type pushMessageContentChecklistTasksDone = {
+    /** Some tasks from a checklist were marked as done or not done */
+    _: 'pushMessageContentChecklistTasksDone',
+    /** Number of changed tasks */
+    task_count: number,
   }
 
   export type pushMessageContentMessageForwards = {
@@ -19074,7 +20087,8 @@ declare module 'tdlib-types' {
      * by non-contacts; 0-getOption("paid_message_star_count_max"). If positive, then
      * allow_new_chats_from_unknown_users must be true. The current user will receive
      * getOption("paid_message_earnings_per_mille") Telegram Stars for each 1000 Telegram
-     * Stars paid for message sending
+     * Stars paid for message sending. Can be positive, only if getOption("can_enable_paid_messages")
+     * is true
      */
     incoming_paid_message_star_count: number,
   }
@@ -19092,7 +20106,8 @@ declare module 'tdlib-types' {
      * by non-contacts; 0-getOption("paid_message_star_count_max"). If positive, then
      * allow_new_chats_from_unknown_users must be true. The current user will receive
      * getOption("paid_message_earnings_per_mille") Telegram Stars for each 1000 Telegram
-     * Stars paid for message sending
+     * Stars paid for message sending. Can be positive, only if getOption("can_enable_paid_messages")
+     * is true
      */
     readonly incoming_paid_message_star_count?: number,
   }
@@ -19930,6 +20945,28 @@ declare module 'tdlib-types' {
     readonly game_short_name?: string,
   }
 
+  export type internalLinkTypeGroupCall = {
+    /**
+     * The link is a link to a group call that isn't bound to a chat. Use getGroupCallParticipants
+     * to get the list of group call participants and show them on the join group call
+     * screen. Call joinGroupCall with the given invite_link to join the call
+     */
+    _: 'internalLinkTypeGroupCall',
+    /** Internal representation of the invite link */
+    invite_link: string,
+  }
+
+  export type internalLinkTypeGroupCall$Input = {
+    /**
+     * The link is a link to a group call that isn't bound to a chat. Use getGroupCallParticipants
+     * to get the list of group call participants and show them on the join group call
+     * screen. Call joinGroupCall with the given invite_link to join the call
+     */
+    readonly _: 'internalLinkTypeGroupCall',
+    /** Internal representation of the invite link */
+    readonly invite_link?: string,
+  }
+
   export type internalLinkTypeInstantView = {
     /**
      * The link must be opened in an Instant View. Call getWebPageInstantView with
@@ -20102,6 +21139,22 @@ declare module 'tdlib-types' {
      * needs to be focused and the text after the link must be selected
      */
     readonly contains_link?: boolean,
+  }
+
+  export type internalLinkTypeMyStars = {
+    /**
+     * The link is a link to the screen with information about Telegram Star balance
+     * and transactions of the current user
+     */
+    _: 'internalLinkTypeMyStars',
+  }
+
+  export type internalLinkTypeMyStars$Input = {
+    /**
+     * The link is a link to the screen with information about Telegram Star balance
+     * and transactions of the current user
+     */
+    readonly _: 'internalLinkTypeMyStars',
   }
 
   export type internalLinkTypePassportDataRequest = {
@@ -20408,26 +21461,26 @@ declare module 'tdlib-types' {
 
   export type internalLinkTypeStory = {
     /**
-     * The link is a link to a story. Call searchPublicChat with the given sender username,
+     * The link is a link to a story. Call searchPublicChat with the given poster username,
      * then call getStory with the received chat identifier and the given story identifier,
      * then show the story if received
      */
     _: 'internalLinkTypeStory',
-    /** Username of the sender of the story */
-    story_sender_username: string,
+    /** Username of the poster of the story */
+    story_poster_username: string,
     /** Story identifier */
     story_id: number,
   }
 
   export type internalLinkTypeStory$Input = {
     /**
-     * The link is a link to a story. Call searchPublicChat with the given sender username,
+     * The link is a link to a story. Call searchPublicChat with the given poster username,
      * then call getStory with the received chat identifier and the given story identifier,
      * then show the story if received
      */
     readonly _: 'internalLinkTypeStory',
-    /** Username of the sender of the story */
-    readonly story_sender_username?: string,
+    /** Username of the poster of the story */
+    readonly story_poster_username?: string,
     /** Story identifier */
     readonly story_id?: number,
   }
@@ -20563,7 +21616,7 @@ declare module 'tdlib-types' {
   export type internalLinkTypeVideoChat = {
     /**
      * The link is a link to a video chat. Call searchPublicChat with the given chat
-     * username, and then joinGroupCall with the given invite hash to process the link
+     * username, and then joinVideoChat with the given invite hash to process the link
      */
     _: 'internalLinkTypeVideoChat',
     /** Username of the chat with the video chat */
@@ -20583,7 +21636,7 @@ declare module 'tdlib-types' {
   export type internalLinkTypeVideoChat$Input = {
     /**
      * The link is a link to a video chat. Call searchPublicChat with the given chat
-     * username, and then joinGroupCall with the given invite hash to process the link
+     * username, and then joinVideoChat with the given invite hash to process the link
      */
     readonly _: 'internalLinkTypeVideoChat',
     /** Username of the chat with the video chat */
@@ -20723,13 +21776,6 @@ declare module 'tdlib-types' {
   export type blockListStories$Input = {
     /** The block list that disallows viewing of stories of the current user */
     readonly _: 'blockListStories',
-  }
-
-  export type filePart = {
-    /** Contains a part of a file */
-    _: 'filePart',
-    /** File bytes */
-    data: string /* base64 */,
   }
 
   export type fileTypeNone = {
@@ -21658,6 +22704,32 @@ declare module 'tdlib-types' {
     readonly _: 'suggestedActionExtendStarSubscriptions',
   }
 
+  export type suggestedActionCustom = {
+    /** A custom suggestion to be shown at the top of the chat list */
+    _: 'suggestedActionCustom',
+    /** Unique name of the suggestion */
+    name: string,
+    /** Title of the suggestion */
+    title: formattedText,
+    /** Description of the suggestion */
+    description: formattedText,
+    /** The link to open when the suggestion is clicked */
+    url: string,
+  }
+
+  export type suggestedActionCustom$Input = {
+    /** A custom suggestion to be shown at the top of the chat list */
+    readonly _: 'suggestedActionCustom',
+    /** Unique name of the suggestion */
+    readonly name?: string,
+    /** Title of the suggestion */
+    readonly title?: formattedText$Input,
+    /** Description of the suggestion */
+    readonly description?: formattedText$Input,
+    /** The link to open when the suggestion is clicked */
+    readonly url?: string,
+  }
+
   export type count = {
     /** Contains a counter */
     _: 'count',
@@ -21670,6 +22742,13 @@ declare module 'tdlib-types' {
     _: 'text',
     /** Text */
     text: string,
+  }
+
+  export type data = {
+    /** Contains some binary data */
+    _: 'data',
+    /** Data */
+    data: string /* base64 */,
   }
 
   export type seconds = {
@@ -21878,7 +22957,7 @@ declare module 'tdlib-types' {
   }
 
   export type chatStatisticsObjectTypeStory = {
-    /** Describes a story sent by the chat */
+    /** Describes a story posted on behalf of the chat */
     _: 'chatStatisticsObjectTypeStory',
     /** Story identifier */
     story_id: number,
@@ -21887,7 +22966,7 @@ declare module 'tdlib-types' {
   export type chatStatisticsInteractionInfo = {
     /**
      * Contains statistics about interactions with a message sent in the chat or a
-     * story sent by the chat
+     * story posted on behalf of the chat
      */
     _: 'chatStatisticsInteractionInfo',
     /** Type of the object */
@@ -21983,11 +23062,11 @@ declare module 'tdlib-types' {
     mean_message_share_count: statisticalValue,
     /** Mean number of times reactions were added to the recently sent messages */
     mean_message_reaction_count: statisticalValue,
-    /** Mean number of times the recently sent stories were viewed */
+    /** Mean number of times the recently posted stories were viewed */
     mean_story_view_count: statisticalValue,
-    /** Mean number of times the recently sent stories were shared */
+    /** Mean number of times the recently posted stories were shared */
     mean_story_share_count: statisticalValue,
-    /** Mean number of times reactions were added to the recently sent stories */
+    /** Mean number of times reactions were added to the recently posted stories */
     mean_story_reaction_count: statisticalValue,
     /** A percentage of users with enabled notifications for the chat; 0-100 */
     enabled_notifications_percentage: number,
@@ -22017,7 +23096,7 @@ declare module 'tdlib-types' {
     instant_view_interaction_graph: StatisticalGraph,
     /**
      * Detailed statistics about number of views and shares of recently sent messages
-     * and stories
+     * and posted stories
      */
     recent_interactions: Array<chatStatisticsInteractionInfo>,
   }
@@ -22828,6 +23907,31 @@ declare module 'tdlib-types' {
     topic_count: number,
   }
 
+  export type updateDirectMessagesChatTopic = {
+    /**
+     * Basic information about a topic in a channel direct messages chat administered
+     * by the current user has changed. This update is guaranteed to come before the
+     * topic identifier is returned to the application
+     */
+    _: 'updateDirectMessagesChatTopic',
+    /** New data about the topic */
+    topic: directMessagesChatTopic,
+  }
+
+  export type updateTopicMessageCount = {
+    /**
+     * Number of messages in a topic has changed; for Saved Messages and channel direct
+     * messages chat topics only
+     */
+    _: 'updateTopicMessageCount',
+    /** Identifier of the chat in topic of which the number of messages has changed */
+    chat_id: number,
+    /** Identifier of the topic */
+    topic_id: MessageTopic,
+    /** Approximate number of messages in the topics */
+    message_count: number,
+  }
+
   export type updateQuickReplyShortcut = {
     /**
      * Basic information about a quick reply shortcut has changed. This update is guaranteed
@@ -22867,10 +23971,29 @@ declare module 'tdlib-types' {
   export type updateForumTopicInfo = {
     /** Basic information about a topic in a forum chat was changed */
     _: 'updateForumTopicInfo',
-    /** Chat identifier */
-    chat_id: number,
     /** New information about the topic */
     info: forumTopicInfo,
+  }
+
+  export type updateForumTopic = {
+    /** Information about a topic in a forum chat was changed */
+    _: 'updateForumTopic',
+    /** Chat identifier */
+    chat_id: number,
+    /** Message thread identifier of the topic */
+    message_thread_id: number,
+    /** True, if the topic is pinned in the topic list */
+    is_pinned: boolean,
+    /** Identifier of the last read incoming message */
+    last_read_inbox_message_id: number,
+    /** Identifier of the last read outgoing message */
+    last_read_outbox_message_id: number,
+    /** Number of unread messages with a mention/reply in the topic */
+    unread_mention_count: number,
+    /** Number of messages with unread reactions in the topic */
+    unread_reaction_count: number,
+    /** Notification settings for the topic */
+    notification_settings: chatNotificationSettings,
   }
 
   export type updateScopeNotificationSettings = {
@@ -23208,7 +24331,7 @@ declare module 'tdlib-types' {
   export type updateGroupCall = {
     /** Information about a group call was updated */
     _: 'updateGroupCall',
-    /** New data about a group call */
+    /** New data about the group call */
     group_call: groupCall,
   }
 
@@ -23219,10 +24342,47 @@ declare module 'tdlib-types' {
      * is joined or being joined
      */
     _: 'updateGroupCallParticipant',
-    /** Identifier of group call */
+    /** Identifier of the group call */
     group_call_id: number,
-    /** New data about a participant */
+    /** New data about the participant */
     participant: groupCallParticipant,
+  }
+
+  export type updateGroupCallParticipants = {
+    /**
+     * The list of group call participants that can send and receive encrypted call
+     * data has changed; for group calls not bound to a chat only
+     */
+    _: 'updateGroupCallParticipants',
+    /** Identifier of the group call */
+    group_call_id: number,
+    /**
+     * New list of group call participant user identifiers. The identifiers may be
+     * invalid or the corresponding users may be unknown. The participants must be
+     * shown in the list of group call participants even there is no information about
+     * them
+     */
+    participant_user_ids: Array<string>,
+  }
+
+  export type updateGroupCallVerificationState = {
+    /**
+     * The verification state of an encrypted group call has changed; for group calls
+     * not bound to a chat only
+     */
+    _: 'updateGroupCallVerificationState',
+    /** Identifier of the group call */
+    group_call_id: number,
+    /**
+     * The call state generation to which the emoji corresponds. If generation is different
+     * for two users, then their emoji may be also different
+     */
+    generation: number,
+    /**
+     * Group call state fingerprint represented as 4 emoji; may be empty if the state
+     * isn't verified yet
+     */
+    emojis: Array<string>,
   }
 
   export type updateNewCallSignalingData = {
@@ -23288,32 +24448,32 @@ declare module 'tdlib-types' {
     /** A story became inaccessible */
     _: 'updateStoryDeleted',
     /** Identifier of the chat that posted the story */
-    story_sender_chat_id: number,
+    story_poster_chat_id: number,
     /** Story identifier */
     story_id: number,
   }
 
-  export type updateStorySendSucceeded = {
-    /** A story has been successfully sent */
-    _: 'updateStorySendSucceeded',
-    /** The sent story */
+  export type updateStoryPostSucceeded = {
+    /** A story has been successfully posted */
+    _: 'updateStoryPostSucceeded',
+    /** The posted story */
     story: story,
     /** The previous temporary story identifier */
     old_story_id: number,
   }
 
-  export type updateStorySendFailed = {
+  export type updateStoryPostFailed = {
     /**
-     * A story failed to send. If the story sending is canceled, then updateStoryDeleted
+     * A story failed to post. If the story posting is canceled, then updateStoryDeleted
      * will be received instead of this update
      */
-    _: 'updateStorySendFailed',
-    /** The failed to send story */
+    _: 'updateStoryPostFailed',
+    /** The failed to post story */
     story: story,
-    /** The cause of the story sending failure */
+    /** The cause of the story posting failure */
     error: error,
     /** Type of the error; may be null if unknown */
-    error_type?: CanSendStoryResult,
+    error_type?: CanPostStoryResult,
   }
 
   export type updateChatActiveStories = {
@@ -23481,6 +24641,25 @@ declare module 'tdlib-types' {
     _: 'updateConnectionState',
     /** The new connection state */
     state: ConnectionState,
+  }
+
+  export type updateFreezeState = {
+    /** The freeze state of the current user's account has changed */
+    _: 'updateFreezeState',
+    /** True, if the account is frozen */
+    is_frozen: boolean,
+    /**
+     * Point in time (Unix timestamp) when the account was frozen; 0 if the account
+     * isn't frozen
+     */
+    freezing_date: number,
+    /**
+     * Point in time (Unix timestamp) when the account will be deleted and can't be
+     * unfrozen; 0 if the account isn't frozen
+     */
+    deletion_date: number,
+    /** The link to open to send an appeal to unfreeze the account */
+    appeal_link: string,
   }
 
   export type updateTermsOfService = {
@@ -24130,7 +25309,7 @@ declare module 'tdlib-types' {
 
   export type getAuthorizationState = {
     /**
-     * Returns the current authorization state; this is an offline request. For informational
+     * Returns the current authorization state. This is an offline method. For informational
      * purposes only. Use updateAuthorizationState instead to maintain the current
      * authorization state. Can be called before initialization
      */
@@ -24199,8 +25378,9 @@ declare module 'tdlib-types' {
      * Sets the phone number of the user and sends an authentication code to the user.
      * Works only when the current authorization state is authorizationStateWaitPhoneNumber,
      * or if there is no pending authentication query and the current authorization
-     * state is authorizationStateWaitEmailAddress, authorizationStateWaitEmailCode,
-     * authorizationStateWaitCode, authorizationStateWaitRegistration, or authorizationStateWaitPassword
+     * state is authorizationStateWaitPremiumPurchase, authorizationStateWaitEmailAddress,
+     * authorizationStateWaitEmailCode, authorizationStateWaitCode, authorizationStateWaitRegistration,
+     * or authorizationStateWaitPassword
      */
     readonly _: 'setAuthenticationPhoneNumber',
     /** The phone number of the user, in international format */
@@ -24210,6 +25390,37 @@ declare module 'tdlib-types' {
      * default settings
      */
     readonly settings?: phoneNumberAuthenticationSettings$Input,
+  }
+
+  export type checkAuthenticationPremiumPurchase = {
+    /**
+     * Checks whether an in-store purchase of Telegram Premium is possible before authorization.
+     * Works only when the current authorization state is authorizationStateWaitPremiumPurchase
+     */
+    readonly _: 'checkAuthenticationPremiumPurchase',
+    /** ISO 4217 currency code of the payment currency */
+    readonly currency?: string,
+    /** Paid amount, in the smallest units of the currency */
+    readonly amount?: number,
+  }
+
+  export type setAuthenticationPremiumPurchaseTransaction = {
+    /**
+     * Informs server about an in-store purchase of Telegram Premium before authorization.
+     * Works only when the current authorization state is authorizationStateWaitPremiumPurchase
+     */
+    readonly _: 'setAuthenticationPremiumPurchaseTransaction',
+    /** Information about the transaction */
+    readonly transaction?: StoreTransaction$Input,
+    /**
+     * Pass true if this is a restore of a Telegram Premium purchase; only for App
+     * Store
+     */
+    readonly is_restore?: boolean,
+    /** ISO 4217 currency code of the payment currency */
+    readonly currency?: string,
+    /** Paid amount, in the smallest units of the currency */
+    readonly amount?: number,
   }
 
   export type setAuthenticationEmailAddress = {
@@ -24259,8 +25470,9 @@ declare module 'tdlib-types' {
      * Requests QR code authentication by scanning a QR code on another logged in device.
      * Works only when the current authorization state is authorizationStateWaitPhoneNumber,
      * or if there is no pending authentication query and the current authorization
-     * state is authorizationStateWaitEmailAddress, authorizationStateWaitEmailCode,
-     * authorizationStateWaitCode, authorizationStateWaitRegistration, or authorizationStateWaitPassword
+     * state is authorizationStateWaitPremiumPurchase, authorizationStateWaitEmailAddress,
+     * authorizationStateWaitEmailCode, authorizationStateWaitCode, authorizationStateWaitRegistration,
+     * or authorizationStateWaitPassword
      */
     readonly _: 'requestQrCodeAuthentication',
     /** List of user identifiers of other users currently using the application */
@@ -24595,7 +25807,7 @@ declare module 'tdlib-types' {
 
   export type getUser = {
     /**
-     * Returns information about a user by their identifier. This is an offline request
+     * Returns information about a user by their identifier. This is an offline method
      * if the current user is not a bot
      */
     readonly _: 'getUser',
@@ -24613,7 +25825,7 @@ declare module 'tdlib-types' {
   export type getBasicGroup = {
     /**
      * Returns information about a basic group by its identifier. This is an offline
-     * request if the current user is not a bot
+     * method if the current user is not a bot
      */
     readonly _: 'getBasicGroup',
     /** Basic group identifier */
@@ -24630,7 +25842,7 @@ declare module 'tdlib-types' {
   export type getSupergroup = {
     /**
      * Returns information about a supergroup or a channel by its identifier. This
-     * is an offline request if the current user is not a bot
+     * is an offline method if the current user is not a bot
      */
     readonly _: 'getSupergroup',
     /** Supergroup or channel identifier */
@@ -24650,7 +25862,7 @@ declare module 'tdlib-types' {
   export type getSecretChat = {
     /**
      * Returns information about a secret chat by its identifier. This is an offline
-     * request
+     * method
      */
     readonly _: 'getSecretChat',
     /** Secret chat identifier */
@@ -24659,7 +25871,7 @@ declare module 'tdlib-types' {
 
   export type getChat = {
     /**
-     * Returns information about a chat by its identifier; this is an offline request
+     * Returns information about a chat by its identifier. This is an offline method
      * if the current user is not a bot
      */
     readonly _: 'getChat',
@@ -24683,7 +25895,7 @@ declare module 'tdlib-types' {
     /**
      * Returns information about a message, if it is available without sending network
      * request. Returns a 404 error if message isn't available locally. This is an
-     * offline request
+     * offline method
      */
     readonly _: 'getMessageLocally',
     /** Identifier of the chat the message belongs to */
@@ -24696,11 +25908,12 @@ declare module 'tdlib-types' {
     /**
      * Returns information about a non-bundled message that is replied by a given message.
      * Also, returns the pinned message, the game message, the invoice message, the
-     * message with a previously set same background, the giveaway message, and the
-     * topic creation message for messages of the types messagePinMessage, messageGameScore,
-     * messagePaymentSuccessful, messageChatSetBackground, messageGiveawayCompleted
-     * and topic messages without non-bundled replied message respectively. Returns
-     * a 404 error if the message doesn't exist
+     * message with a previously set same background, the giveaway message, the checklist
+     * message, and the topic creation message for messages of the types messagePinMessage,
+     * messageGameScore, messagePaymentSuccessful, messageChatSetBackground, messageGiveawayCompleted,
+     * messageChecklistTasksDone and messageChecklistTasksAdded, and topic messages
+     * without non-bundled replied message respectively. Returns a 404 error if the
+     * message doesn't exist
      */
     readonly _: 'getRepliedMessage',
     /** Identifier of the chat the message belongs to */
@@ -24746,7 +25959,7 @@ declare module 'tdlib-types' {
   }
 
   export type getMessageProperties = {
-    /** Returns properties of a message; this is an offline request */
+    /** Returns properties of a message. This is an offline method */
     readonly _: 'getMessageProperties',
     /** Chat identifier */
     readonly chat_id?: number,
@@ -24792,8 +26005,20 @@ declare module 'tdlib-types' {
     readonly message_id?: number,
   }
 
+  export type getMessageAuthor = {
+    /**
+     * Returns information about actual author of a message sent on behalf of a channel.
+     * The method can be called if messageProperties.can_get_author == true
+     */
+    readonly _: 'getMessageAuthor',
+    /** Chat identifier */
+    readonly chat_id?: number,
+    /** Identifier of the message */
+    readonly message_id?: number,
+  }
+
   export type getFile = {
-    /** Returns information about a file; this is an offline request */
+    /** Returns information about a file. This is an offline method */
     readonly _: 'getFile',
     /** Identifier of the file to get */
     readonly file_id?: number,
@@ -24801,8 +26026,8 @@ declare module 'tdlib-types' {
 
   export type getRemoteFile = {
     /**
-     * Returns information about a file by its remote identifier; this is an offline
-     * request. Can be used to register a URL as a file for further uploading, or sending
+     * Returns information about a file by its remote identifier. This is an offline
+     * method. Can be used to register a URL as a file for further uploading, or sending
      * as a message. Even the request succeeds, the file can be used only if it is
      * still accessible to the user. For example, if the file is from a message, then
      * the message must be not deleted and accessible to the user. If the file database
@@ -24878,7 +26103,7 @@ declare module 'tdlib-types' {
   export type searchChats = {
     /**
      * Searches for the specified query in the title and username of already known
-     * chats; this is an offline request. Returns chats in the order seen in the main
+     * chats. This is an offline method. Returns chats in the order seen in the main
      * chat list
      */
     readonly _: 'searchChats',
@@ -24992,7 +26217,7 @@ declare module 'tdlib-types' {
   export type searchRecentlyFoundChats = {
     /**
      * Searches for the specified query in the title and username of up to 50 recently
-     * found chats; this is an offline request
+     * found chats. This is an offline method
      */
     readonly _: 'searchRecentlyFoundChats',
     /** Query to search for */
@@ -25026,8 +26251,8 @@ declare module 'tdlib-types' {
 
   export type getRecentlyOpenedChats = {
     /**
-     * Returns recently opened chats; this is an offline request. Returns chats in
-     * the order of last opening
+     * Returns recently opened chats. This is an offline method. Returns chats in the
+     * order of last opening
      */
     readonly _: 'getRecentlyOpenedChats',
     /** The maximum number of chats to be returned */
@@ -25079,7 +26304,8 @@ declare module 'tdlib-types' {
     /**
      * Returns a list of recently inactive supergroups and channels. Can be used when
      * user reaches limit on the number of joined supergroups and channels and receives
-     * CHANNELS_TOO_MUCH error. Also, the limit can be increased with Telegram Premium
+     * the error "CHANNELS_TOO_MUCH". Also, the limit can be increased with Telegram
+     * Premium
      */
     readonly _: 'getInactiveSupergroupChats',
   }
@@ -25087,6 +26313,196 @@ declare module 'tdlib-types' {
   export type getSuitablePersonalChats = {
     /** Returns a list of channel chats, which can be used as a personal chat */
     readonly _: 'getSuitablePersonalChats',
+  }
+
+  export type loadDirectMessagesChatTopics = {
+    /**
+     * Loads more topics in a channel direct messages chat administered by the current
+     * user. The loaded topics will be sent through updateDirectMessagesChatTopic.
+     * Topics are sorted by their topic.order in descending order. Returns a 404 error
+     * if all topics have been loaded
+     */
+    readonly _: 'loadDirectMessagesChatTopics',
+    /** Chat identifier of the channel direct messages chat */
+    readonly chat_id?: number,
+    /**
+     * The maximum number of topics to be loaded. For optimal performance, the number
+     * of loaded topics is chosen by TDLib and can be smaller than the specified limit,
+     * even if the end of the list is not reached
+     */
+    readonly limit?: number,
+  }
+
+  export type getDirectMessagesChatTopic = {
+    /**
+     * Returns information about the topic in a channel direct messages chat administered
+     * by the current user
+     */
+    readonly _: 'getDirectMessagesChatTopic',
+    /** Chat identifier of the channel direct messages chat */
+    readonly chat_id?: number,
+    /** Identifier of the topic to get */
+    readonly topic_id?: number,
+  }
+
+  export type getDirectMessagesChatTopicHistory = {
+    /**
+     * Returns messages in the topic in a channel direct messages chat administered
+     * by the current user. The messages are returned in reverse chronological order
+     * (i.e., in order of decreasing message_id)
+     */
+    readonly _: 'getDirectMessagesChatTopicHistory',
+    /** Chat identifier of the channel direct messages chat */
+    readonly chat_id?: number,
+    /** Identifier of the topic which messages will be fetched */
+    readonly topic_id?: number,
+    /**
+     * Identifier of the message starting from which messages must be fetched; use
+     * 0 to get results from the last message
+     */
+    readonly from_message_id?: number,
+    /**
+     * Specify 0 to get results from exactly the message from_message_id or a negative
+     * offset up to 99 to get additionally some newer messages
+     */
+    readonly offset?: number,
+    /**
+     * The maximum number of messages to be returned; must be positive and can't be
+     * greater than 100. If the offset is negative, the limit must be greater than
+     * or equal to -offset. For optimal performance, the number of returned messages
+     * is chosen by TDLib and can be smaller than the specified limit
+     */
+    readonly limit?: number,
+  }
+
+  export type getDirectMessagesChatTopicMessageByDate = {
+    /**
+     * Returns the last message sent in the topic in a channel direct messages chat
+     * administered by the current user no later than the specified date
+     */
+    readonly _: 'getDirectMessagesChatTopicMessageByDate',
+    /** Chat identifier of the channel direct messages chat */
+    readonly chat_id?: number,
+    /** Identifier of the topic which messages will be fetched */
+    readonly topic_id?: number,
+    /** Point in time (Unix timestamp) relative to which to search for messages */
+    readonly date?: number,
+  }
+
+  export type deleteDirectMessagesChatTopicHistory = {
+    /**
+     * Deletes all messages in the topic in a channel direct messages chat administered
+     * by the current user
+     */
+    readonly _: 'deleteDirectMessagesChatTopicHistory',
+    /** Chat identifier of the channel direct messages chat */
+    readonly chat_id?: number,
+    /** Identifier of the topic which messages will be deleted */
+    readonly topic_id?: number,
+  }
+
+  export type deleteDirectMessagesChatTopicMessagesByDate = {
+    /**
+     * Deletes all messages between the specified dates in the topic in a channel direct
+     * messages chat administered by the current user. Messages sent in the last 30
+     * seconds will not be deleted
+     */
+    readonly _: 'deleteDirectMessagesChatTopicMessagesByDate',
+    /** Chat identifier of the channel direct messages chat */
+    readonly chat_id?: number,
+    /** Identifier of the topic which messages will be deleted */
+    readonly topic_id?: number,
+    /** The minimum date of the messages to delete */
+    readonly min_date?: number,
+    /** The maximum date of the messages to delete */
+    readonly max_date?: number,
+  }
+
+  export type setDirectMessagesChatTopicIsMarkedAsUnread = {
+    /**
+     * Changes the marked as unread state of the topic in a channel direct messages
+     * chat administered by the current user
+     */
+    readonly _: 'setDirectMessagesChatTopicIsMarkedAsUnread',
+    /** Chat identifier of the channel direct messages chat */
+    readonly chat_id?: number,
+    /** Topic identifier */
+    readonly topic_id?: number,
+    /** New value of is_marked_as_unread */
+    readonly is_marked_as_unread?: boolean,
+  }
+
+  export type setDirectMessagesChatTopicDraftMessage = {
+    /**
+     * Changes the draft message in the topic in a channel direct messages chat administered
+     * by the current user
+     */
+    readonly _: 'setDirectMessagesChatTopicDraftMessage',
+    /** Chat identifier */
+    readonly chat_id?: number,
+    /** Topic identifier */
+    readonly topic_id?: number,
+    /**
+     * New draft message; pass null to remove the draft. All files in draft message
+     * content must be of the type inputFileLocal. Media thumbnails and captions are
+     * ignored
+     */
+    readonly draft_message?: draftMessage$Input,
+  }
+
+  export type unpinAllDirectMessagesChatTopicMessages = {
+    /**
+     * Removes all pinned messages from the topic in a channel direct messages chat
+     * administered by the current user
+     */
+    readonly _: 'unpinAllDirectMessagesChatTopicMessages',
+    /** Identifier of the chat */
+    readonly chat_id?: number,
+    /** Topic identifier */
+    readonly topic_id?: number,
+  }
+
+  export type readAllDirectMessagesChatTopicReactions = {
+    /**
+     * Removes all unread reactions in the topic in a channel direct messages chat
+     * administered by the current user
+     */
+    readonly _: 'readAllDirectMessagesChatTopicReactions',
+    /** Identifier of the chat */
+    readonly chat_id?: number,
+    /** Topic identifier */
+    readonly topic_id?: number,
+  }
+
+  export type getDirectMessagesChatTopicRevenue = {
+    /**
+     * Returns the total number of Telegram Stars received by the channel chat for
+     * direct messages from the given topic
+     */
+    readonly _: 'getDirectMessagesChatTopicRevenue',
+    /**
+     * Chat identifier of the channel direct messages chat administered by the current
+     * user
+     */
+    readonly chat_id?: number,
+    /** Identifier of the topic */
+    readonly topic_id?: number,
+  }
+
+  export type toggleDirectMessagesChatTopicCanSendUnpaidMessages = {
+    /**
+     * Allows to send unpaid messages to the given topic of the channel direct messages
+     * chat administered by the current user
+     */
+    readonly _: 'toggleDirectMessagesChatTopicCanSendUnpaidMessages',
+    /** Chat identifier */
+    readonly chat_id?: number,
+    /** Identifier of the topic */
+    readonly topic_id?: number,
+    /** Pass true to allow unpaid messages; pass false to disallow unpaid messages */
+    readonly can_send_unpaid_messages?: boolean,
+    /** Pass true to refund the user previously paid messages */
+    readonly refund_payments?: boolean,
   }
 
   export type loadSavedMessagesTopics = {
@@ -25201,7 +26617,7 @@ declare module 'tdlib-types' {
     /**
      * Returns messages in a chat. The messages are returned in reverse chronological
      * order (i.e., in order of decreasing message_id). For optimal performance, the
-     * number of returned messages is chosen by TDLib. This is an offline request if
+     * number of returned messages is chosen by TDLib. This is an offline method if
      * only_local is true
      */
     readonly _: 'getChatHistory',
@@ -25294,13 +26710,18 @@ declare module 'tdlib-types' {
      * in secret chats with a non-empty query (searchSecretMessages must be used instead),
      * or without an enabled message database. For optimal performance, the number
      * of returned messages is chosen by TDLib and can be smaller than the specified
-     * limit. A combination of query, sender_id, filter and message_thread_id search
-     * criteria is expected to be supported, only if it is required for Telegram official
-     * application implementation
+     * limit. A combination of query, sender_id, filter and topic_id search criteria
+     * is expected to be supported, only if it is required for Telegram official application
+     * implementation
      */
     readonly _: 'searchChatMessages',
     /** Identifier of the chat in which to search messages */
     readonly chat_id?: number,
+    /**
+     * Pass topic identifier to search messages only in specific topic; pass null to
+     * search for messages in all topics
+     */
+    readonly topic_id?: MessageTopic$Input,
     /** Query to search for */
     readonly query?: string,
     /**
@@ -25327,16 +26748,6 @@ declare module 'tdlib-types' {
     readonly limit?: number,
     /** Additional filter for messages to search; pass null to search for all messages */
     readonly filter?: SearchMessagesFilter$Input,
-    /**
-     * If not 0, only messages in the specified thread will be returned; supergroups
-     * only
-     */
-    readonly message_thread_id?: number,
-    /**
-     * If not 0, only messages in the specified Saved Messages topic will be returned;
-     * pass 0 to return all messages, or for chats other than Saved Messages
-     */
-    readonly saved_messages_topic_id?: number,
   }
 
   export type searchMessages = {
@@ -25451,9 +26862,9 @@ declare module 'tdlib-types' {
 
   export type searchCallMessages = {
     /**
-     * Searches for call messages. Returns the results in reverse chronological order
-     * (i.e., in order of decreasing message_id). For optimal performance, the number
-     * of returned messages is chosen by TDLib
+     * Searches for call and group call messages. Returns the results in reverse chronological
+     * order (i.e., in order of decreasing message_id). For optimal performance, the
+     * number of returned messages is chosen by TDLib
      */
     readonly _: 'searchCallMessages',
     /**
@@ -25516,7 +26927,7 @@ declare module 'tdlib-types' {
      * Identifier of the chat that posted the stories to search for; pass 0 to search
      * stories in all chats
      */
-    readonly story_sender_chat_id?: number,
+    readonly story_poster_chat_id?: number,
     /** Hashtag or cashtag to search for */
     readonly tag?: string,
     /**
@@ -25680,6 +27091,11 @@ declare module 'tdlib-types' {
     /** Identifier of the chat in which to return information about messages */
     readonly chat_id?: number,
     /**
+     * Pass topic identifier to get the result only in specific topic; pass null to
+     * get the result in all topics; forum topics aren't supported
+     */
+    readonly topic_id?: MessageTopic$Input,
+    /**
      * Filter for message content. Filters searchMessagesFilterEmpty, searchMessagesFilterMention,
      * searchMessagesFilterUnreadMention, and searchMessagesFilterUnreadReaction are
      * unsupported in this function
@@ -25690,28 +27106,26 @@ declare module 'tdlib-types' {
      * 0 to get results from the last message
      */
     readonly from_message_id?: number,
-    /**
-     * If not0, only messages in the specified Saved Messages topic will be considered;
-     * pass 0 to consider all messages, or for chats other than Saved Messages
-     */
-    readonly saved_messages_topic_id?: number,
   }
 
   export type getChatMessageCount = {
-    /** Returns approximate number of messages of the specified type in the chat */
+    /**
+     * Returns approximate number of messages of the specified type in the chat or
+     * its topic
+     */
     readonly _: 'getChatMessageCount',
     /** Identifier of the chat in which to count messages */
     readonly chat_id?: number,
+    /**
+     * Pass topic identifier to get number of messages only in specific topic; pass
+     * null to get number of messages in all topics
+     */
+    readonly topic_id?: MessageTopic$Input,
     /**
      * Filter for message content; searchMessagesFilterEmpty is unsupported in this
      * function
      */
     readonly filter?: SearchMessagesFilter$Input,
-    /**
-     * If not 0, only messages in the specified Saved Messages topic will be counted;
-     * pass 0 to count all messages, or for chats other than Saved Messages
-     */
-    readonly saved_messages_topic_id?: number,
     /**
      * Pass true to get the number of messages without sending network requests, or
      * -1 if the number of messages is unknown locally
@@ -25722,29 +27136,25 @@ declare module 'tdlib-types' {
   export type getChatMessagePosition = {
     /**
      * Returns approximate 1-based position of a message among messages, which can
-     * be found by the specified filter in the chat. Cannot be used in secret chats
+     * be found by the specified filter in the chat and topic. Cannot be used in secret
+     * chats
      */
     readonly _: 'getChatMessagePosition',
     /** Identifier of the chat in which to find message position */
     readonly chat_id?: number,
-    /** Message identifier */
-    readonly message_id?: number,
+    /**
+     * Pass topic identifier to get position among messages only in specific topic;
+     * pass null to get position among all chat messages
+     */
+    readonly topic_id?: MessageTopic$Input,
     /**
      * Filter for message content; searchMessagesFilterEmpty, searchMessagesFilterUnreadMention,
      * searchMessagesFilterUnreadReaction, and searchMessagesFilterFailedToSend are
      * unsupported in this function
      */
     readonly filter?: SearchMessagesFilter$Input,
-    /**
-     * If not 0, only messages in the specified thread will be considered; supergroups
-     * only
-     */
-    readonly message_thread_id?: number,
-    /**
-     * If not 0, only messages in the specified Saved Messages topic will be considered;
-     * pass 0 to consider all relevant messages, or for chats other than Saved Messages
-     */
-    readonly saved_messages_topic_id?: number,
+    /** Message identifier */
+    readonly message_id?: number,
   }
 
   export type getChatScheduledMessages = {
@@ -25798,6 +27208,71 @@ declare module 'tdlib-types' {
     readonly option_id?: string /* base64 */,
   }
 
+  export type getSearchSponsoredChats = {
+    /** Returns sponsored chats to be shown in the search results */
+    readonly _: 'getSearchSponsoredChats',
+    /** Query the user searches for */
+    readonly query?: string,
+  }
+
+  export type viewSponsoredChat = {
+    /** Informs TDLib that the user fully viewed a sponsored chat */
+    readonly _: 'viewSponsoredChat',
+    /** Unique identifier of the sponsored chat */
+    readonly sponsored_chat_unique_id?: number,
+  }
+
+  export type openSponsoredChat = {
+    /** Informs TDLib that the user opened a sponsored chat */
+    readonly _: 'openSponsoredChat',
+    /** Unique identifier of the sponsored chat */
+    readonly sponsored_chat_unique_id?: number,
+  }
+
+  export type reportSponsoredChat = {
+    /** Reports a sponsored chat to Telegram moderators */
+    readonly _: 'reportSponsoredChat',
+    /** Unique identifier of the sponsored chat */
+    readonly sponsored_chat_unique_id?: number,
+    /** Option identifier chosen by the user; leave empty for the initial request */
+    readonly option_id?: string /* base64 */,
+  }
+
+  export type getVideoMessageAdvertisements = {
+    /**
+     * Returns advertisements to be shown while a video from a message is watched.
+     * Available only if messageProperties.can_get_video_advertisements
+     */
+    readonly _: 'getVideoMessageAdvertisements',
+    /** Identifier of the chat with the message */
+    readonly chat_id?: number,
+    /** Identifier of the message */
+    readonly message_id?: number,
+  }
+
+  export type viewVideoMessageAdvertisement = {
+    /** Informs TDLib that the user viewed a video message advertisement */
+    readonly _: 'viewVideoMessageAdvertisement',
+    /** Unique identifier of the advertisement */
+    readonly advertisement_unique_id?: number,
+  }
+
+  export type clickVideoMessageAdvertisement = {
+    /** Informs TDLib that the user clicked a video message advertisement */
+    readonly _: 'clickVideoMessageAdvertisement',
+    /** Unique identifier of the advertisement */
+    readonly advertisement_unique_id?: number,
+  }
+
+  export type reportVideoMessageAdvertisement = {
+    /** Reports a video message advertisement to Telegram moderators */
+    readonly _: 'reportVideoMessageAdvertisement',
+    /** Unique identifier of the advertisement */
+    readonly advertisement_unique_id?: number,
+    /** Option identifier chosen by the user; leave empty for the initial request */
+    readonly option_id?: string /* base64 */,
+  }
+
   export type removeNotification = {
     /**
      * Removes an active notification from notification list. Needs to be called only
@@ -25826,7 +27301,7 @@ declare module 'tdlib-types' {
     /**
      * Returns an HTTPS link to a message in a chat. Available only if messageProperties.can_get_link,
      * or if messageProperties.can_get_media_timestamp_links and a media timestamp
-     * link is generated. This is an offline request
+     * link is generated. This is an offline method
      */
     readonly _: 'getMessageLink',
     /** Identifier of the chat to which the message belongs */
@@ -26071,7 +27546,7 @@ declare module 'tdlib-types' {
     /**
      * Pass true to copy content of the messages without reference to the original
      * sender. Always true if the messages are forwarded to a secret chat or are local.
-     * Use messageProperties.can_be_saved and messageProperties.can_be_copied_to_secret_chat
+     * Use messageProperties.can_be_copied and messageProperties.can_be_copied_to_secret_chat
      * to check whether the message is suitable
      */
     readonly send_copy?: boolean,
@@ -26139,7 +27614,7 @@ declare module 'tdlib-types' {
      * restarts only if the message database is used. Returns the added message
      */
     readonly _: 'addLocalMessage',
-    /** Target chat */
+    /** Target chat; channel direct messages chats aren't supported */
     readonly chat_id?: number,
     /** Identifier of the sender of the message */
     readonly sender_id?: MessageSender$Input,
@@ -26252,6 +27727,25 @@ declare module 'tdlib-types' {
      * if the notification is disabled
      */
     readonly proximity_alert_radius?: number,
+  }
+
+  export type editMessageChecklist = {
+    /**
+     * Edits the message content of a checklist. Returns the edited message after the
+     * edit is completed on the server side
+     */
+    readonly _: 'editMessageChecklist',
+    /** The chat the message belongs to */
+    readonly chat_id?: number,
+    /**
+     * Identifier of the message. Use messageProperties.can_be_edited to check whether
+     * the message can be edited
+     */
+    readonly message_id?: number,
+    /** The new message reply markup; pass null if none; for bots only */
+    readonly reply_markup?: ReplyMarkup$Input,
+    /** The new checklist. If some tasks were completed, this information will be kept */
+    readonly checklist?: inputChecklist$Input,
   }
 
   export type editMessageMedia = {
@@ -26567,6 +28061,27 @@ declare module 'tdlib-types' {
     readonly proximity_alert_radius?: number,
   }
 
+  export type editBusinessMessageChecklist = {
+    /**
+     * Edits the content of a checklist in a message sent on behalf of a business account;
+     * for bots only
+     */
+    readonly _: 'editBusinessMessageChecklist',
+    /**
+     * Unique identifier of business connection on behalf of which the message was
+     * sent
+     */
+    readonly business_connection_id?: string,
+    /** The chat the message belongs to */
+    readonly chat_id?: number,
+    /** Identifier of the message */
+    readonly message_id?: number,
+    /** The new message reply markup; pass null if none */
+    readonly reply_markup?: ReplyMarkup$Input,
+    /** The new checklist. If some tasks were completed, this information will be kept */
+    readonly checklist?: inputChecklist$Input,
+  }
+
   export type editBusinessMessageMedia = {
     /**
      * Edits the media content of a message with a text, an animation, an audio, a
@@ -26672,6 +28187,132 @@ declare module 'tdlib-types' {
     readonly is_pinned?: boolean,
   }
 
+  export type readBusinessMessage = {
+    /** Reads a message on behalf of a business account; for bots only */
+    readonly _: 'readBusinessMessage',
+    /** Unique identifier of business connection through which the message was received */
+    readonly business_connection_id?: string,
+    /** The chat the message belongs to */
+    readonly chat_id?: number,
+    /** Identifier of the message */
+    readonly message_id?: number,
+  }
+
+  export type deleteBusinessMessages = {
+    /** Deletes messages on behalf of a business account; for bots only */
+    readonly _: 'deleteBusinessMessages',
+    /** Unique identifier of business connection through which the messages were received */
+    readonly business_connection_id?: string,
+    /** Identifier of the messages */
+    readonly message_ids?: ReadonlyArray<number>,
+  }
+
+  export type editBusinessStory = {
+    /**
+     * Changes a story posted by the bot on behalf of a business account; for bots
+     * only
+     */
+    readonly _: 'editBusinessStory',
+    /** Identifier of the chat that posted the story */
+    readonly story_poster_chat_id?: number,
+    /** Identifier of the story to edit */
+    readonly story_id?: number,
+    /** New content of the story */
+    readonly content?: InputStoryContent$Input,
+    /** New clickable rectangle areas to be shown on the story media */
+    readonly areas?: inputStoryAreas$Input,
+    /** New story caption */
+    readonly caption?: formattedText$Input,
+    /** The new privacy settings for the story */
+    readonly privacy_settings?: StoryPrivacySettings$Input,
+  }
+
+  export type deleteBusinessStory = {
+    /**
+     * Deletes a story posted by the bot on behalf of a business account; for bots
+     * only
+     */
+    readonly _: 'deleteBusinessStory',
+    /** Unique identifier of business connection */
+    readonly business_connection_id?: string,
+    /** Identifier of the story to delete */
+    readonly story_id?: number,
+  }
+
+  export type setBusinessAccountName = {
+    /** Changes the first and last name of a business account; for bots only */
+    readonly _: 'setBusinessAccountName',
+    /** Unique identifier of business connection */
+    readonly business_connection_id?: string,
+    /** The new value of the first name for the business account; 1-64 characters */
+    readonly first_name?: string,
+    /** The new value of the optional last name for the business account; 0-64 characters */
+    readonly last_name?: string,
+  }
+
+  export type setBusinessAccountBio = {
+    /** Changes the bio of a business account; for bots only */
+    readonly _: 'setBusinessAccountBio',
+    /** Unique identifier of business connection */
+    readonly business_connection_id?: string,
+    /**
+     * The new value of the bio; 0-getOption("bio_length_max") characters without line
+     * feeds
+     */
+    readonly bio?: string,
+  }
+
+  export type setBusinessAccountProfilePhoto = {
+    /** Changes a profile photo of a business account; for bots only */
+    readonly _: 'setBusinessAccountProfilePhoto',
+    /** Unique identifier of business connection */
+    readonly business_connection_id?: string,
+    /** Profile photo to set; pass null to remove the photo */
+    readonly photo?: InputChatPhoto$Input,
+    /**
+     * Pass true to set the public photo, which will be visible even the main photo
+     * is hidden by privacy settings
+     */
+    readonly is_public?: boolean,
+  }
+
+  export type setBusinessAccountUsername = {
+    /** Changes the editable username of a business account; for bots only */
+    readonly _: 'setBusinessAccountUsername',
+    /** Unique identifier of business connection */
+    readonly business_connection_id?: string,
+    /** The new value of the username */
+    readonly username?: string,
+  }
+
+  export type setBusinessAccountGiftSettings = {
+    /** Changes settings for gift receiving of a business account; for bots only */
+    readonly _: 'setBusinessAccountGiftSettings',
+    /** Unique identifier of business connection */
+    readonly business_connection_id?: string,
+    /** The new settings */
+    readonly settings?: giftSettings$Input,
+  }
+
+  export type getBusinessAccountStarAmount = {
+    /** Returns the amount of Telegram Stars owned by a business account; for bots only */
+    readonly _: 'getBusinessAccountStarAmount',
+    /** Unique identifier of business connection */
+    readonly business_connection_id?: string,
+  }
+
+  export type transferBusinessAccountStars = {
+    /**
+     * Transfer Telegram Stars from the business account to the business bot; for bots
+     * only
+     */
+    readonly _: 'transferBusinessAccountStars',
+    /** Unique identifier of business connection */
+    readonly business_connection_id?: string,
+    /** Number of Telegram Stars to transfer */
+    readonly star_count?: number,
+  }
+
   export type checkQuickReplyShortcutName = {
     /** Checks validness of a name for a quick reply shortcut. Can be called synchronously */
     readonly _: 'checkQuickReplyShortcutName',
@@ -26745,7 +28386,7 @@ declare module 'tdlib-types' {
      */
     readonly reply_to_message_id?: number,
     /**
-     * The content of the message to be added; inputMessagePoll, inputMessageForwarded
+     * The content of the message to be added; inputMessagePaidMedia, inputMessageForwarded
      * and inputMessageLocation with live_period aren't supported
      */
     readonly input_message_content?: InputMessageContent$Input,
@@ -26823,9 +28464,9 @@ declare module 'tdlib-types' {
     /**
      * Asynchronously edits the text, media or caption of a quick reply message. Use
      * quickReplyMessage.can_be_edited to check whether a message can be edited. Media
-     * message can be edited only to a media message. The type of message content in
-     * an album can't be changed with exception of replacing a photo with a video or
-     * vice versa
+     * message can be edited only to a media message. Checklist messages can be edited
+     * only to a checklist message. The type of message content in an album can't be
+     * changed with exception of replacing a photo with a video or vice versa
      */
     readonly _: 'editQuickReplyMessage',
     /** Unique identifier of the quick reply shortcut with the message */
@@ -26833,9 +28474,9 @@ declare module 'tdlib-types' {
     /** Identifier of the message */
     readonly message_id?: number,
     /**
-     * New content of the message. Must be one of the following types: inputMessageText,
-     * inputMessageAnimation, inputMessageAudio, inputMessageDocument, inputMessagePhoto
-     * or inputMessageVideo
+     * New content of the message. Must be one of the following types: inputMessageAnimation,
+     * inputMessageAudio, inputMessageChecklist, inputMessageDocument, inputMessagePhoto,
+     * inputMessageText, or inputMessageVideo
      */
     readonly input_message_content?: InputMessageContent$Input,
   }
@@ -26904,7 +28545,7 @@ declare module 'tdlib-types' {
   }
 
   export type getForumTopicLink = {
-    /** Returns an HTTPS link to a topic in a forum chat. This is an offline request */
+    /** Returns an HTTPS link to a topic in a forum chat. This is an offline method */
     readonly _: 'getForumTopicLink',
     /** Identifier of the chat */
     readonly chat_id?: number,
@@ -27435,6 +29076,36 @@ declare module 'tdlib-types' {
     readonly reply_markup?: ReplyMarkup$Input,
   }
 
+  export type addChecklistTasks = {
+    /** Adds tasks to a checklist in a message */
+    readonly _: 'addChecklistTasks',
+    /** Identifier of the chat with the message */
+    readonly chat_id?: number,
+    /**
+     * Identifier of the message containing the checklist. Use messageProperties.can_add_tasks
+     * to check whether the tasks can be added
+     */
+    readonly message_id?: number,
+    /** List of added tasks */
+    readonly tasks?: ReadonlyArray<inputChecklistTask$Input>,
+  }
+
+  export type markChecklistTasksAsDone = {
+    /** Adds tasks of a checklist in a message as done or not done */
+    readonly _: 'markChecklistTasksAsDone',
+    /** Identifier of the chat with the message */
+    readonly chat_id?: number,
+    /**
+     * Identifier of the message containing the checklist. Use messageProperties.can_mark_tasks_as_done
+     * to check whether the tasks can be marked as done or not done
+     */
+    readonly message_id?: number,
+    /** Identifiers of tasks that were marked as done */
+    readonly marked_as_done_task_ids?: ReadonlyArray<number>,
+    /** Identifiers of tasks that were marked as not done */
+    readonly marked_as_not_done_task_ids?: ReadonlyArray<number>,
+  }
+
   export type hideSuggestedAction = {
     /** Hides a suggested action */
     readonly _: 'hideSuggestedAction',
@@ -27629,7 +29300,7 @@ declare module 'tdlib-types' {
 
   export type getWebAppPlaceholder = {
     /**
-     * Returns a default placeholder for Web Apps of a bot; this is an offline request.
+     * Returns a default placeholder for Web Apps of a bot. This is an offline method.
      * Returns a 404 error if the placeholder isn't known
      */
     readonly _: 'getWebAppPlaceholder',
@@ -27727,8 +29398,13 @@ declare module 'tdlib-types' {
      * an internalLinkTypeAttachmentMenuBot link, or an empty string otherwise
      */
     readonly url?: string,
-    /** If not 0, the message thread identifier in which the message will be sent */
+    /** If not 0, the message thread identifier to which the message will be sent */
     readonly message_thread_id?: number,
+    /**
+     * If not 0, unique identifier of the topic of channel direct messages chat to
+     * which the message will be sent
+     */
+    readonly direct_messages_chat_topic_id?: number,
     /**
      * Information about the message or story to be replied in the message sent by
      * the Web App; pass null if none
@@ -28176,7 +29852,7 @@ declare module 'tdlib-types' {
   }
 
   export type getChatListsToAddChat = {
-    /** Returns chat lists to which the chat can be added. This is an offline request */
+    /** Returns chat lists to which the chat can be added. This is an offline method */
     readonly _: 'getChatListsToAddChat',
     /** Chat identifier */
     readonly chat_id?: number,
@@ -28717,6 +30393,30 @@ declare module 'tdlib-types' {
     readonly discussion_chat_id?: number,
   }
 
+  export type setChatDirectMessagesGroup = {
+    /**
+     * Changes direct messages group settings for a channel chat; requires owner privileges
+     * in the chat
+     */
+    readonly _: 'setChatDirectMessagesGroup',
+    /** Identifier of the channel chat */
+    readonly chat_id?: number,
+    /**
+     * Pass true if the direct messages group is enabled for the channel chat; pass
+     * false otherwise
+     */
+    readonly is_enabled?: boolean,
+    /**
+     * The new number of Telegram Stars that must be paid for each message that is
+     * sent to the direct messages chat unless the sender is an administrator of the
+     * channel chat; 0-getOption("paid_message_star_count_max"). The channel will receive
+     * getOption("paid_message_earnings_per_mille") Telegram Stars for each 1000 Telegram
+     * Stars paid for message sending. Requires supergroupFullInfo.can_enable_paid_messages
+     * for positive amounts
+     */
+    readonly paid_message_star_count?: number,
+  }
+
   export type setChatLocation = {
     /**
      * Changes the location of a chat. Available only for some location-based supergroups,
@@ -29088,7 +30788,7 @@ declare module 'tdlib-types' {
     /** Returns a story */
     readonly _: 'getStory',
     /** Identifier of the chat that posted the story */
-    readonly story_sender_chat_id?: number,
+    readonly story_poster_chat_id?: number,
     /** Story identifier */
     readonly story_id?: number,
     /**
@@ -29098,21 +30798,21 @@ declare module 'tdlib-types' {
     readonly only_local?: boolean,
   }
 
-  export type getChatsToSendStories = {
+  export type getChatsToPostStories = {
     /**
      * Returns supergroup and channel chats in which the current user has the right
-     * to post stories. The chats must be rechecked with canSendStory before actually
+     * to post stories. The chats must be rechecked with canPostStory before actually
      * trying to post a story there
      */
-    readonly _: 'getChatsToSendStories',
+    readonly _: 'getChatsToPostStories',
   }
 
-  export type canSendStory = {
+  export type canPostStory = {
     /**
-     * Checks whether the current user can send a story on behalf of a chat; requires
+     * Checks whether the current user can post a story on behalf of a chat; requires
      * can_post_stories right for supergroup and channel chats
      */
-    readonly _: 'canSendStory',
+    readonly _: 'canPostStory',
     /**
      * Chat identifier. Pass Saved Messages chat identifier when posting a story on
      * behalf of the current user
@@ -29120,12 +30820,12 @@ declare module 'tdlib-types' {
     readonly chat_id?: number,
   }
 
-  export type sendStory = {
+  export type postStory = {
     /**
-     * Sends a new story to a chat; requires can_post_stories right for supergroup
+     * Posts a new story on behalf of a chat; requires can_post_stories right for supergroup
      * and channel chats. Returns a temporary story
      */
-    readonly _: 'sendStory',
+    readonly _: 'postStory',
     /**
      * Identifier of the chat that will post the story. Pass Saved Messages chat identifier
      * when posting a story on behalf of the current user
@@ -29141,8 +30841,8 @@ declare module 'tdlib-types' {
      */
     readonly caption?: formattedText$Input,
     /**
-     * The privacy settings for the story; ignored for stories sent to supergroup and
-     * channel chats
+     * The privacy settings for the story; ignored for stories posted on behalf of
+     * supergroup and channel chats
      */
     readonly privacy_settings?: StoryPrivacySettings$Input,
     /**
@@ -29172,7 +30872,7 @@ declare module 'tdlib-types' {
      */
     readonly _: 'editStory',
     /** Identifier of the chat that posted the story */
-    readonly story_sender_chat_id?: number,
+    readonly story_poster_chat_id?: number,
     /** Identifier of the story to edit */
     readonly story_id?: number,
     /** New content of the story; pass null to keep the current content */
@@ -29193,7 +30893,7 @@ declare module 'tdlib-types' {
      */
     readonly _: 'editStoryCover',
     /** Identifier of the chat that posted the story */
-    readonly story_sender_chat_id?: number,
+    readonly story_poster_chat_id?: number,
     /** Identifier of the story to edit */
     readonly story_id?: number,
     /** New timestamp of the frame, which will be used as video thumbnail */
@@ -29219,7 +30919,7 @@ declare module 'tdlib-types' {
      */
     readonly _: 'toggleStoryIsPostedToChatPage',
     /** Identifier of the chat that posted the story */
-    readonly story_sender_chat_id?: number,
+    readonly story_poster_chat_id?: number,
     /** Identifier of the story */
     readonly story_id?: number,
     /**
@@ -29231,12 +30931,12 @@ declare module 'tdlib-types' {
 
   export type deleteStory = {
     /**
-     * Deletes a previously sent story. Can be called only if story.can_be_deleted
+     * Deletes a previously posted story. Can be called only if story.can_be_deleted
      * == true
      */
     readonly _: 'deleteStory',
     /** Identifier of the chat that posted the story */
-    readonly story_sender_chat_id?: number,
+    readonly story_poster_chat_id?: number,
     /** Identifier of the story to delete */
     readonly story_id?: number,
   }
@@ -29250,7 +30950,7 @@ declare module 'tdlib-types' {
     /**
      * Loads more active stories from a story list. The loaded stories will be sent
      * through updates. Active stories are sorted by the pair (active_stories.order,
-     * active_stories.story_sender_chat_id) in descending order. Returns a 404 error
+     * active_stories.story_poster_chat_id) in descending order. Returns a 404 error
      * if all active stories have been loaded
      */
     readonly _: 'loadActiveStories',
@@ -29339,8 +31039,8 @@ declare module 'tdlib-types' {
   export type openStory = {
     /** Informs TDLib that a story is opened and is being viewed by the user */
     readonly _: 'openStory',
-    /** The identifier of the sender of the opened story */
-    readonly story_sender_chat_id?: number,
+    /** The identifier of the chat that posted the opened story */
+    readonly story_poster_chat_id?: number,
     /** The identifier of the story */
     readonly story_id?: number,
   }
@@ -29348,8 +31048,8 @@ declare module 'tdlib-types' {
   export type closeStory = {
     /** Informs TDLib that a story is closed by the user */
     readonly _: 'closeStory',
-    /** The identifier of the sender of the story to close */
-    readonly story_sender_chat_id?: number,
+    /** The identifier of the poster of the story to close */
+    readonly story_poster_chat_id?: number,
     /** The identifier of the story */
     readonly story_id?: number,
   }
@@ -29364,8 +31064,8 @@ declare module 'tdlib-types' {
   export type setStoryReaction = {
     /** Changes chosen reaction on a story that has already been sent */
     readonly _: 'setStoryReaction',
-    /** The identifier of the sender of the story */
-    readonly story_sender_chat_id?: number,
+    /** The identifier of the poster of the story */
+    readonly story_poster_chat_id?: number,
     /** The identifier of the story */
     readonly story_id?: number,
     /**
@@ -29421,8 +31121,8 @@ declare module 'tdlib-types' {
      * is posted on behalf of a chat and the user is an administrator in the chat
      */
     readonly _: 'getChatStoryInteractions',
-    /** The identifier of the sender of the story */
-    readonly story_sender_chat_id?: number,
+    /** The identifier of the poster of the story */
+    readonly story_poster_chat_id?: number,
     /** Story identifier */
     readonly story_id?: number,
     /**
@@ -29448,8 +31148,8 @@ declare module 'tdlib-types' {
   export type reportStory = {
     /** Reports a story to the Telegram moderators */
     readonly _: 'reportStory',
-    /** The identifier of the sender of the story to report */
-    readonly story_sender_chat_id?: number,
+    /** The identifier of the poster of the story to report */
+    readonly story_poster_chat_id?: number,
     /** The identifier of the story to report */
     readonly story_id?: number,
     /** Option identifier chosen by the user; leave empty for the initial request */
@@ -29476,8 +31176,8 @@ declare module 'tdlib-types' {
      * returned messages and stories is chosen by TDLib
      */
     readonly _: 'getStoryPublicForwards',
-    /** The identifier of the sender of the story */
-    readonly story_sender_chat_id?: number,
+    /** The identifier of the poster of the story */
+    readonly story_poster_chat_id?: number,
     /** The identifier of the story */
     readonly story_id?: number,
     /**
@@ -29495,8 +31195,8 @@ declare module 'tdlib-types' {
 
   export type getChatBoostLevelFeatures = {
     /**
-     * Returns the list of features available on the specific chat boost level; this
-     * is an offline request
+     * Returns the list of features available on the specific chat boost level. This
+     * is an offline method
      */
     readonly _: 'getChatBoostLevelFeatures',
     /**
@@ -29510,8 +31210,8 @@ declare module 'tdlib-types' {
 
   export type getChatBoostFeatures = {
     /**
-     * Returns the list of features available for different chat boost levels; this
-     * is an offline request
+     * Returns the list of features available for different chat boost levels. This
+     * is an offline method
      */
     readonly _: 'getChatBoostFeatures',
     /**
@@ -29936,7 +31636,7 @@ declare module 'tdlib-types' {
      * Play Integrity API token for the Android application, or secret from push notification
      * for the iOS application for application verification, or reCAPTCHA token for
      * reCAPTCHA verifications; pass an empty string to abort verification and receive
-     * error VERIFICATION_FAILED for the request
+     * the error "VERIFICATION_FAILED" for the request
      */
     readonly token?: string,
   }
@@ -30280,11 +31980,6 @@ declare module 'tdlib-types' {
     readonly protocol?: callProtocol$Input,
     /** Pass true to create a video call */
     readonly is_video?: boolean,
-    /**
-     * Identifier of the group call to which the user will be added after exchanging
-     * private key via the call; pass 0 if none
-     */
-    readonly group_call_id?: number,
   }
 
   export type acceptCall = {
@@ -30312,6 +32007,8 @@ declare module 'tdlib-types' {
     readonly call_id?: number,
     /** Pass true if the user was disconnected */
     readonly is_disconnected?: boolean,
+    /** If the call was upgraded to a group call, pass invite link to the group call */
+    readonly invite_link?: string,
     /** The call duration, in seconds */
     readonly duration?: number,
     /** Pass true if the call was a video call */
@@ -30395,15 +32092,18 @@ declare module 'tdlib-types' {
   }
 
   export type createGroupCall = {
-    /** Creates a group call from a one-to-one call */
+    /** Creates a new group call that isn't bound to a chat */
     readonly _: 'createGroupCall',
-    /** Call identifier */
-    readonly call_id?: number,
+    /**
+     * Parameters to join the call; pass null to only create call link without joining
+     * the call
+     */
+    readonly join_parameters?: groupCallJoinParameters$Input,
   }
 
   export type getVideoChatRtmpUrl = {
     /**
-     * Returns RTMP URL for streaming to the chat; requires can_manage_video_chats
+     * Returns RTMP URL for streaming to the video chat of a chat; requires can_manage_video_chats
      * administrator right
      */
     readonly _: 'getVideoChatRtmpUrl',
@@ -30412,7 +32112,10 @@ declare module 'tdlib-types' {
   }
 
   export type replaceVideoChatRtmpUrl = {
-    /** Replaces the current RTMP URL for streaming to the chat; requires owner privileges */
+    /**
+     * Replaces the current RTMP URL for streaming to the video chat of a chat; requires
+     * owner privileges in the chat
+     */
     readonly _: 'replaceVideoChatRtmpUrl',
     /** Chat identifier */
     readonly chat_id?: number,
@@ -30425,19 +32128,19 @@ declare module 'tdlib-types' {
     readonly group_call_id?: number,
   }
 
-  export type startScheduledGroupCall = {
-    /** Starts a scheduled group call */
-    readonly _: 'startScheduledGroupCall',
-    /** Group call identifier */
+  export type startScheduledVideoChat = {
+    /** Starts a scheduled video chat */
+    readonly _: 'startScheduledVideoChat',
+    /** Group call identifier of the video chat */
     readonly group_call_id?: number,
   }
 
-  export type toggleGroupCallEnabledStartNotification = {
+  export type toggleVideoChatEnabledStartNotification = {
     /**
-     * Toggles whether the current user will receive a notification when the group
-     * call starts; scheduled group calls only
+     * Toggles whether the current user will receive a notification when the video
+     * chat starts; for scheduled video chats only
      */
-    readonly _: 'toggleGroupCallEnabledStartNotification',
+    readonly _: 'toggleVideoChatEnabledStartNotification',
     /** Group call identifier */
     readonly group_call_id?: number,
     /** New value of the enabled_start_notification setting */
@@ -30445,8 +32148,17 @@ declare module 'tdlib-types' {
   }
 
   export type joinGroupCall = {
-    /** Joins an active group call. Returns join response payload for tgcalls */
+    /** Joins a group call that is not bound to a chat */
     readonly _: 'joinGroupCall',
+    /** The group call to join */
+    readonly input_group_call?: InputGroupCall$Input,
+    /** Parameters to join the call */
+    readonly join_parameters?: groupCallJoinParameters$Input,
+  }
+
+  export type joinVideoChat = {
+    /** Joins an active video chat. Returns join response payload for tgcalls */
+    readonly _: 'joinVideoChat',
     /** Group call identifier */
     readonly group_call_id?: number,
     /**
@@ -30454,24 +32166,10 @@ declare module 'tdlib-types' {
      * pass null to join as self; video chats only
      */
     readonly participant_id?: MessageSender$Input,
-    /** Caller audio channel synchronization source identifier; received from tgcalls */
-    readonly audio_source_id?: number,
-    /** Group call join payload; received from tgcalls */
-    readonly payload?: string,
-    /** Pass true to join the call with muted microphone */
-    readonly is_muted?: boolean,
-    /** Pass true if the user's video is enabled */
-    readonly is_my_video_enabled?: boolean,
-    /**
-     * If non-empty, invite hash to be used to join the group call without being muted
-     * by administrators
-     */
+    /** Parameters to join the call */
+    readonly join_parameters?: groupCallJoinParameters$Input,
+    /** Invite hash as received from internalLinkTypeVideoChat */
     readonly invite_hash?: string,
-    /**
-     * Fingerprint of the encryption key for E2E group calls not bound to a chat; pass
-     * 0 for voice chats
-     */
-    readonly key_fingerprint?: number | string,
   }
 
   export type startGroupCallScreenSharing = {
@@ -30507,57 +32205,98 @@ declare module 'tdlib-types' {
     readonly group_call_id?: number,
   }
 
-  export type setGroupCallTitle = {
-    /** Sets group call title. Requires groupCall.can_be_managed group call flag */
-    readonly _: 'setGroupCallTitle',
+  export type setVideoChatTitle = {
+    /** Sets title of a video chat; requires groupCall.can_be_managed right */
+    readonly _: 'setVideoChatTitle',
     /** Group call identifier */
     readonly group_call_id?: number,
     /** New group call title; 1-64 characters */
     readonly title?: string,
   }
 
-  export type toggleGroupCallMuteNewParticipants = {
+  export type toggleVideoChatMuteNewParticipants = {
     /**
-     * Toggles whether new participants of a group call can be unmuted only by administrators
-     * of the group call. Requires groupCall.can_toggle_mute_new_participants group
-     * call flag
+     * Toggles whether new participants of a video chat can be unmuted only by administrators
+     * of the video chat. Requires groupCall.can_toggle_mute_new_participants right
      */
-    readonly _: 'toggleGroupCallMuteNewParticipants',
+    readonly _: 'toggleVideoChatMuteNewParticipants',
     /** Group call identifier */
     readonly group_call_id?: number,
     /** New value of the mute_new_participants setting */
     readonly mute_new_participants?: boolean,
   }
 
-  export type inviteGroupCallParticipants = {
+  export type inviteGroupCallParticipant = {
     /**
-     * Invites users to an active group call. Sends a service message of type messageInviteVideoChatParticipants
-     * for video chats
+     * Invites a user to an active group call; for group calls not bound to a chat
+     * only. Sends a service message of the type messageGroupCall. The group call can
+     * have at most getOption("group_call_participant_count_max") participants
      */
-    readonly _: 'inviteGroupCallParticipants',
+    readonly _: 'inviteGroupCallParticipant',
+    /** Group call identifier */
+    readonly group_call_id?: number,
+    /** User identifier */
+    readonly user_id?: number,
+    /** Pass true if the group call is a video call */
+    readonly is_video?: boolean,
+  }
+
+  export type declineGroupCallInvitation = {
+    /**
+     * Declines an invitation to an active group call via messageGroupCall. Can be
+     * called both by the sender and the receiver of the invitation
+     */
+    readonly _: 'declineGroupCallInvitation',
+    /** Identifier of the chat with the message */
+    readonly chat_id?: number,
+    /** Identifier of the message of the type messageGroupCall */
+    readonly message_id?: number,
+  }
+
+  export type banGroupCallParticipants = {
+    /**
+     * Bans users from a group call not bound to a chat; requires groupCall.is_owned.
+     * Only the owner of the group call can invite the banned users back
+     */
+    readonly _: 'banGroupCallParticipants',
+    /** Group call identifier */
+    readonly group_call_id?: number,
+    /**
+     * Identifiers of group call participants to ban; identifiers of unknown users
+     * from the update updateGroupCallParticipants can be also passed to the method
+     */
+    readonly user_ids?: ReadonlyArray<number | string>,
+  }
+
+  export type inviteVideoChatParticipants = {
+    /**
+     * Invites users to an active video chat. Sends a service message of the type messageInviteVideoChatParticipants
+     * to the chat bound to the group call
+     */
+    readonly _: 'inviteVideoChatParticipants',
     /** Group call identifier */
     readonly group_call_id?: number,
     /** User identifiers. At most 10 users can be invited simultaneously */
     readonly user_ids?: ReadonlyArray<number>,
   }
 
-  export type getGroupCallInviteLink = {
+  export type getVideoChatInviteLink = {
     /** Returns invite link to a video chat in a public chat */
-    readonly _: 'getGroupCallInviteLink',
+    readonly _: 'getVideoChatInviteLink',
     /** Group call identifier */
     readonly group_call_id?: number,
     /**
      * Pass true if the invite link needs to contain an invite hash, passing which
-     * to joinGroupCall would allow the invited user to unmute themselves. Requires
-     * groupCall.can_be_managed group call flag
+     * to joinVideoChat would allow the invited user to unmute themselves. Requires
+     * groupCall.can_be_managed right
      */
     readonly can_self_unmute?: boolean,
   }
 
   export type revokeGroupCallInviteLink = {
     /**
-     * Revokes invite link for a group call. Requires groupCall.can_be_managed group
-     * call flag
+     * Revokes invite link for a group call. Requires groupCall.can_be_managed right
+     * for video chats or groupCall.is_owned otherwise
      */
     readonly _: 'revokeGroupCallInviteLink',
     /** Group call identifier */
@@ -30566,8 +32305,8 @@ declare module 'tdlib-types' {
 
   export type startGroupCallRecording = {
     /**
-     * Starts recording of an active group call. Requires groupCall.can_be_managed
-     * group call flag
+     * Starts recording of an active group call; for video chats only. Requires groupCall.can_be_managed
+     * right
      */
     readonly _: 'startGroupCallRecording',
     /** Group call identifier */
@@ -30582,8 +32321,8 @@ declare module 'tdlib-types' {
 
   export type endGroupCallRecording = {
     /**
-     * Ends recording of an active group call. Requires groupCall.can_be_managed group
-     * call flag
+     * Ends recording of an active group call; for video chats only. Requires groupCall.can_be_managed
+     * right
      */
     readonly _: 'endGroupCallRecording',
     /** Group call identifier */
@@ -30609,7 +32348,10 @@ declare module 'tdlib-types' {
   }
 
   export type setGroupCallParticipantIsSpeaking = {
-    /** Informs TDLib that speaking state of a participant of an active group has changed */
+    /**
+     * Informs TDLib that speaking state of a participant of an active group call has
+     * changed. Returns identifier of the participant if it is found
+     */
     readonly _: 'setGroupCallParticipantIsSpeaking',
     /** Group call identifier */
     readonly group_call_id?: number,
@@ -30639,8 +32381,8 @@ declare module 'tdlib-types' {
   export type setGroupCallParticipantVolumeLevel = {
     /**
      * Changes volume level of a participant of an active group call. If the current
-     * user can manage the group call, then the participant's volume level will be
-     * changed for all users with the default volume level
+     * user can manage the group call or is the owner of the group call, then the participant's
+     * volume level will be changed for all users with the default volume level
      */
     readonly _: 'setGroupCallParticipantVolumeLevel',
     /** Group call identifier */
@@ -30652,7 +32394,7 @@ declare module 'tdlib-types' {
   }
 
   export type toggleGroupCallParticipantIsHandRaised = {
-    /** Toggles whether a group call participant hand is rased */
+    /** Toggles whether a group call participant hand is rased; for video chats only */
     readonly _: 'toggleGroupCallParticipantIsHandRaised',
     /** Group call identifier */
     readonly group_call_id?: number,
@@ -30660,9 +32402,21 @@ declare module 'tdlib-types' {
     readonly participant_id?: MessageSender$Input,
     /**
      * Pass true if the user's hand needs to be raised. Only self hand can be raised.
-     * Requires groupCall.can_be_managed group call flag to lower other's hand
+     * Requires groupCall.can_be_managed right to lower other's hand
      */
     readonly is_hand_raised?: boolean,
+  }
+
+  export type getGroupCallParticipants = {
+    /**
+     * Returns information about participants of a non-joined group call that is not
+     * bound to a chat
+     */
+    readonly _: 'getGroupCallParticipants',
+    /** The group call which participants will be returned */
+    readonly input_group_call?: InputGroupCall$Input,
+    /** The maximum number of participants to return; must be positive */
+    readonly limit?: number,
   }
 
   export type loadGroupCallParticipants = {
@@ -30689,25 +32443,28 @@ declare module 'tdlib-types' {
   }
 
   export type endGroupCall = {
-    /** Ends a group call. Requires groupCall.can_be_managed */
+    /**
+     * Ends a group call. Requires groupCall.can_be_managed right for video chats or
+     * groupCall.is_owned otherwise
+     */
     readonly _: 'endGroupCall',
     /** Group call identifier */
     readonly group_call_id?: number,
   }
 
-  export type getGroupCallStreams = {
-    /** Returns information about available group call streams */
-    readonly _: 'getGroupCallStreams',
+  export type getVideoChatStreams = {
+    /** Returns information about available video chat streams */
+    readonly _: 'getVideoChatStreams',
     /** Group call identifier */
     readonly group_call_id?: number,
   }
 
-  export type getGroupCallStreamSegment = {
+  export type getVideoChatStreamSegment = {
     /**
-     * Returns a file with a segment of a group call stream in a modified OGG format
+     * Returns a file with a segment of a video chat stream in a modified OGG format
      * for audio or MPEG-4 format for video
      */
-    readonly _: 'getGroupCallStreamSegment',
+    readonly _: 'getVideoChatStreamSegment',
     /** Group call identifier */
     readonly group_call_id?: number,
     /** Point in time when the stream segment begins; Unix timestamp in milliseconds */
@@ -30721,6 +32478,32 @@ declare module 'tdlib-types' {
      * quality
      */
     readonly video_quality?: GroupCallVideoQuality$Input,
+  }
+
+  export type encryptGroupCallData = {
+    /** Encrypts group call data before sending them over network using tgcalls */
+    readonly _: 'encryptGroupCallData',
+    /** Group call identifier. The call must not be a video chat */
+    readonly group_call_id?: number,
+    /** Data channel for which data is encrypted */
+    readonly data_channel?: GroupCallDataChannel$Input,
+    /** Data to encrypt */
+    readonly data?: string /* base64 */,
+    /** Size of data prefix that must be kept unencrypted */
+    readonly unencrypted_prefix_size?: number,
+  }
+
+  export type decryptGroupCallData = {
+    /** Decrypts group call data received by tgcalls */
+    readonly _: 'decryptGroupCallData',
+    /** Group call identifier. The call must not be a video chat */
+    readonly group_call_id?: number,
+    /** Identifier of the group call participant, which sent the data */
+    readonly participant_id?: MessageSender$Input,
+    /** Data channel for which data was encrypted; pass null if unknown */
+    readonly data_channel?: GroupCallDataChannel$Input,
+    /** Data to decrypt */
+    readonly data?: string /* base64 */,
   }
 
   export type setMessageSenderBlockList = {
@@ -30936,7 +32719,7 @@ declare module 'tdlib-types' {
 
   export type getStickerOutline = {
     /**
-     * Returns outline of a sticker; this is an offline request. Returns a 404 error
+     * Returns outline of a sticker. This is an offline method. Returns a 404 error
      * if the outline isn't known
      */
     readonly _: 'getStickerOutline',
@@ -31401,7 +33184,7 @@ declare module 'tdlib-types' {
   export type getWebPageInstantView = {
     /**
      * Returns an instant view version of a web page if available. This is an offline
-     * request if only_local is true. Returns a 404 error if the web page has no instant
+     * method if only_local is true. Returns a 404 error if the web page has no instant
      * view page
      */
     readonly _: 'getWebPageInstantView',
@@ -31420,8 +33203,8 @@ declare module 'tdlib-types' {
     /** Profile photo to set */
     readonly photo?: InputChatPhoto$Input,
     /**
-     * Pass true to set a public photo, which will be visible even the main photo is
-     * hidden by privacy settings
+     * Pass true to set the public photo, which will be visible even the main photo
+     * is hidden by privacy settings
      */
     readonly is_public?: boolean,
   }
@@ -32378,6 +34161,20 @@ declare module 'tdlib-types' {
     readonly can_have_sponsored_messages?: boolean,
   }
 
+  export type toggleSupergroupHasAutomaticTranslation = {
+    /**
+     * Toggles whether messages are automatically translated in the channel chat; requires
+     * can_change_info administrator right in the channel. The chat must have at least
+     * chatBoostFeatures.min_automatic_translation_boost_level boost level to enable
+     * automatic translation
+     */
+    readonly _: 'toggleSupergroupHasAutomaticTranslation',
+    /** The identifier of the channel */
+    readonly supergroup_id?: number,
+    /** The new value of has_automatic_translation */
+    readonly has_automatic_translation?: boolean,
+  }
+
   export type toggleSupergroupHasHiddenMembers = {
     /**
      * Toggles whether non-administrators can receive only administrators and bots
@@ -32413,6 +34210,8 @@ declare module 'tdlib-types' {
     readonly supergroup_id?: number,
     /** New value of is_forum */
     readonly is_forum?: boolean,
+    /** New value of has_forum_tabs; ignored if is_forum is false */
+    readonly has_forum_tabs?: boolean,
   }
 
   export type toggleSupergroupIsBroadcastGroup = {
@@ -32581,6 +34380,13 @@ declare module 'tdlib-types' {
     readonly _: 'deleteSavedCredentials',
   }
 
+  export type setGiftSettings = {
+    /** Changes settings for gift receiving for the current user */
+    readonly _: 'setGiftSettings',
+    /** The new settings */
+    readonly settings?: giftSettings$Input,
+  }
+
   export type getAvailableGifts = {
     /** Returns gifts that can be sent to other users and channel chats */
     readonly _: 'getAvailableGifts',
@@ -32617,6 +34423,11 @@ declare module 'tdlib-types' {
   export type sellGift = {
     /** Sells a gift for Telegram Stars */
     readonly _: 'sellGift',
+    /**
+     * Unique identifier of business connection on behalf of which to send the request;
+     * for bots only
+     */
+    readonly business_connection_id?: string,
     /** Identifier of the gift */
     readonly received_gift_id?: string,
   }
@@ -32676,6 +34487,11 @@ declare module 'tdlib-types' {
   export type upgradeGift = {
     /** Upgrades a regular gift */
     readonly _: 'upgradeGift',
+    /**
+     * Unique identifier of business connection on behalf of which to send the request;
+     * for bots only
+     */
+    readonly business_connection_id?: string,
     /** Identifier of the gift */
     readonly received_gift_id?: string,
     /**
@@ -32693,6 +34509,11 @@ declare module 'tdlib-types' {
   export type transferGift = {
     /** Sends an upgraded gift to another user or a channel chat */
     readonly _: 'transferGift',
+    /**
+     * Unique identifier of business connection on behalf of which to send the request;
+     * for bots only
+     */
+    readonly business_connection_id?: string,
     /** Identifier of the gift */
     readonly received_gift_id?: string,
     /** Identifier of the user or the channel chat that will receive the gift */
@@ -32701,9 +34522,29 @@ declare module 'tdlib-types' {
     readonly star_count?: number,
   }
 
+  export type sendResoldGift = {
+    /**
+     * Sends an upgraded gift that is available for resale to another user or channel
+     * chat; gifts already owned by the current user must be transferred using transferGift
+     * and can't be passed to the method
+     */
+    readonly _: 'sendResoldGift',
+    /** Name of the upgraded gift to send */
+    readonly gift_name?: string,
+    /** Identifier of the user or the channel chat that will receive the gift */
+    readonly owner_id?: MessageSender$Input,
+    /** The amount of Telegram Stars required to pay for the gift */
+    readonly star_count?: number,
+  }
+
   export type getReceivedGifts = {
     /** Returns gifts received by the given user or chat */
     readonly _: 'getReceivedGifts',
+    /**
+     * Unique identifier of business connection on behalf of which to send the request;
+     * for bots only
+     */
+    readonly business_connection_id?: string,
     /** Identifier of the gift receiver */
     readonly owner_id?: MessageSender$Input,
     /**
@@ -32763,6 +34604,41 @@ declare module 'tdlib-types' {
     readonly received_gift_id?: string,
     /** The 2-step verification password of the current user */
     readonly password?: string,
+  }
+
+  export type setGiftResalePrice = {
+    /** Changes resale price of a unique gift owned by the current user */
+    readonly _: 'setGiftResalePrice',
+    /** Identifier of the unique gift */
+    readonly received_gift_id?: string,
+    /**
+     * The new price for the unique gift; 0 or getOption("gift_resale_star_count_min")-getOption("gift_resale_star_count_max").
+     * Pass 0 to disallow gift resale. The current user will receive getOption("gift_resale_earnings_per_mille")
+     * Telegram Stars for each 1000 Telegram Stars paid for the gift
+     */
+    readonly resale_star_count?: number,
+  }
+
+  export type searchGiftsForResale = {
+    /** Returns upgraded gifts that can be bought from other owners */
+    readonly _: 'searchGiftsForResale',
+    /** Identifier of the regular gift that was upgraded to a unique gift */
+    readonly gift_id?: number | string,
+    /** Order in which the results will be sorted */
+    readonly order?: GiftForResaleOrder$Input,
+    /**
+     * Attributes used to filter received gifts. If multiple attributes of the same
+     * type are specified, then all of them are allowed. If none attributes of specific
+     * type are specified, then all values for this attribute type are allowed
+     */
+    readonly attributes?: ReadonlyArray<UpgradedGiftAttributeId$Input>,
+    /**
+     * Offset of the first entry to return as received from the previous request with
+     * the same order and attributes; use empty string to get the first chunk of results
+     */
+    readonly offset?: string,
+    /** The maximum number of gifts to return */
+    readonly limit?: number,
   }
 
   export type createInvoiceLink = {
@@ -32850,7 +34726,7 @@ declare module 'tdlib-types' {
   export type getLocalizationTargetInfo = {
     /**
      * Returns information about the current localization target. This is an offline
-     * request if only_local is true. Can be called before authorization
+     * method if only_local is true. Can be called before authorization
      */
     readonly _: 'getLocalizationTargetInfo',
     /**
@@ -33990,6 +35866,26 @@ declare module 'tdlib-types' {
     readonly code?: string,
   }
 
+  export type giftPremiumWithStars = {
+    /**
+     * Allows to buy a Telegram Premium subscription for another user with payment
+     * in Telegram Stars; for bots only
+     */
+    readonly _: 'giftPremiumWithStars',
+    /** Identifier of the user which will receive Telegram Premium */
+    readonly user_id?: number,
+    /** The number of Telegram Stars to pay for subscription */
+    readonly star_count?: number,
+    /** Number of months the Telegram Premium subscription will be active for the user */
+    readonly month_count?: number,
+    /**
+     * Text to show to the user receiving Telegram Premium; 0-getOption("gift_text_length_max")
+     * characters. Only Bold, Italic, Underline, Strikethrough, Spoiler, and CustomEmoji
+     * entities are allowed
+     */
+    readonly text?: formattedText$Input,
+  }
+
   export type launchPrepaidGiveaway = {
     /** Launches a prepaid giveaway */
     readonly _: 'launchPrepaidGiveaway',
@@ -34075,37 +35971,18 @@ declare module 'tdlib-types' {
   export type canPurchaseFromStore = {
     /**
      * Checks whether an in-store purchase is possible. Must be called before any in-store
-     * purchase
+     * purchase. For official applications only
      */
     readonly _: 'canPurchaseFromStore',
     /** Transaction purpose */
     readonly purpose?: StorePaymentPurpose$Input,
   }
 
-  export type assignAppStoreTransaction = {
-    /**
-     * Informs server about a purchase through App Store. For official applications
-     * only
-     */
-    readonly _: 'assignAppStoreTransaction',
-    /** App Store receipt */
-    readonly receipt?: string /* base64 */,
-    /** Transaction purpose */
-    readonly purpose?: StorePaymentPurpose$Input,
-  }
-
-  export type assignGooglePlayTransaction = {
-    /**
-     * Informs server about a purchase through Google Play. For official applications
-     * only
-     */
-    readonly _: 'assignGooglePlayTransaction',
-    /** Application package name */
-    readonly package_name?: string,
-    /** Identifier of the purchased store product */
-    readonly store_product_id?: string,
-    /** Google Play purchase token */
-    readonly purchase_token?: string,
+  export type assignStoreTransaction = {
+    /** Informs server about an in-store purchase. For official applications only */
+    readonly _: 'assignStoreTransaction',
+    /** Information about the transaction */
+    readonly transaction?: StoreTransaction$Input,
     /** Transaction purpose */
     readonly purpose?: StorePaymentPurpose$Input,
   }
@@ -34721,6 +36598,7 @@ declare module 'tdlib-types' {
   export type AuthorizationState =
     | authorizationStateWaitTdlibParameters
     | authorizationStateWaitPhoneNumber
+    | authorizationStateWaitPremiumPurchase
     | authorizationStateWaitEmailAddress
     | authorizationStateWaitEmailCode
     | authorizationStateWaitCode
@@ -34886,6 +36764,8 @@ declare module 'tdlib-types' {
     | inputChatPhotoAnimation$Input
     | inputChatPhotoSticker$Input
 
+  export type StarAmount = starAmount
+
   /** Describes type of subscription paid in Telegram Stars */
   export type StarSubscriptionType =
     | starSubscriptionTypeChannel
@@ -34921,11 +36801,25 @@ declare module 'tdlib-types' {
 
   export type StarGiveawayPaymentOptions = starGiveawayPaymentOptions
 
-  export type Gifts = gifts
-
   export type UpgradedGift = upgradedGift
 
   export type UpgradeGiftResult = upgradeGiftResult
+
+  export type AvailableGifts = availableGifts
+
+  /** Contains identifier of an upgraded gift attribute to search for */
+  export type UpgradedGiftAttributeId$Input =
+    | upgradedGiftAttributeIdModel$Input
+    | upgradedGiftAttributeIdSymbol$Input
+    | upgradedGiftAttributeIdBackdrop$Input
+
+  /** Describes order in which upgraded gifts for resale will be sorted */
+  export type GiftForResaleOrder$Input =
+    | giftForResaleOrderPrice$Input
+    | giftForResaleOrderPriceChangeDate$Input
+    | giftForResaleOrderNumber$Input
+
+  export type GiftsForResale = giftsForResale
 
   /** Represents content of a gift received by a user or a channel chat */
   export type SentGift =
@@ -34968,12 +36862,16 @@ declare module 'tdlib-types' {
     | starTransactionTypeGiftTransfer
     | starTransactionTypeGiftSale
     | starTransactionTypeGiftUpgrade
+    | starTransactionTypeUpgradedGiftPurchase
+    | starTransactionTypeUpgradedGiftSale
     | starTransactionTypeChannelPaidReactionSend
     | starTransactionTypeChannelPaidReactionReceive
     | starTransactionTypeAffiliateProgramCommission
     | starTransactionTypePaidMessageSend
     | starTransactionTypePaidMessageReceive
     | starTransactionTypePremiumPurchase
+    | starTransactionTypeBusinessBotTransferSend
+    | starTransactionTypeBusinessBotTransferReceive
     | starTransactionTypeUnsupported
 
   export type StarTransactions = starTransactions
@@ -35152,6 +37050,18 @@ declare module 'tdlib-types' {
     | paidReactionTypeAnonymous$Input
     | paidReactionTypeChat$Input
 
+  /** Describes a topic of messages in a chat */
+  export type MessageTopic =
+    | messageTopicForum
+    | messageTopicDirectMessages
+    | messageTopicSavedMessages
+
+  /** Describes a topic of messages in a chat */
+  export type MessageTopic$Input =
+    | messageTopicForum$Input
+    | messageTopicDirectMessages$Input
+    | messageTopicSavedMessages$Input
+
   /** Describes type of emoji effect */
   export type MessageEffectType =
     | messageEffectTypeEmojiReaction
@@ -35202,6 +37112,7 @@ declare module 'tdlib-types' {
     | messageSourceChatHistory$Input
     | messageSourceMessageThreadHistory$Input
     | messageSourceForumTopicHistory$Input
+    | messageSourceDirectMessagesChatTopicHistory$Input
     | messageSourceHistoryPreview$Input
     | messageSourceChatList$Input
     | messageSourceSearch$Input
@@ -35212,13 +37123,17 @@ declare module 'tdlib-types' {
 
   export type SponsoredMessages = sponsoredMessages
 
-  /** Describes result of sponsored message report */
-  export type ReportChatSponsoredMessageResult =
-    | reportChatSponsoredMessageResultOk
-    | reportChatSponsoredMessageResultFailed
-    | reportChatSponsoredMessageResultOptionRequired
-    | reportChatSponsoredMessageResultAdsHidden
-    | reportChatSponsoredMessageResultPremiumRequired
+  export type SponsoredChats = sponsoredChats
+
+  export type VideoMessageAdvertisements = videoMessageAdvertisements
+
+  /** Describes result of sponsored message or chat report */
+  export type ReportSponsoredResult =
+    | reportSponsoredResultOk
+    | reportSponsoredResultFailed
+    | reportSponsoredResultOptionRequired
+    | reportSponsoredResultAdsHidden
+    | reportSponsoredResultPremiumRequired
 
   export type FoundFileDownloads = foundFileDownloads
 
@@ -35421,6 +37336,8 @@ declare module 'tdlib-types' {
     | savedMessagesTopicTypeAuthorHidden
     | savedMessagesTopicTypeSavedFromChat
 
+  export type DirectMessagesChatTopic = directMessagesChatTopic
+
   export type ForumTopicInfo = forumTopicInfo
 
   export type ForumTopic = forumTopic
@@ -35514,6 +37431,7 @@ declare module 'tdlib-types' {
     | linkPreviewTypeEmbeddedVideoPlayer
     | linkPreviewTypeExternalAudio
     | linkPreviewTypeExternalVideo
+    | linkPreviewTypeGroupCall
     | linkPreviewTypeInvoice
     | linkPreviewTypeMessage
     | linkPreviewTypePhoto
@@ -35716,8 +37634,10 @@ declare module 'tdlib-types' {
     | messageGame
     | messagePoll
     | messageStory
+    | messageChecklist
     | messageInvoice
     | messageCall
+    | messageGroupCall
     | messageVideoChatScheduled
     | messageVideoChatStarted
     | messageVideoChatEnded
@@ -35760,6 +37680,11 @@ declare module 'tdlib-types' {
     | messageGift
     | messageUpgradedGift
     | messageRefundedUpgradedGift
+    | messagePaidMessagesRefunded
+    | messagePaidMessagePriceChanged
+    | messageDirectMessagePriceChanged
+    | messageChecklistTasksDone
+    | messageChecklistTasksAdded
     | messageContactRegistered
     | messageUsersShared
     | messageChatShared
@@ -35873,6 +37798,7 @@ declare module 'tdlib-types' {
     | inputMessageInvoice
     | inputMessagePoll
     | inputMessageStory
+    | inputMessageChecklist
     | inputMessageForwarded
 
   /** The content of a message to send */
@@ -35895,6 +37821,7 @@ declare module 'tdlib-types' {
     | inputMessageInvoice$Input
     | inputMessagePoll$Input
     | inputMessageStory$Input
+    | inputMessageChecklist$Input
     | inputMessageForwarded$Input
 
   export type MessageProperties = messageProperties
@@ -36025,7 +37952,7 @@ declare module 'tdlib-types' {
     | storyContentVideo
     | storyContentUnsupported
 
-  /** The content of a story to send */
+  /** The content of a story to post */
   export type InputStoryContent$Input =
     | inputStoryContentPhoto$Input
     | inputStoryContentVideo$Input
@@ -36106,7 +38033,7 @@ declare module 'tdlib-types' {
     | callDiscardReasonDeclined
     | callDiscardReasonDisconnected
     | callDiscardReasonHungUp
-    | callDiscardReasonAllowGroupCall
+    | callDiscardReasonUpgradeToGroupCall
 
   /** Describes the type of call server */
   export type CallServerType =
@@ -36132,11 +38059,32 @@ declare module 'tdlib-types' {
     | groupCallVideoQualityMedium$Input
     | groupCallVideoQualityFull$Input
 
-  export type GroupCallStreams = groupCallStreams
+  export type VideoChatStreams = videoChatStreams
 
   export type RtmpUrl = rtmpUrl
 
   export type GroupCall = groupCall
+
+  export type GroupCallParticipants = groupCallParticipants
+
+  export type GroupCallInfo = groupCallInfo
+
+  /** Describes result of group call participant invitation */
+  export type InviteGroupCallParticipantResult =
+    | inviteGroupCallParticipantResultUserPrivacyRestricted
+    | inviteGroupCallParticipantResultUserAlreadyParticipant
+    | inviteGroupCallParticipantResultUserWasBanned
+    | inviteGroupCallParticipantResultSuccess
+
+  /** Describes data channel for a group call */
+  export type GroupCallDataChannel$Input =
+    | groupCallDataChannelMain$Input
+    | groupCallDataChannelScreenSharing$Input
+
+  /** Describes a non-joined group call that isn't bound to a chat */
+  export type InputGroupCall$Input =
+    | inputGroupCallLink$Input
+    | inputGroupCallMessage$Input
 
   /** Describes the exact type of problem with a call */
   export type CallProblem$Input =
@@ -36315,6 +38263,7 @@ declare module 'tdlib-types' {
     | chatEventHasAggressiveAntiSpamEnabledToggled
     | chatEventSignMessagesToggled
     | chatEventShowMessageSenderToggled
+    | chatEventAutomaticTranslationToggled
     | chatEventInviteLinkEdited
     | chatEventInviteLinkRevoked
     | chatEventInviteLinkDeleted
@@ -36367,8 +38316,8 @@ declare module 'tdlib-types' {
     | premiumLimitTypeChatFolderInviteLinkCount
     | premiumLimitTypeShareableChatFolderCount
     | premiumLimitTypeActiveStoryCount
-    | premiumLimitTypeWeeklySentStoryCount
-    | premiumLimitTypeMonthlySentStoryCount
+    | premiumLimitTypeWeeklyPostedStoryCount
+    | premiumLimitTypeMonthlyPostedStoryCount
     | premiumLimitTypeStoryCaptionLength
     | premiumLimitTypeStorySuggestedReactionAreaCount
     | premiumLimitTypeSimilarChatCount
@@ -36389,8 +38338,8 @@ declare module 'tdlib-types' {
     | premiumLimitTypeChatFolderInviteLinkCount$Input
     | premiumLimitTypeShareableChatFolderCount$Input
     | premiumLimitTypeActiveStoryCount$Input
-    | premiumLimitTypeWeeklySentStoryCount$Input
-    | premiumLimitTypeMonthlySentStoryCount$Input
+    | premiumLimitTypeWeeklyPostedStoryCount$Input
+    | premiumLimitTypeMonthlyPostedStoryCount$Input
     | premiumLimitTypeStoryCaptionLength$Input
     | premiumLimitTypeStorySuggestedReactionAreaCount$Input
     | premiumLimitTypeSimilarChatCount$Input
@@ -36421,6 +38370,7 @@ declare module 'tdlib-types' {
     | premiumFeatureLastSeenTimes
     | premiumFeatureBusiness
     | premiumFeatureMessageEffects
+    | premiumFeatureChecklists
 
   /** Describes a feature available to Premium users */
   export type PremiumFeature$Input =
@@ -36448,6 +38398,7 @@ declare module 'tdlib-types' {
     | premiumFeatureLastSeenTimes$Input
     | premiumFeatureBusiness$Input
     | premiumFeatureMessageEffects$Input
+    | premiumFeatureChecklists$Input
 
   /** Describes a feature available to Business user accounts */
   export type BusinessFeature =
@@ -36513,6 +38464,11 @@ declare module 'tdlib-types' {
     | storePaymentPurposeStarGiveaway$Input
     | storePaymentPurposeStars$Input
     | storePaymentPurposeGiftedStars$Input
+
+  /** Describes an in-store transaction */
+  export type StoreTransaction$Input =
+    | storeTransactionAppStore$Input
+    | storeTransactionGooglePlay$Input
 
   /** Describes a purpose of a payment toward Telegram */
   export type TelegramPaymentPurpose$Input =
@@ -36583,16 +38539,16 @@ declare module 'tdlib-types' {
   export type Hashtags = hashtags
 
   /**
-   * Represents result of checking whether the current user can send a story in the
-   * specific chat
+   * Represents result of checking whether the current user can post a story on behalf
+   * of the specific chat
    */
-  export type CanSendStoryResult =
-    | canSendStoryResultOk
-    | canSendStoryResultPremiumNeeded
-    | canSendStoryResultBoostNeeded
-    | canSendStoryResultActiveStoryLimitExceeded
-    | canSendStoryResultWeeklyLimitExceeded
-    | canSendStoryResultMonthlyLimitExceeded
+  export type CanPostStoryResult =
+    | canPostStoryResultOk
+    | canPostStoryResultPremiumNeeded
+    | canPostStoryResultBoostNeeded
+    | canPostStoryResultActiveStoryLimitExceeded
+    | canPostStoryResultWeeklyLimitExceeded
+    | canPostStoryResultMonthlyLimitExceeded
 
   /**
    * Represents result of checking whether the current session can be used to transfer
@@ -36654,6 +38610,7 @@ declare module 'tdlib-types' {
     | pushMessageContentSticker
     | pushMessageContentStory
     | pushMessageContentText
+    | pushMessageContentChecklist
     | pushMessageContentVideo
     | pushMessageContentVideoNote
     | pushMessageContentVoiceNote
@@ -36672,6 +38629,8 @@ declare module 'tdlib-types' {
     | pushMessageContentRecurringPayment
     | pushMessageContentSuggestProfilePhoto
     | pushMessageContentProximityAlertTriggered
+    | pushMessageContentChecklistTasksAdded
+    | pushMessageContentChecklistTasksDone
     | pushMessageContentMessageForwards
     | pushMessageContentMediaAlbum
 
@@ -36891,6 +38850,7 @@ declare module 'tdlib-types' {
     | internalLinkTypeDefaultMessageAutoDeleteTimerSettings
     | internalLinkTypeEditProfileSettings
     | internalLinkTypeGame
+    | internalLinkTypeGroupCall
     | internalLinkTypeInstantView
     | internalLinkTypeInvoice
     | internalLinkTypeLanguagePack
@@ -36898,6 +38858,7 @@ declare module 'tdlib-types' {
     | internalLinkTypeMainWebApp
     | internalLinkTypeMessage
     | internalLinkTypeMessageDraft
+    | internalLinkTypeMyStars
     | internalLinkTypePassportDataRequest
     | internalLinkTypePhoneNumberConfirmation
     | internalLinkTypePremiumFeatures
@@ -36944,6 +38905,7 @@ declare module 'tdlib-types' {
     | internalLinkTypeDefaultMessageAutoDeleteTimerSettings$Input
     | internalLinkTypeEditProfileSettings$Input
     | internalLinkTypeGame$Input
+    | internalLinkTypeGroupCall$Input
     | internalLinkTypeInstantView$Input
     | internalLinkTypeInvoice$Input
     | internalLinkTypeLanguagePack$Input
@@ -36951,6 +38913,7 @@ declare module 'tdlib-types' {
     | internalLinkTypeMainWebApp$Input
     | internalLinkTypeMessage$Input
     | internalLinkTypeMessageDraft$Input
+    | internalLinkTypeMyStars$Input
     | internalLinkTypePassportDataRequest$Input
     | internalLinkTypePhoneNumberConfirmation$Input
     | internalLinkTypePremiumFeatures$Input
@@ -36991,8 +38954,6 @@ declare module 'tdlib-types' {
   export type BlockList$Input =
     | blockListMain$Input
     | blockListStories$Input
-
-  export type FilePart = filePart
 
   /** Represents the type of file */
   export type FileType =
@@ -37149,6 +39110,7 @@ declare module 'tdlib-types' {
     | suggestedActionSetProfilePhoto
     | suggestedActionExtendPremium
     | suggestedActionExtendStarSubscriptions
+    | suggestedActionCustom
 
   /** Describes an action suggested to the current user */
   export type SuggestedAction$Input =
@@ -37166,10 +39128,13 @@ declare module 'tdlib-types' {
     | suggestedActionSetProfilePhoto$Input
     | suggestedActionExtendPremium$Input
     | suggestedActionExtendStarSubscriptions$Input
+    | suggestedActionCustom$Input
 
   export type Count = count
 
   export type Text = text
+
+  export type Data = data
 
   export type Seconds = seconds
 
@@ -37316,11 +39281,14 @@ declare module 'tdlib-types' {
     | updateChatOnlineMemberCount
     | updateSavedMessagesTopic
     | updateSavedMessagesTopicCount
+    | updateDirectMessagesChatTopic
+    | updateTopicMessageCount
     | updateQuickReplyShortcut
     | updateQuickReplyShortcutDeleted
     | updateQuickReplyShortcuts
     | updateQuickReplyShortcutMessages
     | updateForumTopicInfo
+    | updateForumTopic
     | updateScopeNotificationSettings
     | updateReactionNotificationSettings
     | updateNotification
@@ -37350,14 +39318,16 @@ declare module 'tdlib-types' {
     | updateCall
     | updateGroupCall
     | updateGroupCallParticipant
+    | updateGroupCallParticipants
+    | updateGroupCallVerificationState
     | updateNewCallSignalingData
     | updateUserPrivacySettingRules
     | updateUnreadMessageCount
     | updateUnreadChatCount
     | updateStory
     | updateStoryDeleted
-    | updateStorySendSucceeded
-    | updateStorySendFailed
+    | updateStoryPostSucceeded
+    | updateStoryPostFailed
     | updateChatActiveStories
     | updateStoryListChatCount
     | updateStoryStealthMode
@@ -37375,6 +39345,7 @@ declare module 'tdlib-types' {
     | updateProfileAccentColors
     | updateLanguagePackStrings
     | updateConnectionState
+    | updateFreezeState
     | updateTermsOfService
     | updateUnconfirmedSession
     | updateAttachmentMenuBots
@@ -37458,6 +39429,8 @@ declare module 'tdlib-types' {
     | getAuthorizationState
     | setTdlibParameters
     | setAuthenticationPhoneNumber
+    | checkAuthenticationPremiumPurchase
+    | setAuthenticationPremiumPurchaseTransaction
     | setAuthenticationEmailAddress
     | resendAuthenticationCode
     | checkAuthenticationEmailCode
@@ -37514,6 +39487,7 @@ declare module 'tdlib-types' {
     | getMessageThread
     | getMessageReadDate
     | getMessageViewers
+    | getMessageAuthor
     | getFile
     | getRemoteFile
     | loadChats
@@ -37542,6 +39516,18 @@ declare module 'tdlib-types' {
     | getSuitableDiscussionChats
     | getInactiveSupergroupChats
     | getSuitablePersonalChats
+    | loadDirectMessagesChatTopics
+    | getDirectMessagesChatTopic
+    | getDirectMessagesChatTopicHistory
+    | getDirectMessagesChatTopicMessageByDate
+    | deleteDirectMessagesChatTopicHistory
+    | deleteDirectMessagesChatTopicMessagesByDate
+    | setDirectMessagesChatTopicIsMarkedAsUnread
+    | setDirectMessagesChatTopicDraftMessage
+    | unpinAllDirectMessagesChatTopicMessages
+    | readAllDirectMessagesChatTopicReactions
+    | getDirectMessagesChatTopicRevenue
+    | toggleDirectMessagesChatTopicCanSendUnpaidMessages
     | loadSavedMessagesTopics
     | getSavedMessagesTopicHistory
     | getSavedMessagesTopicMessageByDate
@@ -37578,6 +39564,14 @@ declare module 'tdlib-types' {
     | getChatSponsoredMessages
     | clickChatSponsoredMessage
     | reportChatSponsoredMessage
+    | getSearchSponsoredChats
+    | viewSponsoredChat
+    | openSponsoredChat
+    | reportSponsoredChat
+    | getVideoMessageAdvertisements
+    | viewVideoMessageAdvertisement
+    | clickVideoMessageAdvertisement
+    | reportVideoMessageAdvertisement
     | removeNotification
     | removeNotificationGroup
     | getMessageLink
@@ -37602,6 +39596,7 @@ declare module 'tdlib-types' {
     | deleteChatMessagesByDate
     | editMessageText
     | editMessageLiveLocation
+    | editMessageChecklist
     | editMessageMedia
     | editMessageCaption
     | editMessageReplyMarkup
@@ -37616,11 +39611,23 @@ declare module 'tdlib-types' {
     | sendBusinessMessageAlbum
     | editBusinessMessageText
     | editBusinessMessageLiveLocation
+    | editBusinessMessageChecklist
     | editBusinessMessageMedia
     | editBusinessMessageCaption
     | editBusinessMessageReplyMarkup
     | stopBusinessPoll
     | setBusinessMessageIsPinned
+    | readBusinessMessage
+    | deleteBusinessMessages
+    | editBusinessStory
+    | deleteBusinessStory
+    | setBusinessAccountName
+    | setBusinessAccountBio
+    | setBusinessAccountProfilePhoto
+    | setBusinessAccountUsername
+    | setBusinessAccountGiftSettings
+    | getBusinessAccountStarAmount
+    | transferBusinessAccountStars
     | checkQuickReplyShortcutName
     | loadQuickReplyShortcuts
     | setQuickReplyShortcutName
@@ -37678,6 +39685,8 @@ declare module 'tdlib-types' {
     | setPollAnswer
     | getPollVoters
     | stopPoll
+    | addChecklistTasks
+    | markChecklistTasksAsDone
     | hideSuggestedAction
     | hideContactCloseBirthdays
     | getBusinessConnection
@@ -37775,6 +39784,7 @@ declare module 'tdlib-types' {
     | setChatClientData
     | setChatDescription
     | setChatDiscussionGroup
+    | setChatDirectMessagesGroup
     | setChatLocation
     | setChatSlowModeDelay
     | pinChatMessage
@@ -37807,9 +39817,9 @@ declare module 'tdlib-types' {
     | readChatList
     | getCurrentWeather
     | getStory
-    | getChatsToSendStories
-    | canSendStory
-    | sendStory
+    | getChatsToPostStories
+    | canPostStory
+    | postStory
     | editStory
     | editStoryCover
     | setStoryPrivacySettings
@@ -37902,16 +39912,20 @@ declare module 'tdlib-types' {
     | getVideoChatRtmpUrl
     | replaceVideoChatRtmpUrl
     | getGroupCall
-    | startScheduledGroupCall
-    | toggleGroupCallEnabledStartNotification
+    | startScheduledVideoChat
+    | toggleVideoChatEnabledStartNotification
     | joinGroupCall
+    | joinVideoChat
     | startGroupCallScreenSharing
     | toggleGroupCallScreenSharingIsPaused
     | endGroupCallScreenSharing
-    | setGroupCallTitle
-    | toggleGroupCallMuteNewParticipants
-    | inviteGroupCallParticipants
-    | getGroupCallInviteLink
+    | setVideoChatTitle
+    | toggleVideoChatMuteNewParticipants
+    | inviteGroupCallParticipant
+    | declineGroupCallInvitation
+    | banGroupCallParticipants
+    | inviteVideoChatParticipants
+    | getVideoChatInviteLink
     | revokeGroupCallInviteLink
     | startGroupCallRecording
     | endGroupCallRecording
@@ -37921,11 +39935,14 @@ declare module 'tdlib-types' {
     | toggleGroupCallParticipantIsMuted
     | setGroupCallParticipantVolumeLevel
     | toggleGroupCallParticipantIsHandRaised
+    | getGroupCallParticipants
     | loadGroupCallParticipants
     | leaveGroupCall
     | endGroupCall
-    | getGroupCallStreams
-    | getGroupCallStreamSegment
+    | getVideoChatStreams
+    | getVideoChatStreamSegment
+    | encryptGroupCallData
+    | decryptGroupCallData
     | setMessageSenderBlockList
     | blockMessageSenderFromReplies
     | getBlockedMessageSenders
@@ -38074,6 +40091,7 @@ declare module 'tdlib-types' {
     | toggleSupergroupJoinByRequest
     | toggleSupergroupIsAllHistoryAvailable
     | toggleSupergroupCanHaveSponsoredMessages
+    | toggleSupergroupHasAutomaticTranslation
     | toggleSupergroupHasHiddenMembers
     | toggleSupergroupHasAggressiveAntiSpamEnabled
     | toggleSupergroupIsForum
@@ -38091,6 +40109,7 @@ declare module 'tdlib-types' {
     | getSavedOrderInfo
     | deleteSavedOrderInfo
     | deleteSavedCredentials
+    | setGiftSettings
     | getAvailableGifts
     | sendGift
     | sellGift
@@ -38100,10 +40119,13 @@ declare module 'tdlib-types' {
     | getGiftUpgradePreview
     | upgradeGift
     | transferGift
+    | sendResoldGift
     | getReceivedGifts
     | getReceivedGift
     | getUpgradedGift
     | getUpgradedGiftWithdrawalUrl
+    | setGiftResalePrice
+    | searchGiftsForResale
     | createInvoiceLink
     | refundStarPayment
     | getSupportUser
@@ -38214,6 +40236,7 @@ declare module 'tdlib-types' {
     | getPremiumGiveawayPaymentOptions
     | checkPremiumGiftCode
     | applyPremiumGiftCode
+    | giftPremiumWithStars
     | launchPrepaidGiveaway
     | getGiveawayInfo
     | getStarPaymentOptions
@@ -38222,8 +40245,7 @@ declare module 'tdlib-types' {
     | getStarTransactions
     | getStarSubscriptions
     | canPurchaseFromStore
-    | assignAppStoreTransaction
-    | assignGooglePlayTransaction
+    | assignStoreTransaction
     | editStarSubscription
     | editUserStarSubscription
     | reuseStarSubscription
@@ -38286,6 +40308,8 @@ declare module 'tdlib-types' {
     getAuthorizationState: AuthorizationState,
     setTdlibParameters: Ok,
     setAuthenticationPhoneNumber: Ok,
+    checkAuthenticationPremiumPurchase: Ok,
+    setAuthenticationPremiumPurchaseTransaction: Ok,
     setAuthenticationEmailAddress: Ok,
     resendAuthenticationCode: Ok,
     checkAuthenticationEmailCode: Ok,
@@ -38342,6 +40366,7 @@ declare module 'tdlib-types' {
     getMessageThread: MessageThreadInfo,
     getMessageReadDate: MessageReadDate,
     getMessageViewers: MessageViewers,
+    getMessageAuthor: User,
     getFile: File,
     getRemoteFile: File,
     loadChats: Ok,
@@ -38370,6 +40395,18 @@ declare module 'tdlib-types' {
     getSuitableDiscussionChats: Chats,
     getInactiveSupergroupChats: Chats,
     getSuitablePersonalChats: Chats,
+    loadDirectMessagesChatTopics: Ok,
+    getDirectMessagesChatTopic: DirectMessagesChatTopic,
+    getDirectMessagesChatTopicHistory: Messages,
+    getDirectMessagesChatTopicMessageByDate: Message,
+    deleteDirectMessagesChatTopicHistory: Ok,
+    deleteDirectMessagesChatTopicMessagesByDate: Ok,
+    setDirectMessagesChatTopicIsMarkedAsUnread: Ok,
+    setDirectMessagesChatTopicDraftMessage: Ok,
+    unpinAllDirectMessagesChatTopicMessages: Ok,
+    readAllDirectMessagesChatTopicReactions: Ok,
+    getDirectMessagesChatTopicRevenue: StarCount,
+    toggleDirectMessagesChatTopicCanSendUnpaidMessages: Ok,
     loadSavedMessagesTopics: Ok,
     getSavedMessagesTopicHistory: Messages,
     getSavedMessagesTopicMessageByDate: Message,
@@ -38405,7 +40442,15 @@ declare module 'tdlib-types' {
     getChatScheduledMessages: Messages,
     getChatSponsoredMessages: SponsoredMessages,
     clickChatSponsoredMessage: Ok,
-    reportChatSponsoredMessage: ReportChatSponsoredMessageResult,
+    reportChatSponsoredMessage: ReportSponsoredResult,
+    getSearchSponsoredChats: SponsoredChats,
+    viewSponsoredChat: Ok,
+    openSponsoredChat: Ok,
+    reportSponsoredChat: ReportSponsoredResult,
+    getVideoMessageAdvertisements: VideoMessageAdvertisements,
+    viewVideoMessageAdvertisement: Ok,
+    clickVideoMessageAdvertisement: Ok,
+    reportVideoMessageAdvertisement: ReportSponsoredResult,
     removeNotification: Ok,
     removeNotificationGroup: Ok,
     getMessageLink: MessageLink,
@@ -38430,6 +40475,7 @@ declare module 'tdlib-types' {
     deleteChatMessagesByDate: Ok,
     editMessageText: Message,
     editMessageLiveLocation: Message,
+    editMessageChecklist: Message,
     editMessageMedia: Message,
     editMessageCaption: Message,
     editMessageReplyMarkup: Message,
@@ -38444,11 +40490,23 @@ declare module 'tdlib-types' {
     sendBusinessMessageAlbum: BusinessMessages,
     editBusinessMessageText: BusinessMessage,
     editBusinessMessageLiveLocation: BusinessMessage,
+    editBusinessMessageChecklist: BusinessMessage,
     editBusinessMessageMedia: BusinessMessage,
     editBusinessMessageCaption: BusinessMessage,
     editBusinessMessageReplyMarkup: BusinessMessage,
     stopBusinessPoll: BusinessMessage,
     setBusinessMessageIsPinned: Ok,
+    readBusinessMessage: Ok,
+    deleteBusinessMessages: Ok,
+    editBusinessStory: Story,
+    deleteBusinessStory: Ok,
+    setBusinessAccountName: Ok,
+    setBusinessAccountBio: Ok,
+    setBusinessAccountProfilePhoto: Ok,
+    setBusinessAccountUsername: Ok,
+    setBusinessAccountGiftSettings: Ok,
+    getBusinessAccountStarAmount: StarAmount,
+    transferBusinessAccountStars: Ok,
     checkQuickReplyShortcutName: Ok,
     loadQuickReplyShortcuts: Ok,
     setQuickReplyShortcutName: Ok,
@@ -38506,6 +40564,8 @@ declare module 'tdlib-types' {
     setPollAnswer: Ok,
     getPollVoters: MessageSenders,
     stopPoll: Ok,
+    addChecklistTasks: Ok,
+    markChecklistTasksAsDone: Ok,
     hideSuggestedAction: Ok,
     hideContactCloseBirthdays: Ok,
     getBusinessConnection: BusinessConnection,
@@ -38603,6 +40663,7 @@ declare module 'tdlib-types' {
     setChatClientData: Ok,
     setChatDescription: Ok,
     setChatDiscussionGroup: Ok,
+    setChatDirectMessagesGroup: Ok,
     setChatLocation: Ok,
     setChatSlowModeDelay: Ok,
     pinChatMessage: Ok,
@@ -38635,9 +40696,9 @@ declare module 'tdlib-types' {
     readChatList: Ok,
     getCurrentWeather: CurrentWeather,
     getStory: Story,
-    getChatsToSendStories: Chats,
-    canSendStory: CanSendStoryResult,
-    sendStory: Story,
+    getChatsToPostStories: Chats,
+    canPostStory: CanPostStoryResult,
+    postStory: Story,
     editStory: Ok,
     editStoryCover: Ok,
     setStoryPrivacySettings: Ok,
@@ -38687,7 +40748,7 @@ declare module 'tdlib-types' {
     writeGeneratedFilePart: Ok,
     setFileGenerationProgress: Ok,
     finishFileGeneration: Ok,
-    readFilePart: FilePart,
+    readFilePart: Data,
     deleteFile: Ok,
     addFileToDownloads: File,
     toggleDownloadIsPaused: Ok,
@@ -38726,34 +40787,41 @@ declare module 'tdlib-types' {
     getVideoChatAvailableParticipants: MessageSenders,
     setVideoChatDefaultParticipant: Ok,
     createVideoChat: GroupCallId,
-    createGroupCall: Ok,
+    createGroupCall: GroupCallInfo,
     getVideoChatRtmpUrl: RtmpUrl,
     replaceVideoChatRtmpUrl: RtmpUrl,
     getGroupCall: GroupCall,
-    startScheduledGroupCall: Ok,
-    toggleGroupCallEnabledStartNotification: Ok,
-    joinGroupCall: Text,
+    startScheduledVideoChat: Ok,
+    toggleVideoChatEnabledStartNotification: Ok,
+    joinGroupCall: GroupCallInfo,
+    joinVideoChat: Text,
     startGroupCallScreenSharing: Text,
     toggleGroupCallScreenSharingIsPaused: Ok,
     endGroupCallScreenSharing: Ok,
-    setGroupCallTitle: Ok,
-    toggleGroupCallMuteNewParticipants: Ok,
-    inviteGroupCallParticipants: Ok,
-    getGroupCallInviteLink: HttpUrl,
+    setVideoChatTitle: Ok,
+    toggleVideoChatMuteNewParticipants: Ok,
+    inviteGroupCallParticipant: InviteGroupCallParticipantResult,
+    declineGroupCallInvitation: Ok,
+    banGroupCallParticipants: Ok,
+    inviteVideoChatParticipants: Ok,
+    getVideoChatInviteLink: HttpUrl,
     revokeGroupCallInviteLink: Ok,
     startGroupCallRecording: Ok,
     endGroupCallRecording: Ok,
     toggleGroupCallIsMyVideoPaused: Ok,
     toggleGroupCallIsMyVideoEnabled: Ok,
-    setGroupCallParticipantIsSpeaking: Ok,
+    setGroupCallParticipantIsSpeaking: MessageSender,
     toggleGroupCallParticipantIsMuted: Ok,
     setGroupCallParticipantVolumeLevel: Ok,
     toggleGroupCallParticipantIsHandRaised: Ok,
+    getGroupCallParticipants: GroupCallParticipants,
     loadGroupCallParticipants: Ok,
     leaveGroupCall: Ok,
     endGroupCall: Ok,
-    getGroupCallStreams: GroupCallStreams,
-    getGroupCallStreamSegment: FilePart,
+    getVideoChatStreams: VideoChatStreams,
+    getVideoChatStreamSegment: Data,
+    encryptGroupCallData: Data,
+    decryptGroupCallData: Data,
     setMessageSenderBlockList: Ok,
     blockMessageSenderFromReplies: Ok,
     getBlockedMessageSenders: MessageSenders,
@@ -38902,6 +40970,7 @@ declare module 'tdlib-types' {
     toggleSupergroupJoinByRequest: Ok,
     toggleSupergroupIsAllHistoryAvailable: Ok,
     toggleSupergroupCanHaveSponsoredMessages: Ok,
+    toggleSupergroupHasAutomaticTranslation: Ok,
     toggleSupergroupHasHiddenMembers: Ok,
     toggleSupergroupHasAggressiveAntiSpamEnabled: Ok,
     toggleSupergroupIsForum: Ok,
@@ -38919,7 +40988,8 @@ declare module 'tdlib-types' {
     getSavedOrderInfo: OrderInfo,
     deleteSavedOrderInfo: Ok,
     deleteSavedCredentials: Ok,
-    getAvailableGifts: Gifts,
+    setGiftSettings: Ok,
+    getAvailableGifts: AvailableGifts,
     sendGift: Ok,
     sellGift: Ok,
     toggleGiftIsSaved: Ok,
@@ -38928,10 +40998,13 @@ declare module 'tdlib-types' {
     getGiftUpgradePreview: GiftUpgradePreview,
     upgradeGift: UpgradeGiftResult,
     transferGift: Ok,
+    sendResoldGift: Ok,
     getReceivedGifts: ReceivedGifts,
     getReceivedGift: ReceivedGift,
     getUpgradedGift: UpgradedGift,
     getUpgradedGiftWithdrawalUrl: HttpUrl,
+    setGiftResalePrice: Ok,
+    searchGiftsForResale: GiftsForResale,
     createInvoiceLink: HttpUrl,
     refundStarPayment: Ok,
     getSupportUser: User,
@@ -39042,6 +41115,7 @@ declare module 'tdlib-types' {
     getPremiumGiveawayPaymentOptions: PremiumGiveawayPaymentOptions,
     checkPremiumGiftCode: PremiumGiftCodeInfo,
     applyPremiumGiftCode: Ok,
+    giftPremiumWithStars: Ok,
     launchPrepaidGiveaway: Ok,
     getGiveawayInfo: GiveawayInfo,
     getStarPaymentOptions: StarPaymentOptions,
@@ -39050,8 +41124,7 @@ declare module 'tdlib-types' {
     getStarTransactions: StarTransactions,
     getStarSubscriptions: StarSubscriptions,
     canPurchaseFromStore: Ok,
-    assignAppStoreTransaction: Ok,
-    assignGooglePlayTransaction: Ok,
+    assignStoreTransaction: Ok,
     editStarSubscription: Ok,
     editUserStarSubscription: Ok,
     reuseStarSubscription: Ok,
@@ -39115,6 +41188,8 @@ declare module 'tdlib-types' {
     getAuthorizationState: getAuthorizationState,
     setTdlibParameters: setTdlibParameters,
     setAuthenticationPhoneNumber: setAuthenticationPhoneNumber,
+    checkAuthenticationPremiumPurchase: checkAuthenticationPremiumPurchase,
+    setAuthenticationPremiumPurchaseTransaction: setAuthenticationPremiumPurchaseTransaction,
     setAuthenticationEmailAddress: setAuthenticationEmailAddress,
     resendAuthenticationCode: resendAuthenticationCode,
     checkAuthenticationEmailCode: checkAuthenticationEmailCode,
@@ -39171,6 +41246,7 @@ declare module 'tdlib-types' {
     getMessageThread: getMessageThread,
     getMessageReadDate: getMessageReadDate,
     getMessageViewers: getMessageViewers,
+    getMessageAuthor: getMessageAuthor,
     getFile: getFile,
     getRemoteFile: getRemoteFile,
     loadChats: loadChats,
@@ -39199,6 +41275,18 @@ declare module 'tdlib-types' {
     getSuitableDiscussionChats: getSuitableDiscussionChats,
     getInactiveSupergroupChats: getInactiveSupergroupChats,
     getSuitablePersonalChats: getSuitablePersonalChats,
+    loadDirectMessagesChatTopics: loadDirectMessagesChatTopics,
+    getDirectMessagesChatTopic: getDirectMessagesChatTopic,
+    getDirectMessagesChatTopicHistory: getDirectMessagesChatTopicHistory,
+    getDirectMessagesChatTopicMessageByDate: getDirectMessagesChatTopicMessageByDate,
+    deleteDirectMessagesChatTopicHistory: deleteDirectMessagesChatTopicHistory,
+    deleteDirectMessagesChatTopicMessagesByDate: deleteDirectMessagesChatTopicMessagesByDate,
+    setDirectMessagesChatTopicIsMarkedAsUnread: setDirectMessagesChatTopicIsMarkedAsUnread,
+    setDirectMessagesChatTopicDraftMessage: setDirectMessagesChatTopicDraftMessage,
+    unpinAllDirectMessagesChatTopicMessages: unpinAllDirectMessagesChatTopicMessages,
+    readAllDirectMessagesChatTopicReactions: readAllDirectMessagesChatTopicReactions,
+    getDirectMessagesChatTopicRevenue: getDirectMessagesChatTopicRevenue,
+    toggleDirectMessagesChatTopicCanSendUnpaidMessages: toggleDirectMessagesChatTopicCanSendUnpaidMessages,
     loadSavedMessagesTopics: loadSavedMessagesTopics,
     getSavedMessagesTopicHistory: getSavedMessagesTopicHistory,
     getSavedMessagesTopicMessageByDate: getSavedMessagesTopicMessageByDate,
@@ -39235,6 +41323,14 @@ declare module 'tdlib-types' {
     getChatSponsoredMessages: getChatSponsoredMessages,
     clickChatSponsoredMessage: clickChatSponsoredMessage,
     reportChatSponsoredMessage: reportChatSponsoredMessage,
+    getSearchSponsoredChats: getSearchSponsoredChats,
+    viewSponsoredChat: viewSponsoredChat,
+    openSponsoredChat: openSponsoredChat,
+    reportSponsoredChat: reportSponsoredChat,
+    getVideoMessageAdvertisements: getVideoMessageAdvertisements,
+    viewVideoMessageAdvertisement: viewVideoMessageAdvertisement,
+    clickVideoMessageAdvertisement: clickVideoMessageAdvertisement,
+    reportVideoMessageAdvertisement: reportVideoMessageAdvertisement,
     removeNotification: removeNotification,
     removeNotificationGroup: removeNotificationGroup,
     getMessageLink: getMessageLink,
@@ -39259,6 +41355,7 @@ declare module 'tdlib-types' {
     deleteChatMessagesByDate: deleteChatMessagesByDate,
     editMessageText: editMessageText,
     editMessageLiveLocation: editMessageLiveLocation,
+    editMessageChecklist: editMessageChecklist,
     editMessageMedia: editMessageMedia,
     editMessageCaption: editMessageCaption,
     editMessageReplyMarkup: editMessageReplyMarkup,
@@ -39273,11 +41370,23 @@ declare module 'tdlib-types' {
     sendBusinessMessageAlbum: sendBusinessMessageAlbum,
     editBusinessMessageText: editBusinessMessageText,
     editBusinessMessageLiveLocation: editBusinessMessageLiveLocation,
+    editBusinessMessageChecklist: editBusinessMessageChecklist,
     editBusinessMessageMedia: editBusinessMessageMedia,
     editBusinessMessageCaption: editBusinessMessageCaption,
     editBusinessMessageReplyMarkup: editBusinessMessageReplyMarkup,
     stopBusinessPoll: stopBusinessPoll,
     setBusinessMessageIsPinned: setBusinessMessageIsPinned,
+    readBusinessMessage: readBusinessMessage,
+    deleteBusinessMessages: deleteBusinessMessages,
+    editBusinessStory: editBusinessStory,
+    deleteBusinessStory: deleteBusinessStory,
+    setBusinessAccountName: setBusinessAccountName,
+    setBusinessAccountBio: setBusinessAccountBio,
+    setBusinessAccountProfilePhoto: setBusinessAccountProfilePhoto,
+    setBusinessAccountUsername: setBusinessAccountUsername,
+    setBusinessAccountGiftSettings: setBusinessAccountGiftSettings,
+    getBusinessAccountStarAmount: getBusinessAccountStarAmount,
+    transferBusinessAccountStars: transferBusinessAccountStars,
     checkQuickReplyShortcutName: checkQuickReplyShortcutName,
     loadQuickReplyShortcuts: loadQuickReplyShortcuts,
     setQuickReplyShortcutName: setQuickReplyShortcutName,
@@ -39335,6 +41444,8 @@ declare module 'tdlib-types' {
     setPollAnswer: setPollAnswer,
     getPollVoters: getPollVoters,
     stopPoll: stopPoll,
+    addChecklistTasks: addChecklistTasks,
+    markChecklistTasksAsDone: markChecklistTasksAsDone,
     hideSuggestedAction: hideSuggestedAction,
     hideContactCloseBirthdays: hideContactCloseBirthdays,
     getBusinessConnection: getBusinessConnection,
@@ -39432,6 +41543,7 @@ declare module 'tdlib-types' {
     setChatClientData: setChatClientData,
     setChatDescription: setChatDescription,
     setChatDiscussionGroup: setChatDiscussionGroup,
+    setChatDirectMessagesGroup: setChatDirectMessagesGroup,
     setChatLocation: setChatLocation,
     setChatSlowModeDelay: setChatSlowModeDelay,
     pinChatMessage: pinChatMessage,
@@ -39464,9 +41576,9 @@ declare module 'tdlib-types' {
     readChatList: readChatList,
     getCurrentWeather: getCurrentWeather,
     getStory: getStory,
-    getChatsToSendStories: getChatsToSendStories,
-    canSendStory: canSendStory,
-    sendStory: sendStory,
+    getChatsToPostStories: getChatsToPostStories,
+    canPostStory: canPostStory,
+    postStory: postStory,
     editStory: editStory,
     editStoryCover: editStoryCover,
     setStoryPrivacySettings: setStoryPrivacySettings,
@@ -39559,16 +41671,20 @@ declare module 'tdlib-types' {
     getVideoChatRtmpUrl: getVideoChatRtmpUrl,
     replaceVideoChatRtmpUrl: replaceVideoChatRtmpUrl,
     getGroupCall: getGroupCall,
-    startScheduledGroupCall: startScheduledGroupCall,
-    toggleGroupCallEnabledStartNotification: toggleGroupCallEnabledStartNotification,
+    startScheduledVideoChat: startScheduledVideoChat,
+    toggleVideoChatEnabledStartNotification: toggleVideoChatEnabledStartNotification,
     joinGroupCall: joinGroupCall,
+    joinVideoChat: joinVideoChat,
     startGroupCallScreenSharing: startGroupCallScreenSharing,
     toggleGroupCallScreenSharingIsPaused: toggleGroupCallScreenSharingIsPaused,
     endGroupCallScreenSharing: endGroupCallScreenSharing,
-    setGroupCallTitle: setGroupCallTitle,
-    toggleGroupCallMuteNewParticipants: toggleGroupCallMuteNewParticipants,
-    inviteGroupCallParticipants: inviteGroupCallParticipants,
-    getGroupCallInviteLink: getGroupCallInviteLink,
+    setVideoChatTitle: setVideoChatTitle,
+    toggleVideoChatMuteNewParticipants: toggleVideoChatMuteNewParticipants,
+    inviteGroupCallParticipant: inviteGroupCallParticipant,
+    declineGroupCallInvitation: declineGroupCallInvitation,
+    banGroupCallParticipants: banGroupCallParticipants,
+    inviteVideoChatParticipants: inviteVideoChatParticipants,
+    getVideoChatInviteLink: getVideoChatInviteLink,
     revokeGroupCallInviteLink: revokeGroupCallInviteLink,
     startGroupCallRecording: startGroupCallRecording,
     endGroupCallRecording: endGroupCallRecording,
@@ -39578,11 +41694,14 @@ declare module 'tdlib-types' {
     toggleGroupCallParticipantIsMuted: toggleGroupCallParticipantIsMuted,
     setGroupCallParticipantVolumeLevel: setGroupCallParticipantVolumeLevel,
     toggleGroupCallParticipantIsHandRaised: toggleGroupCallParticipantIsHandRaised,
+    getGroupCallParticipants: getGroupCallParticipants,
     loadGroupCallParticipants: loadGroupCallParticipants,
     leaveGroupCall: leaveGroupCall,
     endGroupCall: endGroupCall,
-    getGroupCallStreams: getGroupCallStreams,
-    getGroupCallStreamSegment: getGroupCallStreamSegment,
+    getVideoChatStreams: getVideoChatStreams,
+    getVideoChatStreamSegment: getVideoChatStreamSegment,
+    encryptGroupCallData: encryptGroupCallData,
+    decryptGroupCallData: decryptGroupCallData,
     setMessageSenderBlockList: setMessageSenderBlockList,
     blockMessageSenderFromReplies: blockMessageSenderFromReplies,
     getBlockedMessageSenders: getBlockedMessageSenders,
@@ -39731,6 +41850,7 @@ declare module 'tdlib-types' {
     toggleSupergroupJoinByRequest: toggleSupergroupJoinByRequest,
     toggleSupergroupIsAllHistoryAvailable: toggleSupergroupIsAllHistoryAvailable,
     toggleSupergroupCanHaveSponsoredMessages: toggleSupergroupCanHaveSponsoredMessages,
+    toggleSupergroupHasAutomaticTranslation: toggleSupergroupHasAutomaticTranslation,
     toggleSupergroupHasHiddenMembers: toggleSupergroupHasHiddenMembers,
     toggleSupergroupHasAggressiveAntiSpamEnabled: toggleSupergroupHasAggressiveAntiSpamEnabled,
     toggleSupergroupIsForum: toggleSupergroupIsForum,
@@ -39748,6 +41868,7 @@ declare module 'tdlib-types' {
     getSavedOrderInfo: getSavedOrderInfo,
     deleteSavedOrderInfo: deleteSavedOrderInfo,
     deleteSavedCredentials: deleteSavedCredentials,
+    setGiftSettings: setGiftSettings,
     getAvailableGifts: getAvailableGifts,
     sendGift: sendGift,
     sellGift: sellGift,
@@ -39757,10 +41878,13 @@ declare module 'tdlib-types' {
     getGiftUpgradePreview: getGiftUpgradePreview,
     upgradeGift: upgradeGift,
     transferGift: transferGift,
+    sendResoldGift: sendResoldGift,
     getReceivedGifts: getReceivedGifts,
     getReceivedGift: getReceivedGift,
     getUpgradedGift: getUpgradedGift,
     getUpgradedGiftWithdrawalUrl: getUpgradedGiftWithdrawalUrl,
+    setGiftResalePrice: setGiftResalePrice,
+    searchGiftsForResale: searchGiftsForResale,
     createInvoiceLink: createInvoiceLink,
     refundStarPayment: refundStarPayment,
     getSupportUser: getSupportUser,
@@ -39871,6 +41995,7 @@ declare module 'tdlib-types' {
     getPremiumGiveawayPaymentOptions: getPremiumGiveawayPaymentOptions,
     checkPremiumGiftCode: checkPremiumGiftCode,
     applyPremiumGiftCode: applyPremiumGiftCode,
+    giftPremiumWithStars: giftPremiumWithStars,
     launchPrepaidGiveaway: launchPrepaidGiveaway,
     getGiveawayInfo: getGiveawayInfo,
     getStarPaymentOptions: getStarPaymentOptions,
@@ -39879,8 +42004,7 @@ declare module 'tdlib-types' {
     getStarTransactions: getStarTransactions,
     getStarSubscriptions: getStarSubscriptions,
     canPurchaseFromStore: canPurchaseFromStore,
-    assignAppStoreTransaction: assignAppStoreTransaction,
-    assignGooglePlayTransaction: assignGooglePlayTransaction,
+    assignStoreTransaction: assignStoreTransaction,
     editStarSubscription: editStarSubscription,
     editUserStarSubscription: editUserStarSubscription,
     reuseStarSubscription: reuseStarSubscription,
