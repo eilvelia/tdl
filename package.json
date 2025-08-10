@@ -30,7 +30,7 @@
     "@types/node": "^24.2.1",
     "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^9.33.0",
-    "flow-bin": "^0.238.3",
+    "flow-bin": "^0.261.2",
     "node-gyp": "^11.3.0",
     "prebuildify": "^6.0.1",
     "prebuilt-tdlib": "^0.1008051.0",

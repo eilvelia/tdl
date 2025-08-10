@@ -135,7 +135,7 @@ function generate (
     const set/*: Set<string> */ = new Set()
     while (stack.length > 0) {
       const typ = stack.pop()
-      if (set.has(typ)) continue
+      if (typ == null || set.has(typ)) continue
       set.add(typ)
       const children = baseClassChildren.get(typ)
       if (!children) {
