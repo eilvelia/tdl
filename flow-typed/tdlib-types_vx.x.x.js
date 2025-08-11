@@ -1,6 +1,6 @@
 // @flow
 // Types for TDLib v1.8.51 (bb474a201baa798784d696d2d9d762a9d2807f96)
-// Generated using tdl-install-types v0.3.0
+// Generated using tdl-install-types v0.3.1
 declare module 'tdlib-types' {
   declare export type error = {|
     /**

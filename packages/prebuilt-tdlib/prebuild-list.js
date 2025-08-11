@@ -6,8 +6,7 @@ export type PrebuildInfo = {
   prebuildDir: string,
   libfile: string,
   descr: string,
-  requirements: { os?: string[], cpu?: string[] },
-  libc?: 'glibc' | 'musl'
+  requirements: { os?: string[], cpu?: string[], libc?: string[] }
 }
 */
 
@@ -53,9 +52,9 @@ const prebuilds/*: PrebuildInfo[] */ = [
     descr: 'Linux x86_64 (glibc)',
     requirements: {
       os: ['linux'],
-      cpu: ['x64']
-    },
-    libc: 'glibc'
+      cpu: ['x64'],
+      libc: ['glibc']
+    }
   },
   {
     packageName: 'linux-arm64-glibc',
@@ -64,9 +63,9 @@ const prebuilds/*: PrebuildInfo[] */ = [
     descr: 'Linux arm64 (glibc)',
     requirements: {
       os: ['linux'],
-      cpu: ['arm64']
-    },
-    libc: 'glibc'
+      cpu: ['arm64'],
+      libc: ['glibc']
+    }
   }
 ]
 

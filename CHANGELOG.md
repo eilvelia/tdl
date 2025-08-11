@@ -2,6 +2,11 @@
 
 <!-- Hi! -->
 
+## tdl-install-types@0.3.1 (2025-08-11)
+
+- Added `--override-version`.
+- Fixed a few typos in the help message.
+
 ## tdl@8.0.2 (2024-12-20)
 
 - Fixed a possible `TypeError: null is not an object` error in `client.login()`

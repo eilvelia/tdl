@@ -47,10 +47,15 @@ For the dependencies of TDLib (zlib and openssl), except on Windows, the
 dependencies reflect the state of `nixpkgs-unstable` at the time of building of
 `prebuilt-tdlib`.
 
+`prebuilt-tdlib` also includes TypeScript types for the appropriate TDLib
+version generated via `tdl-install-types` (using its latest version at the time
+of publishing `prebuilt-tdlib`). If you want to override TDLib types, set
+`skipLibCheck` to `true` in your tsconfig.
+
 ## Usage
 
-The `prebuilt-tdlib` package exports a single function `getTdjson`, which
-returns the path to the `tdjson` shared library.
+The `prebuilt-tdlib` package exports `getTdjson()`, which returns the path to
+the `tdjson` shared library.
 
 ```javascript
 const { getTdjson } = require('prebuilt-tdlib')
@@ -59,7 +64,7 @@ console.log(getTdjson())
 // '/home/user/proj/node_modules/@prebuilt-tdlib/linux-x64-glibc/libtdjson.so'
 ```
 
-This package can be used with, for example, [tdl][]. You can pass the
+This package is primarily meant to be used with [tdl][]. You can pass the
 path to `tdl.configure` (since tdl v7.3.0):
 
 [tdl]: https://github.com/eilvelia/tdl
@@ -94,10 +99,9 @@ version is packed into a single minor version.
 
 Example: the npm release for TDLib `v1.8.5` is `0.1008005.0`.
 
-For convenience, `td-X` dist-tags are available. To install `prebuilt-tdlib` for
+For convenience, `td-x.y.z` dist-tags are available. To install `prebuilt-tdlib` for
 TDLib v1.8.5, just run `npm install prebuilt-tdlib@td-1.8.5`, or
-`npm install prebuilt-tdlib@td-1.8.0` for TDLib v1.8.0. This will automatically
-install the needed version of `prebuilt-tdlib`.
+`npm install prebuilt-tdlib@td-1.8.0` for TDLib v1.8.0.
 
 The releases of the `prebuilt-tdlib` npm package are not git-tagged.
 
@@ -106,7 +110,7 @@ Additionally, TDLib's releasing process is [unusual][], and most
 repository. Usually, the prebuilt packages are generated based on the "Update
 version to x.y.z." TDLib commit ([example][commit-example]) or, if subsequent
 commits have been made before such a commit is pushed to `tdlib/td`, on the last
-pushed commit. The commit hash is indicated in the prebuilt-tdlib's
+pushed commit. The commit hash is indicated in prebuilt-tdlib's
 package.json, see e.g. `npm info prebuilt-tdlib tdlib` (or `tdlib.commit`).
 
 [unusual]: https://github.com/tdlib/td/issues/2215
@@ -115,6 +119,18 @@ package.json, see e.g. `npm info prebuilt-tdlib tdlib` (or `tdlib.commit`).
 ## Changes
 
 Changes to the building process of `prebuilt-tdlib` are noted below.
+
+### 2025-08-11
+
+First published as `prebuilt-tdlib@td-1.8.52` (patch 1).
+
+- `prebuilt-tdlib` now optionally depends on the `@prebuilt-tdlib/types`
+  package, which contains TypeScript types generated via `tdl-install-types` for
+  convenience. They still can be overridden by manually generating
+  `tdlib-types.d.ts` via `tdl-install-types` and using `skipLibCheck: true` in
+  tsconfig.
+- Added `getTdlibInfo()` function that returns the commit hash and version of
+  TDLib.
 
 ### 2024-11-17
 

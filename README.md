@@ -10,7 +10,7 @@ a library for creating [Telegram][] clients or bots.
 - [Installation](#installation)
 - [Getting started](#getting-started)
 - [API](#api)
-- [Types](#types)
+- [Generating types](#generating-types)
 - [Other JavaScript runtimes](#other-javascript-runtimes)
 - [Troubleshooting](#troubleshooting)
 - [Issue tracker](#issue-tracker)
@@ -30,8 +30,6 @@ a library for creating [Telegram][] clients or bots.
 1. Install tdl: `npm install tdl`
 2. Additionally install pre-built TDLib libraries (`npm install prebuilt-tdlib`) or
    [build][tdlib-building] TDLib yourself
-3. If you use TypeScript, types for TDLib are generated separately,
-   see the [Types](#types) section
 
 To use tdl, you also need to get TDLib itself, which is dynamically loaded by
 tdl. A convenient option is to use the `prebuilt-tdlib` package (which is
@@ -145,6 +143,9 @@ field, but tdl renames it to `_`.
 Some short examples are available in the [examples/](examples/) directory.
 
 <!-- TODO: Perhaps add a guide on how to read the tl schema or similar? -->
+
+If you use TypeScript, types for TDLib can me imported using `import type * as
+Td from 'tdlib-types'`, see also [Generating types](#generating-types).
 
 [td_api.tl]: https://github.com/tdlib/td/blob/master/td/generate/scheme/td_api.tl
 
@@ -435,8 +436,8 @@ Set the callback that is called when a message is added to the TDLib log. This
 corresponds to the `td_set_log_message_callback` tdjson function. The callback
 overrides the previously set callback.
 
-<a name="types"></a>
-## Types
+<a name="generating-types"></a>
+## Generating types
 
 > [!TIP]
 > It is generally significantly more convenient to use tdl with TypeScript,
@@ -449,15 +450,20 @@ be done via a small `tdl-install-types` utility, which downloads and generates
 types for you. It can be called using `npx tdl-install-types` without a separate
 installation step.
 
+`prebuilt-tdlib` since td-1.8.52 (2025-08-11) already comes with TypeScript
+types generated, so this section is only relevant if you do not use
+`prebuilt-tdlib`, use older version of it, or need to patch the types.
+
 ```console
 $ npx tdl-install-types [<options>] [<target>]
 ```
 
 (Type "y" in case it asks to install the `tdl-install-types` package.)
 
-This utility can generate types for a given tdjson library file, for the
-installed version of prebuilt-tdlib, for a certain TDLib git ref, or for a
-td_api.tl file. Various examples of using `tdl-install-types`:
+This utility can generate types for a given tdjson library file (extracting
+commit hash from the binary file), for the installed version of
+prebuilt-tdlib, for a certain TDLib git ref, or for a td_api.tl file. Various
+examples of using `tdl-install-types`:
 
 ```console
 $ npx tdl-install-types prebuilt-tdlib # generate types for the installed prebuilt-tdlib
@@ -470,9 +476,10 @@ $ npx tdl-install-types ./td_api.tl # generate types based on the td_api.tl file
 ```
 
 By default, the types are generated into a `tdlib-types.d.ts` file that you can
-git-commit. The declaration file should be inside your project to work. When you
-update the version of TDLib, don't forget to also update the types: it's
-important to keep the types in sync with the interface TDLib actually uses.
+git-commit. The declaration file should be inside your TypeScript project to
+work. When you update the version of TDLib, don't forget to also update the
+types: it's important to keep the types in sync with the interface TDLib
+actually uses.
 
 See `npx tdl-install-types --help` for additional information.
 

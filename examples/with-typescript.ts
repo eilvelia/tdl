@@ -1,6 +1,5 @@
 import * as tdl from 'tdl'
-// import TDLib types:
-// import type * as Td from 'tdlib-types'
+import type * as Td from 'tdlib-types'
 
 const client = tdl.createClient({
   apiId: 2222, // Your api_id

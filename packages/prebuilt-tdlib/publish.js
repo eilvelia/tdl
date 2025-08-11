@@ -48,6 +48,24 @@ prebuildPackageJson.tdlib = {
 
 const prebuildTemplateDir = path.join(__dirname, 'prebuild-template')
 
+const prebuildCount = fs.readdirSync(path.join(__dirname, 'prebuilds'))
+  .filter(name => name.startsWith('tdlib-'))
+  .length
+
+if (prebuildCount < prebuilds.length)
+  throw new Error(`Expected ${prebuilds.length} prebuilds, found ${prebuildCount}`)
+
+const typesTemplateDir = path.join(__dirname, 'types-template')
+const typesPackageJson = require('./types-template/package.json')
+
+delete typesPackageJson.private
+typesPackageJson.name = `${SCOPE}/types`
+typesPackageJson.version = npmVersion
+typesPackageJson.tdlib = {
+  commit: tdlibCommit,
+  version: tdlibVersion
+}
+
 function publishPrebuild (info/*: PrebuildInfo */) {
   console.log(`Preparing to publish ${SCOPE}/${info.packageName}@${npmVersion}`)
 
@@ -80,21 +98,30 @@ function publishPrebuild (info/*: PrebuildInfo */) {
   fs.rmSync(info.libfile)
 }
 
-const prebuildCount = fs.readdirSync(path.join(__dirname, 'prebuilds'))
-  .filter(name => name.startsWith('tdlib-'))
-  .length
-
-if (prebuildCount < prebuilds.length)
-  throw new Error(`Expected ${prebuilds.length} prebuilds, found ${prebuildCount}`)
-
-// Publish
-
 const oldCwd = process.cwd()
+
+// Publish the types package
+
+console.log(`Preparing to publish ${SCOPE}/types@${npmVersion}`)
+process.chdir(typesTemplateDir)
+fs.writeFileSync(
+  path.join(typesTemplateDir, 'package.json'),
+  JSON.stringify(typesPackageJson, null, '  ') + '\n'
+)
+execSync(
+  `npx tdl-install-types -o tdlib-types.d.ts --override-version ${tdlibVersion} --git-ref ${tdlibCommit}`,
+  { stdio: 'inherit' }
+)
+execSync('npm publish --provenance --access public', { stdio: 'inherit' })
+
+// Publish prebuilds
 
 process.chdir(prebuildTemplateDir)
 
 for (const prebuild of prebuilds)
   publishPrebuild(prebuild)
+
+// Publish the main package
 
 console.log(`Preparing to publish ${MAIN_PACKAGE_NAME}@${npmVersion}`)
 
@@ -109,7 +136,9 @@ mainPackageJson.tdlib = {
 }
 mainPackageJson.optionalDependencies = prebuilds.reduce((obj, info) => {
   return { ...obj, [SCOPE + '/' + info.packageName]: npmVersion }
-}, {})
+}, {
+  [`${SCOPE}/types`]: npmVersion
+})
 
 fs.writeFileSync(
   path.join(__dirname, 'package.json'),
@@ -127,6 +156,7 @@ const addTagCommand =
 execSync(publishCommand, { stdio: 'inherit' })
 execSync(addTagCommand, { stdio: 'inherit' })
 
+// Restore cwd
 try {
   process.chdir(oldCwd)
 } catch (e) {

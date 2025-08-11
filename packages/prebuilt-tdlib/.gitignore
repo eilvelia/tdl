@@ -1,2 +1,3 @@
 prebuilds/tdlib-*
+types-template/*.d.ts
 to-upload/

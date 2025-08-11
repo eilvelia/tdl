@@ -1,6 +1,6 @@
 {
   "name": "tdl-install-types",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Generate TypeScript (and Flow) types for TDLib",
   "main": "src/index.js",
   "scripts": {

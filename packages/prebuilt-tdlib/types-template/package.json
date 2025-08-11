@@ -1,0 +1,29 @@
+{
+  "name": "@prebuilt-tdlib/types-dev",
+  "version": "0.0.0",
+  "description": "Generated TypeScript types for TDLib",
+  "types": "tdlib-types.d.ts",
+  "scripts": {
+    "build": ""
+  },
+  "files": [
+    "LICENSE.md",
+    "README.md",
+    "tdlib-types.d.ts"
+  ],
+  "preferUnplugged": true,
+  "license": "0BSD",
+  "keywords": [
+    "tdlib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eilvelia/tdl.git"
+  },
+  "homepage": "https://github.com/eilvelia/tdl/tree/main/packages/prebuilt-tdlib#readme",
+  "tdlib": {
+    "commit": "unknown",
+    "version": "unknown"
+  },
+  "private": true
+}

@@ -38,7 +38,8 @@ exports.getTdjson = function getTdjson (options/*:: ?: Options */)/*: string */ 
       if (!prebuild.requirements.os.includes(platform)) continue
     if (prebuild.requirements.cpu != null)
       if (!prebuild.requirements.cpu.includes(arch)) continue
-    if (prebuild.libc != null && prebuild.libc !== libc) continue
+    if (prebuild.requirements.libc != null && libc != null)
+      if (!prebuild.requirements.libc.includes(libc)) continue
     // Found a prebuild for the current platform
     const pkg = `${SCOPE}/${prebuild.packageName}/${prebuild.libfile}`
     try {
@@ -50,4 +51,13 @@ exports.getTdjson = function getTdjson (options/*:: ?: Options */)/*: string */ 
   let entirePlatform = `${platform}-${arch}`
   if (libc != null) entirePlatform += '-' + libc
   throw new Error(`The ${entirePlatform} platform is not supported`)
+}
+
+let cachedTdlibInfo/*: { commit: string, version: string } | null */ = null
+
+exports.getTdlibInfo = function getTdlibInfo ()/*: { commit: string, version: string } */ {
+  if (cachedTdlibInfo != null) return cachedTdlibInfo
+  const pkg = require('./package.json')
+  cachedTdlibInfo = pkg.tdlib
+  return pkg.tdlib
 }

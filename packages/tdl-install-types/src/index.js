@@ -13,7 +13,7 @@ const help = `\
   Usage: tdl-install-types [<options>] [<target>]
 
   Generate TypeScript (and optionally Flow) types for TDLib,
-  potentially fetching the needed schema from the TDLib's GitHub repository.
+  potentially fetching the necessary schema from TDLib's GitHub repository.
   These types can be used with the tdl library.
 
   By default, a tdlib-types.d.ts file is created that you can git-commit.
@@ -39,7 +39,8 @@ const help = `\
       Interpret <target> as a file path to the tdjson shared library. This is
       the default behavior if <target> ends with .so, .dylib, or .dll.
       Can fail if the heuristics cannot find the version inside the shared
-      library, especially for older TDLib versions.
+      library, especially for older TDLib versions, or if TDLib was built
+      outside of the git repository.
 
     --tl
       Interpret <target> as a file path to a td_api.tl file describing the TDLib
@@ -58,14 +59,17 @@ const help = `\
     --flow
       Also generate Flow types besides the TypeScript types.
 
-    --flow-output <path>
-      Output generated Flow types to <path>.
+    --flow-output <filepath>
+      Output generated Flow types to <filepath>.
       Defaults to flow-typed/tdlib-types_vx.x.x.js.
 
     --github-repo <username>/<repository>
       Set the TDLib GitHub repository.
-      Can be set, for example, to the tdlight's repository.
+      Can be set, for example, to the repository of tdlight.
       Defaults to tdlib/td.
+
+    --override-version <version>
+      Override TDLib version that is generated in the comment header.
 
     --prebuilt-tdlib     Deprecated. Same as setting <target> to prebuilt-tdlib.
 
@@ -84,6 +88,7 @@ let flow = false
 let flowOutput = 'flow-typed/tdlib-types_vx.x.x.js'
 let githubRepo = 'tdlib/td'
 let defaultTarget = false
+let overriddenVersion = null
 
 function parseArgs () {
   if (argv.includes('--help') || argv.includes('-h')) {
@@ -140,6 +145,15 @@ function parseArgs () {
         githubRepo = argv[i + 1]
         i++
         break
+      case '--override-version':
+        if (!argv[i + 1]) {
+          console.error(`${arg} expects a version string`)
+          process.exitCode = 1
+          return false
+        }
+        overriddenVersion = argv[i + 1]
+        i++
+        break
       default:
         if (arg.startsWith('-')) {
           console.error(`WARN Unrecognized option ${arg}`)
@@ -176,6 +190,8 @@ function writeFile (file, contents) {
 }
 
 function fromSchema (schema, { ver, hash } = {}) {
+  if (overriddenVersion != null)
+    ver = overriddenVersion
   let line1 = '// Types for TDLib'
   if (ver) line1 += ` v${ver}`
   if (hash) line1 += ` (${hash})`
@@ -204,13 +220,13 @@ async function fetchTdVersion (ref) {
   }
 }
 
-async function fromGitRef (ref, ver = null) {
+async function fromGitRef (ref, ver = overriddenVersion) {
   const url = `https://raw.githubusercontent.com/${githubRepo}/${ref}/td/generate/scheme/td_api.tl`
   const res = await fetch(url)
   const schema = await res.text()
   if (schema.length < 2000)
     throw Error(`Failed to fetch schema from ${url}\n  ${schema}`)
-  ver ||= await fetchTdVersion(ref)
+  ver ??= await fetchTdVersion(ref)
   const hash = (ref.length >= 30 && ref !== ver) ? ref : null
   fromSchema(schema, { ver, hash })
 }
@@ -230,7 +246,7 @@ function fromDynamicLib (lib) {
     const useVersionRef = (parsed?.[0] === 1 && parsed?.[1] < 8)
       || (!hash && parsed.every(x => !Number.isNaN(x)))
     if (useVersionRef)
-      return fromGitRef('v' + version, version)
+      return fromGitRef('v' + version, overriddenVersion ?? version)
   }
   if (hash) {
     console.log(`INFO Using TDLib ${hash}`)
@@ -249,7 +265,7 @@ async function fromPrebuiltTdlib () {
     const packageJsonPath = path.join(prebuiltTdlib, 'package.json')
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath).toString())
     const tdlibCommit = packageJson?.tdlib?.commit
-    const tdlibVersion = packageJson?.tdlib?.version
+    const tdlibVersion = overriddenVersion ?? packageJson?.tdlib?.version
     if (typeof tdlibCommit === 'string' && typeof tdlibVersion === 'string') {
       await fromGitRef(tdlibCommit, tdlibVersion)
       return
