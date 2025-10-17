@@ -54,7 +54,7 @@ jobs:
 
   build-macos-x86_64:
     name: 'Build TDLib / macOS x86_64'
-    runs-on: macos-13
+    runs-on: macos-15-intel
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v27
@@ -71,7 +71,7 @@ jobs:
 
   build-macos-arm64:
     name: 'Build TDLib / macOS arm64'
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v27
@@ -145,7 +145,7 @@ jobs:
             bin: tdlib-linux-x86_64-glibc
           - os: ubuntu-24.04-arm
             bin: tdlib-linux-arm64-glibc
-          - os: macos-13
+          - os: macos-15-intel
             bin: tdlib-macos-x86_64
           - os: macos-latest
             bin: tdlib-macos-arm64

@@ -9,9 +9,7 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          # Weirdly arm64 macos-14 doesn't really work because typescript fails with
-          # RangeError: Maximum call stack size exceeded at getOuterTypeParameters
-          - macos-13
+          - macos-latest
           - windows-latest
         node:
           - 24
@@ -31,7 +29,7 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: npm
       - name: Update npm
-        run: npm install -g npm@9
+        run: npm install -g npm@10
       - run: npm install # also runs the `prepare` npm script, which runs `build`
       - run: npm test
       - run: npm uninstall -D prebuilt-tdlib
