@@ -22,8 +22,8 @@ jobs:
     name: 'Build TDLib / Linux x86_64 glibc'
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v27
+      - uses: actions/checkout@v5
+      - uses: cachix/install-nix-action@v31
         with:
           nix_path: nixpkgs=channel:nixos-unstable
       - name: Build TDLib
@@ -39,8 +39,8 @@ jobs:
     name: 'Build TDLib / Linux arm64 glibc (cross)'
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v27
+      - uses: actions/checkout@v5
+      - uses: cachix/install-nix-action@v31
         with:
           nix_path: nixpkgs=channel:nixos-unstable
       - name: Build TDLib
@@ -56,8 +56,8 @@ jobs:
     name: 'Build TDLib / macOS x86_64'
     runs-on: macos-15-intel
     steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v27
+      - uses: actions/checkout@v5
+      - uses: cachix/install-nix-action@v31
         with:
           nix_path: nixpkgs=channel:nixpkgs-unstable
       - name: Build TDLib
@@ -73,8 +73,8 @@ jobs:
     name: 'Build TDLib / macOS arm64'
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v27
+      - uses: actions/checkout@v5
+      - uses: cachix/install-nix-action@v31
         with:
           nix_path: nixpkgs=channel:nixpkgs-unstable
       - name: Build TDLib
@@ -92,7 +92,7 @@ jobs:
     name: 'Build TDLib / Windows x86_64'
     runs-on: windows-2022
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           repository: 'tdlib/td'
           ref: ${{ inputs.tdlib }}
@@ -152,7 +152,7 @@ jobs:
           - os: windows-latest
             bin: tdlib-windows-x86_64
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
@@ -176,7 +176,7 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
