@@ -5,7 +5,7 @@
   zlib,
   cmake,
   gperf,
-  apple-sdk_11,
+  apple-sdk_13,
   buildPackages,
 
   rev,
@@ -20,7 +20,7 @@ stdenv.mkDerivation {
   buildInputs = [
     (openssl.override { static = true; }).dev
     (zlib.override { static = true; shared = false; })
-  ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ apple-sdk_11 ];
+  ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ apple-sdk_13 ];
 
   nativeBuildInputs = [
     cmake
@@ -33,6 +33,7 @@ stdenv.mkDerivation {
   # compiler can be zig cc targeting a different glibc version that doesn't
   # produce runnable executables
   preConfigure = ''
+    export MACOSX_DEPLOYMENT_TARGET=11.0
     cmake -B native-build \
       -DCMAKE_C_COMPILER=$CC_FOR_BUILD \
       -DCMAKE_CXX_COMPILER=$CXX_FOR_BUILD \
