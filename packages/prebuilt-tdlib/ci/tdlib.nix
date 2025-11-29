@@ -5,7 +5,7 @@
   zlib,
   cmake,
   gperf,
-  apple-sdk_13,
+  apple-sdk_15,
   buildPackages,
 
   rev,
@@ -20,7 +20,7 @@ stdenv.mkDerivation {
   buildInputs = [
     (openssl.override { static = true; }).dev
     (zlib.override { static = true; shared = false; })
-  ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ apple-sdk_13 ];
+  ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ apple-sdk_15 ];
 
   nativeBuildInputs = [
     cmake
