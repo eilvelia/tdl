@@ -10,7 +10,7 @@ using [npm publish --provenance][npm-provenance].
 
 Supported systems:
 - Linux x86_64, arm64 (requires glibc >= 2.22)
-- macOS x86_64, arm64 (requires macOS >= 11.0)
+- macOS x86_64, arm64 (requires macOS >= 14.0)
 - Windows x86_64
 
 To install `prebuilt-tdlib` for the latest TDLib version that `prebuilt-tdlib`
@@ -119,6 +119,12 @@ package.json, see e.g. `npm info prebuilt-tdlib tdlib` (or `tdlib.commit`).
 ## Changes
 
 Changes to the building process of `prebuilt-tdlib` are noted below.
+
+### 2025-12-01
+
+First published as `prebuilt-tdlib@td-1.8.57`.
+
+- Dropped support for macOS 11, 12, 13.
 
 ### 2025-08-11
 
