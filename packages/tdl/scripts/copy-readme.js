@@ -1,5 +1,7 @@
-const fs = require('fs')
-const path = require('path')
+//@flow
+
+const fs = require('node:fs')
+const path = require('node:path')
 
 fs.copyFileSync(
   path.join(__dirname, '..', '..', '..', 'README.md'),

@@ -8,9 +8,10 @@
 
 [options]
 module.use_strict=true
-include_warnings=true
+# include_warnings=true
 
 [strict]
 
 [declarations]
 <PROJECT_ROOT>/node_modules/.*
+<PROJECT_ROOT>/flow-typed/.*

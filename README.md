@@ -61,6 +61,7 @@ additional information.
 ## Getting started
 
 ```javascript
+// Import using CommonJS:
 const tdl = require('tdl')
 
 // Configure tdl to use the tdjson shared library from the prebuilt-tdlib
@@ -110,30 +111,30 @@ async function main () {
   })
   console.log('A part of my chat list:', chats)
 
-  // Close the instance so that TDLib exits gracefully and the JS runtime can
-  // finish the process.
+  // Close the instance so that TDLib finishes gracefully and the JS runtime can
+  // exit the process.
   await client.close()
 }
 
 main().catch(console.error)
 ```
 
-Instead of using CommonJS (`require('tdl')`), one can import tdl in an
+Instead of using `require`, one can import tdl in an
 EcmaScript module through the interoperability with CommonJS:
 `import * as tdl from 'tdl'` (or import only some functions:
 `import { createClient } from 'tdl'`).
 
 The API reference of the TDLib methods, which are called using `client.invoke`,
-can be found at, e.g.:
+can be found at:
 - https://core.telegram.org/tdlib/docs/annotated.html,
-- the [td_api.tl][] file in the TDLib repository,
+- the [td_api.tl][] file in the TDLib repository (written as a schema in the TL language),
 - if the TypeScript types for TDLib are installed, the documentation can be
   browsed directly in the editor, using the editor's autocompletion menu or the
   `tdlib-types.d.ts` file (the types are annotated with JSDoc comments).
 
-In the TDLib documentation, the `bytes` type means a **base64-encoded** string.
+In the TDLib schema, the `bytes` type means a **base64-encoded** string.
 `int64` accepts either a number or a string, pass string for large numbers.
-`int32`, `int53`, and `double` are the number JS type.
+`int32`, `int53`, and `double` are mapped to the number JavaScript type.
 
 See also https://core.telegram.org/tdlib/getting-started for some basic
 information on how to use TDLib (tdl handles the authorization part with
@@ -142,10 +143,8 @@ field, but tdl renames it to `_`.
 
 Some short examples are available in the [examples/](examples/) directory.
 
-<!-- TODO: Perhaps add a guide on how to read the tl schema or similar? -->
-
-If you use TypeScript, types for TDLib can me imported using `import type * as
-Td from 'tdlib-types'`, see also [Generating types](#generating-types).
+If you use TypeScript, types for TDLib can be imported using
+`import type * as Td from 'tdlib-types'`, see also [Generating types](#generating-types).
 
 [td_api.tl]: https://github.com/tdlib/td/blob/master/td/generate/scheme/td_api.tl
 
@@ -160,13 +159,13 @@ Td from 'tdlib-types'`, see also [Generating types](#generating-types).
 
 Configure several parameters such as libtdjson filename or verbosity level. This
 function should be called before `tdl.createClient` or `tdl.execute`. Can be
-called multiple times.
+called multiple times; only present fields are set.
 
 The possible parameters are:
 
 ```javascript
 tdl.configure({
-  // Path to the library. By default, it is 'tdjson.dll' on Windows,
+  // Path to the shared library. By default, it is 'tdjson.dll' on Windows,
   // 'libtdjson.dylib' on macOS, or 'libtdjson.so' otherwise.
   tdjson: 'libtdjson.so',
   // Path to the library directory. Defaults to the empty string.
@@ -203,7 +202,7 @@ const client = tdl.createClient({
 })
 ```
 
-`createClient` accepts options of the following interface:
+`createClient` accepts options of the following interface (expressed in TypeScript):
 
 ```typescript
 type ClientOptions = {
@@ -380,10 +379,10 @@ for await (const update of client.iterUpdates()) {
 #### `client.invoke(query: Request) => Promise<Response>`
 
 Call a TDLib method asynchronously. If the request fails, the promise rejects
-with `TDLibError` containing the error code and error message.
+with a `TDLibError` containing the error code and error message.
 
-For information regarding the TDLib API list, see the
-[Getting started](#getting-started) section of this README.
+Regarding the TDLib API list, see the [Getting started](#getting-started) section of this
+README.
 
 ```javascript
 const chats = await client.invoke({
@@ -440,18 +439,17 @@ overrides the previously set callback.
 
 > [!TIP]
 > It is generally significantly more convenient to use tdl with TypeScript,
-> which enables autocompletion along with the documentation for more than 2500
+> which enables autocompletion along with the documentation comments for more than 2500
 > TDLib methods and structures.
 
 While tdl works with any TDLib version (above the requirement), the TypeScript
-types have to be installed specifically for the TDLib version you use. This can
-be done via a small `tdl-install-types` utility, which downloads and generates
-types for you. It can be called using `npx tdl-install-types` without a separate
-installation step.
+types have to be installed specifically for the TDLib version you use.
 
-`prebuilt-tdlib` since td-1.8.52 (2025-08-11) already comes with TypeScript
-types generated, so this section is only relevant if you do not use
-`prebuilt-tdlib`, use older version of it, or need to patch the types.
+`prebuilt-tdlib` since version td-1.8.52 (released 2025-08-11) comes with TypeScript types
+included for its TDLib version. If you do not use `prebuilt-tdlib`, use older version of
+it, or want to patch the types, you may generate TypeScript types using the following
+`tdl-install-types` utility, which fetches the schema and generates types for you. It can
+be called using `npx tdl-install-types` without separate installation.
 
 ```console
 $ npx tdl-install-types [<options>] [<target>]
@@ -482,7 +480,7 @@ actually uses.
 
 See `npx tdl-install-types --help` for additional information.
 
-The types can be imported by using the `tdlib-types` module name:
+The types can be imported using the `tdlib-types` module name:
 
 ```typescript
 import type * as Td from 'tdlib-types'
@@ -506,9 +504,8 @@ generally works out of the box, however the stability may not be the best yet.
 
 [deno][] can also import tdl through the node compatibility via
 `import * as tdl from 'npm:tdl'`. To use tdl in deno, you must ensure that your
-deno version is 1.44.2 (2024-06-13) or greater. The Node-API implementation was
-broken in older deno versions and can easily result in segfaults. There's a
-small example in `examples/deno-example.ts`.
+deno version is 1.44.2 (released 2024-06-13) or greater. The Node-API implementation was
+broken in older versions of deno. There's a small example in `examples/deno-example.ts`.
 
 tdl depends on native libraries and cannot be used in the browser. TDLib itself,
 however, can work in the browser if you compile it to WebAssembly. There is an
@@ -559,7 +556,7 @@ The path to the directory in which you execute `npm install` likely contains
 spaces, which is not supported by gyp:
 https://github.com/nodejs/node-gyp/issues/65#issuecomment-368820565.
 
-### Messages from certain chats are not received or are delayed
+### Messages from some chats are not received or are delayed
 
 This is likely caused by missing `openChat` calls. Call the `openChat` method
 with the chat from which you want to receive messages (can be called multiple

@@ -1,7 +1,7 @@
 // @flow
 
-const fs = require('fs')
-const path = require('path')
+const fs = require('node:fs')
+const path = require('node:path')
 
 const inputFile = path.join(__dirname, '..', 'index.d.ts')
 const outputFile = path.join(__dirname, '..', 'dist', 'index.js.flow')

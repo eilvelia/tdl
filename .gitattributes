@@ -3,6 +3,6 @@
 *.snap linguist-generated=true
 *.shot linguist-generated=true
 tdlib-types.d.ts linguist-generated=true
-flow-typed/*.js linguist-generated=true
+flow-typed/**/* linguist-generated=true
 examples/*.js linguist-vendored=true
 examples/*.ts linguist-vendored=true

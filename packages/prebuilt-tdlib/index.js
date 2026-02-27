@@ -12,13 +12,13 @@ export type Options = {
 }
 */
 
-let libcNameCache = null
+let libcNameCache/*: null | 'glibc' | 'musl' */ = null
 
 function detectLibc ()/*: 'glibc' | 'musl' */ {
   // This function can return false results: it currently only checks for
   // Alpine Linux as a heuristic (the same approach is used by node-gyp-build).
   if (libcNameCache != null) return libcNameCache
-  let result = 'glibc'
+  let result/*: 'glibc' | 'musl' */ = 'glibc'
   try {
     if (fs.existsSync('/etc/alpine-release'))
       result = 'musl'
@@ -48,6 +48,7 @@ exports.getTdjson = function getTdjson (options/*:: ?: Options */)/*: string */ 
       throw new Error(`Could not load ${pkg} (are optionalDependencies installed?): ${e?.message}`)
     }
   }
+  // No prebuild found
   let entirePlatform = `${platform}-${arch}`
   if (libc != null) entirePlatform += '-' + libc
   throw new Error(`The ${entirePlatform} platform is not supported`)

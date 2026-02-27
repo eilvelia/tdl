@@ -29,7 +29,7 @@ tdl.createClient({
     device_model: 'unknown'
   }
 })
-// $FlowExpectedError[incompatible-call]
+// $FlowExpectedError[incompatible-type]
 tdl.createClient()
 
 tdl.createBareClient()
@@ -45,7 +45,7 @@ const execRes = tdl.execute({
 
 tdl.setLogMessageCallback(4, a => console.log(a))
 tdl.setLogMessageCallback(4, null)
-// $FlowExpectedError[incompatible-call]
+// $FlowExpectedError[incompatible-type]
 tdl.setLogMessageCallback('1234')
 
 async function main () {
@@ -78,24 +78,24 @@ async function main () {
       Promise.resolve({ firstName: 'John', lastName: 'Doe' })
   }))
 
-  // $FlowExpectedError[incompatible-call]
+  // $FlowExpectedError[incompatible-type]
   await client.login(() => ({ getToken: () => Promise.resolve('token') }))
-  // $FlowExpectedError[incompatible-call]
+  // $FlowExpectedError[incompatible-type]
   await client.login(() => {})
-  // $FlowExpectedError[incompatible-call]
+  // $FlowExpectedError[incompatible-type]
   await client.login(() => ({ a: 2 }))
-  // $FlowExpectedError[incompatible-call]
+  // $FlowExpectedError[incompatible-type]
   await client.login(() => ({ type: 'abc' }))
 
-  // $FlowExpectedError[incompatible-call]
+  // $FlowExpectedError[incompatible-type]
   client.login(123)
-  // $FlowExpectedError[incompatible-call]
+  // $FlowExpectedError[incompatible-type]
   client.login(() => 2)
 
   await client.loginAsBot('token')
   await client.loginAsBot(() => 'token')
   await client.loginAsBot(() => Promise.resolve('token'))
-  // $FlowExpectedError[incompatible-call]
+  // $FlowExpectedError[incompatible-type]
   await client.loginAsBot(Promise.resolve('token'))
 
   const res = client.execute({
@@ -126,10 +126,6 @@ async function main () {
 
   client.invoke({
     _: 'addProxy',
-    server: '127.0.0.1',
-    port: 443,
-    enable: true,
-    type: { _: 'proxyTypeMtproto', secret: '15abcdef1234567890deadbeef123456' }
   })
 
   const ver: string = client.getVersion()
@@ -139,14 +135,14 @@ async function main () {
 
 client.on('error', e => console.log('error', e))
 
-// $FlowExpectedError[incompatible-call]
+// $FlowExpectedError[incompatible-type]
 client.on('foo')
-// $FlowExpectedError[incompatible-call]
+// $FlowExpectedError[incompatible-type]
 client.on('error')
 
 client.once('update', e => {
   ;(e: Td.Update)
-  // $FlowExpectedError[incompatible-cast]
+  // $FlowExpectedError[incompatible-type]
   ;(e: number)
 })
 
@@ -164,11 +160,11 @@ client.on('error', e => {
 })
 
 client.removeListener('update', () => {})
-// $FlowExpectedError[incompatible-call]
+// $FlowExpectedError[incompatible-type]
 client.removeListener('update', () => {}, 'abc')
-// $FlowExpectedError[incompatible-call]
+// $FlowExpectedError[incompatible-type]
 client.removeListener('myevent', () => {})
-// $FlowExpectedError[incompatible-call]
+// $FlowExpectedError[incompatible-type]
 client.removeListener('update', 'abc')
 
 client.emit('close')

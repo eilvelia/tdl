@@ -1,8 +1,8 @@
 #!/usr/bin/env/node
 // @flow
 
-const path = require('path')
-const fs = require('fs')
+const path = require('node:path')
+const fs = require('node:fs')
 const { execSync } = require('child_process')
 const { prebuilds } = require('./prebuild-list')
 /*:: import type { PrebuildInfo } from './prebuild-list' */

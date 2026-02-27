@@ -100,10 +100,6 @@ async function main () {
 
   client.invoke({
     _: 'addProxy',
-    server: '127.0.0.1',
-    port: 443,
-    enable: true,
-    type: { _: 'proxyTypeMtproto', secret: '15abcdef1234567890deadbeef123456' }
   })
 
   const ver: string = client.getVersion()

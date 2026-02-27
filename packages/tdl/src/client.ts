@@ -127,7 +127,7 @@ export type ManagingParameters = {
 }
 
 const TDLIB_1_8_6 = new Version('1.8.6')
-const TDLIB_DEFAULT = new Version('1.8.27')
+const TDLIB_DEFAULT = new Version('1.8.61')
 
 const TDL_MAGIC = '-tdl-'
 
