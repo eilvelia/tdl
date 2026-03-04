@@ -102,7 +102,7 @@ type DeferredPromise<R, E> = {
   reject: (error: E) => void
 }
 
-type PendingRequest = DeferredPromise<unknown, TDLibError>
+type PendingRequest = DeferredPromise<unknown, Error>
 
 export type On =
   & ((event: 'update', listener: (update: Td.Update) => void) => Client)
@@ -269,6 +269,10 @@ export class Client {
     const finish = () => {
       this.off('update', onUpdate)
       finished = true
+      if (defer != null) {
+        defer.resolve({ done: true, value: undefined })
+        defer = null
+      }
       debug('Finished an async iterator')
     }
 
@@ -386,6 +390,10 @@ export class Client {
     if (!this._client.isTdn)
       this._tdjson.tdold.destroy(this._client.val)
     this._client.val = null
+    for (const defer of this._pending.values())
+      defer.reject(new Error('Client was closed'))
+    this._pending.clear()
+    this._preinitRequests = []
     this.emit('close')
     debug('closed')
   }
@@ -428,6 +436,10 @@ export class Client {
   // This function can be called with any TDLib object
   private _handleReceive (res: any): void {
     debugReceive(res)
+
+    // ignore response if the client is closed
+    if (this._client.val == null)
+      return
 
     const isError = res._ === 'error'
 
