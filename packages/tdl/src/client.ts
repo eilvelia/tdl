@@ -702,10 +702,10 @@ export class Client {
         if (update._ !== 'updateAuthorizationState') return
         processAuthorizationState(update.authorization_state)
       }
+      this.on('update', onUpdate)
       // Process last received authorization state first
       if (this._authorizationState != null)
         processAuthorizationState(this._authorizationState)
-      this.on('update', onUpdate)
     })
   }
 

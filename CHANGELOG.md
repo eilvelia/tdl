@@ -2,6 +2,11 @@
 
 <!-- Hi! -->
 
+## tdl (UNRELEASED)
+
+- Fixed a minor potential event listener leak in client.login().
+- Minor improvements.
+
 ## tdl-install-types@0.3.1 (2025-08-11)
 
 - Added `--override-version`.
