@@ -1,20 +1,10 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
+set -euo pipefail
 
-tdlib=$1
-arch=$2
+tdlib=${1:?not enough arguments: expected TDLib rev}
+arch=${2:?not enough arguments: expected arch}
 abi="${3:-gnu}"
-
-if [ -z "$tdlib" ]; then
-  echo "Not enough arguments: expected TDLib rev"
-  exit 1
-fi
-
-if [ -z "$arch" ]; then
-  echo "Not enough arguments: expected arch"
-  exit 1
-fi
 
 if [ "$abi" = "gnu" ]; then
   libc_version="2.22"
@@ -37,8 +27,8 @@ cd to-upload
 # Info
 ldd libtdjson.so || true
 
-if [ -z "$GITHUB_ENV" ]; then
-  echo "Note: GITHUB_ENV not found"
+if [ -z "${GITHUB_ENV:-}" ]; then
+  echo "note: GITHUB_ENV not found"
   exit
 fi
 

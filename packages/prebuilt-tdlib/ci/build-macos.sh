@@ -1,17 +1,12 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
+set -euo pipefail
 
-tdlib=$1
-
-if [ -z "$tdlib" ]; then
-  echo "Not enough arguments: expected TDLib rev"
-  exit 1
-fi
+tdlib=${1:?not enough arguments: expected TDLib rev}
 
 set -x
 
-nix-build -v -E "(import <nixpkgs> { }).callPackage ./tdlib.nix { rev = \"$tdlib\"; }"
+nix-build -v -E "(import <nixpkgs> {}).callPackage ./tdlib.nix { rev = \"$tdlib\"; }"
 
 mkdir to-upload
 cp -L ./result/lib/libtdjson.dylib to-upload/libtdjson.dylib
@@ -29,8 +24,8 @@ codesign -s - --force libtdjson.dylib
 otool -L libtdjson.dylib
 otool -l libtdjson.dylib
 
-if [ -z "$GITHUB_ENV" ]; then
-  echo "Note: GITHUB_ENV not found"
+if [ -z "${GITHUB_ENV:-}" ]; then
+  echo "note: GITHUB_ENV not found"
   exit
 fi
 

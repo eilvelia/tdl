@@ -48,7 +48,7 @@ need a patched TDLib, or for other reasons.
 
 ### prebuilt-tdlib
 
-`prebuilt-tdlib` supports x86_64 & arm64 Linux (glibc only), x86_64 & arm64
+`prebuilt-tdlib` supports x86_64 & arm64 Linux, x86_64 & arm64
 macOS, and x86_64 Windows. An example of using libraries from `prebuilt-tdlib`
 is present in the section below. See the README of [prebuilt-tdlib][] for
 additional information.

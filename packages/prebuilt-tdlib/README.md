@@ -9,7 +9,8 @@ using [npm publish --provenance][npm-provenance].
 [npm-provenance]: https://docs.npmjs.com/generating-provenance-statements
 
 Supported systems:
-- Linux x86_64, arm64 (requires glibc >= 2.22)
+- Linux glibc x86_64, arm64 (requires glibc >= 2.22)
+- Linux musl x86_64, arm64
 - macOS x86_64, arm64 (requires macOS >= 14.0)
 - Windows x86_64
 
@@ -119,6 +120,13 @@ package.json, see e.g. `npm info prebuilt-tdlib tdlib` (or `tdlib.commit`).
 ## Changes
 
 Changes to the building process of `prebuilt-tdlib` are noted below.
+
+### 2026-03-08
+
+First published as `prebuilt-tdlib@td-1.8.62` (patch 1).
+
+- Added shared libraries for Linux musl x86_64 and Linux musl aarch64.
+  The libc detection method reads /proc/self/exe or fallbacks to /usr/bin/ldd.
 
 ### 2025-12-01
 

@@ -41,6 +41,7 @@ stdenv.mkDerivation {
       -DCMAKE_STRIP=$(command -v $STRIP_FOR_BUILD) \
       -DTD_GENERATE_SOURCE_FILES=ON .
     cmake --build native-build -j $NIX_BUILD_CORES
+    export STRIP=$STRIP_FOR_BUILD
   '';
 
   cmakeFlags = [

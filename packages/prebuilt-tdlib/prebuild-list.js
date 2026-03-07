@@ -66,6 +66,28 @@ const prebuilds/*: PrebuildInfo[] */ = [
       cpu: ['arm64'],
       libc: ['glibc']
     }
+  },
+  {
+    packageName: 'linux-x64-musl',
+    prebuildDir: 'tdlib-linux-x86_64-musl',
+    libfile: SHARED_LINUX,
+    descr: 'Linux x86_64 (musl)',
+    requirements: {
+      os: ['linux'],
+      cpu: ['x64'],
+      libc: ['musl']
+    }
+  },
+  {
+    packageName: 'linux-arm64-musl',
+    prebuildDir: 'tdlib-linux-arm64-musl',
+    libfile: SHARED_LINUX,
+    descr: 'Linux arm64 (musl)',
+    requirements: {
+      os: ['linux'],
+      cpu: ['arm64'],
+      libc: ['musl']
+    }
   }
 ]
 

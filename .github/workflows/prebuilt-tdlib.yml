@@ -52,6 +52,40 @@ jobs:
           name: tdlib-linux-arm64-glibc
           path: ${{ env.TO_UPLOAD }}
 
+  build-linux-x86_64-musl:
+    name: 'Build TDLib / Linux x86_64 musl'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+      - name: Build TDLib
+        run: |
+          cd packages/prebuilt-tdlib/ci
+          ./build-linux.sh ${{ inputs.tdlib }} x86_64 musl
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tdlib-linux-x86_64-musl
+          path: ${{ env.TO_UPLOAD }}
+
+  build-linux-arm64-musl:
+    name: 'Build TDLib / Linux arm64 musl (cross)'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+      - name: Build TDLib
+        run: |
+          cd packages/prebuilt-tdlib/ci
+          ./build-linux.sh ${{ inputs.tdlib }} aarch64 musl
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tdlib-linux-arm64-musl
+          path: ${{ env.TO_UPLOAD }}
+
   build-macos-x86_64:
     name: 'Build TDLib / macOS x86_64'
     runs-on: macos-15-intel
@@ -131,6 +165,8 @@ jobs:
     needs:
       - build-linux-x86_64-glibc
       - build-linux-arm64-glibc
+      - build-linux-x86_64-musl
+      - build-linux-arm64-musl
       - build-macos-x86_64
       - build-macos-arm64
       - build-windows-x86_64
@@ -140,33 +176,52 @@ jobs:
       matrix:
         v:
           # use an older ubuntu version to test the library working with
-          # previous glibc version
+          # previous glibc versions
           - os: ubuntu-22.04
             bin: tdlib-linux-x86_64-glibc
           - os: ubuntu-24.04-arm
             bin: tdlib-linux-arm64-glibc
+          - os: ubuntu-24.04
+            bin: tdlib-linux-x86_64-musl
+            docker: node:lts-alpine
+          - os: ubuntu-24.04-arm
+            bin: tdlib-linux-arm64-musl
+            docker: node:lts-alpine
           - os: macos-15-intel
             bin: tdlib-macos-x86_64
           - os: macos-latest
             bin: tdlib-macos-arm64
           - os: windows-latest
             bin: tdlib-windows-x86_64
+    env:
+      LIBDIR_PATH: '.' # for npm run test:integration
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v4
+        if: ${{ !matrix.v.docker }}
         with:
           node-version: lts/*
           cache: npm
-      - run: npm install
-      - name: Uninstall the prebuilt-tdlib dev dependency
-        run: npm uninstall -D prebuilt-tdlib # just in case
       - uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.v.bin }}
           merge-multiple: true
-      - run: npm run test:integration
-        env:
-          LIBDIR_PATH: '.'
+      - name: Test
+        if: ${{ !matrix.v.docker }}
+        run: |
+          npm install
+          npm uninstall -D prebuilt-tdlib
+          npm run test:integration
+      - name: Test (musl)
+        if: ${{ matrix.v.docker }}
+        run: |
+          docker run --rm -e LIBDIR_PATH -v "${{ github.workspace }}:/work" -w /work \
+            ${{ matrix.v.docker }} sh -c "
+              apk add --no-cache python3 make g++ &&
+              npm install &&
+              npm uninstall -D prebuilt-tdlib &&
+              npm run test:integration
+            "
 
   publish:
     name: 'Publish to npm'
