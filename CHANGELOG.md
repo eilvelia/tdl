@@ -4,6 +4,7 @@
 
 ## tdl (UNRELEASED)
 
+- Added node addon prebuilts for linux x86_64 musl and linux arm64 musl.
 - Fixed a minor potential event listener leak in client.login().
 - Minor improvements.
 

@@ -35,17 +35,21 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           CC="zig cc -target x86_64-linux-gnu.2.22" CXX="zig c++ -target x86_64-linux-gnu.2.22 -s" \
-            npm exec -w tdl -c 'prebuildify --napi -t 18.20.5 --arch x64 --tag-libc --strip'
+            npm exec -w tdl -c 'prebuildify --napi -t 20.20.1 --arch x64 --libc glibc --tag-libc'
           CC="zig cc -target aarch64-linux-gnu.2.22" CXX="zig c++ -target aarch64-linux-gnu.2.22 -s" \
-            npm exec -w tdl -c 'prebuildify --napi -t 18.20.5 --arch arm64 --armv 8 --tag-armv --tag-libc'
-          ldd packages/tdl/prebuilds/*-x64/*.node
+            npm exec -w tdl -c 'prebuildify --napi -t 20.20.1 --arch arm64 --armv 8 --tag-armv --libc glibc --tag-libc'
+          CC="zig cc -target x86_64-linux-musl" CXX="zig c++ -target x86_64-linux-musl -s" \
+            npm exec -w tdl -c 'prebuildify --napi -t 20.20.1 --arch x64 --libc musl --tag-libc'
+          CC="zig cc -target aarch64-linux-musl" CXX="zig c++ -target aarch64-linux-musl -s" \
+            npm exec -w tdl -c 'prebuildify --napi -t 20.20.1 --arch arm64 --armv 8 --tag-armv --libc musl --tag-libc'
+          ldd packages/tdl/prebuilds/*-x64/*.glibc.node
       - name: Prebuildify (macOS x86_64 and Windows x86_64)
         if: runner.os != 'Linux'
-        run: npm exec -w tdl -c 'prebuildify --napi -t 18.20.8 --arch x64 --strip'
+        run: npm exec -w tdl -c 'prebuildify --napi -t 20.20.1 --arch x64 --strip'
       - name: "Prebuildify (macOS arm64)"
         if: runner.os == 'macOS'
         run: |
-          npm exec -w tdl -c 'prebuildify --napi -t 18.20.8 --arch arm64 --strip'
+          npm exec -w tdl -c 'prebuildify --napi -t 20.20.1 --arch arm64 --strip'
       - name: Info
         run: |
           file packages/tdl/prebuilds/*/*.node
