@@ -278,7 +278,7 @@ export class Client {
 
     function onUpdate (update: Td.Update) {
       if (update._ === 'updateAuthorizationState' &&
-          update.authorization_state._ == 'authorizationStateClosed') {
+          update.authorization_state._ === 'authorizationStateClosed') {
         finish()
       }
       if (defer != null) {
