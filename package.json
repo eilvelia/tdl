@@ -7,7 +7,7 @@
     "clean": "rimraf --glob packages/*/dist/ && npm run clean -w tdl",
     "clean-modules": "rm -rf node_modules/ && rm -rf packages/node_modules/",
     "clean-all": "npm run clean && npm run clean-modules",
-    "build": "npm run build -ws",
+    "build": "npm run build ---workspaces",
     "lint": "eslint . --max-warnings 0",
     "test:unit": "vitest run --exclude \"tests/integration|tests/auth-only\"",
     "test": "tsc && flow check && npm run lint && npm run test:unit",
