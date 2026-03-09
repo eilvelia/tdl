@@ -1,6 +1,10 @@
 #define NAPI_VERSION 5
 #define NODE_API_NO_EXTERNAL_BUFFERS_ALLOWED 1
 
+#ifndef NAPI_DISABLE_CPP_EXCEPTIONS
+# define NAPI_DISABLE_CPP_EXCEPTIONS 1
+#endif
+
 #include <napi.h>
 #include <thread>
 #include <chrono>
