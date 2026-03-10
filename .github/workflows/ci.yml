@@ -29,11 +29,11 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: npm
       - name: Update npm
+        if: ${{ matrix.node < 22 }}
         run: npm install -g npm@10
       - run: npm install # also runs the `prepare` npm script, which runs `build`
       - run: npm test
-      - run: npm uninstall -D prebuilt-tdlib
-      - name: Run integration tests
+      - name: Run integration tests for different TDLib versions
         shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
@@ -46,6 +46,7 @@ jobs:
             "td-1.8.14",
             "td-1.8.0"
           )
+          npm uninstall -D prebuilt-tdlib
           foreach ($td in $tds) {
             mkdir $td
             npm install -D prebuilt-tdlib@$td

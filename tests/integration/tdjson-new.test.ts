@@ -1,5 +1,5 @@
 import { describe } from 'vitest'
-import { addTests } from './shared'
+import { addTests } from './test'
 
 describe('tdl + tdjson', () => {
   addTests()

@@ -2,7 +2,7 @@
 // database creation). It takes API_ID, API_HASH, and the bot token from the
 // test.cfg file. These tests are run manually only.
 
-import { describe, test, expect, beforeEach, afterEach } from 'vitest'
+import { describe, test, expect, beforeEach, afterEach, beforeAll, afterAll } from 'vitest'
 import * as path from 'node:path'
 import * as fs from 'node:fs'
 import * as fsp from 'node:fs/promises'
@@ -14,9 +14,8 @@ const projectRoot = path.join(__dirname, '..', '..')
 tdl.configure({ tdjson: getTdjson() })
 
 const databaseDirectory = path.join(__dirname, '..', '_td_database')
-const filesDirectory = path.join(__dirname, '..', '_td_files')
 
-const envrcLines = fs.readFileSync(path.join(projectRoot, 'test.cfg'))
+const cfgLines = fs.readFileSync(path.join(projectRoot, 'test.cfg'))
   .toString()
   .trim()
   .split(/\r?\n/)
@@ -26,7 +25,7 @@ let apiId: number | undefined
 let apiHash: string | undefined
 let botToken: string | undefined
 
-for (const line of envrcLines) {
+for (const line of cfgLines) {
   if (line[0] === '#') continue
   const [k, v] = line.split('=')
   switch (k) {
@@ -40,27 +39,38 @@ if (apiId == null) throw new Error('No api id')
 if (apiHash == null) throw new Error('No api hash')
 if (botToken == null) throw new Error('No bot token')
 
-describe('tdl with an authenticated client', () => {
-  let client: tdl.Client
-
-  beforeEach(() => {
-    client = tdl.createClient({
-      apiId,
-      apiHash,
-      databaseDirectory,
-      filesDirectory,
-      tdlibParameters: {
+const createTestClient = () => {
+  return tdl.createClient({
+    apiId,
+    apiHash,
+    databaseDirectory,
+    filesDirectory: databaseDirectory,
+    tdlibParameters: {
         use_file_database: false,
         use_chat_info_database: false,
         use_message_database: false
       }
-    })
+  })
+}
+
+const cleanDatabase = () => {
+  return fsp.rm(databaseDirectory, { recursive: true, force: true })
+}
+
+describe('tdl with an authenticated client', () => {
+  let client: tdl.Client
+
+  beforeAll(async () => {
+    await cleanDatabase()
+  })
+
+  beforeEach(() => {
+    client = createTestClient()
   })
 
   afterEach(async () => {
     await client.close()
-    await fsp.rm(databaseDirectory, { recursive: true, force: true })
-    await fsp.rm(filesDirectory, { recursive: true, force: true })
+    await cleanDatabase()
   })
 
   test('make pre-auth request, log in successfully', async () => {
@@ -73,9 +83,9 @@ describe('tdl with an authenticated client', () => {
     const me = await client.invoke({ _: 'getMe' })
     expect(me).toMatchObject({
       _: 'user',
+      type: { _: 'userTypeBot' },
       phone_number: ''
     })
-    expect(me.type._).toBe('userTypeBot')
   })
 
   test('can receive auth-only updates', async () => {
@@ -90,7 +100,7 @@ describe('tdl with an authenticated client', () => {
       }
       throw new Error('Failed to receive updateOption(my_id)')
     })()
-    await client.loginAsBot(botToken)
+    await client.loginAsBot(() => Promise.resolve(botToken))
   })
 
   test('an exception in the client.on(update) handler is emitted as error', () => {
@@ -112,5 +122,43 @@ describe('tdl with an authenticated client', () => {
         throw new Error('##TEST##')
       })
     })
+  })
+})
+
+describe('tdl with a single long authenticated bot session', () => {
+  let client: tdl.Client
+
+  beforeAll(async () => {
+    client = createTestClient()
+    client.on('error', e => console.error('error', e))
+    await client.loginAsBot(botToken)
+  })
+
+  afterAll(async () => {
+    await cleanDatabase()
+  })
+
+  test('getVersion() returns a valid version string', () => {
+    const version = client.getVersion()
+    expect(version).toMatch(/^\d+\.\d+\.\d+$/)
+  })
+
+  test('invoke rejects with TDLibError for an invalid request', async () => {
+    try {
+      await client.invoke({ _: 'getChat', chat_id: 2 ** 40 })
+      expect.unreachable()
+    } catch (e: any) {
+      expect(e).toBeInstanceOf(tdl.TDLibError)
+      expect(e.code).toBeTypeOf('number')
+      expect(e.message).toBeTypeOf('string')
+    }
+  })
+
+  test('close event fires when client is logged out', async () => {
+    let closeFired = false
+    client.on('close', () => { closeFired = true })
+    await client.invoke({ _: 'logOut' })
+    expect(closeFired).toBe(true)
+    expect(client.isClosed()).toBe(true)
   })
 })
