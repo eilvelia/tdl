@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeAll, afterAll } from 'vitest'
+import { describe, expect, test, beforeAll, afterAll, onTestFinished } from 'vitest'
 import * as path from 'node:path'
 import * as tdl from 'tdl'
 import type * as Td from 'tdlib-types'
@@ -73,17 +73,19 @@ export function addTests (oldTdjson: boolean = false) {
   })
 
   test('non-Error thrown in update listener should be emitted as UnknownError', () => {
+    const client = tdl.createBareClient()
+    onTestFinished(() => client.close())
     return new Promise<void>((resolve, reject) => {
-      const client = tdl.createBareClient()
       client.once('update', () => {
         throw 'not an error'
       })
       client.on('error', e => {
+        if (e?.message?.includes?.('Request aborted')) return
         try {
           expect(e).toBeInstanceOf(tdl.UnknownError)
           expect((e as any).err).toBe('not an error')
           expect(e.message).toBe('not an error')
-          client.close().then(resolve)
+          resolve()
         } catch (err) {
           reject(err)
         }

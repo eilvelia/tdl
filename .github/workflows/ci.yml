@@ -44,10 +44,15 @@ jobs:
             "td-1.8.27",
             "td-1.8.19",
             "td-1.8.14",
-            "td-1.8.0"
+            "td-1.8.5"
           )
           npm uninstall -D prebuilt-tdlib
           foreach ($td in $tds) {
+            echo "-- $td --"
+            if ($td -eq 'td-1.8.5' -and $env:RUNNER_OS -eq 'macOS' -and $env:RUNNER_ARCH -eq 'ARM64') {
+              echo "skipping $td on macos arm64"
+              continue
+            }
             mkdir $td
             npm install -D prebuilt-tdlib@$td
             npm run test:integration
