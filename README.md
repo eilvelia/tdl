@@ -22,7 +22,7 @@ a library for creating [Telegram][] clients or bots.
 - The tdjson shared library (`libtdjson.so` on Linux, `libtdjson.dylib` on macOS, `tdjson.dll` on Windows), of TDLib version 1.8.0 or newer
 - In rare cases, a C++ compiler and Python installed to build the node addon[^1]
 
-[^1]: tdl is packaged with pre-built addons for Windows (x86_64), GNU/Linux (x86_64, arm64; glibc >= 2.22), and macOS (x86_64, arm64; v11.0+). If a pre-built binary is not available for your system, then the node addon will be built using node-gyp, requiring Python and a C++ toolchain (C++14 is required) to be installed (on Windows, MSVS or Build Tools). Pass `--build-from-source` to never use the pre-built binaries. arm64 binaries are not tested in CI. Linux binaries are statically linked against libstdc++.
+[^1]: tdl is packaged with pre-built addons for Windows (x86_64), Linux (x86_64, arm64; glibc >= 2.22 or musl), and macOS (x86_64, arm64; v11.0+). If a pre-built binary is not available for your system, then the node addon will be built using node-gyp, requiring Python and a C++ toolchain (C++14 is required) to be installed (on Windows, MSVS or Build Tools). Pass `--build-from-source` to never use the pre-built binaries. arm64 binaries are not tested in CI. Linux binaries are statically linked against libstdc++.
 
 <a name="installation"></a>
 ## Installation

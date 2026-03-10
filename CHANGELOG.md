@@ -2,7 +2,7 @@
 
 <!-- Hi! -->
 
-## tdl (UNRELEASED)
+## tdl@8.1.0 (2026-03-10)
 
 - Added node addon prebuilts for linux x86_64 musl and linux arm64 musl.
 - Fixed a minor potential event listener leak in client.login().
