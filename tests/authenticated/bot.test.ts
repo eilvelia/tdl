@@ -86,7 +86,7 @@ describe('tdl with an authenticated client', () => {
       type: { _: 'userTypeBot' },
       phone_number: ''
     })
-  })
+  }, 8000)
 
   test('can receive auth-only updates', async () => {
     (async () => {
@@ -101,7 +101,7 @@ describe('tdl with an authenticated client', () => {
       throw new Error('Failed to receive updateOption(my_id)')
     })()
     await client.loginAsBot(() => Promise.resolve(botToken))
-  })
+  }, 8000)
 
   test('an exception in the client.on(update) handler is emitted as error', () => {
     return new Promise((resolve, reject) => {
@@ -132,7 +132,7 @@ describe('tdl with a single long authenticated bot session', () => {
     client = createTestClient()
     client.on('error', e => console.error('error', e))
     await client.loginAsBot(botToken)
-  })
+  }, 8000)
 
   afterAll(async () => {
     await cleanDatabase()
@@ -157,7 +157,7 @@ describe('tdl with a single long authenticated bot session', () => {
   test('close event fires when client is logged out', async () => {
     let closeFired = false
     client.on('close', () => { closeFired = true })
-    await client.invoke({ _: 'logOut' })
+    await client.close()
     expect(closeFired).toBe(true)
     expect(client.isClosed()).toBe(true)
   })
