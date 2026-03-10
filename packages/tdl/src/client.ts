@@ -230,6 +230,8 @@ export class Client {
     let listeners = this._events[event]
     if (listeners == null)
       listeners = this._events[event] = new Set()
+    if (listeners.has(fn))
+      return this
     fn.once = true
     listeners.add(fn)
     return this
