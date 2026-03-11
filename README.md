@@ -1,4 +1,4 @@
-# tdl &nbsp; [![npm](https://img.shields.io/npm/v/tdl.svg)](https://www.npmjs.com/package/tdl) [![CI](https://github.com/eilvelia/tdl/actions/workflows/ci.yml/badge.svg)](https://github.com/eilvelia/tdl/actions/workflows/ci.yml)
+# tdl &nbsp; [![npm](https://img.shields.io/npm/v/tdl.svg)](https://www.npmjs.com/package/tdl) [![CI](https://github.com/eilvelia/tdl/actions/workflows/ci.yml/badge.svg)](https://github.com/eilvelia/tdl/actions/workflows/ci.yml) ![coverage](https://img.shields.io/badge/coverage-80.92%25-brightgreen.svg)
 
 tdl is a fairly simple JavaScript wrapper for [TDLib][] (Telegram Database library),
 a library for creating [Telegram][] clients or bots.
