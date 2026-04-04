@@ -19,7 +19,7 @@ stdenv.mkDerivation {
 
   buildInputs = [
     (openssl.override { static = true; }).dev
-    (zlib.override { static = true; shared = false; })
+    (zlib.override { shared = false; })
   ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ apple-sdk_14 ];
 
   nativeBuildInputs = [
