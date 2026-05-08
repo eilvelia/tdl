@@ -34,22 +34,36 @@ let
             fi
           fi
         done
+
+        rm -f "$out/nix-support/ld-set-dynamic-linker"
       '';
     });
     extraPackages = [ ];
     # Add glibc version to target if necessary & always strip
-    nixSupport.cc-cflags = [ "-target" zigTarget "-s" ];
+    nixSupport.cc-cflags = [ "-target" zigTarget "-s" "-Wno-unused-command-line-argument" ];
   };
 
   stdenv = pkgs'.overrideCC pkgs'.stdenv zigCC;
 
-  openssl = (pkgs'.openssl.override { inherit stdenv; }).overrideAttrs {
+  openssl = (pkgs'.openssl.override { inherit stdenv; }).overrideAttrs (prev: {
     doCheck = false;
-  };
+    postInstall = builtins.replaceStrings
+      [ ''
+        makeWrapper $bin/bin/openssl $bin/bin/c_rehash \
+          --add-flags "rehash"
+      '' ]
+      [ "" ]
+      prev.postInstall;
+  });
 
-  zlib = (pkgs'.zlib.override { inherit stdenv; }).overrideAttrs {
+  zlib = (pkgs'.zlib.override { inherit stdenv; }).overrideAttrs (prev: {
     doCheck = false;
-  };
+    postPatch = (prev.postPatch or "") + ''
+      substituteInPlace gzguts.h \
+        --replace-fail '#  ifndef NO_STRERROR' '#  if 1'
+    '';
+    buildFlags = [ "libz.a" ];
+  });
 in
 (pkgs'.callPackage ./tdlib.nix { inherit rev openssl zlib stdenv; }).overrideAttrs (prev: {
   # https://github.com/ziglang/zig/issues/15113
