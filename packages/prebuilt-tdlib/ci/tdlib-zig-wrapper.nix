@@ -38,7 +38,7 @@ let
     });
     extraPackages = [ ];
     # Add glibc version to target if necessary & always strip
-    nixSupport.cc-cflags = [ "-target" zigTarget "-s" ];
+    nixSupport.cc-cflags = [ "-target" zigTarget "-s" "-Wno-unused-command-line-argument" ];
   };
 
   stdenv = pkgs'.overrideCC pkgs'.stdenv zigCC;
