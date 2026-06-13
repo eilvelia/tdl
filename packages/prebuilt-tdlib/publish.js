@@ -1,4 +1,4 @@
-#!/usr/bin/env/node
+#!/usr/bin/env node
 // @flow
 
 const path = require('node:path')
