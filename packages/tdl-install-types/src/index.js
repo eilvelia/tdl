@@ -161,6 +161,7 @@ function parseArgs () {
         }
         if (target) {
           console.error('Too many arguments')
+          process.exitCode = 1
           return false
         }
         target = arg
@@ -300,7 +301,13 @@ if (!shouldContinue) {
   const schema = fs.readFileSync(target).toString()
   fromSchema(schema)
 } else if (type === GIT_REF) {
-  fromGitRef(target).catch(console.error)
+  fromGitRef(target).catch(err => {
+    console.error(String(err))
+    process.exitCode = 1
+  })
 } else if (type === LIB) {
-  fromDynamicLib(target)
+  fromDynamicLib(target).catch(err => {
+    console.error(String(err))
+    process.exitCode = 1
+  })
 }
