@@ -269,6 +269,7 @@ export class Client {
     let finished = false
 
     const finish = () => {
+      if (finished) return
       this.off('update', onUpdate)
       finished = true
       if (defer != null) {
@@ -282,6 +283,7 @@ export class Client {
       if (update._ === 'updateAuthorizationState' &&
           update.authorization_state._ === 'authorizationStateClosed') {
         finish()
+        return
       }
       if (defer != null) {
         defer.resolve({ done: false, value: update })
@@ -301,10 +303,9 @@ export class Client {
         }
         if (finished)
           return Promise.resolve({ done: true, value: undefined })
-        if (defer != null) {
-          finish()
-          throw new Error('Cannot call next() twice in succession')
-        }
+        if (defer != null)
+          return Promise.reject(
+            new Error('Cannot call next() before the previous next() resolves'))
         return new Promise((resolve, reject) => {
           defer = { resolve, reject }
         })
