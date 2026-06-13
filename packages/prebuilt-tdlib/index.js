@@ -52,10 +52,13 @@ function elfInterpreterPath (elf/*: Buffer */)/*: string | null */ {
   const count = elf.readUInt16LE(56)
   for (let i = 0; i < count; i++) {
     const headerOffset = offset + (i * size)
+    if (headerOffset + 4 > elf.length) break
     const type = elf.readUInt32LE(headerOffset)
     if (type === 3) {
+      if (headerOffset + 36 > elf.length) break
       const fileOffset = elf.readUInt32LE(headerOffset + 8)
       const fileSize = elf.readUInt32LE(headerOffset + 32)
+      if (fileOffset + fileSize > elf.length) break
       return elf.subarray(fileOffset, fileOffset + fileSize).toString().replace(/\0.*$/g, '')
     }
   }
