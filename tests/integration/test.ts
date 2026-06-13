@@ -323,14 +323,12 @@ export function addTests (oldTdjson: boolean = false) {
       expect(received[1]).toMatchObject({ name: 'for_await_2' })
     })
 
-    test('calling iterUpdates().next() twice concurrently should throw', async () => {
+    test('calling iterUpdates().next() twice concurrently should reject the second call', async () => {
       const iter = client.iterUpdates()
-      // First call will block waiting for an update
       const p1 = iter.next()
-      expect(() => iter.next()).toThrow('Cannot call next() twice in succession')
-      // Clean up: finish the iterator so p1 resolves
+      await expect(iter.next()).rejects.toThrow('Cannot call next() before the previous next() resolves')
       await iter.return!()
-      await p1
+      expect(await p1).toEqual({ done: true, value: undefined })
     })
 
     test('two bare clients should work independently', async () => {
