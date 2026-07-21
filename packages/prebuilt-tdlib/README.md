@@ -44,8 +44,8 @@ prevent compatibility issues in Node.js). libstdc++ is also linked statically
 on Linux.
 
 For the dependencies of TDLib (zlib and openssl), except on Windows, the
-`nixpkgs-unstable` package repository is used, and the versions of those
-dependencies reflect the state of `nixpkgs-unstable` at the time of building of
+latest stable nixpkgs package repository is used, and the versions of those
+dependencies reflect the state of nixpkgs at the time of building of
 `prebuilt-tdlib`.
 
 `prebuilt-tdlib` also includes TypeScript types for the appropriate TDLib
