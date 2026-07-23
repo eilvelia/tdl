@@ -14,13 +14,11 @@ jobs:
         node:
           - 24
         include:
-          # The packages themselves should still work with Node v16, but the
-          # dev dependencies don't support v16 anymore
+          # The packages themselves should still work with Node v16, v18, but
+          # the dev dependencies do not support these versions anymore
           - node: 22
             os: ubuntu-latest
           - node: 20
-            os: ubuntu-latest
-          - node: 18
             os: ubuntu-latest
     steps:
       - uses: actions/checkout@v5

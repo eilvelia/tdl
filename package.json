@@ -30,7 +30,7 @@
     "eslint": "^9.39.3",
     "flow-bin": "^0.303.0",
     "node-addon-api": "^7.1.1",
-    "node-gyp": "^11.3.0",
+    "node-gyp": "^12.4.0",
     "prebuildify": "^6.0.1",
     "prebuilt-tdlib": "^0.1008061.0",
     "rimraf": "^6.0.1",
@@ -40,7 +40,7 @@
     "vitest": "^3.2.4"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20.17.0"
   },
   "author": "eilvelia <hi@eilvelia.cat>",
   "license": "MIT",
